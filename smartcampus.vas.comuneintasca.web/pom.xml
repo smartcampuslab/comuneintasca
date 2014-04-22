@@ -1,0 +1,153 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>eu.trentorise.smartcampus</groupId>
+	<artifactId>smartcampus.vas.comuneintasca.web</artifactId>
+	<version>1.0</version>
+	<packaging>war</packaging>
+	<name>Comune in Tasca webapp</name>
+
+	<properties>
+		<spring.version>3.1.3.RELEASE</spring.version>
+		<servicebus-core>1.3</servicebus-core>
+		<service-engine-client>1.4</service-engine-client>
+		<spring-security-version>3.1.0.RELEASE</spring-security-version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.odftoolkit</groupId>
+			<artifactId>simple-odf</artifactId>
+			<version>0.7-incubating</version>
+		</dependency>
+            
+		<!-- Servlet and lib -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+		<!-- Security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring-security-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring-security-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring-security-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>it.sayservice.platform</groupId>
+			<artifactId>service-engine-client</artifactId>
+			<version>${service-engine-client}</version>
+		</dependency>
+		<dependency>
+			<groupId>it.sayservice.platform</groupId>
+			<artifactId>servicebus-core</artifactId>
+			<version>${servicebus-core}</version>
+		</dependency>
+		<dependency>
+			<groupId>eu.trentorise.smartcampus</groupId>
+			<artifactId>syncstorage.web</artifactId>
+			<version>1.2</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>com.google.protobuf</groupId>
+			<artifactId>protobuf-java</artifactId>
+			<version>2.4.1</version>
+		</dependency>
+
+		<!-- JMS -->
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-core</artifactId>
+			<version>5.5.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+	    <dependency>
+	      <groupId>org.codehaus.jackson</groupId>
+	      <artifactId>jackson-mapper-lgpl</artifactId>
+	      <version>1.9.4</version>
+	      <type>jar</type>
+	      <scope>compile</scope>
+	    </dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.0.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
+		<finalName>comuneintasca</finalName>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>SmartCampus-releases</id>
+			<url>http://repository.smartcampuslab.it/content/repositories/releases</url>
+		</repository>
+	</repositories>
+
+</project>

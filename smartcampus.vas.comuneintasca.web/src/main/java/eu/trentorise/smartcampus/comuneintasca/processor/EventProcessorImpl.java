@@ -19,6 +19,7 @@ import it.sayservice.platform.client.ServiceBusClient;
 import it.sayservice.platform.client.ServiceBusListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +29,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.protobuf.ByteString;
 
-import edu.emory.mathcs.backport.java.util.Collections;
 import eu.trentorise.smartcampus.comuneintasca.listener.Subscriber;
 import eu.trentorise.smartcampus.comuneintasca.model.EventObject;
 import eu.trentorise.smartcampus.comuneintasca.model.Organization;

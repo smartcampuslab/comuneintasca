@@ -7,7 +7,7 @@ public class POIObject extends GeoCITObject {
 
 	private Map<String,String> classification;
 	private String relatedObjectId;
-	private String contackFullName;
+	private String contactFullName;
 
 	public Map<String, String> getClassification() {
 		return classification;
@@ -21,10 +21,10 @@ public class POIObject extends GeoCITObject {
 	public void setRelatedObjectId(String relatedObjectId) {
 		this.relatedObjectId = relatedObjectId;
 	}
-	public String getContackFullName() {
-		return contackFullName;
+	public String getContactFullName() {
+		return contactFullName;
 	}
-	public void setContackFullName(String contackFullName) {
-		this.contackFullName = contackFullName;
+	public void setContactFullName(String contackFullName) {
+		this.contactFullName = contackFullName;
 	}
 }

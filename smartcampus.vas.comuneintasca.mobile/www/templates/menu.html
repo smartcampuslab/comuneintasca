@@ -1,0 +1,41 @@
+<ion-side-menus>
+
+  <ion-pane ion-side-menu-content>
+    <ion-nav-bar class="bar-stable nav-title-slide-ios7">
+      <ion-nav-buttons side="left">
+        <ion-nav-back-button class="button-clear"><i class="icon ion-chevron-left"></i></ion-nav-back-button>
+      </ion-nav-buttons>
+      <ion-nav-buttons side="right">
+          <button menu-toggle="right" class="button button-icon icon ion-navicon"></button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
+  </ion-pane>
+
+  <ion-side-menu side="right">
+    <header class="bar bar-header bar-dark">
+      <h1 class="title">Trento in Tasca</h1>
+    </header>
+    <ion-content class="has-header content-calm">
+      <ion-list>
+        <ion-item nav-clear menu-close class="item-calm2" href="#/app/home">Home</ion-item>
+        <div class="item-divider">Da sapere</div>
+        <ion-item nav-clear menu-close class="item-calm2" href="#/app/info">Info</ion-item>
+        <ion-item nav-clear menu-close class="item-calm2" href="#/app/storia">Storia</ion-item>
+        <ion-item nav-clear menu-close class="item-calm2" href="#/app/bondone">Bondone</ion-item>
+        <div class="item-divider">Da vedere</div>
+        <ion-item nav-clear menu-close class="item-calm2" href="#/app/luoghi">Luoghi</ion-item>
+        <ion-item nav-clear menu-close class="item-calm2" href="#/app/mappa">Mappa</ion-item>
+        <ion-item nav-clear menu-close class="item-calm2" href="#/app/itinerari">Itinerari</ion-item>
+        <div class="item-divider">Da fare</div>
+        <ion-item nav-clear menu-close class="item-calm2" href="#/app/eventi">Eventi</ion-item>
+        <ion-item nav-clear menu-close class="item-calm2" href="#/app/dormire">Dormire</ion-item>
+        <ion-item nav-clear menu-close class="item-calm2" href="#/app/mangiare">Mangiare</ion-item>
+        <div class="item-divider">Altro</div>
+        <ion-item nav-clear menu-close class="item-calm2" href="#/app/servizi">Servizi</ion-item>
+        <ion-item nav-clear menu-close class="item-calm2" href="#/app/foto">Foto</ion-item>
+        <ion-item nav-clear menu-close class="item-calm2" href="#/app/video">Video</ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>

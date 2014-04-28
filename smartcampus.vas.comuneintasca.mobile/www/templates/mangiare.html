@@ -1,0 +1,9 @@
+<ion-view title="Mangiare">
+  <ion-content class="has-header">
+    <ion-list>
+      <ion-item ng-repeat="mangio in mangiare" href="#/app/mangiare/{{mangio.id}}">
+        {{mangio.name}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

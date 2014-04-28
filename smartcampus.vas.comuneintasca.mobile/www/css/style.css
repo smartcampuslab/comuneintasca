@@ -1,0 +1,25 @@
+.scroll-content > #map1, .scroll-content > #map2 {
+  height: 100%;
+}
+
+
+.item-divider {
+/*    background-color: #999; color:#fff; border-top:2px solid #000;*/
+    padding: .3em .5em;
+}
+/*
+.pane, .view {
+    background-color: #fff;
+}
+.content-stable {
+    background-color: #2976aa;
+    color:#fff;
+}
+
+.item-complex .item-content {
+    background-color: transparent;
+}
+.menu {
+    background-color: transparent;
+}
+*/

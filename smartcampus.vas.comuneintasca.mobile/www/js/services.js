@@ -137,7 +137,7 @@ angular.module('starter.services', [])
                         nextVersion=data.version;
                         console.log('nextVersion: '+nextVersion);
                         if (nextVersion>currentDbVersion) {
-                            objsDone=[];
+                            objsDone=$q.defer();
                             objsUpdated={};
                             objsDeleted={};
 
@@ -150,16 +150,8 @@ angular.module('starter.services', [])
                                         console.log('updates: '+updates.length);
 
                                         angular.forEach(updates, function(item, idx){
-                                            objsUpdated[contentTypeKey+'-'+idx]=$q.defer();
-                                            console.log('saving promise for update "'+contentTypeKey+'-'+idx+'"');
-                                            objsDone.push(objsUpdated[contentTypeKey+'-'+idx].promise);
-                                        });
-                                        console.log('will wait for '+Object.keys(objsUpdated).length+' "'+contentTypeKey+'" update promises');
-
-                                        angular.forEach(updates, function(item, idx){
                                             tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [ item.id ]);
 
-                                            console.log('working on promise update "'+contentTypeKey+'-'+idx+'"');
                                             if (contentTypeKey=='content') {
                                                 classification=item.classification;
                                             } else if (contentTypeKey=='poi') {
@@ -171,15 +163,11 @@ angular.module('starter.services', [])
                                             tx.executeSql('INSERT INTO ContentObjects (id, version, type, category, classification, data, lat, lon, updateTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', values
                                                 ,function(tx, res){ //success callback
                                                     console.log('inserted obj with id: '+item.id);
-                                                    objsUpdated[contentTypeKey+'-'+idx].resolve(true);
                                                 }
                                                 ,function(e){  //error callback
                                                     console.log('unable to insert obj with id '+item.id+': '+e.message);
-                                                    objsUpdated[contentTypeKey+'-'+idx].resolve(false);
                                                 }
                                             );
-//                                            console.log('resolved update promise for obj "'+contentTypeKey+'-'+idx+'"');
-//                                            objsUpdated[contentTypeKey+'-'+idx].resolve(true);
                                         });
                                     } else {
                                         console.log('nothing to update');
@@ -190,22 +178,13 @@ angular.module('starter.services', [])
                                         console.log('deletions: '+deletions.length);
 
                                         angular.forEach(deletions, function(item, idx){
-                                            objsDeleted[contentTypeKey+'-'+idx]=$q.defer();
-                                            console.log('saving promise for deletion "'+contentTypeKey+'-'+idx+'"');
-                                            objsDone.push(objsDeleted[contentTypeKey+'-'+idx].promise);
-                                        });
-                                        console.log('will wait for '+Object.keys(objsUpdated).length+' "'+contentTypeKey+'" update promises');
-
-                                        angular.forEach(deletions, function(item, idx){
                                             console.log('deleting obj with id: '+item.id);
                                             tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [ item.id ]
                                                 ,function(tx, res){ //success callback
                                                     console.log('deleted obj with id: '+item.id);
-                                                    objsDeleted[contentTypeKey+'-'+idx].resolve(true);
                                                 }
                                                 ,function(e){  //error callback
                                                     console.log('unable to deleted obj with id '+item.id+': '+e.message);
-                                                    objsDeleted[contentTypeKey+'-'+idx].resolve(false);
                                                 }
                                             );
                                         });
@@ -213,10 +192,10 @@ angular.module('starter.services', [])
                                         console.log('nothing to delete');
                                     }
                                 });
+                                objsDone.resolve(true);
                             });
 
-                            console.log('total promises: '+objsDone.length);
-                            $q.all(objsDone).then(function () {
+                            objsDone.promise.then(function () {
                                 currentDbVersion=nextVersion;
                                 localStorage.currentDbVersion=currentDbVersion;
 

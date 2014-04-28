@@ -107,7 +107,7 @@ angular.module('starter.services', [])
                 tx.executeSql('CREATE INDEX IF NOT EXISTS co_lat ON ContentObjects( lat )');
                 tx.executeSql('CREATE INDEX IF NOT EXISTS co_lon ON ContentObjects( lon )');
                 tx.executeSql('CREATE INDEX IF NOT EXISTS co_typeclass ON ContentObjects( type, classification )');
-                tx.executeSql('CREATE INDEX IF NOT EXISTS co_typeclass ON ContentObjects( type, id )');
+                tx.executeSql('CREATE INDEX IF NOT EXISTS co_typeid ON ContentObjects( type, id )');
                 localStorage.currentSchemaVersion=currentSchemaVersion=SCHEMA_VERSION;
                 if (currentDbVersion>0) localStorage.currentDbVersion=currentDbVersion=0;
                 console.log('initialized');

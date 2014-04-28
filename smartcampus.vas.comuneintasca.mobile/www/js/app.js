@@ -96,6 +96,47 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
       }
     })
+    .state('app.itinerario', {
+      url: "/itinerari/:itinerarioId",
+      views: {
+        'menuContent' :{
+          abstract: true,
+          templateUrl: "templates/itinerario.html", controller: 'ItinerarioCtrl'
+        }
+      }
+    })
+    .state('app.itinerario.info', {
+      url: "/info",
+      views: {
+        'itinerario-info' :{
+          templateUrl: "templates/itinerario-info.html", controller: 'ItinerarioInfoCtrl'
+        }
+      }
+    })
+    .state('app.itinerario.tappe', {
+      url: "/tappe",
+      views: {
+        'itinerario-tappe' :{
+          templateUrl: "templates/itinerario-tappe.html", controller: 'ItinerarioTappeCtrl'
+        }
+      }
+    })
+    .state('app.itinerario.tappa', {
+      url: "/tappe/:luogoId",
+      views: {
+        'itinerario-tappe' :{
+          templateUrl: "templates/luogo.html", controller: 'LuogoCtrl'
+        }
+      }
+    })
+    .state('app.itinerario.mappa', {
+      url: "/mappa",
+      views: {
+        'itinerario-mappa' :{
+          templateUrl: "templates/itinerario-mappa.html", controller: 'ItinerarioMappaCtrl'
+        }
+      }
+    })
     .state('app.eventi', {
       url: "/eventi",
       views: {

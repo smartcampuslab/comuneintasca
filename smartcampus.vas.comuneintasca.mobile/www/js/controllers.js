@@ -42,25 +42,67 @@ angular.module('starter.controllers', [])
 .controller('ServizioCtrl', function($scope, DatiDB, $stateParams) { DatiDB.get('content',$stateParams.servizioId).then(function(data){ $scope.servizio = data; }); })
 
 .controller('MappaCtrl', function($scope, DatiDB) {
-    var map = new mxn.Mapstraction('map1', 'openlayers');
-    var latlon = new mxn.LatLonPoint(46.066667,11.116667);
-    map.setCenterAndZoom(latlon, 13);
+    map1 = new mxn.Mapstraction('map1', 'openlayers');
     DatiDB.all('poi').then(function(data){
         angular.forEach(data,function(luogo,idx){
             if (luogo.location) {
                 m=new mxn.Marker(new mxn.LatLonPoint(luogo.location[0],luogo.location[1]));
                 m.setIcon('img/mapmarker.png',[25,40],[25/2,40/2]);
                 m.setInfoBubble(luogo.title.it);
-                map.addMarker(m);
+                map1.addMarker(m);
             }
+        });
+        map1.autoCenterAndZoom();
+    });
+})
+
+.controller('ItinerariCtrl', function($scope, DatiDB) { DatiDB.all('itinerary').then(function(data){ $scope.itinerari=data; }); })
+.controller('ItinerarioCtrl', function($scope, DatiDB, $stateParams) {
+    $scope.itinerarioId=$stateParams.itinerarioId;
+})
+.controller('ItinerarioInfoCtrl', function($scope, DatiDB, $stateParams) {
+    DatiDB.get('itinerary',$stateParams.itinerarioId).then(function(data){
+        $scope.itinerario=data;
+    });
+})
+.controller('ItinerarioTappeCtrl', function($scope, DatiDB, $stateParams) {
+    DatiDB.get('itinerary',$stateParams.itinerarioId).then(function(data){
+        $scope.itinerario=data;
+        $scope.tappe=[];
+        angular.forEach(data.steps,function(step,idx){
+            console.log('step #'+idx+': '+step);
+            DatiDB.get('poi',step).then(function(luogo){
+                luogo['idx']=idx+1;
+                $scope.tappe[idx]=luogo;
+            });
         });
     });
 })
-.controller('ItinerariCtrl', function($scope) {
-    var map = new mxn.Mapstraction('map2', 'openlayers');
-    var latlon = new mxn.LatLonPoint(46.066667,11.116667);
-    map.setCenterAndZoom(latlon, 10);
-    m=new mxn.Marker(new mxn.LatLonPoint(46.07048,11.15055));
-    m.setIcon('img/mapmarker.png',[25,40],[25/2,40/2]);
-    map.addMarker(m);
+.controller('ItinerarioInfoCtrl', function($scope, DatiDB, $stateParams) {
+    DatiDB.get('itinerary',$stateParams.itinerarioId).then(function(data){
+        $scope.itinerario=data;
+        DatiDB.get('poi',$stateParams.tappaId).then(function(luogo){
+            $scope.tappa=luogo;
+        });
+    });
+})
+.controller('ItinerarioMappaCtrl', function($scope, DatiDB, $stateParams) {
+    map2 = new mxn.Mapstraction('map2', 'openlayers');
+    DatiDB.get('itinerary',$stateParams.itinerarioId).then(function(data){
+        angular.forEach(data.steps,function(step,idx){
+            console.log('step #'+idx+': '+step);
+            DatiDB.get('poi',step).then(function(luogo){
+                console.log(luogo.title.it);
+                if (luogo.location) {
+                    m=new mxn.Marker(new mxn.LatLonPoint(luogo.location[0],luogo.location[1]));
+                    m.setIcon('img/mapmarker.png',[25,40],[25/2,40/2]);
+                    m.setInfoBubble(luogo.title.it);
+                    map2.addMarker(m);
+                } else {
+                    console.log('no location');
+                }
+            });
+        });
+        setTimeout(function(){ map2.autoCenterAndZoom(); },500);
+    });
 })

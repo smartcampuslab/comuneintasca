@@ -54,7 +54,7 @@ angular.module('starter.services', [])
 })
 
 .factory('DatiDB', function($q, $http, $ionicLoading, Config) {
-    var SCHEMA_VERSION=18;
+    var SCHEMA_VERSION=19;
     var types={
         'content':'eu.trentorise.smartcampus.comuneintasca.model.ContentObject',
         'poi':'eu.trentorise.smartcampus.comuneintasca.model.POIObject',
@@ -78,6 +78,7 @@ angular.module('starter.services', [])
     var dbopenDeferred = $q.defer();
     var dbDeferred = $q.defer();
 
+    var dbObj;
     if (window.cordova) {
         console.log('cordova db...');
         document.addEventListener("deviceready", function(){
@@ -228,83 +229,85 @@ angular.module('starter.services', [])
             var data = $q.defer();
             this.sync().then(function(dbVersion){
                 console.log('current database version: '+dbVersion);
-                loading=$ionicLoading.show({ content: 'loading...', showDelay:1000 });
+                var loading=$ionicLoading.show({ content: 'loading...', showDelay:1000 });
 
-                db.then(function(dbObj){
-                    dbObj.transaction(function (tx) {
-                        //console.log('type: '+types[dbname]);
-                        tx.executeSql('SELECT id, data, lat, lon FROM ContentObjects WHERE type=?', [ types[dbname] ], function (tx, results) {
-                            lista=[]
-                            var len = results.rows.length, i;
-                            console.log('results.rows.length: '+results.rows.length);
-                            for (i = 0; i < len; i++) {
-                                //console.log(results.rows.item(i));
-                                lista.push(JSON.parse(results.rows.item(i).data));
-                            }
+                dbObj.transaction(function (tx) {
+                    //console.log('type: '+types[dbname]);
+                    tx.executeSql('SELECT id, data, lat, lon FROM ContentObjects WHERE type=?', [ types[dbname] ], function (tx, results) {
+                        lista=[]
+                        var len = results.rows.length, i;
+                        console.log('results.rows.length: '+results.rows.length);
+                        for (i = 0; i < len; i++) {
+                            //console.log(results.rows.item(i));
+                            lista.push(JSON.parse(results.rows.item(i).data));
+                        }
 
-                            $ionicLoading.hide();
-                            data.resolve(lista);
-                        });
+                        $ionicLoading.hide();
+                        data.resolve(lista);
                     });
                 });
             });
-
             return data.promise;
         },
         cate: function(dbname,cateId) {
             var data = $q.defer();
             this.sync().then(function(dbVersion){
                 console.log('current database version: '+dbVersion);
-                loading=$ionicLoading.show({ content: 'loading...', showDelay:1000 });
+                var loading=$ionicLoading.show({ content: 'loading...', showDelay:1000 });
 
-                db.then(function(dbObj){
-                    dbObj.transaction(function (tx) {
-//                        console.log('type: '+types[dbname]);
-                        console.log('category: '+cateId);
-                        tx.executeSql('SELECT id, data, lat, lon FROM ContentObjects WHERE type=? AND classification=?', [ types[dbname],cateId ], function (tx, cateResults) {
-                            lista=[]
-                            var len = cateResults.rows.length, i;
-                            console.log('cateResults.rows.length: '+cateResults.rows.length);
-                            for (i = 0; i < len; i++) {
-                                //console.log(cateResults.rows.item(i));
-                                lista.push(JSON.parse(cateResults.rows.item(i).data));
-                            }
+                dbObj.transaction(function (tx) {
+//                    console.log('type: '+types[dbname]);
+                    console.log('category: '+cateId);
+                    tx.executeSql('SELECT id, data, lat, lon FROM ContentObjects WHERE type=? AND classification=?', [ types[dbname],cateId ], function (tx, cateResults) {
+                        lista=[]
+                        var len = cateResults.rows.length, i;
+                        console.log('cateResults.rows.length: '+cateResults.rows.length);
+                        for (i = 0; i < len; i++) {
+                            //console.log(cateResults.rows.item(i));
+                            lista.push(JSON.parse(cateResults.rows.item(i).data));
+                        }
 
-                            $ionicLoading.hide();
-                            data.resolve(lista);
-                        },function(tx, err){
-                            console.log('data error!');
-                            console.log(err);
+                        $ionicLoading.hide();
+                        data.resolve(lista);
+                    },function(tx, err){
+                        console.log('data error!');
+                        console.log(err);
 
-                            $ionicLoading.hide();
-                            data.reject();
-                        });
+                        $ionicLoading.hide();
+                        data.reject();
                     });
                 });
             });
             return data.promise;
         },
         get: function(dbname,itemId) {
-            var item = $q.defer();
-            this.sync().then(function(dbVersion){
-                console.log('current database version: '+dbVersion);
-
-                db.then(function(dbObj){
-                    dbObj.transaction(function (tx) {
-                        //console.log('type: '+types[dbname]);
-                        //console.log('itemId: '+itemId);
-                        tx.executeSql('SELECT id, data, lat, lon FROM ContentObjects WHERE type=? AND id=?', [ types[dbname],itemId ], function (tx, results) {
-                            if (results.rows.length>0) {
-                                //console.log(results.rows.item(0));
-                                item.resolve(JSON.parse(results.rows.item(0).data));
-                            } else {
-                                item.reject();
-                            }
-                        });
+            var dbitem = $q.defer();
+            console.log('DatiDB.get("'+dbname+'","'+itemId+'")');
+            db.then(function(dbObj){
+                dbObj.transaction(function (tx) {
+                    //console.log('type: '+types[dbname]);
+                    console.log('itemId: '+itemId);
+                    tx.executeSql('SELECT id, data, lat, lon FROM ContentObjects WHERE type=? AND id=?', [ types[dbname],itemId ], function (tx, results) {
+                        if (results.rows.length>0) {
+                            dbitem.resolve(JSON.parse(results.rows.item(0).data));
+                        } else {
+                            console.log('not found!');
+                            dbitem.reject();
+                        }
+                    },function(tx, err){
+                        console.log('error!');
+                        getitem.reject();
                     });
                 });
+/*
+            }).catch(function(err){
+                console.log('get/catch!');
+                console.log(err);
+            }).finally(function(){
+                console.log('get/finally.');
+*/
             });
-            return item.promise;
+            return dbitem.promise;
         }
     }
 })

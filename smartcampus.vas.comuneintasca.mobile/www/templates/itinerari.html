@@ -1,5 +1,9 @@
 <ion-view title="Itinerari">
-  <ion-content class="has-header" scroll="false">
-    <div id="map2"></div>
+  <ion-content class="has-header">
+    <ion-list>
+      <ion-item ng-repeat="itinerario in itinerari" href="#/app/itinerari/{{itinerario.id}}/info">
+        {{itinerario.title.it}}
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>

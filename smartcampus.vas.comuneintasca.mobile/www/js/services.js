@@ -48,8 +48,15 @@ angular.module('starter.services', [])
 })
 
 .factory('DatiDB', function($q, $http) {
-    var SCHEMA_VERSION=8;
-    var types={ 'content':'eu.trentorise.smartcampus.comuneintasca.model.ContentObject', 'poi':'eu.trentorise.smartcampus.comuneintasca.model.POIObject', 'event':'eu.trentorise.smartcampus.comuneintasca.model.EventObject' };
+    var SCHEMA_VERSION=9;
+    var types={
+        'content':'eu.trentorise.smartcampus.comuneintasca.model.ContentObject',
+        'poi':'eu.trentorise.smartcampus.comuneintasca.model.POIObject',
+        'event':'eu.trentorise.smartcampus.comuneintasca.model.EventObject',
+        'restaurant':'eu.trentorise.smartcampus.comuneintasca.model.RestaurantObject',
+        'hotel':'eu.trentorise.smartcampus.comuneintasca.model.HotelObject',
+        'itinerary':'eu.trentorise.smartcampus.comuneintasca.model.ItineraryObject'
+    };
     lastSynced=-1;
 
     var currentSchemaVersion=0;
@@ -156,6 +163,7 @@ angular.module('starter.services', [])
                             });
                             currentDbVersion=nextVersion;
                             localStorage.currentDbVersion=currentDbVersion;
+
                             syncronization.resolve(currentDbVersion);
                         } else {
                             console.log('local database already up-to-date!');

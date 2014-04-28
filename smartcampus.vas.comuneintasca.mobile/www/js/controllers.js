@@ -6,10 +6,10 @@ angular.module('starter.controllers', [])
 .controller('HomeCtrl', function($scope) {
 })
 
-.controller('DormireCtrl', function($scope, DatiJSON) { DatiJSON.all('dormire').then(function(data){ $scope.dormire=data; }); })
-.controller('DormoCtrl', function($scope, DatiJSON, $stateParams) { DatiJSON.get('dormire',$stateParams.dormoId).then(function(data){ $scope.dormo = data; }); })
-.controller('MangiareCtrl', function($scope, DatiJSON) { DatiJSON.all('mangiare').then(function(data){ $scope.mangiare=data; }); })
-.controller('MangioCtrl', function($scope, DatiJSON, $stateParams) { DatiJSON.get('mangiare',$stateParams.mangioId).then(function(data){ $scope.mangio = data; }); })
+.controller('DormireCtrl', function($scope, DatiDB) { DatiDB.all('hotel').then(function(data){ $scope.dormire=data; }); })
+.controller('DormoCtrl', function($scope, DatiDB, $stateParams) { DatiDB.get('hotel',$stateParams.dormoId).then(function(data){ $scope.dormo = data; }); })
+.controller('MangiareCtrl', function($scope, DatiDB) { DatiDB.all('restaurant').then(function(data){ $scope.mangiare=data; }); })
+.controller('MangioCtrl', function($scope, DatiDB, $stateParams) { DatiDB.get('restaurant',$stateParams.mangioId).then(function(data){ $scope.mangio = data; }); })
 
 .controller('EventiCtrl', function($scope, DatiDB) { DatiDB.all('event').then(function(data){ $scope.events=data; }); })
 .controller('EventoCtrl', function($scope, DatiDB, $stateParams) { DatiDB.get('event',$stateParams.eventoId).then(function(data){ $scope.event = data; }); })

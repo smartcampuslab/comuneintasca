@@ -1,5 +1,11 @@
 angular.module('starter.services', [])
 
+.factory('Config', function($q) {
+    return {
+        syncTimeoutSeconds: function(){ return 120; }
+    }
+})
+
 .factory('GeoLocate', function($q) {
     return {
         locate: function() {
@@ -47,8 +53,8 @@ angular.module('starter.services', [])
    }
 })
 
-.factory('DatiDB', function($q, $http) {
-    var SCHEMA_VERSION=9;
+.factory('DatiDB', function($q, $http, $ionicLoading, Config) {
+    var SCHEMA_VERSION=18;
     var types={
         'content':'eu.trentorise.smartcampus.comuneintasca.model.ContentObject',
         'poi':'eu.trentorise.smartcampus.comuneintasca.model.POIObject',
@@ -94,6 +100,14 @@ angular.module('starter.services', [])
             dbObj.transaction(function (tx) {
                 tx.executeSql('DROP TABLE IF EXISTS ContentObjects');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS ContentObjects (id text primary key, version integer, type text, category text, classification text, data text, lat real, lon real, updateTime integer)');
+                tx.executeSql('CREATE INDEX IF NOT EXISTS co_id ON ContentObjects( id )');
+                tx.executeSql('CREATE INDEX IF NOT EXISTS co_type ON ContentObjects( type )');
+                tx.executeSql('CREATE INDEX IF NOT EXISTS co_cate ON ContentObjects( category )');
+                tx.executeSql('CREATE INDEX IF NOT EXISTS co_class ON ContentObjects( classification )');
+                tx.executeSql('CREATE INDEX IF NOT EXISTS co_lat ON ContentObjects( lat )');
+                tx.executeSql('CREATE INDEX IF NOT EXISTS co_lon ON ContentObjects( lon )');
+                tx.executeSql('CREATE INDEX IF NOT EXISTS co_typeclass ON ContentObjects( type, classification )');
+                tx.executeSql('CREATE INDEX IF NOT EXISTS co_typeclass ON ContentObjects( type, id )');
                 localStorage.currentSchemaVersion=currentSchemaVersion=SCHEMA_VERSION;
                 if (currentDbVersion>0) localStorage.currentDbVersion=currentDbVersion=0;
                 console.log('initialized');
@@ -111,7 +125,9 @@ angular.module('starter.services', [])
             syncronization=$q.defer();
             db.then(function(dbObj){
                 var now_as_epoch = parseInt((new Date).getTime()/1000);
-                if ( lastSynced==-1 || now_as_epoch>(lastSynced+30) ) {
+                if ( lastSynced==-1 || now_as_epoch>(lastSynced+Config.syncTimeoutSeconds()) ) {
+                    syncing=$ionicLoading.show({ content: 'syncing...' });
+
                     $http.defaults.headers.common.Accept='application/json';
                     $http.defaults.headers.post={ 'Content-Type':'application/json' };
                     $http(syncOptions).success(function(data,status,headers,config){
@@ -121,15 +137,29 @@ angular.module('starter.services', [])
                         nextVersion=data.version;
                         console.log('nextVersion: '+nextVersion);
                         if (nextVersion>currentDbVersion) {
-                            angular.forEach(types, function(contentTypeClassName, contentTypeKey){
-                                console.log('type ('+contentTypeKey+'): '+contentTypeClassName);
+                            objsDone=[];
+                            objsUpdated={};
+                            objsDeleted={};
 
-                                if (!angular.isUndefined(data.updated[contentTypeClassName])) {
-                                    updates=data.updated[contentTypeClassName];
-                                    console.log('updates: '+updates.length);
-                                    angular.forEach(updates, function(item, idx){
-                                        dbObj.transaction(function (tx) {
+                            dbObj.transaction(function (tx) {
+                                angular.forEach(types, function(contentTypeClassName, contentTypeKey){
+                                    console.log('type ('+contentTypeKey+'): '+contentTypeClassName);
+
+                                    if (!angular.isUndefined(data.updated[contentTypeClassName])) {
+                                        updates=data.updated[contentTypeClassName];
+                                        console.log('updates: '+updates.length);
+
+                                        angular.forEach(updates, function(item, idx){
+                                            objsUpdated[contentTypeKey+'-'+idx]=$q.defer();
+                                            console.log('saving promise for update "'+contentTypeKey+'-'+idx+'"');
+                                            objsDone.push(objsUpdated[contentTypeKey+'-'+idx].promise);
+                                        });
+                                        console.log('will wait for '+Object.keys(objsUpdated).length+' "'+contentTypeKey+'" update promises');
+
+                                        angular.forEach(updates, function(item, idx){
                                             tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [ item.id ]);
+
+                                            console.log('working on promise update "'+contentTypeKey+'-'+idx+'"');
                                             if (contentTypeKey=='content') {
                                                 classification=item.classification;
                                             } else if (contentTypeKey=='poi') {
@@ -139,43 +169,77 @@ angular.module('starter.services', [])
                                             }
                                             values=[item.id, item.version, contentTypeClassName, item.category, classification, JSON.stringify(item), ((item.location && item.location.length==2)?item.location[0]:-1), ((item.location && item.location.length==2)?item.location[1]:-1), item.updateTime];
                                             tx.executeSql('INSERT INTO ContentObjects (id, version, type, category, classification, data, lat, lon, updateTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', values
-                                                ,function(tx, res){ console.log('inserted obj with id: '+item.id); } //success callback
-                                                ,function(e){ console.log('unable to insert obj with id '+item.id+': '+e.message); } //error callback
+                                                ,function(tx, res){ //success callback
+                                                    console.log('inserted obj with id: '+item.id);
+                                                    objsUpdated[contentTypeKey+'-'+idx].resolve(true);
+                                                }
+                                                ,function(e){  //error callback
+                                                    console.log('unable to insert obj with id '+item.id+': '+e.message);
+                                                    objsUpdated[contentTypeKey+'-'+idx].resolve(false);
+                                                }
+                                            );
+//                                            console.log('resolved update promise for obj "'+contentTypeKey+'-'+idx+'"');
+//                                            objsUpdated[contentTypeKey+'-'+idx].resolve(true);
+                                        });
+                                    } else {
+                                        console.log('nothing to update');
+                                    }
+
+                                    if (!angular.isUndefined(data.deleted[contentTypeClassName])) {
+                                        deletions=data.deleted[contentTypeClassName];
+                                        console.log('deletions: '+deletions.length);
+
+                                        angular.forEach(deletions, function(item, idx){
+                                            objsDeleted[contentTypeKey+'-'+idx]=$q.defer();
+                                            console.log('saving promise for deletion "'+contentTypeKey+'-'+idx+'"');
+                                            objsDone.push(objsDeleted[contentTypeKey+'-'+idx].promise);
+                                        });
+                                        console.log('will wait for '+Object.keys(objsUpdated).length+' "'+contentTypeKey+'" update promises');
+
+                                        angular.forEach(deletions, function(item, idx){
+                                            console.log('deleting obj with id: '+item.id);
+                                            tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [ item.id ]
+                                                ,function(tx, res){ //success callback
+                                                    console.log('deleted obj with id: '+item.id);
+                                                    objsDeleted[contentTypeKey+'-'+idx].resolve(true);
+                                                }
+                                                ,function(e){  //error callback
+                                                    console.log('unable to deleted obj with id '+item.id+': '+e.message);
+                                                    objsDeleted[contentTypeKey+'-'+idx].resolve(false);
+                                                }
                                             );
                                         });
-                                    });
-                                } else {
-                                    console.log('nothing to update');
-                                }
-
-                                if (!angular.isUndefined(data.deleted[contentTypeClassName])) {
-                                    deletions=data.deleted[contentTypeClassName];
-                                    console.log('deletions: '+deletions.length);
-                                    dbObj.transaction(function (tx) {
-                                        angular.forEach(deletions, function(item, idx){
-                                            //console.log('deleting obj with id: '+item.id);
-                                            tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [ item.id ]);
-                                        });
-                                    });
-                                } else {
-                                    console.log('nothing to delete');
-                                }
+                                    } else {
+                                        console.log('nothing to delete');
+                                    }
+                                });
                             });
-                            currentDbVersion=nextVersion;
-                            localStorage.currentDbVersion=currentDbVersion;
 
-                            syncronization.resolve(currentDbVersion);
+                            console.log('total promises: '+objsDone.length);
+                            $q.all(objsDone).then(function () {
+                                currentDbVersion=nextVersion;
+                                localStorage.currentDbVersion=currentDbVersion;
+
+                                $ionicLoading.hide();
+                                syncronization.resolve(currentDbVersion);
+                            });
                         } else {
                             console.log('local database already up-to-date!');
+
+                            $ionicLoading.hide();
                             syncronization.resolve(currentDbVersion);
                         }
                     }).error(function(data,status,headers,config){
                         console.log('data error!');
                         console.log(data);
+
+                        $ionicLoading.hide();
                         syncronization.reject();
                     });
                 } else{
                     console.log('avoiding too frequent syncronizations. seconds since last one: '+(now_as_epoch-lastSynced));
+
+                    $ionicLoading.hide();
                     syncronization.resolve(currentDbVersion);
                 }
             });
@@ -185,11 +249,12 @@ angular.module('starter.services', [])
             var data = $q.defer();
             this.sync().then(function(dbVersion){
                 console.log('current database version: '+dbVersion);
+                loading=$ionicLoading.show({ content: 'loading...', showDelay:1000 });
 
                 db.then(function(dbObj){
                     dbObj.transaction(function (tx) {
                         //console.log('type: '+types[dbname]);
-                        tx.executeSql('SELECT * FROM ContentObjects WHERE type=?', [ types[dbname] ], function (tx, results) {
+                        tx.executeSql('SELECT id, data, lat, lon FROM ContentObjects WHERE type=?', [ types[dbname] ], function (tx, results) {
                             lista=[]
                             var len = results.rows.length, i;
                             console.log('results.rows.length: '+results.rows.length);
@@ -197,6 +262,8 @@ angular.module('starter.services', [])
                                 //console.log(results.rows.item(i));
                                 lista.push(JSON.parse(results.rows.item(i).data));
                             }
+
+                            $ionicLoading.hide();
                             data.resolve(lista);
                         });
                     });
@@ -209,12 +276,13 @@ angular.module('starter.services', [])
             var data = $q.defer();
             this.sync().then(function(dbVersion){
                 console.log('current database version: '+dbVersion);
+                loading=$ionicLoading.show({ content: 'loading...', showDelay:1000 });
 
                 db.then(function(dbObj){
                     dbObj.transaction(function (tx) {
 //                        console.log('type: '+types[dbname]);
                         console.log('category: '+cateId);
-                        tx.executeSql('SELECT * FROM ContentObjects WHERE type=? AND classification=?', [ types[dbname],cateId ], function (tx, cateResults) {
+                        tx.executeSql('SELECT id, data, lat, lon FROM ContentObjects WHERE type=? AND classification=?', [ types[dbname],cateId ], function (tx, cateResults) {
                             lista=[]
                             var len = cateResults.rows.length, i;
                             console.log('cateResults.rows.length: '+cateResults.rows.length);
@@ -222,10 +290,14 @@ angular.module('starter.services', [])
                                 //console.log(cateResults.rows.item(i));
                                 lista.push(JSON.parse(cateResults.rows.item(i).data));
                             }
+
+                            $ionicLoading.hide();
                             data.resolve(lista);
                         },function(tx, err){
                             console.log('data error!');
                             console.log(err);
+
+                            $ionicLoading.hide();
                             data.reject();
                         });
                     });
@@ -242,7 +314,7 @@ angular.module('starter.services', [])
                     dbObj.transaction(function (tx) {
                         //console.log('type: '+types[dbname]);
                         //console.log('itemId: '+itemId);
-                        tx.executeSql('SELECT * FROM ContentObjects WHERE type=? AND id=?', [ types[dbname],itemId ], function (tx, results) {
+                        tx.executeSql('SELECT id, data, lat, lon FROM ContentObjects WHERE type=? AND id=?', [ types[dbname],itemId ], function (tx, results) {
                             if (results.rows.length>0) {
                                 //console.log(results.rows.item(0));
                                 item.resolve(JSON.parse(results.rows.item(0).data));

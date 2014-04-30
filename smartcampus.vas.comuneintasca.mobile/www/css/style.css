@@ -1,6 +1,8 @@
 .scroll-content > #map1, .scroll-content > #map2 {
   height: 100%;
 }
+.platform-ios .tabs { height:70px; }
+.platform-ios .has-tabs { bottom: 70px; }
 
 
 .item-divider {

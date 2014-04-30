@@ -54,7 +54,7 @@ angular.module('starter.services', [])
 })
 
 .factory('DatiDB', function($q, $http, $ionicLoading, Config) {
-    var SCHEMA_VERSION=19;
+    var SCHEMA_VERSION=20;
     var types={
         'content':'eu.trentorise.smartcampus.comuneintasca.model.ContentObject',
         'poi':'eu.trentorise.smartcampus.comuneintasca.model.POIObject',

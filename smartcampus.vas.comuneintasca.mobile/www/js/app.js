@@ -100,7 +100,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       url: "/itinerari/:itinerarioId",
       views: {
         'menuContent' :{
-          abstract: true,
           templateUrl: "templates/itinerario.html", controller: 'ItinerarioCtrl'
         }
       }

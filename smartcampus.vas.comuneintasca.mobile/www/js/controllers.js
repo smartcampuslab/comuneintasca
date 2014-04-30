@@ -30,8 +30,10 @@ angular.module('starter.controllers', [])
 })
 
 .controller('InfoCtrl', function($scope, DatiDB) {
-    DatiDB.get('content','text.3001').then(function(data){ $scope.info = data; });
-    DatiDB.get('content','text.3004').then(function(data){ $scope.dati = data; });
+    DatiDB.get('content','text.3001').then(function(data){
+        $scope.info = data;
+        DatiDB.get('content','text.3004').then(function(data){ $scope.dati = data; });
+    });
 })
 .controller('StoriaCtrl', function($scope, DatiDB) {
     DatiDB.get('content','text.3002').then(function(data){ $scope.storia = data; });
@@ -59,39 +61,22 @@ angular.module('starter.controllers', [])
 .controller('ItinerariCtrl', function($scope, DatiDB) { DatiDB.all('itinerary').then(function(data){ $scope.itinerari=data; }); })
 .controller('ItinerarioCtrl', function($scope, DatiDB, $stateParams) {
     $scope.itinerarioId=$stateParams.itinerarioId;
-})
-.controller('ItinerarioInfoCtrl', function($scope, DatiDB, $stateParams) {
     DatiDB.get('itinerary',$stateParams.itinerarioId).then(function(data){
         $scope.itinerario=data;
+        DatiDB.get('poi',data.steps.join()).then(function(luoghi){
+            $scope.tappe=luoghi;
+        });
     });
+})
+.controller('ItinerarioInfoCtrl', function($scope, DatiDB, $stateParams) {
 })
 .controller('ItinerarioTappeCtrl', function($scope, DatiDB, $stateParams) {
-    DatiDB.get('itinerary',$stateParams.itinerarioId).then(function(data){
-        $scope.itinerario=data;
-        $scope.tappe=[];
-        angular.forEach(data.steps,function(step,idx){
-            console.log('step #'+idx+': '+step);
-            DatiDB.get('poi',step).then(function(luogo){
-                luogo['idx']=idx+1;
-                $scope.tappe[idx]=luogo;
-            });
-        });
-    });
-})
-.controller('ItinerarioInfoCtrl', function($scope, DatiDB, $stateParams) {
-    DatiDB.get('itinerary',$stateParams.itinerarioId).then(function(data){
-        $scope.itinerario=data;
-        DatiDB.get('poi',$stateParams.tappaId).then(function(luogo){
-            $scope.tappa=luogo;
-        });
-    });
 })
 .controller('ItinerarioMappaCtrl', function($scope, DatiDB, $stateParams) {
     map2 = new mxn.Mapstraction('map2', 'openlayers');
     DatiDB.get('itinerary',$stateParams.itinerarioId).then(function(data){
-        angular.forEach(data.steps,function(step,idx){
-            console.log('step #'+idx+': '+step);
-            DatiDB.get('poi',step).then(function(luogo){
+        DatiDB.get('poi',data.steps.join()).then(function(luoghi){
+            angular.forEach(luoghi,function(luogo,idx){
                 console.log(luogo.title.it);
                 if (luogo.location) {
                     m=new mxn.Marker(new mxn.LatLonPoint(luogo.location[0],luogo.location[1]));

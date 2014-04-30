@@ -281,33 +281,57 @@ angular.module('starter.services', [])
             return data.promise;
         },
         get: function(dbname,itemId) {
-            var dbitem = $q.defer();
             console.log('DatiDB.get("'+dbname+'","'+itemId+'")');
-            db.then(function(dbObj){
+
+            return this.sync().then(function(dbVersion){
+                console.log('[DatiDB.get("'+dbname+'","'+itemId+'")] current database version: '+dbVersion);
+                var loading=$ionicLoading.show({ content: 'loading...', showDelay:1000 });
+
+                var dbitem = $q.defer();
                 dbObj.transaction(function (tx) {
                     //console.log('type: '+types[dbname]);
-                    console.log('itemId: '+itemId);
-                    tx.executeSql('SELECT id, data, lat, lon FROM ContentObjects WHERE type=? AND id=?', [ types[dbname],itemId ], function (tx, results) {
+                    if (itemId.indexOf(',')==-1) {
+                        console.log('itemId: '+itemId);
+                        idCond='id=?';
+                    } else {
+                        console.log('itemsIds: '+itemId);
+                        itemsIds=itemId.split(',');
+                        for (i=0; i<itemsIds.length; i++) itemsIds[i]='?';
+                        idCond='id IN ('+itemsIds.join()+')';
+                    }
+                    qParams=itemId.split(',');
+                    qParams.unshift(types[dbname]);
+                    dbQuery='SELECT id, data, lat, lon FROM ContentObjects WHERE type=? AND '+idCond;
+                    console.log('dbQuery: '+dbQuery);
+                    tx.executeSql(dbQuery, qParams, function (tx, results) {
+                        $ionicLoading.hide();
+
                         if (results.rows.length>0) {
-                            dbitem.resolve(JSON.parse(results.rows.item(0).data));
+                            if (itemId.indexOf(',')==-1) {
+                                dbitem.resolve(JSON.parse(results.rows.item(0).data));
+                            } else {
+                                lista=[]
+                                var len = results.rows.length, i;
+                                console.log('results.rows.length: '+results.rows.length);
+                                for (i = 0; i < len; i++) {
+                                    //console.log(cateResults.rows.item(i));
+                                    lista.push(JSON.parse(results.rows.item(i).data));
+                                }
+                                dbitem.resolve(lista);
+                            }
                         } else {
                             console.log('not found!');
                             dbitem.reject();
                         }
                     },function(tx, err){
                         console.log('error!');
-                        getitem.reject();
+
+                        $ionicLoading.hide();
+                        dbitem.reject();
                     });
                 });
-/*
-            }).catch(function(err){
-                console.log('get/catch!');
-                console.log(err);
-            }).finally(function(){
-                console.log('get/finally.');
-*/
+                return dbitem.promise;
             });
-            return dbitem.promise;
         }
     }
 })

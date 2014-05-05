@@ -336,6 +336,141 @@ angular.module('starter.services', [])
     }
 })
 
+.factory('Files', function($q, $http) {
+    var onErrorFS=function(e) {
+        console.log('Exception:');
+        console.log(e);
+        var msg = '';
+        switch (e.code) {
+            case FileError.QUOTA_EXCEEDED_ERR:
+                msg = 'QUOTA_EXCEEDED_ERR';
+                break;
+            case FileError.NOT_FOUND_ERR:
+                msg = 'NOT_FOUND_ERR';
+                break;
+            case FileError.SECURITY_ERR:
+                msg = 'SECURITY_ERR';
+                break;
+            case FileError.INVALID_MODIFICATION_ERR:
+                msg = 'INVALID_MODIFICATION_ERR';
+                break;
+            case FileError.INVALID_STATE_ERR:
+                msg = 'INVALID_STATE_ERR';
+                break;
+            default:
+                msg = 'Unknown Error';
+                break;
+        };
+        console.log('Error: ' + msg);
+        fsObj.reject();
+    };
+    var fsObj=$q.defer();
+    var filesystem=fsObj.promise;
+    console.log('Opening file system...');
+    if (window.cordova) {
+        document.addEventListener("deviceready", function(){
+            window.requestFileSystem(window.PERSISTENT, 50*1024*1024 /*5MB*/, function(fs){
+                console.log('Opened file system: ' + fs.root.toURL());
+                if (device.platform=='Android') {
+                    console.log('cordova (android) fs...');
+                    fsRoot='files-external';
+                } else {
+                    console.log('cordova (ios) fs...');
+                    fsRoot='documents';
+                }
+                /*
+                fs.root.getDirectory(fsRoot, {create: false}, function(dirEntry) {
+                    fsObj.resolve(dirEntry);
+                }, onErrorFS);
+                */
+                var dirReader = fs.root.createReader();
+                dirReader.readEntries(function(entries) {
+                    for(var i = 0; i < entries.length; i++) {
+                        var entry = entries[i];
+                        if (entry.isDirectory){
+                            console.log('Directory: ' + entry.fullPath);
+                        } else if (entry.isFile){
+                            console.log('File: ' + entry.fullPath);
+                        }
+                    }
+                    fsObj.resolve(fs.root);
+                }, onErrorFS);
+            }, onErrorFS);
+        }, false);
+    } else {
+        var FS_QUOTA=50*1024*1024;  /*50MB*/
+        var quotaRequested=function(grantedBytes) {
+            window.requestFileSystem=window.requestFileSystem || window.webkitRequestFileSystem;
+            window.requestFileSystem(window.PERSISTENT, grantedBytes, function(fs){
+                fsObj.resolve(fs.root);
+            }, onErrorFS);
+        };
+
+        if (window.webkitStorageInfo && window.webkitStorageInfo.requestQuota) {
+            console.log('requesting quota...');
+            window.webkitStorageInfo.requestQuota(PERSISTENT,FS_QUOTA,quotaRequested,onErrorFS);
+        } else {
+            quotaRequested(FS_QUOTA);
+        }
+    }
+    return {
+        list: function(dirname) {
+            return filesystem.then(function(rootDir) {
+                console.log('rootDir: '+rootDir.fullPath);
+                return rootDir;
+            });
+        },
+        get: function(fileurl) {
+            console.log('fileurl: '+fileurl);
+            var filename=fileurl.substring(fileurl.lastIndexOf('/')+1);
+            console.log('filename: '+filename);
+            var filegot=$q.defer();
+            filesystem.then(function(rootDir) {
+                console.log('rootDir: '+rootDir.toURL());
+                rootDir.getDirectory('SavedImages', {create: true}, function(dirEntry) {
+                    dirEntry.getFile(filename, {}, function(fileEntry) {
+                        console.log('file already saved: '+fileEntry.fullPath);
+                        fileEntry.remove(function(){  console.log('file removed'); });
+                        filegot.resolve(fileEntry.toURL());
+                    },function(){
+//                        dirEntry.getFile(filename, {create: true}, function(fileEntry) {
+//                            console.log('file created: '+fileEntry.toURL());
+filesavepath=rootDir.toURL()+'SavedImages/'+filename;
+console.log('downloading to '+filesavepath);
+var fileTransfer = new FileTransfer();
+fileTransfer.download(
+    fileurl,
+    filesavepath,
+    function(fileEntry) {
+        console.log("download complete: " + fileEntry.fullPath);
+        filegot.resolve(fileEntry.toURL());
+    },
+    function(error) {
+        console.log("download error source " + error.source);
+        console.log("download error target " + error.target);
+        console.log("donwload error code: " + error.code);
+        filegot.reject(error);
+    },
+    true,
+    {
+//        headers: { "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA==" }
+    }
+);
+
+//                        },function(){
+//                            console.log('file not found: unable to create it!');
+//                            filegot.reject();
+//                        });
+                    });
+                }, function(){
+                    filegot.reject();
+                });
+            });
+            return filegot.promise;
+        }
+    };
+})
+
 .factory('DatiJSON', function($http) {
     return {
         all: function(dbname) {
@@ -363,5 +498,5 @@ angular.module('starter.services', [])
                 }
             });
         }
-    }
+    };
 })

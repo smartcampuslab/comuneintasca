@@ -433,34 +433,27 @@ angular.module('starter.services', [])
                         fileEntry.remove(function(){  console.log('file removed'); });
                         filegot.resolve(fileEntry.toURL());
                     },function(){
-//                        dirEntry.getFile(filename, {create: true}, function(fileEntry) {
-//                            console.log('file created: '+fileEntry.toURL());
-filesavepath=rootDir.toURL()+'SavedImages/'+filename;
-console.log('downloading to '+filesavepath);
-var fileTransfer = new FileTransfer();
-fileTransfer.download(
-    fileurl,
-    filesavepath,
-    function(fileEntry) {
-        console.log("download complete: " + fileEntry.fullPath);
-        filegot.resolve(fileEntry.toURL());
-    },
-    function(error) {
-        console.log("download error source " + error.source);
-        console.log("download error target " + error.target);
-        console.log("donwload error code: " + error.code);
-        filegot.reject(error);
-    },
-    true,
-    {
-//        headers: { "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA==" }
-    }
-);
-
-//                        },function(){
-//                            console.log('file not found: unable to create it!');
-//                            filegot.reject();
-//                        });
+                        filesavepath=rootDir.toURL()+'SavedImages/'+filename;
+                        console.log('downloading to '+filesavepath);
+                        var fileTransfer = new FileTransfer();
+                        fileTransfer.download(
+                            fileurl,
+                            filesavepath,
+                            function(fileEntry) {
+                                console.log("download complete: " + fileEntry.fullPath);
+                                filegot.resolve(fileEntry.toURL());
+                            },
+                            function(error) {
+                                console.log("download error source " + error.source);
+                                console.log("download error target " + error.target);
+                                console.log("donwload error code: " + error.code);
+                                filegot.reject(error);
+                            },
+                            true,
+                            {
+                                //headers: { "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA==" }
+                            }
+                        );
                     });
                 }, function(){
                     filegot.reject();

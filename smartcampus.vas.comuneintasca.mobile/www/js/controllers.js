@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, DatiDB) {
-//    DatiDB.sync();
+.controller('MenuCtrl', function($scope, DatiDB) {
+    DatiDB.sync();
 })
 .controller('HomeCtrl', function($scope, Files) {
     console.log('asking for file...');
@@ -13,43 +13,67 @@ angular.module('starter.controllers', [])
     });
 })
 
-.controller('DormireCtrl', function($scope, DatiDB) { DatiDB.all('hotel').then(function(data){ $scope.dormire=data; }); })
-.controller('DormoCtrl', function($scope, DatiDB, $stateParams) { DatiDB.get('hotel',$stateParams.dormoId).then(function(data){ $scope.dormo = data; }); })
-.controller('MangiareCtrl', function($scope, DatiDB) { DatiDB.all('restaurant').then(function(data){ $scope.mangiare=data; }); })
-.controller('MangioCtrl', function($scope, DatiDB, $stateParams) { DatiDB.get('restaurant',$stateParams.mangioId).then(function(data){ $scope.mangio = data; }); })
+.controller('ContentCtrl', function($scope, $state, $stateParams, DatiDB) {
+    if ($stateParams.contentId) {
+        contentId=$stateParams.contentId;
+    } else {
+        contentId=$state.current.data.contentId
+    }
+    DatiDB.get('content',contentId).then(function(data){
+        $scope.content = data;
+    });
+})
+.controller('ContentsListCtrl', function($scope, $state, $stateParams, DatiDB) {
+    if ($stateParams.contentsCate) {
+        DatiDB.cate('content',$stateParams.contentsCate).then(function(data){ $scope.contents=data; });
+    } else if ($stateParams.contentsIds) {
+        DatiDB.get('content',$stateParams.contentsIds).then(function(data){ $scope.contents=data; });
+    } else if ($state.current.data.contentsCate) {
+        DatiDB.cate('content',$state.current.data.contentsCate).then(function(data){ $scope.contents=data; });
+    } else {
+        DatiDB.get('content',$state.current.data.contentsIds).then(function(data){ $scope.contents=data; });
+    }
+})
 
-.controller('EventiCtrl', function($scope, DatiDB) { DatiDB.all('event').then(function(data){ $scope.events=data; }); })
-.controller('EventoCtrl', function($scope, DatiDB, $stateParams) { DatiDB.get('event',$stateParams.eventoId).then(function(data){ $scope.event = data; }); })
+.controller('HotelsListCtrl', function($scope, DatiDB) { DatiDB.all('hotel').then(function(data){ $scope.hotels=data; }); })
+.controller('HotelCtrl', function($scope, $stateParams, DatiDB) { DatiDB.get('hotel',$stateParams.hotelId).then(function(data){ $scope.hotel = data; }); })
+.controller('RestaurantsListCtrl', function($scope, DatiDB) { DatiDB.all('restaurant').then(function(data){ $scope.restaurants=data; }); })
+.controller('RestaurantCtrl', function($scope, $stateParams, DatiDB) { DatiDB.get('restaurant',$stateParams.restaurantId).then(function(data){ $scope.restaurant = data; }); })
 
-.controller('LuoghiCtrl', function($scope, DatiDB) { DatiDB.all('poi').then(function(data){ $scope.luoghi=data; }); })
-.controller('LuogoCtrl', function($scope, DatiDB, GeoLocate, $stateParams) {
-    DatiDB.get('poi',$stateParams.luogoId).then(function(data){
-        $scope.luogo = data;
+.controller('PlacesListCtrl', function($scope, $stateParams, DatiDB, Config) {
+    if ($stateParams.placeType) {
+        $scope.cate=Config.poiCateFromType($stateParams.placeType);
+        DatiDB.cate('poi',$scope.cate.it).then(function(data){ $scope.places=data; });
+    } else {
+        DatiDB.all('poi').then(function(data){ $scope.places=data; });
+    }
+})
+
+
+.controller('EventsListCtrl', function($scope, $stateParams, DatiDB, Config) {
+    if ($stateParams.eventType) {
+        $scope.cate=Config.eventCateFromType($stateParams.eventType);
+        DatiDB.cate('event',$scope.cate.it).then(function(data){ $scope.events=data; });
+    } else {
+        DatiDB.all('event').then(function(data){ $scope.events=data; });
+    }
+})
+.controller('EventCtrl', function($scope, DatiDB, $stateParams) {
+    DatiDB.get('event',$stateParams.eventoId).then(function(data){ $scope.event = data; });
+})
+
+.controller('PlaceCtrl', function($scope, DatiDB, GeoLocate, $stateParams) {
+    DatiDB.get('poi',$stateParams.placeId).then(function(data){
+        $scope.place = data;
         if (data.location) {
             GeoLocate.locate().then(function(latlon){
-                console.log(latlon);
-                $scope.distanza = GeoLocate.distance(latlon,data.location);
+                $scope.distance = GeoLocate.distance(latlon,data.location);
             });
         } else {
             console.log('no known location for place');
         }
     });
 })
-
-.controller('InfoCtrl', function($scope, DatiDB) {
-    DatiDB.get('content','text.3001').then(function(data){
-        $scope.info = data;
-        DatiDB.get('content','text.3004').then(function(data){ $scope.dati = data; });
-    });
-})
-.controller('StoriaCtrl', function($scope, DatiDB) {
-    DatiDB.get('content','text.3002').then(function(data){ $scope.storia = data; });
-    DatiDB.get('content','text.3003').then(function(data){ $scope.concilio = data; });
-})
-.controller('BondoneCtrl', function($scope, DatiDB) { DatiDB.cate('content','bondone').then(function(data){ $scope.schede=data; }); })
-.controller('ServiziCtrl', function($scope, DatiDB) { DatiDB.cate('content','Servizi').then(function(data){ $scope.servizi=data; }); })
-.controller('ServizioCtrl', function($scope, DatiDB, $stateParams) { DatiDB.get('content',$stateParams.servizioId).then(function(data){ $scope.servizio = data; }); })
-
 .controller('MappaCtrl', function($scope, DatiDB) {
     map1 = new mxn.Mapstraction('map1', 'openlayers');
     DatiDB.all('poi').then(function(data){

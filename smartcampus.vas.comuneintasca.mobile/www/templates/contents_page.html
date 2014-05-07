@@ -1,0 +1,8 @@
+<ion-view title="Content">
+  <ion-content class="has-header padding">
+    <div class="comuni-content" ng-repeat="content in contents">
+        <h2>{{content.title|translate}}</h2>
+        <div class="comuni-htmldesc" ng-bind-html="content.info|translate"></div>
+    </div>
+  </ion-content>
+</ion-view>

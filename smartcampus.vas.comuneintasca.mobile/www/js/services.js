@@ -1,8 +1,41 @@
 angular.module('starter.services', [])
 
 .factory('Config', function($q) {
+    var poiTypes={
+        'museums':{ de:'Musei', it:'Musei', en:'Musei' },
+        'buildings':{ de:'Historische Gebäude', it:'Edifici storici', en:'Historic Buildings' },
+        'churches':{ de:'Kirchen', it:'Chiese', en:'Churches' },
+        'acheo':{ de:'Archäologische Areas', it:'Aree Archeologiche', en:'Archaeological Areas' },
+        'parks':{ de:'Natur', it:'Natura', en:'Nature' },
+        'misc':{ de:'Andere Seiten von historischem und künstlerischem Interesse', it:'Altri siti di interesse storico artistico', en:'Other sites of historical and artistic interest' }
+    };
+    eventTypes={
+        'fairs':{ de:'', it:'Feste, mercati e fiere', en:'' },
+        'conferences':{ de:'', it:'Incontri, convegni e conferenze', en:'' },
+        'shows':{ de:'', it:'Spettacoli', en:'' },
+        'exhibitions':{ de:'', it:'Mostre', en:'' },
+        'labs':{ de:'', it:'Corsi e laboratori', en:'' },
+        'competitions':{ de:'', it:'Competizioni e gare', en:'' },
+        'misc':{ de:'', it:'Iniziative varie', en:'' },
+    };
+/*
+
+fairs">Fest
+conferences
+shows">Spet
+exhibitions
+misc">Inizi
+*/
     return {
-        syncTimeoutSeconds: function(){ return 120; }
+        syncTimeoutSeconds: function(){
+            return 60*60;/* 60 times 60 seconds = 1 HOUR */
+        },
+        poiCateFromType: function(type){
+            return poiTypes[type];
+        },
+        eventCateFromType: function(type){
+            return eventTypes[type];
+        }
     }
 })
 
@@ -54,7 +87,7 @@ angular.module('starter.services', [])
 })
 
 .factory('DatiDB', function($q, $http, $ionicLoading, Config) {
-    var SCHEMA_VERSION=20;
+    var SCHEMA_VERSION=25;
     var types={
         'content':'eu.trentorise.smartcampus.comuneintasca.model.ContentObject',
         'poi':'eu.trentorise.smartcampus.comuneintasca.model.POIObject',
@@ -153,12 +186,21 @@ angular.module('starter.services', [])
                                         angular.forEach(updates, function(item, idx){
                                             tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [ item.id ]);
 
+                                            classification='';
                                             if (contentTypeKey=='content') {
                                                 classification=item.classification;
                                             } else if (contentTypeKey=='poi') {
                                                 classification=item.classification.it;
-                                            } else {
-                                                classification='';
+                                            } else if (contentTypeKey=='event') {
+                                                category=item.category;
+                                                if (category) {
+                                                    // "category": "{objectName=Feste, mercati e fiere, classIdentifier=tipo_eventi, datePublished=1395152152, dateModified=1395152182, objectRemoteId=a15d79dc9794d829ed43364863a8225a, objectId=835351, link=http://www.comune.trento.it/api/opendata/v1/content/object/835351}"
+                                                    startMrkr="{objectName=";
+                                                    endMrkr=", classIdentifier=";
+                                                    classification=category.substring(startMrkr.length,category.indexOf(endMrkr)) || '';
+                                                    if (!classification || classification.toString()=='false') classification=Config.eventCateFromType('misc').it;
+                                                    console.log('event cate: '+classification);
+                                                }
                                             }
                                             values=[item.id, item.version, contentTypeClassName, item.category, classification, JSON.stringify(item), ((item.location && item.location.length==2)?item.location[0]:-1), ((item.location && item.location.length==2)?item.location[1]:-1), item.updateTime];
                                             tx.executeSql('INSERT INTO ContentObjects (id, version, type, category, classification, data, lat, lon, updateTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', values

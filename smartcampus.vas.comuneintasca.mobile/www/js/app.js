@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'starter.filters'])
 
 .run(function($ionicPlatform) {
     if (typeof(Number.prototype.toRad) === "undefined") {
@@ -19,66 +19,97 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   });
 })
-
+/*
+/mainevents
+/places/museums
+/places/buildings
+/places/churches
+/places/acheo
+/places/parks
+/places/misc
+/itineraries
+/events/fairs
+/events/conferences
+/events/shows
+/events/exhibitions
+/events/misc
+/offices
+*/
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
-
     .state('app', {
-      url: "/app",
-      abstract: true,
-      templateUrl: "templates/menu.html", controller: 'AppCtrl'
-    })
+        url:"/app", abstract:true, templateUrl:"templates/menu.html", controller:'MenuCtrl'
 
+    })
     .state('app.home', {
-      url: "/home",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/home.html", controller: "HomeCtrl"
-        }
-      }
+        url:"/home", views:{ 'menuContent':{
+            templateUrl:"templates/home.html", controller:"HomeCtrl"
+        } }
+    })
+    .state('app.contentscate', {
+        url:"/contentscate/:contentsCate", views:{ 'menuContent':{
+            templateUrl:"templates/contents_page.html",  controller:"ContentsListCtrl"
+        } }
+    })
+    .state('app.contents', {
+        url:"/contents/:contentsIds", views:{ 'menuContent':{
+            templateUrl:"templates/contents_page.html", controller:"ContentsListCtrl"
+        } }
+    })
+    .state('app.content', {
+        url:"/content/:contentId", views:{ 'menuContent':{
+            templateUrl:"templates/content.html",  controller:"ContentCtrl"
+        } }
     })
 
-    .state('app.info', {
-      url: "/info",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/info.html", controller: "InfoCtrl"
-        }
-      }
+    .state('app.services', {
+        url:"/services", views:{ 'menuContent':{
+            templateUrl:"templates/contents_list.html", controller:"ContentsListCtrl"
+        } }, data:{ contentsCate:'Servizi' }
     })
-    .state('app.storia', {
-      url: "/storia",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/storia.html", controller: "StoriaCtrl"
-        }
-      }
+    .state('app.hotels', {
+        url:"/hotels", views:{ 'menuContent':{
+            templateUrl:"templates/hotels_list.html", controller:"HotelsListCtrl"
+        } }
     })
-    .state('app.bondone', {
-      url: "/bondone",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/bondone.html", controller: "BondoneCtrl"
-        }
-      }
+    .state('app.hotel', {
+        url:"/hotel/:hotelId", views:{ 'menuContent':{
+            templateUrl:"templates/hotel.html", controller:"HotelCtrl"
+        } }
+    })
+    .state('app.restaurants', {
+        url:"/restaurants", views:{ 'menuContent':{
+            templateUrl:"templates/restaurants_list.html", controller:"RestaurantsListCtrl"
+        } }
+    })
+    .state('app.restaurant', {
+        url:"/restaurant/:restaurantId", views:{ 'menuContent':{
+            templateUrl:"templates/restaurant.html", controller:"RestaurantCtrl"
+        } }
     })
 
-    .state('app.luoghi', {
-      url: "/luoghi",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/luoghi.html", controller: "LuoghiCtrl"
-        }
-      }
+    .state('app.places', {
+        url:"/places/:placeType", views:{ 'menuContent':{
+            templateUrl:"templates/places_list.html", controller:"PlacesListCtrl"
+        } }
     })
-    .state('app.luogo', {
-      url: "/luoghi/:luogoId",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/luogo.html", controller: 'LuogoCtrl'
-        }
-      }
+    .state('app.place', {
+        url:"/place/:placeId", views:{ 'menuContent':{
+            templateUrl:"templates/place.html", controller:"PlaceCtrl"
+        } }
     })
+    .state('app.events', {
+        url: "/events/:eventType", views: { 'menuContent' :{
+          templateUrl: "templates/events_list.html", controller: 'EventsListCtrl'
+        } }
+    })
+    .state('app.event', {
+        url: "/event/:eventId", views: { 'menuContent' :{
+          templateUrl: "templates/event.html", controller: 'EventCtrl'
+        } }
+    })
+
+
     .state('app.mappa', {
       url: "/mappa",
       views: {
@@ -132,86 +163,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       views: {
         'itinerario-mappa' :{
           templateUrl: "templates/itinerario-mappa.html", controller: 'ItinerarioMappaCtrl'
-        }
-      }
-    })
-    .state('app.eventi', {
-      url: "/eventi",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/eventi.html", controller: 'EventiCtrl'
-        }
-      }
-    })
-    .state('app.evento', {
-      url: "/eventi/:eventoId",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/evento.html", controller: 'EventoCtrl'
-        }
-      }
-    })
-    .state('app.dormire', {
-      url: "/dormire",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/dormire.html", controller: 'DormireCtrl'
-        }
-      }
-    })
-    .state('app.dormo', {
-      url: "/dormire/:dormoId",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/dormo.html", controller: 'DormoCtrl'
-        }
-      }
-    })
-    .state('app.mangiare', {
-      url: "/mangiare",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/mangiare.html", controller: 'MangiareCtrl'
-        }
-      }
-    })
-    .state('app.mangio', {
-      url: "/mangiare/:mangioId",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/mangio.html", controller: 'MangioCtrl'
-        }
-      }
-    })
-    .state('app.servizi', {
-      url: "/servizi",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/servizi.html", controller: 'ServiziCtrl'
-        }
-      }
-    })
-    .state('app.servizio', {
-      url: "/servizi/:servizioId",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/servizio.html", controller: 'ServizioCtrl'
-        }
-      }
-    })
-    .state('app.foto', {
-      url: "/foto",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/foto.html"
-        }
-      }
-    })
-    .state('app.video', {
-      url: "/video",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/video.html"
         }
       }
     });

@@ -1,0 +1,9 @@
+<ion-view title="{{cate|translate}}">
+  <ion-content class="has-header">
+    <ion-list>
+      <ion-item ng-repeat="place in places" href="#/app/place/{{place.id}}">
+        {{place.title|translate}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

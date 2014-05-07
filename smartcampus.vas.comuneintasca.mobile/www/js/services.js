@@ -434,26 +434,24 @@ angular.module('starter.services', [])
                         filegot.resolve(fileEntry.toURL());
                     },function(){
                         filesavepath=rootDir.toURL()+'SavedImages/'+filename;
-                        console.log('downloading to '+filesavepath);
-                        var fileTransfer = new FileTransfer();
-                        fileTransfer.download(
-                            fileurl,
-                            filesavepath,
-                            function(fileEntry) {
+                        if (window.cordova) {
+                            console.log('[cordova] downloading to '+filesavepath);
+                            var fileTransfer = new FileTransfer();
+                            fileTransfer.download(fileurl,filesavepath,function(fileEntry) {
                                 console.log("download complete: " + fileEntry.fullPath);
                                 filegot.resolve(fileEntry.toURL());
-                            },
-                            function(error) {
+                            }, function(error) {
                                 console.log("download error source " + error.source);
                                 console.log("download error target " + error.target);
                                 console.log("donwload error code: " + error.code);
                                 filegot.reject(error);
-                            },
-                            true,
-                            {
-                                //headers: { "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA==" }
-                            }
-                        );
+                            }, true, { /* headers: { "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA==" } */ });
+                        } else {
+                            $http({ method:'GET', url:fileurl, responseType:'arraybuffer' }).success(function(data,status,headers,config){
+                                console.log(typeof data);
+                                console.log('data.byteLength='+data.byteLength);
+                            });
+                        }
                     });
                 }, function(){
                     filegot.reject();

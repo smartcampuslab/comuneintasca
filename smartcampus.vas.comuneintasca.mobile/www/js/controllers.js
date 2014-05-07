@@ -59,7 +59,7 @@ angular.module('starter.controllers', [])
     }
 })
 .controller('EventCtrl', function($scope, DatiDB, $stateParams) {
-    DatiDB.get('event',$stateParams.eventoId).then(function(data){ $scope.event = data; });
+    DatiDB.get('event',$stateParams.eventId).then(function(data){ $scope.event = data; });
 })
 
 .controller('PlaceCtrl', function($scope, DatiDB, GeoLocate, $stateParams) {

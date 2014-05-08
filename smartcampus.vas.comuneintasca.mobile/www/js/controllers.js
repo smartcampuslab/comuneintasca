@@ -4,13 +4,6 @@ angular.module('starter.controllers', [])
     DatiDB.sync();
 })
 .controller('HomeCtrl', function($scope, Files) {
-    console.log('asking for file...');
-    Files.get('https://vas-dev.smartcampuslab.it/comuneintasca/images/a_le_due_spade.jpg').then(function(fileUrl){
-        console.log('file got: '+fileUrl);
-        $scope.fileurl=fileUrl;
-    },function(error){
-        $scope.fileurl=error;
-    });
 })
 
 .controller('ContentCtrl', function($scope, $state, $stateParams, DatiDB) {

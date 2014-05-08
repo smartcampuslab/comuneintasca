@@ -463,12 +463,12 @@ misc">Inizi
             });
         },
         get: function(fileurl) {
-            console.log('fileurl: '+fileurl);
+            //console.log('fileurl: '+fileurl);
             var filename=fileurl.substring(fileurl.lastIndexOf('/')+1);
-            console.log('filename: '+filename);
+            //console.log('filename: '+filename);
             var filegot=$q.defer();
             filesystem.then(function(rootDir) {
-                console.log('rootDir: '+rootDir.toURL());
+                //console.log('rootDir: '+rootDir.toURL());
                 rootDir.getDirectory('SavedImages', {create: true}, function(dirEntry) {
                     dirEntry.getFile(filename, {}, function(fileEntry) {
                         console.log('file already saved: '+fileEntry.fullPath);
@@ -483,18 +483,20 @@ misc">Inizi
                                 console.log("download complete: " + fileEntry.fullPath);
                                 filegot.resolve(fileEntry.toURL());
                             }, function(error) {
-                                console.log("download error source " + error.source);
-                                console.log("download error target " + error.target);
-                                console.log("donwload error code: " + error.code);
+                                //console.log("download error source " + error.source);console.log("download error target " + error.target);console.log("donwload error code: " + error.code);
                                 filegot.reject(error);
                             }, true, { /* headers: { "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA==" } */ });
                         } else {
+                            // NON CORDOVA IMPLEMENTATION PARKED: returning the same web url get got as input, for the moment
+                            filegot.resolve(fileurl);
+/*
                             $http({ method:'GET', url:fileurl, responseType:'arraybuffer' }).success(function(data,status,headers,config){
                                 console.log(typeof data);
                                 console.log('data.byteLength='+data.byteLength);
                             });
+*/
                         }
-                    });
+                });
                 }, function(){
                     filegot.reject();
                 });

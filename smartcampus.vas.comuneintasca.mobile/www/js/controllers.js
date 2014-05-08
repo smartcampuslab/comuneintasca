@@ -4,13 +4,6 @@ angular.module('starter.controllers', ['google-maps'])
     DatiDB.sync();
 })
 .controller('HomeCtrl', function($scope, Files) {
-    console.log('asking for file...');
-    Files.get('https://vas-dev.smartcampuslab.it/comuneintasca/images/a_le_due_spade.jpg').then(function(fileUrl){
-        console.log('file got: '+fileUrl);
-        $scope.fileurl=fileUrl;
-    },function(error){
-        $scope.fileurl=error;
-    });
 })
 
 .controller('ContentCtrl', function($scope, $state, $stateParams, DatiDB) {
@@ -19,52 +12,38 @@ angular.module('starter.controllers', ['google-maps'])
     } else {
         contentId=$state.current.data.contentId
     }
-    DatiDB.get('content',contentId).then(function(data){
+    $scope.gotdata=DatiDB.get('content',contentId).then(function(data){
         $scope.content = data;
     });
 })
 .controller('ContentsListCtrl', function($scope, $state, $stateParams, DatiDB) {
     if ($stateParams.contentsCate) {
-        DatiDB.cate('content',$stateParams.contentsCate).then(function(data){ $scope.contents=data; });
+        $scope.gotdata=DatiDB.cate('content',$stateParams.contentsCate).then(function(data){ $scope.contents=data; });
     } else if ($stateParams.contentsIds) {
-        DatiDB.get('content',$stateParams.contentsIds).then(function(data){ $scope.contents=data; });
+        $scope.gotdata=DatiDB.get('content',$stateParams.contentsIds).then(function(data){ $scope.contents=data; });
     } else if ($state.current.data.contentsCate) {
-        DatiDB.cate('content',$state.current.data.contentsCate).then(function(data){ $scope.contents=data; });
+        $scope.gotdata=DatiDB.cate('content',$state.current.data.contentsCate).then(function(data){ $scope.contents=data; });
     } else {
-        DatiDB.get('content',$state.current.data.contentsIds).then(function(data){ $scope.contents=data; });
+        $scope.gotdata=DatiDB.get('content',$state.current.data.contentsIds).then(function(data){ $scope.contents=data; });
     }
 })
 
-.controller('HotelsListCtrl', function($scope, DatiDB) { DatiDB.all('hotel').then(function(data){ $scope.hotels=data; }); })
-.controller('HotelCtrl', function($scope, $stateParams, DatiDB) { DatiDB.get('hotel',$stateParams.hotelId).then(function(data){ $scope.hotel = data; }); })
-.controller('RestaurantsListCtrl', function($scope, DatiDB) { DatiDB.all('restaurant').then(function(data){ $scope.restaurants=data; }); })
-.controller('RestaurantCtrl', function($scope, $stateParams, DatiDB) { DatiDB.get('restaurant',$stateParams.restaurantId).then(function(data){ $scope.restaurant = data; }); })
+.controller('HotelsListCtrl', function($scope, DatiDB) { $scope.gotdata=DatiDB.all('hotel').then(function(data){ $scope.hotels=data; }); })
+.controller('HotelCtrl', function($scope, $stateParams, DatiDB) { $scope.gotdata=DatiDB.get('hotel',$stateParams.hotelId).then(function(data){ $scope.hotel = data; }); })
+.controller('RestaurantsListCtrl', function($scope, DatiDB) { $scope.gotdata=DatiDB.all('restaurant').then(function(data){ $scope.restaurants=data; }); })
+.controller('RestaurantCtrl', function($scope, $stateParams, DatiDB) { $scope.gotdata=DatiDB.get('restaurant',$stateParams.restaurantId).then(function(data){ $scope.restaurant = data; }); })
 
 .controller('PlacesListCtrl', function($scope, $stateParams, DatiDB, Config) {
     if ($stateParams.placeType) {
         $scope.cate=Config.poiCateFromType($stateParams.placeType);
-        DatiDB.cate('poi',$scope.cate.it).then(function(data){ $scope.places=data; });
+        $scope.gotdata=DatiDB.cate('poi',$scope.cate.it).then(function(data){ $scope.places=data; });
     } else {
-        DatiDB.all('poi').then(function(data){ $scope.places=data; });
+        $scope.gotdata=DatiDB.all('poi').then(function(data){ $scope.places=data; });
     }
 })
-
-
-.controller('EventsListCtrl', function($scope, $stateParams, DatiDB, Config) {
-    if ($stateParams.eventType) {
-        $scope.cate=Config.eventCateFromType($stateParams.eventType);
-        DatiDB.cate('event',$scope.cate.it).then(function(data){ $scope.events=data; });
-    } else {
-        DatiDB.all('event').then(function(data){ $scope.events=data; });
-    }
-})
-.controller('EventCtrl', function($scope, DatiDB, $stateParams) {
-    DatiDB.get('event',$stateParams.eventId).then(function(data){ $scope.event = data; });
-})
-
 .controller('PlaceCtrl', function($scope, DatiDB, GeoLocate, $stateParams) {
-    DatiDB.get('poi',$stateParams.placeId).then(function(data){
-        $scope.place = data;
+    $scope.gotdata=DatiDB.get('poi',$stateParams.placeId).then(function(data){
+        $scope.place=data;
         if (data.location) {
             GeoLocate.locate().then(function(latlon){
                 $scope.distance = GeoLocate.distance(latlon,data.location);
@@ -74,6 +53,20 @@ angular.module('starter.controllers', ['google-maps'])
         }
     });
 })
+
+
+.controller('EventsListCtrl', function($scope, $stateParams, DatiDB, Config) {
+    if ($stateParams.eventType) {
+        $scope.cate=Config.eventCateFromType($stateParams.eventType);
+        $scope.gotdata=DatiDB.cate('event',$scope.cate.it).then(function(data){ $scope.events=data; });
+    } else {
+        $scope.gotdata=DatiDB.all('event').then(function(data){ $scope.events=data; });
+    }
+})
+.controller('EventCtrl', function($scope, DatiDB, $stateParams) {
+    $scope.gotdata=DatiDB.get('event',$stateParams.eventId).then(function(data){ $scope.event = data; });
+})
+
 .controller('MappaCtrl', function($scope, DatiDB) {
 $scope.map = {
     draggable: 'true',

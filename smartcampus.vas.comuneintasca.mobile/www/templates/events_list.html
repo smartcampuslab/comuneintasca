@@ -1,8 +1,10 @@
 <ion-view title="{{cate|translate}}">
   <ion-content class="has-header">
     <ion-list>
-      <ion-item ng-repeat="event in events" href="#/app/event/{{event.id}}">
-        {{event.title|translate}}
+      <ion-item ng-repeat="event in events" class="item-thumbnail-left" href="#/app/event/{{event.id}}">
+        <comuni-img class="item-image comuni-item-image" image="event.image" gotdata="gotdata"></comuni-img>
+        <h2>{{event.title|translate}}</h2>
+        <p class="comuni-item-bottomdetail">{{event.address|translate}}</p>
       </ion-item>
     </ion-list>
   </ion-content>

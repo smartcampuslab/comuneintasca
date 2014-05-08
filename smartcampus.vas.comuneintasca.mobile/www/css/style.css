@@ -73,3 +73,7 @@ ion-side-menu .item {
     background-color: #2975a7;
     color:#fff;
 }
+
+.angular-google-map-container {
+  height: 800px;
+}

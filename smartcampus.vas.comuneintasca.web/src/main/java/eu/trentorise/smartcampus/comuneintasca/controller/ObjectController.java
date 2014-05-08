@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import eu.trentorise.smartcampus.comuneintasca.model.ContentObject;
 import eu.trentorise.smartcampus.comuneintasca.model.EventObject;
+import eu.trentorise.smartcampus.comuneintasca.model.MainEventObject;
 import eu.trentorise.smartcampus.comuneintasca.model.POIObject;
 import eu.trentorise.smartcampus.presentation.common.exception.DataException;
 
@@ -41,6 +42,11 @@ public class ObjectController extends AbstractObjectController {
 	@RequestMapping(method = RequestMethod.GET, value = "/contents")
 	public @ResponseBody List<ContentObject> getAllContents() throws DataException {
 		return storage.getObjectsByType(ContentObject.class);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/mainevents")
+	public @ResponseBody List<MainEventObject> getAllMainEvents() throws DataException {
+		return storage.getObjectsByType(MainEventObject.class);
 	}
 
 }

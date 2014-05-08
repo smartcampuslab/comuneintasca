@@ -1,8 +1,10 @@
 <ion-view title="Restaurants">
   <ion-content class="has-header">
     <ion-list>
-      <ion-item ng-repeat="restaurant in restaurants" href="#/app/restaurant/{{restaurant.id}}">
-        {{restaurant.title|translate}}
+      <ion-item ng-repeat="restaurant in restaurants" class="item-thumbnail-left" href="#/app/restaurant/{{restaurant.id}}">
+        <comuni-img class="item-image comuni-item-image" image="restaurant.image" gotdata="gotdata"></comuni-img>
+        <h2>{{restaurant.title|translate}}</h2>
+        <p class="comuni-item-bottomdetail">{{restaurant.address|translate}}</p>
       </ion-item>
     </ion-list>
   </ion-content>

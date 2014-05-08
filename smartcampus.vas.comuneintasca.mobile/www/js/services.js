@@ -463,12 +463,12 @@ misc">Inizi
             });
         },
         get: function(fileurl) {
-            console.log('fileurl: '+fileurl);
+            //console.log('fileurl: '+fileurl);
             var filename=fileurl.substring(fileurl.lastIndexOf('/')+1);
-            console.log('filename: '+filename);
+            //console.log('filename: '+filename);
             var filegot=$q.defer();
             filesystem.then(function(rootDir) {
-                console.log('rootDir: '+rootDir.toURL());
+                //console.log('rootDir: '+rootDir.toURL());
                 rootDir.getDirectory('SavedImages', {create: true}, function(dirEntry) {
                     dirEntry.getFile(filename, {}, function(fileEntry) {
                         console.log('file already saved: '+fileEntry.fullPath);

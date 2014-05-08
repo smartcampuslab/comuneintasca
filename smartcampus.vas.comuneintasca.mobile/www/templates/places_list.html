@@ -2,7 +2,7 @@
   <ion-content class="has-header">
     <ion-list>
       <ion-item ng-repeat="place in places" class="item-thumbnail-left" href="#/app/place/{{place.id}}">
-        <comuni-img data-source-type="place" data-source="{{place.image}}"></comuni-img>
+        <comuni-img class="item-image comuni-item-image" image="place.image" gotdata="gotdata"></comuni-img>
         <h2>{{place.title|translate}}</h2>
         <p class="comuni-item-bottomdetail">{{place.address|translate}}</p>
       </ion-item>

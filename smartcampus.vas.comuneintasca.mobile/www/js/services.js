@@ -28,7 +28,7 @@ misc">Inizi
 */
     return {
         syncTimeoutSeconds: function(){
-            return 60*60;/* 60 times 60 seconds = 1 HOUR */
+            return 60*60 *24 *10; /* 60 times 60 seconds = 1 HOUR --> x24 = 1 DAY x10 */
         },
         poiCateFromType: function(type){
             return poiTypes[type];
@@ -87,7 +87,7 @@ misc">Inizi
 })
 
 .factory('DatiDB', function($q, $http, $ionicLoading, Config) {
-    var SCHEMA_VERSION=25;
+    var SCHEMA_VERSION=26;
     var types={
         'content':'eu.trentorise.smartcampus.comuneintasca.model.ContentObject',
         'poi':'eu.trentorise.smartcampus.comuneintasca.model.POIObject',

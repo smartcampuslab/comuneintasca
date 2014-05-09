@@ -21,18 +21,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 })
 /*
 /mainevents
-/places/museums
-/places/buildings
-/places/churches
-/places/acheo
-/places/parks
-/places/misc
 /itineraries
-/events/fairs
-/events/conferences
-/events/shows
-/events/exhibitions
-/events/misc
 /offices
 */
 .config(function($stateProvider, $urlRouterProvider) {

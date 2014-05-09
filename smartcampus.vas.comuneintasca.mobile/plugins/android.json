@@ -4,79 +4,46 @@
         "uninstalled": []
     },
     "config_munge": {
-        "files": {
-            "res/xml/config.xml": {
-                "parents": {
-                    "/*": [
-                        {
-                            "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Geolocation\"><param name=\"android-package\" value=\"org.apache.cordova.geolocation.GeoBroker\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"SQLitePlugin\"><param name=\"android-package\" value=\"org.pgsqlite.SQLitePlugin\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"File\"><param name=\"android-package\" value=\"org.apache.cordova.file.FileUtils\" /><param name=\"onload\" value=\"true\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"FileTransfer\"><param name=\"android-package\" value=\"org.apache.cordova.filetransfer.FileTransfer\" /></feature>",
-                            "count": 1
-                        }
-                    ]
-                }
+        "AndroidManifest.xml": {
+            "/manifest/application": {
+                "<activity android:label=\"@string/app_name\" android:name=\"org.pgsqlite.SQLitePlugin\"><intent-filter></intent-filter></activity>": 1
             },
-            "AndroidManifest.xml": {
-                "parents": {
-                    "/*": [
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
-                            "count": 4
-                        }
-                    ],
-                    "/manifest/application": [
-                        {
-                            "xml": "<activity android:label=\"@string/app_name\" android:name=\"org.pgsqlite.SQLitePlugin\"><intent-filter></intent-filter></activity>",
-                            "count": 1
-                        }
-                    ]
-                }
+            "/*": {
+                "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />": 2,
+                "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />": 1,
+                "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />": 1
+            }
+        },
+        "res/xml/config.xml": {
+            "/*": {
+                "<feature name=\"SQLitePlugin\"><param name=\"android-package\" value=\"org.pgsqlite.SQLitePlugin\" /></feature>": 1,
+                "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>": 1,
+                "<feature name=\"File\"><param name=\"android-package\" value=\"org.apache.cordova.file.FileUtils\" /><param name=\"onload\" value=\"true\" /></feature>": 1,
+                "<feature name=\"FileTransfer\"><param name=\"android-package\" value=\"org.apache.cordova.filetransfer.FileTransfer\" /></feature>": 1,
+                "<feature name=\"Geolocation\"><param name=\"android-package\" value=\"org.apache.cordova.geolocation.GeoBroker\" /></feature>": 1
             }
         }
     },
     "installed_plugins": {
+        "com.phonegap.plugins.sqlite": {
+            "PACKAGE_NAME": "it.smartcampuslab.comuni.trento"
+        },
         "org.apache.cordova.console": {
             "PACKAGE_NAME": "it.smartcampuslab.comuni.trento"
         },
         "org.apache.cordova.device": {
             "PACKAGE_NAME": "it.smartcampuslab.comuni.trento"
         },
-        "org.apache.cordova.statusbar": {
+        "org.apache.cordova.file": {
+            "PACKAGE_NAME": "it.smartcampuslab.comuni.trento"
+        },
+        "org.apache.cordova.file-transfer": {
             "PACKAGE_NAME": "it.smartcampuslab.comuni.trento"
         },
         "org.apache.cordova.geolocation": {
             "PACKAGE_NAME": "it.smartcampuslab.comuni.trento"
         },
-        "com.phonegap.plugins.sqlite": {
-            "PACKAGE_NAME": "it.smartcampuslab.comuni.trento"
-        },
-        "org.apache.cordova.file": {
-            "PACKAGE_NAME": "it.smartcampuslab.comuni.trento"
-        },
-        "org.apache.cordova.file-transfer": {
+        "org.apache.cordova.statusbar": {
             "PACKAGE_NAME": "it.smartcampuslab.comuni.trento"
         }
     },

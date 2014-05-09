@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import eu.trentorise.smartcampus.comuneintasca.model.ContentObject;
 import eu.trentorise.smartcampus.comuneintasca.model.HotelObject;
 import eu.trentorise.smartcampus.comuneintasca.model.ItineraryObject;
+import eu.trentorise.smartcampus.comuneintasca.model.MainEventObject;
 import eu.trentorise.smartcampus.comuneintasca.model.POIObject;
 import eu.trentorise.smartcampus.comuneintasca.model.RestaurantObject;
 import eu.trentorise.smartcampus.presentation.common.exception.DataException;
@@ -42,11 +43,25 @@ public class ObjectProcessor {
 			updateRestaurants();
 			updateHotels();
 			updateItineraries();
+			updateMainEvents();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
+	private void updateMainEvents() throws Exception {
+		List<MainEventObject> contents = parseMainEventObjects();
+		for (MainEventObject content : contents) {
+			MainEventObject old = null;
+			try {
+				old = storage.getObjectById(content.getId(), MainEventObject.class);
+			} catch (Exception e) {}
+			if (old == null || old.getLastModified() < content.getLastModified()) {
+				storage.storeObject(content);
+			}
+		}
+	}
+
 	private void updateContents() throws Exception {
 		List<ContentObject> contents = parseContentObjects();
 		for (ContentObject content : contents) {
@@ -108,6 +123,15 @@ public class ObjectProcessor {
 				storage.storeObject(i);
 			}
 		}
+	}
+
+	private List<MainEventObject> parseMainEventObjects() throws Exception {
+		List<MainEventObject> objects = new ArrayList<MainEventObject>();
+		List<List<String>> rows = ODFParser.parseTable("/mainevents/mainevents.ods", 29);
+		for (List<String> row : rows) {
+			objects.add(convertMainEventObject(row));
+		}
+		return objects;
 	}
 
 	private List<POIObject> parsePOIObjects() throws Exception {
@@ -407,6 +431,63 @@ public class ObjectProcessor {
 		p.setDescription(shortDesc);
 		
 		p.setLastModified(lastModifiedFormat.parse(row.get(20)).getTime());
+		return p;
+	}
+
+	private MainEventObject convertMainEventObject(List<String> row) throws ParseException {
+		MainEventObject p = new MainEventObject();
+		p.setId(row.get(0));
+		p.setCategory(row.get(2));
+
+		Map<String,String> classification = new HashMap<String, String>();
+		classification.put("it", row.get(3));
+		classification.put("de", row.get(4));
+		classification.put("en", row.get(5));
+		p.setClassification(classification);
+
+		Map<String,String> titles = new HashMap<String, String>();
+		titles.put("it", row.get(6));
+		titles.put("de", row.get(7));
+		titles.put("en", row.get(8));
+		p.setTitle(titles);
+
+		Map<String,String> address = new HashMap<String, String>();
+		address.put("it", row.get(9));
+		address.put("de", row.get(10));
+		address.put("en", row.get(11));
+		p.setAddress(address);
+
+		p.setUrl(row.get(12));
+		Map<String,String> contacts = new HashMap<String, String>();
+		contacts.put("email", row.get(13));
+		contacts.put("phone", row.get(14));
+		p.setContacts(contacts);
+		
+		if (!StringUtils.isEmpty(row.get(16))) {
+			p.setImage(imagePrefix+"/"+row.get(16));
+		}
+		
+		Map<String,String> shortDesc = new HashMap<String, String>();
+		shortDesc.put("it", row.get(17));
+		shortDesc.put("de", row.get(18));
+		shortDesc.put("en", row.get(19));
+		p.setDescription(shortDesc);
+		
+		p.setLastModified(lastModifiedFormat.parse(row.get(20)).getTime());
+		
+		if (!StringUtils.isEmpty(row.get(22)) && !StringUtils.isEmpty(row.get(23))) {
+			p.setLocation(new double[]{Double.parseDouble(row.get(22)),Double.parseDouble(row.get(23))});
+		}
+
+		p.setFromDate(lastModifiedFormat.parse(row.get(24)).getTime());
+		p.setToDate(lastModifiedFormat.parse(row.get(25)).getTime());
+		
+		Map<String,String> timeDesc = new HashMap<String, String>();
+		timeDesc.put("it", row.get(26));
+		timeDesc.put("de", row.get(27));
+		timeDesc.put("en", row.get(28));
+		p.setEventDateDescription(timeDesc);
+
 		return p;
 	}
 

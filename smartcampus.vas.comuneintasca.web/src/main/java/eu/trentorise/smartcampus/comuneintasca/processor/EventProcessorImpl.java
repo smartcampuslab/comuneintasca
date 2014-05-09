@@ -66,7 +66,6 @@ public class EventProcessorImpl implements ServiceBusListener {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
 	private void updateEvents(List<ByteString> data) throws Exception {
 		for (ByteString bs : data) {
 			Evento bt = Evento.parseFrom(bs);

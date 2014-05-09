@@ -379,7 +379,7 @@ $scope.show = function() {
         $scope.markers.models[data.steps.indexOf(luogo.id)] = luogo;
       });
 
-      drawDirections($scope.map.control, $scope.markers.models);
+      // drawDirections($scope.map.control, $scope.markers.models);
 
       /*setTimeout(function () {
       map2.autoCenterAndZoom();

@@ -133,6 +133,17 @@ $scope.show = function() {
   });
 })
 
+.controller('MainEventsListCtrl', function ($scope, DatiDB) {
+  $scope.gotdata = DatiDB.all('mainevent').then(function (data) {
+    $scope.mainevents = data;
+  });
+})
+.controller('MainEventCtrl', function ($scope, DatiDB, $stateParams) {
+  $scope.gotdata = DatiDB.get('mainevent', $stateParams.maineventId).then(function (data) {
+    $scope.mainevent = data;
+  });
+})
+
 .controller('MappaCtrl', function ($scope, DatiDB) {
   $scope.map = {
     draggable: 'true',

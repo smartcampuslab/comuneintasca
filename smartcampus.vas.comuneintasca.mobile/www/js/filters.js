@@ -1,15 +1,17 @@
 angular.module('starter.filters', [])
 
-.filter('translate', function() {
+.filter('translate', function($rootScope) {
+    lang=$rootScope.lang;
     return function(input) {
-        if (input && input.en && input.en!='') {
-            return input.en;
-
-        } else if (input && input.it && input.it!='') {
-            return input.it;
-
-        } else  {
-            return input;
+        console.log('translate: lang='+lang);
+        if (!input) {
+            return '';
+        } else {
+            if (input[lang] && input[lang]!='') {
+                return input[lang];
+            } else {
+                return input.it || '';
+            }
         }
     };
 })

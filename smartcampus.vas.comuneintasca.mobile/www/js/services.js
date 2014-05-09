@@ -18,17 +18,9 @@ angular.module('starter.services', [])
         'competitions':{ de:'', it:'Competizioni e gare', en:'' },
         'misc':{ de:'', it:'Iniziative varie', en:'' },
     };
-/*
-
-fairs">Fest
-conferences
-shows">Spet
-exhibitions
-misc">Inizi
-*/
     return {
         syncTimeoutSeconds: function(){
-            return 60*60;/* 60 times 60 seconds = 1 HOUR */
+            return 60*60 *24 *10; /* 60 times 60 seconds = 1 HOUR --> x24 = 1 DAY x10 */
         },
         poiCateFromType: function(type){
             return poiTypes[type];
@@ -87,14 +79,15 @@ misc">Inizi
 })
 
 .factory('DatiDB', function($q, $http, $ionicLoading, Config) {
-    var SCHEMA_VERSION=25;
+    var SCHEMA_VERSION=26;
     var types={
         'content':'eu.trentorise.smartcampus.comuneintasca.model.ContentObject',
         'poi':'eu.trentorise.smartcampus.comuneintasca.model.POIObject',
         'event':'eu.trentorise.smartcampus.comuneintasca.model.EventObject',
         'restaurant':'eu.trentorise.smartcampus.comuneintasca.model.RestaurantObject',
         'hotel':'eu.trentorise.smartcampus.comuneintasca.model.HotelObject',
-        'itinerary':'eu.trentorise.smartcampus.comuneintasca.model.ItineraryObject'
+        'itinerary':'eu.trentorise.smartcampus.comuneintasca.model.ItineraryObject',
+		'mainevent':'eu.trentorise.smartcampus.comuneintasca.model.MainEventObject'
     };
     lastSynced=-1;
 
@@ -201,7 +194,10 @@ misc">Inizi
                                                     if (!classification || classification.toString()=='false') classification=Config.eventCateFromType('misc').it;
                                                     console.log('event cate: '+classification);
                                                 }
-                                            }
+                                            } else if (contentTypeKey=='mainevent') {
+                                                classification=item.classification.it;
+												item.category = 'mainevent';
+											}	
                                             values=[item.id, item.version, contentTypeClassName, item.category, classification, JSON.stringify(item), ((item.location && item.location.length==2)?item.location[0]:-1), ((item.location && item.location.length==2)?item.location[1]:-1), item.updateTime];
                                             tx.executeSql('INSERT INTO ContentObjects (id, version, type, category, classification, data, lat, lon, updateTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', values
                                                 ,function(tx, res){ //success callback

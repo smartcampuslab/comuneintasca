@@ -1,7 +1,7 @@
 <ion-view title="Itinerario">
   <ion-content class="has-header">
     <ion-list>
-      <ion-item ng-repeat="tappa in tappe track by $index" href="#/app/itinerari/{{itinerario.id}}/tappe/{{tappa.id}}">
+      <ion-item ng-repeat="tappa in tappe track by $index" href="#/app/itinerary/{{itinerario.id}}/step/{{tappa.id}}">
           {{$index + 1}}. {{tappa.title.it}}
       </ion-item>
     </ion-list>

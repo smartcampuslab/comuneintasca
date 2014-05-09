@@ -1,10 +1,37 @@
 angular.module('starter.controllers', ['google-maps'])
 
-.controller('MenuCtrl', function ($scope, DatiDB) {
-  DatiDB.sync();
+.controller('MenuCtrl', function($scope, $rootScope, DatiDB) {
+	var broserLanguage = window.navigator.userLanguage || window.navigator.language;
+	var lang=broserLanguage.substring(0,2);
+	if (lang!='it' && lang!='en' && lang!='de') {
+        $rootScope.lang='en';
+    } else {
+        $rootScope.lang=lang;
+    }
+    DatiDB.sync();
 })
+.controller('HomeCtrl', function($scope, Files) {
+/*
+$scope.show = function() {
 
-.controller('HomeCtrl', function ($scope, Files) {})
+   // Show the action sheet
+   $ionicActionSheet.show({
+     buttons: [
+       { text: '<b>Share</b> This' },
+       { text: 'Move' },
+     ],
+     destructiveText: 'Delete',
+     titleText: 'Modify your album',
+     cancelText: 'Cancel',
+     buttonClicked: function(index) {
+       return true;
+     }
+   });
+
+ };
+*/
+//    $state.go('contact.detail')
+})
 
 .controller('ContentCtrl', function ($scope, $state, $stateParams, DatiDB) {
   if ($stateParams.contentId) {
@@ -103,6 +130,17 @@ angular.module('starter.controllers', ['google-maps'])
 .controller('EventCtrl', function ($scope, DatiDB, $stateParams) {
   $scope.gotdata = DatiDB.get('event', $stateParams.eventId).then(function (data) {
     $scope.event = data;
+  });
+})
+
+.controller('MainEventsListCtrl', function ($scope, DatiDB) {
+  $scope.gotdata = DatiDB.all('mainevent').then(function (data) {
+    $scope.mainevents = data;
+  });
+})
+.controller('MainEventCtrl', function ($scope, DatiDB, $stateParams) {
+  $scope.gotdata = DatiDB.get('mainevent', $stateParams.maineventId).then(function (data) {
+    $scope.mainevent = data;
   });
 })
 

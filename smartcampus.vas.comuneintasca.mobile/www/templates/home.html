@@ -1,5 +1,29 @@
 <ion-view title="Trento in tasca">
-  <ion-content class="has-header content-stable padding" scroll="false" id="content-home">
-    <h1>Home</h1>
+  <ion-content class="has-header content-stable" scroll="false" id="content-home">
+    <ion-slide-box does-continue="true" slide-interval="30000" id="slide-box-home">
+        <ion-slide>
+            <div class="hp-box festival"><h3 class="title">Festival dell'Economia</h2></div>
+        </ion-slide>
+        <ion-slide>
+            <div class="hp-box sport"><h3 class="title">Ben...essere in movimento!</h2></div>
+        </ion-slide>
+        <ion-slide>
+            <div class="hp-box palazzi"><h3 class="title">Palazzi Aperti</h2></div>
+        </ion-slide>
+    </ion-slide-box>
+    <div id="home-buttons">
+        <div class="row">
+            <div class="col"><button class="button button-block button-calm">Conoscere <span>Trento</span></button></div>
+            <div class="col"><button class="button button-block button-calm">Vivere <span>Trento</span></button></div>
+        </div>
+        <div class="row">
+            <div class="col"><button class="button button-block button-calm">Scoprire <span>Trento</span></button></div>
+            <div class="col"><button class="button button-block button-calm" ng-click="load('itineraries')">Percorsi a <span>Trento</span></button></div>
+        </div>
+        <div class="row">
+            <div class="col"><button class="button button-block button-calm">Mangiare&amp;Dormire</button></div>
+            <div class="col"><button class="button button-block button-calm">Info Utili</button></div>
+        </div>
+    </div>      
   </ion-content>
 </ion-view>

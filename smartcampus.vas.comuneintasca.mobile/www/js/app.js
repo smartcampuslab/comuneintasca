@@ -87,6 +87,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             templateUrl:"templates/restaurant.html", controller:"RestaurantCtrl"
         } }
     })
+    .state('app.mainevents', {
+        url:"/mainevents", views:{ 'menuContent':{
+            templateUrl:"templates/mainevents_list.html", controller:"MainEventsListCtrl"
+        } }
+    })
+    .state('app.mainevent', {
+        url:"/mainevent/:maineventId", views:{ 'menuContent':{
+            templateUrl:"templates/mainevent.html", controller:"MainEventCtrl"
+        } }
+    })
 
     .state('app.places', {
         url:"/places/:placeType", views:{ 'menuContent':{
@@ -118,50 +128,50 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         }
       }
     })
-    .state('app.itinerari', {
-      url: "/itinerari",
+    .state('app.itineraries', {
+      url: "/itineraries",
       views: {
         'menuContent' :{
           templateUrl: "templates/itinerari.html", controller: 'ItinerariCtrl'
         }
       }
     })
-    .state('app.itinerario', {
-      url: "/itinerari/:itinerarioId",
+    .state('app.itinerary', {
+      url: "/itinerary/:itinerarioId",
       views: {
         'menuContent' :{
           templateUrl: "templates/itinerario.html", controller: 'ItinerarioCtrl'
         }
       }
     })
-    .state('app.itinerario.info', {
+    .state('app.itinerary.info', {
       url: "/info",
       views: {
-        'itinerario-info' :{
+        'itinerary-info' :{
           templateUrl: "templates/itinerario-info.html", controller: 'ItinerarioInfoCtrl'
         }
       }
     })
-    .state('app.itinerario.tappe', {
-      url: "/tappe",
+    .state('app.itinerary.steps', {
+      url: "/steps",
       views: {
-        'itinerario-tappe' :{
+        'itinerary-steps' :{
           templateUrl: "templates/itinerario-tappe.html", controller: 'ItinerarioTappeCtrl'
         }
       }
     })
-    .state('app.itinerario.tappa', {
-      url: "/tappe/:luogoId",
+    .state('app.itinerary.step', {
+      url: "/step/:placeId",
       views: {
-        'itinerario-tappe' :{
-          templateUrl: "templates/luogo.html", controller: 'LuogoCtrl'
+        'itinerary-steps' :{
+          templateUrl: "templates/place.html", controller: 'PlaceCtrl'
         }
       }
     })
-    .state('app.itinerario.mappa', {
-      url: "/mappa",
+    .state('app.itinerary.map', {
+      url: "/map",
       views: {
-        'itinerario-mappa' :{
+        'itinerary-map' :{
           templateUrl: "templates/itinerario-mappa.html", controller: 'ItinerarioMappaCtrl'
         }
       }

@@ -1,6 +1,9 @@
 <ion-view title="Hotel">
-  <ion-content class="has-header padding" ng-cloak>
-    <h1>{{hotel.title|translate}}</h1>
-    {{hotel.description|translate}}
+  <ion-content class="has-header" ng-cloak>
+    <comuni-img ng-if="hotel.image" class="content-image-main" image="hotel.image" gotdata="gotdata"></comuni-img>
+    <div class="padding">
+        <h1>{{hotel.title|translate}}</h1>
+        {{hotel.description|translate}}
+    </div>
   </ion-content>
 </ion-view>

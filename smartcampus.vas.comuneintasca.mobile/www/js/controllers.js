@@ -1,6 +1,13 @@
 angular.module('starter.controllers', [])
 
-.controller('MenuCtrl', function($scope, DatiDB) {
+.controller('MenuCtrl', function($scope, $rootScope, DatiDB) {
+	var broserLanguage = window.navigator.userLanguage || window.navigator.language;
+	var lang=broserLanguage.substring(0,2);
+	if (lang!='it' && lang!='en' && lang!='de') {
+        $rootScope.lang='en';
+    } else {
+        $rootScope.lang=lang;
+    }
     DatiDB.sync();
 })
 .controller('HomeCtrl', function($scope, Files) {

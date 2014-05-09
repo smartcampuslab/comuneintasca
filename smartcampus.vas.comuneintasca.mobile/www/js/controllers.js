@@ -158,6 +158,7 @@ angular.module('starter.controllers', ['google-maps'])
 
   // map1 = new mxn.Mapstraction('map1', 'openlayers');
   DatiDB.all('poi').then(function (data) {
+    $scope.markers.models = [];
     angular.forEach(data, function (luogo, idx) {
       if (luogo.location) {
         /*m = new mxn.Marker(new mxn.LatLonPoint(luogo.location[0], luogo.location[1]));
@@ -166,10 +167,10 @@ angular.module('starter.controllers', ['google-maps'])
         map1.addMarker(m);*/
         luogo.latitude = luogo.location[0];
         luogo.longitude = luogo.location[1];
+        $scope.markers.models.push()
       }
     });
     // map1.autoCenterAndZoom();
-    $scope.markers.models = data;
   });
 })
 
@@ -194,6 +195,12 @@ angular.module('starter.controllers', ['google-maps'])
 .controller('ItinerarioTappeCtrl', function ($scope, DatiDB, $stateParams) {})
 
 .controller('ItinerarioMappaCtrl', function ($scope, DatiDB, $stateParams) {
+  var directionsService = new google.maps.DirectionsService();
+  var directionsDisplay = new google.maps.DirectionsRenderer();
+  // directionsDisplay.setMap($scope.map.control.getGMap());
+
+  $scope.mapControl = {};
+
   $scope.map = {
     draggable: 'true',
     center: {
@@ -219,6 +226,13 @@ angular.module('starter.controllers', ['google-maps'])
     doCluster: false
   };
 
+  /*
+   * google.maps.TravelMode.DRIVING (Default)
+   * google.maps.TravelMode.BICYCLING
+   * google.maps.TravelMode.TRANSIT
+   * google.maps.TravelMode.WALKING
+   */
+
   $scope.polyline = {
     stroke: {
       color: '#ff0000',
@@ -237,9 +251,12 @@ angular.module('starter.controllers', ['google-maps'])
   // map2 = new mxn.Mapstraction('map2', 'openlayers');
   DatiDB.get('itinerary', $stateParams.itinerarioId).then(function (data) {
     DatiDB.get('poi', data.steps.join()).then(function (luoghi) {
+      $scope.markers.models = [];
+
       angular.forEach(luoghi, function (luogo, idx) {
+        // for (var i = 0; i < luoghi.length; i++) {
         console.log(luogo.title.it);
-        if (luogo.location) {
+        if (!!luogo.location) {
           /*m = new mxn.Marker(new mxn.LatLonPoint(luogo.location[0], luogo.location[1]));
           m.setIcon('img/mapmarker.png', [25, 40], [25 / 2, 40 / 2]);
           m.setInfoBubble(luogo.title.it);
@@ -249,12 +266,38 @@ angular.module('starter.controllers', ['google-maps'])
           luogo.longitude = luogo.location[1];
         } else {
           console.log('no location');
+          alert(luogo.title.it);
+          luogo.latitude = 0;
+          luogo.longitude = 0;
         }
+        $scope.markers.models[data.steps.indexOf(luogo.id)] = luogo;
       });
-      $scope.markers.models = luoghi;
-    });
-    /*setTimeout(function () {
+      /*setTimeout(function () {
       map2.autoCenterAndZoom();
     }, 500);*/
+    });
   });
+
+  //  $scope.$watch('mapControl', function (newValue, oldValue) {
+  //    if (oldValue === newValue) {
+  //      var origin = new google.maps.LatLng($scope.markers.models[0].latitude, $scope.markers.models[0].longitude);
+  //      var destination = new google.maps.LatLng($scope.markers.models[$scope.markers.models.length - 1].latitude, $scope.markers.models[$scope.markers.models.length - 1].longitude);
+  //
+  //      var request = {
+  //        origin: origin,
+  //        destination: destination,
+  //        travelMode: google.maps.TravelMode.WALKING
+  //      };
+  //      directionsService.route(request, function (result, status) {
+  //        alert(status);
+  //        if (status == google.maps.DirectionsStatus.OK) {
+  //          directionsDisplay.setMap($scope.mapControl.getGMap());
+  //          directionsDisplay.setDirections(result);
+  //        }
+  //      });
+  //    }
+  //  });
+
+  // angular.element(document).ready(function () {});
+
 })

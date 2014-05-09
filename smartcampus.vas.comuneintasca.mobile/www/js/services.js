@@ -86,7 +86,8 @@ angular.module('starter.services', [])
         'event':'eu.trentorise.smartcampus.comuneintasca.model.EventObject',
         'restaurant':'eu.trentorise.smartcampus.comuneintasca.model.RestaurantObject',
         'hotel':'eu.trentorise.smartcampus.comuneintasca.model.HotelObject',
-        'itinerary':'eu.trentorise.smartcampus.comuneintasca.model.ItineraryObject'
+        'itinerary':'eu.trentorise.smartcampus.comuneintasca.model.ItineraryObject',
+		'mainevent':'eu.trentorise.smartcampus.comuneintasca.model.MainEventObject'
     };
     lastSynced=-1;
 
@@ -193,7 +194,10 @@ angular.module('starter.services', [])
                                                     if (!classification || classification.toString()=='false') classification=Config.eventCateFromType('misc').it;
                                                     console.log('event cate: '+classification);
                                                 }
-                                            }
+                                            } else if (contentTypeKey=='mainevent') {
+                                                classification=item.classification.it;
+												item.category = 'mainevent';
+											}	
                                             values=[item.id, item.version, contentTypeClassName, item.category, classification, JSON.stringify(item), ((item.location && item.location.length==2)?item.location[0]:-1), ((item.location && item.location.length==2)?item.location[1]:-1), item.updateTime];
                                             tx.executeSql('INSERT INTO ContentObjects (id, version, type, category, classification, data, lat, lon, updateTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', values
                                                 ,function(tx, res){ //success callback

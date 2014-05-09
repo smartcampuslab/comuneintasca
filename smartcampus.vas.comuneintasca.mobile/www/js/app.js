@@ -87,6 +87,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             templateUrl:"templates/restaurant.html", controller:"RestaurantCtrl"
         } }
     })
+    .state('app.mainevents', {
+        url:"/mainevents", views:{ 'menuContent':{
+            templateUrl:"templates/mainevents_list.html", controller:"MainEventsListCtrl"
+        } }
+    })
+    .state('app.mainevent', {
+        url:"/mainevent/:maineventId", views:{ 'menuContent':{
+            templateUrl:"templates/mainevent.html", controller:"MainEventCtrl"
+        } }
+    })
 
     .state('app.places', {
         url:"/places/:placeType", views:{ 'menuContent':{

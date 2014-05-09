@@ -1,5 +1,25 @@
 <ion-view title="Itinerario">
   <ion-content class="has-header" scroll="false">
-    <div id="map2"></div>
+    <div id="map2">
+      <google-map center="map.center" zoom="map.zoom" draggable="{{map.draggable}}">
+        <!--
+              <window coords="infoWindow.coords" show="infoWindow.show" isIconVisibleOnClick="infoWindow.isIconVisibleOnClick" closeClick="closeInfoWindow"  options="infoWindow.options">
+                {{infoWindow.content}}
+              </window>
+        -->
+        <!-- with WINDOW: click="openInfoWindow" -->
+        <!-- with WINDOWS: click="showInfoWindow = true" -->
+        <markers models="markers.models" coords="markers.coords" fit="markers.fit" doCluster="markers.doCluster" click="showInfoWindow = true">
+          <!-- icon="markers.icon"-->
+          <!-- click="markers.click"-->
+          <windows>
+            <!-- show="showInfoWindow" closeClick="showInfoWindow = false" ng-cloak-->
+            <p ng-non-bindable>{{title.it}}</p>
+          </windows>
+        </markers>
+        <polyline path="markers.models" stroke="polyline.stroke" clickable="polyline.clickable" draggable="polyline.draggable" editable="polyline.editable" geodesic="polyline.geodesic" visible="polyline.visible">
+        </polyline>
+      </google-map>
+    </div>
   </ion-content>
 </ion-view>

@@ -187,18 +187,16 @@ $scope.show = function() {
   DatiDB.all('poi').then(function (data) {
     angular.forEach(data, function (luogo, idx) {
       if (luogo.location) {
-        // m = new mxn.Marker(new mxn.LatLonPoint(luogo.location[0], luogo.location[1]));
-        // m.setIcon('img/mapmarker.png', [25, 40], [25 / 2, 40 / 2]);
-        // m.setInfoBubble(luogo.title.it);
-        // map1.addMarker(m);
+        /*m = new mxn.Marker(new mxn.LatLonPoint(luogo.location[0], luogo.location[1]));
+        m.setIcon('img/mapmarker.png', [25, 40], [25 / 2, 40 / 2]);
+        m.setInfoBubble(luogo.title.it);
+        map1.addMarker(m);*/
         luogo.latitude = luogo.location[0];
         luogo.longitude = luogo.location[1];
       }
     });
     // map1.autoCenterAndZoom();
     $scope.markers.models = data;
-    // $scope.map.center.latitude = $scope.markers.models[0].latitude;
-    // $scope.map.center.longitude = $scope.markers.models[0].longitude;
   });
 })
 
@@ -223,23 +221,67 @@ $scope.show = function() {
 .controller('ItinerarioTappeCtrl', function ($scope, DatiDB, $stateParams) {})
 
 .controller('ItinerarioMappaCtrl', function ($scope, DatiDB, $stateParams) {
-  map2 = new mxn.Mapstraction('map2', 'openlayers');
+  $scope.map = {
+    draggable: 'true',
+    center: {
+      latitude: 0,
+      longitude: 0
+    },
+    zoom: 8
+  };
+
+  /* Very dirty workaround!!! */
+  $scope.markers = {
+    models: [{
+      latitude: 0,
+      longitude: 0
+    }, {
+      latitude: 0,
+      longitude: 0
+    }],
+    coords: 'self',
+    fit: true,
+    // icon: 'img/mapmarker.png',
+    // click: 'openInfoWindow($markerModel)',
+    doCluster: false
+  };
+
+  $scope.polyline = {
+    stroke: {
+      color: '#ff0000',
+      weight: 3,
+      opacity: 1.0
+    },
+    clickable: false,
+    draggable: false,
+    editable: false,
+    geodesic: true,
+    visible: true
+  };
+
+  $scope.showInfoWindow = false;
+
+  // map2 = new mxn.Mapstraction('map2', 'openlayers');
   DatiDB.get('itinerary', $stateParams.itinerarioId).then(function (data) {
     DatiDB.get('poi', data.steps.join()).then(function (luoghi) {
       angular.forEach(luoghi, function (luogo, idx) {
         console.log(luogo.title.it);
         if (luogo.location) {
-          m = new mxn.Marker(new mxn.LatLonPoint(luogo.location[0], luogo.location[1]));
+          /*m = new mxn.Marker(new mxn.LatLonPoint(luogo.location[0], luogo.location[1]));
           m.setIcon('img/mapmarker.png', [25, 40], [25 / 2, 40 / 2]);
           m.setInfoBubble(luogo.title.it);
-          map2.addMarker(m);
+          map2.addMarker(m);*/
+
+          luogo.latitude = luogo.location[0];
+          luogo.longitude = luogo.location[1];
         } else {
           console.log('no location');
         }
       });
+      $scope.markers.models = luoghi;
     });
-    setTimeout(function () {
+    /*setTimeout(function () {
       map2.autoCenterAndZoom();
-    }, 500);
+    }, 500);*/
   });
 })

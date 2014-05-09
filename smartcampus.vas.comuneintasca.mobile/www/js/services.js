@@ -18,14 +18,6 @@ angular.module('starter.services', [])
         'competitions':{ de:'', it:'Competizioni e gare', en:'' },
         'misc':{ de:'', it:'Iniziative varie', en:'' },
     };
-/*
-
-fairs">Fest
-conferences
-shows">Spet
-exhibitions
-misc">Inizi
-*/
     return {
         syncTimeoutSeconds: function(){
             return 60*60 *24 *10; /* 60 times 60 seconds = 1 HOUR --> x24 = 1 DAY x10 */

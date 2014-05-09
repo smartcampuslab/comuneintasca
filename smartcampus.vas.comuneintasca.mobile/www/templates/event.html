@@ -1,6 +1,10 @@
 <ion-view title="Eventi">
-  <ion-content class="has-header padding" ng-cloak>
-    <h1>{{event.title.it}}</h1>
-    <div class="htmldesc" ng-bind-html="event.description.it"></div>
+  <ion-content class="has-header" ng-cloak>
+    <comuni-img ng-if="event.image" class="content-image-main" image="event.image" gotdata="gotdata"></comuni-img>
+    <div class="padding">
+        <h1>{{event.title|translate}}</h1>
+        <div class="htmldesc" ng-bind-html="event.description|translate"></div>
+        <div class="htmldesc" ng-bind-html="event.info|translate"></div>
+    </div>
   </ion-content>
 </ion-view>

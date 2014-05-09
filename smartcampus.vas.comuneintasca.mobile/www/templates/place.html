@@ -1,6 +1,6 @@
 <ion-view title="{{place.classification|translate}}">
   <ion-content class="has-header" ng-cloak>
-    <comuni-img class="content-image-main" image="place.image" gotdata="gotdata"></comuni-img>
+    <comuni-img ng-if="place.image" class="content-image-main" image="place.image" gotdata="gotdata"></comuni-img>
     <div class="padding">
         <h1>{{place.title|translate}}</h1>
         <div class="comuni-html-desc" ng-bind-html="place.description|translate"></div>

@@ -1,10 +1,13 @@
 <ion-view title="Restaurant">
-  <ion-content class="has-header padding" ng-cloak>
-    <h1>{{restaurant.title.it}}</h1>
-    <p>{{restaurant.address.it}}</p>
-    <p>{{restaurant.description.it}}</p>
-    <p>{{restaurant.timetable.it}}</p>
-    <p>{{restaurant.closing.it}}</p>
-    <p>{{restaurant.equipment.it}}</p>
+  <ion-content class="has-header" ng-cloak>
+    <comuni-img ng-if="restaurant.image" class="content-image-main" image="restaurant.image" gotdata="gotdata"></comuni-img>
+    <div class="padding">
+        <h1>{{restaurant.title|translate}}</h1>
+        <p>{{restaurant.address|translate}}</p>
+        <p>{{restaurant.description|translate}}</p>
+        <p>{{restaurant.timetable|translate}}</p>
+        <p>{{restaurant.closing|translate}}</p>
+        <p>{{restaurant.equipment|translate}}</p>
+    </div>
   </ion-content>
 </ion-view>

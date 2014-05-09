@@ -195,13 +195,8 @@ angular.module('starter.controllers', ['google-maps'])
 .controller('ItinerarioTappeCtrl', function ($scope, DatiDB, $stateParams) {})
 
 .controller('ItinerarioMappaCtrl', function ($scope, DatiDB, $stateParams) {
-  var directionsService = new google.maps.DirectionsService();
-  var directionsDisplay = new google.maps.DirectionsRenderer();
-  // directionsDisplay.setMap($scope.map.control.getGMap());
-
-  $scope.mapControl = {};
-
   $scope.map = {
+    control: {},
     draggable: 'true',
     center: {
       latitude: 0,
@@ -226,19 +221,10 @@ angular.module('starter.controllers', ['google-maps'])
     doCluster: false
   };
 
-  /*
-   * google.maps.TravelMode.DRIVING (Default)
-   * google.maps.TravelMode.BICYCLING
-   * google.maps.TravelMode.TRANSIT
-   * google.maps.TravelMode.WALKING
-   */
-
-  $scope.polyline = {
-    stroke: {
-      color: '#ff0000',
-      weight: 3,
-      opacity: 1.0
-    },
+  $scope.polylineOptions = {
+    strokeColor: '#ff0000',
+    strokeWeight: 3,
+    strokeOpacity: 1.0,
     clickable: false,
     draggable: false,
     editable: false,
@@ -246,7 +232,90 @@ angular.module('starter.controllers', ['google-maps'])
     visible: true
   };
 
+  $scope.polyline = {
+    stroke: {
+      color: $scope.polylineOptions.strokeColor,
+      weight: $scope.polylineOptions.strokeWeight,
+      opacity: $scope.polylineOptions.strokeOpacity
+    },
+    clickable: $scope.polylineOptions.clickable,
+    draggable: $scope.polylineOptions.draggable,
+    editable: $scope.polylineOptions.editable,
+    geodesic: $scope.polylineOptions.geodesic,
+    visible: $scope.polylineOptions.visible
+  };
+
+  /*
+   * google.maps.TravelMode.DRIVING (Default)
+   * google.maps.TravelMode.BICYCLING
+   * google.maps.TravelMode.TRANSIT
+   * google.maps.TravelMode.WALKING
+   */
+  $scope.directionsOptions = {
+    directionsServiceOptions: {
+      travelMode: google.maps.TravelMode.WALKING
+    },
+    directionsRendererOptions: {
+      suppressMarkers: true,
+      polylineOptions: $scope.polylineOptions
+    }
+  };
+
   $scope.showInfoWindow = false;
+
+  var directionsService = new google.maps.DirectionsService();
+  var directionsDisplay = new google.maps.DirectionsRenderer($scope.directionsOptions.directionsRendererOptions);
+
+  var drawDirections = function (control, models, caller) {
+    if (!!control && !!models && models.length >= 2) {
+      var max = 10;
+      var splittedModels = [];
+      var array = new Array();
+      for (var i = 0; i < models.length; i++) {
+        if (array.length == 0 && i > 0) {
+          i--;
+        }
+        array.push(models[i]);
+        if (array.length == max || (i + 1) == models.length) {
+          splittedModels.push(array);
+          array = new Array();
+        }
+      }
+
+      for (var i = 0; i < splittedModels.length; i++) {
+        var partialModels = splittedModels[i];
+
+        var origin = new google.maps.LatLng(partialModels[0].latitude, partialModels[0].longitude);
+        var destination = new google.maps.LatLng(partialModels[partialModels.length - 1].latitude, partialModels[partialModels.length - 1].longitude);
+        var waypoints = [];
+
+        if (partialModels.length > 2) {
+          for (var j = 1; j < (partialModels.length - 1); j++) {
+            var waypoint = {
+              location: new google.maps.LatLng(partialModels[j].latitude, partialModels[j].longitude)
+            };
+            waypoints.push(waypoint);
+          }
+        }
+
+        var request = {
+          origin: origin,
+          destination: destination,
+          waypoints: waypoints,
+          travelMode: $scope.directionsOptions.directionsServiceOptions.travelMode
+        };
+        directionsService.route(request, function (result, status) {
+          if (status == google.maps.DirectionsStatus.OK) {
+            directionsDisplay = new google.maps.DirectionsRenderer($scope.directionsOptions.directionsRendererOptions);
+            directionsDisplay.setMap(control.getGMap());
+            directionsDisplay.setDirections(result);
+
+            if (!!caller) alert(caller);
+          }
+        });
+      }
+    }
+  }
 
   // map2 = new mxn.Mapstraction('map2', 'openlayers');
   DatiDB.get('itinerary', $stateParams.itinerarioId).then(function (data) {
@@ -265,39 +334,18 @@ angular.module('starter.controllers', ['google-maps'])
           luogo.latitude = luogo.location[0];
           luogo.longitude = luogo.location[1];
         } else {
-          console.log('no location');
-          alert(luogo.title.it);
+          console.log('WARNING: no location for "' + luogo.title.it + '"');
           luogo.latitude = 0;
           luogo.longitude = 0;
         }
         $scope.markers.models[data.steps.indexOf(luogo.id)] = luogo;
       });
+
+      drawDirections($scope.map.control, $scope.markers.models);
+
       /*setTimeout(function () {
       map2.autoCenterAndZoom();
     }, 500);*/
     });
   });
-
-  //  $scope.$watch('mapControl', function (newValue, oldValue) {
-  //    if (oldValue === newValue) {
-  //      var origin = new google.maps.LatLng($scope.markers.models[0].latitude, $scope.markers.models[0].longitude);
-  //      var destination = new google.maps.LatLng($scope.markers.models[$scope.markers.models.length - 1].latitude, $scope.markers.models[$scope.markers.models.length - 1].longitude);
-  //
-  //      var request = {
-  //        origin: origin,
-  //        destination: destination,
-  //        travelMode: google.maps.TravelMode.WALKING
-  //      };
-  //      directionsService.route(request, function (result, status) {
-  //        alert(status);
-  //        if (status == google.maps.DirectionsStatus.OK) {
-  //          directionsDisplay.setMap($scope.mapControl.getGMap());
-  //          directionsDisplay.setDirections(result);
-  //        }
-  //      });
-  //    }
-  //  });
-
-  // angular.element(document).ready(function () {});
-
 })

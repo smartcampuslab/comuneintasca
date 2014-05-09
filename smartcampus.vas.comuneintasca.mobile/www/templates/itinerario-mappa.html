@@ -1,7 +1,7 @@
 <ion-view title="Itinerario">
   <ion-content class="has-header" scroll="false">
     <div id="map2">
-      <google-map center="map.center" zoom="map.zoom" draggable="{{map.draggable}}" control="mapControl">
+      <google-map center="map.center" zoom="map.zoom" draggable="{{map.draggable}}" control="map.control">
         <!--
               <window coords="infoWindow.coords" show="infoWindow.show" isIconVisibleOnClick="infoWindow.isIconVisibleOnClick" closeClick="closeInfoWindow"  options="infoWindow.options">
                 {{infoWindow.content}}
@@ -17,8 +17,10 @@
             <p ng-non-bindable>{{title.it}}</p>
           </windows>
         </markers>
+<!--
         <polyline path="markers.models" stroke="polyline.stroke" clickable="polyline.clickable" draggable="polyline.draggable" editable="polyline.editable" geodesic="polyline.geodesic" visible="polyline.visible">
         </polyline>
+-->
       </google-map>
     </div>
   </ion-content>

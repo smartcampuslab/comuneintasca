@@ -4,19 +4,6 @@
         "uninstalled": []
     },
     "config_munge": {
-        "config.xml": {
-            "/*": {
-                "<feature name=\"Console\"><param name=\"ios-package\" value=\"CDVLogger\" /></feature>": 1,
-                "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>": 1,
-                "<feature name=\"StatusBar\"><param name=\"ios-package\" onload=\"true\" value=\"CDVStatusBar\" /></feature>": 1,
-                "<preference name=\"StatusBarOverlaysWebView\" value=\"true\" />": 1,
-                "<preference name=\"StatusBarBackgroundColor\" value=\"#000000\" />": 1,
-                "<feature name=\"Geolocation\"><param name=\"ios-package\" value=\"CDVLocation\" /></feature>": 1,
-                "<feature name=\"SQLitePlugin\"><param name=\"ios-package\" value=\"SQLitePlugin\" /></feature>": 1,
-                "<feature name=\"File\"><param name=\"ios-package\" value=\"CDVFile\" /><param name=\"onload\" value=\"true\" /></feature>": 1,
-                "<feature name=\"FileTransfer\"><param name=\"ios-package\" value=\"CDVFileTransfer\" /></feature>": 1
-            }
-        },
         "framework": {
             "libsqlite3.dylib": {
                 "false": 1
@@ -27,28 +14,41 @@
             "MobileCoreServices.framework": {
                 "false": 1
             }
+        },
+        "config.xml": {
+            "/*": {
+                "<feature name=\"SQLitePlugin\"><param name=\"ios-package\" value=\"SQLitePlugin\" /></feature>": 1,
+                "<feature name=\"Console\"><param name=\"ios-package\" value=\"CDVLogger\" /></feature>": 1,
+                "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>": 1,
+                "<feature name=\"File\"><param name=\"ios-package\" value=\"CDVFile\" /><param name=\"onload\" value=\"true\" /></feature>": 1,
+                "<feature name=\"FileTransfer\"><param name=\"ios-package\" value=\"CDVFileTransfer\" /></feature>": 1,
+                "<feature name=\"Geolocation\"><param name=\"ios-package\" value=\"CDVLocation\" /></feature>": 1,
+                "<feature name=\"StatusBar\"><param name=\"ios-package\" onload=\"true\" value=\"CDVStatusBar\" /></feature>": 1,
+                "<preference name=\"StatusBarOverlaysWebView\" value=\"true\" />": 1,
+                "<preference name=\"StatusBarBackgroundColor\" value=\"#000000\" />": 1
+            }
         }
     },
     "installed_plugins": {
+        "com.phonegap.plugins.sqlite": {
+            "PACKAGE_NAME": "it.smartcampuslab.comuni.trento"
+        },
         "org.apache.cordova.console": {
             "PACKAGE_NAME": "it.smartcampuslab.comuni.trento"
         },
         "org.apache.cordova.device": {
             "PACKAGE_NAME": "it.smartcampuslab.comuni.trento"
         },
-        "org.apache.cordova.statusbar": {
+        "org.apache.cordova.file": {
+            "PACKAGE_NAME": "it.smartcampuslab.comuni.trento"
+        },
+        "org.apache.cordova.file-transfer": {
             "PACKAGE_NAME": "it.smartcampuslab.comuni.trento"
         },
         "org.apache.cordova.geolocation": {
             "PACKAGE_NAME": "it.smartcampuslab.comuni.trento"
         },
-        "com.phonegap.plugins.sqlite": {
-            "PACKAGE_NAME": "it.smartcampuslab.comuni.trento"
-        },
-        "org.apache.cordova.file": {
-            "PACKAGE_NAME": "it.smartcampuslab.comuni.trento"
-        },
-        "org.apache.cordova.file-transfer": {
+        "org.apache.cordova.statusbar": {
             "PACKAGE_NAME": "it.smartcampuslab.comuni.trento"
         }
     },

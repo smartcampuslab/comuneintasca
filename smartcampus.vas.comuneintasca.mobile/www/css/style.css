@@ -89,8 +89,9 @@ p.comuni-item-bottomdetail {
     background-color: #2975a7;
     color:#fff;
 }
+
 #slide-box-home {
-//    position:absolute;bottom:0;
+/*    position:absolute;bottom:0;*/
 }
 .hp-box {
     background-size:cover;background-position:center;background-repeat:no-repeat;
@@ -103,4 +104,8 @@ p.comuni-item-bottomdetail {
 
 #home-buttons button {
     border-radius:.5em;color:#2975a7;background-color:#b7d6e8; margin:0;padding:0;
+}
+
+.angular-google-map-container {
+  height: 800px;
 }

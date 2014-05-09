@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['google-maps'])
 
 .controller('MenuCtrl', function($scope, $rootScope, DatiDB) {
 	var broserLanguage = window.navigator.userLanguage || window.navigator.language;
@@ -95,18 +95,72 @@ $scope.show = function() {
 })
 
 .controller('MappaCtrl', function($scope, DatiDB) {
-    map1 = new mxn.Mapstraction('map1', 'openlayers');
-    DatiDB.all('poi').then(function(data){
-        angular.forEach(data,function(luogo,idx){
-            if (luogo.location) {
-                m=new mxn.Marker(new mxn.LatLonPoint(luogo.location[0],luogo.location[1]));
-                m.setIcon('img/mapmarker.png',[25,40],[25/2,40/2]);
-                m.setInfoBubble(luogo.title.it);
-                map1.addMarker(m);
-            }
-        });
-        map1.autoCenterAndZoom();
+$scope.map = {
+    draggable: 'true',
+    center: {
+      latitude: 0,
+      longitude: 0
+    },
+    zoom: 8
+  };
+
+  $scope.markers = {
+    models: [],
+    coords: 'self',
+    fit: true,
+    // icon: 'img/mapmarker.png',
+    // click: 'openInfoWindow($markerModel)',
+    doCluster: true
+  };
+
+  $scope.showInfoWindow = false;
+
+//  These components are used only for the single infowindow, not working now :(
+  $scope.infoWindow = {
+    show: false,
+    coords: null,
+    content: '',
+    isIconVisibleOnClick: true,
+    options: null,
+  };
+
+  $scope.openInfoWindow = function ($markerModel) {
+    $scope.infoWindow.coords = {
+      latitude: $markerModel.latitude,
+      longitude: $markerModel.longitude
+    };
+    $scope.infoWindow.content = $markerModel.latitude + ',' + $markerModel.longitude + '\n' + $markerModel.title.it;
+    $scope.infoWindow.options = {
+      content: $scope.infoWindow.content
+    };
+    $scope.infoWindow.show = true;
+    alert($scope.infoWindow.content);
+  };
+
+  $scope.closeInfoWindow = function() {
+    $scope.infoWindow.show = false;
+    $scope.infoWindow.coords = null;
+    $scope.infoWindow.options = null;
+  };
+
+  // map1 = new mxn.Mapstraction('map1', 'openlayers');
+  DatiDB.all('poi').then(function (data) {
+    angular.forEach(data, function (luogo, idx) {
+      if (luogo.location) {
+        //        m = new mxn.Marker(new mxn.LatLonPoint(luogo.location[0], luogo.location[1]));
+        //        m.setIcon('img/mapmarker.png', [25, 40], [25 / 2, 40 / 2]);
+        //        m.setInfoBubble(luogo.title.it);
+        //        map1.addMarker(m);
+
+        luogo.latitude = luogo.location[0];
+        luogo.longitude = luogo.location[1];
+      }
     });
+    // map1.autoCenterAndZoom();
+    $scope.markers.models = data;
+    //    $scope.map.center.latitude = $scope.markers.models[0].latitude;
+    //    $scope.map.center.longitude = $scope.markers.models[0].longitude;
+  });
 })
 
 .controller('ItinerariCtrl', function($scope, DatiDB) { DatiDB.all('itinerary').then(function(data){ $scope.itinerari=data; }); })

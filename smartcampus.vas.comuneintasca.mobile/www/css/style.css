@@ -89,4 +89,18 @@ p.comuni-item-bottomdetail {
     background-color: #2975a7;
     color:#fff;
 }
+#slide-box-home {
+//    position:absolute;bottom:0;
+}
+.hp-box {
+    background-size:cover;background-position:center;background-repeat:no-repeat;
+    height:350px;background-color:#fff;
+}
+.hp-box .title { background-color:rgba(0,0,0,.7);color:#fff;padding:.5em;}
+.hp-box.festival { background-image:url(../img/hp-box/festivaleconomia.png); }
+.hp-box.sport { background-image:url(../img/hp-box/sportnelverde.png); }
+.hp-box.palazzi { background-image:url(../img/hp-box/palazziaperti.png); }
 
+#home-buttons button {
+    border-radius:.5em;color:#2975a7;background-color:#b7d6e8; margin:0;padding:0;
+}

@@ -85,7 +85,7 @@ angular.module('starter.services', [])
 })
 
 .factory('DatiDB', function($q, $http, $ionicLoading, Config) {
-    var SCHEMA_VERSION=26;
+    var SCHEMA_VERSION=37;
     var types={
         'content':'eu.trentorise.smartcampus.comuneintasca.model.ContentObject',
         'poi':'eu.trentorise.smartcampus.comuneintasca.model.POIObject',
@@ -107,11 +107,10 @@ angular.module('starter.services', [])
     var localSyncOptions={ method:'GET', url:'data/trento.json' };
     var remoteSyncOptions={ method:'POST', url:'https://vas-dev.smartcampuslab.it/comuneintasca/sync?since='+currentDbVersion, data:'{"updated":{}}' };
 
-    var dbopenDeferred = $q.defer();
-    var dbDeferred = $q.defer();
-
     var dbObj;
-    if (window.cordova) {
+
+    var dbopenDeferred = $q.defer();
+    if (ionic.Platform.isWebView()) {
         console.log('cordova db...');
         document.addEventListener("deviceready", function(){
             console.log('cordova db inited...');
@@ -127,6 +126,8 @@ angular.module('starter.services', [])
         dbopenDeferred.resolve(dbObj);
     }
     dbopen=dbopenDeferred.promise;
+
+    var dbDeferred = $q.defer();
     dbopen.then(function(dbObj){
         if (currentDbVersion==0 || currentSchemaVersion!=SCHEMA_VERSION) {
             console.log('initializing database...');
@@ -142,9 +143,15 @@ angular.module('starter.services', [])
                 tx.executeSql('CREATE INDEX IF NOT EXISTS co_typeclass ON ContentObjects( type, classification )');
                 tx.executeSql('CREATE INDEX IF NOT EXISTS co_typeid ON ContentObjects( type, id )');
                 localStorage.currentSchemaVersion=currentSchemaVersion=SCHEMA_VERSION;
-                if (currentDbVersion>0) localStorage.currentDbVersion=currentDbVersion=0;
+                if (currentDbVersion>0) {
+                    localStorage.currentDbVersion=0;
+                    currentDbVersion=0;
+                }
+            },function(error){ //error callback
+                console.log('cannot initialize: '+error);
+                dbDeferred.reject(error);
+            },function(){ //success callback
                 console.log('initialized');
-
                 dbDeferred.resolve(dbObj);
             });
         } else {
@@ -209,7 +216,7 @@ angular.module('starter.services', [])
                                                 ,function(tx, res){ //success callback
                                                     console.log('inserted obj with id: '+item.id);
                                                 }
-                                                ,function(e){  //error callback
+                                                ,function(e){ //error callback
                                                     console.log('unable to insert obj with id '+item.id+': '+e.message);
                                                 }
                                             );
@@ -237,6 +244,11 @@ angular.module('starter.services', [])
                                         console.log('nothing to delete');
                                     }
                                 });
+                            },function(){ //error callback
+                                console.log('cannot sync');
+                                objsDone.reject(false);
+                            },function(){ //success callback
+                                console.log('synced');
                                 objsDone.resolve(true);
                             });
 
@@ -246,6 +258,11 @@ angular.module('starter.services', [])
 
                                 $ionicLoading.hide();
                                 syncronization.resolve(currentDbVersion);
+                            },function(){
+                                console.log('cannot initialize (2)');
+
+                                $ionicLoading.hide();
+                                syncronization.reject();
                             });
                         } else {
                             console.log('local database already up-to-date!');
@@ -275,19 +292,16 @@ angular.module('starter.services', [])
                 console.log('current database version: '+dbVersion);
                 var loading=$ionicLoading.show({ content: 'loading...', showDelay:1000, duration:Config.loadingOverlayTimeoutMillis() });
 
+                var lista=[]
                 dbObj.transaction(function (tx) {
                     //console.log('type: '+types[dbname]);
                     tx.executeSql('SELECT id, data, lat, lon FROM ContentObjects WHERE type=?', [ types[dbname] ], function (tx, results) {
-                        lista=[]
                         var len = results.rows.length, i;
                         console.log('results.rows.length: '+results.rows.length);
                         for (i = 0; i < len; i++) {
                             //console.log(results.rows.item(i));
                             lista.push(JSON.parse(results.rows.item(i).data));
                         }
-
-                        $ionicLoading.hide();
-                        data.resolve(lista);
                     },function(tx, err){
                         console.log('data error!');
                         console.log(err);
@@ -295,6 +309,14 @@ angular.module('starter.services', [])
                         $ionicLoading.hide();
                         data.reject();
                     });
+                },function(error){ //error callback
+                    console.log('db.all() ERROR: '+error);
+                    $ionicLoading.hide();
+                    data.reject(error);
+                },function(){ //success callback
+                    console.log('db.all() DONE!');
+                    $ionicLoading.hide();
+                    data.resolve(lista);
                 });
             });
             return data.promise;
@@ -305,27 +327,32 @@ angular.module('starter.services', [])
                 console.log('current database version: '+dbVersion);
                 var loading=$ionicLoading.show({ content: 'loading...', showDelay:1000, duration:Config.loadingOverlayTimeoutMillis() });
 
+                var lista=[]
                 dbObj.transaction(function (tx) {
 //                    console.log('type: '+types[dbname]);
                     console.log('category: '+cateId);
                     tx.executeSql('SELECT id, data, lat, lon FROM ContentObjects WHERE type=? AND classification=?', [ types[dbname],cateId ], function (tx, cateResults) {
-                        lista=[]
                         var len = cateResults.rows.length, i;
                         console.log('cateResults.rows.length: '+cateResults.rows.length);
                         for (i = 0; i < len; i++) {
                             //console.log(cateResults.rows.item(i));
                             lista.push(JSON.parse(cateResults.rows.item(i).data));
                         }
-
-                        $ionicLoading.hide();
-                        data.resolve(lista);
                     },function(tx, err){
-                        console.log('data error!');
+                        console.log('cate data error!');
                         console.log(err);
 
                         $ionicLoading.hide();
                         data.reject();
                     });
+                },function(error){ //error callback
+                    console.log('db.cate() ERROR: '+error);
+                    $ionicLoading.hide();
+                    data.reject(error);
+                },function(){ //success callback
+                    console.log('db.cate() DONE!');
+                    $ionicLoading.hide();
+                    data.resolve(lista);
                 });
             });
             return data.promise;
@@ -338,6 +365,7 @@ angular.module('starter.services', [])
                 var loading=$ionicLoading.show({ content: 'loading...', showDelay:1000, duration:Config.loadingOverlayTimeoutMillis() });
 
                 var dbitem = $q.defer();
+                var lista=[];
                 dbObj.transaction(function (tx) {
                     //console.log('type: '+types[dbname]);
                     if (itemId.indexOf(',')==-1) {
@@ -354,31 +382,35 @@ angular.module('starter.services', [])
                     dbQuery='SELECT id, data, lat, lon FROM ContentObjects WHERE type=? AND '+idCond;
                     console.log('dbQuery: '+dbQuery);
                     tx.executeSql(dbQuery, qParams, function (tx, results) {
-                        $ionicLoading.hide();
-
                         if (results.rows.length>0) {
                             if (itemId.indexOf(',')==-1) {
                                 dbitem.resolve(JSON.parse(results.rows.item(0).data));
                             } else {
-                                lista=[]
                                 var len = results.rows.length, i;
                                 console.log('results.rows.length: '+results.rows.length);
                                 for (i = 0; i < len; i++) {
-                                    //console.log(cateResults.rows.item(i));
+                                    console.log(cateResults.rows.item(i));
                                     lista.push(JSON.parse(results.rows.item(i).data));
                                 }
-                                dbitem.resolve(lista);
                             }
                         } else {
                             console.log('not found!');
-                            dbitem.reject();
+                            dbitem.reject('not found!');
                         }
                     },function(tx, err){
-                        console.log('error!');
+                        console.log('error: '+err);
 
                         $ionicLoading.hide();
-                        dbitem.reject();
+                        dbitem.reject(err);
                     });
+                },function(error){ //error callback
+                    console.log('db.get() ERROR: '+error);
+                    $ionicLoading.hide();
+                    dbitem.reject(error);
+                },function(){ //success callback
+                    console.log('db.get() DONE!');
+                    $ionicLoading.hide();
+                    dbitem.resolve(lista);
                 });
                 return dbitem.promise;
             });

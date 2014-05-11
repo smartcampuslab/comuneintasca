@@ -22,6 +22,12 @@ angular.module('starter.services', [])
         syncTimeoutSeconds: function(){
             return 60*60 *24 *10; /* 60 times 60 seconds = 1 HOUR --> x24 = 1 DAY x10 */
         },
+        syncingOverlayTimeoutMillis: function(){
+            return 40*1000; /* 40 seconds before automatically hiding syncing overlay */
+        },
+        loadingOverlayTimeoutMillis: function(){
+            return 15*1000; /* 15 seconds before automatically hiding loading overlay */
+        },
         poiCateFromType: function(type){
             return poiTypes[type];
         },
@@ -153,7 +159,7 @@ angular.module('starter.services', [])
             db.then(function(dbObj){
                 var now_as_epoch = parseInt((new Date).getTime()/1000);
                 if ( lastSynced==-1 || now_as_epoch>(lastSynced+Config.syncTimeoutSeconds()) ) {
-                    syncing=$ionicLoading.show({ content: 'syncing...' });
+                    syncing=$ionicLoading.show({ content: 'syncing...', duration:Config.syncingOverlayTimeoutMillis() });
 
                     $http.defaults.headers.common.Accept='application/json';
                     $http.defaults.headers.post={ 'Content-Type':'application/json' };
@@ -267,7 +273,7 @@ angular.module('starter.services', [])
             var data = $q.defer();
             this.sync().then(function(dbVersion){
                 console.log('current database version: '+dbVersion);
-                var loading=$ionicLoading.show({ content: 'loading...', showDelay:1000 });
+                var loading=$ionicLoading.show({ content: 'loading...', showDelay:1000, duration:Config.loadingOverlayTimeoutMillis() });
 
                 dbObj.transaction(function (tx) {
                     //console.log('type: '+types[dbname]);
@@ -282,6 +288,12 @@ angular.module('starter.services', [])
 
                         $ionicLoading.hide();
                         data.resolve(lista);
+                    },function(tx, err){
+                        console.log('data error!');
+                        console.log(err);
+
+                        $ionicLoading.hide();
+                        data.reject();
                     });
                 });
             });
@@ -291,7 +303,7 @@ angular.module('starter.services', [])
             var data = $q.defer();
             this.sync().then(function(dbVersion){
                 console.log('current database version: '+dbVersion);
-                var loading=$ionicLoading.show({ content: 'loading...', showDelay:1000 });
+                var loading=$ionicLoading.show({ content: 'loading...', showDelay:1000, duration:Config.loadingOverlayTimeoutMillis() });
 
                 dbObj.transaction(function (tx) {
 //                    console.log('type: '+types[dbname]);
@@ -323,7 +335,7 @@ angular.module('starter.services', [])
 
             return this.sync().then(function(dbVersion){
                 console.log('[DatiDB.get("'+dbname+'","'+itemId+'")] current database version: '+dbVersion);
-                var loading=$ionicLoading.show({ content: 'loading...', showDelay:1000 });
+                var loading=$ionicLoading.show({ content: 'loading...', showDelay:1000, duration:Config.loadingOverlayTimeoutMillis() });
 
                 var dbitem = $q.defer();
                 dbObj.transaction(function (tx) {

@@ -531,3 +531,36 @@ angular.module('starter.services', [])
         }
     };
 })
+
+.factory('Sort', function($ionicPopup, $filter) {
+    var keys = {
+	'Date':{'it':'Data','en':'Date','de':'Date'},
+	'Distance':{'it':'Distanza','en':'Distance','de':'Distance'},
+	'OrderBy':{'it':'Ordinare per','en':'Order by','de':'Order by'},
+	'A-Z': {'it':'A-Z','en':'A-Z','de':'A-Z'},
+	'Z-A': {'it':'Z-A','en':'Z-A','de':'Z-A'}
+	};
+
+	return {
+		showSortPopup: function($scope, options, presel, callback) {
+		   var title = $filter('translate')(keys['OrderBy']);
+
+		   var template = '<div class="list">';
+		   for (var i = 0; i < options.length; i++) { 
+		     var s = $filter('translate')(keys[options[i]]);
+		     template += '<a class="item item-icon-right" ng-click="show.close(\''+options[i]+'\')">'+s+'<i class="icon '+(options[i]==presel?'ion-ios7-checkmark-outline':'')+'"></i></a>';
+		   }
+		    // An elaborate, custom popup
+		   var myPopup = $ionicPopup.show({
+			 template: template,
+			 title: title,
+			 scope: $scope,
+			 buttons: [ { text: 'Cancel' } ]
+		   });
+		   $scope.show = myPopup;
+		   myPopup.then(function(res) {
+			 callback(res);
+		   });
+		}
+	}
+})

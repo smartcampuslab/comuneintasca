@@ -133,14 +133,22 @@ $scope.show = function() {
   });
 })
 
-.controller('MainEventsListCtrl', function ($scope, DatiDB) {
+.controller('MainEventsListCtrl', function ($scope, Sort, DatiDB) {
   $scope.gotdata = DatiDB.all('mainevent').then(function (data) {
     $scope.mainevents = data;
   });
+  $scope.ordering = 'A-Z';
+  
+  // Triggered on a button click, or some other target
+  $scope.showPopup = function() {
+    Sort.showSortPopup($scope,['A-Z','Z-A','Date'],$scope.ordering,function(res){
+	  $scope.ordering = res;
+	});
+  } 
 })
 .controller('MainEventCtrl', function ($scope, DatiDB, $stateParams) {
   $scope.gotdata = DatiDB.get('mainevent', $stateParams.maineventId).then(function (data) {
-    $scope.mainevent = data;
+	$scope.obj = data;
   });
 })
 

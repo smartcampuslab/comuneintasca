@@ -1,10 +1,14 @@
 <ion-view title="Main Events">
+  <ion-nav-buttons side="left">
+	<a class="button button-icon icon ion-android-sort" ng-click="showPopup()"></a>	
+  </ion-nav-buttons>	
   <ion-content class="has-header">
-    <ion-list>
-      <ion-item ng-repeat="mainevent in mainevents" class="item-thumbnail-left" href="#/app/mainevent/{{mainevent.id}}">
-        <comuni-img class="item-image comuni-item-image" image="mainevent.image" gotdata="gotdata"></comuni-img>
-        <h2>{{mainevent.title|translate}}</h2>
-        <p class="comuni-item-bottomdetail">{{mainevent.eventDateDescription|translate}}</p>
+	<ion-list>
+	<div class="item item-divider" align="center">{{mainevents.length}} results</div>	
+      <ion-item ng-repeat="obj in mainevents | extOrderBy:ordering" class="item-thumbnail-left" href="#/app/mainevent/{{obj.id}}">
+        <comuni-img class="item-image comuni-item-image" image="obj.image" gotdata="gotdata"></comuni-img>
+        <h2>{{obj.title|translate}}</h2>
+        <p class="comuni-item-bottomdetail">{{obj.eventDateDescription|translate}}</p>
       </ion-item>
     </ion-list>
   </ion-content>

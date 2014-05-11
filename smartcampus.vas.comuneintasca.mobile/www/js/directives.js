@@ -11,7 +11,7 @@ angular.module('starter.directives', [])
             // added since scope can be not yet filled with actual data,
             // since data is taken asyncronously from the database
             scope.gotdata.then(function(){
-                content=scope.content||scope.place||scope.hotel||scope.restaurant||scope.event||scope.mainevent||{image:''};
+                content=scope.content||scope.place||scope.hotel||scope.restaurant||scope.event||scope.obj||{image:''};
                 if (content.image && content.image!='') {
                     Files.get(content.image).then(function(fileUrl){
 //                        if (element.hasClass('item-image')) {

@@ -697,9 +697,9 @@ angular.module('starter.services', [])
             console.log('entry.toUrl(): '+entry.toUrl());
             console.log('entry.fullPath: '+entry.fullPath);
             filegot.resolve(filesavepath);
-          },function(err){
+          },function(evt){
             console.log('cordova resolveLocalFileSystemURL() error:');
-            console.log(err);
+            console.log(evt.target.error.code );
             filegot.resolve(fileurl);
           });
           */

@@ -74,7 +74,7 @@ $scope.show = function() {
 
 .controller('HotelCtrl', function ($scope, $stateParams, DatiDB) {
   $scope.gotdata = DatiDB.get('hotel', $stateParams.hotelId).then(function (data) {
-    $scope.hotel = data;
+    $scope.obj = data;
   });
 })
 
@@ -86,7 +86,7 @@ $scope.show = function() {
 
 .controller('RestaurantCtrl', function ($scope, $stateParams, DatiDB) {
   $scope.gotdata = DatiDB.get('restaurant', $stateParams.restaurantId).then(function (data) {
-    $scope.restaurant = data;
+    $scope.obj = data;
   });
 })
 
@@ -131,7 +131,7 @@ $scope.show = function() {
 
 .controller('EventCtrl', function ($scope, DatiDB, $stateParams) {
   $scope.gotdata = DatiDB.get('event', $stateParams.eventId).then(function (data) {
-    $scope.event = data;
+    $scope.obj = data;
   });
 })
 

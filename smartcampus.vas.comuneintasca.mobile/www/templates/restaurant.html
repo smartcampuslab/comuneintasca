@@ -1,13 +1,17 @@
 <ion-view title="Restaurant">
   <ion-content class="has-header" ng-cloak>
-    <comuni-img ng-if="restaurant.image" class="content-image-main" image="restaurant.image" gotdata="gotdata"></comuni-img>
+    <comuni-img ng-if="obj.image" class="content-image-main" image="obj.image" gotdata="gotdata"></comuni-img>
     <div class="padding">
-        <h1>{{restaurant.title|translate}}</h1>
-        <p>{{restaurant.address|translate}}</p>
-        <p>{{restaurant.description|translate}}</p>
-        <p>{{restaurant.timetable|translate}}</p>
-        <p>{{restaurant.closing|translate}}</p>
-        <p>{{restaurant.equipment|translate}}</p>
+      <h1>{{obj.title|translate}}</h1>
+      <div class="subtitle">{{obj.classification|translate}}</div>
+      <div class="subtitle">{{obj.address|translate}}</div>
+      <div ng-include="'templates/toolbox.html'"></div>
+      <div>
+        <p><strong>Orari di apertura:</strong> {{obj.timetable | translate}}</p>
+        <p><strong>Giorni di chiusura:</strong> {{obj.closing | translate}}</p>
+        <p><strong>Prezzi:</strong> {{obj.prices | translate}} &euro;</p>
+        <p><strong>Servizi disponibili:</strong> {{obj.equipment | translate}}</p>
+      </div>
     </div>
   </ion-content>
 </ion-view>

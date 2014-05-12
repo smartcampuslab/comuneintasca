@@ -525,7 +525,7 @@ angular.module('starter.services', [])
                 } else if (dbname=='poi') {
                   result.dbClassification=Config.poiCateFromDbClassification(result.dbClassification);
                 }
-                lista.push(result);
+                dbitem.resolve(result);
               } else {
                 var len = results.rows.length,
                   i;

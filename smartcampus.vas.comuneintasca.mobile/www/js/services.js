@@ -3,31 +3,37 @@ angular.module('starter.services', [])
 .factory('Config', function ($q) {
   var poiTypes = {
     'museums': {
+      key: 'museums',
       de: 'Musei',
       it: 'Musei',
       en: 'Musei'
     },
     'buildings': {
+      key: 'buildings',
       de: 'Historische Gebäude',
       it: 'Edifici storici',
       en: 'Historic Buildings'
     },
     'churches': {
+      key: 'churches',
       de: 'Kirchen',
       it: 'Chiese',
       en: 'Churches'
     },
     'acheo': {
+      key: 'acheo',
       de: 'Archäologische Areas',
       it: 'Aree Archeologiche',
       en: 'Archaeological Areas'
     },
     'parks': {
+      key: 'parks',
       de: 'Natur',
       it: 'Natura',
       en: 'Nature'
     },
     'misc': {
+      key: 'misc',
       de: 'Andere Seiten von historischem und künstlerischem Interesse',
       it: 'Altri siti di interesse storico artistico',
       en: 'Other sites of historical and artistic interest'
@@ -35,36 +41,43 @@ angular.module('starter.services', [])
   };
   var eventTypes = {
     'fairs': {
+      key: 'fairs',
       de: '',
       it: 'Feste, mercati e fiere',
       en: ''
     },
     'conferences': {
+      key: 'conferences',
       de: '',
       it: 'Incontri, convegni e conferenze',
       en: ''
     },
     'shows': {
+      key: 'shows',
       de: '',
       it: 'Spettacoli',
       en: ''
     },
     'exhibitions': {
+      key: 'exhibitions',
       de: '',
       it: 'Mostre',
       en: ''
     },
     'labs': {
+      key: 'labs',
       de: '',
       it: 'Corsi e laboratori',
       en: ''
     },
     'competitions': {
+      key: 'competitions',
       de: '',
       it: 'Competizioni e gare',
       en: ''
     },
     'misc': {
+      key: 'misc',
       de: '',
       it: 'Iniziative varie',
       en: ''

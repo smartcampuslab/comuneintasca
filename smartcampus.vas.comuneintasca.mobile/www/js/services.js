@@ -392,7 +392,7 @@ angular.module('starter.services', [])
                                 var len = results.rows.length, i;
                                 console.log('results.rows.length: '+results.rows.length);
                                 for (i = 0; i < len; i++) {
-                                    console.log(cateResults.rows.item(i));
+                                    console.log(results.rows.item(i));
                                     lista.push(JSON.parse(results.rows.item(i).data));
                                 }
                             }

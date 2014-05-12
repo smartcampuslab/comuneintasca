@@ -93,8 +93,10 @@ angular.module('starter.services', [])
       return poiTypes[type];
     },
     poiCateFromDbClassification: function (dbclassification) {
-      for (var poiType in poiTypes) {
-        if (poiTypes[poiType].it==dbclassification) return poiTypes[poiType];
+      for (var poiType in poiTypes) { 
+        if (poiTypes.hasOwnProperty(poiType)) {
+          if (poiTypes[poiType].it==dbclassification) return poiTypes[poiType];
+        } 
       }
       return {
         de: 'UNKNOWN',
@@ -110,7 +112,9 @@ angular.module('starter.services', [])
     },
     eventCateFromDbClassification: function (dbclassification) {
       for (var eventType in eventTypes) {
-        if (eventTypes[eventType].it==dbclassification) return eventTypes[eventType];
+        if (eventTypes.hasOwnProperty(eventType)) {
+          if (eventTypes[eventType].it==dbclassification) return eventTypes[eventType];
+        }
       }
       return {
         de: 'UNKNOWN',

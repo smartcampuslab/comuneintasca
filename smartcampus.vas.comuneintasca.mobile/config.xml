@@ -1,19 +1,24 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='utf-8' ?>
 <widget id="it.smartcampuslab.comuni.trento" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Trento in Tasca</name>
-    <description>
-        Il Comune in tasca: Trento (Smart Campus Lab)
-    </description>
-    <author email="info@smartcampuslab.it" href="http://www.smartcampuslab.it/">
-      Smart Campus Lab
-    </author>
-    <content src="index.html" />
-    <access origin="*" />
-    <preference name="fullscreen" value="true" />
-    <preference name="webviewbounce" value="false" />
-    <preference name="UIWebViewBounce" value="false" />
-    <preference name="DisallowOverscroll" value="true" />
-    <feature name="StatusBar">
-      <param name="ios-package" value="CDVStatusBar" onload="true" />
-    </feature>
+  <name>Trento in Tasca</name>
+  <description>
+    Il Comune in tasca: Trento (Smart Campus Lab)
+  </description>
+  <author email="info@smartcampuslab.it" href="http://www.smartcampuslab.it/">
+    Smart Campus Lab
+  </author>
+  <content src="index.html" />
+  <access origin="*" />
+  <preference name="fullscreen" value="true" />
+  <preference name="webviewbounce" value="false" />
+  <preference name="UIWebViewBounce" value="false" />
+  <preference name="DisallowOverscroll" value="true" />
+  <feature name="StatusBar">
+    <param name="ios-package" value="CDVStatusBar" onload="true" />
+  </feature>
+  <preference name="AndroidPersistentFileLocation" value="Compatibility" />
+  <preference name="iosPersistentFileLocation" value="Compatibility" />
+  <preference name="LoadUrlTimeoutValue" value="5000"/>
+  <preference name="SplashScreenDelay" value="1000"/>
+  <preference name="KeyboardDisplayRequiresUserAction" value="false"/>
 </widget>

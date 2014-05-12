@@ -597,34 +597,34 @@ angular.module('starter.services', [])
     console.log('Error: ' + msg);
     fsObj.reject();
   };
+  var rootFS;
   var fsObj = $q.defer();
   var filesystem = fsObj.promise;
   console.log('Opening file system...');
   if (ionic.Platform.isWebView()) {
     document.addEventListener("deviceready", function () {
       window.requestFileSystem(window.PERSISTENT, 50 * 1024 * 1024 /*50MB*/ , function (fs) {
-        console.log('Opened file system: ' + fs.root.toURL());
+        rootFS=fs.root;
+        console.log('Opened file system: ' + rootFS.toURL());
         if (device.platform == 'Android') {
           console.log('cordova (android) fs...');
           fsRoot = 'files-external';
+//          fsRoot = 'documents';
         } else {
           console.log('cordova (ios) fs...');
           fsRoot = 'documents';
         }
-        /*
-                var dirReader = fs.root.createReader();
-                dirReader.readEntries(function(entries) {
-                    for(var i = 0; i < entries.length; i++) {
-                        var entry = entries[i];
-                        if (entry.isDirectory){
-                            console.log('Directory: ' + entry.fullPath);
-                        } else if (entry.isFile){
-                            console.log('File: ' + entry.fullPath);
-                        }
-                    }
-                }, onErrorFS);
-                */
-        fsObj.resolve(fs.root);
+        fs.root.getDirectory(IMAGESDIR_NAME, {
+          create: true
+        }, function (dirEntry) {
+          console.log('main dirEntry.nativeURL: '+dirEntry.nativeURL);
+          //console.log('main dirEntry.toUrl(): '+dirEntry.toUrl());
+          console.log('main dirEntry.fullPath: '+dirEntry.fullPath);
+          fsObj.resolve(dirEntry);
+        },function(err){
+          console.log('cannot find main folder fs');
+          fsObj.reject('cannot find main folder fs');
+        });
       }, onErrorFS);
     }, false);
   } else {
@@ -646,10 +646,35 @@ angular.module('starter.services', [])
     */
   }
   return {
-    list: function (dirname) {
-      return filesystem.then(function (rootDir) {
-        console.log('rootDir: ' + rootDir.fullPath);
-        return rootDir;
+    listRoot: function (dirname) {
+      return filesystem.then(function (mainDir) {
+        /*
+        var dirReader = rootDir.createReader();
+        dirReader.readEntries(function(entries) {
+          for(var i = 0; i < entries.length; i++) {
+            var entry = entries[i];
+            if (entry.isDirectory){
+              console.log('Directory: ' + entry.toUrl());
+            } else if (entry.isFile){
+              console.log('File: ' + entry.toUrl());
+            }
+          }
+        }, function(e){
+          console.log('fsRoot Exception: '+e);
+        });
+        */
+        var dirReader = mainDir.createReader();
+        dirReader.readEntries(function(entries) {
+          for (entry in entries) {
+            if (entry.isDirectory){
+              console.log('Directory: ' + entry.nativeUrl);
+            } else if (entry.isFile){
+              console.log('File: ' + entry.nativeUrl);
+            }
+          }
+        }, function(e){
+          console.log('fsMain Exception: '+e);
+        });
       });
     },
     get: function (fileurl) {
@@ -657,44 +682,51 @@ angular.module('starter.services', [])
       var filename = fileurl.substring(fileurl.lastIndexOf('/') + 1);
       //console.log('filename: '+filename);
       var filegot = $q.defer();
-      filesystem.then(function (rootDir) {
-        console.log('rootDir: ' + rootDir.fullPath);
-        console.log('rootDir URL: ' + rootDir.toURL());
-        rootDir.getDirectory(IMAGESDIR_NAME, {
-          create: true
-        }, function (dirEntry) {
-          var filesavepath = rootDir.fullPath + IMAGESDIR_NAME + '/' + filename;
-          dirEntry.getFile(filename, {}, function (fileEntry) {
-            console.log('file already saved: ' + filesavepath);
-            console.log('file path: ' + fileEntry.fullPath);
-            //                        fileEntry.remove(function(){  console.log('file removed'); });
+      filesystem.then(function (mainDir) {
+        //console.log('rootDir: ' + rootDir.fullPath);
+        mainDir.getFile(filename, {}, function (fileEntry) {
+          /*
+          console.log('file url: ' + fileEntry.toURL());
+          console.log('file path: ' + fileEntry.fullPath);
+          window.resolveLocalFileSystemURL(filesavepath,function(entry){
+            console.log('entry.nativeURL: '+entry.nativeURL);
+            console.log('entry.toUrl(): '+entry.toUrl());
+            console.log('entry.fullPath: '+entry.fullPath);
             filegot.resolve(filesavepath);
-          }, function () {
-            if (ionic.Platform.isWebView()) {
-              console.log('[cordova] downloading to ' + filesavepath);
-              var fileTransfer = new FileTransfer();
-              fileTransfer.download(fileurl, filesavepath, function (fileEntry) {
-                console.log("download complete: " + fileEntry.fullPath);
-                filegot.resolve(fileEntry.toURL());
-              }, function (error) {
-                //console.log("download error source " + error.source);console.log("download error target " + error.target);console.log("donwload error code: " + error.code);
-                filegot.reject(error);
-              }, true, { /* headers: { "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA==" } */ });
-            } else {
-              // NON CORDOVA IMPLEMENTATION PARKED: returning the same web url get got as input, for the moment
-              filegot.resolve(fileurl);
-              /*
-                            $http({ method:'GET', url:fileurl, responseType:'arraybuffer' }).success(function(data,status,headers,config){
-                                console.log(typeof data);
-                                console.log('data.byteLength='+data.byteLength);
-                            });
-*/
-            }
+          },function(err){
+            console.log('cordova resolveLocalFileSystemURL() error:');
+            console.log(err);
+            filegot.resolve(fileurl);
           });
+          */
+          var filesavepath = rootFS.toURL() + IMAGESDIR_NAME + '/' + filename;
+          console.log('already downloaded to "'+filesavepath+'"');
+          filegot.resolve(filesavepath);
         }, function () {
-          filegot.reject();
+          if (ionic.Platform.isWebView()) {
+            var filesavepath = rootFS.toURL() + IMAGESDIR_NAME + '/' + filename;
+            console.log('not found: downloading to "'+filesavepath+'"');
+            var fileTransfer = new FileTransfer();
+            fileTransfer.download(fileurl, filesavepath, function (fileEntry) {
+              console.log("download complete: " + filesavepath);
+              filegot.resolve(filesavepath);
+            }, function (error) {
+              //console.log("download error source " + error.source);console.log("download error target " + error.target);console.log("donwload error code: " + error.code);
+              filegot.reject(error);
+            }, true, { /* headers: { "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA==" } */ });
+          } else {
+            // NON CORDOVA IMPLEMENTATION PARKED: returning the same web url get got as input, for the moment
+            filegot.resolve(fileurl);
+            /*
+            $http({ method:'GET', url:fileurl, responseType:'arraybuffer' }).success(function(data,status,headers,config){
+                console.log(typeof data);
+                console.log('data.byteLength='+data.byteLength);
+            });
+            */
+          }
         });
       });
+      this.listRoot();
       return filegot.promise;
     }
   };

@@ -92,9 +92,9 @@ angular.module('starter.services', [])
     poiCateFromType: function (type) {
       return poiTypes[type];
     },
-    poiCateFromDbClassification: function (classification) {
-      for (i=0;i<poiTypes.length;i++) {
-        if (poiTypes[i].it==classification) return poiTypes[i];
+    poiCateFromDbClassification: function (dbclassification) {
+      for (var poiType in poiTypes) {
+        if (poiTypes[poiType].it==dbclassification) return poiTypes[poiType];
       }
       return {
         de: 'UNKNOWN',
@@ -108,9 +108,9 @@ angular.module('starter.services', [])
     eventCateFromType: function (type) {
       return eventTypes[type];
     },
-    eventCateFromDbClassification: function (classification) {
-      for (i=0;i<eventTypes.length;i++) {
-        if (eventTypes[i].it==classification) return eventTypes[i];
+    eventCateFromDbClassification: function (dbclassification) {
+      for (var eventType in eventTypes) {
+        if (eventTypes[eventType].it==dbclassification) return eventTypes[eventType];
       }
       return {
         de: 'UNKNOWN',
@@ -401,14 +401,14 @@ angular.module('starter.services', [])
         var lista = []
         dbObj.transaction(function (tx) {
           //console.log('type: '+types[dbname]);
-          tx.executeSql('SELECT id, data, lat, lon FROM ContentObjects WHERE type=?', [types[dbname]], function (tx, results) {
+          tx.executeSql('SELECT id, classification, data, lat, lon FROM ContentObjects WHERE type=?', [types[dbname]], function (tx, results) {
             var len = results.rows.length,
               i;
             console.log('results.rows.length: ' + results.rows.length);
             for (i = 0; i < len; i++) {
-              item=results.rows.item(i);
+              var item=results.rows.item(i);
               //console.log(item);
-              result=JSON.parse(item.data);
+              var result=JSON.parse(item.data);
               result['dbClassification']=item.classification;
               if (dbname=='event') {
                 result.dbClassification=Config.eventCateFromDbClassification(result.dbClassification);
@@ -450,14 +450,14 @@ angular.module('starter.services', [])
         dbObj.transaction(function (tx) {
           //                    console.log('type: '+types[dbname]);
           console.log('category: ' + cateId);
-          tx.executeSql('SELECT id, data, lat, lon FROM ContentObjects WHERE type=? AND classification=?', [types[dbname], cateId], function (tx, cateResults) {
+          tx.executeSql('SELECT id, classification, data, lat, lon FROM ContentObjects WHERE type=? AND classification=?', [types[dbname], cateId], function (tx, cateResults) {
             var len = cateResults.rows.length,
               i;
             console.log('cateResults.rows.length: ' + cateResults.rows.length);
             for (i = 0; i < len; i++) {
-              item=cateResults.rows.item(i);
+              var item=cateResults.rows.item(i);
               //console.log(item);
-              result=JSON.parse(item.data);
+              var result=JSON.parse(item.data);
               result['dbClassification']=item.classification;
               if (dbname=='event') {
                 result.dbClassification=Config.eventCateFromDbClassification(result.dbClassification);
@@ -509,16 +509,16 @@ angular.module('starter.services', [])
             for (i = 0; i < itemsIds.length; i++) itemsIds[i] = '?';
             idCond = 'id IN (' + itemsIds.join() + ')';
           }
-          qParams = itemId.split(',');
+          var qParams = itemId.split(',');
           qParams.unshift(types[dbname]);
-          dbQuery = 'SELECT id, data, lat, lon FROM ContentObjects WHERE type=? AND ' + idCond;
+          var dbQuery = 'SELECT id, classification, data, lat, lon FROM ContentObjects WHERE type=? AND ' + idCond;
           console.log('dbQuery: ' + dbQuery);
           tx.executeSql(dbQuery, qParams, function (tx, results) {
             if (results.rows.length > 0) {
               if (itemId.indexOf(',') == -1) {
-                item=results.rows.item(0);
+                var item=results.rows.item(0);
                 //console.log(item);
-                result=JSON.parse(item.data);
+                var result=JSON.parse(item.data);
                 result['dbClassification']=item.classification;
                 if (dbname=='event') {
                   result.dbClassification=Config.eventCateFromDbClassification(result.dbClassification);
@@ -527,11 +527,10 @@ angular.module('starter.services', [])
                 }
                 dbitem.resolve(result);
               } else {
-                var len = results.rows.length,
-                  i;
+                var len = results.rows.length, i;
                 console.log('results.rows.length: ' + results.rows.length);
                 for (i = 0; i < len; i++) {
-                  item=results.rows.item(i);
+                  var item=results.rows.item(i);
                   //console.log(item);
                   result=JSON.parse(item.data);
                   result['dbClassification']=item.classification;

@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['google-maps'])
 
-.controller('MenuCtrl', function($scope, $rootScope, DatiDB) {
+.controller('MenuCtrl', function($scope, $rootScope, DatiDB, Config) {
 	var broserLanguage = window.navigator.userLanguage || window.navigator.language;
 	var lang=broserLanguage.substring(0,2);
 	if (lang!='it' && lang!='en' && lang!='de') {
@@ -9,6 +9,8 @@ angular.module('starter.controllers', ['google-maps'])
         $rootScope.lang=lang;
     }
     DatiDB.sync();
+    $scope.poiTypes=Config.poiTypesList();
+    $scope.eventTypes=Config.eventTypesList();
 })
 .controller('HomeCtrl', function($scope, Files) {
 /*

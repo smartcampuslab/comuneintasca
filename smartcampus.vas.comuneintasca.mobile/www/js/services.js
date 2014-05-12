@@ -648,6 +648,7 @@ angular.module('starter.services', [])
       quotaRequested(FS_QUOTA);
     }
     */
+    fsObj.resolve();
   }
   return {
     listRoot: function (dirname) {
@@ -687,50 +688,54 @@ angular.module('starter.services', [])
       //console.log('filename: '+filename);
       var filegot = $q.defer();
       filesystem.then(function (mainDir) {
-        //console.log('rootDir: ' + rootDir.fullPath);
-        mainDir.getFile(filename, {}, function (fileEntry) {
-          /*
-          console.log('file url: ' + fileEntry.toURL());
-          console.log('file path: ' + fileEntry.fullPath);
-          window.resolveLocalFileSystemURL(filesavepath,function(entry){
-            console.log('entry.nativeURL: '+entry.nativeURL);
-            console.log('entry.toUrl(): '+entry.toUrl());
-            console.log('entry.fullPath: '+entry.fullPath);
-            filegot.resolve(filesavepath);
-          },function(evt){
-            console.log('cordova resolveLocalFileSystemURL() error:');
-            console.log(evt.target.error.code );
-            filegot.resolve(fileurl);
-          });
-          */
-          var filesavepath = rootFS.toURL() + IMAGESDIR_NAME + '/' + filename;
-          console.log('already downloaded to "'+filesavepath+'"');
-          filegot.resolve(filesavepath);
-        }, function () {
-          if (ionic.Platform.isWebView()) {
-            var filesavepath = rootFS.toURL() + IMAGESDIR_NAME + '/' + filename;
-            console.log('not found: downloading to "'+filesavepath+'"');
-            var fileTransfer = new FileTransfer();
-            fileTransfer.download(fileurl, filesavepath, function (fileEntry) {
-              console.log("download complete: " + filesavepath);
-              filegot.resolve(filesavepath);
-            }, function (error) {
-              //console.log("download error source " + error.source);console.log("download error target " + error.target);console.log("donwload error code: " + error.code);
-              filegot.reject(error);
-            }, true, { /* headers: { "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA==" } */ });
-          } else {
-            // NON CORDOVA IMPLEMENTATION PARKED: returning the same web url get got as input, for the moment
-            filegot.resolve(fileurl);
+        if (ionic.Platform.isWebView()) {
+          //console.log('rootDir: ' + rootDir.fullPath);
+          mainDir.getFile(filename, {}, function (fileEntry) {
             /*
-            $http({ method:'GET', url:fileurl, responseType:'arraybuffer' }).success(function(data,status,headers,config){
-                console.log(typeof data);
-                console.log('data.byteLength='+data.byteLength);
+            console.log('file url: ' + fileEntry.toURL());
+            console.log('file path: ' + fileEntry.fullPath);
+            window.resolveLocalFileSystemURL(filesavepath,function(entry){
+              console.log('entry.nativeURL: '+entry.nativeURL);
+              console.log('entry.toUrl(): '+entry.toUrl());
+              console.log('entry.fullPath: '+entry.fullPath);
+              filegot.resolve(filesavepath);
+            },function(evt){
+              console.log('cordova resolveLocalFileSystemURL() error:');
+              console.log(evt.target.error.code );
+              filegot.resolve(fileurl);
             });
             */
-          }
-        });
+            var filesavepath = rootFS.toURL() + IMAGESDIR_NAME + '/' + filename;
+            console.log('already downloaded to "'+filesavepath+'"');
+            filegot.resolve(filesavepath);
+          }, function () {
+            if (ionic.Platform.isWebView()) {
+              var filesavepath = rootFS.toURL() + IMAGESDIR_NAME + '/' + filename;
+              console.log('not found: downloading to "'+filesavepath+'"');
+              var fileTransfer = new FileTransfer();
+              fileTransfer.download(fileurl, filesavepath, function (fileEntry) {
+                console.log("download complete: " + filesavepath);
+                filegot.resolve(filesavepath);
+              }, function (error) {
+                //console.log("download error source " + error.source);console.log("download error target " + error.target);console.log("donwload error code: " + error.code);
+                filegot.reject(error);
+              }, true, { /* headers: { "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA==" } */ });
+            } else {
+              // NON CORDOVA IMPLEMENTATION PARKED: returning the same web url get got as input, for the moment
+              filegot.resolve(fileurl);
+              /*
+              $http({ method:'GET', url:fileurl, responseType:'arraybuffer' }).success(function(data,status,headers,config){
+                  console.log(typeof data);
+                  console.log('data.byteLength='+data.byteLength);
+              });
+              */
+            }
+          });
+          //this.listRoot();
+        } else {
+          filegot.resolve(fileurl);
+        }
       });
-      this.listRoot();
       return filegot.promise;
     }
   };

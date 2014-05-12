@@ -410,6 +410,11 @@ angular.module('starter.services', [])
               //console.log(item);
               result=JSON.parse(item.data);
               result['dbClassification']=item.classification;
+              if (dbname=='event') {
+                result.dbClassification=Config.eventCateFromDbClassification(result.dbClassification);
+              } else if (dbname=='poi') {
+                result.dbClassification=Config.poiCateFromDbClassification(result.dbClassification);
+              }
               lista.push(result);
             }
           }, function (tx, err) {
@@ -454,6 +459,11 @@ angular.module('starter.services', [])
               //console.log(item);
               result=JSON.parse(item.data);
               result['dbClassification']=item.classification;
+              if (dbname=='event') {
+                result.dbClassification=Config.eventCateFromDbClassification(result.dbClassification);
+              } else if (dbname=='poi') {
+                result.dbClassification=Config.poiCateFromDbClassification(result.dbClassification);
+              }
               lista.push(result);
             }
           }, function (tx, err) {
@@ -506,7 +516,16 @@ angular.module('starter.services', [])
           tx.executeSql(dbQuery, qParams, function (tx, results) {
             if (results.rows.length > 0) {
               if (itemId.indexOf(',') == -1) {
-                dbitem.resolve(JSON.parse(results.rows.item(0).data));
+                item=results.rows.item(0);
+                //console.log(item);
+                result=JSON.parse(item.data);
+                result['dbClassification']=item.classification;
+                if (dbname=='event') {
+                  result.dbClassification=Config.eventCateFromDbClassification(result.dbClassification);
+                } else if (dbname=='poi') {
+                  result.dbClassification=Config.poiCateFromDbClassification(result.dbClassification);
+                }
+                lista.push(result);
               } else {
                 var len = results.rows.length,
                   i;
@@ -516,6 +535,11 @@ angular.module('starter.services', [])
                   //console.log(item);
                   result=JSON.parse(item.data);
                   result['dbClassification']=item.classification;
+                  if (dbname=='event') {
+                    result.dbClassification=Config.eventCateFromDbClassification(result.dbClassification);
+                  } else if (dbname=='poi') {
+                    result.dbClassification=Config.poiCateFromDbClassification(result.dbClassification);
+                  }
                   lista.push(result);
                 }
               }

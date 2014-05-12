@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'starter.filters', 'starter.directives', 'localization'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $rootScope) {
     if (typeof(Number.prototype.toRad) === "undefined") {
       Number.prototype.toRad = function() {
         return this * Math.PI / 180;
@@ -18,6 +18,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       StatusBar.hide();
     }
   });
+  // global functions for toolbox
+  $rootScope.extLink = function(url) {
+	window.open(url,'_system');
+  } 
+  $rootScope.email = function(to) {
+	window.plugin.email.open({to: [to]});
+  }
+  $rootScope.hasNav = function(loc) {
+	return loc != null;
+  }
+  $rootScope.bringmethere = function(loc) {
+  }
 })
 /*
 /mainevents

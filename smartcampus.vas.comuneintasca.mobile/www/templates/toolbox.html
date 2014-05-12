@@ -1,11 +1,7 @@
-<div class="row">
-		<div class="col col-60">
-		<a ng-if="obj.url" class="button comuni-button" href="{{obj.url}}" target="_system"><i class="icon ion-ios7-world-outline"></i></a>
-		<a ng-if="obj.contacts.email" class="button comuni-button"><i class="icon ion-ios7-email-outline"></i></a>
-		<a ng-if="obj.contacts.phone" class="button comuni-button"><i class="icon ion-ios7-telephone-outline"></i></a>
-		</div>
-		<div class="col col-40" align="right">
-		<a class="button comuni-button"><i class="icon ion-social-facebook-outline"></i></a>
-		<a class="button comuni-button"><i class="icon ion-social-twitter-outline"></i></a>
-		</div>
+<div class="tabs tabs-icon-only">
+		<a ng-if="obj.url" class="tab-item" ng-click="extLink(obj.url)"><i class="icon ion-ios7-world"></i></a>
+		<a ng-if="obj.contacts.email" class="tab-item" ng-click="email(obj.contacts.email)"><i class="icon ion-ios7-email"></i></a>
+		<a ng-if="obj.contacts.phone" class="tab-item" href="tel:{{obj.contacts.phone}}"><i class="icon ion-ios7-telephone"></i></a>
+		<a ng-if="hasNav(obj.location)" class="tab-item" ng-click="bringmethere(obj.location)"><i class="icon ion-navigate"></i></a>
+		<a class="tab-item"><i class="icon ion-share"></i></a>
 </div>

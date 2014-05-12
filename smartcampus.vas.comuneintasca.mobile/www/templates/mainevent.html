@@ -4,8 +4,10 @@
     <div class="padding">
       <h1>{{obj.title | translate}}</h1>
       <div class="subtitle">{{obj.eventDateDescription | translate}}</div>
-      <div ng-include="'templates/toolbox.html'"></div>
       <div class="htmldesc" ng-bind-html="obj.description | translate"></div>
     </div>
   </ion-content>
+  <ion-footer-bar>
+	<div ng-include="'templates/toolbox.html'"></div>
+  </ion-footer-bar>
 </ion-view>

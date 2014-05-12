@@ -1,31 +1,31 @@
 [
   {
     "key":"Storia",
-    "value":"History",
+    "value":"Storia",
     "description":"side menu label"
   }, {
     "key":"Eventi Principali",
-    "value":"Main Events",
+    "value":"Eventi Principali",
     "description":"side menu label"
   }, {
     "key":"Mappa",
-    "value":"Map",
+    "value":"Mappa",
     "description":"side menu label"
   }, {
     "key":"Itinerari",
-    "value":"Itineraries",
+    "value":"Itinerari",
     "description":"side menu label"
   }, {
     "key":"Hotel",
-    "value":"Hotels",
+    "value":"Hotel",
     "description":"side menu label"
   }, {
     "key":"Ristoranti",
-    "value":"Restaurants",
+    "value":"Ristoranti",
     "description":"side menu label"
   }, {
     "key":"Servizi",
-    "value":"Services",
+    "value":"Servizi",
     "description":"side menu label"
   }
 ]

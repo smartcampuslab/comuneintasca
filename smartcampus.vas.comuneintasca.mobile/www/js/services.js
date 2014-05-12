@@ -41,7 +41,7 @@ angular.module('starter.services', [])
     return {
         locate: function() {
             var localization = $q.defer();
-            if (window.cordova) {
+            if (ionic.Platform.isWebView()) {
                 console.log('cordova localization...');
                 document.addEventListener("deviceready", function(){
                     console.log('cordova localization inited...');
@@ -449,7 +449,7 @@ angular.module('starter.services', [])
     var fsObj=$q.defer();
     var filesystem=fsObj.promise;
     console.log('Opening file system...');
-    if (window.cordova) {
+    if (ionic.Platform.isWebView()) {
         document.addEventListener("deviceready", function(){
             window.requestFileSystem(window.PERSISTENT, 50*1024*1024 /*5MB*/, function(fs){
                 console.log('Opened file system: ' + fs.root.toURL());
@@ -516,7 +516,7 @@ angular.module('starter.services', [])
                         filegot.resolve(fileEntry.toURL());
                     },function(){
                         filesavepath=rootDir.toURL()+'SavedImages/'+filename;
-                        if (window.cordova) {
+                        if (ionic.Platform.isWebView()) {
                             console.log('[cordova] downloading to '+filesavepath);
                             var fileTransfer = new FileTransfer();
                             fileTransfer.download(fileurl,filesavepath,function(fileEntry) {

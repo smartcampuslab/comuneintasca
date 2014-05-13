@@ -88,7 +88,7 @@ angular.module('starter.services', [])
       return 'TrentoInTasca';
     },
     schemaVersion: function () {
-      return 38;
+      return 40;
     },
     syncTimeoutSeconds: function () {
       return 60 * 60 * 24 * 10; /* 60 times 60 seconds = 1 HOUR --> x24 = 1 DAY x10 */

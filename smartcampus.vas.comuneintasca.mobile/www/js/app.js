@@ -29,6 +29,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 	return loc != null;
   }
   $rootScope.bringmethere = function(loc) {
+    if(device.platform == "Android"){
+		window.open("http://maps.google.com/maps?daddr="+loc[0]+","+loc[1],"_system");	
+    }else if(device.platform == "iOS"){
+        var url = "maps:daddr="+loc[0]+","+loc[1];                
+        successFn();
+        window.location = url;
+    }else{
+		console.error("Unknown platform");
+    }			
   }
   $rootScope.share = function(text, webUrl, imgUrl) {
 	window.plugins.socialsharing.share(text, null, imgUrl, webUrl);

@@ -279,128 +279,135 @@ angular.module('starter.services', [])
     sync: function () {
       syncronization = $q.defer();
       db.then(function (dbObj) {
-        var now_as_epoch = parseInt((new Date).getTime() / 1000);
-        if (lastSynced == -1 || now_as_epoch > (lastSynced + Config.syncTimeoutSeconds())) {
-          syncing = $ionicLoading.show({
-            content: 'syncing...',
-            duration: Config.syncingOverlayTimeoutMillis()
-          });
-
-          $http.defaults.headers.common.Accept = 'application/json';
-          $http.defaults.headers.post = {
-            'Content-Type': 'application/json'
-          };
-          if (currentDbVersion == 0) {
-            currentSyncOptions = localSyncOptions;
-          } else {
-            currentSyncOptions = syncOptions;
-          }
-          $http(currentSyncOptions).success(function (data, status, headers, config) {
-            console.log((now_as_epoch - lastSynced) + ' seconds since last syncronization: checking web service...');
-            lastSynced = now_as_epoch;
-
-            nextVersion = data.version;
-            console.log('nextVersion: ' + nextVersion);
-            if (nextVersion > currentDbVersion) {
-              objsDone = $q.defer();
-              objsUpdated = {};
-              objsDeleted = {};
-
-              dbObj.transaction(function (tx) {
-                angular.forEach(types, function (contentTypeClassName, contentTypeKey) {
-                  console.log('type (' + contentTypeKey + '): ' + contentTypeClassName);
-
-                  if (!angular.isUndefined(data.updated[contentTypeClassName])) {
-                    updates = data.updated[contentTypeClassName];
-                    console.log('updates: ' + updates.length);
-
-                    angular.forEach(updates, function (item, idx) {
-                      tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [item.id]);
-
-                      classification = '';
-                      if (contentTypeKey == 'content') {
-                        classification = item.classification;
-                      } else if (contentTypeKey == 'poi') {
-                        classification = item.classification.it;
-                      } else if (contentTypeKey == 'event') {
-                        category = item.category;
-                        if (category) {
-                          // "category": "{objectName=Feste, mercati e fiere, classIdentifier=tipo_eventi, datePublished=1395152152, dateModified=1395152182, objectRemoteId=a15d79dc9794d829ed43364863a8225a, objectId=835351, link=http://www.comune.trento.it/api/opendata/v1/content/object/835351}"
-                          startMrkr = "{objectName=";
-                          endMrkr = ", classIdentifier=";
-                          classification = category.substring(startMrkr.length, category.indexOf(endMrkr)) || '';
-                          if (!classification || classification.toString() == 'false') classification = Config.eventCateFromType('misc').it;
-                          console.log('event cate: ' + classification);
-                        }
-                      } else if (contentTypeKey == 'mainevent') {
-                        classification = item.classification.it;
-                        item.category = 'mainevent';
-                      }
-                      values = [item.id, item.version, contentTypeClassName, item.category, classification, JSON.stringify(item), ((item.location && item.location.length == 2) ? item.location[0] : -1), ((item.location && item.location.length == 2) ? item.location[1] : -1), item.updateTime];
-                      tx.executeSql('INSERT INTO ContentObjects (id, version, type, category, classification, data, lat, lon, updateTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', values, function (tx, res) { //success callback
-                        console.log('inserted obj with id: ' + item.id);
-                      }, function (e) { //error callback
-                        console.log('unable to insert obj with id ' + item.id + ': ' + e.message);
-                      });
-                    });
-                  } else {
-                    console.log('nothing to update');
-                  }
-
-                  if (!angular.isUndefined(data.deleted[contentTypeClassName])) {
-                    deletions = data.deleted[contentTypeClassName];
-                    console.log('deletions: ' + deletions.length);
-
-                    angular.forEach(deletions, function (item, idx) {
-                      console.log('deleting obj with id: ' + item.id);
-                      tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [item.id], function (tx, res) { //success callback
-                        console.log('deleted obj with id: ' + item.id);
-                      }, function (e) { //error callback
-                        console.log('unable to deleted obj with id ' + item.id + ': ' + e.message);
-                      });
-                    });
-                  } else {
-                    console.log('nothing to delete');
-                  }
-                });
-              }, function () { //error callback
-                console.log('cannot sync');
-                objsDone.reject(false);
-              }, function () { //success callback
-                console.log('synced');
-                objsDone.resolve(true);
-              });
-
-              objsDone.promise.then(function () {
-                currentDbVersion = nextVersion;
-                localStorage.currentDbVersion = currentDbVersion;
-
-                $ionicLoading.hide();
-                syncronization.resolve(currentDbVersion);
-              }, function () {
-                console.log('cannot initialize (2)');
-
-                $ionicLoading.hide();
-                syncronization.reject();
-              });
-            } else {
-              console.log('local database already up-to-date!');
-
-              $ionicLoading.hide();
-              syncronization.resolve(currentDbVersion);
-            }
-          }).error(function (data, status, headers, config) {
-            console.log('data error!');
-            console.log(data);
-
-            $ionicLoading.hide();
-            syncronization.reject();
-          });
-        } else {
-          console.log('avoiding too frequent syncronizations. seconds since last one: ' + (now_as_epoch - lastSynced));
+        if (ionic.Platform.isWebView() && navigator.connection.type==Connection.NONE) {
+          console.log('no network connection');
 
           $ionicLoading.hide();
           syncronization.resolve(currentDbVersion);
+        } else {
+          var now_as_epoch = parseInt((new Date).getTime() / 1000);
+          if (lastSynced == -1 || now_as_epoch > (lastSynced + Config.syncTimeoutSeconds())) {
+            syncing = $ionicLoading.show({
+              content: 'syncing...',
+              duration: Config.syncingOverlayTimeoutMillis()
+            });
+
+            $http.defaults.headers.common.Accept = 'application/json';
+            $http.defaults.headers.post = {
+              'Content-Type': 'application/json'
+            };
+            if (currentDbVersion == 0) {
+              currentSyncOptions = localSyncOptions;
+            } else {
+              currentSyncOptions = syncOptions;
+            }
+            $http(currentSyncOptions).success(function (data, status, headers, config) {
+              console.log((now_as_epoch - lastSynced) + ' seconds since last syncronization: checking web service...');
+              lastSynced = now_as_epoch;
+
+              nextVersion = data.version;
+              console.log('nextVersion: ' + nextVersion);
+              if (nextVersion > currentDbVersion) {
+                objsDone = $q.defer();
+                objsUpdated = {};
+                objsDeleted = {};
+
+                dbObj.transaction(function (tx) {
+                  angular.forEach(types, function (contentTypeClassName, contentTypeKey) {
+                    console.log('type (' + contentTypeKey + '): ' + contentTypeClassName);
+
+                    if (!angular.isUndefined(data.updated[contentTypeClassName])) {
+                      updates = data.updated[contentTypeClassName];
+                      console.log('updates: ' + updates.length);
+
+                      angular.forEach(updates, function (item, idx) {
+                        tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [item.id]);
+
+                        classification = '';
+                        if (contentTypeKey == 'content') {
+                          classification = item.classification;
+                        } else if (contentTypeKey == 'poi') {
+                          classification = item.classification.it;
+                        } else if (contentTypeKey == 'event') {
+                          category = item.category;
+                          if (category) {
+                            // "category": "{objectName=Feste, mercati e fiere, classIdentifier=tipo_eventi, datePublished=1395152152, dateModified=1395152182, objectRemoteId=a15d79dc9794d829ed43364863a8225a, objectId=835351, link=http://www.comune.trento.it/api/opendata/v1/content/object/835351}"
+                            startMrkr = "{objectName=";
+                            endMrkr = ", classIdentifier=";
+                            classification = category.substring(startMrkr.length, category.indexOf(endMrkr)) || '';
+                            if (!classification || classification.toString() == 'false') classification = Config.eventCateFromType('misc').it;
+                            console.log('event cate: ' + classification);
+                          }
+                        } else if (contentTypeKey == 'mainevent') {
+                          classification = item.classification.it;
+                          item.category = 'mainevent';
+                        }
+                        values = [item.id, item.version, contentTypeClassName, item.category, classification, JSON.stringify(item), ((item.location && item.location.length == 2) ? item.location[0] : -1), ((item.location && item.location.length == 2) ? item.location[1] : -1), item.updateTime];
+                        tx.executeSql('INSERT INTO ContentObjects (id, version, type, category, classification, data, lat, lon, updateTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', values, function (tx, res) { //success callback
+                          console.log('inserted obj with id: ' + item.id);
+                        }, function (e) { //error callback
+                          console.log('unable to insert obj with id ' + item.id + ': ' + e.message);
+                        });
+                      });
+                    } else {
+                      console.log('nothing to update');
+                    }
+
+                    if (!angular.isUndefined(data.deleted[contentTypeClassName])) {
+                      deletions = data.deleted[contentTypeClassName];
+                      console.log('deletions: ' + deletions.length);
+
+                      angular.forEach(deletions, function (item, idx) {
+                        console.log('deleting obj with id: ' + item.id);
+                        tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [item.id], function (tx, res) { //success callback
+                          console.log('deleted obj with id: ' + item.id);
+                        }, function (e) { //error callback
+                          console.log('unable to deleted obj with id ' + item.id + ': ' + e.message);
+                        });
+                      });
+                    } else {
+                      console.log('nothing to delete');
+                    }
+                  });
+                }, function () { //error callback
+                  console.log('cannot sync');
+                  objsDone.reject(false);
+                }, function () { //success callback
+                  console.log('synced');
+                  objsDone.resolve(true);
+                });
+
+                objsDone.promise.then(function () {
+                  currentDbVersion = nextVersion;
+                  localStorage.currentDbVersion = currentDbVersion;
+
+                  $ionicLoading.hide();
+                  syncronization.resolve(currentDbVersion);
+                }, function () {
+                  console.log('cannot initialize (2)');
+
+                  $ionicLoading.hide();
+                  syncronization.reject();
+                });
+              } else {
+                console.log('local database already up-to-date!');
+
+                $ionicLoading.hide();
+                syncronization.resolve(currentDbVersion);
+              }
+            }).error(function (data, status, headers, config) {
+              console.log('cannot check for new data: network unavailable?');
+              console.log(status);
+
+              $ionicLoading.hide();
+              syncronization.resolve(currentDbVersion);
+            });
+          } else {
+            console.log('avoiding too frequent syncronizations. seconds since last one: ' + (now_as_epoch - lastSynced));
+
+            $ionicLoading.hide();
+            syncronization.resolve(currentDbVersion);
+          }
         }
       });
       return syncronization.promise;
@@ -723,16 +730,21 @@ angular.module('starter.services', [])
             filegot.resolve(filesavepath);
           }, function () {
             if (ionic.Platform.isWebView()) {
-              var filesavepath = rootFS.toURL() + IMAGESDIR_NAME + '/' + filename;
-              console.log('not found: downloading to "'+filesavepath+'"');
-              var fileTransfer = new FileTransfer();
-              fileTransfer.download(fileurl, filesavepath, function (fileEntry) {
-                console.log("download complete: " + filesavepath);
-                filegot.resolve(filesavepath);
-              }, function (error) {
-                //console.log("download error source " + error.source);console.log("download error target " + error.target);console.log("donwload error code: " + error.code);
-                filegot.reject(error);
-              }, true, { /* headers: { "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA==" } */ });
+              if (navigator.connection.type==Connection.NONE) {
+                console.log('no network connection: cannot download missing images!');
+                filegot.reject('no network connection');
+              } else {
+                var filesavepath = rootFS.toURL() + IMAGESDIR_NAME + '/' + filename;
+                console.log('not found: downloading to "'+filesavepath+'"');
+                var fileTransfer = new FileTransfer();
+                fileTransfer.download(fileurl, filesavepath, function (fileEntry) {
+                  console.log("download complete: " + filesavepath);
+                  filegot.resolve(filesavepath);
+                }, function (error) {
+                  //console.log("download error source " + error.source);console.log("download error target " + error.target);console.log("donwload error code: " + error.code);
+                  filegot.reject(error);
+                }, true, { /* headers: { "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA==" } */ });
+              }
             } else {
               // NON CORDOVA IMPLEMENTATION PARKED: returning the same web url get got as input, for the moment
               filegot.resolve(fileurl);

@@ -77,13 +77,25 @@ ion-side-menu .item {
 .comuni-item-image {
     border:4px solid #b7d6e8;height:100%;line-height:80px;
 }
+.comuni-item-image.unavailable, .comuni-item-image.missing, .comuni-item-image.error {
+  background-color:#AA3B2C;
+}
+.comuni-item-image.unavailable:after { content:'...'; }
+.comuni-item-image.missing:after { content:''; }
+.comuni-item-image.error:after { content:'!'; }
 p.comuni-item-bottomdetail {
     position:absolute;bottom:10px;left:105px;
 }
 
 .content-image-main {
     height:320px;line-height:320px;
+.content-image-main.unavailable, .content-image-main.missing, .content-image-main.error {
+  height:40px;line-height:40px;
+  background-color:#AA3B2C;
 }
+.content-image-main.unavailable:after { content:'...'; }
+.content-image-main.missing:after { content:''; }
+.content-image-main.error:after { content:'!'; }
 
 #content-home {
     background-color: #2975a7;

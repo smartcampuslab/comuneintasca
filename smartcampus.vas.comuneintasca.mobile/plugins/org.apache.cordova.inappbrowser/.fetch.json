@@ -1,1 +1,1 @@
-{"source":{"type":"local","path":"C:\\Users\\raman\\AppData\\Local\\Temp\\org.apache.cordova.inappbrowser\\package"}}
+{"source":{"type":"git","url":"https://github.com/apache/cordova-plugin-inappbrowser.git","subdir":"."}}

@@ -3,5 +3,5 @@
 		<a ng-if="obj.contacts.email" class="tab-item" ng-click="email(obj.contacts.email)"><i class="icon ion-ios7-email"></i></a>
 		<a ng-if="obj.contacts.phone" class="tab-item" href="tel:{{obj.contacts.phone}}"><i class="icon ion-ios7-telephone"></i></a>
 		<a ng-if="hasNav(obj.location)" class="tab-item" ng-click="bringmethere(obj.location)"><i class="icon ion-navigate"></i></a>
-		<a class="tab-item"><i class="icon ion-share"></i></a>
+		<a class="tab-item"><i class="icon ion-share" ng-click="share(obj.title.it,obj.url,obj.image)"></i></a>
 </div>

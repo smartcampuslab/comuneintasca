@@ -30,6 +30,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   }
   $rootScope.bringmethere = function(loc) {
   }
+  $rootScope.share = function(text, webUrl, imgUrl) {
+	window.plugins.socialsharing.share(text, null, imgUrl, webUrl);
+  }
+
 })
 /*
 /mainevents

@@ -4,6 +4,9 @@
       <ion-item ng-repeat="hotel in hotels" class="item-thumbnail-left" href="#/app/hotel/{{hotel.id}}">
         <comuni-img class="item-image comuni-item-image" image="hotel.image" gotdata="gotdata"></comuni-img>
         <h2>{{hotel.title|translate}}</h2>
+        <p>
+          <i class="icon ion-ios7-star" ng-if="!! hotel.stars" ng-repeat="n in _.range(0, hotel.stars)"></i>
+        </p>
         <p class="comuni-item-bottomdetail">{{hotel.address|translate}}</p>
       </ion-item>
     </ion-list>

@@ -1,19 +1,19 @@
 angular.module('starter.controllers', ['google-maps'])
 
-.controller('MenuCtrl', function($scope, $rootScope, DatiDB, Config) {
-	var broserLanguage = window.navigator.userLanguage || window.navigator.language;
-	var lang=broserLanguage.substring(0,2);
-	if (lang!='it' && lang!='en' && lang!='de') {
-        $rootScope.lang='en';
-    } else {
-        $rootScope.lang=lang;
-    }
-    DatiDB.sync();
-    $scope.poiTypes=Config.poiTypesList();
-    $scope.eventTypes=Config.eventTypesList();
+.controller('MenuCtrl', function ($scope, $rootScope, DatiDB, Config) {
+  var broserLanguage = window.navigator.userLanguage || window.navigator.language;
+  var lang = broserLanguage.substring(0, 2);
+  if (lang != 'it' && lang != 'en' && lang != 'de') {
+    $rootScope.lang = 'en';
+  } else {
+    $rootScope.lang = lang;
+  }
+  DatiDB.sync();
+  $scope.poiTypes = Config.poiTypesList();
+  $scope.eventTypes = Config.eventTypesList();
 })
-.controller('HomeCtrl', function($scope, Files) {
-/*
+  .controller('HomeCtrl', function ($scope, Files) {
+    /*
 $scope.show = function() {
 
    // Show the action sheet
@@ -32,8 +32,8 @@ $scope.show = function() {
 
  };
 */
-//    $state.go('contact.detail')
-})
+    //    $state.go('contact.detail')
+  })
 
 .controller('ContentCtrl', function ($scope, $state, $stateParams, DatiDB) {
   if ($stateParams.contentId) {
@@ -67,6 +67,7 @@ $scope.show = function() {
 })
 
 .controller('HotelsListCtrl', function ($scope, DatiDB) {
+  $scope._ = _;
   $scope.gotdata = DatiDB.all('hotel').then(function (data) {
     $scope.hotels = data;
   });
@@ -140,19 +141,19 @@ $scope.show = function() {
     $scope.mainevents = data;
   });
   $scope.ordering = 'A-Z';
-  
+
   // Triggered on a button click, or some other target
-  $scope.showPopup = function() {
-    Sort.showSortPopup($scope,['A-Z','Z-A','Date'],$scope.ordering,function(res){
-	  $scope.ordering = res;
-	});
-  } 
+  $scope.showPopup = function () {
+    Sort.showSortPopup($scope, ['A-Z', 'Z-A', 'Date'], $scope.ordering, function (res) {
+      $scope.ordering = res;
+    });
+  }
 })
-.controller('MainEventCtrl', function ($scope, DatiDB, $stateParams) {
-  $scope.gotdata = DatiDB.get('mainevent', $stateParams.maineventId).then(function (data) {
-	$scope.obj = data;
-  });
-})
+  .controller('MainEventCtrl', function ($scope, DatiDB, $stateParams) {
+    $scope.gotdata = DatiDB.get('mainevent', $stateParams.maineventId).then(function (data) {
+      $scope.obj = data;
+    });
+  })
 
 .controller('MappaCtrl', function ($scope, DatiDB) {
   $scope.map = {

@@ -3,37 +3,31 @@ angular.module('starter.services', [])
 .factory('Config', function ($q) {
   var poiTypes = {
     'museums': {
-      key: 'museums',
       de: 'Musei',
       it: 'Musei',
       en: 'Musei'
     },
     'buildings': {
-      key: 'buildings',
       de: 'Historische Gebäude',
       it: 'Edifici storici',
       en: 'Historic Buildings'
     },
     'churches': {
-      key: 'churches',
       de: 'Kirchen',
       it: 'Chiese',
       en: 'Churches'
     },
     'acheo': {
-      key: 'acheo',
       de: 'Archäologische Areas',
       it: 'Aree Archeologiche',
       en: 'Archaeological Areas'
     },
     'parks': {
-      key: 'parks',
       de: 'Natur',
       it: 'Natura',
       en: 'Nature'
     },
     'misc': {
-      key: 'misc',
       de: 'Andere Seiten von historischem und künstlerischem Interesse',
       it: 'Altri siti di interesse storico artistico',
       en: 'Other sites of historical and artistic interest'
@@ -41,54 +35,179 @@ angular.module('starter.services', [])
   };
   var eventTypes = {
     'fairs': {
-      key: 'fairs',
       de: '',
       it: 'Feste, mercati e fiere',
       en: ''
     },
     'conferences': {
-      key: 'conferences',
       de: '',
       it: 'Incontri, convegni e conferenze',
       en: ''
     },
     'shows': {
-      key: 'shows',
       de: '',
       it: 'Spettacoli',
       en: ''
     },
     'exhibitions': {
-      key: 'exhibitions',
       de: '',
       it: 'Mostre',
       en: ''
     },
     'labs': {
-      key: 'labs',
       de: '',
       it: 'Corsi e laboratori',
       en: ''
     },
     'competitions': {
-      key: 'competitions',
       de: '',
       it: 'Competizioni e gare',
       en: ''
     },
     'misc': {
-      key: 'misc',
       de: '',
       it: 'Iniziative varie',
       en: ''
     },
   };
+
+  var hotelTypes = {
+    'hotel': {
+      de: 'Hotel',
+      it: 'Hotel',
+      en: 'Hotel'
+    },
+    'hostel': {
+      de: 'Jugendherberge',
+      it: 'Ostello',
+      en: 'Youth Hostel'
+    },
+    'agri': {
+      de: 'Agritourismusbetrieb',
+      it: 'Agritur',
+      en: 'Farmhouse Inn'
+    },
+    'bnb': {
+      de: 'Bed and Breakfast',
+      it: 'Bed and Breakfast',
+      en: 'Bed and Breakfast'
+    },
+    'camp': {
+      de: 'Campingplatz',
+      it: 'Campeggio',
+      en: 'Camp-site'
+    },
+    'rooms': {
+      de: 'Zimmervermietung',
+      it: 'Affittacamere',
+      en: 'Landlord'
+    },
+    'apts': {
+      de: 'Ferienwohnungen',
+      it: 'Appartamenti per vacanze',
+      en: 'Holiday apartments'
+    },
+  };
+
+  var restaurantTypes = {
+    'osteria': {
+      de: '',
+      it: 'Osteria',
+      en: ''
+    },
+    'pizzeria': {
+      de: '',
+      it: 'Pizzeria',
+      en: ''
+    },
+    'trattoria': {
+      de: 'Gastwirtschaft',
+      it: 'Trattoria',
+      en: ' '
+    },
+    'typical': {
+      de: 'Bed and Breakfast',
+      it: 'Osteria tipica',
+      en: 'Typical Osteria'
+    },
+    'restaurant': {
+      de: 'Restaurant',
+      it: 'Ristorante',
+      en: 'Restaurant'
+    },
+    'pub': {
+      de: 'Bierstube',
+      it: 'Birreria',
+      en: 'Pub'
+    },
+    'fastfood': {
+      de: '',
+      it: 'Fast food',
+      en: ''
+    },
+    'bar': {
+      de: '',
+      it: 'Bar',
+      en: ''
+    },
+    'winebar': {
+      de: '',
+      it: 'Wine Bar',
+      en: ''
+    },
+    'agritur': {
+      de: 'Agritourismusbetrieb',
+      it: 'Agritur',
+      en: 'Agritur (farmhouse inn)'
+    },
+    'selfservice': {
+      de: '',
+      it: 'Self-service',
+      en: ''
+    },
+    'chinese': {
+      de: 'Chinesische Spezialitäten',
+      it: 'Specialità cinese',
+      en: 'Chinese specialities'
+    },
+    'thai': {
+      de: 'Thailändische und chinesische Spezialitäten',
+      it: 'Specialità thailandese e cinese',
+      en: 'Thai and Chinese specialities'
+    },
+    'brazil': {
+      de: 'Brasilianisches Restaurant',
+      it: 'Ristorante brasiliano',
+      en: 'Brazilian Restaurant'
+    },
+    'mexico': {
+      de: 'Mexikanische Küche',
+      it: 'Cucina messicana',
+      en: 'Mexican food'
+    },
+    'japan': {
+      de: 'Japanische Spezialitäten ',
+      it: 'Specialità giapponesi',
+      en: 'Japanese specialities'
+    },
+    'japanchina': {
+      de: 'Japanische und chinesische Spezialitäten',
+      it: 'Specialità giapponese e cinese',
+      en: 'Japanese and Chinese specialities'
+    },
+    'orient': {
+      de: 'Orientalische Spezialitäten',
+      it: 'Specialità orientali',
+      en: 'Oriental specialities'
+    }
+  };
+
   return {
     savedImagesDirName: function () {
       return 'TrentoInTasca';
     },
     schemaVersion: function () {
-      return 40;
+      return 45;
     },
     syncTimeoutSeconds: function () {
       return 60 * 60 * 24 * 10; /* 60 times 60 seconds = 1 HOUR --> x24 = 1 DAY x10 */
@@ -127,6 +246,42 @@ angular.module('starter.services', [])
       for (var eventType in eventTypes) {
         if (eventTypes.hasOwnProperty(eventType)) {
           if (eventTypes[eventType].it==dbclassification) return eventTypes[eventType];
+        }
+      }
+      return {
+        de: 'UNKNOWN',
+        it: 'UNKNOWN',
+        en: 'UNKNOWN'
+      };
+    },
+    hotelTypesList: function () {
+      return hotelTypes;
+    },
+    hotelCateFromType: function (type) {
+      return hotelTypes[type];
+    },
+    hotelCateFromDbClassification: function (dbclassification) {
+      for (var hotelType in hotelTypes) {
+        if (hotelTypes.hasOwnProperty(hotelType)) {
+          if (hotelTypes[hotelType].it==dbclassification) return hotelTypes[hotelType];
+        }
+      }
+      return {
+        de: 'UNKNOWN',
+        it: 'UNKNOWN',
+        en: 'UNKNOWN'
+      };
+    },
+    restaurantTypesList: function () {
+      return restaurantTypes;
+    },
+    restaurantCateFromType: function (type) {
+      return restaurantTypes[type];
+    },
+    restaurantCateFromDbClassification: function (dbclassification) {
+      for (var restaurantType in restaurantTypes) {
+        if (restaurantTypes.hasOwnProperty(restaurantType)) {
+          if (restaurantTypes[restaurantType].it==dbclassification) return restaurantTypes[restaurantType];
         }
       }
       return {
@@ -244,11 +399,13 @@ angular.module('starter.services', [])
       console.log('initializing database...');
       dbObj.transaction(function (tx) {
         tx.executeSql('DROP TABLE IF EXISTS ContentObjects');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS ContentObjects (id text primary key, version integer, type text, category text, classification text, data text, lat real, lon real, updateTime integer)');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS ContentObjects (id text primary key, version integer, type text, category text, classification text, classification2 text, classification3 text, data text, lat real, lon real, updateTime integer)');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_id ON ContentObjects( id )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_type ON ContentObjects( type )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_cate ON ContentObjects( category )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_class ON ContentObjects( classification )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_class2 ON ContentObjects( classification, classification2 )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_class3 ON ContentObjects( classification, classification2, classification3 )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_lat ON ContentObjects( lat )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_lon ON ContentObjects( lon )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_typeclass ON ContentObjects( type, classification )');
@@ -323,7 +480,7 @@ angular.module('starter.services', [])
                       angular.forEach(updates, function (item, idx) {
                         tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [item.id]);
 
-                        classification = '';
+                        var classification = '', classification2 = '', classification3 = '';
                         if (contentTypeKey == 'content') {
                           classification = item.classification;
                         } else if (contentTypeKey == 'poi') {
@@ -341,9 +498,21 @@ angular.module('starter.services', [])
                         } else if (contentTypeKey == 'mainevent') {
                           classification = item.classification.it;
                           item.category = 'mainevent';
+                        } else if (contentTypeKey == 'hotel') {
+                          classification = item.classification.it;
+                        } else if (contentTypeKey == 'restaurant') {
+                          classifications = item.classification.it.split(';');
+                          classification = classifications[0].trim();
+                          if (classifications.length>1) {
+                            classification2 = classifications[1].trim();
+                            if (classifications.length>2) {
+                              classification3 = classifications[2].trim();
+                            }
+                          }
+                          item.category = 'mainevent';
                         }
-                        values = [item.id, item.version, contentTypeClassName, item.category, classification, JSON.stringify(item), ((item.location && item.location.length == 2) ? item.location[0] : -1), ((item.location && item.location.length == 2) ? item.location[1] : -1), item.updateTime];
-                        tx.executeSql('INSERT INTO ContentObjects (id, version, type, category, classification, data, lat, lon, updateTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', values, function (tx, res) { //success callback
+                        values = [item.id, item.version, contentTypeClassName, item.category, classification, classification2, classification3, JSON.stringify(item), ((item.location && item.location.length == 2) ? item.location[0] : -1), ((item.location && item.location.length == 2) ? item.location[1] : -1), item.updateTime];
+                        tx.executeSql('INSERT INTO ContentObjects (id, version, type, category, classification, classification2, classification3, data, lat, lon, updateTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', values, function (tx, res) { //success callback
                           console.log('inserted obj with id: ' + item.id);
                         }, function (e) { //error callback
                           console.log('unable to insert obj with id ' + item.id + ': ' + e.message);
@@ -425,7 +594,7 @@ angular.module('starter.services', [])
         var lista = []
         dbObj.transaction(function (tx) {
           //console.log('type: '+types[dbname]);
-          tx.executeSql('SELECT id, classification, data, lat, lon FROM ContentObjects WHERE type=?', [types[dbname]], function (tx, results) {
+          tx.executeSql('SELECT id, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=?', [types[dbname]], function (tx, results) {
             var len = results.rows.length,
               i;
             console.log('results.rows.length: ' + results.rows.length);
@@ -438,6 +607,10 @@ angular.module('starter.services', [])
                 result.dbClassification=Config.eventCateFromDbClassification(result.dbClassification);
               } else if (dbname=='poi') {
                 result.dbClassification=Config.poiCateFromDbClassification(result.dbClassification);
+              } else if (dbname=='restaurant') {
+                result.dbClassification=Config.restaurantCateFromDbClassification(result.dbClassification);
+                result.dbClassification2=Config.restaurantCateFromDbClassification(item.classification2);
+                result.dbClassification3=Config.restaurantCateFromDbClassification(item.classification3);
               }
               lista.push(result);
             }
@@ -474,7 +647,7 @@ angular.module('starter.services', [])
         dbObj.transaction(function (tx) {
           //                    console.log('type: '+types[dbname]);
           console.log('category: ' + cateId);
-          tx.executeSql('SELECT id, classification, data, lat, lon FROM ContentObjects WHERE type=? AND classification=?', [types[dbname], cateId], function (tx, cateResults) {
+          tx.executeSql('SELECT id, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=? AND (classification=? OR classification2=? OR classification3=?)', [types[dbname], cateId, cateId, cateId], function (tx, cateResults) {
             var len = cateResults.rows.length,
               i;
             console.log('cateResults.rows.length: ' + cateResults.rows.length);
@@ -487,6 +660,10 @@ angular.module('starter.services', [])
                 result.dbClassification=Config.eventCateFromDbClassification(result.dbClassification);
               } else if (dbname=='poi') {
                 result.dbClassification=Config.poiCateFromDbClassification(result.dbClassification);
+              } else if (dbname=='restaurant') {
+                result.dbClassification=Config.restaurantCateFromDbClassification(result.dbClassification);
+                result.dbClassification2=Config.restaurantCateFromDbClassification(item.classification2);
+                result.dbClassification3=Config.restaurantCateFromDbClassification(item.classification3);
               }
               lista.push(result);
             }
@@ -535,7 +712,7 @@ angular.module('starter.services', [])
           }
           var qParams = itemId.split(',');
           qParams.unshift(types[dbname]);
-          var dbQuery = 'SELECT id, classification, data, lat, lon FROM ContentObjects WHERE type=? AND ' + idCond;
+          var dbQuery = 'SELECT id, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=? AND ' + idCond;
           console.log('dbQuery: ' + dbQuery);
           tx.executeSql(dbQuery, qParams, function (tx, results) {
             if (results.rows.length > 0) {
@@ -548,6 +725,10 @@ angular.module('starter.services', [])
                   result.dbClassification=Config.eventCateFromDbClassification(result.dbClassification);
                 } else if (dbname=='poi') {
                   result.dbClassification=Config.poiCateFromDbClassification(result.dbClassification);
+                } else if (dbname=='restaurant') {
+                  result.dbClassification=Config.restaurantCateFromDbClassification(result.dbClassification);
+                  result.dbClassification2=Config.restaurantCateFromDbClassification(item.classification2);
+                  result.dbClassification3=Config.restaurantCateFromDbClassification(item.classification3);
                 }
                 dbitem.resolve(result);
               } else {
@@ -562,6 +743,10 @@ angular.module('starter.services', [])
                     result.dbClassification=Config.eventCateFromDbClassification(result.dbClassification);
                   } else if (dbname=='poi') {
                     result.dbClassification=Config.poiCateFromDbClassification(result.dbClassification);
+                  } else if (dbname=='restaurant') {
+                    result.dbClassification=Config.restaurantCateFromDbClassification(result.dbClassification);
+                    result.dbClassification2=Config.restaurantCateFromDbClassification(item.classification2);
+                    result.dbClassification3=Config.restaurantCateFromDbClassification(item.classification3);
                   }
                   lista.push(result);
                 }

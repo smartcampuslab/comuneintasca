@@ -1,0 +1,9 @@
+<ion-view title="Restaurants">
+  <ion-content class="has-header">
+    <ion-list>
+      <ion-item ng-repeat="(key,cate) in restaurantcates" href="#/app/restaurants/{{key}}">
+        {{cate|translate}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

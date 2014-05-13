@@ -66,11 +66,21 @@ $scope.show = function() {
   }
 })
 
-.controller('HotelsListCtrl', function ($scope, DatiDB) {
-  $scope._ = _;
-  $scope.gotdata = DatiDB.all('hotel').then(function (data) {
-    $scope.hotels = data;
-  });
+.controller('HotelsListCtrl', function ($scope, $stateParams, DatiDB, Config) {
+  if ($stateParams.hotelType) {
+    $scope._ = _;
+    $scope.cate = Config.hotelCateFromType($stateParams.hotelType);
+    $scope.gotdata = DatiDB.cate('hotel', $scope.cate.it).then(function (data) {
+      $scope.hotels = data;
+    });
+  } else {
+    $scope.hotelcates=Config.hotelTypesList();
+    /*
+    $scope.gotdata = DatiDB.all('hotel').then(function (data) {
+      $scope.hotels = data;
+    });
+    */
+  }
 })
 
 .controller('HotelCtrl', function ($scope, $stateParams, DatiDB) {
@@ -79,10 +89,20 @@ $scope.show = function() {
   });
 })
 
-.controller('RestaurantsListCtrl', function ($scope, DatiDB) {
-  $scope.gotdata = DatiDB.all('restaurant').then(function (data) {
-    $scope.restaurants = data;
-  });
+.controller('RestaurantsListCtrl', function ($scope, $stateParams, DatiDB, Config) {
+  if ($stateParams.restaurantType) {
+    $scope.cate = Config.restaurantCateFromType($stateParams.restaurantType);
+    $scope.gotdata = DatiDB.cate('restaurant', $scope.cate.it).then(function (data) {
+      $scope.restaurants = data;
+    });
+  } else {
+    $scope.restaurantcates=Config.restaurantTypesList();
+    /*
+    $scope.gotdata = DatiDB.all('restaurant').then(function (data) {
+      $scope.restaurants = data;
+    });
+    */
+  }
 })
 
 .controller('RestaurantCtrl', function ($scope, $stateParams, DatiDB) {

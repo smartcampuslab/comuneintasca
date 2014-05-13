@@ -81,8 +81,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             templateUrl:"templates/contents_list.html", controller:"ContentsListCtrl"
         } }, data:{ contentsCate:'Servizi' }
     })
-    .state('app.hotels', {
+
+    .state('app.hotelcates', {
         url:"/hotels", views:{ 'menuContent':{
+            templateUrl:"templates/hotels.html", controller:"HotelsListCtrl"
+        } }
+    })
+    .state('app.hotels', {
+        url:"/hotels/:hotelType", views:{ 'menuContent':{
             templateUrl:"templates/hotels_list.html", controller:"HotelsListCtrl"
         } }
     })
@@ -91,8 +97,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             templateUrl:"templates/hotel.html", controller:"HotelCtrl"
         } }
     })
-    .state('app.restaurants', {
+    .state('app.restaurantcates', {
         url:"/restaurants", views:{ 'menuContent':{
+            templateUrl:"templates/restaurants.html", controller:"RestaurantsListCtrl"
+        } }
+    })
+    .state('app.restaurants', {
+        url:"/restaurants/:restaurantType", views:{ 'menuContent':{
             templateUrl:"templates/restaurants_list.html", controller:"RestaurantsListCtrl"
         } }
     })
@@ -101,6 +112,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             templateUrl:"templates/restaurant.html", controller:"RestaurantCtrl"
         } }
     })
+
     .state('app.mainevents', {
         url:"/mainevents", views:{ 'menuContent':{
             templateUrl:"templates/mainevents_list.html", controller:"MainEventsListCtrl"

@@ -123,7 +123,7 @@ angular.module('starter.services', [])
     'trattoria': {
       de: 'Gastwirtschaft',
       it: 'Trattoria',
-      en: ' '
+      en: ''
     },
     'typical': {
       de: 'Bed and Breakfast',
@@ -207,7 +207,7 @@ angular.module('starter.services', [])
       return 'TrentoInTasca';
     },
     schemaVersion: function () {
-      return 45;
+      return 46;
     },
     syncTimeoutSeconds: function () {
       return 60 * 60 * 24 * 10; /* 60 times 60 seconds = 1 HOUR --> x24 = 1 DAY x10 */
@@ -437,9 +437,8 @@ angular.module('starter.services', [])
       syncronization = $q.defer();
       db.then(function (dbObj) {
         if (ionic.Platform.isWebView() && navigator.connection.type==Connection.NONE) {
-          console.log('no network connection');
-
           $ionicLoading.hide();
+          console.log('no network connection');
           syncronization.resolve(currentDbVersion);
         } else {
           var now_as_epoch = parseInt((new Date).getTime() / 1000);
@@ -547,34 +546,29 @@ angular.module('starter.services', [])
                 });
 
                 objsDone.promise.then(function () {
+                  $ionicLoading.hide();
                   currentDbVersion = nextVersion;
                   localStorage.currentDbVersion = currentDbVersion;
-
-                  $ionicLoading.hide();
                   syncronization.resolve(currentDbVersion);
                 }, function () {
-                  console.log('cannot initialize (2)');
-
                   $ionicLoading.hide();
+                  console.log('cannot initialize (2)');
                   syncronization.reject();
                 });
               } else {
-                console.log('local database already up-to-date!');
-
                 $ionicLoading.hide();
+                console.log('local database already up-to-date!');
                 syncronization.resolve(currentDbVersion);
               }
             }).error(function (data, status, headers, config) {
+              $ionicLoading.hide();
               console.log('cannot check for new data: network unavailable?');
               console.log(status);
-
-              $ionicLoading.hide();
               syncronization.resolve(currentDbVersion);
             });
           } else {
-            console.log('avoiding too frequent syncronizations. seconds since last one: ' + (now_as_epoch - lastSynced));
-
             $ionicLoading.hide();
+            console.log('avoiding too frequent syncronizations. seconds since last one: ' + (now_as_epoch - lastSynced));
             syncronization.resolve(currentDbVersion);
           }
         }
@@ -603,31 +597,32 @@ angular.module('starter.services', [])
               //console.log(item);
               var result=JSON.parse(item.data);
               result['dbClassification']=item.classification;
+              result['dbClassification2']=item.classification2;
+              result['dbClassification3']=item.classification3;
               if (dbname=='event') {
                 result.dbClassification=Config.eventCateFromDbClassification(result.dbClassification);
               } else if (dbname=='poi') {
                 result.dbClassification=Config.poiCateFromDbClassification(result.dbClassification);
               } else if (dbname=='restaurant') {
-                result.dbClassification=Config.restaurantCateFromDbClassification(result.dbClassification);
-                result.dbClassification2=Config.restaurantCateFromDbClassification(item.classification2);
-                result.dbClassification3=Config.restaurantCateFromDbClassification(item.classification3);
+                if (result.dbClassification!='') result.dbClassification=Config.restaurantCateFromDbClassification(result.dbClassification);
+                if (result.dbClassification2!='') result.dbClassification2=Config.restaurantCateFromDbClassification(result.dbClassification2);
+                if (result.dbClassification3!='') result.dbClassification3=Config.restaurantCateFromDbClassification(result.dbClassification3);
               }
               lista.push(result);
             }
           }, function (tx, err) {
+            $ionicLoading.hide();
             console.log('data error!');
             console.log(err);
-
-            $ionicLoading.hide();
             data.reject();
           });
         }, function (error) { //error callback
-          console.log('db.all() ERROR: ' + error);
           $ionicLoading.hide();
+          console.log('db.all() ERROR: ' + error);
           data.reject(error);
         }, function () { //success callback
-          console.log('db.all() DONE!');
           $ionicLoading.hide();
+          console.log('db.all() DONE!');
           data.resolve(lista);
         });
       });
@@ -647,40 +642,40 @@ angular.module('starter.services', [])
         dbObj.transaction(function (tx) {
           //                    console.log('type: '+types[dbname]);
           console.log('category: ' + cateId);
-          tx.executeSql('SELECT id, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=? AND (classification=? OR classification2=? OR classification3=?)', [types[dbname], cateId, cateId, cateId], function (tx, cateResults) {
-            var len = cateResults.rows.length,
-              i;
+          tx.executeSql('SELECT id, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=? AND (classification=? OR classification2=? OR classification3=?)', [types[dbname], cateId, cateId, cateId], function (tx2, cateResults) {
+            var len = cateResults.rows.length, i;
             console.log('cateResults.rows.length: ' + cateResults.rows.length);
             for (i = 0; i < len; i++) {
               var item=cateResults.rows.item(i);
               //console.log(item);
               var result=JSON.parse(item.data);
               result['dbClassification']=item.classification;
+              result['dbClassification2']=item.classification2;
+              result['dbClassification3']=item.classification3;
               if (dbname=='event') {
                 result.dbClassification=Config.eventCateFromDbClassification(result.dbClassification);
               } else if (dbname=='poi') {
                 result.dbClassification=Config.poiCateFromDbClassification(result.dbClassification);
               } else if (dbname=='restaurant') {
-                result.dbClassification=Config.restaurantCateFromDbClassification(result.dbClassification);
-                result.dbClassification2=Config.restaurantCateFromDbClassification(item.classification2);
-                result.dbClassification3=Config.restaurantCateFromDbClassification(item.classification3);
+                if (result.dbClassification!='') result.dbClassification=Config.restaurantCateFromDbClassification(result.dbClassification);
+                if (result.dbClassification2!='') result.dbClassification2=Config.restaurantCateFromDbClassification(result.dbClassification2);
+                if (result.dbClassification3!='') result.dbClassification3=Config.restaurantCateFromDbClassification(result.dbClassification3);
               }
               lista.push(result);
             }
-          }, function (tx, err) {
+          }, function (tx2, err) {
+            $ionicLoading.hide();
             console.log('cate data error!');
             console.log(err);
-
-            $ionicLoading.hide();
-            data.reject();
+            data.reject(err);
           });
         }, function (error) { //error callback
-          console.log('db.cate() ERROR: ' + error);
           $ionicLoading.hide();
+          console.log('db.cate() ERROR: ' + error);
           data.reject(error);
         }, function () { //success callback
-          console.log('db.cate() DONE!');
           $ionicLoading.hide();
+          console.log('db.cate() DONE!');
           data.resolve(lista);
         });
       });
@@ -714,21 +709,23 @@ angular.module('starter.services', [])
           qParams.unshift(types[dbname]);
           var dbQuery = 'SELECT id, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=? AND ' + idCond;
           console.log('dbQuery: ' + dbQuery);
-          tx.executeSql(dbQuery, qParams, function (tx, results) {
+          tx.executeSql(dbQuery, qParams, function (tx2, results) {
             if (results.rows.length > 0) {
               if (itemId.indexOf(',') == -1) {
                 var item=results.rows.item(0);
                 //console.log(item);
                 var result=JSON.parse(item.data);
                 result['dbClassification']=item.classification;
+                result['dbClassification2']=item.classification2;
+                result['dbClassification3']=item.classification3;
                 if (dbname=='event') {
                   result.dbClassification=Config.eventCateFromDbClassification(result.dbClassification);
                 } else if (dbname=='poi') {
                   result.dbClassification=Config.poiCateFromDbClassification(result.dbClassification);
                 } else if (dbname=='restaurant') {
-                  result.dbClassification=Config.restaurantCateFromDbClassification(result.dbClassification);
-                  result.dbClassification2=Config.restaurantCateFromDbClassification(item.classification2);
-                  result.dbClassification3=Config.restaurantCateFromDbClassification(item.classification3);
+                  if (result.dbClassification!='') result.dbClassification=Config.restaurantCateFromDbClassification(result.dbClassification);
+                  if (result.dbClassification2!='') result.dbClassification2=Config.restaurantCateFromDbClassification(result.dbClassification2);
+                  if (result.dbClassification3!='') result.dbClassification3=Config.restaurantCateFromDbClassification(result.dbClassification3);
                 }
                 dbitem.resolve(result);
               } else {
@@ -739,14 +736,16 @@ angular.module('starter.services', [])
                   //console.log(item);
                   result=JSON.parse(item.data);
                   result['dbClassification']=item.classification;
+                  result['dbClassification2']=item.classification2;
+                  result['dbClassification3']=item.classification3;
                   if (dbname=='event') {
                     result.dbClassification=Config.eventCateFromDbClassification(result.dbClassification);
                   } else if (dbname=='poi') {
                     result.dbClassification=Config.poiCateFromDbClassification(result.dbClassification);
                   } else if (dbname=='restaurant') {
-                    result.dbClassification=Config.restaurantCateFromDbClassification(result.dbClassification);
-                    result.dbClassification2=Config.restaurantCateFromDbClassification(item.classification2);
-                    result.dbClassification3=Config.restaurantCateFromDbClassification(item.classification3);
+                    if (result.dbClassification!='') result.dbClassification=Config.restaurantCateFromDbClassification(result.dbClassification);
+                    if (result.dbClassification2!='') result.dbClassification2=Config.restaurantCateFromDbClassification(result.dbClassification2);
+                    if (result.dbClassification3!='') result.dbClassification3=Config.restaurantCateFromDbClassification(result.dbClassification3);
                   }
                   lista.push(result);
                 }
@@ -755,19 +754,18 @@ angular.module('starter.services', [])
               console.log('not found!');
               dbitem.reject('not found!');
             }
-          }, function (tx, err) {
-            console.log('error: ' + err);
-
+          }, function (tx2, err) {
             $ionicLoading.hide();
+            console.log('error: ' + err);
             dbitem.reject(err);
           });
         }, function (error) { //error callback
-          console.log('db.get() ERROR: ' + error);
           $ionicLoading.hide();
+          console.log('db.get() ERROR: ' + error);
           dbitem.reject(error);
         }, function () { //success callback
-          console.log('db.get() DONE!');
           $ionicLoading.hide();
+          console.log('db.get() DONE!');
           dbitem.resolve(lista);
         });
         return dbitem.promise;

@@ -27,5 +27,21 @@
     "key":"Servizi",
     "value":"Servizi",
     "description":"side menu label"
+  }, {
+    "key":"restaurant_opening",
+    "value":"Orari",
+    "description":"restaurant leaf"
+  }, {
+    "key":"restaurant_closing",
+    "value":"Giorni di chiusura",
+    "description":"restaurant leaf"
+  }, {
+    "key":"restaurant_price",
+    "value":"Prezzo indicativo",
+    "description":"restaurant leaf"
+  }, {
+    "key":"restaurant_services",
+    "value":"Servizi disponibili",
+    "description":"restaurant leaf"
   }
 ]

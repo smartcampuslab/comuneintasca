@@ -6,13 +6,13 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'starter.filters', 'starter.directives', 'localization'])
 
-.run(function($ionicPlatform, $rootScope, DatiDB) {
-    if (typeof(Number.prototype.toRad) === "undefined") {
-      Number.prototype.toRad = function() {
-        return this * Math.PI / 180;
-      }
+.run(function($ionicPlatform, $rootScope, DatiDB, GeoLocate) {
+  if (typeof(Number.prototype.toRad) === "undefined") {
+    Number.prototype.toRad = function() {
+      return this * Math.PI / 180;
     }
-    $ionicPlatform.ready(function() {
+  }
+  $ionicPlatform.ready(function() {
     if(window.StatusBar) {
       // org.apache.cordova.statusbar required
       StatusBar.hide();

@@ -1,517 +1,517 @@
 {
     "version": 663,
     "updated": {
-		"eu.trentorise.smartcampus.comuneintasca.model.MainEventObject": [
-    {
-        "id": "event.major.1",
-        "updateTime": 1399563500155,
-        "version": 992,
-        "user": null,
-        "source": null,
-        "title": {
-            "de": "Trento Montain Film Festival ",
-            "it": "Trento Film Festival della Montagna ",
-            "en": "Trento Film Festival della Montagna (Bergfilmfestival in Trient)"
-        },
-        "shortTitle": null,
-        "subtitle": null,
-        "description": {
-            "de": "International film festival of mountain, exploration and adventure films.  A programme with a rich section of narrative films and documentaries by distinguished film makers, presenting exciting stories about men in relation to nature, mountains and adventure. In addition to the film programme the festival also offers meetings, exhibitions on a theme, shows and an international exhibition of books about the mountains.",
-            "it": "Rassegna cinematografica internazionale di film di montagna, esplorazione e avventura. Un programma all'insegna di una ricca sezione di film narrativi e documentari d'autore che presentano racconti emozionanti di uomini in relazione agli spazi della natura, della montagna e dell'avventura. Oltre al programma cinematografico il festival propone anche incontri, mostre tematiche, spettacoli e una rassegna internazionale dell'editoria di montagna. ",
-            "en": "Internationales Filmfestival zu den Themen Berge, Expeditionen und Abenteuer. Das Festival bietet ein reichhaltiges Programm an Spiel- und Dokumentarfilmen, die faszinierende Erlebnisse und Abenteuer von Menschen in der Natur und in den Bergen schildern. Neben Filmen bietet das Festival auch ein vielseitiges Rahmenprogramm mit Diskussionen und Treffen, Ausstellungen, zahlreichen weiteren Veranstaltungen und einer internationalen, der Bergwelt gewidmeten Büchermesse."
-        },
-        "info": null,
-        "category": "event",
-        "contacts": {
-            "phone": "0461 986120",
-            "email": "info@trentofilmfestival.it"
-        },
-        "url": "www.trentofilmfestival.it",
-        "image": "https://vas-dev.smartcampuslab.it/comuneintasca/images/filmfestival_2012.jpg",
-        "lastModified": 1387530000000,
-        "location": null,
-        "address": {
-            "de": "",
-            "it": "",
-            "en": ""
-        },
-        "fromDate": 1322712000000,
-        "toDate": 3498177600000,
-        "eventDateDescription": {
-            "de": "April-May",
-            "it": "Aprile-Maggio",
-            "en": "April-Mai"
-        },
-        "classification": {
-            "de": "Main Events",
-            "it": "Eventi principali",
-            "en": "Main Events"
-        }
-    },
-    {
-        "id": "event.major.2",
-        "updateTime": 1399563500169,
-        "version": 993,
-        "user": null,
-        "source": null,
-        "title": {
-            "de": "Mostra dei vini (Wine Exhibition)",
-            "it": "Mostra dei vini",
-            "en": "Mostra dei vini (Weinausstellung)"
-        },
-        "shortTitle": null,
-        "subtitle": null,
-        "description": {
-            "de": "The Wine Exhibition, classic end-of-spring event for lovers of wines and grappas from Trentino, offers a great opportunity for exchange and confrontation between local producers, tourism operators, the territory and its people. This is also a time when visitors can get to know Trentino’s wine production in the lively atmosphere of the city of Trento, with its historical and cultural beauties. During the event there are several meetings and occasions for more in-depth information, to appreciate the infinite variety of scents and flavours of Trentino wines and products that are at the heart of its enogastronomic identity.",
-            "it": "La Mostra dei Vini, classico appuntamento di fine primavera per gli appassionati di vino e grappe del territorio trentino, rappresenta un importante momento di confronto e di relazione tra i produttori locali, gli operatori turistici, il territorio e le sue genti. E' anche il momento in cui il visitatore può avvicinarsi alla produzione enologica trentina nel clima festoso della città di Trento tra le sue bellezze storiche e culturali. All'interno della manifestazione sono previsti diversi incontri ed approfondimenti per apprezzare l'infinita varietà di profumi e sapori dei vini trentini e dei prodotti che compongono l'identità enogastronomica locale.",
-            "en": "Die Weinausstellung, eine traditionelle Veranstaltung, die Ende Frühling stattfindet und den Liebhabern von Wein und Grappa des Trentino gewidmet ist, bietet eine hervorragende Gelegenheit, die lokalen Produzenten, die Tourismusbetriebe und natürlich auch die einheimische Bevölkerung kennen zu lernen. Die Weinausstellung ist auch ein Anlass, sich in der feierlichen Atmosphäre der Stadt Trient, inmitten ihrer historischen und kulturellen Sehenswürdigkeiten, der Weinherstellung des Trentino zu nähern. Im Rahmen der Veranstaltung sind verschiedene Begegnungen und informative Veranstaltungen vorgesehen, auf denen die unendliche Vielfalt an Duft- und Geschmacksnoten der Trentiner Weine und der Produkte vorgestellt wird, die die lokale Önogastronomie auszeichnen."
-        },
-        "info": null,
-        "category": "event",
-        "contacts": {
-            "phone": "0461 887101",
-            "email": ""
-        },
-        "url": "www.palazzoroccabruna.it",
-        "image": "https://vas-dev.smartcampuslab.it/comuneintasca/images/mostra_vini.jpg",
-        "lastModified": 1387530000000,
-        "location": [
-            46.07,
-            11.12
+		"eu.trentorise.smartcampus.comuneintasca.model.MainEventObject":  [
+            {
+                "id": "event.major.1",
+                "updateTime": 1400081203888,
+                "version": 1236,
+                "user": null,
+                "source": null,
+                "title": {
+                    "de": "Trento Film Festival della Montagna (Bergfilmfestival in Trient)",
+                    "it": "Trento Film Festival della Montagna ",
+                    "en": "Trento Montain Film Festival "
+                },
+                "shortTitle": null,
+                "subtitle": null,
+                "description": {
+                    "de": "Internationales Filmfestival zu den Themen Berge, Expeditionen und Abenteuer. Das Festival bietet ein reichhaltiges Programm an Spiel- und Dokumentarfilmen, die faszinierende Erlebnisse und Abenteuer von Menschen in der Natur und in den Bergen schildern. Neben Filmen bietet das Festival auch ein vielseitiges Rahmenprogramm mit Diskussionen und Treffen, Ausstellungen, zahlreichen weiteren Veranstaltungen und einer internationalen, der Bergwelt gewidmeten Büchermesse.",
+                    "it": "Rassegna cinematografica internazionale di film di montagna, esplorazione e avventura. Un programma all'insegna di una ricca sezione di film narrativi e documentari d'autore che presentano racconti emozionanti di uomini in relazione agli spazi della natura, della montagna e dell'avventura. Oltre al programma cinematografico il festival propone anche incontri, mostre tematiche, spettacoli e una rassegna internazionale dell'editoria di montagna. ",
+                    "en": "International film festival of mountain, exploration and adventure films.  A programme with a rich section of narrative films and documentaries by distinguished film makers, presenting exciting stories about men in relation to nature, mountains and adventure. In addition to the film programme the festival also offers meetings, exhibitions on a theme, shows and an international exhibition of books about the mountains."
+                },
+                "info": null,
+                "category": "event",
+                "contacts": {
+                    "phone": "0461 986120",
+                    "email": "info@trentofilmfestival.it"
+                },
+                "url": "www.trentofilmfestival.it",
+                "image": "https://vas-dev.smartcampuslab.it/comuneintasca/images/filmfestival_2012.jpg",
+                "lastModified": 1387530000000,
+                "location": null,
+                "address": {
+                    "de": "",
+                    "it": "",
+                    "en": ""
+                },
+                "fromDate": 1322712000000,
+                "toDate": 3498177600000,
+                "eventDateDescription": {
+                    "de": "April-Mai",
+                    "it": "Aprile-Maggio",
+                    "en": "April-May"
+                },
+                "classification": {
+                    "de": "Main Events",
+                    "it": "Eventi principali",
+                    "en": "Main Events"
+                }
+            },
+            {
+                "id": "event.major.2",
+                "updateTime": 1400081203900,
+                "version": 1237,
+                "user": null,
+                "source": null,
+                "title": {
+                    "de": "Mostra dei vini (Weinausstellung)",
+                    "it": "Mostra dei vini",
+                    "en": "Mostra dei vini (Wine Exhibition)"
+                },
+                "shortTitle": null,
+                "subtitle": null,
+                "description": {
+                    "de": "Die Weinausstellung, eine traditionelle Veranstaltung, die Ende Frühling stattfindet und den Liebhabern von Wein und Grappa des Trentino gewidmet ist, bietet eine hervorragende Gelegenheit, die lokalen Produzenten, die Tourismusbetriebe und natürlich auch die einheimische Bevölkerung kennen zu lernen. Die Weinausstellung ist auch ein Anlass, sich in der feierlichen Atmosphäre der Stadt Trient, inmitten ihrer historischen und kulturellen Sehenswürdigkeiten, der Weinherstellung des Trentino zu nähern. Im Rahmen der Veranstaltung sind verschiedene Begegnungen und informative Veranstaltungen vorgesehen, auf denen die unendliche Vielfalt an Duft- und Geschmacksnoten der Trentiner Weine und der Produkte vorgestellt wird, die die lokale Önogastronomie auszeichnen.",
+                    "it": "La Mostra dei Vini, classico appuntamento di fine primavera per gli appassionati di vino e grappe del territorio trentino, rappresenta un importante momento di confronto e di relazione tra i produttori locali, gli operatori turistici, il territorio e le sue genti. E' anche il momento in cui il visitatore può avvicinarsi alla produzione enologica trentina nel clima festoso della città di Trento tra le sue bellezze storiche e culturali. All'interno della manifestazione sono previsti diversi incontri ed approfondimenti per apprezzare l'infinita varietà di profumi e sapori dei vini trentini e dei prodotti che compongono l'identità enogastronomica locale.",
+                    "en": "The Wine Exhibition, classic end-of-spring event for lovers of wines and grappas from Trentino, offers a great opportunity for exchange and confrontation between local producers, tourism operators, the territory and its people. This is also a time when visitors can get to know Trentino’s wine production in the lively atmosphere of the city of Trento, with its historical and cultural beauties. During the event there are several meetings and occasions for more in-depth information, to appreciate the infinite variety of scents and flavours of Trentino wines and products that are at the heart of its enogastronomic identity."
+                },
+                "info": null,
+                "category": "event",
+                "contacts": {
+                    "phone": "0461 887101",
+                    "email": ""
+                },
+                "url": "www.palazzoroccabruna.it",
+                "image": "https://vas-dev.smartcampuslab.it/comuneintasca/images/mostra_vini.jpg",
+                "lastModified": 1387530000000,
+                "location": [
+                    46.07,
+                    11.12
+                ],
+                "address": {
+                    "de": "",
+                    "it": "",
+                    "en": ""
+                },
+                "fromDate": 1317441600000,
+                "toDate": 3498177600000,
+                "eventDateDescription": {
+                    "de": "ende Mai",
+                    "it": "fine Maggio",
+                    "en": "end of May"
+                },
+                "classification": {
+                    "de": "Main Events",
+                    "it": "Eventi principali",
+                    "en": "Main Events"
+                }
+            },
+            {
+                "id": "event.major.3",
+                "updateTime": 1400081203903,
+                "version": 1238,
+                "user": null,
+                "source": null,
+                "title": {
+                    "de": "Festival Economia (Wirtschaftsfestival)",
+                    "it": "Festival Economia",
+                    "en": "Festival dell'Economia (Economics Festival)"
+                },
+                "shortTitle": null,
+                "subtitle": null,
+                "description": {
+                    "de": "Nationale und internationale Wirtschaftsexperten kommen jedes Jahr nach Trient, um neue Ansätze und Überlegungen anlässlich der verschiedenen öffentlichen Veranstaltungen und kulturellen Initiativen vorzustellen und zu diskutieren. Gäste des Festivals in Trient sind die Protagonisten bedeutender Forschungsarbeiten, die hier ihre Theorien vorstellen und die Debatte zu aktuellen Themen anregen. Als Gesprächspartner sind alle Bürger eingeladen, unabhängig von Alter, Bevölkerungsschicht und Bildungsstand: Das Festival steht allen offen, um zu verstehen, was uns das zukünftige wirtschaftliche Szenario bringen wird, in das wir alle einbezogen sind.",
+                    "it": "Esperti nazionali ed internazionali in economia animano ogni anno la città con nuove occasioni di confronto e di riflessione, incontri pubblici ed iniziative culturali. In occasione del festival il capoluogo trentino ospita i protagonisti di ricerche significative per esporre le loro tesi e promuovere il dibattito su un tema di grandissima attualità. A interloquire con loro la gente \"comune\", senza distinzione di età, estrazione sociale e titolo di studio: un festival di tutti e aperto a tutti per capire cosa aspettarci dallo scenario economico futuro, in cui tutti siamo coinvolti. ",
+                    "en": "National and international economics experts bring new life to the city every year with opportunities for discussion and reflection, public meetings and cultural initiatives. During the festival, Trento hosts authors of significant research who present their thesis and encourage the debate on a matter of great topical interest.  Discussing with them are \"common\" people, regardless of age, social class and education: a festival for everyone and open to  everyone, to understand what we can expect from a future economic scenario that is going to affect all of us."
+                },
+                "info": null,
+                "category": "event",
+                "contacts": {
+                    "phone": "0461 260511",
+                    "email": "info@festivaleconomia.it"
+                },
+                "url": "http://2012.festivaleconomia.eu/",
+                "image": "https://vas-dev.smartcampuslab.it/comuneintasca/images/festival_economia.jpg",
+                "lastModified": 1387530000000,
+                "location": null,
+                "address": {
+                    "de": "",
+                    "it": "",
+                    "en": ""
+                },
+                "fromDate": 1315022400000,
+                "toDate": 3498177600000,
+                "eventDateDescription": {
+                    "de": "Juni",
+                    "it": "Giugno",
+                    "en": "June"
+                },
+                "classification": {
+                    "de": "Main Events",
+                    "it": "Eventi principali",
+                    "en": "Main Events"
+                }
+            },
+            {
+                "id": "event.major.4",
+                "updateTime": 1400081203904,
+                "version": 1239,
+                "user": null,
+                "source": null,
+                "title": {
+                    "de": "Feste Vigiliane",
+                    "it": "Feste Vigiliane",
+                    "en": "Feste Vigiliane"
+                },
+                "shortTitle": null,
+                "subtitle": null,
+                "description": {
+                    "de": "Anlässlich des Stadtfestes „Feste Vigiliane“, das dem Schutzheiligen von Trient, San Vigilio, gewidmet ist, verwandelt sich die historische Altstadt in einen mittelalterlichen Ort, den eine Vielzahl von Veranstaltungen belebt - Spiele, Musik und Darbietungen verschiedener Art – und nicht zuletzt natürlich die gastronomischen Spezialitäten der Region. Die „Cena Benedettina“ (Benediktinischer Abendessen), das „Tribunale di Penitenza“ (Strafgericht) mit anschließender „Tonca“ (Bestrafung durch Eintauchen in die Etsch), die „Zaterada“ (Flößerrennen), der „Corteo Storico“ (historischer Umzug), und die „Mascherada dei Ciusi e dei Gobi“ (Wettstreit in historischen Kostümen um eine riesige Polenta) sowie das „Pontificale“ (Pontifikalamt) sind die historischen Elemente, die das Stadtfest zu Ehren des Schutzheiligen bereichern.",
+                    "it": "Le Feste Vigiliane, dedicate al patrono della città, trasformano il centro storico in un antico borgo medioevale animandolo con giochi, musica e spettacoli, mentre nell'aria si diffondono i profumi della cucina tipica. La Cena Benedettina, il Tribunale di Penitenza con la successiva Tonca, la Zatterada, il Corteo Storico, la Mascherada dei Ciusi e dei Gobi e il Pontificale sono gli elementi storici di interesse che caratterizzano anche culturalmente la festa del Santo Patrono.",
+                    "en": "The Feste Vigiliane, dedicated to San Vigilio, the patron saint of the city, turn the historical city centre into an old medieval village  with lively games, music and shows, while the air fills with the smells of typical local food. The “Cena Benedettina (Benedictine Dinner), the “Tribunale di Penitenza” (Court of Penance) followed by the “Tonca” (punishment by immersion in the Adige river) the “Zaterada” (Raft race), the “Corteo storico” (Historic Parade), the Mascherada dei Ciusi e dei Gobi (a contest in historical costumes for a big “polenta”) and the “Pontificale” (Pontifical mass) provide moments of historical and cultural interest during the patron saint festival."
+                },
+                "info": null,
+                "category": "event",
+                "contacts": {
+                    "phone": "0461 917111",
+                    "email": "trento.immagine@tin.it"
+                },
+                "url": "www.festevigiliane.it",
+                "image": "https://vas-dev.smartcampuslab.it/comuneintasca/images/vigiliane_Magrone.jpg",
+                "lastModified": 1387530000000,
+                "location": null,
+                "address": {
+                    "de": "",
+                    "it": "",
+                    "en": ""
+                },
+                "fromDate": 1314936000000,
+                "toDate": 3498177600000,
+                "eventDateDescription": {
+                    "de": "Juni",
+                    "it": "Giugno",
+                    "en": "June"
+                },
+                "classification": {
+                    "de": "Main Events",
+                    "it": "Eventi principali",
+                    "en": "Main Events"
+                }
+            },
+            {
+                "id": "event.major.5",
+                "updateTime": 1400081203906,
+                "version": 1240,
+                "user": null,
+                "source": null,
+                "title": {
+                    "de": "(Radrennen) Gran Fondo Charly Gaul",
+                    "it": "Gran Fondo Charly Gaul",
+                    "en": "Gran Fondo Charly Gaul (Cycling race)"
+                },
+                "shortTitle": null,
+                "subtitle": null,
+                "description": {
+                    "de": "Die Idee, ein Radrennen zu Ehren des berühmten Radsportlers zu veranstalten, entstand im Jahre 2005 anlässlich des Besuchs von Charly Gaul auf dem Bondone, dem Berg der Stadt Trient, der den Sportler für seine einzigartige Leistung im Juni 1956 berühmt machte. Seit 2005 wurden sieben Rennen mit je neuen Strecken und Zielen veranstaltet, die alle eines gemeinsam haben: die Eroberung des Monte Bondone.",
+                    "it": "L'idea di creare una gara ciclistica intitolata al famoso sportivo è nata nel 2005 in occasione della visita di Charly Gaul al Bondone, la montagna di Trento che lo rese famoso per la sua epica impresa nel giugno 1956. Da allora si sono svolte sette edizioni, con nuovi percorsi e traguardi, accomunati tutti dall'ascesa del Monte Bondone. ",
+                    "en": "The idea to introduce a bicycle race dedicated to the famous sportsman goes back to 2005 during Charly Gaul’s visit to Bondone, the Trento mountain that made him famous for his epic performance in June 1956. Since then there have been seven editions, with new routes and finishing lines but one thing in common: the climbing of Monte Bondone."
+                },
+                "info": null,
+                "category": "event",
+                "contacts": {
+                    "phone": "0461 216000",
+                    "email": "charlygaul@apt.trento.it"
+                },
+                "url": "http://www.laleggendariacharlygaul.it/",
+                "image": "https://vas-dev.smartcampuslab.it/comuneintasca/images/charly_gaul.jpg",
+                "lastModified": 1387530000000,
+                "location": null,
+                "address": {
+                    "de": "",
+                    "it": "",
+                    "en": ""
+                },
+                "fromDate": 1314849600000,
+                "toDate": 3498177600000,
+                "eventDateDescription": {
+                    "de": "ende Juli",
+                    "it": "fine Luglio",
+                    "en": "end of July"
+                },
+                "classification": {
+                    "de": "Main Events",
+                    "it": "Eventi principali",
+                    "en": "Main Events"
+                }
+            },
+            {
+                "id": "event.major.6",
+                "updateTime": 1400081203908,
+                "version": 1241,
+                "user": null,
+                "source": null,
+                "title": {
+                    "de": "Contrada Larga ",
+                    "it": "Contrada Larga ",
+                    "en": "Contrada Larga "
+                },
+                "shortTitle": null,
+                "subtitle": null,
+                "description": {
+                    "de": "Im Mittelpunkt dieser traditionellen Veranstaltung, die jeden Sommer stattfindet, steht die Musik. Die Teilnehmer sind Musiker aus verschiedenen Ländern, die die warme Jahreszeit mit den Traditionen und Besonderheiten ihrer musikalischen Kultur und ihrem Talent noch bereichern.",
+                    "it": "Tradizionale appuntamento che si rinnova ogni estate dove protagonista è la musica classica. Alla reaasegna partecipano musicisti provenienti da aree geografiche diverse che portano a Trento la tradizione e la specificità della loro cultura musicale, all'insegna dell'eccellenza.",
+                    "en": "A classic event returning every summer and where music is the absolute protagonist. Musicians from different geographical areas bring to Trento the tradition and special character of their musical culture in an atmosphere of excellence."
+                },
+                "info": null,
+                "category": "event",
+                "contacts": {
+                    "phone": "0461 884287",
+                    "email": ""
+                },
+                "url": "www.trentocultura.it",
+                "image": "https://vas-dev.smartcampuslab.it/comuneintasca/images/contradalarga.jpg",
+                "lastModified": 1387530000000,
+                "location": null,
+                "address": {
+                    "de": "",
+                    "it": "",
+                    "en": ""
+                },
+                "fromDate": 1312257600000,
+                "toDate": 3498177600000,
+                "eventDateDescription": {
+                    "de": "Juli end August",
+                    "it": "Luglio – Agosto",
+                    "en": "July and August"
+                },
+                "classification": {
+                    "de": "Main Events",
+                    "it": "Eventi principali",
+                    "en": "Main Events"
+                }
+            },
+            {
+                "id": "event.major.7",
+                "updateTime": 1400081203909,
+                "version": 1242,
+                "user": null,
+                "source": null,
+                "title": {
+                    "de": "Palio delle Contrade",
+                    "it": "Palio delle Contrade",
+                    "en": "Palio delle Contrade"
+                },
+                "shortTitle": null,
+                "subtitle": null,
+                "description": {
+                    "de": "Anlässlich des „Palio delle Contrade“ verwandelt sich Piazza Duomo, einer der schönsten Plätze der historischen Altstadt von Trient, in einen wahrhaften Waffenplatz mit mittelalterlichen Lagern und kostümierten Protagonisten, die vor dem Publikum aus Einheimischen und Touristen das mittelalterliche Trient mit seinen Dörfern, Stadtvierteln, Straßen, Schwertkämpfern, Bogenschützen, Fahnenschwenkern, Jongleuren, Edelfrauen und Edelmännern wiederaufleben lassen.",
+                    "it": "Grazie al Palio delle Contrade Piazza Duomo, una delle più belle piazze del nostro centro storico, si trasformerà in una vera e propria piazza d'armi con accampamenti medioevali e personaggi in costume che faranno rivivere al vasto pubblico di cittadini e turisti la Trento di un tempo, fatta di borghi, quartieri, contrade, spadaccini, balestrieri, sbandieratori, giocolieri, paggi e dame. ",
+                    "en": "Piazza Duomo, one of the most beautiful squares of Trento’s historical centre, is transformed for the occasion into a veritable parade ground with medieval camps and characters in historical costume, bringing back to life for the large number of citizens and tourists the Trento of a long time ago, with hamlets, neighbourhoods, districts, swordsmen, crossbowmen, flag flyers, jugglers, pages and ladies."
+                },
+                "info": null,
+                "category": "event",
+                "contacts": {
+                    "phone": "",
+                    "email": "amicitta@tin.it"
+                },
+                "url": "www.amicitta.com",
+                "image": "https://vas-dev.smartcampuslab.it/comuneintasca/images/PALIO.jpg",
+                "lastModified": 1387530000000,
+                "location": null,
+                "address": {
+                    "de": "",
+                    "it": "",
+                    "en": ""
+                },
+                "fromDate": 1312084800000,
+                "toDate": 3498177600000,
+                "eventDateDescription": {
+                    "de": "September",
+                    "it": "Settembre",
+                    "en": "September"
+                },
+                "classification": {
+                    "de": "Main Events",
+                    "it": "Eventi principali",
+                    "en": "Main Events"
+                }
+            },
+            {
+                "id": "event.major.8",
+                "updateTime": 1400081203910,
+                "version": 1243,
+                "user": null,
+                "source": null,
+                "title": {
+                    "de": "Borsa Internazionale del Turismo Montano (Internationale Bergtourismusbörse)",
+                    "it": "Borsa Internazionale del Turismo Montano ",
+                    "en": "Borsa Internazionale del Turismo Montano (International Mountain Tourism Exchange)"
+                },
+                "shortTitle": null,
+                "subtitle": null,
+                "description": {
+                    "de": "Im Herzen der historischen Altstadt von Trient, auf der Piazza Fiera, findet dieTourismusbörse statt, auf der Einheimische und Touristen an den Ständen der wichtigsten Urlaubsorte der Alpen reichhaltige Informationen über die lokalen Traditionen und das kulturelle Erbe finden. Gleichzeitig bietet die Bergtourismusbörse die Gelegenheit, neue Tendenzen und die zukünftige Entwicklung des touristischen Angebots der alpinen Regionen kennen zu lernen. Im Mittelpunkt stehen natürlich die Berge des Trentino mit ihren Traditionen und ihrer Kultur, die es zu schätzen gilt und die bei dieser Gelegenheit auch dem nicht-einheimischen Publikum vorgestellt werden sollen.",
+                    "it": "Nel cuore del centro storico di Trento, in Piazza Fiera, si svolgerà la rassegna fieristica dove cittadini e turisti potranno trovare gli stand delle principali località turistiche dell'arco alpino, con il proprio patrimonio di tradizioni e cultura. Sarà anche l'occasione per riflettere sulle nuove tendenze commerciali e le proposte future del turismo in montagna. Grande protagonista del confronto resterà sempre la montagna, caratteristica imprescindibile del Trentino, patrimonio di tradizioni, cultura da rispettare, ma anche da fare scoprire ed apprezzare all'esterno.",
+                    "en": "In the heart of Trento historical centre, in Piazza Fiera, is held the fair event where local people and tourists can visit the stands of the main tourist resorts in the Alps, each one with its own wealth of traditions and culture. This gives also an opportunity to consider new market trends and future offers of mountain tourism. The great protagonists are the mountains, an unfailing feature of Trentino, with a great richness of traditions and culture to be honoured, but also to be made known and appreciated in the outside world."
+                },
+                "info": null,
+                "category": "event",
+                "contacts": {
+                    "phone": "0461 434200",
+                    "email": "bitm@bitm.it"
+                },
+                "url": "www.bitm.it",
+                "image": "https://vas-dev.smartcampuslab.it/comuneintasca/images/bitm.jpg",
+                "lastModified": 1387530000000,
+                "location": null,
+                "address": {
+                    "de": "",
+                    "it": "",
+                    "en": ""
+                },
+                "fromDate": 1308542400000,
+                "toDate": 3498177600000,
+                "eventDateDescription": {
+                    "de": "September",
+                    "it": "Settembre",
+                    "en": "September"
+                },
+                "classification": {
+                    "de": "Main Events",
+                    "it": "Eventi principali",
+                    "en": "Main Events"
+                }
+            },
+            {
+                "id": "event.major.9",
+                "updateTime": 1400081203912,
+                "version": 1244,
+                "user": null,
+                "source": null,
+                "title": {
+                    "de": "Autunno Trentino (Herbst im Trentino)",
+                    "it": "Autunno Trentino",
+                    "en": "Autunno Trentino (Autumn in Trentino)"
+                },
+                "shortTitle": null,
+                "subtitle": null,
+                "description": {
+                    "de": "Ein ganz besonderes Schaufenster für die Önogastronomie im Trentino, die sich durch eine außerordentliche Vielfalt an Erzeugnissen des gesamten Territoriums auszeichnet und dies nicht zuletzt dank der Initiative „Strade del Vino e dei Sapori del Trentino“ (Wein- und Geschmacksstrassen des Trentino) zu unterstreichen weiß. Die gesamte Stadt und insbesondere Piazza Cesare Battisti leben an den beiden letzten Wochenenden im September mit den Farben, Klängen und vor allem den gastronomischen Spezialitäten des Herbstes auf – an den Ständen der Hersteller und der bekanntesten Chefköche des Trentino kommen die Liebhaber der lokalen Önogastronomie voll auf ihre Kosten.",
+                    "it": "Una vetrina privilegiata dell'enogastronomia trentina, capace di esaltare la ricchezza e la diversità delle produzioni dell'intero territorio, grazie anche al coinvolgimento delle Strade del Vino e dei Sapori del Trentino. Tutta la città e in particolar modo Piazza Cesare Battisti, nei due fine settimana di settembre, si animerà di colori, suoni, e soprattutto gusti dell'autunno, attraverso gli stand dei produttori, degustazioni e i sapori degli chef più conosciuti del territorio trentino. ",
+                    "en": "A privileged showcase of Trentino food and wine, highlighting the richness and diversity of the entire territory production thanks also to the Trentino’s Roads of Wine and Flavours. The whole city, and especially Piazza Cesare Battisti, comes alive in two September weekends with the colours, sounds and above all flavours of autumn in the producers stands, with tastings and dishes by Trentino’s most famous chefs."
+                },
+                "info": null,
+                "category": "event",
+                "contacts": {
+                    "phone": "0461 233909",
+                    "email": ""
+                },
+                "url": "www.autunnotrentino.it",
+                "image": "https://vas-dev.smartcampuslab.it/comuneintasca/images/autunno_trentino.jpg",
+                "lastModified": 1387530000000,
+                "location": null,
+                "address": {
+                    "de": "",
+                    "it": "",
+                    "en": ""
+                },
+                "fromDate": 1306900800000,
+                "toDate": 3498177600000,
+                "eventDateDescription": {
+                    "de": "September",
+                    "it": "Settembre",
+                    "en": "September"
+                },
+                "classification": {
+                    "de": "Main Events",
+                    "it": "Eventi principali",
+                    "en": "Main Events"
+                }
+            },
+            {
+                "id": "event.major.10",
+                "updateTime": 1400081203913,
+                "version": 1245,
+                "user": null,
+                "source": null,
+                "title": {
+                    "de": "Trekking Urbano (Stadtwandern)",
+                    "it": "Trekking Urbano ",
+                    "en": "Trekking Urbano (Urban Trekking)"
+                },
+                "shortTitle": null,
+                "subtitle": null,
+                "description": {
+                    "de": "Eine einzigartige Initiative, um die Stadt Trient und ihr Umland auf Spaziergängen durch die eindrucksvollsten Orte zu erkunden. Jedes Jahr nimmt Trient am „nationalen Stadtwandertag“ teil, der von der Stadt Siena gefördert wird, und lädt zur Entdeckung einer neuen Strecke ein, die sich in das Panorama der bereits vorhandenen, das ganze Jahr über begehbaren Strecken.",
+                    "it": "Un'occasione unica nel suo genere per conoscere Trento e i suoi dintorni grazie a passeggiate nei luoghi più suggestivi. Ogni anno il Comune di Trento aderisce alla giornata nazionale del trekking Urbano, promossa dal Comune di Siena, riscoprendo un nuovo percorso che va ad aggiungersi a quelli già esistenti, percorribili tutto l'anno. ",
+                    "en": "A unique opportunity to get to know Trento and its surroundings with walks to the most special places. Every year the Municipality of Trento joins the urban trekking national day promoted by the Municipality of Siena, introducing a new route that will be added to the existing ones which can be travelled all year long."
+                },
+                "info": null,
+                "category": "event",
+                "contacts": {
+                    "phone": "0461 216060",
+                    "email": "informazioni@apt.trento.it"
+                },
+                "url": "http://www.apt.trento.it/dettaglio.htm?L=it&ID=ELE0218305",
+                "image": "https://vas-dev.smartcampuslab.it/comuneintasca/images/logo_trekking_urbano.jpg",
+                "lastModified": 1387530000000,
+                "location": null,
+                "address": {
+                    "de": "",
+                    "it": "",
+                    "en": ""
+                },
+                "fromDate": 1306814400000,
+                "toDate": 3498177600000,
+                "eventDateDescription": {
+                    "de": "Oktober",
+                    "it": "Ottobre",
+                    "en": "October"
+                },
+                "classification": {
+                    "de": "Main Events",
+                    "it": "Eventi principali",
+                    "en": "Main Events"
+                }
+            },
+            {
+                "id": "event.major.11",
+                "updateTime": 1400081203915,
+                "version": 1246,
+                "user": null,
+                "source": null,
+                "title": {
+                    "de": "\"Trento, città del Natale\" e il Mercatino di Natale (Die “Weihnachtsstadt Trient” und der Weihnachtsmarkt)",
+                    "it": "\"Trento, città del Natale\" e il Mercatino di Natale ",
+                    "en": "\"Trento, città del Natale\" e il Mercatino di Natale (“Trento Christmas city” and the Christmas market)"
+                },
+                "shortTitle": null,
+                "subtitle": null,
+                "description": {
+                    "de": "Ein reichhaltiges Programm mit kulturellen Events und Animation, das von der Stadtverwaltung gefördert und gemeinsam mit der Stadt und verschiedenen im Trentino aktiven Einrichtungen organisiert wird, bildet den Rahmen für den traditionellen Weihnachtsmarkt im historischen Kontext der antiken Stadtmauern. Und um das Jahr im Zeichen von Musik und Unterhaltung abzuschließen, sind alle zum eindrucksvollen Spektakel in der historischen Altstadt eingeladen.",
+                    "it": "Un ricco palinsesto di eventi culturali e animazioni, promosso dall'Amministrazione comunale ma realizzato assieme alla città e ai vari soggetti che operano sul territorio, farà da contorno al tradizionale Mercatino di Natale ospitato nello storico scenario delle antiche mura cittadine. E per finire l'anno all'insegna della musica e del divertimento l'appuntamento è per tutti in piazza con un suggestivo spettacolo. ",
+                    "en": "A rich programme of cultural events and entertainment, promoted by Trento’s administration and organized by the city together with various territory entities, is the background to the traditional Christmas Market, held in the historical setting of the old city walls.  And to end off the year with music and fun we’ll see you all in the main square for an impressive show."
+                },
+                "info": null,
+                "category": "event",
+                "contacts": {
+                    "phone": "0461 884169",
+                    "email": "ufficio_turismo@comune.trento.it"
+                },
+                "url": "http://www.comune.trento.it/Aree-tematiche/Turismo/Attrattive-turistiche/Manifestazioni-e-Fiere/Trento-citta-del-Natale",
+                "image": "https://vas-dev.smartcampuslab.it/comuneintasca/images/natale.jpg",
+                "lastModified": 1387530000000,
+                "location": null,
+                "address": {
+                    "de": "",
+                    "it": "",
+                    "en": ""
+                },
+                "fromDate": 1301630400000,
+                "toDate": 3498177600000,
+                "eventDateDescription": {
+                    "de": "November-Dezember",
+                    "it": "Novembre-Dicembre",
+                    "en": "November-December"
+                },
+                "classification": {
+                    "de": "Main Events",
+                    "it": "Eventi principali",
+                    "en": "Main Events"
+                }
+            }
         ],
-        "address": {
-            "de": "",
-            "it": "",
-            "en": ""
-        },
-        "fromDate": 1317441600000,
-        "toDate": 3498177600000,
-        "eventDateDescription": {
-            "de": "end of May",
-            "it": "fine Maggio",
-            "en": "ende Mai"
-        },
-        "classification": {
-            "de": "Main Events",
-            "it": "Eventi principali",
-            "en": "Main Events"
-        }
-    },
-    {
-        "id": "event.major.3",
-        "updateTime": 1399563500172,
-        "version": 994,
-        "user": null,
-        "source": null,
-        "title": {
-            "de": "Festival dell'Economia (Economics Festival)",
-            "it": "Festival Economia",
-            "en": "Festival Economia (Wirtschaftsfestival)"
-        },
-        "shortTitle": null,
-        "subtitle": null,
-        "description": {
-            "de": "National and international economics experts bring new life to the city every year with opportunities for discussion and reflection, public meetings and cultural initiatives. During the festival, Trento hosts authors of significant research who present their thesis and encourage the debate on a matter of great topical interest.  Discussing with them are \"common\" people, regardless of age, social class and education: a festival for everyone and open to  everyone, to understand what we can expect from a future economic scenario that is going to affect all of us.",
-            "it": "Esperti nazionali ed internazionali in economia animano ogni anno la città con nuove occasioni di confronto e di riflessione, incontri pubblici ed iniziative culturali. In occasione del festival il capoluogo trentino ospita i protagonisti di ricerche significative per esporre le loro tesi e promuovere il dibattito su un tema di grandissima attualità. A interloquire con loro la gente \"comune\", senza distinzione di età, estrazione sociale e titolo di studio: un festival di tutti e aperto a tutti per capire cosa aspettarci dallo scenario economico futuro, in cui tutti siamo coinvolti. ",
-            "en": "Nationale und internationale Wirtschaftsexperten kommen jedes Jahr nach Trient, um neue Ansätze und Überlegungen anlässlich der verschiedenen öffentlichen Veranstaltungen und kulturellen Initiativen vorzustellen und zu diskutieren. Gäste des Festivals in Trient sind die Protagonisten bedeutender Forschungsarbeiten, die hier ihre Theorien vorstellen und die Debatte zu aktuellen Themen anregen. Als Gesprächspartner sind alle Bürger eingeladen, unabhängig von Alter, Bevölkerungsschicht und Bildungsstand: Das Festival steht allen offen, um zu verstehen, was uns das zukünftige wirtschaftliche Szenario bringen wird, in das wir alle einbezogen sind."
-        },
-        "info": null,
-        "category": "event",
-        "contacts": {
-            "phone": "0461 260511",
-            "email": "info@festivaleconomia.it"
-        },
-        "url": "http://2012.festivaleconomia.eu/",
-        "image": "https://vas-dev.smartcampuslab.it/comuneintasca/images/festival_economia.jpg",
-        "lastModified": 1387530000000,
-        "location": null,
-        "address": {
-            "de": "",
-            "it": "",
-            "en": ""
-        },
-        "fromDate": 1315022400000,
-        "toDate": 3498177600000,
-        "eventDateDescription": {
-            "de": "June",
-            "it": "Giugno",
-            "en": "Juni"
-        },
-        "classification": {
-            "de": "Main Events",
-            "it": "Eventi principali",
-            "en": "Main Events"
-        }
-    },
-    {
-        "id": "event.major.4",
-        "updateTime": 1399563500174,
-        "version": 995,
-        "user": null,
-        "source": null,
-        "title": {
-            "de": "Feste Vigiliane",
-            "it": "Feste Vigiliane",
-            "en": "Feste Vigiliane"
-        },
-        "shortTitle": null,
-        "subtitle": null,
-        "description": {
-            "de": "The Feste Vigiliane, dedicated to San Vigilio, the patron saint of the city, turn the historical city centre into an old medieval village  with lively games, music and shows, while the air fills with the smells of typical local food. The “Cena Benedettina (Benedictine Dinner), the “Tribunale di Penitenza” (Court of Penance) followed by the “Tonca” (punishment by immersion in the Adige river) the “Zaterada” (Raft race), the “Corteo storico” (Historic Parade), the Mascherada dei Ciusi e dei Gobi (a contest in historical costumes for a big “polenta”) and the “Pontificale” (Pontifical mass) provide moments of historical and cultural interest during the patron saint festival.",
-            "it": "Le Feste Vigiliane, dedicate al patrono della città, trasformano il centro storico in un antico borgo medioevale animandolo con giochi, musica e spettacoli, mentre nell'aria si diffondono i profumi della cucina tipica. La Cena Benedettina, il Tribunale di Penitenza con la successiva Tonca, la Zatterada, il Corteo Storico, la Mascherada dei Ciusi e dei Gobi e il Pontificale sono gli elementi storici di interesse che caratterizzano anche culturalmente la festa del Santo Patrono.",
-            "en": "Anlässlich des Stadtfestes „Feste Vigiliane“, das dem Schutzheiligen von Trient, San Vigilio, gewidmet ist, verwandelt sich die historische Altstadt in einen mittelalterlichen Ort, den eine Vielzahl von Veranstaltungen belebt - Spiele, Musik und Darbietungen verschiedener Art – und nicht zuletzt natürlich die gastronomischen Spezialitäten der Region. Die „Cena Benedettina“ (Benediktinischer Abendessen), das „Tribunale di Penitenza“ (Strafgericht) mit anschließender „Tonca“ (Bestrafung durch Eintauchen in die Etsch), die „Zaterada“ (Flößerrennen), der „Corteo Storico“ (historischer Umzug), und die „Mascherada dei Ciusi e dei Gobi“ (Wettstreit in historischen Kostümen um eine riesige Polenta) sowie das „Pontificale“ (Pontifikalamt) sind die historischen Elemente, die das Stadtfest zu Ehren des Schutzheiligen bereichern."
-        },
-        "info": null,
-        "category": "event",
-        "contacts": {
-            "phone": "0461 917111",
-            "email": "trento.immagine@tin.it"
-        },
-        "url": "www.festevigiliane.it",
-        "image": "https://vas-dev.smartcampuslab.it/comuneintasca/images/vigiliane_Magrone.jpg",
-        "lastModified": 1387530000000,
-        "location": null,
-        "address": {
-            "de": "",
-            "it": "",
-            "en": ""
-        },
-        "fromDate": 1314936000000,
-        "toDate": 3498177600000,
-        "eventDateDescription": {
-            "de": "June",
-            "it": "Giugno",
-            "en": "Juni"
-        },
-        "classification": {
-            "de": "Main Events",
-            "it": "Eventi principali",
-            "en": "Main Events"
-        }
-    },
-    {
-        "id": "event.major.5",
-        "updateTime": 1399563500175,
-        "version": 996,
-        "user": null,
-        "source": null,
-        "title": {
-            "de": "Gran Fondo Charly Gaul (Cycling race)",
-            "it": "Gran Fondo Charly Gaul",
-            "en": "(Radrennen) Gran Fondo Charly Gaul"
-        },
-        "shortTitle": null,
-        "subtitle": null,
-        "description": {
-            "de": "The idea to introduce a bicycle race dedicated to the famous sportsman goes back to 2005 during Charly Gaul’s visit to Bondone, the Trento mountain that made him famous for his epic performance in June 1956. Since then there have been seven editions, with new routes and finishing lines but one thing in common: the climbing of Monte Bondone.",
-            "it": "L'idea di creare una gara ciclistica intitolata al famoso sportivo è nata nel 2005 in occasione della visita di Charly Gaul al Bondone, la montagna di Trento che lo rese famoso per la sua epica impresa nel giugno 1956. Da allora si sono svolte sette edizioni, con nuovi percorsi e traguardi, accomunati tutti dall'ascesa del Monte Bondone. ",
-            "en": "Die Idee, ein Radrennen zu Ehren des berühmten Radsportlers zu veranstalten, entstand im Jahre 2005 anlässlich des Besuchs von Charly Gaul auf dem Bondone, dem Berg der Stadt Trient, der den Sportler für seine einzigartige Leistung im Juni 1956 berühmt machte. Seit 2005 wurden sieben Rennen mit je neuen Strecken und Zielen veranstaltet, die alle eines gemeinsam haben: die Eroberung des Monte Bondone."
-        },
-        "info": null,
-        "category": "event",
-        "contacts": {
-            "phone": "0461 216000",
-            "email": "charlygaul@apt.trento.it"
-        },
-        "url": "http://www.laleggendariacharlygaul.it/",
-        "image": "https://vas-dev.smartcampuslab.it/comuneintasca/images/charly_gaul.jpg",
-        "lastModified": 1387530000000,
-        "location": null,
-        "address": {
-            "de": "",
-            "it": "",
-            "en": ""
-        },
-        "fromDate": 1314849600000,
-        "toDate": 3498177600000,
-        "eventDateDescription": {
-            "de": "end of July",
-            "it": "fine Luglio",
-            "en": "ende Juli"
-        },
-        "classification": {
-            "de": "Main Events",
-            "it": "Eventi principali",
-            "en": "Main Events"
-        }
-    },
-    {
-        "id": "event.major.6",
-        "updateTime": 1399563500176,
-        "version": 997,
-        "user": null,
-        "source": null,
-        "title": {
-            "de": "Contrada Larga ",
-            "it": "Contrada Larga ",
-            "en": "Contrada Larga "
-        },
-        "shortTitle": null,
-        "subtitle": null,
-        "description": {
-            "de": "A classic event returning every summer and where music is the absolute protagonist. Musicians from different geographical areas bring to Trento the tradition and special character of their musical culture in an atmosphere of excellence.",
-            "it": "Tradizionale appuntamento che si rinnova ogni estate dove protagonista è la musica classica. Alla reaasegna partecipano musicisti provenienti da aree geografiche diverse che portano a Trento la tradizione e la specificità della loro cultura musicale, all'insegna dell'eccellenza.",
-            "en": "Im Mittelpunkt dieser traditionellen Veranstaltung, die jeden Sommer stattfindet, steht die Musik. Die Teilnehmer sind Musiker aus verschiedenen Ländern, die die warme Jahreszeit mit den Traditionen und Besonderheiten ihrer musikalischen Kultur und ihrem Talent noch bereichern."
-        },
-        "info": null,
-        "category": "event",
-        "contacts": {
-            "phone": "0461 884287",
-            "email": ""
-        },
-        "url": "www.trentocultura.it",
-        "image": "https://vas-dev.smartcampuslab.it/comuneintasca/images/contradalarga.jpg",
-        "lastModified": 1387530000000,
-        "location": null,
-        "address": {
-            "de": "",
-            "it": "",
-            "en": ""
-        },
-        "fromDate": 1312257600000,
-        "toDate": 3498177600000,
-        "eventDateDescription": {
-            "de": "July and August",
-            "it": "Luglio – Agosto",
-            "en": "Juli end August"
-        },
-        "classification": {
-            "de": "Main Events",
-            "it": "Eventi principali",
-            "en": "Main Events"
-        }
-    },
-    {
-        "id": "event.major.7",
-        "updateTime": 1399563500177,
-        "version": 998,
-        "user": null,
-        "source": null,
-        "title": {
-            "de": "Palio delle Contrade",
-            "it": "Palio delle Contrade",
-            "en": "Palio delle Contrade"
-        },
-        "shortTitle": null,
-        "subtitle": null,
-        "description": {
-            "de": "Piazza Duomo, one of the most beautiful squares of Trento’s historical centre, is transformed for the occasion into a veritable parade ground with medieval camps and characters in historical costume, bringing back to life for the large number of citizens and tourists the Trento of a long time ago, with hamlets, neighbourhoods, districts, swordsmen, crossbowmen, flag flyers, jugglers, pages and ladies.",
-            "it": "Grazie al Palio delle Contrade Piazza Duomo, una delle più belle piazze del nostro centro storico, si trasformerà in una vera e propria piazza d'armi con accampamenti medioevali e personaggi in costume che faranno rivivere al vasto pubblico di cittadini e turisti la Trento di un tempo, fatta di borghi, quartieri, contrade, spadaccini, balestrieri, sbandieratori, giocolieri, paggi e dame. ",
-            "en": "Anlässlich des „Palio delle Contrade“ verwandelt sich Piazza Duomo, einer der schönsten Plätze der historischen Altstadt von Trient, in einen wahrhaften Waffenplatz mit mittelalterlichen Lagern und kostümierten Protagonisten, die vor dem Publikum aus Einheimischen und Touristen das mittelalterliche Trient mit seinen Dörfern, Stadtvierteln, Straßen, Schwertkämpfern, Bogenschützen, Fahnenschwenkern, Jongleuren, Edelfrauen und Edelmännern wiederaufleben lassen."
-        },
-        "info": null,
-        "category": "event",
-        "contacts": {
-            "phone": "",
-            "email": "amicitta@tin.it"
-        },
-        "url": "www.amicitta.com",
-        "image": "https://vas-dev.smartcampuslab.it/comuneintasca/images/PALIO.jpg",
-        "lastModified": 1387530000000,
-        "location": null,
-        "address": {
-            "de": "",
-            "it": "",
-            "en": ""
-        },
-        "fromDate": 1312084800000,
-        "toDate": 3498177600000,
-        "eventDateDescription": {
-            "de": "September",
-            "it": "Settembre",
-            "en": "September"
-        },
-        "classification": {
-            "de": "Main Events",
-            "it": "Eventi principali",
-            "en": "Main Events"
-        }
-    },
-    {
-        "id": "event.major.8",
-        "updateTime": 1399563500179,
-        "version": 999,
-        "user": null,
-        "source": null,
-        "title": {
-            "de": "Borsa Internazionale del Turismo Montano (International Mountain Tourism Exchange)",
-            "it": "Borsa Internazionale del Turismo Montano ",
-            "en": "Borsa Internazionale del Turismo Montano (Internationale Bergtourismusbörse)"
-        },
-        "shortTitle": null,
-        "subtitle": null,
-        "description": {
-            "de": "In the heart of Trento historical centre, in Piazza Fiera, is held the fair event where local people and tourists can visit the stands of the main tourist resorts in the Alps, each one with its own wealth of traditions and culture. This gives also an opportunity to consider new market trends and future offers of mountain tourism. The great protagonists are the mountains, an unfailing feature of Trentino, with a great richness of traditions and culture to be honoured, but also to be made known and appreciated in the outside world.",
-            "it": "Nel cuore del centro storico di Trento, in Piazza Fiera, si svolgerà la rassegna fieristica dove cittadini e turisti potranno trovare gli stand delle principali località turistiche dell'arco alpino, con il proprio patrimonio di tradizioni e cultura. Sarà anche l'occasione per riflettere sulle nuove tendenze commerciali e le proposte future del turismo in montagna. Grande protagonista del confronto resterà sempre la montagna, caratteristica imprescindibile del Trentino, patrimonio di tradizioni, cultura da rispettare, ma anche da fare scoprire ed apprezzare all'esterno.",
-            "en": "Im Herzen der historischen Altstadt von Trient, auf der Piazza Fiera, findet dieTourismusbörse statt, auf der Einheimische und Touristen an den Ständen der wichtigsten Urlaubsorte der Alpen reichhaltige Informationen über die lokalen Traditionen und das kulturelle Erbe finden. Gleichzeitig bietet die Bergtourismusbörse die Gelegenheit, neue Tendenzen und die zukünftige Entwicklung des touristischen Angebots der alpinen Regionen kennen zu lernen. Im Mittelpunkt stehen natürlich die Berge des Trentino mit ihren Traditionen und ihrer Kultur, die es zu schätzen gilt und die bei dieser Gelegenheit auch dem nicht-einheimischen Publikum vorgestellt werden sollen."
-        },
-        "info": null,
-        "category": "event",
-        "contacts": {
-            "phone": "0461 434200",
-            "email": "bitm@bitm.it"
-        },
-        "url": "www.bitm.it",
-        "image": "https://vas-dev.smartcampuslab.it/comuneintasca/images/bitm.jpg",
-        "lastModified": 1387530000000,
-        "location": null,
-        "address": {
-            "de": "",
-            "it": "",
-            "en": ""
-        },
-        "fromDate": 1308542400000,
-        "toDate": 3498177600000,
-        "eventDateDescription": {
-            "de": "September",
-            "it": "Settembre",
-            "en": "September"
-        },
-        "classification": {
-            "de": "Main Events",
-            "it": "Eventi principali",
-            "en": "Main Events"
-        }
-    },
-    {
-        "id": "event.major.9",
-        "updateTime": 1399563500180,
-        "version": 1000,
-        "user": null,
-        "source": null,
-        "title": {
-            "de": "Autunno Trentino (Autumn in Trentino)",
-            "it": "Autunno Trentino",
-            "en": "Autunno Trentino (Herbst im Trentino)"
-        },
-        "shortTitle": null,
-        "subtitle": null,
-        "description": {
-            "de": "A privileged showcase of Trentino food and wine, highlighting the richness and diversity of the entire territory production thanks also to the Trentino’s Roads of Wine and Flavours. The whole city, and especially Piazza Cesare Battisti, comes alive in two September weekends with the colours, sounds and above all flavours of autumn in the producers stands, with tastings and dishes by Trentino’s most famous chefs.",
-            "it": "Una vetrina privilegiata dell'enogastronomia trentina, capace di esaltare la ricchezza e la diversità delle produzioni dell'intero territorio, grazie anche al coinvolgimento delle Strade del Vino e dei Sapori del Trentino. Tutta la città e in particolar modo Piazza Cesare Battisti, nei due fine settimana di settembre, si animerà di colori, suoni, e soprattutto gusti dell'autunno, attraverso gli stand dei produttori, degustazioni e i sapori degli chef più conosciuti del territorio trentino. ",
-            "en": "Ein ganz besonderes Schaufenster für die Önogastronomie im Trentino, die sich durch eine außerordentliche Vielfalt an Erzeugnissen des gesamten Territoriums auszeichnet und dies nicht zuletzt dank der Initiative „Strade del Vino e dei Sapori del Trentino“ (Wein- und Geschmacksstrassen des Trentino) zu unterstreichen weiß. Die gesamte Stadt und insbesondere Piazza Cesare Battisti leben an den beiden letzten Wochenenden im September mit den Farben, Klängen und vor allem den gastronomischen Spezialitäten des Herbstes auf – an den Ständen der Hersteller und der bekanntesten Chefköche des Trentino kommen die Liebhaber der lokalen Önogastronomie voll auf ihre Kosten."
-        },
-        "info": null,
-        "category": "event",
-        "contacts": {
-            "phone": "0461 233909",
-            "email": ""
-        },
-        "url": "www.autunnotrentino.it",
-        "image": "https://vas-dev.smartcampuslab.it/comuneintasca/images/autunno_trentino.jpg",
-        "lastModified": 1387530000000,
-        "location": null,
-        "address": {
-            "de": "",
-            "it": "",
-            "en": ""
-        },
-        "fromDate": 1306900800000,
-        "toDate": 3498177600000,
-        "eventDateDescription": {
-            "de": "September",
-            "it": "Settembre",
-            "en": "September"
-        },
-        "classification": {
-            "de": "Main Events",
-            "it": "Eventi principali",
-            "en": "Main Events"
-        }
-    },
-    {
-        "id": "event.major.10",
-        "updateTime": 1399563500182,
-        "version": 1001,
-        "user": null,
-        "source": null,
-        "title": {
-            "de": "Trekking Urbano (Urban Trekking)",
-            "it": "Trekking Urbano ",
-            "en": "Trekking Urbano (Stadtwandern)"
-        },
-        "shortTitle": null,
-        "subtitle": null,
-        "description": {
-            "de": "A unique opportunity to get to know Trento and its surroundings with walks to the most special places. Every year the Municipality of Trento joins the urban trekking national day promoted by the Municipality of Siena, introducing a new route that will be added to the existing ones which can be travelled all year long.",
-            "it": "Un'occasione unica nel suo genere per conoscere Trento e i suoi dintorni grazie a passeggiate nei luoghi più suggestivi. Ogni anno il Comune di Trento aderisce alla giornata nazionale del trekking Urbano, promossa dal Comune di Siena, riscoprendo un nuovo percorso che va ad aggiungersi a quelli già esistenti, percorribili tutto l'anno. ",
-            "en": "Eine einzigartige Initiative, um die Stadt Trient und ihr Umland auf Spaziergängen durch die eindrucksvollsten Orte zu erkunden. Jedes Jahr nimmt Trient am „nationalen Stadtwandertag“ teil, der von der Stadt Siena gefördert wird, und lädt zur Entdeckung einer neuen Strecke ein, die sich in das Panorama der bereits vorhandenen, das ganze Jahr über begehbaren Strecken."
-        },
-        "info": null,
-        "category": "event",
-        "contacts": {
-            "phone": "0461 216060",
-            "email": "informazioni@apt.trento.it"
-        },
-        "url": "http://www.apt.trento.it/dettaglio.htm?L=it&ID=ELE0218305",
-        "image": "https://vas-dev.smartcampuslab.it/comuneintasca/images/logo_trekking_urbano.jpg",
-        "lastModified": 1387530000000,
-        "location": null,
-        "address": {
-            "de": "",
-            "it": "",
-            "en": ""
-        },
-        "fromDate": 1306814400000,
-        "toDate": 3498177600000,
-        "eventDateDescription": {
-            "de": "October",
-            "it": "Ottobre",
-            "en": "Oktober"
-        },
-        "classification": {
-            "de": "Main Events",
-            "it": "Eventi principali",
-            "en": "Main Events"
-        }
-    },
-    {
-        "id": "event.major.11",
-        "updateTime": 1399563500183,
-        "version": 1002,
-        "user": null,
-        "source": null,
-        "title": {
-            "de": "\"Trento, città  del Natale\" e il Mercatino di Natale (“Trento Christmas city” and the Christmas market)",
-            "it": "\"Trento, città del Natale\" e il Mercatino di Natale ",
-            "en": "\"Trento, città  del Natale\" e il Mercatino di Natale (Die “Weihnachtsstadt Trient” und der Weihnachtsmarkt)"
-        },
-        "shortTitle": null,
-        "subtitle": null,
-        "description": {
-            "de": "A rich programme of cultural events and entertainment, promoted by Trento’s administration and organized by the city together with various territory entities, is the background to the traditional Christmas Market, held in the historical setting of the old city walls.  And to end off the year with music and fun we’ll see you all in the main square for an impressive show.",
-            "it": "Un ricco palinsesto di eventi culturali e animazioni, promosso dall'Amministrazione comunale ma realizzato assieme alla città e ai vari soggetti che operano sul territorio, farà da contorno al tradizionale Mercatino di Natale ospitato nello storico scenario delle antiche mura cittadine. E per finire l'anno all'insegna della musica e del divertimento l'appuntamento è per tutti in piazza con un suggestivo spettacolo. ",
-            "en": "Ein reichhaltiges Programm mit kulturellen Events und Animation, das von der Stadtverwaltung gefördert und gemeinsam mit der Stadt und verschiedenen im Trentino aktiven Einrichtungen organisiert wird, bildet den Rahmen für den traditionellen Weihnachtsmarkt im historischen Kontext der antiken Stadtmauern. Und um das Jahr im Zeichen von Musik und Unterhaltung abzuschließen, sind alle zum eindrucksvollen Spektakel in der historischen Altstadt eingeladen."
-        },
-        "info": null,
-        "category": "event",
-        "contacts": {
-            "phone": "0461 884169",
-            "email": "ufficio_turismo@comune.trento.it"
-        },
-        "url": "http://www.comune.trento.it/Aree-tematiche/Turismo/Attrattive-turistiche/Manifestazioni-e-Fiere/Trento-citta-del-Natale",
-        "image": "https://vas-dev.smartcampuslab.it/comuneintasca/images/natale.jpg",
-        "lastModified": 1387530000000,
-        "location": null,
-        "address": {
-            "de": "",
-            "it": "",
-            "en": ""
-        },
-        "fromDate": 1301630400000,
-        "toDate": 3498177600000,
-        "eventDateDescription": {
-            "de": "November-December",
-            "it": "Novembre-Dicembre",
-            "en": "November-Dezember"
-        },
-        "classification": {
-            "de": "Main Events",
-            "it": "Eventi principali",
-            "en": "Main Events"
-        }
-    }
-],
         "eu.trentorise.smartcampus.comuneintasca.model.RestaurantObject": [
             {
                 "id": "ristorazione.1000",

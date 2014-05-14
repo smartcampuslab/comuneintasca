@@ -210,13 +210,15 @@ angular.module('starter.services', [])
       return 48;
     },
     syncTimeoutSeconds: function () {
+      return 60 * 60; /* 60 times 60 seconds = 1 HOUR */
+      return 60 * 60 * 24; /* 60 times 60 seconds = 1 HOUR --> x24 = 1 DAY */
       return 60 * 60 * 24 * 10; /* 60 times 60 seconds = 1 HOUR --> x24 = 1 DAY x10 */
     },
     syncingOverlayTimeoutMillis: function () {
-      return 40 * 1000; /* 40 seconds before automatically hiding syncing overlay */
+      return 30 * 1000; /* 30 seconds before automatically hiding syncing overlay */
     },
     loadingOverlayTimeoutMillis: function () {
-      return 15 * 1000; /* 15 seconds before automatically hiding loading overlay */
+      return 10 * 1000; /* 10 seconds before automatically hiding loading overlay */
     },
     poiTypesList: function () {
       return poiTypes;

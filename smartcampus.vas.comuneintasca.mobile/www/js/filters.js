@@ -19,7 +19,6 @@ angular.module('starter.filters', [])
 .filter('extOrderBy', function($rootScope, $filter, GeoLocate) {
 	return function(input, order) {
 		if (!angular.isObject(input)) return input;
-		var location = $rootScope.location;
 		input.sort(function(a, b){
 		    if ('A-Z' == order) {
 				var a1 = $filter('translate')(a.title);
@@ -40,9 +39,9 @@ angular.module('starter.filters', [])
 				return dif;
 			}
 			if ('Distance' == order) {
-				var a1 = GeoLocate.distance(a.location, location);
-				var b1 = GeoLocate.distance(b.location, location);
-				return b1-a1;
+				var a1 = a.distance;
+				var b1 = b.distance;
+				return a1-b1;
 			}
 			return 0;
 		});

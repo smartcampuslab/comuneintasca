@@ -295,55 +295,88 @@ angular.module('starter.services', [])
   }
 })
 
-.factory('GeoLocate', function ($q) {
+.factory('GeoLocate', function ($q,$rootScope) {
   return {
     locate: function () {
       var localization = $q.defer();
-      if (ionic.Platform.isWebView()) {
-        console.log('cordova localization...');
-        document.addEventListener("deviceready", function () {
-          console.log('cordova localization inited...');
+      if ($rootScope.myPosition) {
+        localization.resolve($rootScope.myPosition);
+      } else {
+        if (ionic.Platform.isWebView()) {
+          console.log('cordova localization...');
+          document.addEventListener("deviceready", function () {
+            console.log('cordova localization inited...');
+            navigator.geolocation.watchPosition(function (position) {
+              console.log('localizing...');
+              r = [position.coords.latitude, position.coords.longitude];
+              localization.resolve(r);
+            }, function (error) {
+              localization.reject();
+            }, { 
+  //            maximumAge: 3000,
+  //            timeout: 5000, 
+              enableHighAccuracy: true 
+            });
+          }, false);
+        } else {
+          console.log('web localization...');
           navigator.geolocation.watchPosition(function (position) {
-            console.log('localizing...');
             r = [position.coords.latitude, position.coords.longitude];
             localization.resolve(r);
           }, function (error) {
             localization.reject();
+          }, { 
+  //          maximumAge: 3000, 
+  //          timeout: 5000, 
+            enableHighAccuracy: true 
           });
-        }, false);
-      } else {
-        console.log('web localization...');
-        navigator.geolocation.watchPosition(function (position) {
-          r = [position.coords.latitude, position.coords.longitude];
-          localization.resolve(r);
-        }, function (error) {
-          localization.reject();
-        });
+        }
+
       }
       return localization.promise;
     },
     distance: function (pt1, pt2) {
-      var lat1 = pt1[0];
-      var lon1 = pt1[1];
-      var lat2 = pt2[0];
-      var lon2 = pt2[1];
+      var d=false;
+      if (pt1 && pt1[0] && pt1[1] && pt2 && pt2[0] && pt2[1]) {
+        var lat1 = pt1[0];
+        var lon1 = pt1[1];
+        var lat2 = pt2[0];
+        var lon2 = pt2[1];
 
-      var R = 6371; // km
-      var dLat = (lat2 - lat1).toRad();
-      var dLon = (lon2 - lon1).toRad();
-      var lat1 = lat1.toRad();
-      var lat2 = lat2.toRad();
-      var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
-      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      var d = R * c;
-
+        var R = 6371; // km
+//        var R = 3958.76; // miles
+        var dLat = (lat2 - lat1).toRad();
+        var dLon = (lon2 - lon1).toRad();
+        var lat1 = lat1.toRad();
+        var lat2 = lat2.toRad();
+        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        d = R * c;
+        console.log('distance: '+d);
+      } else {
+        console.log('cannot calculate distance!');
+      }
       return d;
+    },
+    distanceTo: function (gotoPosition) {
+      var GL=this;
+      return this.locate().then(function(myPosition){
+//      if ($rootScope.myPosition){
+//        console.log('$rootScope.myPosition: '+JSON.stringify($rootScope.myPosition));
+        console.log('myPosition: '+JSON.stringify(myPosition));
+        console.log('gotoPosition: '+JSON.stringify(gotoPosition));
+        return GL.distance(myPosition,gotoPosition);
+//        return this.distance($rootScope.myPosition,gotoPosition);
+//      } else {
+//        return false;
+//      };
+      });
     }
   }
 })
 
-.factory('DatiDB', function ($q, $http, $ionicLoading, Config) {
+.factory('DatiDB', function ($q, $http, $rootScope, $ionicLoading, Config, GeoLocate) {
   var SCHEMA_VERSION = Config.schemaVersion();
   var types = {
     'content': 'eu.trentorise.smartcampus.comuneintasca.model.ContentObject',
@@ -368,6 +401,23 @@ angular.module('starter.services', [])
       if (item.dbClassification != '') item.dbClassification = Config.restaurantCateFromDbClassification(item.dbClassification);
       if (item.dbClassification2 != '') item.dbClassification2 = Config.restaurantCateFromDbClassification(item.dbClassification2);
       if (item.dbClassification3 != '') item.dbClassification3 = Config.restaurantCateFromDbClassification(item.dbClassification3);
+    }
+    console.log('item.location: '+JSON.stringify(item.location));
+    if (item.hasOwnProperty('location') && item.location) {
+      console.log('item.location: '+JSON.stringify(item.location));
+      if ($rootScope.myPosition){
+        console.log('$rootScope.myPosition: '+JSON.stringify($rootScope.myPosition));
+        distance=GeoLocate.distance($rootScope.myPosition,item.location);
+        console.log('distance: '+distance);
+        item['distance']=distance;
+      } else {
+        GeoLocate.distanceTo(item.location).then(function(distance){
+          console.log('distance: '+distance);
+          item['distance']=distance;
+        });
+      }
+    } else {
+      console.log('item.location UNKNOWN');
     }
     return item;
   };
@@ -1101,6 +1151,7 @@ angular.module('starter.services', [])
       });
       $scope.show = myPopup;
       myPopup.then(function (res) {
+        console.log('sort popup res: '+res);
         callback(res);
       });
     }

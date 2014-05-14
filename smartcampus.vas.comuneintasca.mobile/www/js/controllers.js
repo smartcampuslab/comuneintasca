@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['google-maps'])
 
-.controller('MenuCtrl', function ($scope, $rootScope, DatiDB, Config) {
+.controller('MenuCtrl', function ($scope, $rootScope, DatiDB, Config, GeoLocate) {
   var broserLanguage = window.navigator.userLanguage || window.navigator.language;
   var lang = broserLanguage.substring(0, 2);
   if (lang != 'it' && lang != 'en' && lang != 'de') {
@@ -111,7 +111,15 @@ $scope.show = function() {
   });
 })
 
-.controller('PlacesListCtrl', function ($scope, $stateParams, DatiDB, Config) {
+.controller('PlacesListCtrl', function ($scope, $stateParams, Sort, DatiDB, Config) {
+  $scope.ordering = 'Distance';
+  // Triggered on a button click, or some other target
+  $scope.showPopup = function () {
+    Sort.showSortPopup($scope, ['A-Z', 'Z-A', 'Distance'], $scope.ordering, function (res) {
+      if (res) $scope.ordering = res;
+    });
+  };
+
   if ($stateParams.placeType) {
     $scope.cate = Config.poiCateFromType($stateParams.placeType);
     $scope.gotdata = DatiDB.cate('poi', $scope.cate.it).then(function (data) {
@@ -160,14 +168,14 @@ $scope.show = function() {
   $scope.gotdata = DatiDB.all('mainevent').then(function (data) {
     $scope.mainevents = data;
   });
+  
   $scope.ordering = 'A-Z';
-
   // Triggered on a button click, or some other target
   $scope.showPopup = function () {
     Sort.showSortPopup($scope, ['A-Z', 'Z-A', 'Date'], $scope.ordering, function (res) {
-      $scope.ordering = res;
+      if (res) $scope.ordering = res;
     });
-  }
+  };
 })
   .controller('MainEventCtrl', function ($scope, DatiDB, $stateParams) {
     $scope.gotdata = DatiDB.get('mainevent', $stateParams.maineventId).then(function (data) {

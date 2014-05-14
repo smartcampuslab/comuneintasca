@@ -76,6 +76,14 @@
     "value": "Municipality offices",
     "description": "side menu label"
   }, {
+    "key": "leaf_Itinerario",
+    "value": "Itinerary",
+    "description": "detail label"
+  }, {
+    "key": "leaf_Hotel",
+    "value": "Hotel",
+    "description": "side menu label"
+  }, {
     "key": "restaurant_opening",
     "value": "Opening",
     "description": "restaurant leaf"

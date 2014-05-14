@@ -280,10 +280,11 @@ $scope.show = function() {
 
 .controller('ItinerarioCtrl', function ($scope, DatiDB, $stateParams) {
   $scope.itinerarioId = $stateParams.itinerarioId;
-  DatiDB.get('itinerary', $stateParams.itinerarioId).then(function (data) {
+  $scope.gotdata = DatiDB.get('itinerary', $stateParams.itinerarioId).then(function (data) {
     $scope.itinerario = data;
     DatiDB.get('poi', data.steps.join()).then(function (luoghi) {
       $scope.tappe = luoghi;
+	  $scope.location = luoghi[0].location;
     });
   });
 })

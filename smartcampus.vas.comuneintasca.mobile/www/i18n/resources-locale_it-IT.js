@@ -68,6 +68,14 @@
     "value": "Uffici Comunali",
     "description": "side menu label"
   }, {
+    "key": "leaf_Itinerario",
+    "value": "Itinerario",
+    "description": "detail label"
+  }, {
+    "key": "leaf_Hotel",
+    "value": "Hotel",
+    "description": "side menu label"
+  }, {
     "key": "restaurant_opening",
     "value": "Orari",
     "description": "restaurant leaf"

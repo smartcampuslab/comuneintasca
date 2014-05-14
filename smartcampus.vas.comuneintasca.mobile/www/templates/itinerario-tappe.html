@@ -1,8 +1,15 @@
-<ion-view title="Itinerario">
+<ion-view title="{{'Itinerario'|i18n}}">
   <ion-content class="has-header">
     <ion-list>
-      <ion-item ng-repeat="tappa in tappe track by $index" href="#/app/itinerary/{{itinerario.id}}/step/{{tappa.id}}">
-          {{$index + 1}}. {{tappa.title.it}}
+	  <div class="item item-divider" align="center">{{itinerario.title|translate}}</div>
+	  <ion-item class="item-thumbnail-left"
+                ng-repeat="place in tappe track by $index"
+                collection-item-width="'100%'"
+                collection-item-height="'80px'"
+                href="#/app/itinerary/{{itinerario.id}}/step/{{place.id}}">
+        <comuni-img class="item-image comuni-item-image" image="place.image" gotdata="gotdata"></comuni-img>
+        <h2>{{$index + 1}}. {{place.title|translate}}</h2>
+        <p class="comuni-item-bottomdetail">{{place.address|translate}}</p>
       </ion-item>
     </ion-list>
   </ion-content>

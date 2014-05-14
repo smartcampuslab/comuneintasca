@@ -166,7 +166,14 @@ $scope.show = function() {
   })
 
 
-.controller('EventsListCtrl', function ($scope, $stateParams, DatiDB, Config) {
+.controller('EventsListCtrl', function ($scope, $stateParams, DatiDB, Config, Sort) {
+  $scope.orderingTypes = ['A-Z', 'Z-A', 'Date'];
+  $scope.ordering = $scope.orderingTypes[2];
+  $scope.showSortPopup = function () {
+    Sort.openSortPopup($scope, $scope.orderingTypes, $scope.ordering, function (res) {
+      if (res) $scope.ordering = res;
+    });
+  }
   if ($stateParams.eventType) {
     $scope.cate = Config.eventCateFromType($stateParams.eventType);
     $scope.gotdata = DatiDB.cate('event', $scope.cate.it).then(function (data) {
@@ -186,7 +193,7 @@ $scope.show = function() {
 })
 
 .controller('MainEventsListCtrl', function ($scope, Sort, DatiDB) {
-  $scope.orderingTypes = ['A-Z', 'Z-A', 'Distance'];
+  $scope.orderingTypes = ['A-Z', 'Z-A', 'Date'];
   $scope.ordering = $scope.orderingTypes[0];
   $scope.showSortPopup = function () {
     Sort.openSortPopup($scope, $scope.orderingTypes, $scope.ordering, function (res) {
@@ -272,8 +279,15 @@ $scope.show = function() {
   });
 })
 
-.controller('ItinerariCtrl', function ($scope, DatiDB) {
-  DatiDB.all('itinerary').then(function (data) {
+.controller('ItinerariCtrl', function ($scope, DatiDB, Sort) {
+  $scope.orderingTypes = ['A-Z', 'Z-A'];
+  $scope.ordering = $scope.orderingTypes[0];
+  $scope.showSortPopup = function () {
+    Sort.openSortPopup($scope, $scope.orderingTypes, $scope.ordering, function (res) {
+      if (res) $scope.ordering = res;
+    });
+  };
+  $scope.gotdata = DatiDB.all('itinerary').then(function (data) {
     $scope.itinerari = data;
   });
 })

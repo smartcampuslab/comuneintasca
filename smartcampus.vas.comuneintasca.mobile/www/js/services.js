@@ -227,10 +227,10 @@ angular.module('starter.services', [])
       return poiTypes[type];
     },
     poiCateFromDbClassification: function (dbclassification) {
-      for (var poiType in poiTypes) { 
+      for (var poiType in poiTypes) {
         if (poiTypes.hasOwnProperty(poiType)) {
-          if (poiTypes[poiType].it==dbclassification) return poiTypes[poiType];
-        } 
+          if (poiTypes[poiType].it == dbclassification) return poiTypes[poiType];
+        }
       }
       return {
         de: 'UNKNOWN',
@@ -247,7 +247,7 @@ angular.module('starter.services', [])
     eventCateFromDbClassification: function (dbclassification) {
       for (var eventType in eventTypes) {
         if (eventTypes.hasOwnProperty(eventType)) {
-          if (eventTypes[eventType].it==dbclassification) return eventTypes[eventType];
+          if (eventTypes[eventType].it == dbclassification) return eventTypes[eventType];
         }
       }
       return {
@@ -265,7 +265,7 @@ angular.module('starter.services', [])
     hotelCateFromDbClassification: function (dbclassification) {
       for (var hotelType in hotelTypes) {
         if (hotelTypes.hasOwnProperty(hotelType)) {
-          if (hotelTypes[hotelType].it==dbclassification) return hotelTypes[hotelType];
+          if (hotelTypes[hotelType].it == dbclassification) return hotelTypes[hotelType];
         }
       }
       return {
@@ -283,7 +283,7 @@ angular.module('starter.services', [])
     restaurantCateFromDbClassification: function (dbclassification) {
       for (var restaurantType in restaurantTypes) {
         if (restaurantTypes.hasOwnProperty(restaurantType)) {
-          if (restaurantTypes[restaurantType].it==dbclassification) return restaurantTypes[restaurantType];
+          if (restaurantTypes[restaurantType].it == dbclassification) return restaurantTypes[restaurantType];
         }
       }
       return {
@@ -304,6 +304,7 @@ angular.module('starter.services', [])
         document.addEventListener("deviceready", function () {
           console.log('cordova localization inited...');
           navigator.geolocation.watchPosition(function (position) {
+            console.log('localizing...');
             r = [position.coords.latitude, position.coords.longitude];
             localization.resolve(r);
           }, function (error) {
@@ -353,8 +354,23 @@ angular.module('starter.services', [])
     'itinerary': 'eu.trentorise.smartcampus.comuneintasca.model.ItineraryObject',
     'mainevent': 'eu.trentorise.smartcampus.comuneintasca.model.MainEventObject'
   };
-  lastSynced = -1;
-
+  var lastSynced = -1;
+  var parseDbRow = function (dbtype, dbrow) {
+    var item = JSON.parse(dbrow.data);
+    item['dbClassification'] = dbrow.classification || '';
+    item['dbClassification2'] = dbrow.classification2 || '';
+    item['dbClassification3'] = dbrow.classification3 || '';
+    if (type == 'event') {
+      item.dbClassification = Config.eventCateFromDbClassification(item.dbClassification);
+    } else if (type == 'poi') {
+      item.dbClassification = Config.poiCateFromDbClassification(item.dbClassification);
+    } else if (type == 'restaurant') {
+      if (item.dbClassification != '') item.dbClassification = Config.restaurantCateFromDbClassification(item.dbClassification);
+      if (item.dbClassification2 != '') item.dbClassification2 = Config.restaurantCateFromDbClassification(item.dbClassification2);
+      if (item.dbClassification3 != '') item.dbClassification3 = Config.restaurantCateFromDbClassification(item.dbClassification3);
+    }
+    return item;
+  };
   var currentSchemaVersion = 0;
   if (localStorage.currentSchemaVersion) currentSchemaVersion = localStorage.currentSchemaVersion;
   console.log('currentSchemaVersion: ' + currentSchemaVersion);
@@ -440,7 +456,7 @@ angular.module('starter.services', [])
     sync: function () {
       syncronization = $q.defer();
       db.then(function (dbObj) {
-        if (ionic.Platform.isWebView() && navigator.connection.type==Connection.NONE) {
+        if (ionic.Platform.isWebView() && navigator.connection.type == Connection.NONE) {
           $ionicLoading.hide();
           console.log('no network connection');
           syncronization.resolve(currentDbVersion);
@@ -483,7 +499,9 @@ angular.module('starter.services', [])
                       angular.forEach(updates, function (item, idx) {
                         tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [item.id]);
 
-                        var classification = '', classification2 = '', classification3 = '';
+                        var classification = '',
+                          classification2 = '',
+                          classification3 = '';
                         if (contentTypeKey == 'content') {
                           classification = item.classification;
                         } else if (contentTypeKey == 'poi') {
@@ -506,9 +524,9 @@ angular.module('starter.services', [])
                         } else if (contentTypeKey == 'restaurant') {
                           classifications = item.classification.it.split(';');
                           classification = classifications[0].trim();
-                          if (classifications.length>1) {
+                          if (classifications.length > 1) {
                             classification2 = classifications[1].trim();
-                            if (classifications.length>2) {
+                            if (classifications.length > 2) {
                               classification3 = classifications[2].trim();
                             }
                           }
@@ -593,26 +611,9 @@ angular.module('starter.services', [])
         dbObj.transaction(function (tx) {
           //console.log('type: '+types[dbname]);
           tx.executeSql('SELECT id, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=?', [types[dbname]], function (tx, results) {
-            var len = results.rows.length,
-              i;
             console.log('results.rows.length: ' + results.rows.length);
-            for (i = 0; i < len; i++) {
-              var item=results.rows.item(i);
-              //console.log(item);
-              var result=JSON.parse(item.data);
-              result['dbClassification']=item.classification;
-              result['dbClassification2']=item.classification2;
-              result['dbClassification3']=item.classification3;
-              if (dbname=='event') {
-                result.dbClassification=Config.eventCateFromDbClassification(result.dbClassification);
-              } else if (dbname=='poi') {
-                result.dbClassification=Config.poiCateFromDbClassification(result.dbClassification);
-              } else if (dbname=='restaurant') {
-                if (result.dbClassification!='') result.dbClassification=Config.restaurantCateFromDbClassification(result.dbClassification);
-                if (result.dbClassification2!='') result.dbClassification2=Config.restaurantCateFromDbClassification(result.dbClassification2);
-                if (result.dbClassification3!='') result.dbClassification3=Config.restaurantCateFromDbClassification(result.dbClassification3);
-              }
-              lista.push(result);
+            for (var item in results.rows) {
+              lista.push(parseDbRow(dbname, item));
             }
           }, function (tx, err) {
             $ionicLoading.hide();
@@ -647,25 +648,9 @@ angular.module('starter.services', [])
           //                    console.log('type: '+types[dbname]);
           console.log('category: ' + cateId);
           tx.executeSql('SELECT id, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=? AND (classification=? OR classification2=? OR classification3=?)', [types[dbname], cateId, cateId, cateId], function (tx2, cateResults) {
-            var len = cateResults.rows.length, i;
             console.log('cateResults.rows.length: ' + cateResults.rows.length);
-            for (i = 0; i < len; i++) {
-              var item=cateResults.rows.item(i);
-              //console.log(item);
-              var result=JSON.parse(item.data);
-              result['dbClassification']=item.classification;
-              result['dbClassification2']=item.classification2;
-              result['dbClassification3']=item.classification3;
-              if (dbname=='event') {
-                result.dbClassification=Config.eventCateFromDbClassification(result.dbClassification);
-              } else if (dbname=='poi') {
-                result.dbClassification=Config.poiCateFromDbClassification(result.dbClassification);
-              } else if (dbname=='restaurant') {
-                if (result.dbClassification!='') result.dbClassification=Config.restaurantCateFromDbClassification(result.dbClassification);
-                if (result.dbClassification2!='') result.dbClassification2=Config.restaurantCateFromDbClassification(result.dbClassification2);
-                if (result.dbClassification3!='') result.dbClassification3=Config.restaurantCateFromDbClassification(result.dbClassification3);
-              }
-              lista.push(result);
+            for (var item in cateResults.rows) {
+              lista.push(parseDbRow(dbname, item));
             }
           }, function (tx2, err) {
             $ionicLoading.hide();
@@ -716,42 +701,13 @@ angular.module('starter.services', [])
           tx.executeSql(dbQuery, qParams, function (tx2, results) {
             if (results.rows.length > 0) {
               if (itemId.indexOf(',') == -1) {
-                var item=results.rows.item(0);
-                //console.log(item);
-                var result=JSON.parse(item.data);
-                result['dbClassification']=item.classification;
-                result['dbClassification2']=item.classification2;
-                result['dbClassification3']=item.classification3;
-                if (dbname=='event') {
-                  result.dbClassification=Config.eventCateFromDbClassification(result.dbClassification);
-                } else if (dbname=='poi') {
-                  result.dbClassification=Config.poiCateFromDbClassification(result.dbClassification);
-                } else if (dbname=='restaurant') {
-                  if (result.dbClassification!='') result.dbClassification=Config.restaurantCateFromDbClassification(result.dbClassification);
-                  if (result.dbClassification2!='') result.dbClassification2=Config.restaurantCateFromDbClassification(result.dbClassification2);
-                  if (result.dbClassification3!='') result.dbClassification3=Config.restaurantCateFromDbClassification(result.dbClassification3);
-                }
+                var item = results.rows.item(0);
+                var result = parseDbRow(dbname, item);
                 dbitem.resolve(result);
               } else {
-                var len = results.rows.length, i;
                 console.log('results.rows.length: ' + results.rows.length);
-                for (i = 0; i < len; i++) {
-                  var item=results.rows.item(i);
-                  //console.log(item);
-                  result=JSON.parse(item.data);
-                  result['dbClassification']=item.classification;
-                  result['dbClassification2']=item.classification2;
-                  result['dbClassification3']=item.classification3;
-                  if (dbname=='event') {
-                    result.dbClassification=Config.eventCateFromDbClassification(result.dbClassification);
-                  } else if (dbname=='poi') {
-                    result.dbClassification=Config.poiCateFromDbClassification(result.dbClassification);
-                  } else if (dbname=='restaurant') {
-                    if (result.dbClassification!='') result.dbClassification=Config.restaurantCateFromDbClassification(result.dbClassification);
-                    if (result.dbClassification2!='') result.dbClassification2=Config.restaurantCateFromDbClassification(result.dbClassification2);
-                    if (result.dbClassification3!='') result.dbClassification3=Config.restaurantCateFromDbClassification(result.dbClassification3);
-                  }
-                  lista.push(result);
+                for (var item in results.rows) {
+                  lista.push(parseDbRow(dbname, item));
                 }
               }
             } else {
@@ -775,125 +731,115 @@ angular.module('starter.services', [])
         return dbitem.promise;
       });
     },
-	    getFavorites: function () {
+    getFavorites: function () {
       console.log('DatiDB.getFavorites()');
 
-        var loading = $ionicLoading.show({
-          content: 'loading...',
-          showDelay: 1000,
-          duration: Config.loadingOverlayTimeoutMillis()
-        });
+      var loading = $ionicLoading.show({
+        content: 'loading...',
+        showDelay: 1000,
+        duration: Config.loadingOverlayTimeoutMillis()
+      });
 
-        var dbitem = $q.defer();
-        var lista = [];
-        dbObj.transaction(function (tx) {
-          //console.log('type: '+types[dbname]);
-          var dbQuery = 'SELECT co.id, co.classification, co.data, co.category FROM ContentObjects co, Favorites f WHERE f.id=co.id';
-          console.log('dbQuery: ' + dbQuery);
-          tx.executeSql(dbQuery, null, function (tx, results) {
-            if (results.rows.length > 0) {
-                var len = results.rows.length, i;
-                console.log('results.rows.length: ' + results.rows.length);
-                for (i = 0; i < len; i++) {
-                  var item=results.rows.item(i);
-                  //console.log(item);
-                  result=JSON.parse(item.data);
-                  result['dbClassification']=item.classification;
-                  if (dbname=='event') {
-                    result.dbClassification=Config.eventCateFromDbClassification(result.dbClassification);
-                  } else if (dbname=='poi') {
-                    result.dbClassification=Config.poiCateFromDbClassification(result.dbClassification);
-                  }
-                  lista.push(result);
-                }
-            } else {
-              console.log('not found!');
-              dbitem.reject('not found!');
+      var dbitem = $q.defer();
+      var lista = [];
+      dbObj.transaction(function (tx) {
+        //console.log('type: '+types[dbname]);
+        var dbQuery = 'SELECT co.id, co.classification, co.classification2, co.classification3, co.data, co.category FROM ContentObjects co, Favorites f WHERE f.id=co.id';
+        console.log('dbQuery: ' + dbQuery);
+        tx.executeSql(dbQuery, null, function (tx, results) {
+          if (results.rows.length > 0) {
+            console.log('results.rows.length: ' + results.rows.length);
+            for (var item in results.rows) {
+              lista.push(parseDbRow(dbname, item));
             }
-          }, function (tx, err) {
-            console.log('error: ' + err);
+          } else {
+            console.log('not found!');
+            dbitem.reject('not found!');
+          }
+        }, function (tx, err) {
+          console.log('error: ' + err);
 
-            $ionicLoading.hide();
-            dbitem.reject(err);
-          });
-        }, function (error) { //error callback
-          console.log('db.get() ERROR: ' + error);
           $ionicLoading.hide();
-          dbitem.reject(error);
-        }, function () { //success callback
-          console.log('db.get() DONE!');
-          $ionicLoading.hide();
-          dbitem.resolve(lista);
+          dbitem.reject(err);
         });
-        return dbitem.promise;
+      }, function (error) { //error callback
+        console.log('db.get() ERROR: ' + error);
+        $ionicLoading.hide();
+        dbitem.reject(error);
+      }, function () { //success callback
+        console.log('db.get() DONE!');
+        $ionicLoading.hide();
+        dbitem.resolve(lista);
+      });
+      return dbitem.promise;
     },
     isFavorite: function (itemId) {
       console.log('DatiDB.getFavorites()');
 
-        var dbitem = $q.defer();
-        var result = false;
-		
-        dbObj.transaction(function (tx) {
-          //console.log('type: '+types[dbname]);
-          var dbQuery = 'SELECT id FROM Favorites f WHERE f.id=?';
-          console.log('dbQuery: ' + dbQuery);
-          tx.executeSql(dbQuery, [itemId], function (tx, results) {
-            if (results.rows.length > 0) {
-			  result = true;
-            } else {
-              console.log('not found!');
-            }
-          }, function (tx, err) {
-            console.log('error: ' + err);
-            dbitem.resolve(false);
-          });
-        }, function (error) { //error callback
-          console.log('db.get() ERROR: ' + error);
+      var dbitem = $q.defer();
+      var result = false;
+
+      dbObj.transaction(function (tx) {
+        //console.log('type: '+types[dbname]);
+        var dbQuery = 'SELECT id FROM Favorites f WHERE f.id=?';
+        console.log('dbQuery: ' + dbQuery);
+        tx.executeSql(dbQuery, [itemId], function (tx, results) {
+          if (results.rows.length > 0) {
+            result = true;
+          } else {
+            console.log('not found!');
+          }
+        }, function (tx, err) {
+          console.log('error: ' + err);
           dbitem.resolve(false);
-        }, function () { //success callback
-          console.log('db.get() DONE!');
-          dbitem.resolve(result);
         });
-		
-        return dbitem.promise;
+      }, function (error) { //error callback
+        console.log('db.get() ERROR: ' + error);
+        dbitem.resolve(false);
+      }, function () { //success callback
+        console.log('db.get() DONE!');
+        dbitem.resolve(result);
+      });
+
+      return dbitem.promise;
     },
     setFavorite: function (itemId, val) {
-      console.log('DatiDB.setFavorite('+itemId+','+val+')');
+      console.log('DatiDB.setFavorite(' + itemId + ',' + val + ')');
 
-        var dbitem = $q.defer();
-        var result = false;
-		
-        dbObj.transaction(function (tx) {
-          //console.log('type: '+types[dbname]);
-		  var dbQuery = null;
-		  if (val) {
-		    dbQuery = 'INSERT INTO Favorites (id) VALUES (?)';
-		  }	else {
-			dbQuery = 'DELETE FROM Favorites WHERE id = ?';
-		  }
-          console.log('dbQuery: ' + dbQuery);
-          tx.executeSql(dbQuery, [itemId], function (tx, results) {
-		    result = val;
-		  }, function (tx, err) {
-            console.log('error: ' + err);
-            dbitem.resolve(!val);
-          });
-        }, function (error) { //error callback
-          console.log('db.get() ERROR: ' + error);
+      var dbitem = $q.defer();
+      var result = false;
+
+      dbObj.transaction(function (tx) {
+        //console.log('type: '+types[dbname]);
+        var dbQuery = null;
+        if (val) {
+          dbQuery = 'INSERT INTO Favorites (id) VALUES (?)';
+        } else {
+          dbQuery = 'DELETE FROM Favorites WHERE id = ?';
+        }
+        console.log('dbQuery: ' + dbQuery);
+        tx.executeSql(dbQuery, [itemId], function (tx, results) {
+          result = val;
+        }, function (tx, err) {
+          console.log('error: ' + err);
           dbitem.resolve(!val);
-        }, function () { //success callback
-          console.log('db.get() DONE!');
-          dbitem.resolve(result);
         });
-		
-        return dbitem.promise;
-    }	
+      }, function (error) { //error callback
+        console.log('db.get() ERROR: ' + error);
+        dbitem.resolve(!val);
+      }, function () { //success callback
+        console.log('db.get() DONE!');
+        dbitem.resolve(result);
+      });
+
+      return dbitem.promise;
+    }
   }
 })
 
 .factory('Files', function ($q, $http, Config) {
   IMAGESDIR_NAME = Config.savedImagesDirName();
-  console.log('savedImagesDirName: '+IMAGESDIR_NAME);
+  console.log('savedImagesDirName: ' + IMAGESDIR_NAME);
   var onErrorFS = function (e) {
     console.log('Exception:');
     console.log(e);
@@ -928,12 +874,12 @@ angular.module('starter.services', [])
   if (ionic.Platform.isWebView()) {
     document.addEventListener("deviceready", function () {
       window.requestFileSystem(window.PERSISTENT, 50 * 1024 * 1024 /*50MB*/ , function (fs) {
-        rootFS=fs.root;
+        rootFS = fs.root;
         console.log('Opened file system: ' + rootFS.toURL());
         if (device.platform == 'Android') {
           console.log('cordova (android) fs...');
           fsRoot = 'files-external';
-//          fsRoot = 'documents';
+          //          fsRoot = 'documents';
         } else {
           console.log('cordova (ios) fs...');
           fsRoot = 'documents';
@@ -941,11 +887,11 @@ angular.module('starter.services', [])
         fs.root.getDirectory(IMAGESDIR_NAME, {
           create: true
         }, function (dirEntry) {
-          console.log('main dirEntry.nativeURL: '+dirEntry.nativeURL);
+          console.log('main dirEntry.nativeURL: ' + dirEntry.nativeURL);
           //console.log('main dirEntry.toUrl(): '+dirEntry.toUrl());
-          console.log('main dirEntry.fullPath: '+dirEntry.fullPath);
+          console.log('main dirEntry.fullPath: ' + dirEntry.fullPath);
           fsObj.resolve(dirEntry);
-        },function(err){
+        }, function (err) {
           console.log('cannot find main folder fs');
           fsObj.reject('cannot find main folder fs');
         });
@@ -989,16 +935,16 @@ angular.module('starter.services', [])
         });
         */
         var dirReader = mainDir.createReader();
-        dirReader.readEntries(function(entries) {
+        dirReader.readEntries(function (entries) {
           for (entry in entries) {
-            if (entry.isDirectory){
+            if (entry.isDirectory) {
               console.log('Directory: ' + entry.nativeUrl);
-            } else if (entry.isFile){
+            } else if (entry.isFile) {
               console.log('File: ' + entry.nativeUrl);
             }
           }
-        }, function(e){
-          console.log('fsMain Exception: '+e);
+        }, function (e) {
+          console.log('fsMain Exception: ' + e);
         });
       });
     },
@@ -1026,16 +972,16 @@ angular.module('starter.services', [])
             });
             */
             var filesavepath = rootFS.toURL() + IMAGESDIR_NAME + '/' + filename;
-            console.log('already downloaded to "'+filesavepath+'"');
+            console.log('already downloaded to "' + filesavepath + '"');
             filegot.resolve(filesavepath);
           }, function () {
             if (ionic.Platform.isWebView()) {
-              if (navigator.connection.type==Connection.NONE) {
+              if (navigator.connection.type == Connection.NONE) {
                 console.log('no network connection: cannot download missing images!');
                 filegot.reject('no network connection');
               } else {
                 var filesavepath = rootFS.toURL() + IMAGESDIR_NAME + '/' + filename;
-                console.log('not found: downloading to "'+filesavepath+'"');
+                console.log('not found: downloading to "' + filesavepath + '"');
                 var fileTransfer = new FileTransfer();
                 fileTransfer.download(fileurl, filesavepath, function (fileEntry) {
                   console.log("download complete: " + filesavepath);

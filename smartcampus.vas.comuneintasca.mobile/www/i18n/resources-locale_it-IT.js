@@ -16,6 +16,10 @@
     "value":"Itinerari",
     "description":"side menu label"
   }, {
+    "key":"Itinerario",
+    "value":"Itinerario",
+    "description":"detail label"
+  }, {
     "key":"Hotel",
     "value":"Hotel",
     "description":"side menu label"

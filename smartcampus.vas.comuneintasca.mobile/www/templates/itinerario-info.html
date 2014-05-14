@@ -1,7 +1,8 @@
-<ion-view title="Itinerario">
-  <ion-content class="has-header padding">
-    <h2>{{itinerario.title.it}}</h2>
-    <div class="htmldesc" ng-bind-html="itinerario.description.it"></div>
-    <div class="htmlinfo" ng-bind-html="itinerario.info.it"></div>
+<ion-view title="{{'Itinerario'|i18n}}">
+  <ion-content class="has-header" ng-cloak>
+    <comuni-img ng-if="itinerario.image" class="content-image-main" image="itinerario.image" gotdata="gotdata"></comuni-img>
+    <h2>{{itinerario.title|translate}}</h2>
+    <div class="htmldesc" ng-bind-html="itinerario.description|translate"></div>
+    <div class="htmlinfo" ng-bind-html="itinerario.info|translate"></div>
   </ion-content>
 </ion-view>

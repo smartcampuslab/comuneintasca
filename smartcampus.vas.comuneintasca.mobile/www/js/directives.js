@@ -12,7 +12,7 @@ angular.module('starter.directives', [])
       // added since scope can be not yet filled with actual data,
       // since data is taken asyncronously from the database
       scope.gotdata.then(function () {
-        content = scope.content || scope.place || scope.hotel || scope.restaurant || scope.event || scope.obj || {
+        content = scope.content || scope.place || scope.hotel || scope.restaurant || scope.event || scope.obj || scope.itinerario ||{
           image: ''
         };
         if (content.image && content.image != '' && content.image != 'false') {

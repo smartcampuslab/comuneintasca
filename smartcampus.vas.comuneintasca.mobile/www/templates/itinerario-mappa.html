@@ -1,5 +1,6 @@
-<ion-view title="Itinerario">
+<ion-view title="{{'Itinerario'|i18n}}">
   <ion-content class="has-header" scroll="false">
+	<div class="item item-divider" align="center">{{itinerario.title|translate}}</div>	
     <div id="map2">
       <google-map center="map.center" zoom="map.zoom" draggable="{{map.draggable}}" control="map.control">
         <!--

@@ -136,6 +136,18 @@ angular.module('localization', [])
             return localize.getLocalizedString(input);
         };
     }])
+    // simple plural filter
+    // usage {{ TOKEN | i18nplur:count }}
+    .filter('i18nplur', ['localize', function (localize) {
+        return function (input, count) {
+		    var key = input;
+			if (!count) return '';
+			if (count == 1)  key += '_single'; 
+			else  key += '_plural'; 
+            return count + ' ' + localize.getLocalizedString(key);
+        };
+    }])
+	
     // translation directive that can handle dynamic strings
     // updates the text value of the attached element
     // usage <span data-i18n="TOKEN" ></span>

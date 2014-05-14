@@ -91,5 +91,13 @@
     "key": "restaurant_services",
     "value": "Servizi disponibili",
     "description": "restaurant leaf"
+  }, {
+    "key": "list_results_single",
+    "value": "resultato",
+    "description": "list results"
+  }, {
+    "key": "list_results_plural",
+    "value": "resultati",
+    "description": "list results"
   }
 ]

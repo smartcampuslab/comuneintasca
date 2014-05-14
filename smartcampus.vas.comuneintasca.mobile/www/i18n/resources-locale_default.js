@@ -99,5 +99,14 @@
     "key": "restaurant_services",
     "value": "Services",
     "description": "restaurant leaf"
+  }, {
+    "key": "list_results_single",
+    "value": "result",
+    "description": "list results"
+  }, {
+    "key": "list_results_plural",
+    "value": "results",
+    "description": "list results"
   }
+  
 ]

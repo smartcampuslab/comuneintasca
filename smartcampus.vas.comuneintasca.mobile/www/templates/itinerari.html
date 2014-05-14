@@ -4,7 +4,7 @@
   </ion-nav-buttons>	
   <ion-content class="has-header">
     <ion-list>
-    	<div class="item item-divider" align="center">{{itinerari.length}} results</div>	
+	<div class="item item-divider" align="center">{{'list_results'|i18nplur:itinerari.length}}</div>	
 	  <ion-item class="item-thumbnail-left"
                 ng-repeat="itinerario in itinerari | extOrderBy:ordering" 
 				href="#/app/itinerary/{{itinerario.id}}/info"

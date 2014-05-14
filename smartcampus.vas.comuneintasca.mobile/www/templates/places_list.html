@@ -7,7 +7,7 @@
       <ion-item ng-repeat="place in places | extOrderBy:ordering" class="item-thumbnail-left" href="#/app/place/{{place.id}}">
         <comuni-img class="item-image comuni-item-image" image="place.image" gotdata="gotdata"></comuni-img>
         <h2>{{place.title|translate}}</h2>
-        <p class="comuni-item-bottomdetail"><span ng-if="place.distance">{{place.distance | number:1}}</span> {{place.address|translate}}</p>
+        <p class="comuni-item-bottomdetail"><span ng-if="place.distance">{{place.distance | number:1}} Km to </span>{{place.address|translate}}</p>
       </ion-item>
     </ion-list>
   </ion-content>

@@ -66,13 +66,26 @@ $scope.show = function() {
   }
 })
 
-.controller('HotelsListCtrl', function ($scope, $stateParams, DatiDB, Config) {
+.controller('HotelsListCtrl', function ($scope, $stateParams, Sort, DatiDB, Config) {
   if ($stateParams.hotelType) {
-    $scope._ = _;
+    if ($stateParams.hotelType=='hotel') {
+      $scope.orderingTypes = ['A-Z', 'Z-A', 'Distance', 'Stars'];
+    } else {
+      $scope.orderingTypes = ['A-Z', 'Z-A', 'Distance'];
+    }
+    $scope.ordering = $scope.orderingTypes[2];
+    $scope.showSortPopup = function () {
+      Sort.openSortPopup($scope, $scope.orderingTypes, $scope.ordering, function (res) {
+        if (res) $scope.ordering = res;
+      });
+    };
+
     $scope.cate = Config.hotelCateFromType($stateParams.hotelType);
     $scope.gotdata = DatiDB.cate('hotel', $scope.cate.it).then(function (data) {
       $scope.hotels = data;
     });
+
+    $scope._ = _;
   } else {
     $scope.hotelcates=Config.hotelTypesList();
     /*
@@ -89,8 +102,16 @@ $scope.show = function() {
   });
 })
 
-.controller('RestaurantsListCtrl', function ($scope, $stateParams, DatiDB, Config) {
+.controller('RestaurantsListCtrl', function ($scope, $stateParams, Sort, DatiDB, Config) {
   if ($stateParams.restaurantType) {
+    $scope.orderingTypes = ['A-Z', 'Z-A', 'Distance'];
+    $scope.ordering = $scope.orderingTypes[2];
+    $scope.showSortPopup = function () {
+      Sort.openSortPopup($scope, $scope.orderingTypes, $scope.ordering, function (res) {
+        if (res) $scope.ordering = res;
+      });
+    };
+
     $scope.cate = Config.restaurantCateFromType($stateParams.restaurantType);
     $scope.gotdata = DatiDB.cate('restaurant', $scope.cate.it).then(function (data) {
       $scope.restaurants = data;
@@ -112,10 +133,10 @@ $scope.show = function() {
 })
 
 .controller('PlacesListCtrl', function ($scope, $stateParams, Sort, DatiDB, Config) {
-  $scope.ordering = 'Distance';
-  // Triggered on a button click, or some other target
-  $scope.showPopup = function () {
-    Sort.showSortPopup($scope, ['A-Z', 'Z-A', 'Distance'], $scope.ordering, function (res) {
+  $scope.orderingTypes = ['A-Z', 'Z-A', 'Distance'];
+  $scope.ordering = $scope.orderingTypes[2];
+  $scope.showSortPopup = function () {
+    Sort.openSortPopup($scope, $scope.orderingTypes, $scope.ordering, function (res) {
       if (res) $scope.ordering = res;
     });
   };
@@ -165,17 +186,17 @@ $scope.show = function() {
 })
 
 .controller('MainEventsListCtrl', function ($scope, Sort, DatiDB) {
-  $scope.gotdata = DatiDB.all('mainevent').then(function (data) {
-    $scope.mainevents = data;
-  });
-  
-  $scope.ordering = 'A-Z';
-  // Triggered on a button click, or some other target
-  $scope.showPopup = function () {
-    Sort.showSortPopup($scope, ['A-Z', 'Z-A', 'Date'], $scope.ordering, function (res) {
+  $scope.orderingTypes = ['A-Z', 'Z-A', 'Distance'];
+  $scope.ordering = $scope.orderingTypes[0];
+  $scope.showSortPopup = function () {
+    Sort.openSortPopup($scope, $scope.orderingTypes, $scope.ordering, function (res) {
       if (res) $scope.ordering = res;
     });
   };
+
+  $scope.gotdata = DatiDB.all('mainevent').then(function (data) {
+    $scope.mainevents = data;
+  });
 })
   .controller('MainEventCtrl', function ($scope, DatiDB, $stateParams) {
     $scope.gotdata = DatiDB.get('mainevent', $stateParams.maineventId).then(function (data) {

@@ -1104,6 +1104,11 @@ angular.module('starter.services', [])
 
 .factory('Sort', function ($ionicPopup, $filter) {
   var keys = {
+    'Stars': {
+      'it': 'Stelle',
+      'en': 'Stars',
+      'de': 'Stars'
+    },
     'Date': {
       'it': 'Data',
       'en': 'Date',
@@ -1132,7 +1137,7 @@ angular.module('starter.services', [])
   };
 
   return {
-    showSortPopup: function ($scope, options, presel, callback) {
+    openSortPopup: function ($scope, options, presel, callback) {
       var title = $filter('translate')(keys['OrderBy']);
 
       var template = '<div class="list">';

@@ -43,6 +43,11 @@ angular.module('starter.filters', [])
 				var b1 = b.distance;
 				return a1-b1;
 			}
+			if ('Stars' == order) {
+				var a1 = a.stars || 0;
+				var b1 = b.stars || 0;
+				return b1-a1;
+			}
 			return 0;
 		});
 		return input;

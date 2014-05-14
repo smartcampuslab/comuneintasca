@@ -18,6 +18,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       StatusBar.hide();
     }
   });
+  GeoLocate.locate().then(function(position){
+    $rootScope.myPosition=position;
+  });
   // global functions for toolbox
   $rootScope.extLink = function(url) {
 	window.open(url,'_system');

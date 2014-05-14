@@ -2,6 +2,7 @@ package eu.trentorise.smartcampus.comuneintasca.processor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -33,22 +34,60 @@ public class ItineraryGenerator {
 			GeoCITObject ref = (GeoCITObject) storage.getObjectById(id);
 			points.add(ref.getLocation());
 		}
-		return extractLinesForItineraryPoints(points);
+		return extractLineForItineraryPoints(points);
 	}
 
-	private List<String> extractLinesForItineraryPoints(List<double[]> list) throws SecurityException, RemoteException {
-		int start = 0;
-		int end = Math.min(10, list.size());
+	private List<String> extractLineForItineraryPoints(List<double[]> list) throws SecurityException, RemoteException {
 		List<String> res = new ArrayList<String>();
-		do {
-			List<double[]> sub = list.subList(start, end);
-			res.addAll(extractLines(callDirections(sub)));
-			start = end - 1;
-			end = Math.min(end + 10, list.size());
-		} while (end < list.size());
+		double[] prev = list.get(0);
+		for (int i = 0; i < list.size()-1; i++) {
+			List<String> strings = extractLines(callDirections(prev, list.get(i+1)));
+			List<double[]> decodedStep = new ArrayList<double[]>();
+			if (strings.size() == 0) continue;
+			for (String s : strings) {
+				Collection<double[]> decoded = decodeLine(s); 
+				decodedStep.addAll(decoded);
+			}
+			if (decodedStep.size() == 2 && 
+					Arrays.equals(decodedStep.get(0), prev) &&
+					Arrays.equals(decodedStep.get(1), list.get(i+1))) 
+			{
+				continue;
+			} else {
+				List<double[]> points = new ArrayList<double[]>();
+				points.add(prev);
+				points.addAll(decodedStep);
+				prev = list.get(i+1);
+				points.add(prev);
+				res.add(encodeLine(points));
+			}
+		}
 		return res;
 	}
 	
+	private String toString(Collection<double[]> decoded) {
+		String s = "[";
+		for (double[] p : decoded) {
+			s += Arrays.toString(p)+" ";
+		}
+		return s+"]";
+	}
+	private String toStringInt(Collection<double[]> decoded) {
+		String s = "";
+		for (double[] p : decoded) {
+			s += "("+Arrays.toString(p)+") Level: 3\n";
+		}
+		return s+"";
+	}
+
+	private String encodeLine(List<double[]> points) {
+		return PolylineEncoder.encode(points);
+	}
+
+	private Collection<double[]> decodeLine(String s) {
+		return PolylineEncoder.decode(s);
+	}
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private List<String> extractLines(Map<String,Object> response) {
 		List<Object> elems = (List<Object>) response.get("routes");
@@ -70,31 +109,22 @@ public class ItineraryGenerator {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private Map<String,Object> callDirections(List<double[]> points) throws SecurityException, RemoteException {
-		if (points == null || points.isEmpty()) return Collections.emptyMap(); 
+	private Map<String,Object> callDirections(double[] from, double[] to) throws SecurityException, RemoteException {
+		if (from == null || to == null) return Collections.emptyMap(); 
 		
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("key", apiKey);
 		params.put("mode", "walking");
-		params.put("origin",toLocation(points.get(0)));
-		params.put("destination",toLocation(points.get(points.size()-1)));
-		params.put("waypoints", toWaypoints(points));
+		params.put("origin",toLocation(from));
+		params.put("destination",toLocation(to));
 		
-		System.err.println("MAKING A CALL: "+params);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+		}
 		
 		String s = RemoteConnector.getJSON("https://maps.googleapis.com/maps/api/directions/json", "", null, params );
 		return JsonUtils.toObject(s, Map.class);
-	}
-
-	private String toWaypoints(List<double[]> points) {
-		String res = "";
-		for (int i = 1; i < points.size()-1;i++) {
-			res += toLocation(points.get(i));
-			if (i < points.size()-2) {
-				res += "|";
-			}
-		}
-		return res;
 	}
 
 	private String toLocation(double[] ds) {
@@ -126,6 +156,6 @@ public class ItineraryGenerator {
 				new double[]{46.07081409,11.12706232},
 				new double[]{46.07046425,11.12726617}
 		});
-		System.err.println(gen.extractLinesForItineraryPoints(list));
+		System.err.println(gen.extractLineForItineraryPoints(list));
 	}
 }

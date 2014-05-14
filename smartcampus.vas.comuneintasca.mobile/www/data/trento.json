@@ -15362,11 +15362,11 @@
                 "organizations": []
             }
         ],
-        "eu.trentorise.smartcampus.comuneintasca.model.ItineraryObject": [
+        "eu.trentorise.smartcampus.comuneintasca.model.ItineraryObject":  [
             {
                 "id": "Itinerary1",
-                "updateTime": 1398351382122,
-                "version": 654,
+                "updateTime": 1400067434559,
+                "version": 1228,
                 "user": null,
                 "source": null,
                 "title": {
@@ -15416,33 +15416,32 @@
                 "length": 1200,
                 "duration": 20,
                 "difficulty": "low",
-				"stepLines": [
-                    "apdxGea{bA}@J",
-                    "_rdxGy`{bAGaB",
-                    "grdxG{c{bAASJY@C@A?A?A?A@g@",
-                    "wqdxG}f{bA?D",
-                    "wqdxGwf{bA@u@",
-                    "uqdxGmh{bAd@A",
-                    "opdxGoh{bAVAbB[",
-                    "sldxGmi{bALtAFf@@J?H?HAJANAVCh@",
-                    "eldxGqa{bAYD",
-                    "_mdxGka{bAO?",
-                    "omdxGka{bAN?XE",
-                    "eldxGqa{bABi@@W@O@K?I?IAKGg@",
-                    "eldxGwf{bAMuA",
-                    "sldxGmi{bAcBZ}@B",
-                    "uqdxGmh{bACvA?@?@?@A@AB",
-                    "}qdxGie{bAKX",
-                    "irdxGod{bAHtB",
-                    "_rdxGy`{bAn@I",
-                    "opdxGca{bAo@H",
-                    "_rdxGy`{bAIuB"
+                "stepLines": [
+                    "gpdxGyb{bADr@}@J??GaBd@C",
+                    "aqdxG_d{bA[i@@C@A?A?A?A@g@Z@",
+                    "{pdxG{f{bA[A?D`@B",
+                    "updxGsf{bAa@C@u@??d@A@n@",
+                    "mpdxG_g{bAAo@VAbB[??LtAFf@@J?H?HAJANAVCh@??YD??O?@g@",
+                    "mmdxGsb{bAAf@N?XE??Bi@@W@O@K?I?IAKGg@m@V",
+                    "smdxG_f{bAl@WMuA??cBZ}@B??CvA?@?@?@A@ABME",
+                    "krdxGoe{bAJLIP??HtB??n@IBV",
+                    "kpdxGk`{bACWo@H??IuBAA",
+                    "krdxGqd{bA@@sCf@qAJYBMg@",
+                    "wzdxG_d{bALf@XC??Dp@TC",
+                    "sxdxGma{bAUBEq@??YBi@@@lA",
+                    "q{dxGg`{bAAmAcBD??@ZQD",
+                    "g_exGma{bAPEA[MeB??E_AWD",
+                    "c`exGog{bAVEImB?QAaBYB",
+                    "q`exGsn{bAXC@`B?P??XDN@Du@",
+                    "e~dxGql{bAEt@OAYE??aC|@??AEAC{@}C]_A_@_AQc@IQMMm@o@YM_BiACK",
+                    "knexGey{bABJFKPaA??LeBBK@EDK@G@CJUHKf@[vC}ATGMgA",
+                    "qeexGcg|bALfA`@Of@_@Q_A"
                 ]
             },
             {
                 "id": "Itinerary2",
-                "updateTime": 1398351382138,
-                "version": 655,
+                "updateTime": 1400067434574,
+                "version": 1229,
                 "user": null,
                 "source": null,
                 "title": {
@@ -15481,30 +15480,21 @@
                 "length": null,
                 "duration": null,
                 "difficulty": null,
-				"stepLines": [
-                    "emdxGii{bAPC",
-                    "sldxGmi{bAQ{B",
-                    "emdxGim{bAIqA",
-                    "omdxG{o{bAlBa@",
-                    "ajdxG}p{bA@b@",
-                    "_jdxGyo{bAAc@GqA",
-                    "ijdxGos{bAAYI}@CW",
-                    "yjdxG_w{bACSCCAC",
-                    "ckdxG{w{bA@BBBBR",
-                    "yjdxG_w{bABVH|@HjBB`ARjB",
-                    "iidxGok{bANM",
-                    "yhdxG}k{bA@A~@c@RIVGNILEPCNEZI",
-                    "obdxGyn{bA[H",
-                    "kcdxGon{bAAcA",
-                    "mcdxGsp{bA@bA",
-                    "kcdxGon{bAp@Q",
-                    "yadxGao{bAAV?FADEDEDCBEDCD?@"
+                "stepLines": [
+                    "gmdxGui{bA@JPC??Q{BRC",
+                    "qldxGmm{bASBIqA??lBa@??@b@PA",
+                    "midxG{o{bAQ@Ac@GqAPA",
+                    "widxGqs{bAQ@AYI}@CW??CSCCACDQ",
+                    "}jdxGmx{bAEP@BBBBR??BVH|@HjBB`ARjB??NMTt@",
+                    "chdxGgj{bAUu@@A~@c@RIVGNILEPCNEZIAS",
+                    "qbdxGmo{bA@R[H??AcAN?",
+                    "}bdxGsp{bAO?@bA??p@Q??AV?FADEDEDCBEDCD?@MC"
                 ]
             },
             {
                 "id": "Itinerary3",
-                "updateTime": 1398351382139,
-                "version": 656,
+                "updateTime": 1400067434576,
+                "version": 1230,
                 "user": null,
                 "source": null,
                 "title": {
@@ -15543,28 +15533,21 @@
                 "length": null,
                 "duration": null,
                 "difficulty": null,
-				 "stepLines": [
-                    "uldxGc~zbABt@NtC",
-                    "aldxGwwzbABT",
-                    "}kdxGawzbABt@@FD`A",
-                    "qkdxGaszbAX`GJvBL|BFfA",
-                    "uidxGaazbAGgAM}BKwB",
-                    "wjdxG_kzbA_Df@",
-                    "wodxGwizbA~Cg@",
-                    "wjdxG_kzbAJvBL|BLzBFzD",
-                    "gidxGqyybA@n@",
-                    "eidxGaxybAdEjBHBDHTF^L|@XlBh@`B`@z@PxAVn@L`@FNB@?",
-                    "qpcxGgnybAAA?AA??A?AAA?A?A?A?A?A?A?A?A?A?A?A@A?A?A@??A@??A?A@?@A@?@M@MBQDGGe@",
-                    "epcxGqrybAk@VKBE?I?E?EAEEAECEAIAQEkACeA",
-                    "sscxGwwybABdADjA@P@HBD@DDDD@D?H?D?JCj@W",
-                    "epcxGqrybACk@Cw@?C",
-                    "mpcxGyuybAp@a@"
+                "stepLines": [
+                    "wkdxGg~zbA]BBt@NtC`@E",
+                    "_kdxG}wzbAa@DBTa@F",
+                    "_mdxGyvzbA`@GBt@@FD`A^C",
+                    "qjdxGeszbA_@BX`GJvBL|BFfA\\C",
+                    "whdxGeazbA]BGgAM}BKwB??_Df@LrA",
+                    "iodxGcgzbAMsA~Cg@??JvBL|BLzBFzDf@C",
+                    "_hdxGuyybAg@B@n@??dEjBHBDHTF^L|@XlBh@`B`@z@PxAVn@L`@FNB@???AA?AA??A?AAA?A?A?A?A?A?A?A?A?A?A?A@A?A?A@??A@??A?A@?@A@?@M@MBQDGGe@??k@VKBE?I?E?EAEEAECEAIAQEkACeA{@H",
+                    "oucxGmwybAz@IBdADjA@P@HBD@DDDD@D?H?D?JCj@W??Ck@Cw@?C??p@a@@F"
                 ]
             },
             {
                 "id": "Itinerary4",
-                "updateTime": 1398351382141,
-                "version": 657,
+                "updateTime": 1400067434577,
+                "version": 1231,
                 "user": null,
                 "source": null,
                 "title": {
@@ -15601,26 +15584,13 @@
                 "length": null,
                 "duration": null,
                 "difficulty": null,
-				 "stepLines": [
-                    "}wdxGyuzbAS@U@U@YAa@Ge@M[U",
-                    "{}dxGawzbAAFAN?J?\\?f@@P",
-                    "}}dxGeszbAo@N",
-                    "m_exGurzbAWF",
-                    "e`exGmrzbAQyBK}AAI",
-                    "eaexGoyzbA[Dy@NuAPs@F",
-                    "ehexG_xzbAr@GtAQ",
-                    "{cexGyxzbAFl@Df@Np@RdAPz@R~@?J?L?JAFEP?BGXUbACN?L@N?D@B@D@F@F@BDFDJXf@@JBFNp@",
-                    "e`exGybzbA?@A??@A??@?@A??@?@A@?@?@?@?@A??@?@?@?@@@?@?@?@@@?@?@@@?@@@OfA@^ABk@zCUjA",
-                    "ybexGsvybAEEECEAC?EUAECEACAAACA?CECCSQ",
-                    "_eexGgyybAc@a@aC_A",
-                    "ejexGi|ybAOd@",
-                    "ujexGc{ybAd@tDBF@B",
-                    "iiexGauybAACCGe@uD",
-                    "ujexGc{ybANe@",
-                    "ejexGi|ybA`C~@v@r@BBBD@?@B@@@BBD@DDT",
-                    "ocexG_wybAC?G@KDGHEJCJAL?F?L@??DFNDFQ`@M^ELAJCLC^?L@NBZJr@f@jCCjA?`@Cn@C`@C\\GZI^Ut@Qf@CH", "ofexGm{xbAM?C?E?E@E?C@C@A@C@E@IHA@OLCBYX[\\SPEBC@C@E@CAA?AAAA?A?C?A?A@CNULSFIJGHGPM?A@??C?A?A?AAE?AACAAA?A??AA?A?A?A?C?C@A?A@C@A@CBMPORKLKFE@G?CAAAAAACAA?CAC@CBUHSJWN_@JWLa@FSBSDS@MDYB_@@W?O?[AICEAAECC@C@E@CDADCFERSpAO~@ShAIn@Mj@IRIFIJ_@J{@JYFWHM@K?QCOGIIGIESAU?i@Bc@Dg@BY@YAKCMKSM_@IOI_@A]@U@]NgA?AR{@J[",
-                    "avexGekybAL@L@B@F?D@F@D@FBFBDBBDBB",
-                    "gsexGcjybACCCEECGCGCEAGAEAG?CAGA"
+                "stepLines": [
+                    "}wdxGovzbA?TS@U@U@YAa@Ge@M[U??AFAN?J?\\?f@@P??o@NDb@",
+                    "g_exGqqzbAYDCa@QyBK}AAI??[Dy@NuAPs@FDrA",
+                    "_hexGkuzbAEsAr@GtAQ??Fl@Df@Np@RdAPz@R~@?J?L?JAFEP?BGXUbACN?L@N?D@B@D@F@F@BDFDJXf@@JBFNp@???@A??@A??@?@A??@?@A@?@?@?@?@A??@?@?@?@@@?@?@?@@@?@?@@@?@@@OfA@^ABk@zCUjA??EEECEAC?EUAECEACAAACA?CECCSQ@C",
+                    "}dexGkyybAABc@a@aC_A??Od@??d@tDBF@Bo@tA",
+                    "yjexGkrybAn@uAACCGe@uD??Ne@??`C~@v@r@BBBD@?@B@@@BBD@DDT??C?G@KDGHEJCJAL?F?L@??DFNDFQ`@M^ELAJCLC^?L@NBZJr@f@jCCjA?`@Cn@C`@C\\GZI^Ut@Qf@CH??M?C?E?E@E?C@C@A@C@E@IHA@OLCBYX[\\SPEBC@C@E@CAA?AAAA?A?C?A?A@CNULSFIJGHGPM?A@??C?A?A?AAE?AACAAA?A??AA?A?A?A?C?C@A?A@C@A@CBMPORKLKFE@G?CAAAAAACAA?CAC@CBUHSJWN_@JWLa@FSBSDS@MDYB_@@W?O?[AICEAAECC@C@E@CDADCFERSpAO~@ShAIn@Mj@IRIFIJ_@J{@JYFWHM@K?QCOGIIGIESAU?i@Bc@Dg@BY@YAKCMKSM_@IOI_@A]@U@]NgA?AR{@J[??L@L@B@F?D@F@D@FBFBDBBDBBNQ",
+                    "wrexGujybAOPCCCEECGCGCEAGAEAG?CAGANkD"
                 ]
             }
         ],

@@ -312,6 +312,13 @@ $scope.show = function() {
       latitude: 0,
       longitude: 0
     }],
+    poly: [{
+      latitude: 0,
+      longitude: 0
+    }, {
+      latitude: 0,
+      longitude: 0
+    }],	
     coords: 'self',
     fit: true,
     // icon: 'img/mapmarker.png',
@@ -418,11 +425,11 @@ $scope.show = function() {
 */
   // map2 = new mxn.Mapstraction('map2', 'openlayers');
   DatiDB.get('itinerary', $stateParams.itinerarioId).then(function (data) {
-    $scope.polylineData = [];
+    $scope.markers.poly = [];
     angular.forEach(data.stepLines, function (line) {
 		var points = google.maps.geometry.encoding.decodePath(line);
 		angular.forEach(points, function (p) {
-		  $scope.polylineData.push({latitude:p.lat(),longitude:p.lng()});
+		  $scope.markers.poly.push({latitude:p.lat(),longitude:p.lng()});
 		});
 	});
   

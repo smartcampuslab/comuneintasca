@@ -5,7 +5,7 @@ angular.module('starter.services', [])
     'museums': {
       de: 'Musei',
       it: 'Musei',
-      en: 'Musei'
+      en: 'Museums'
     },
     'buildings': {
       de: 'Historische Gebäude',
@@ -35,39 +35,39 @@ angular.module('starter.services', [])
   };
   var eventTypes = {
     'fairs': {
-      de: '',
+      de: 'Festivals, Märkte und Messen',
       it: 'Feste, mercati e fiere',
-      en: ''
+      en: 'Festivals, markets and fairs'
     },
     'conferences': {
-      de: '',
+      de: 'Tagungen, Seminare und Konferenzen',
       it: 'Incontri, convegni e conferenze',
-      en: ''
+      en: 'Meetings, seminars and conferences'
     },
     'shows': {
-      de: '',
+      de: 'Shows',
       it: 'Spettacoli',
-      en: ''
+      en: 'Shows'
     },
     'exhibitions': {
-      de: '',
+      de: 'Ausstellungen',
       it: 'Mostre',
-      en: ''
+      en: 'Exhibitions'
     },
     'labs': {
-      de: '',
+      de: 'Kurse und Workshops',
       it: 'Corsi e laboratori',
-      en: ''
+      en: 'Courses and workshops'
     },
     'competitions': {
-      de: '',
+      de: 'Wettbewerbe und Gewinnspiele',
       it: 'Competizioni e gare',
-      en: ''
+      en: 'Competitions and contests'
     },
     'misc': {
-      de: '',
+      de: 'Verschiedene Initiativen',
       it: 'Iniziative varie',
-      en: ''
+      en: 'Various initiatives'
     },
   };
 

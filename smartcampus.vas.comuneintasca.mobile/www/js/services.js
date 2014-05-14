@@ -360,11 +360,11 @@ angular.module('starter.services', [])
     item['dbClassification'] = dbrow.classification || '';
     item['dbClassification2'] = dbrow.classification2 || '';
     item['dbClassification3'] = dbrow.classification3 || '';
-    if (type == 'event') {
+    if (dbtype == 'event') {
       item.dbClassification = Config.eventCateFromDbClassification(item.dbClassification);
-    } else if (type == 'poi') {
+    } else if (dbtype == 'poi') {
       item.dbClassification = Config.poiCateFromDbClassification(item.dbClassification);
-    } else if (type == 'restaurant') {
+    } else if (dbtype == 'restaurant') {
       if (item.dbClassification != '') item.dbClassification = Config.restaurantCateFromDbClassification(item.dbClassification);
       if (item.dbClassification2 != '') item.dbClassification2 = Config.restaurantCateFromDbClassification(item.dbClassification2);
       if (item.dbClassification3 != '') item.dbClassification3 = Config.restaurantCateFromDbClassification(item.dbClassification3);
@@ -611,8 +611,10 @@ angular.module('starter.services', [])
         dbObj.transaction(function (tx) {
           //console.log('type: '+types[dbname]);
           tx.executeSql('SELECT id, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=?', [types[dbname]], function (tx, results) {
-            console.log('results.rows.length: ' + results.rows.length);
-            for (var item in results.rows) {
+            var len = results.rows.length, i;
+            console.log('results.rows.length: ' + len);
+            for (i = 0; i < len; i++) {
+              var item=results.rows.item(i);
               lista.push(parseDbRow(dbname, item));
             }
           }, function (tx, err) {
@@ -649,7 +651,10 @@ angular.module('starter.services', [])
           console.log('category: ' + cateId);
           tx.executeSql('SELECT id, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=? AND (classification=? OR classification2=? OR classification3=?)', [types[dbname], cateId, cateId, cateId], function (tx2, cateResults) {
             console.log('cateResults.rows.length: ' + cateResults.rows.length);
-            for (var item in cateResults.rows) {
+            var len = cateResults.rows.length, i;
+            console.log('results.rows.length: ' + len);
+            for (i = 0; i < len; i++) {
+              var item=cateResults.rows.item(i);
               lista.push(parseDbRow(dbname, item));
             }
           }, function (tx2, err) {
@@ -701,12 +706,15 @@ angular.module('starter.services', [])
           tx.executeSql(dbQuery, qParams, function (tx2, results) {
             if (results.rows.length > 0) {
               if (itemId.indexOf(',') == -1) {
+                console.log('single db result');
                 var item = results.rows.item(0);
                 var result = parseDbRow(dbname, item);
                 dbitem.resolve(result);
               } else {
-                console.log('results.rows.length: ' + results.rows.length);
-                for (var item in results.rows) {
+                var len = results.rows.length, i;
+                console.log('results.rows.length: ' + len);
+                for (i = 0; i < len; i++) {
+                  var item=results.rows.item(i);
                   lista.push(parseDbRow(dbname, item));
                 }
               }
@@ -748,8 +756,10 @@ angular.module('starter.services', [])
         console.log('dbQuery: ' + dbQuery);
         tx.executeSql(dbQuery, null, function (tx, results) {
           if (results.rows.length > 0) {
-            console.log('results.rows.length: ' + results.rows.length);
-            for (var item in results.rows) {
+            var len = results.rows.length, i;
+            console.log('results.rows.length: ' + len);
+            for (i = 0; i < len; i++) {
+              var item=results.rows.item(i);
               lista.push(parseDbRow(dbname, item));
             }
           } else {

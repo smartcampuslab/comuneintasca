@@ -1,8 +1,18 @@
-<ion-view title="{{'sidemenu_Itinerari' | i18n}}">
+<ion-view title="{{'sidemenu_Itinerari'|i18n}}">
+  <ion-nav-buttons side="left">
+	<a class="button button-icon icon ion-android-sort" ng-click="showSortPopup()"></a>	
+  </ion-nav-buttons>	
   <ion-content class="has-header">
     <ion-list>
-      <ion-item ng-repeat="itinerario in itinerari" href="#/app/itinerary/{{itinerario.id}}/info">
-        {{itinerario.title.it}}
+    	<div class="item item-divider" align="center">{{itinerari.length}} results</div>	
+	  <ion-item class="item-thumbnail-left"
+                ng-repeat="itinerario in itinerari | extOrderBy:ordering" 
+				href="#/app/itinerary/{{itinerario.id}}/info"
+                collection-item-width="'100%'"
+                collection-item-height="'80px'">
+        <comuni-img class="item-image comuni-item-image" image="itinerario.image" gotdata="gotdata"></comuni-img>
+        <h2>{{itinerario.title|translate}}</h2>
+        <p class="comuni-item-bottomdetail">{{itinerario.subtitle|translate}}</p>
       </ion-item>
     </ion-list>
   </ion-content>

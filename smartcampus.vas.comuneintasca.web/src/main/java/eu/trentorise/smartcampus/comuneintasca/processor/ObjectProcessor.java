@@ -399,7 +399,7 @@ public class ObjectProcessor {
 		subtitles.put("it", row.get(6));
 		subtitles.put("de", row.get(7));
 		subtitles.put("en", row.get(8));
-		p.setTitle(titles);
+		p.setSubtitle(subtitles);
 
 		if (!StringUtils.isEmpty(row.get(9))) {
 			p.setImage(imagePrefix+"/"+row.get(9));

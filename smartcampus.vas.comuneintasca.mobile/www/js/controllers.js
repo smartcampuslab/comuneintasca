@@ -186,7 +186,7 @@ $scope.show = function() {
 })
 
 .controller('MainEventsListCtrl', function ($scope, Sort, DatiDB) {
-  $scope.orderingTypes = ['A-Z', 'Z-A', 'Distance'];
+  $scope.orderingTypes = ['A-Z', 'Z-A', 'Data'];
   $scope.ordering = $scope.orderingTypes[0];
   $scope.showSortPopup = function () {
     Sort.openSortPopup($scope, $scope.orderingTypes, $scope.ordering, function (res) {
@@ -272,8 +272,15 @@ $scope.show = function() {
   });
 })
 
-.controller('ItinerariCtrl', function ($scope, DatiDB) {
-  DatiDB.all('itinerary').then(function (data) {
+.controller('ItinerariCtrl', function ($scope, DatiDB, Sort) {
+  $scope.orderingTypes = ['A-Z', 'Z-A'];
+  $scope.ordering = $scope.orderingTypes[0];
+  $scope.showSortPopup = function () {
+    Sort.openSortPopup($scope, $scope.orderingTypes, $scope.ordering, function (res) {
+      if (res) $scope.ordering = res;
+    });
+  };
+  $scope.gotdata = DatiDB.all('itinerary').then(function (data) {
     $scope.itinerari = data;
   });
 })

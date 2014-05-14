@@ -3,7 +3,8 @@
   <ion-pane ion-side-menu-content>
     <ion-nav-bar class="bar-comuni nav-title-slide-ios7">
       <ion-nav-buttons side="left">
-        <ion-nav-back-button class="button-clear"><i class="icon ion-chevron-left"></i>
+        <ion-nav-back-button class="button-clear">
+          <i class="icon ion-chevron-left"></i>
         </ion-nav-back-button>
       </ion-nav-buttons>
       <ion-nav-buttons side="right">
@@ -15,30 +16,76 @@
 
   <ion-side-menu side="right">
     <header class="bar bar-header bar-dark-comuni">
-      <h1 class="title">Trento in Tasca</h1>
+      <h1 class="title"><span data-i18n="sidemenu_Title"></span></h1>
     </header>
     <ion-content class="has-header content-calm">
       <ion-list>
-        <ion-item nav-clear menu-close class="item-calm2" href="#/app/home">Home</ion-item>
-        <div class="item-divider">Conoscere Trento</div>
-        <ion-item nav-clear menu-close class="item-calm2" href="#/app/contents/text.3001,text.3004">Info</ion-item>
-        <ion-item nav-clear menu-close class="item-calm2" href="#/app/content/text.3002"><span data-i18n="Storia"></span></ion-item>
-        <ion-item nav-clear menu-close class="item-calm2" href="#/app/content/text.3003">Concilio</ion-item>
-        <ion-item nav-clear menu-close class="item-calm2" href="#/app/mainevents"><span data-i18n="Eventi Principali"></span></ion-item>
-        <ion-item nav-clear menu-close class="item-calm2" href="#/app/contentscate/bondone">Bondone</ion-item>
-        <div class="item-divider">Vivere Trento</div>
-        <ion-item ng-repeat="(key, type) in eventTypes" nav-clear menu-close class="item-calm2" ng-href="#/app/events/{{key}}"><span ng-bind="type|translate"></span></ion-item>
-        <div class="item-divider">Scoprire Trento</div>
-        <ion-item nav-clear menu-close class="item-calm2" href="#/app/mappa">Mappa</ion-item>
-        <ion-item ng-repeat="(key, type) in poiTypes" nav-clear menu-close class="item-calm2" ng-href="#/app/places/{{key}}"><span ng-bind="type|translate"></span></ion-item>
-        <div class="item-divider">Percorsi a Trento</div>
-        <ion-item nav-clear menu-close class="item-calm2" href="#/app/itineraries"><span data-i18n="Itinerari"></span></ion-item>
-        <div class="item-divider">Mangiare e Dormire</div>
-        <ion-item nav-clear menu-close class="item-calm2" href="#/app/hotels"><span data-i18n="Hotel"></span></ion-item>
-        <ion-item nav-clear menu-close class="item-calm2" href="#/app/restaurants"><span data-i18n="Ristoranti"></span></ion-item>
-        <div class="item-divider">Info Utili</div>
-        <ion-item nav-clear menu-close class="item-calm2" href="#/app/services"><span data-i18n="Servizi"></span></ion-item>
-        <ion-item nav-clear menu-close class="item-calm2" href="#/app/offices">Uffici Comunali</ion-item>
+        <ion-item nav-clear menu-close class="item-calm2" href="#/app/home">
+          <span data-i18n="sidemenu_Home"></span>
+        </ion-item>
+
+        <div class="item-divider">
+          <span data-i18n="sidemenu_div_Conoscere"></span>
+        </div>
+        <ion-item nav-clear menu-close class="item-calm2" href="#/app/contents/text.3001,text.3004">
+          <span data-i18n="sidemenu_Info"></span>
+        </ion-item>
+        <ion-item nav-clear menu-close class="item-calm2" href="#/app/content/text.3002">
+          <span data-i18n="sidemenu_Storia"></span>
+        </ion-item>
+        <ion-item nav-clear menu-close class="item-calm2" href="#/app/content/text.3003">
+          <span data-i18n="sidemenu_Concilio"></span>
+        </ion-item>
+        <ion-item nav-clear menu-close class="item-calm2" href="#/app/mainevents">
+          <span data-i18n="sidemenu_Eventi-Principali"></span>
+        </ion-item>
+        <ion-item nav-clear menu-close class="item-calm2" href="#/app/contentscate/bondone">
+          <span data-i18n="sidemenu_Bondone"></span>
+        </ion-item>
+
+        <div class="item-divider">
+          <span data-i18n="sidemenu_div_Vivere"></span>
+        </div>
+        <ion-item ng-repeat="(key, type) in eventTypes" nav-clear menu-close class="item-calm2" ng-href="#/app/events/{{key}}">
+          <span ng-bind="type | translate"></span>
+        </ion-item>
+
+        <div class="item-divider">
+          <span data-i18n="sidemenu_div_Scoprire"></span>
+        </div>
+        <ion-item nav-clear menu-close class="item-calm2" href="#/app/mappa">
+          <span data-i18n="sidemenu_Mappa"></span>
+        </ion-item>
+        <ion-item ng-repeat="(key, type) in poiTypes" nav-clear menu-close class="item-calm2" ng-href="#/app/places/{{key}}">
+          <span ng-bind="type | translate"></span>
+        </ion-item>
+
+        <div class="item-divider">
+          <span data-i18n="sidemenu_div_Percorsi"></span>
+        </div>
+        <ion-item nav-clear menu-close class="item-calm2" href="#/app/itineraries">
+          <span data-i18n="sidemenu_Itinerari"></span>
+        </ion-item>
+
+        <div class="item-divider">
+          <span data-i18n="sidemenu_div_Mangiare-dormire"></span>
+        </div>
+        <ion-item nav-clear menu-close class="item-calm2" href="#/app/hotels">
+          <span data-i18n="sidemenu_Hotel"></span>
+        </ion-item>
+        <ion-item nav-clear menu-close class="item-calm2" href="#/app/restaurants">
+          <span data-i18n="sidemenu_Ristoranti"></span>
+        </ion-item>
+
+        <div class="item-divider">
+          <span data-i18n="sidemenu_div_Info-utili"></span>
+        </div>
+        <ion-item nav-clear menu-close class="item-calm2" href="#/app/services">
+          <span data-i18n="sidemenu_Servizi"></span>
+        </ion-item>
+        <ion-item nav-clear menu-close class="item-calm2" href="#/app/offices">
+          <span data-i18n="sidemenu_Uffici-comunali"></span>
+        </ion-item>
       </ion-list>
     </ion-content>
   </ion-side-menu>

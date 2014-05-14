@@ -207,7 +207,7 @@ angular.module('starter.services', [])
       return 'TrentoInTasca';
     },
     schemaVersion: function () {
-      return 46;
+      return 48;
     },
     syncTimeoutSeconds: function () {
       return 60 * 60 * 24 * 10; /* 60 times 60 seconds = 1 HOUR --> x24 = 1 DAY x10 */
@@ -400,6 +400,8 @@ angular.module('starter.services', [])
       dbObj.transaction(function (tx) {
         tx.executeSql('DROP TABLE IF EXISTS ContentObjects');
         tx.executeSql('CREATE TABLE IF NOT EXISTS ContentObjects (id text primary key, version integer, type text, category text, classification text, classification2 text, classification3 text, data text, lat real, lon real, updateTime integer)');
+        tx.executeSql('DROP TABLE IF EXISTS Favorites');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS Favorites (id text primary key)');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_id ON ContentObjects( id )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_type ON ContentObjects( type )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_cate ON ContentObjects( category )');
@@ -770,7 +772,120 @@ angular.module('starter.services', [])
         });
         return dbitem.promise;
       });
-    }
+    },
+	    getFavorites: function () {
+      console.log('DatiDB.getFavorites()');
+
+        var loading = $ionicLoading.show({
+          content: 'loading...',
+          showDelay: 1000,
+          duration: Config.loadingOverlayTimeoutMillis()
+        });
+
+        var dbitem = $q.defer();
+        var lista = [];
+        dbObj.transaction(function (tx) {
+          //console.log('type: '+types[dbname]);
+          var dbQuery = 'SELECT co.id, co.classification, co.data, co.category FROM ContentObjects co, Favorites f WHERE f.id=co.id';
+          console.log('dbQuery: ' + dbQuery);
+          tx.executeSql(dbQuery, null, function (tx, results) {
+            if (results.rows.length > 0) {
+                var len = results.rows.length, i;
+                console.log('results.rows.length: ' + results.rows.length);
+                for (i = 0; i < len; i++) {
+                  var item=results.rows.item(i);
+                  //console.log(item);
+                  result=JSON.parse(item.data);
+                  result['dbClassification']=item.classification;
+                  if (dbname=='event') {
+                    result.dbClassification=Config.eventCateFromDbClassification(result.dbClassification);
+                  } else if (dbname=='poi') {
+                    result.dbClassification=Config.poiCateFromDbClassification(result.dbClassification);
+                  }
+                  lista.push(result);
+                }
+            } else {
+              console.log('not found!');
+              dbitem.reject('not found!');
+            }
+          }, function (tx, err) {
+            console.log('error: ' + err);
+
+            $ionicLoading.hide();
+            dbitem.reject(err);
+          });
+        }, function (error) { //error callback
+          console.log('db.get() ERROR: ' + error);
+          $ionicLoading.hide();
+          dbitem.reject(error);
+        }, function () { //success callback
+          console.log('db.get() DONE!');
+          $ionicLoading.hide();
+          dbitem.resolve(lista);
+        });
+        return dbitem.promise;
+    },
+    isFavorite: function (itemId) {
+      console.log('DatiDB.getFavorites()');
+
+        var dbitem = $q.defer();
+        var result = false;
+		
+        dbObj.transaction(function (tx) {
+          //console.log('type: '+types[dbname]);
+          var dbQuery = 'SELECT id FROM Favorites f WHERE f.id=?';
+          console.log('dbQuery: ' + dbQuery);
+          tx.executeSql(dbQuery, [itemId], function (tx, results) {
+            if (results.rows.length > 0) {
+			  result = true;
+            } else {
+              console.log('not found!');
+            }
+          }, function (tx, err) {
+            console.log('error: ' + err);
+            dbitem.resolve(false);
+          });
+        }, function (error) { //error callback
+          console.log('db.get() ERROR: ' + error);
+          dbitem.resolve(false);
+        }, function () { //success callback
+          console.log('db.get() DONE!');
+          dbitem.resolve(result);
+        });
+		
+        return dbitem.promise;
+    },
+    setFavorite: function (itemId, val) {
+      console.log('DatiDB.setFavorite('+itemId+','+val+')');
+
+        var dbitem = $q.defer();
+        var result = false;
+		
+        dbObj.transaction(function (tx) {
+          //console.log('type: '+types[dbname]);
+		  var dbQuery = null;
+		  if (val) {
+		    dbQuery = 'INSERT INTO Favorites (id) VALUES (?)';
+		  }	else {
+			dbQuery = 'DELETE FROM Favorites WHERE id = ?';
+		  }
+          console.log('dbQuery: ' + dbQuery);
+          tx.executeSql(dbQuery, [itemId], function (tx, results) {
+		    result = val;
+		  }, function (tx, err) {
+            console.log('error: ' + err);
+            dbitem.resolve(!val);
+          });
+        }, function (error) { //error callback
+          console.log('db.get() ERROR: ' + error);
+          dbitem.resolve(!val);
+        }, function () { //success callback
+          console.log('db.get() DONE!');
+          dbitem.resolve(result);
+        });
+		
+        return dbitem.promise;
+    }	
   }
 })
 

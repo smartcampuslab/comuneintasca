@@ -319,7 +319,6 @@ $scope.show = function() {
    * google.maps.TravelMode.BICYCLING
    * google.maps.TravelMode.TRANSIT
    * google.maps.TravelMode.WALKING
-   */
   $scope.directionsOptions = {
     directionsServiceOptions: {
       travelMode: google.maps.TravelMode.WALKING
@@ -329,9 +328,11 @@ $scope.show = function() {
       polylineOptions: $scope.polylineOptions
     }
   };
+   */
 
   $scope.showInfoWindow = false;
 
+/*
   var directionsService = new google.maps.DirectionsService();
   var directionsDisplay = new google.maps.DirectionsRenderer($scope.directionsOptions.directionsRendererOptions);
 
@@ -385,9 +386,17 @@ $scope.show = function() {
       }
     }
   }
-
+*/
   // map2 = new mxn.Mapstraction('map2', 'openlayers');
   DatiDB.get('itinerary', $stateParams.itinerarioId).then(function (data) {
+    $scope.polylineData = [];
+    angular.forEach(data.stepLines, function (line) {
+		var points = google.maps.geometry.encoding.decodePath(line);
+		angular.forEach(points, function (p) {
+		  $scope.polylineData.push({latitude:p.lat(),longitude:p.lng()});
+		});
+	});
+  
     DatiDB.get('poi', data.steps.join()).then(function (luoghi) {
       $scope.markers.models = [];
 

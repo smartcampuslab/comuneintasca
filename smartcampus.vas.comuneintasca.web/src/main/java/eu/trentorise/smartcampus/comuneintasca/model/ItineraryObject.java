@@ -9,6 +9,9 @@ public class ItineraryObject extends BaseCITObject {
 	private Integer length;
 	private Integer duration;
 	private String difficulty;
+	
+	private List<String> stepLines;
+	
 	public List<String> getSteps() {
 		return steps;
 	}
@@ -33,6 +36,11 @@ public class ItineraryObject extends BaseCITObject {
 	public void setDifficulty(String difficulty) {
 		this.difficulty = difficulty;
 	}
-	
+	public List<String> getStepLines() {
+		return stepLines;
+	}
+	public void setStepLines(List<String> stepLines) {
+		this.stepLines = stepLines;
+	}
 	
 }

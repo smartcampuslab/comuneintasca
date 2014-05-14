@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'starter.filters', 'starter.directives', 'localization'])
 
-.run(function($ionicPlatform, $rootScope) {
+.run(function($ionicPlatform, $rootScope, DatiDB) {
     if (typeof(Number.prototype.toRad) === "undefined") {
       Number.prototype.toRad = function() {
         return this * Math.PI / 180;
@@ -42,7 +42,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   $rootScope.share = function(text, webUrl, imgUrl) {
 	window.plugins.socialsharing.share(text, null, imgUrl, webUrl);
   }
-
+  $rootScope.toggleFavorite = function(obj) {
+	DatiDB.setFavorite(obj.id,obj.favorite < 0).then(function(res) {
+		obj['favorite'] = res ? 1 : -1;
+	});
+  }
+  
+  $rootScope.isFavorite = function(obj) {
+    if (!obj) return false;
+    if (obj['favorite'] == null || obj['favorite'] == 0) {
+	  DatiDB.isFavorite(obj.id).then(function(res){
+	    obj['favorite'] = res ? 1 : -1;
+	  });
+	  return false;
+	} else {
+	  return obj['favorite'] > 0 ? true : false;
+	} 
+  }
 })
 /*
 /mainevents

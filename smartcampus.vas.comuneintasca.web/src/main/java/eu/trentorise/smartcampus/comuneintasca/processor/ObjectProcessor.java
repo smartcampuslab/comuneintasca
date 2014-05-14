@@ -11,6 +11,8 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -20,17 +22,23 @@ import eu.trentorise.smartcampus.comuneintasca.model.ItineraryObject;
 import eu.trentorise.smartcampus.comuneintasca.model.MainEventObject;
 import eu.trentorise.smartcampus.comuneintasca.model.POIObject;
 import eu.trentorise.smartcampus.comuneintasca.model.RestaurantObject;
+import eu.trentorise.smartcampus.network.RemoteException;
 import eu.trentorise.smartcampus.presentation.common.exception.DataException;
 import eu.trentorise.smartcampus.presentation.common.exception.NotFoundException;
 import eu.trentorise.smartcampus.presentation.storage.sync.BasicObjectSyncStorage;
 
 public class ObjectProcessor {
 
+	private Logger logger = LoggerFactory.getLogger(getClass());
+	
 	private static final SimpleDateFormat lastModifiedFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm aa Z");
 	
 	@Autowired
 	private BasicObjectSyncStorage storage;
 
+	@Autowired
+	private ItineraryGenerator itineraryGenerator;
+	
 	@Autowired
 	@Value("${imageFolderPrefix}")
 	private String imagePrefix;
@@ -376,7 +384,7 @@ public class ObjectProcessor {
 		p.setLastModified(lastModifiedFormat.parse(row.get(25)).getTime());
 		return p;
 	}
-	private ItineraryObject convertItineraryObject(List<String> row) throws ParseException, NotFoundException, DataException {
+	private ItineraryObject convertItineraryObject(List<String> row) throws ParseException, NotFoundException, DataException, SecurityException, RemoteException {
 		ItineraryObject p = new ItineraryObject();
 		p.setId(row.get(0));
 		p.setCategory(row.get(2));
@@ -431,6 +439,9 @@ public class ObjectProcessor {
 		p.setDescription(shortDesc);
 		
 		p.setLastModified(lastModifiedFormat.parse(row.get(20)).getTime());
+		
+		p.setStepLines(itineraryGenerator.generateSteps(p));
+		
 		return p;
 	}
 

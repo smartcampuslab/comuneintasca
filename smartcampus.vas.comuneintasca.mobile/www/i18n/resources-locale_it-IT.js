@@ -8,6 +8,10 @@
     "value": "Prima pagina",
     "description": "side menu label"
   }, {
+    "key": "sidemenu_Favourites",
+    "value": "Preferiti",
+    "description": "side menu label"
+  }, {
     "key": "sidemenu_div_Conoscere",
     "value": "Conoscere Trento",
     "description": "side menu label"

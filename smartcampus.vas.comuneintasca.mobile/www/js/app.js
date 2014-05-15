@@ -79,6 +79,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             templateUrl:"templates/home.html", controller:"HomeCtrl"
         } }
     })
+    .state('app.favs', {
+        url:"/favs", views:{ 'menuContent':{
+            templateUrl:"templates/favourites_list.html", controller:"FavouritesListCtrl"
+        } }
+    })
     .state('app.contentscate', {
         url:"/contentscate/:contentsCate", views:{ 'menuContent':{
             templateUrl:"templates/contents_page.html",  controller:"ContentsListCtrl"

@@ -8,6 +8,10 @@
     "value": "Home",
     "description": "side menu label"
   }, {
+    "key": "sidemenu_Favourites",
+    "value": "Favourites",
+    "description": "side menu label"
+  }, {
     "key": "sidemenu_div_Conoscere",
     "value": "Know Trento",
     "description": "side menu label"

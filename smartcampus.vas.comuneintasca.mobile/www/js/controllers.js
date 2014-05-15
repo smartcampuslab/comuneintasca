@@ -66,6 +66,12 @@ $scope.show = function() {
   }
 })
 
+.controller('FavouritesListCtrl', function ($scope, DatiDB) {
+  DatiDB.getFavorites().then(function(data){
+    $scope.favourites = data;
+  });
+})
+
 .controller('HotelsListCtrl', function ($scope, $stateParams, Sort, DatiDB, Config) {
   if ($stateParams.hotelType) {
     if ($stateParams.hotelType=='hotel') {

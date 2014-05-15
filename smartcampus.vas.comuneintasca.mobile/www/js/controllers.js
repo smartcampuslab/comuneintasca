@@ -1,8 +1,8 @@
 angular.module('starter.controllers', ['google-maps'])
 
 .controller('MenuCtrl', function ($scope, $rootScope, DatiDB, Config, GeoLocate) {
-  var broserLanguage = window.navigator.userLanguage || window.navigator.language;
-  var lang = broserLanguage.substring(0, 2);
+  var browserLanguage = window.navigator.userLanguage || window.navigator.language;
+  var lang = browserLanguage.substring(0, 2);
   if (lang != 'it' && lang != 'en' && lang != 'de') {
     $rootScope.lang = 'en';
   } else {

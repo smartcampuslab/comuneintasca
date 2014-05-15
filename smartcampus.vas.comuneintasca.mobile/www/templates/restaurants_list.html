@@ -1,14 +1,14 @@
-<ion-view title="Restaurants">
+<ion-view title="{{'sidemenu_Ristoranti' | i18n}}">
   <ion-nav-buttons side="left">
-	<a class="button button-icon icon ion-android-sort" ng-click="showSortPopup()"></a>	
-  </ion-nav-buttons>	
+    <a class="button button-icon icon ion-android-sort" ng-click="showSortPopup()"></a>
+  </ion-nav-buttons>
   <ion-content class="has-header">
     <ion-list>
-      <div class="item item-divider" align="center">{{'list_results'|i18nplur:restaurants.length}}</div>	
+      <div class="item item-divider" align="center">{{'list_results' | i18nplur:restaurants.length}}</div>
       <ion-item ng-repeat="restaurant in restaurants | extOrderBy:ordering" class="item-thumbnail-left" href="#/app/restaurant/{{restaurant.id}}">
         <comuni-img class="item-image comuni-item-image" image="restaurant.image" gotdata="gotdata"></comuni-img>
-        <h2>{{restaurant.title|translate}}</h2>
-        <p class="comuni-item-bottomdetail"><span ng-if="restaurant.distance">{{restaurant.distance | number:1}} Km to</span>{{restaurant.address|translate}}</p>
+        <h2>{{restaurant.title | translate}}</h2>
+        <p class="comuni-item-bottomdetail"><span ng-if="restaurant.distance">{{restaurant.distance | number:1}} {{'entry_km-to' | i18n}} </span>{{restaurant.address | translate}}</p>
       </ion-item>
     </ion-list>
   </ion-content>

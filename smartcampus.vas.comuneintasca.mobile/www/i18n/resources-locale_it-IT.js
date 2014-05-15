@@ -74,7 +74,15 @@
   }, {
     "key": "leaf_Hotel",
     "value": "Hotel",
-    "description": "side menu label"
+    "description": "detail label"
+  }, {
+    "key": "leaf_Event",
+    "value": "Evento",
+    "description": "detail label"
+  }, {
+    "key": "leaf_Restaurant",
+    "value": "Ristorante",
+    "description": "detail label"
   }, {
     "key": "restaurant_opening",
     "value": "Orari",
@@ -99,5 +107,9 @@
     "key": "list_results_plural",
     "value": "resultati",
     "description": "list results"
+  }, {
+    "key": "entry_km-to",
+    "value": "Km da",
+    "description": "restaurant entry"
   }
 ]

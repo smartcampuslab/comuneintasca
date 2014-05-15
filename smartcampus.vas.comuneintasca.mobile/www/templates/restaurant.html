@@ -1,12 +1,10 @@
-<ion-view title="Restaurant">
+<ion-view title="{{'leaf_Restaurant' | i18n}}">
   <ion-content class="has-header" ng-cloak>
     <comuni-img ng-if="obj.image" class="content-image-main" image="obj.image" gotdata="gotdata"></comuni-img>
     <div class="padding">
       <h1>{{obj.title | translate}}</h1>
-      <div class="subtitle">
-        <strong>{{obj.classification | translate}}</strong>
-      </div>
-      <div class="subtitle">{{obj.address | translate}}</div>
+      <h4>{{obj.classification | translate}}</h4>
+      <h5>{{obj.address | translate}}</h5>
       <p>
         <ul>
           <li><strong>{{'restaurant_opening' | i18n}}: </strong> {{obj.timetable | translate}}</li>

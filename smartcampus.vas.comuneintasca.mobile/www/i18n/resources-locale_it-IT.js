@@ -1,5 +1,13 @@
 [
   {
+    "key": "sidemenu_Title",
+    "value": "Trento in Tasca",
+    "description": "side menu label"
+  }, {
+    "key": "sidemenu_Home",
+    "value": "Prima pagina",
+    "description": "side menu label"
+  }, {
     "key": "sidemenu_div_Conoscere",
     "value": "Conoscere Trento",
     "description": "side menu label"

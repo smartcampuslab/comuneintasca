@@ -126,8 +126,9 @@ $scope.show = function() {
   }
 })
 
-.controller('RestaurantCtrl', function ($scope, $stateParams, DatiDB) {
+.controller('RestaurantCtrl', function ($rootScope, $scope, $stateParams, DatiDB) {
   $scope.gotdata = DatiDB.get('restaurant', $stateParams.restaurantId).then(function (data) {
+    $scope.lang = $rootScope.lang;
     $scope.obj = data;
   });
 })

@@ -116,6 +116,10 @@
     "value": "results",
     "description": "list results"
   }, {
+    "key": "entry_km",
+    "value": "Km",
+    "description": "restaurant entry"
+  }, {
     "key": "entry_km-to",
     "value": "Km to",
     "description": "restaurant entry"

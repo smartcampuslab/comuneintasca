@@ -102,10 +102,15 @@ ion-side-menu .item {
 .comuni-item-image.error:after {
   content: '!';
 }
-p.comuni-item-bottomdetail {
+.comuni-item-bottomdetail {
   position: absolute;
   bottom: 10px;
-  left: 105px;
+  /*left: 105px;*/
+  width: 100%;
+  padding-right: 120px;
+}
+.comuni-item-bottomdetail .comuni-item-distance {
+  float: right;
 }
 .content-image-main {
   height: 320px;
@@ -188,4 +193,7 @@ p.comuni-item-bottomdetail {
   -ms-flex: 0 0 40%;
   flex: 0 0 40%;
   max-width: 40%;
+}
+.col-distance {
+  text-align: right;
 }

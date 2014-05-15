@@ -11,7 +11,13 @@
         <p>
           <i class="icon ion-ios7-star" ng-if="!! hotel.stars" ng-repeat="n in _.range(0, hotel.stars)"></i>
         </p>
-        <p class="comuni-item-bottomdetail"><span ng-if="hotel.distance">{{hotel.distance | number:1}} {{'entry_km-to' | i18n}} </span>{{hotel.address | translate}}</p>
+        <!-- <div class="comuni-item-bottomdetail"><span ng-if="hotel.distance">{{hotel.distance | number:1}} {{'entry_km-to' | i18n}} </span>{{hotel.address | translate}}</div>-->
+        <div class="comuni-item-bottomdetail">
+          <span>{{hotel.address | translate}}</span>
+          <span class="comuni-item-distance" ng-if="!! hotel.distance">
+            {{hotel.distance | number:1}} {{'entry_km' | i18n}}
+          </span>
+        </div>
       </ion-item>
     </ion-list>
   </ion-content>

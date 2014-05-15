@@ -3,8 +3,8 @@
     <comuni-img ng-if="itinerario.image" class="content-image-main" image="itinerario.image" gotdata="gotdata"></comuni-img>
     <div class="padding">
       <h2>{{itinerario.title | translate}}</h2>
-      <div class="htmldesc" ng-bind-html="itinerario.description|translate"></div>
-      <div class="htmlinfo" ng-bind-html="itinerario.info|translate"></div>
+      <div class="htmldesc" compile="itinerario.description|translate"></div>
+      <div class="htmlinfo" compile="itinerario.info|translate"></div>
     </div>
   </ion-content>
 </ion-view>

@@ -36,6 +36,50 @@ angular.module('starter.directives', [])
   };
 })
 
+.directive('compile', function($compile) {
+      // directive factory creates a link function
+      return function(scope, element, attrs) {
+        scope.$watch(
+          function(scope) {
+             // watch the 'compile' expression for changes
+            return scope.$eval(attrs.compile);
+          },
+          function(value) {
+            // when the 'compile' expression changes
+            // assign it into the current DOM
+            element.html(value);
+
+            // compile the new DOM and link it to the current
+            // scope.
+            // NOTE: we only compile .childNodes so that
+            // we don't get into infinite loop compiling ourselves
+            $compile(element.contents())(scope);
+          }
+        );
+      };
+    })
+  
+.directive('a', [function () {
+    return {
+        restrict: 'E',
+        link: function (scope, element, attrs, ctrl) {
+            element.on('click', function (event) {
+			  // process only non-angular links / links starting with hash	
+			  if (element[0].href && !element[0].attributes['ng-href'] && element[0].attributes['href'].value.indexOf('#') != 0) {
+				console.log(element[0].attributes['href'].value);
+				event.preventDefault();
+			    var url = element[0].href;
+                var protocol = element[0].protocol;
+				// do not open relative links
+				if (protocol && element[0].attributes['href'].value.indexOf(protocol) == 0) {
+					window.open(url,'_system');
+					console.log("blocking link "+ element[0].attributes['href'].value);             
+				}
+			  } 
+            });
+        }
+    };
+}]);
 /*
     console.log('asking for file...');
         console.log('file got: '+fileUrl);

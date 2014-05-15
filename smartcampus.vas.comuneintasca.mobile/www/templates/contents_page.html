@@ -4,7 +4,7 @@
         <comuni-img ng-if="content.image" class="content-image-main" image="content.image" gotdata="gotdata"></comuni-img>
         <div class="padding">
             <h2>{{content.title|translate}}</h2>
-            <div class="comuni-htmldesc" ng-bind-html="content.info|translate"></div>
+            <div class="comuni-htmldesc" compile="content.info|translate"></div>
         </div>
     </div>
   </ion-content>

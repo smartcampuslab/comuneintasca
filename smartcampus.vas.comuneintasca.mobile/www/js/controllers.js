@@ -43,7 +43,7 @@ $scope.show = function() {
   }
   $scope.gotdata = DatiDB.get('content', contentId).then(function (data) {
     $scope.content = data;
-  });
+  });  
 })
 
 .controller('ContentsListCtrl', function ($scope, $state, $stateParams, DatiDB) {

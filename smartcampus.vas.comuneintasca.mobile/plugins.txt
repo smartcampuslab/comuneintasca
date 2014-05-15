@@ -1,0 +1,14 @@
+(already added by ionic)
+org.apache.cordova.console
+org.apache.cordova.device
+org.apache.cordova.statusbar
+
+(project related)
+cordova plugin add https://github.com/brodysoft/Cordova-SQLitePlugin.git
+cordova plugin add org.apache.cordova.file
+cordova plugin add org.apache.cordova.file-transfer
+cordova plugin add org.apache.cordova.geolocation
+cordova plugin add org.apache.cordova.core.inappbrowser
+cordova plugin add de.appplant.cordova.plugin.email-composer
+cordova plugin add https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git
+cordova plugin add org.apache.cordova.network-information

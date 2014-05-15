@@ -201,6 +201,15 @@ angular.module('starter.services', [])
       en: 'Oriental specialities'
     }
   };
+  var contentTypes = {
+    'content': 'eu.trentorise.smartcampus.comuneintasca.model.ContentObject',
+    'poi': 'eu.trentorise.smartcampus.comuneintasca.model.POIObject',
+    'event': 'eu.trentorise.smartcampus.comuneintasca.model.EventObject',
+    'restaurant': 'eu.trentorise.smartcampus.comuneintasca.model.RestaurantObject',
+    'hotel': 'eu.trentorise.smartcampus.comuneintasca.model.HotelObject',
+    'itinerary': 'eu.trentorise.smartcampus.comuneintasca.model.ItineraryObject',
+    'mainevent': 'eu.trentorise.smartcampus.comuneintasca.model.MainEventObject'
+  };
 
   return {
     savedImagesDirName: function () {
@@ -219,6 +228,17 @@ angular.module('starter.services', [])
     },
     loadingOverlayTimeoutMillis: function () {
       return 10 * 1000; /* 10 seconds before automatically hiding loading overlay */
+    },
+    contentTypesList: function () {
+      return contentTypes;
+    },
+    contentKeyFromDbType: function (dbtype) {
+      for (var contentType in contentTypes) {
+        if (contentTypes.hasOwnProperty(contentType)) {
+          if (contentTypes[contentType] == dbtype) return contentType;
+        }
+      }
+      return '';
     },
     poiTypesList: function () {
       return poiTypes;
@@ -295,7 +315,7 @@ angular.module('starter.services', [])
   }
 })
 
-.factory('GeoLocate', function ($q,$rootScope) {
+.factory('GeoLocate', function ($q, $rootScope) {
   return {
     locate: function () {
       var localization = $q.defer();
@@ -312,10 +332,10 @@ angular.module('starter.services', [])
               localization.resolve(r);
             }, function (error) {
               localization.reject();
-            }, { 
-  //            maximumAge: 3000,
-  //            timeout: 5000, 
-              enableHighAccuracy: true 
+            }, {
+              //maximumAge: 3000,
+              //timeout: 5000, 
+              enableHighAccuracy: true
             });
           }, false);
         } else {
@@ -325,10 +345,10 @@ angular.module('starter.services', [])
             localization.resolve(r);
           }, function (error) {
             localization.reject();
-          }, { 
-  //          maximumAge: 3000, 
-  //          timeout: 5000, 
-            enableHighAccuracy: true 
+          }, {
+            //maximumAge: 3000, 
+            //timeout: 5000, 
+            enableHighAccuracy: true
           });
         }
 
@@ -336,7 +356,7 @@ angular.module('starter.services', [])
       return localization.promise;
     },
     distance: function (pt1, pt2) {
-      var d=false;
+      var d = false;
       if (pt1 && pt1[0] && pt1[1] && pt2 && pt2[0] && pt2[1]) {
         var lat1 = pt1[0];
         var lon1 = pt1[1];
@@ -344,7 +364,7 @@ angular.module('starter.services', [])
         var lon2 = pt2[1];
 
         var R = 6371; // km
-//        var R = 3958.76; // miles
+        //var R = 3958.76; // miles
         var dLat = (lat2 - lat1).toRad();
         var dLon = (lon2 - lon1).toRad();
         var lat1 = lat1.toRad();
@@ -353,24 +373,24 @@ angular.module('starter.services', [])
           Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         d = R * c;
-        console.log('distance: '+d);
+        console.log('distance: ' + d);
       } else {
         console.log('cannot calculate distance!');
       }
       return d;
     },
     distanceTo: function (gotoPosition) {
-      var GL=this;
-      return this.locate().then(function(myPosition){
-//      if ($rootScope.myPosition){
-//        console.log('$rootScope.myPosition: '+JSON.stringify($rootScope.myPosition));
-        console.log('myPosition: '+JSON.stringify(myPosition));
-        console.log('gotoPosition: '+JSON.stringify(gotoPosition));
-        return GL.distance(myPosition,gotoPosition);
-//        return this.distance($rootScope.myPosition,gotoPosition);
-//      } else {
-//        return false;
-//      };
+      var GL = this;
+      return this.locate().then(function (myPosition) {
+        //if ($rootScope.myPosition){
+        //console.log('$rootScope.myPosition: '+JSON.stringify($rootScope.myPosition));
+        console.log('myPosition: ' + JSON.stringify(myPosition));
+        console.log('gotoPosition: ' + JSON.stringify(gotoPosition));
+        return GL.distance(myPosition, gotoPosition);
+        //return this.distance($rootScope.myPosition,gotoPosition);
+        //} else {
+        //return false;
+        //};
       });
     }
   }
@@ -378,42 +398,57 @@ angular.module('starter.services', [])
 
 .factory('DatiDB', function ($q, $http, $rootScope, $ionicLoading, Config, GeoLocate) {
   var SCHEMA_VERSION = Config.schemaVersion();
-  var types = {
-    'content': 'eu.trentorise.smartcampus.comuneintasca.model.ContentObject',
-    'poi': 'eu.trentorise.smartcampus.comuneintasca.model.POIObject',
-    'event': 'eu.trentorise.smartcampus.comuneintasca.model.EventObject',
-    'restaurant': 'eu.trentorise.smartcampus.comuneintasca.model.RestaurantObject',
-    'hotel': 'eu.trentorise.smartcampus.comuneintasca.model.HotelObject',
-    'itinerary': 'eu.trentorise.smartcampus.comuneintasca.model.ItineraryObject',
-    'mainevent': 'eu.trentorise.smartcampus.comuneintasca.model.MainEventObject'
-  };
+  var types = Config.contentTypesList();
   var lastSynced = -1;
-  var parseDbRow = function (dbtype, dbrow) {
+  var parseDbRow = function (dbrow) {
+    var dbtype = Config.contentKeyFromDbType(dbrow.type);
+    console.log(dbtype);
     var item = JSON.parse(dbrow.data);
     item['dbClassification'] = dbrow.classification || '';
     item['dbClassification2'] = dbrow.classification2 || '';
     item['dbClassification3'] = dbrow.classification3 || '';
-    if (dbtype == 'event') {
-      item.dbClassification = Config.eventCateFromDbClassification(item.dbClassification);
+    if (dbtype == 'content') {
+      item['abslink'] = '#/app/content/' + item.id;
+
     } else if (dbtype == 'poi') {
+      item['abslink'] = '#/app/place/' + item.id;
+
       item.dbClassification = Config.poiCateFromDbClassification(item.dbClassification);
+
+    } else if (dbtype == 'event') {
+      item['abslink'] = '#/app/event/' + item.id;
+
+      item.dbClassification = Config.eventCateFromDbClassification(item.dbClassification);
+
     } else if (dbtype == 'restaurant') {
+      item['abslink'] = '#/app/restaurant/' + item.id;
+
       if (item.dbClassification != '') item.dbClassification = Config.restaurantCateFromDbClassification(item.dbClassification);
       if (item.dbClassification2 != '') item.dbClassification2 = Config.restaurantCateFromDbClassification(item.dbClassification2);
       if (item.dbClassification3 != '') item.dbClassification3 = Config.restaurantCateFromDbClassification(item.dbClassification3);
+
+    } else if (dbtype == 'hotel') {
+      item['abslink'] = '#/app/event/' + item.id;
+
+    } else if (dbtype == 'itinerary') {
+      item['abslink'] = '#/app/itinerary/' + item.id + '/info';
+
+    } else if (dbtype == 'mainevent') {
+      item['abslink'] = '#/app/mainevent/' + item.id;
+
     }
-    console.log('item.location: '+JSON.stringify(item.location));
+    console.log('item.location: ' + JSON.stringify(item.location));
     if (item.hasOwnProperty('location') && item.location) {
-      console.log('item.location: '+JSON.stringify(item.location));
-      if ($rootScope.myPosition){
-        console.log('$rootScope.myPosition: '+JSON.stringify($rootScope.myPosition));
-        distance=GeoLocate.distance($rootScope.myPosition,item.location);
-        console.log('distance: '+distance);
-        item['distance']=distance;
+      console.log('item.location: ' + JSON.stringify(item.location));
+      if ($rootScope.myPosition) {
+        console.log('$rootScope.myPosition: ' + JSON.stringify($rootScope.myPosition));
+        distance = GeoLocate.distance($rootScope.myPosition, item.location);
+        console.log('distance: ' + distance);
+        item['distance'] = distance;
       } else {
-        GeoLocate.distanceTo(item.location).then(function(distance){
-          console.log('distance: '+distance);
-          item['distance']=distance;
+        GeoLocate.distanceTo(item.location).then(function (distance) {
+          console.log('distance: ' + distance);
+          item['distance'] = distance;
         });
       }
     } else {
@@ -456,7 +491,7 @@ angular.module('starter.services', [])
     console.log('web db...');
     dbObj = window.openDatabase('Trento', '1.0', 'Trento in Tasca', 2 * 1024 * 1024);
     syncOptions = localSyncOptions;
-    //        syncOptions=remoteSyncOptions;
+    //syncOptions=remoteSyncOptions;
     dbopenDeferred.resolve(dbObj);
   }
   dbopen = dbopenDeferred.promise;
@@ -660,12 +695,13 @@ angular.module('starter.services', [])
         var lista = []
         dbObj.transaction(function (tx) {
           //console.log('type: '+types[dbname]);
-          tx.executeSql('SELECT id, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=?', [types[dbname]], function (tx, results) {
-            var len = results.rows.length, i;
+          tx.executeSql('SELECT id, type, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=?', [types[dbname]], function (tx, results) {
+            var len = results.rows.length,
+              i;
             console.log('results.rows.length: ' + len);
             for (i = 0; i < len; i++) {
-              var item=results.rows.item(i);
-              lista.push(parseDbRow(dbname, item));
+              var item = results.rows.item(i);
+              lista.push(parseDbRow(item));
             }
           }, function (tx, err) {
             $ionicLoading.hide();
@@ -697,15 +733,16 @@ angular.module('starter.services', [])
 
         var lista = []
         dbObj.transaction(function (tx) {
-          //                    console.log('type: '+types[dbname]);
+          //console.log('type: '+types[dbname]);
           console.log('category: ' + cateId);
-          tx.executeSql('SELECT id, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=? AND (classification=? OR classification2=? OR classification3=?)', [types[dbname], cateId, cateId, cateId], function (tx2, cateResults) {
+          tx.executeSql('SELECT id, type, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=? AND (classification=? OR classification2=? OR classification3=?)', [types[dbname], cateId, cateId, cateId], function (tx2, cateResults) {
             console.log('cateResults.rows.length: ' + cateResults.rows.length);
-            var len = cateResults.rows.length, i;
+            var len = cateResults.rows.length,
+              i;
             console.log('results.rows.length: ' + len);
             for (i = 0; i < len; i++) {
-              var item=cateResults.rows.item(i);
-              lista.push(parseDbRow(dbname, item));
+              var item = cateResults.rows.item(i);
+              lista.push(parseDbRow(item));
             }
           }, function (tx2, err) {
             $ionicLoading.hide();
@@ -751,21 +788,22 @@ angular.module('starter.services', [])
           }
           var qParams = itemId.split(',');
           qParams.unshift(types[dbname]);
-          var dbQuery = 'SELECT id, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=? AND ' + idCond;
+          var dbQuery = 'SELECT id, type, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=? AND ' + idCond;
           console.log('dbQuery: ' + dbQuery);
           tx.executeSql(dbQuery, qParams, function (tx2, results) {
             if (results.rows.length > 0) {
               if (itemId.indexOf(',') == -1) {
                 console.log('single db result');
                 var item = results.rows.item(0);
-                var result = parseDbRow(dbname, item);
+                var result = parseDbRow(item);
                 dbitem.resolve(result);
               } else {
-                var len = results.rows.length, i;
+                var len = results.rows.length,
+                  i;
                 console.log('results.rows.length: ' + len);
                 for (i = 0; i < len; i++) {
-                  var item=results.rows.item(i);
-                  lista.push(parseDbRow(dbname, item));
+                  var item = results.rows.item(i);
+                  lista.push(parseDbRow(item));
                 }
               }
             } else {
@@ -802,15 +840,16 @@ angular.module('starter.services', [])
       var lista = [];
       dbObj.transaction(function (tx) {
         //console.log('type: '+types[dbname]);
-        var dbQuery = 'SELECT co.id, co.classification, co.classification2, co.classification3, co.data, co.category FROM ContentObjects co, Favorites f WHERE f.id=co.id';
+        var dbQuery = 'SELECT co.id, co.type, co.classification, co.classification2, co.classification3, co.data, co.category FROM ContentObjects co, Favorites f WHERE f.id=co.id';
         console.log('dbQuery: ' + dbQuery);
         tx.executeSql(dbQuery, null, function (tx, results) {
           if (results.rows.length > 0) {
-            var len = results.rows.length, i;
+            var len = results.rows.length,
+              i;
             console.log('results.rows.length: ' + len);
             for (i = 0; i < len; i++) {
-              var item=results.rows.item(i);
-              lista.push(parseDbRow(dbname, item));
+              var item = results.rows.item(i);
+              lista.push(parseDbRow(item));
             }
           } else {
             console.log('not found!');
@@ -939,7 +978,7 @@ angular.module('starter.services', [])
         if (device.platform == 'Android') {
           console.log('cordova (android) fs...');
           fsRoot = 'files-external';
-          //          fsRoot = 'documents';
+          //fsRoot = 'documents';
         } else {
           console.log('cordova (ios) fs...');
           fsRoot = 'documents';
@@ -1156,7 +1195,7 @@ angular.module('starter.services', [])
       });
       $scope.show = myPopup;
       myPopup.then(function (res) {
-        console.log('sort popup res: '+res);
+        console.log('sort popup res: ' + res);
         callback(res);
       });
     }

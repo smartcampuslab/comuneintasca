@@ -162,6 +162,7 @@ $scope.show = function() {
   .controller('PlaceCtrl', function ($scope, DatiDB, GeoLocate, $stateParams) {
     $scope.gotdata = DatiDB.get('poi', $stateParams.placeId).then(function (data) {
       $scope.place = data;
+	  $scope.obj = data;
       if (data.location) {
         GeoLocate.locate().then(function (latlon) {
           $scope.distance = GeoLocate.distance(latlon, data.location);

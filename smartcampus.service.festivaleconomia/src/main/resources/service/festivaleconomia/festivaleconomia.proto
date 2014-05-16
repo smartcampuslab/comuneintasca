@@ -1,0 +1,21 @@
+package eu.trentorise.smartcampus.service.festivaleconomia.data.message;
+
+message Evento {
+ required string id = 1;
+ repeated Trans title = 2;
+ repeated Trans description = 3;
+ repeated Trans address = 4;
+ repeated Trans category = 5;
+ required string url = 6;
+ optional string image = 7;
+ optional int64 lastModified = 8;
+ required int64 fromTime = 9;
+ optional int64 toTime = 10;
+
+}
+ 
+message Trans {
+ required string lang = 1;
+ required string value = 2;
+ }
+

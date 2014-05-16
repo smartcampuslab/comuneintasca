@@ -163,7 +163,7 @@ ion-side-menu .item {
 #home-buttons button {
   color: #2975a7;
   margin: 0;
-/*
+  /*
   border-radius: .5em;
   background-color: #b7d6e8;
   padding: 0;
@@ -198,4 +198,8 @@ ion-side-menu .item {
 }
 .col-distance {
   text-align: right;
+}
+.card.emptylist {
+  opacity: .8;
+  text-align: center;
 }

@@ -74,6 +74,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         url:"/app", abstract:true, templateUrl:"templates/menu.html", controller:'MenuCtrl'
 
     })
+    .state('app.cate', {
+        url:"/cate/:cateId", views:{ 'menuContent':{
+            templateUrl:"templates/contentcates_list.html", controller:"CategoriesListCtrl"
+        } }
+    })
     .state('app.home', {
         url:"/home", views:{ 'menuContent':{
             templateUrl:"templates/home.html", controller:"HomeCtrl"

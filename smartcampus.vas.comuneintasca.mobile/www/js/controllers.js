@@ -11,6 +11,9 @@ angular.module('starter.controllers', ['google-maps'])
   DatiDB.sync();
   $scope.poiTypes = Config.poiTypesList();
   $scope.eventTypes = Config.eventTypesList();
+  $scope.goto = function (link) {
+    location = '#/app/' + link;
+  };
 })
   .controller('HomeCtrl', function ($scope, Files) {
     /*
@@ -35,6 +38,63 @@ $scope.show = function() {
     //    $state.go('contact.detail')
   })
 
+.controller('CategoriesListCtrl', function ($scope, $stateParams, Config) {
+  if ($stateParams.cateId == 'info') {
+    $scope.title='sidemenu_div_Conoscere';
+    $scope.categories = [
+      {
+        key: 'sidemenu_Info',
+        link: 'contents/text.3001,text.3004'
+      }, {
+        key: 'sidemenu_Storia',
+        link: 'content/text.3002'
+      }, {
+        key: 'sidemenu_Concilio',
+        link: 'content/text.3003'
+      }, {
+        key: 'sidemenu_Eventi-Principali',
+        link: 'mainevents'
+      }, {
+        key: 'sidemenu_Bondone',
+        link: 'bondone'
+      }
+    ];
+
+  } else if ($stateParams.cateId == 'events') {
+    $scope.basecate=$stateParams.cateId;
+    $scope.title='sidemenu_div_Vivere';
+    $scope.categories2 = Config.eventTypesList();
+  } else if ($stateParams.cateId == 'places') {
+    $scope.basecate=$stateParams.cateId;
+    $scope.title='sidemenu_div_Scoprire';
+    $scope.categories2 = Config.poiTypesList();
+
+  } else if ($stateParams.cateId == 'hospitality') {
+    $scope.title='sidemenu_div_Mangiare-dormire';
+    $scope.categories = [
+      {
+        key: 'sidemenu_Hotel',
+        link: 'hotels'
+      }, {
+        key: 'sidemenu_Ristoranti',
+        link: 'restaurants'
+      }
+    ];
+  } else if ($stateParams.cateId == 'useful') {
+    $scope.title='sidemenu_div_Info-utili';
+    $scope.categories = [
+      {
+        key: 'sidemenu_Servizi',
+        link: 'services'
+      }, {
+        key: 'sidemenu_Uffici-comunali',
+        link: 'offices'
+      }
+    ];
+  }
+  console.log($scope.categories);
+})
+
 .controller('ContentCtrl', function ($scope, $state, $stateParams, DatiDB) {
   if ($stateParams.contentId) {
     contentId = $stateParams.contentId;
@@ -43,7 +103,7 @@ $scope.show = function() {
   }
   $scope.gotdata = DatiDB.get('content', contentId).then(function (data) {
     $scope.content = data;
-  });  
+  });
 })
 
 .controller('ContentsListCtrl', function ($scope, $state, $stateParams, DatiDB) {
@@ -67,14 +127,14 @@ $scope.show = function() {
 })
 
 .controller('FavouritesListCtrl', function ($scope, DatiDB) {
-  DatiDB.getFavorites().then(function(data){
+  $scope.gotdata = DatiDB.getFavorites().then(function (data) {
     $scope.favourites = data;
   });
 })
 
 .controller('HotelsListCtrl', function ($scope, $stateParams, Sort, DatiDB, Config) {
   if ($stateParams.hotelType) {
-    if ($stateParams.hotelType=='hotel') {
+    if ($stateParams.hotelType == 'hotel') {
       $scope.orderingTypes = ['A-Z', 'Z-A', 'Distance', 'Stars'];
     } else {
       $scope.orderingTypes = ['A-Z', 'Z-A', 'Distance'];
@@ -93,7 +153,7 @@ $scope.show = function() {
 
     $scope._ = _;
   } else {
-    $scope.hotelcates=Config.hotelTypesList();
+    $scope.hotelcates = Config.hotelTypesList();
     /*
     $scope.gotdata = DatiDB.all('hotel').then(function (data) {
       $scope.hotels = data;
@@ -123,7 +183,7 @@ $scope.show = function() {
       $scope.restaurants = data;
     });
   } else {
-    $scope.restaurantcates=Config.restaurantTypesList();
+    $scope.restaurantcates = Config.restaurantTypesList();
     /*
     $scope.gotdata = DatiDB.all('restaurant').then(function (data) {
       $scope.restaurants = data;
@@ -162,7 +222,7 @@ $scope.show = function() {
   .controller('PlaceCtrl', function ($scope, DatiDB, GeoLocate, $stateParams) {
     $scope.gotdata = DatiDB.get('poi', $stateParams.placeId).then(function (data) {
       $scope.place = data;
-	  $scope.obj = data;
+      $scope.obj = data;
       if (data.location) {
         GeoLocate.locate().then(function (latlon) {
           $scope.distance = GeoLocate.distance(latlon, data.location);
@@ -309,7 +369,7 @@ $scope.show = function() {
     $scope.itinerario = data;
     DatiDB.get('poi', data.steps.join()).then(function (luoghi) {
       $scope.tappe = luoghi;
-	  $scope.location = luoghi[0].location;
+      $scope.location = luoghi[0].location;
     });
   });
 })
@@ -344,7 +404,7 @@ $scope.show = function() {
     }, {
       latitude: 0,
       longitude: 0
-    }],	
+    }],
     coords: 'self',
     fit: true,
     // icon: 'img/mapmarker.png',
@@ -394,7 +454,7 @@ $scope.show = function() {
 
   $scope.showInfoWindow = false;
 
-/*
+  /*
   var directionsService = new google.maps.DirectionsService();
   var directionsDisplay = new google.maps.DirectionsRenderer($scope.directionsOptions.directionsRendererOptions);
 
@@ -453,12 +513,15 @@ $scope.show = function() {
   DatiDB.get('itinerary', $stateParams.itinerarioId).then(function (data) {
     $scope.markers.poly = [];
     angular.forEach(data.stepLines, function (line) {
-		var points = google.maps.geometry.encoding.decodePath(line);
-		angular.forEach(points, function (p) {
-		  $scope.markers.poly.push({latitude:p.lat(),longitude:p.lng()});
-		});
-	});
-  
+      var points = google.maps.geometry.encoding.decodePath(line);
+      angular.forEach(points, function (p) {
+        $scope.markers.poly.push({
+          latitude: p.lat(),
+          longitude: p.lng()
+        });
+      });
+    });
+
     DatiDB.get('poi', data.steps.join()).then(function (luoghi) {
       $scope.markers.models = [];
 

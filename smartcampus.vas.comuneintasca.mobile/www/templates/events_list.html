@@ -8,7 +8,8 @@
       <ion-item class="item-thumbnail-left" ng-repeat="event in events | extOrderBy:ordering" collection-item-width="'100%'" collection-item-height="'80px'" href="#/app/event/{{event.id}}">
         <comuni-img class="item-image comuni-item-image" image="event.image" gotdata="gotdata"></comuni-img>
         <h2>{{event.title | translate}}</h2>
-        <p class="comuni-item-bottomdetail">{{event.address | translate}}</p>
+        <p>{{event.fromTime | date:'fullDate'}}<span ng-if="event.fromTime !== event.toTime"> - {{event.toTime | date:'fullDate'}}</span></p>
+        <div class="comuni-item-bottomdetail">{{event.address | translate}}</div>
       </ion-item>
     </ion-list>
   </ion-content>

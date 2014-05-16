@@ -11,9 +11,6 @@ angular.module('starter.controllers', ['google-maps'])
   DatiDB.sync();
   $scope.poiTypes = Config.poiTypesList();
   $scope.eventTypes = Config.eventTypesList();
-  $scope.goto=function(link){
-    location='#/app/'+link;
-  };
 })
   .controller('HomeCtrl', function ($scope, Files) {
     /*
@@ -163,15 +160,7 @@ $scope.show = function() {
   }
 })
   .controller('PlaceCtrl', function ($scope, DatiDB, GeoLocate, $stateParams) {
-    var placeId;
-    if ($stateParams.stepId) {
-      $scope.showToolbar = false;
-      placeId=$stateParams.stepId;
-    } else {
-      $scope.showToolbar = true;
-      placeId=$stateParams.placeId;
-    }
-    $scope.gotdata = DatiDB.get('poi', placeId).then(function (data) {
+    $scope.gotdata = DatiDB.get('poi', $stateParams.placeId).then(function (data) {
       $scope.place = data;
 	  $scope.obj = data;
       if (data.location) {
@@ -186,6 +175,7 @@ $scope.show = function() {
 
 
 .controller('EventsListCtrl', function ($scope, $stateParams, DatiDB, Config, Sort) {
+  $scope.dateFormat = 'EEEE d MMMM yyyy';
   $scope.orderingTypes = ['A-Z', 'Z-A', 'Date'];
   $scope.ordering = $scope.orderingTypes[2];
   $scope.showSortPopup = function () {
@@ -206,6 +196,8 @@ $scope.show = function() {
 })
 
 .controller('EventCtrl', function ($scope, DatiDB, $stateParams) {
+  $scope.dateFormat = 'EEEE d MMMM yyyy';
+
   $scope.gotdata = DatiDB.get('event', $stateParams.eventId).then(function (data) {
     $scope.obj = data;
   });

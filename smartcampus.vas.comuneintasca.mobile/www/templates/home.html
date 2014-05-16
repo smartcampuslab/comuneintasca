@@ -13,16 +13,20 @@
     </ion-slide-box>
     <div id="home-buttons">
         <div class="row">
-            <div class="col"><button class="button button-block button-calm">Conoscere <span>Trento</span></button></div>
-            <div class="col"><button class="button button-block button-calm">Vivere <span>Trento</span></button></div>
+            <div class="col"><button class="button button-full button-comuni icon-left ion-pizza">{{'sidemenu_div_Conoscere' | i18n}}</button></div>
+            <div class="col"><button class="button button-full button-comuni icon-right ion-film-marker">{{'sidemenu_div_Vivere' | i18n}}</button></div>
         </div>
         <div class="row">
-            <div class="col"><button class="button button-block button-calm">Scoprire <span>Trento</span></button></div>
-            <div class="col"><button class="button button-block button-calm" ng-click="load('itineraries')">Percorsi a <span>Trento</span></button></div>
+            <div class="col"><button class="button button-full button-comuni icon-left ion-location">{{'sidemenu_div_Scoprire' | i18n}}</button></div>
+            <div class="col"><button class="button button-full button-comuni icon-right ion-map" ng-click="goto('itineraries')">{{'sidemenu_div_Percorsi' | i18n}}</button></div>
         </div>
         <div class="row">
-            <div class="col"><button class="button button-block button-calm">Mangiare&amp;Dormire</button></div>
-            <div class="col"><button class="button button-block button-calm">Info Utili</button></div>
+            <div class="col"><button class="button button-full button-comuni icon-left ion-pizza">{{'sidemenu_div_Mangiare-dormire' | i18n}}</button></div>
+            <div class="col"><button class="button button-full button-comuni icon-right ion-information-circled">{{'sidemenu_div_Info-utili' | i18n}}</button></div>
+        </div>
+        <div class="row">
+            <div class="col"><button class="button button-full button-comuni icon-left ion-model-s">{{'homemenu_Viaggia-Trento' | i18n}}</button></div>
+            <div class="col"><button class="button button-full button-comuni icon-right ion-ios7-star" ng-click="goto('favourites')">{{'sidemenu_Favourites' | i18n}}</button></div>
         </div>
     </div>      
   </ion-content>

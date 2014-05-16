@@ -11,6 +11,9 @@ angular.module('starter.controllers', ['google-maps'])
   DatiDB.sync();
   $scope.poiTypes = Config.poiTypesList();
   $scope.eventTypes = Config.eventTypesList();
+  $scope.goto=function(link){
+    location='#/app/'+link;
+  };
 })
   .controller('HomeCtrl', function ($scope, Files) {
     /*

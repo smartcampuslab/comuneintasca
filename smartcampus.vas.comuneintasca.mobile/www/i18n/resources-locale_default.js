@@ -1,5 +1,9 @@
 [
   {
+    "key": "homemenu_Viaggia-Trento",
+    "value": "Viaggia Trento",
+    "description": "home button label"
+  }, {
     "key": "sidemenu_Title",
     "value": "Trento in Tasca",
     "description": "side menu label"

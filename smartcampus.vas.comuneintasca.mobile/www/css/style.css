@@ -161,11 +161,13 @@ ion-side-menu .item {
   background-image: url(../img/hp-box/palazziaperti.png);
 }
 #home-buttons button {
-  border-radius: .5em;
   color: #2975a7;
-  background-color: #b7d6e8;
   margin: 0;
+/*
+  border-radius: .5em;
+  background-color: #b7d6e8;
   padding: 0;
+*/
 }
 .angular-google-map-container {
   height: 800px;

@@ -56,9 +56,9 @@
         <div class="item-divider">
           <span data-i18n="sidemenu_div_Scoprire"></span>
         </div>
-        <ion-item nav-clear menu-close class="item-calm2" href="#/app/mappa">
+        <!-- <ion-item nav-clear menu-close class="item-calm2" href="#/app/mappa">
           <span data-i18n="sidemenu_Mappa"></span>
-        </ion-item>
+        </ion-item> -->
         <ion-item ng-repeat="(key, type) in poiTypes" nav-clear menu-close class="item-calm2" ng-href="#/app/places/{{key}}">
           <span ng-bind="type | translate"></span>
         </ion-item>

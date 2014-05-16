@@ -9,7 +9,6 @@ cordova plugin add org.apache.cordova.file
 cordova plugin add org.apache.cordova.file-transfer
 cordova plugin add org.apache.cordova.geolocation
 cordova plugin add org.apache.cordova.core.inappbrowser
-(or: cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-inappbrowser.git)
 cordova plugin add de.appplant.cordova.plugin.email-composer
 cordova plugin add https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git
 cordova plugin add org.apache.cordova.network-information

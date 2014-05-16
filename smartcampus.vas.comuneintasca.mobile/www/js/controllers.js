@@ -175,6 +175,7 @@ $scope.show = function() {
 
 
 .controller('EventsListCtrl', function ($scope, $stateParams, DatiDB, Config, Sort) {
+  $scope.dateFormat = 'EEEE d MMMM yyyy';
   $scope.orderingTypes = ['A-Z', 'Z-A', 'Date'];
   $scope.ordering = $scope.orderingTypes[2];
   $scope.showSortPopup = function () {
@@ -195,6 +196,8 @@ $scope.show = function() {
 })
 
 .controller('EventCtrl', function ($scope, DatiDB, $stateParams) {
+  $scope.dateFormat = 'EEEE d MMMM yyyy';
+
   $scope.gotdata = DatiDB.get('event', $stateParams.eventId).then(function (data) {
     $scope.obj = data;
   });

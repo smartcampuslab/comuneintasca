@@ -4,6 +4,8 @@
     <div class="padding">
       <h1>{{obj.title | translate}}</h1>
       <h4>{{obj.dbClassification | translate}}</h4>
+      <h5>{{obj.address | translate}}</h5>
+      <h5>{{obj.fromTime | date:dateFormat}}<span ng-if="obj.fromTime !== obj.toTime"> - {{obj.toTime | date:dateFormat}}</span></h5>
       <div class="htmldesc" compile="obj.description | translate"></div>
       <div class="htmldesc" compile="obj.info | translate"></div>
     </div>

@@ -79,8 +79,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             templateUrl:"templates/home.html", controller:"HomeCtrl"
         } }
     })
-    .state('app.favs', {
-        url:"/favs", views:{ 'menuContent':{
+    .state('app.favourites', {
+        url:"/favourites", views:{ 'menuContent':{
             templateUrl:"templates/favourites_list.html", controller:"FavouritesListCtrl"
         } }
     })
@@ -211,7 +211,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     })
     .state('app.itinerary.step', {
-      url: "/step/:placeId",
+      url: "/step/:stepId",
       views: {
         'itinerary-steps' :{
           templateUrl: "templates/place.html", controller: 'PlaceCtrl'

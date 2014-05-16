@@ -7,7 +7,7 @@
       <!-- <div class="comuni-distance">Km {{place.distance | number:1}}</div>-->
     </div>
   </ion-content>
-  <ion-footer-bar>
+  <ion-footer-bar ng-if="showToolbar">
 	<div ng-include="'templates/toolbox.html'"></div>
   </ion-footer-bar>  
 </ion-view>

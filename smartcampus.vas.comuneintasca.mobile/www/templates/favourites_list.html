@@ -1,7 +1,10 @@
 <ion-view title="{{'sidemenu_Favourites' | i18n}}">
   <ion-content class="has-header">
-    <ion-list>
-      <div class="item item-divider" align="center">{{'list_results' | i18nplur:events.length}}</div>
+    <div class="card emptylist" ng-if="!! !favourites.length">
+      <ion-item item-text-wrap>{{'list_no-favourites' | i18n}}</ion-item>
+    </div>
+    <ion-list ng-if="!! favourites.length">
+      <div class="item item-divider" align="center">{{'list_results' | i18nplur:favourites.length}}</div>
       <ion-item class="item-thumbnail-left" ng-repeat="fav in favourites" collection-item-width="'100%'" collection-item-height="'80px'" nav-clear href="{{fav.abslink}}">
         <comuni-img class="item-image comuni-item-image" image="fav.image" gotdata="gotdata"></comuni-img>
         <h2>{{fav.title | translate}}</h2>

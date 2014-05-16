@@ -16,6 +16,10 @@
     "value": "Preferiti",
     "description": "side menu label"
   }, {
+    "key": "list_no-favourites",
+    "value": "nessun preferito salvato",
+    "description": "favourites list results"
+  }, {
     "key": "sidemenu_div_Conoscere",
     "value": "Conoscere Trento",
     "description": "side menu label"

@@ -168,6 +168,8 @@ ion-side-menu .item {
   background-color: #b7d6e8;
   padding: 0;
 */
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .angular-google-map-container {
   height: 800px;

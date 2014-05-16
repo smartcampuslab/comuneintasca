@@ -102,15 +102,20 @@ ion-side-menu .item {
 .comuni-item-image.error:after {
   content: '!';
 }
-.comuni-item-bottomdetail {
+.comuni-item-bottom {
   position: absolute;
   bottom: 10px;
-  /*left: 105px;*/
-  width: 100%;
+  padding: 0;
   padding-right: 120px;
 }
-.comuni-item-bottomdetail .comuni-item-distance {
-  float: right;
+.comuni-item-bottom .comuni-item-bottom-text {
+  padding: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.comuni-item-bottom .comuni-item-bottom-distance {
+  text-align: right;
 }
 .content-image-main {
   height: 320px;
@@ -163,7 +168,7 @@ ion-side-menu .item {
 #home-buttons button {
   color: #2975a7;
   margin: 0;
-/*
+  /*
   border-radius: .5em;
   background-color: #b7d6e8;
   padding: 0;

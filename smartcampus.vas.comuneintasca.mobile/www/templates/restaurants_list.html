@@ -8,11 +8,13 @@
       <ion-item ng-repeat="restaurant in restaurants | extOrderBy:ordering" class="item-thumbnail-left" href="#/app/restaurant/{{restaurant.id}}">
         <comuni-img class="item-image comuni-item-image" image="restaurant.image" gotdata="gotdata"></comuni-img>
         <h2>{{restaurant.title | translate}}</h2>
-        <div class="comuni-item-bottomdetail">
-          <span>{{restaurant.address | translate}}</span>
-          <span class="comuni-item-distance" ng-if="!! restaurant.distance">
-            {{restaurant.distance | number:1}} {{'entry_km' | i18n}}
-          </span>
+        <div class="row comuni-item-bottom">
+          <div class="col-75 comuni-item-bottom-text">
+            <span>{{restaurant.address | translate}}</span>
+          </div>
+          <div class="col-25 comuni-item-bottom-distance">
+            <span ng-if="!! restaurant.distance">{{restaurant.distance | number:1}} {{'entry_km' | i18n}}</span>
+          </div>
         </div>
       </ion-item>
     </ion-list>

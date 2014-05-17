@@ -18,8 +18,11 @@ angular.module('starter.filters', [])
 
 .filter('extOrderBy', function($rootScope, $filter, GeoLocate) {
 	return function(input, order) {
-		if (!angular.isObject(input)) return input;
-		input.sort(function(a, b){
+		if (!input || !order) return input;
+    
+    var arr = input.slice(0);
+    
+		arr.sort(function(a, b){
 		    if ('A-Z' == order) {
 				var a1 = $filter('translate')(a.title);
 				var b1 = $filter('translate')(b.title);
@@ -50,6 +53,7 @@ angular.module('starter.filters', [])
 			}
 			return 0;
 		});
-		return input;
+    
+		return arr;
 	}
 })

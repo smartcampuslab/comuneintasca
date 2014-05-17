@@ -1141,7 +1141,83 @@ angular.module('starter.services', [])
   };
 })
 
-.factory('Sort', function ($ionicPopup, $filter) {
+.factory('MapHelper', function($location){
+  var map = {
+    draggable: 'true',
+    center: {
+      latitude: 0,
+      longitude: 0
+    },
+    zoom: 8
+  };
+  var markers = {
+    models: [{
+      latitude: 0,
+      longitude: 0
+    }],
+    coords: 'self',
+    fit: true,
+    doCluster: true
+  };
+
+  var showInfoWindow = false;
+  var infoWindow = {
+    show: false,
+    coords: null,
+    content: '',
+    isIconVisibleOnClick: true,
+    options: null,
+  };
+
+  openInfoWindow = function ($markerModel) {
+    infoWindow.coords = {
+      latitude: $markerModel.latitude,
+      longitude: $markerModel.longitude
+    };
+    infoWindow.content = $markerModel.latitude + ',' + $markerModel.longitude + '\n' + $markerModel.title.it;
+    infoWindow.options = {
+      content: infoWindow.content
+    };
+    infoWindow.show = true;
+    alert(infoWindow.content);
+  };
+
+  var closeInfoWindow = function () {
+    infoWindow.show = false;
+    infoWindow.coords = null;
+    infoWindow.options = null;
+  };
+  
+  var title = '';  
+    
+  return {
+    prepare: function (t, data) {
+      showInfoWindow = false;
+      markers.models = [];
+      title = t;
+      
+      angular.forEach(data, function (luogo, idx) {
+        if (luogo.location) {
+          luogo.latitude = luogo.location[0];
+          luogo.longitude = luogo.location[1];
+          markers.models.push(luogo)
+        }
+      });
+      $location.path('/app/mappa');
+    },
+    start: function($scope) {
+      $scope.map = map;
+      $scope.markers = markers;
+      $scope.showInfoWindow = showInfoWindow;
+      $scope.infoWindow = infoWindow;
+      $scope.openInfoWindow = openInfoWindow;
+      $scope.closeInfoWindow = closeInfoWindow;
+      $scope.title = title;
+    }     
+  };
+})
+
+.factory('ListToolbox', function ($ionicPopup, $filter, MapHelper) {
   var keys = {
     'Stars': {
       'it': 'Stelle',
@@ -1163,6 +1239,16 @@ angular.module('starter.services', [])
       'en': 'Order by',
       'de': 'Order by'
     },
+    'Filter': {
+      'it': 'Filtra',
+      'en': 'Filter',
+      'de': 'Filter'
+    },
+    'Cancel': {
+      'it': 'Annula',
+      'en': 'Cancel',
+      'de': 'Cancel'
+    },    
     'A-Z': {
       'it': 'A-Z',
       'en': 'A-Z',
@@ -1175,8 +1261,7 @@ angular.module('starter.services', [])
     }
   };
 
-  return {
-    openSortPopup: function ($scope, options, presel, callback) {
+  var openSortPopup = function ($scope, options, presel, callback) {
       var title = $filter('translate')(keys['OrderBy']);
 
       var template = '<div class="list">';
@@ -1190,7 +1275,7 @@ angular.module('starter.services', [])
         title: title,
         scope: $scope,
         buttons: [{
-          text: 'Cancel'
+          text: $filter('translate')(keys['Cancel'])
         }]
       });
       $scope.show = myPopup;
@@ -1198,6 +1283,68 @@ angular.module('starter.services', [])
         console.log('sort popup res: ' + res);
         callback(res);
       });
+  }
+  
+  var openFilterPopup = function($scope, options, presel, callback) {
+      var title = $filter('translate')(keys['Filter']);
+
+      var template = '<div class="list">';
+      for (var key in options) {
+        var value = options[key].it;
+        var s = $filter('translate')(options[key]);
+        template += '<a class="item item-icon-right" ng-click="show.close(\'' + value + '\')">' + s + '<i class="icon ' + (value == presel ? 'ion-ios7-checkmark-outline' : '') + '"></i></a>';
+      }
+      // An elaborate, custom popup
+      var myPopup = $ionicPopup.show({
+        template: template,
+        title: title,
+        scope: $scope,
+        buttons: [{
+          text: $filter('translate')(keys['Cancel'])
+        }]
+      });
+      $scope.show = myPopup;
+      myPopup.then(function (res) {
+        console.log('sort popup res: ' + res);
+        callback(res);
+      });  
+  }
+
+  return {
+    // expect conf with orderingTypes, defaultOrdering, getMapData, title, filterOptions, defaultFilter, doFilter
+    prepare: function($scope, conf) {
+      if (conf.orderingTypes) {
+        $scope.hasSort = true;
+        $scope.orderingTypes = conf.orderingTypes;
+        $scope.ordering = conf.defaultOrdering;
+        
+        $scope.showSortPopup = function () {
+          openSortPopup($scope, $scope.orderingTypes, $scope.ordering, function (res) {
+            if (res && $scope.ordering != res) {
+              $scope.ordering = res;
+            }
+          });
+        };
+      }
+      if (conf.getMapData) {
+        $scope.hasMap = true;
+        $scope.showMap = function(){
+          MapHelper.prepare(conf.getTitle(),conf.getMapData());
+        };
+      }
+      if (conf.doFilter) {
+        $scope.hasFilter = true;
+        $scope.filterOptions = conf.filterOptions;
+        $scope.filter = conf.defaultFilter;
+        $scope.showFilterPopup = function () {
+          openFilterPopup($scope, $scope.filterOptions, $scope.filter, function (res) {
+            if (res) {
+              $scope.filter = res;
+              conf.doFilter(res);
+            }  
+          });
+        };
+      }
     }
   }
 })

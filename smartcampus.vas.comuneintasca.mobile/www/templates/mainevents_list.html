@@ -1,7 +1,4 @@
 <ion-view title="{{'sidemenu_Eventi-Principali' | i18n}}">
-  <ion-nav-buttons side="left">
-    <a class="button button-icon icon ion-android-sort" ng-click="showSortPopup()"></a>
-  </ion-nav-buttons>
   <ion-content class="has-header">
     <ion-list>
       <div class="item item-divider" align="center">{{'list_results' | i18nplur:mainevents.length}}</div>
@@ -12,4 +9,7 @@
       </ion-item>
     </ion-list>
   </ion-content>
+  <ion-footer-bar>
+	  <div ng-include="'templates/list_toolbox.html'"></div>
+  </ion-footer-bar>      
 </ion-view>

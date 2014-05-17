@@ -1,0 +1,6 @@
+<div class="tabs tabs-icon-only" ng-if="hasMap || hasFilter || hasSort">
+		<a ng-if="hasMap" class="tab-item" ng-click="showMap()"><i class="icon ion-map"></i></a>
+		<a ng-if="hasFilter" class="tab-item" ng-click="showFilterPopup()"><i class="icon ion-social-buffer"></i></a>
+<!--		<a ng-if="list.hasSearch" class="tab-item" ng-click="showSortPopup()"><i class="icon ion-ios7-search-strong"></i></a> -->
+		<a ng-if="hasSort" class="tab-item" ng-click="showSortPopup()"><i class="icon ion-android-sort"></i></a>
+</div>

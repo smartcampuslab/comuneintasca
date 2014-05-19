@@ -8,6 +8,9 @@
 .platform-ios .has-tabs {
   bottom: 70px;
 }
+ion-footer-bar.bar {
+  padding:0;
+}
 .item-divider {
   /*    background-color: #999; color:#fff; border-top:2px solid #000;*/
   padding: .3em .5em;

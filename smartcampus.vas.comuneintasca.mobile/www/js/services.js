@@ -219,7 +219,7 @@ angular.module('starter.services', [])
       return 'TrentoInTasca';
     },
     schemaVersion: function () {
-      return 53;
+      return 54;
     },
     syncTimeoutSeconds: function () {
       return 60 * 60; /* 60 times 60 seconds = 1 HOUR */
@@ -1243,7 +1243,7 @@ angular.module('starter.services', [])
   };
 })
 
-.factory('ListToolbox', function ($ionicPopup, $ionicModal, $filter, MapHelper) {
+.factory('ListToolbox', function ($q, $ionicPopup, $ionicModal, $filter, MapHelper, $location) {
   var keys = {
     'Stars': {
       'it': 'Stelle',
@@ -1298,7 +1298,7 @@ angular.module('starter.services', [])
       var template = '<div class="list">';
       for (var i = 0; i < options.length; i++) {
         var s = $filter('translate')(keys[options[i]]);
-        template += '<a class="item item-icon-right" ng-click="show.close(\'' + options[i] + '\')">' + $filter('translate')(keys['OrderBy']) + '<i class="icon ' + (options[i] == presel ? 'ion-ios7-checkmark-outline' : '') + '"></i></a>';
+        template += '<a class="item item-icon-right" ng-click="show.close(\'' + options[i] + '\')">' + s + '<i class="icon ' + (options[i] == presel ? 'ion-ios7-checkmark-outline' : '') + '"></i></a>';
       }
       // An elaborate, custom popup
       var myPopup = $ionicPopup.show({
@@ -1321,18 +1321,13 @@ angular.module('starter.services', [])
 
       var template = '<div class="modal"><ion-header-bar><h1 class="title">'+title+'</h1></ion-header-bar><ion-content><div class="list">';
       var body = '<a class="item item-icon-right" ng-click="closeModal(\'__all\')">' + $filter('translate')(keys['All']) + '<i class="icon ' + (presel == null ? 'ion-ios7-checkmark-outline' : '') + '"></i></a>';
-      var selected = '';
       for (var key in options) {
         var value = options[key].it;
         var s = $filter('translate')(options[key]);
         s = '<a class="item item-icon-right" ng-click="closeModal(\'' + value + '\')">' + s + '<i class="icon ' + (value == presel ? 'ion-ios7-checkmark-outline' : '') + '"></i></a>';
-        if (value == presel) {
-          selected = s;
-        } else {
-          body += s;
-        }
+        body += s;
       }
-      template += selected + body+'</div></ion-content><ion-footer-bar><div class="tabs" ng-click="closeModal()"><a class="tab-item">'+$filter('translate')(keys['Cancel'])+'</a></div></ion-footer-bar></div>';
+      template += body+'</div></ion-content><ion-footer-bar><div class="tabs" ng-click="closeModal()"><a class="tab-item">'+$filter('translate')(keys['Cancel'])+'</a></div></ion-footer-bar></div>';
       $scope.modal = $ionicModal.fromTemplate(template, {
         scope: $scope,
         animation: 'slide-in-up'
@@ -1364,35 +1359,62 @@ angular.module('starter.services', [])
 */
   }
 
+  var state = {
+    ordering : null,
+    filter : null,
+    data: null
+  };
+  
   return {
-    // expect conf with orderingTypes, defaultOrdering, getData, title, filterOptions, defaultFilter, doFilter
+    // expect conf with load, orderingTypes, defaultOrdering, getData, title, filterOptions, defaultFilter, doFilter
     prepare: function($scope, conf) {
+      var d = $q.defer();
+      $scope.gotdata = d.promise;
+      if ($scope.$navDirection == 'back') {
+        d.resolve(state.data);
+        conf.load(state.data);
+      } else {
+        state.ordering = null;
+        state.filter = null;
+        state.data = null;
+        conf.load(null);
+      }     
+
+      $scope.goToItem = function(path) {
+        state.data = conf.getData();
+        $location.path(path);         
+      }
+      
       if (conf.orderingTypes) {
         $scope.hasSort = true;
         $scope.orderingTypes = conf.orderingTypes;
-        $scope.ordering = {ordering:conf.defaultOrdering,searchText:null};
+        $scope.ordering = $scope.$navDirection != 'back' ? {ordering:conf.defaultOrdering,searchText:null} : state.ordering;
         
         $scope.showSortPopup = function () {
           openSortPopup($scope, $scope.orderingTypes, $scope.ordering.ordering, function (res) {
             if (res && $scope.ordering.ordering != res) {
               $scope.ordering.ordering = res;
+              state.ordering = $scope.ordering;
             }
           });
         };
       }
+      
       if (conf.hasMap) {
         $scope.hasMap = true;
         $scope.showMap = function(){
+          state.data = conf.getData();
           MapHelper.prepare(conf.getTitle(),conf.getData());
         };
       }
       if (conf.doFilter) {
         $scope.hasFilter = true;
         $scope.filterOptions = conf.filterOptions;
-        $scope.filter = conf.defaultFilter;
+        $scope.filter = $scope.$navDirection != 'back' ? conf.defaultFilter : state.filter;
         $scope.showFilterPopup = function () {
           openFilterPopup($scope, $scope.filterOptions, $scope.filter, function (res) {
               $scope.filter = res;
+              state.filter = res;
               conf.doFilter(res);
           });
         };

@@ -4,7 +4,7 @@
       <div class="item item-divider" align="center">{{'list_results' | i18nplur:restaurants.length}}</div>
       <ion-item collection-repeat="restaurant in restaurants | extOrderBy:ordering" 
                 collection-item-width="'100%'" collection-item-height="getListItemHeight(item, $index)"
-                href="#/app/restaurant/{{restaurant.id}}" class="item-thumbnail-left coll-item">
+                ng-click="goToItem('/app/restaurant/'+restaurant.id)" class="item-thumbnail-left coll-item">
         <comuni-img class="item-image comuni-item-image" image="restaurant.image" gotdata="gotdata"></comuni-img>
         <h2>{{restaurant.title | translate}}</h2>
         <div class="row comuni-item-bottom">

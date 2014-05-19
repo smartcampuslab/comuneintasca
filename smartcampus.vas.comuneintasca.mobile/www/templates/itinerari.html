@@ -4,7 +4,7 @@
 	<div class="item item-divider" align="center">{{'list_results' | i18nplur:itinerari.length}}</div>
 	  <ion-item class="item-thumbnail-left"
                 ng-repeat="itinerario in itinerari | extOrderBy:ordering" 
-				href="#/app/itinerary/{{itinerario.id}}/info"
+				ng-click="goToItem('/app/itinerary/'+itinerario.id+'/info')"
                 collection-item-width="'100%'"
                 collection-item-height="'80px'">
         <comuni-img class="item-image comuni-item-image" image="itinerario.image" gotdata="gotdata"></comuni-img>

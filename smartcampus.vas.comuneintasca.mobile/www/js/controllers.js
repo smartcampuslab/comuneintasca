@@ -253,6 +253,9 @@ $scope.show = function() {
     defaultOrdering: 'Date',
     hasSearch: true
   });
+  $scope.getItemHeight = function(item, index) {
+    return 100;
+  };
   if ($stateParams.eventType) {
     $scope.cate = Config.eventCateFromType($stateParams.eventType);
     Profiling.start('eventslist');

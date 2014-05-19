@@ -210,3 +210,7 @@ ion-side-menu .item {
   opacity: .8;
   text-align: center;
 }
+
+.coll-item {
+  width:100%;height:100px;
+}

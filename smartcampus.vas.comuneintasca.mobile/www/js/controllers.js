@@ -1,21 +1,6 @@
 angular.module('starter.controllers', ['google-maps'])
 
-.controller('MenuCtrl', function ($scope, $rootScope, DatiDB, Config, GeoLocate) {
-  var browserLanguage = window.navigator.userLanguage || window.navigator.language;
-  // alert(browserLanguage);
-  var lang = browserLanguage.substring(0, 2);
-  if (lang != 'it' && lang != 'en' && lang != 'de') {
-    $rootScope.lang = 'en';
-  } else {
-    $rootScope.lang = lang;
-  }
-  DatiDB.sync();
-  $scope.poiTypes = Config.poiTypesList();
-  $scope.eventTypes = Config.eventTypesList();
-  $scope.goto = function (link) {
-    location = '#/app/' + link;
-  };
-
+.controller('MenuCtrl', function ($scope) {
   $scope.shownGroup = null;
 
   $scope.showGroup = function(groupId) {
@@ -268,9 +253,6 @@ $scope.show = function() {
     defaultOrdering: 'Date',
     hasSearch: true
   });
-  $scope.getItemHeight = function(item, index) {
-    return 100;
-  };
   if ($stateParams.eventType) {
     $scope.cate = Config.eventCateFromType($stateParams.eventType);
     Profiling.start('eventslist');

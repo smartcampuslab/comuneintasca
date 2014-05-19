@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'starter.filters', 'starter.directives', 'localization'])
 
-.run(function($ionicPlatform, $rootScope, DatiDB, GeoLocate) {
+.run(function($ionicPlatform, $rootScope, DatiDB, GeoLocate, Config) {
   if (typeof(Number.prototype.toRad) === "undefined") {
     Number.prototype.toRad = function() {
       return this * Math.PI / 180;
@@ -35,6 +35,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   GeoLocate.locate().then(function(position){
     $rootScope.myPosition=position;
   });
+
+  var browserLanguage = window.navigator.userLanguage || window.navigator.language;
+  // alert(browserLanguage);
+  var lang = browserLanguage.substring(0, 2);
+  if (lang != 'it' && lang != 'en' && lang != 'de') {
+    $rootScope.lang = 'en';
+  } else {
+    $rootScope.lang = lang;
+  }
+  $rootScope.poiTypes = Config.poiTypesList();
+  $rootScope.eventTypes = Config.eventTypesList();
+  $rootScope.goto = function (link) {
+    location = '#/app/' + link;
+  };
+
+  DatiDB.sync();
+  $rootScope.getListItemHeight = function(item, index) {
+    return 100;
+  };
+
   // global functions for toolbox
   $rootScope.extLink = function(url) {
 	window.open(url,'_system');

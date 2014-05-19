@@ -141,7 +141,8 @@ $scope.show = function() {
     ListToolbox.prepare($scope, {
       orderingTypes: ['A-Z', 'Z-A', 'Distance','Stars'],
       defaultOrdering: 'Distance',
-      getMapData: function() {
+      hasMap: true,
+      getData: function() {
         return $scope.hotels;
       },
       getTitle: function() {
@@ -152,7 +153,8 @@ $scope.show = function() {
         DatiDB.cate('hotel', filter).then(function (data) {
           $scope.hotels = data;
         });
-      }
+      },
+      hasSearch:true
     });
   });
 
@@ -172,7 +174,8 @@ $scope.show = function() {
     ListToolbox.prepare($scope, {
       orderingTypes: ['A-Z', 'Z-A', 'Distance'],
       defaultOrdering: 'Distance',
-      getMapData: function() {
+      hasMap: true,
+      getData: function() {
         return $scope.restaurants;
       },
       getTitle: function() {
@@ -183,7 +186,8 @@ $scope.show = function() {
         DatiDB.cate('restaurant', filter).then(function (data) {
           $scope.restaurants = data;
         });
-      }
+      },
+      hasSearch:true
     });
   });
 
@@ -200,12 +204,14 @@ $scope.show = function() {
   ListToolbox.prepare($scope, {
     orderingTypes: ['A-Z', 'Z-A', 'Distance'],
     defaultOrdering: 'Distance',
-    getMapData: function() {
+    hasMap: true,
+    getData: function() {
       return $scope.places;
     },
     getTitle: function() {
       return $filter('translate')($scope.cate);
-    }  
+    },
+    hasSearch:true    
   });
   
   if ($stateParams.placeType) {
@@ -244,7 +250,8 @@ $scope.show = function() {
   $scope.dateFormat = 'EEEE d MMMM yyyy';
   ListToolbox.prepare($scope, {
     orderingTypes: ['A-Z', 'Z-A', 'Date'],
-    defaultOrdering: 'Date'
+    defaultOrdering: 'Date',
+    hasSearch: true
   });
   if ($stateParams.eventType) {
     $scope.cate = Config.eventCateFromType($stateParams.eventType);
@@ -269,7 +276,8 @@ $scope.show = function() {
 .controller('MainEventsListCtrl', function ($scope, DatiDB, ListToolbox) {
   ListToolbox.prepare($scope, {
     orderingTypes: ['A-Z', 'Z-A', 'Date'],
-    defaultOrdering: 'Date'
+    defaultOrdering: 'Date',
+    hasSearch:true
   });
 
   $scope.gotdata = DatiDB.all('mainevent').then(function (data) {
@@ -285,7 +293,8 @@ $scope.show = function() {
 .controller('ItinerariCtrl', function ($scope, DatiDB, ListToolbox) {
   ListToolbox.prepare($scope, {
     orderingTypes: ['A-Z', 'Z-A'],
-    defaultOrdering: 'A-Z'
+    defaultOrdering: 'A-Z',
+    hasSearch:true
   });
   $scope.gotdata = DatiDB.all('itinerary').then(function (data) {
     $scope.itinerari = data;

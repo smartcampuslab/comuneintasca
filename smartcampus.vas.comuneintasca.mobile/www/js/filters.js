@@ -17,10 +17,23 @@ angular.module('starter.filters', [])
 })
 
 .filter('extOrderBy', function($rootScope, $filter, GeoLocate) {
-	return function(input, order) {
-		if (!input || !order) return input;
+	return function(input, params) {
+		if (!input || !params || !params.ordering) return input;
     
-    var arr = input.slice(0);
+    var order = params.ordering;
+    var filter = params.searchText;
+    
+    var arr = [];
+    if (filter && filter.length>0) {
+      var f = filter.toLowerCase();
+      for (var i = 0; i < input.length; i++) {
+        if ($filter('translate')(input[i].title).toLowerCase().indexOf(f) >=0) {
+          arr.push(input[i]);
+        }
+      }
+    } else {
+      arr = input.slice(0);
+    }
     
 		arr.sort(function(a, b){
 		    if ('A-Z' == order) {

@@ -1311,25 +1311,25 @@ angular.module('starter.services', [])
   }
 
   return {
-    // expect conf with orderingTypes, defaultOrdering, getMapData, title, filterOptions, defaultFilter, doFilter
+    // expect conf with orderingTypes, defaultOrdering, getData, title, filterOptions, defaultFilter, doFilter
     prepare: function($scope, conf) {
       if (conf.orderingTypes) {
         $scope.hasSort = true;
         $scope.orderingTypes = conf.orderingTypes;
-        $scope.ordering = conf.defaultOrdering;
+        $scope.ordering = {ordering:conf.defaultOrdering,searchText:null};
         
         $scope.showSortPopup = function () {
-          openSortPopup($scope, $scope.orderingTypes, $scope.ordering, function (res) {
-            if (res && $scope.ordering != res) {
-              $scope.ordering = res;
+          openSortPopup($scope, $scope.orderingTypes, $scope.ordering.ordering, function (res) {
+            if (res && $scope.ordering.ordering != res) {
+              $scope.ordering.ordering = res;
             }
           });
         };
       }
-      if (conf.getMapData) {
+      if (conf.hasMap) {
         $scope.hasMap = true;
         $scope.showMap = function(){
-          MapHelper.prepare(conf.getTitle(),conf.getMapData());
+          MapHelper.prepare(conf.getTitle(),conf.getData());
         };
       }
       if (conf.doFilter) {
@@ -1343,6 +1343,17 @@ angular.module('starter.services', [])
               conf.doFilter(res);
             }  
           });
+        };
+      }
+      if (conf.hasSearch) {
+        $scope.hasSearch = true;
+        $scope.searching = false;
+        $scope.showSearch = function(){
+          $scope.searching = true;
+        };
+        $scope.cancelSearch = function() {
+          $scope.searching = false;
+          $scope.ordering.searchText = null;
         };
       }
     }

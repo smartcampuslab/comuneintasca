@@ -135,5 +135,13 @@
     "key": "entry_km-to",
     "value": "Km da",
     "description": "restaurant entry"
+  }, {
+    "key": "cancel",
+    "value": "Annula",
+    "description": "button"
+  }, {
+    "key": "search",
+    "value": "Cerca",
+    "description": "button"
   }
 ]

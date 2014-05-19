@@ -219,6 +219,10 @@ ion-side-menu .item {
   color: #ffffff;
   opacity: 0.5;
   font-weight: bold;
+
+}
+.list .item.item-header i.icon {
+  padding-right: 10px;
 }
 .list .item.item-accordion {
   transition: 0.1s all linear;

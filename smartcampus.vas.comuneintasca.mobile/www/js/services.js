@@ -219,7 +219,7 @@ angular.module('starter.services', [])
       return 'TrentoInTasca';
     },
     schemaVersion: function () {
-      return 53;
+      return 54;
     },
     syncTimeoutSeconds: function () {
       return 60 * 60; /* 60 times 60 seconds = 1 HOUR */
@@ -412,8 +412,6 @@ angular.module('starter.services', [])
 .factory('DatiDB', function ($q, $http, $rootScope, $ionicLoading, Config, GeoLocate, Profiling) {
   var SCHEMA_VERSION = Config.schemaVersion();
   var types = Config.contentTypesList();
-  var lastSynced = -1;
-  if (localStorage.lastSynced) lastSynced = localStorage.lastSynced;
 
   var parseDbRow = function (dbrow) {
     var dbtype = Config.contentKeyFromDbType(dbrow.type);
@@ -467,12 +465,18 @@ angular.module('starter.services', [])
     }
     return item;
   };
+
   var currentSchemaVersion = 0;
   if (localStorage.currentSchemaVersion) currentSchemaVersion = localStorage.currentSchemaVersion;
   console.log('currentSchemaVersion: ' + currentSchemaVersion);
-  var currentDbVersion = 0;
-  if (currentSchemaVersion == SCHEMA_VERSION && localStorage.currentDbVersion) currentDbVersion = localStorage.currentDbVersion;
+
+  var currentDbVersion = 0, lastSynced = -1;
+  if (currentSchemaVersion == SCHEMA_VERSION) {
+    if (localStorage.currentDbVersion) currentDbVersion = localStorage.currentDbVersion;
+    if (localStorage.lastSynced) lastSynced = localStorage.lastSynced;
+  } 
   console.log('currentDbVersion: ' + currentDbVersion);
+  console.log('lastSynced: ' + lastSynced);
 
   var localSyncOptions = {
     method: 'GET',
@@ -962,8 +966,28 @@ angular.module('starter.services', [])
   }
 })
 
-.factory('Files', function ($q, $http, Config) {
-  IMAGESDIR_NAME = Config.savedImagesDirName();
+.factory('Files', function ($q, $http, Config, $queue) {
+  var queueFileDownload=function(obj) {
+    var fileTransfer = new FileTransfer();
+    fileTransfer.download(obj.url, obj.savepath, function (fileEntry) {
+      console.log("download complete: " + obj.savepath);
+      obj.promise.resolve(obj.savepath);
+    }, function (error) {
+      //console.log("download error source " + error.source);console.log("download error target " + error.target);console.log("donwload error code: " + error.code);
+      obj.promise.reject(error);
+    }, true, { /* headers: { "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA==" } */ });
+  };
+  /*
+  var downloadQueues=new Array(3);
+  for (var i=0; i<downloadQueues.length; i++) {
+    downloadQueues[i]=$queue.queue(queueFileDownload, {
+      delay: 10, // delay 10 millis between processing items
+      paused: false, // run immediatly
+      complete: function() { console.log('downloadQueues[]: complete!'); }
+    });
+  }
+  */
+  var IMAGESDIR_NAME = Config.savedImagesDirName();
   console.log('savedImagesDirName: ' + IMAGESDIR_NAME);
   var onErrorFS = function (e) {
     console.log('Exception:');
@@ -1105,16 +1129,13 @@ angular.module('starter.services', [])
                 console.log('no network connection: cannot download missing images!');
                 filegot.reject('no network connection');
               } else {
-                var filesavepath = rootFS.toURL() + IMAGESDIR_NAME + '/' + filename;
-                console.log('not found: downloading to "' + filesavepath + '"');
-                var fileTransfer = new FileTransfer();
-                fileTransfer.download(fileurl, filesavepath, function (fileEntry) {
-                  console.log("download complete: " + filesavepath);
-                  filegot.resolve(filesavepath);
-                }, function (error) {
-                  //console.log("download error source " + error.source);console.log("download error target " + error.target);console.log("donwload error code: " + error.code);
-                  filegot.reject(error);
-                }, true, { /* headers: { "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA==" } */ });
+                var fileObj={ 
+                  savepath:rootFS.toURL() + IMAGESDIR_NAME + '/' + filename,
+                  url: fileurl,
+                  promise: filegot
+                };
+                console.log('not found: downloading to "' + fileObj.savepath + '"');
+                queueFileDownload(fileObj);
               }
             } else {
               // NON CORDOVA IMPLEMENTATION PARKED: returning the same web url get got as input, for the moment

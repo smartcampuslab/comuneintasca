@@ -2,6 +2,7 @@ angular.module('starter.controllers', ['google-maps'])
 
 .controller('MenuCtrl', function ($scope, $rootScope, DatiDB, Config, GeoLocate) {
   var browserLanguage = window.navigator.userLanguage || window.navigator.language;
+  // alert(browserLanguage);
   var lang = browserLanguage.substring(0, 2);
   if (lang != 'it' && lang != 'en' && lang != 'de') {
     $rootScope.lang = 'en';
@@ -132,34 +133,32 @@ $scope.show = function() {
   });
 })
 
-.controller('HotelsListCtrl', function ($scope, $stateParams, Sort, DatiDB, Config) {
-  if ($stateParams.hotelType) {
-    if ($stateParams.hotelType == 'hotel') {
-      $scope.orderingTypes = ['A-Z', 'Z-A', 'Distance', 'Stars'];
-    } else {
-      $scope.orderingTypes = ['A-Z', 'Z-A', 'Distance'];
-    }
-    $scope.ordering = $scope.orderingTypes[2];
-    $scope.showSortPopup = function () {
-      Sort.openSortPopup($scope, $scope.orderingTypes, $scope.ordering, function (res) {
-        if (res) $scope.ordering = res;
-      });
-    };
+.controller('HotelsListCtrl', function ($scope, $filter, DatiDB, Config, ListToolbox) {
 
-    $scope.cate = Config.hotelCateFromType($stateParams.hotelType);
-    $scope.gotdata = DatiDB.cate('hotel', $scope.cate.it).then(function (data) {
-      $scope.hotels = data;
+  $scope.gotdata = DatiDB.all('hotel').then(function (data) {
+    $scope.hotels = data;
+    
+    ListToolbox.prepare($scope, {
+      orderingTypes: ['A-Z', 'Z-A', 'Distance','Stars'],
+      defaultOrdering: 'Distance',
+      hasMap: true,
+      getData: function() {
+        return $scope.hotels;
+      },
+      getTitle: function() {
+        return $filter('i18n')('sidemenu_Hotel');
+      },
+      filterOptions: Config.hotelTypesList(),
+      doFilter: function(filter) {
+        DatiDB.cate('hotel', filter).then(function (data) {
+          $scope.hotels = data;
+        });
+      },
+      hasSearch:true
     });
+  });
 
-    $scope._ = _;
-  } else {
-    $scope.hotelcates = Config.hotelTypesList();
-    /*
-    $scope.gotdata = DatiDB.all('hotel').then(function (data) {
-      $scope.hotels = data;
-    });
-    */
-  }
+  $scope._ = _;
 })
 
 .controller('HotelCtrl', function ($scope, $stateParams, DatiDB) {
@@ -168,28 +167,30 @@ $scope.show = function() {
   });
 })
 
-.controller('RestaurantsListCtrl', function ($scope, $stateParams, Sort, DatiDB, Config) {
-  if ($stateParams.restaurantType) {
-    $scope.orderingTypes = ['A-Z', 'Z-A', 'Distance'];
-    $scope.ordering = $scope.orderingTypes[2];
-    $scope.showSortPopup = function () {
-      Sort.openSortPopup($scope, $scope.orderingTypes, $scope.ordering, function (res) {
-        if (res) $scope.ordering = res;
-      });
-    };
+.controller('RestaurantsListCtrl', function ($scope, $filter, DatiDB, Config, ListToolbox) {
+  $scope.gotdata = DatiDB.all('restaurant').then(function (data) {
+    $scope.restaurants = data;
+    
+    ListToolbox.prepare($scope, {
+      orderingTypes: ['A-Z', 'Z-A', 'Distance'],
+      defaultOrdering: 'Distance',
+      hasMap: true,
+      getData: function() {
+        return $scope.restaurants;
+      },
+      getTitle: function() {
+        return $filter('i18n')('sidemenu_Ristoranti');
+      },
+      filterOptions: Config.restaurantTypesList(),
+      doFilter: function(filter) {
+        DatiDB.cate('restaurant', filter).then(function (data) {
+          $scope.restaurants = data;
+        });
+      },
+      hasSearch:true
+    });
+  });
 
-    $scope.cate = Config.restaurantCateFromType($stateParams.restaurantType);
-    $scope.gotdata = DatiDB.cate('restaurant', $scope.cate.it).then(function (data) {
-      $scope.restaurants = data;
-    });
-  } else {
-    $scope.restaurantcates = Config.restaurantTypesList();
-    /*
-    $scope.gotdata = DatiDB.all('restaurant').then(function (data) {
-      $scope.restaurants = data;
-    });
-    */
-  }
 })
 
 .controller('RestaurantCtrl', function ($rootScope, $scope, $stateParams, DatiDB) {
@@ -199,15 +200,20 @@ $scope.show = function() {
   });
 })
 
-.controller('PlacesListCtrl', function ($scope, $stateParams, Sort, DatiDB, Config) {
-  $scope.orderingTypes = ['A-Z', 'Z-A', 'Distance'];
-  $scope.ordering = $scope.orderingTypes[2];
-  $scope.showSortPopup = function () {
-    Sort.openSortPopup($scope, $scope.orderingTypes, $scope.ordering, function (res) {
-      if (res) $scope.ordering = res;
-    });
-  };
-
+.controller('PlacesListCtrl', function ($scope, $stateParams, $filter, DatiDB, Config, ListToolbox) {
+  ListToolbox.prepare($scope, {
+    orderingTypes: ['A-Z', 'Z-A', 'Distance'],
+    defaultOrdering: 'Distance',
+    hasMap: true,
+    getData: function() {
+      return $scope.places;
+    },
+    getTitle: function() {
+      return $filter('translate')($scope.cate);
+    },
+    hasSearch:true    
+  });
+  
   if ($stateParams.placeType) {
     $scope.cate = Config.poiCateFromType($stateParams.placeType);
     $scope.gotdata = DatiDB.cate('poi', $scope.cate.it).then(function (data) {
@@ -219,10 +225,16 @@ $scope.show = function() {
     });
   }
 })
-  .controller('PlaceCtrl', function ($scope, DatiDB, GeoLocate, $stateParams) {
+
+.controller('MapCtrl', function($scope, MapHelper) {
+	MapHelper.start($scope);
+})
+
+.controller('PlaceCtrl', function ($scope, DatiDB, GeoLocate, $stateParams) {
     $scope.gotdata = DatiDB.get('poi', $stateParams.placeId).then(function (data) {
       $scope.place = data;
       $scope.obj = data;
+	  $scope.showToolbar = true;
       if (data.location) {
         GeoLocate.locate().then(function (latlon) {
           $scope.distance = GeoLocate.distance(latlon, data.location);
@@ -234,15 +246,13 @@ $scope.show = function() {
   })
 
 
-.controller('EventsListCtrl', function ($scope, $stateParams, DatiDB, Config, Sort) {
+.controller('EventsListCtrl', function ($scope, $stateParams, DatiDB, Config, ListToolbox) {
   $scope.dateFormat = 'EEEE d MMMM yyyy';
-  $scope.orderingTypes = ['A-Z', 'Z-A', 'Date'];
-  $scope.ordering = $scope.orderingTypes[2];
-  $scope.showSortPopup = function () {
-    Sort.openSortPopup($scope, $scope.orderingTypes, $scope.ordering, function (res) {
-      if (res) $scope.ordering = res;
-    });
-  }
+  ListToolbox.prepare($scope, {
+    orderingTypes: ['A-Z', 'Z-A', 'Date'],
+    defaultOrdering: 'Date',
+    hasSearch: true
+  });
   if ($stateParams.eventType) {
     $scope.cate = Config.eventCateFromType($stateParams.eventType);
     $scope.gotdata = DatiDB.cate('event', $scope.cate.it).then(function (data) {
@@ -263,14 +273,12 @@ $scope.show = function() {
   });
 })
 
-.controller('MainEventsListCtrl', function ($scope, Sort, DatiDB) {
-  $scope.orderingTypes = ['A-Z', 'Z-A', 'Date'];
-  $scope.ordering = $scope.orderingTypes[0];
-  $scope.showSortPopup = function () {
-    Sort.openSortPopup($scope, $scope.orderingTypes, $scope.ordering, function (res) {
-      if (res) $scope.ordering = res;
-    });
-  };
+.controller('MainEventsListCtrl', function ($scope, DatiDB, ListToolbox) {
+  ListToolbox.prepare($scope, {
+    orderingTypes: ['A-Z', 'Z-A', 'Date'],
+    defaultOrdering: 'Date',
+    hasSearch:true
+  });
 
   $scope.gotdata = DatiDB.all('mainevent').then(function (data) {
     $scope.mainevents = data;
@@ -280,84 +288,14 @@ $scope.show = function() {
     $scope.gotdata = DatiDB.get('mainevent', $stateParams.maineventId).then(function (data) {
       $scope.obj = data;
     });
-  })
-
-.controller('MappaCtrl', function ($scope, DatiDB) {
-  $scope.map = {
-    draggable: 'true',
-    center: {
-      latitude: 0,
-      longitude: 0
-    },
-    zoom: 8
-  };
-
-  $scope.markers = {
-    models: [],
-    coords: 'self',
-    fit: true,
-    // icon: 'img/mapmarker.png',
-    // click: 'openInfoWindow($markerModel)',
-    doCluster: true
-  };
-
-  $scope.showInfoWindow = false;
-
-  /* Components used only for the single infowindow, not working now :( */
-  $scope.infoWindow = {
-    show: false,
-    coords: null,
-    content: '',
-    isIconVisibleOnClick: true,
-    options: null,
-  };
-
-  $scope.openInfoWindow = function ($markerModel) {
-    $scope.infoWindow.coords = {
-      latitude: $markerModel.latitude,
-      longitude: $markerModel.longitude
-    };
-    $scope.infoWindow.content = $markerModel.latitude + ',' + $markerModel.longitude + '\n' + $markerModel.title.it;
-    $scope.infoWindow.options = {
-      content: $scope.infoWindow.content
-    };
-    $scope.infoWindow.show = true;
-    alert($scope.infoWindow.content);
-  };
-
-  $scope.closeInfoWindow = function () {
-    $scope.infoWindow.show = false;
-    $scope.infoWindow.coords = null;
-    $scope.infoWindow.options = null;
-  };
-  /* [END] Components used only for the single infowindow, not working now :( */
-
-  // map1 = new mxn.Mapstraction('map1', 'openlayers');
-  DatiDB.all('poi').then(function (data) {
-    $scope.markers.models = [];
-    angular.forEach(data, function (luogo, idx) {
-      if (luogo.location) {
-        /*m = new mxn.Marker(new mxn.LatLonPoint(luogo.location[0], luogo.location[1]));
-        m.setIcon('img/mapmarker.png', [25, 40], [25 / 2, 40 / 2]);
-        m.setInfoBubble(luogo.title.it);
-        map1.addMarker(m);*/
-        luogo.latitude = luogo.location[0];
-        luogo.longitude = luogo.location[1];
-        $scope.markers.models.push()
-      }
-    });
-    // map1.autoCenterAndZoom();
-  });
 })
 
-.controller('ItinerariCtrl', function ($scope, DatiDB, Sort) {
-  $scope.orderingTypes = ['A-Z', 'Z-A'];
-  $scope.ordering = $scope.orderingTypes[0];
-  $scope.showSortPopup = function () {
-    Sort.openSortPopup($scope, $scope.orderingTypes, $scope.ordering, function (res) {
-      if (res) $scope.ordering = res;
-    });
-  };
+.controller('ItinerariCtrl', function ($scope, DatiDB, ListToolbox) {
+  ListToolbox.prepare($scope, {
+    orderingTypes: ['A-Z', 'Z-A'],
+    defaultOrdering: 'A-Z',
+    hasSearch:true
+  });
   $scope.gotdata = DatiDB.all('itinerary').then(function (data) {
     $scope.itinerari = data;
   });

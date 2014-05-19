@@ -111,13 +111,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         } }, data:{ contentsCate:'Servizi' }
     })
 
-    .state('app.hotelcates', {
-        url:"/hotels", views:{ 'menuContent':{
-            templateUrl:"templates/hotels.html", controller:"HotelsListCtrl"
-        } }
-    })
     .state('app.hotels', {
-        url:"/hotels/:hotelType", views:{ 'menuContent':{
+        url:"/hotels", views:{ 'menuContent':{
             templateUrl:"templates/hotels_list.html", controller:"HotelsListCtrl"
         } }
     })
@@ -126,13 +121,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             templateUrl:"templates/hotel.html", controller:"HotelCtrl"
         } }
     })
-    .state('app.restaurantcates', {
-        url:"/restaurants", views:{ 'menuContent':{
-            templateUrl:"templates/restaurants.html", controller:"RestaurantsListCtrl"
-        } }
-    })
     .state('app.restaurants', {
-        url:"/restaurants/:restaurantType", views:{ 'menuContent':{
+        url:"/restaurants", views:{ 'menuContent':{
             templateUrl:"templates/restaurants_list.html", controller:"RestaurantsListCtrl"
         } }
     })
@@ -179,7 +169,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       url: "/mappa",
       views: {
         'menuContent' :{
-          templateUrl: "templates/mappa.html", controller: 'MappaCtrl'
+          templateUrl: "templates/mappa.html", controller: 'MapCtrl'
         }
       }
     })

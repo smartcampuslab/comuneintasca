@@ -1,4 +1,4 @@
-<ion-view title="{{'sidemenu_Mappa' | i18n}}">
+<ion-view title="{{title}}">
   <ion-content class="has-header" scroll="false">
     <div id="map1">
       <google-map center="map.center" zoom="map.zoom" draggable="{{map.draggable}}">
@@ -14,7 +14,7 @@
           <!-- click="markers.click"-->
           <windows>
             <!-- show="showInfoWindow" closeClick="showInfoWindow = false" ng-cloak-->
-            <p ng-non-bindable>{{title.it}}</p>
+            <p ng-non-bindable>{{title | translate}}</p>
           </windows>
         </markers>
       </google-map>

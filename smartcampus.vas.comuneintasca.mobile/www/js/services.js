@@ -220,8 +220,8 @@ angular.module('starter.services', [])
     },
     syncTimeoutSeconds: function () {
       return 60 * 60; /* 60 times 60 seconds = 1 HOUR */
-      return 60 * 60 * 24; /* 60 times 60 seconds = 1 HOUR --> x24 = 1 DAY */
-      return 60 * 60 * 24 * 10; /* 60 times 60 seconds = 1 HOUR --> x24 = 1 DAY x10 */
+//      return 60 * 60 * 24; /* 60 times 60 seconds = 1 HOUR --> x24 = 1 DAY */
+//      return 60 * 60 * 24 * 10; /* 60 times 60 seconds = 1 HOUR --> x24 = 1 DAY x10 */
     },
     syncingOverlayTimeoutMillis: function () {
       return 30 * 1000; /* 30 seconds before automatically hiding syncing overlay */
@@ -323,7 +323,7 @@ angular.module('starter.services', [])
         localization.resolve($rootScope.myPosition);
       } else {
         if (ionic.Platform.isWebView()) {
-          console.log('cordova localization...');
+          //console.log('cordova localization...');
           document.addEventListener("deviceready", function () {
             console.log('cordova localization inited...');
             navigator.geolocation.watchPosition(function (position) {
@@ -339,7 +339,7 @@ angular.module('starter.services', [])
             });
           }, false);
         } else {
-          console.log('web localization...');
+          //console.log('web localization...');
           navigator.geolocation.watchPosition(function (position) {
             r = [position.coords.latitude, position.coords.longitude];
             localization.resolve(r);
@@ -373,7 +373,6 @@ angular.module('starter.services', [])
           Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         d = R * c;
-        console.log('distance: ' + d);
       } else {
         console.log('cannot calculate distance!');
       }
@@ -382,15 +381,9 @@ angular.module('starter.services', [])
     distanceTo: function (gotoPosition) {
       var GL = this;
       return this.locate().then(function (myPosition) {
-        //if ($rootScope.myPosition){
-        //console.log('$rootScope.myPosition: '+JSON.stringify($rootScope.myPosition));
-        console.log('myPosition: ' + JSON.stringify(myPosition));
-        console.log('gotoPosition: ' + JSON.stringify(gotoPosition));
+        //console.log('myPosition: ' + JSON.stringify(myPosition));
+        //console.log('gotoPosition: ' + JSON.stringify(gotoPosition));
         return GL.distance(myPosition, gotoPosition);
-        //return this.distance($rootScope.myPosition,gotoPosition);
-        //} else {
-        //return false;
-        //};
       });
     }
   }
@@ -400,9 +393,10 @@ angular.module('starter.services', [])
   var SCHEMA_VERSION = Config.schemaVersion();
   var types = Config.contentTypesList();
   var lastSynced = -1;
+  if (localStorage.lastSynced) lastSynced = localStorage.lastSynced;
+
   var parseDbRow = function (dbrow) {
     var dbtype = Config.contentKeyFromDbType(dbrow.type);
-    console.log(dbtype);
     var item = JSON.parse(dbrow.data);
     item['dbClassification'] = dbrow.classification || '';
     item['dbClassification2'] = dbrow.classification2 || '';
@@ -437,17 +431,14 @@ angular.module('starter.services', [])
       item['abslink'] = '#/app/mainevent/' + item.id;
 
     }
-    console.log('item.location: ' + JSON.stringify(item.location));
+    //console.log('item.location: ' + JSON.stringify(item.location));
     if (item.hasOwnProperty('location') && item.location) {
-      console.log('item.location: ' + JSON.stringify(item.location));
       if ($rootScope.myPosition) {
-        console.log('$rootScope.myPosition: ' + JSON.stringify($rootScope.myPosition));
         distance = GeoLocate.distance($rootScope.myPosition, item.location);
-        console.log('distance: ' + distance);
         item['distance'] = distance;
       } else {
         GeoLocate.distanceTo(item.location).then(function (distance) {
-          console.log('distance: ' + distance);
+          //console.log('distance: ' + distance);
           item['distance'] = distance;
         });
       }
@@ -548,6 +539,10 @@ angular.module('starter.services', [])
         } else {
           var now_as_epoch = parseInt((new Date).getTime() / 1000);
           if (lastSynced == -1 || now_as_epoch > (lastSynced + Config.syncTimeoutSeconds())) {
+            console.log((now_as_epoch - lastSynced) + ' seconds since last syncronization: checking web service...');
+            lastSynced = now_as_epoch;
+            localStorage.lastSynced = lastSynced;
+
             syncing = $ionicLoading.show({
               content: 'syncing...',
               duration: Config.syncingOverlayTimeoutMillis()
@@ -563,9 +558,6 @@ angular.module('starter.services', [])
               currentSyncOptions = syncOptions;
             }
             $http(currentSyncOptions).success(function (data, status, headers, config) {
-              console.log((now_as_epoch - lastSynced) + ' seconds since last syncronization: checking web service...');
-              lastSynced = now_as_epoch;
-
               nextVersion = data.version;
               console.log('nextVersion: ' + nextVersion);
               if (nextVersion > currentDbVersion) {

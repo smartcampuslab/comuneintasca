@@ -15,9 +15,24 @@ angular.module('starter.controllers', ['google-maps'])
   $scope.goto = function (link) {
     location = '#/app/' + link;
   };
+
+  $scope.shownGroup = null;
+
+  $scope.showGroup = function(groupId) {
+    if (groupId != $scope.shownGroup) {
+      $scope.shownGroup = groupId;
+    } else {
+      $scope.shownGroup = null;
+    }
+  };
+
+  $scope.isGroupShown = function(groupId) {
+    return $scope.shownGroup == groupId;
+  };
 })
-  .controller('HomeCtrl', function ($scope, Files) {
-    /*
+
+.controller('HomeCtrl', function ($scope, Files) {
+  /*
 $scope.show = function() {
 
    // Show the action sheet
@@ -36,12 +51,12 @@ $scope.show = function() {
 
  };
 */
-    //    $state.go('contact.detail')
-  })
+  //    $state.go('contact.detail')
+})
 
 .controller('CategoriesListCtrl', function ($scope, $stateParams, Config) {
   if ($stateParams.cateId == 'info') {
-    $scope.title='sidemenu_div_Conoscere';
+    $scope.title = 'sidemenu_div_Conoscere';
     $scope.categories = [
       {
         key: 'sidemenu_Info',
@@ -62,16 +77,16 @@ $scope.show = function() {
     ];
 
   } else if ($stateParams.cateId == 'events') {
-    $scope.basecate=$stateParams.cateId;
-    $scope.title='sidemenu_div_Vivere';
+    $scope.basecate = $stateParams.cateId;
+    $scope.title = 'sidemenu_div_Vivere';
     $scope.categories2 = Config.eventTypesList();
   } else if ($stateParams.cateId == 'places') {
-    $scope.basecate=$stateParams.cateId;
-    $scope.title='sidemenu_div_Scoprire';
+    $scope.basecate = $stateParams.cateId;
+    $scope.title = 'sidemenu_div_Scoprire';
     $scope.categories2 = Config.poiTypesList();
 
   } else if ($stateParams.cateId == 'hospitality') {
-    $scope.title='sidemenu_div_Mangiare-dormire';
+    $scope.title = 'sidemenu_div_Mangiare-dormire';
     $scope.categories = [
       {
         key: 'sidemenu_Hotel',
@@ -82,7 +97,7 @@ $scope.show = function() {
       }
     ];
   } else if ($stateParams.cateId == 'useful') {
-    $scope.title='sidemenu_div_Info-utili';
+    $scope.title = 'sidemenu_div_Info-utili';
     $scope.categories = [
       {
         key: 'sidemenu_Servizi',
@@ -137,24 +152,24 @@ $scope.show = function() {
 
   $scope.gotdata = DatiDB.all('hotel').then(function (data) {
     $scope.hotels = data;
-    
+
     ListToolbox.prepare($scope, {
-      orderingTypes: ['A-Z', 'Z-A', 'Distance','Stars'],
+      orderingTypes: ['A-Z', 'Z-A', 'Distance', 'Stars'],
       defaultOrdering: 'Distance',
       hasMap: true,
-      getData: function() {
+      getData: function () {
         return $scope.hotels;
       },
-      getTitle: function() {
+      getTitle: function () {
         return $filter('i18n')('sidemenu_Hotel');
       },
       filterOptions: Config.hotelTypesList(),
-      doFilter: function(filter) {
+      doFilter: function (filter) {
         DatiDB.cate('hotel', filter).then(function (data) {
           $scope.hotels = data;
         });
       },
-      hasSearch:true
+      hasSearch: true
     });
   });
 
@@ -170,24 +185,24 @@ $scope.show = function() {
 .controller('RestaurantsListCtrl', function ($scope, $filter, DatiDB, Config, ListToolbox) {
   $scope.gotdata = DatiDB.all('restaurant').then(function (data) {
     $scope.restaurants = data;
-    
+
     ListToolbox.prepare($scope, {
       orderingTypes: ['A-Z', 'Z-A', 'Distance'],
       defaultOrdering: 'Distance',
       hasMap: true,
-      getData: function() {
+      getData: function () {
         return $scope.restaurants;
       },
-      getTitle: function() {
+      getTitle: function () {
         return $filter('i18n')('sidemenu_Ristoranti');
       },
       filterOptions: Config.restaurantTypesList(),
-      doFilter: function(filter) {
+      doFilter: function (filter) {
         DatiDB.cate('restaurant', filter).then(function (data) {
           $scope.restaurants = data;
         });
       },
-      hasSearch:true
+      hasSearch: true
     });
   });
 
@@ -205,15 +220,15 @@ $scope.show = function() {
     orderingTypes: ['A-Z', 'Z-A', 'Distance'],
     defaultOrdering: 'Distance',
     hasMap: true,
-    getData: function() {
+    getData: function () {
       return $scope.places;
     },
-    getTitle: function() {
+    getTitle: function () {
       return $filter('translate')($scope.cate);
     },
-    hasSearch:true    
+    hasSearch: true
   });
-  
+
   if ($stateParams.placeType) {
     $scope.cate = Config.poiCateFromType($stateParams.placeType);
     $scope.gotdata = DatiDB.cate('poi', $scope.cate.it).then(function (data) {
@@ -226,24 +241,24 @@ $scope.show = function() {
   }
 })
 
-.controller('MapCtrl', function($scope, MapHelper) {
-	MapHelper.start($scope);
+.controller('MapCtrl', function ($scope, MapHelper) {
+  MapHelper.start($scope);
 })
 
 .controller('PlaceCtrl', function ($scope, DatiDB, GeoLocate, $stateParams) {
-    $scope.gotdata = DatiDB.get('poi', $stateParams.placeId).then(function (data) {
-      $scope.place = data;
-      $scope.obj = data;
-	  $scope.showToolbar = true;
-      if (data.location) {
-        GeoLocate.locate().then(function (latlon) {
-          $scope.distance = GeoLocate.distance(latlon, data.location);
-        });
-      } else {
-        console.log('no known location for place');
-      }
-    });
-  })
+  $scope.gotdata = DatiDB.get('poi', $stateParams.placeId).then(function (data) {
+    $scope.place = data;
+    $scope.obj = data;
+    $scope.showToolbar = true;
+    if (data.location) {
+      GeoLocate.locate().then(function (latlon) {
+        $scope.distance = GeoLocate.distance(latlon, data.location);
+      });
+    } else {
+      console.log('no known location for place');
+    }
+  });
+})
 
 
 .controller('EventsListCtrl', function ($scope, $stateParams, DatiDB, Config, ListToolbox) {
@@ -277,24 +292,25 @@ $scope.show = function() {
   ListToolbox.prepare($scope, {
     orderingTypes: ['A-Z', 'Z-A', 'Date'],
     defaultOrdering: 'Date',
-    hasSearch:true
+    hasSearch: true
   });
 
   $scope.gotdata = DatiDB.all('mainevent').then(function (data) {
     $scope.mainevents = data;
   });
 })
-  .controller('MainEventCtrl', function ($scope, DatiDB, $stateParams) {
+
+.controller('MainEventCtrl', function ($scope, DatiDB, $stateParams) {
     $scope.gotdata = DatiDB.get('mainevent', $stateParams.maineventId).then(function (data) {
       $scope.obj = data;
     });
-})
+  })
 
 .controller('ItinerariCtrl', function ($scope, DatiDB, ListToolbox) {
   ListToolbox.prepare($scope, {
     orderingTypes: ['A-Z', 'Z-A'],
     defaultOrdering: 'A-Z',
-    hasSearch:true
+    hasSearch: true
   });
   $scope.gotdata = DatiDB.all('itinerary').then(function (data) {
     $scope.itinerari = data;

@@ -261,17 +261,22 @@ $scope.show = function() {
 })
 
 
-.controller('EventsListCtrl', function ($scope, $stateParams, DatiDB, Config, ListToolbox) {
+.controller('EventsListCtrl', function ($scope, $stateParams, DatiDB, Config, ListToolbox, Profiling) {
   $scope.dateFormat = 'EEEE d MMMM yyyy';
   ListToolbox.prepare($scope, {
     orderingTypes: ['A-Z', 'Z-A', 'Date'],
     defaultOrdering: 'Date',
     hasSearch: true
   });
+  $scope.getItemHeight = function(item, index) {
+    return 100;
+  };
   if ($stateParams.eventType) {
     $scope.cate = Config.eventCateFromType($stateParams.eventType);
+    Profiling.start('eventslist');
     $scope.gotdata = DatiDB.cate('event', $scope.cate.it).then(function (data) {
       $scope.events = data;
+      Profiling.do('eventslist');
     });
   } else {
     $scope.gotdata = DatiDB.all('event').then(function (data) {

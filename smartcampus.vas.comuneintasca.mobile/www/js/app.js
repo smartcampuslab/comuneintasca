@@ -155,7 +155,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     })
     .state('app.events', {
         url: "/events/:eventType", views: { 'menuContent' :{
-          templateUrl: "templates/events_list.html", controller: 'EventsListCtrl'
+          templateUrl: "templates/events_list2.html", controller: 'EventsListCtrl'
         } }
     })
     .state('app.event', {

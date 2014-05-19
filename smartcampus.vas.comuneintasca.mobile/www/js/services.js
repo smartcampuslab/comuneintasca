@@ -212,6 +212,9 @@ angular.module('starter.services', [])
   };
 
   return {
+    doProfiling: function() {
+      return true;
+    },
     savedImagesDirName: function () {
       return 'TrentoInTasca';
     },
@@ -386,10 +389,27 @@ angular.module('starter.services', [])
         return GL.distance(myPosition, gotoPosition);
       });
     }
-  }
+  };
 })
 
-.factory('DatiDB', function ($q, $http, $rootScope, $ionicLoading, Config, GeoLocate) {
+.factory('Profiling', function (Config) {
+  var startTimes={};
+  return {
+    start: function(label) {
+      if (Config.doProfiling()) {
+        startTimes[label]=(new Date).getTime();
+      }
+    },
+    do: function(label) {
+      if (Config.doProfiling()) {
+        var startTime=startTimes[label] || -1;
+        if (startTime!=-1) console.log('PROFILE: '+label+'='+((new Date).getTime()-startTime));
+      }
+    }
+  };
+})
+
+.factory('DatiDB', function ($q, $http, $rootScope, $ionicLoading, Config, GeoLocate, Profiling) {
   var SCHEMA_VERSION = Config.schemaVersion();
   var types = Config.contentTypesList();
   var lastSynced = -1;
@@ -532,9 +552,11 @@ angular.module('starter.services', [])
     sync: function () {
       syncronization = $q.defer();
       db.then(function (dbObj) {
+        Profiling.start('dbsync');
         if (ionic.Platform.isWebView() && navigator.connection.type == Connection.NONE) {
           $ionicLoading.hide();
           console.log('no network connection');
+          Profiling.do('dbsync');
           syncronization.resolve(currentDbVersion);
         } else {
           var now_as_epoch = parseInt((new Date).getTime() / 1000);
@@ -648,26 +670,31 @@ angular.module('starter.services', [])
                   $ionicLoading.hide();
                   currentDbVersion = nextVersion;
                   localStorage.currentDbVersion = currentDbVersion;
+                  Profiling.do('dbsync');
                   syncronization.resolve(currentDbVersion);
                 }, function () {
                   $ionicLoading.hide();
                   console.log('cannot initialize (2)');
+                  Profiling.do('dbsync');
                   syncronization.reject();
                 });
               } else {
                 $ionicLoading.hide();
                 console.log('local database already up-to-date!');
+                Profiling.do('dbsync');
                 syncronization.resolve(currentDbVersion);
               }
             }).error(function (data, status, headers, config) {
               $ionicLoading.hide();
               console.log('cannot check for new data: network unavailable?');
               console.log(status);
+              Profiling.do('dbsync');
               syncronization.resolve(currentDbVersion);
             });
           } else {
             $ionicLoading.hide();
             console.log('avoiding too frequent syncronizations. seconds since last one: ' + (now_as_epoch - lastSynced));
+            Profiling.do('dbsync');
             syncronization.resolve(currentDbVersion);
           }
         }
@@ -677,7 +704,7 @@ angular.module('starter.services', [])
     all: function (dbname) {
       var data = $q.defer();
       this.sync().then(function (dbVersion) {
-        console.log('current database version: ' + dbVersion);
+        Profiling.start('dball');
         var loading = $ionicLoading.show({
           content: 'loading...',
           showDelay: 1000,
@@ -699,15 +726,17 @@ angular.module('starter.services', [])
             $ionicLoading.hide();
             console.log('data error!');
             console.log(err);
+            Profiling.do('dball');
             data.reject();
           });
         }, function (error) { //error callback
           $ionicLoading.hide();
           console.log('db.all() ERROR: ' + error);
+          Profiling.do('dball');
           data.reject(error);
         }, function () { //success callback
           $ionicLoading.hide();
-          console.log('db.all() DONE!');
+          Profiling.do('dball');
           data.resolve(lista);
         });
       });
@@ -716,7 +745,7 @@ angular.module('starter.services', [])
     cate: function (dbname, cateId) {
       var data = $q.defer();
       this.sync().then(function (dbVersion) {
-        console.log('current database version: ' + dbVersion);
+        Profiling.start('dbcate');
         var loading = $ionicLoading.show({
           content: 'loading...',
           showDelay: 1000,
@@ -727,7 +756,10 @@ angular.module('starter.services', [])
         dbObj.transaction(function (tx) {
           //console.log('type: '+types[dbname]);
           console.log('category: ' + cateId);
-          tx.executeSql('SELECT id, type, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=? AND (classification=? OR classification2=? OR classification3=?)', [types[dbname], cateId, cateId, cateId], function (tx2, cateResults) {
+
+          var sql = 'SELECT id, type, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=?'+ (cateId ? ' AND (classification=? OR classification2=? OR classification3=?)':'');
+          var params = cateId ? [types[dbname], cateId, cateId, cateId] : [types[dbname]];
+          tx.executeSql(sql, params, function (tx2, cateResults) {
             console.log('cateResults.rows.length: ' + cateResults.rows.length);
             var len = cateResults.rows.length,
               i;
@@ -740,15 +772,17 @@ angular.module('starter.services', [])
             $ionicLoading.hide();
             console.log('cate data error!');
             console.log(err);
+            Profiling.do('dbcate');
             data.reject(err);
           });
         }, function (error) { //error callback
           $ionicLoading.hide();
           console.log('db.cate() ERROR: ' + error);
+          Profiling.do('dbcate');
           data.reject(error);
         }, function () { //success callback
           $ionicLoading.hide();
-          console.log('db.cate() DONE!');
+          Profiling.do('dbcate');
           data.resolve(lista);
         });
       });
@@ -758,7 +792,7 @@ angular.module('starter.services', [])
       console.log('DatiDB.get("' + dbname + '","' + itemId + '")');
 
       return this.sync().then(function (dbVersion) {
-        console.log('[DatiDB.get("' + dbname + '","' + itemId + '")] current database version: ' + dbVersion);
+        Profiling.start('dbget');
         var loading = $ionicLoading.show({
           content: 'loading...',
           showDelay: 1000,
@@ -770,10 +804,8 @@ angular.module('starter.services', [])
         dbObj.transaction(function (tx) {
           //console.log('type: '+types[dbname]);
           if (itemId.indexOf(',') == -1) {
-            console.log('itemId: ' + itemId);
             idCond = 'id=?';
           } else {
-            console.log('itemsIds: ' + itemId);
             itemsIds = itemId.split(',');
             for (i = 0; i < itemsIds.length; i++) itemsIds[i] = '?';
             idCond = 'id IN (' + itemsIds.join() + ')';
@@ -781,18 +813,17 @@ angular.module('starter.services', [])
           var qParams = itemId.split(',');
           qParams.unshift(types[dbname]);
           var dbQuery = 'SELECT id, type, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=? AND ' + idCond;
-          console.log('dbQuery: ' + dbQuery);
+          //console.log('dbQuery: ' + dbQuery);
           tx.executeSql(dbQuery, qParams, function (tx2, results) {
             if (results.rows.length > 0) {
               if (itemId.indexOf(',') == -1) {
-                console.log('single db result');
                 var item = results.rows.item(0);
                 var result = parseDbRow(item);
+                Profiling.do('dbget');
                 dbitem.resolve(result);
               } else {
                 var len = results.rows.length,
                   i;
-                console.log('results.rows.length: ' + len);
                 for (i = 0; i < len; i++) {
                   var item = results.rows.item(i);
                   lista.push(parseDbRow(item));
@@ -800,20 +831,23 @@ angular.module('starter.services', [])
               }
             } else {
               console.log('not found!');
+              Profiling.do('dbget');
               dbitem.reject('not found!');
             }
           }, function (tx2, err) {
             $ionicLoading.hide();
             console.log('error: ' + err);
+            Profiling.do('dbget');
             dbitem.reject(err);
           });
         }, function (error) { //error callback
           $ionicLoading.hide();
           console.log('db.get() ERROR: ' + error);
+          Profiling.do('dbget');
           dbitem.reject(error);
         }, function () { //success callback
           $ionicLoading.hide();
-          console.log('db.get() DONE!');
+          Profiling.do('dbget');
           dbitem.resolve(lista);
         });
         return dbitem.promise;
@@ -1209,7 +1243,7 @@ angular.module('starter.services', [])
   };
 })
 
-.factory('ListToolbox', function ($ionicPopup, $filter, MapHelper) {
+.factory('ListToolbox', function ($ionicPopup, $ionicModal, $filter, MapHelper) {
   var keys = {
     'Stars': {
       'it': 'Stelle',
@@ -1241,6 +1275,11 @@ angular.module('starter.services', [])
       'en': 'Cancel',
       'de': 'Cancel'
     },    
+    'All': {
+      'it': 'Tutte',
+      'en': 'All',
+      'de': 'All'
+    },
     'A-Z': {
       'it': 'A-Z',
       'en': 'A-Z',
@@ -1259,7 +1298,7 @@ angular.module('starter.services', [])
       var template = '<div class="list">';
       for (var i = 0; i < options.length; i++) {
         var s = $filter('translate')(keys[options[i]]);
-        template += '<a class="item item-icon-right" ng-click="show.close(\'' + options[i] + '\')">' + s + '<i class="icon ' + (options[i] == presel ? 'ion-ios7-checkmark-outline' : '') + '"></i></a>';
+        template += '<a class="item item-icon-right" ng-click="show.close(\'' + options[i] + '\')">' + $filter('translate')(keys['OrderBy']) + '<i class="icon ' + (options[i] == presel ? 'ion-ios7-checkmark-outline' : '') + '"></i></a>';
       }
       // An elaborate, custom popup
       var myPopup = $ionicPopup.show({
@@ -1280,12 +1319,34 @@ angular.module('starter.services', [])
   var openFilterPopup = function($scope, options, presel, callback) {
       var title = $filter('translate')(keys['Filter']);
 
-      var template = '<div class="list">';
+      var template = '<div class="modal"><ion-header-bar><h1 class="title">'+title+'</h1></ion-header-bar><ion-content><div class="list">';
+      var body = '<a class="item item-icon-right" ng-click="closeModal(\'__all\')">' + $filter('translate')(keys['All']) + '<i class="icon ' + (presel == null ? 'ion-ios7-checkmark-outline' : '') + '"></i></a>';
+      var selected = '';
       for (var key in options) {
         var value = options[key].it;
         var s = $filter('translate')(options[key]);
-        template += '<a class="item item-icon-right" ng-click="show.close(\'' + value + '\')">' + s + '<i class="icon ' + (value == presel ? 'ion-ios7-checkmark-outline' : '') + '"></i></a>';
+        s = '<a class="item item-icon-right" ng-click="closeModal(\'' + value + '\')">' + s + '<i class="icon ' + (value == presel ? 'ion-ios7-checkmark-outline' : '') + '"></i></a>';
+        if (value == presel) {
+          selected = s;
+        } else {
+          body += s;
+        }
       }
+      template += selected + body+'</div></ion-content><ion-footer-bar><div class="tabs" ng-click="closeModal()"><a class="tab-item">'+$filter('translate')(keys['Cancel'])+'</a></div></ion-footer-bar></div>';
+      $scope.modal = $ionicModal.fromTemplate(template, {
+        scope: $scope,
+        animation: 'slide-in-up'
+      });
+      $scope.modal.show();
+      $scope.$on('$destroy', function() {
+        $scope.modal.remove();
+      });
+      $scope.closeModal = function(val) {
+        $scope.modal.hide();
+        if ('__all' == val) callback(null);
+        else if (val) callback(val);
+      }
+/*
       // An elaborate, custom popup
       var myPopup = $ionicPopup.show({
         template: template,
@@ -1300,6 +1361,7 @@ angular.module('starter.services', [])
         console.log('sort popup res: ' + res);
         callback(res);
       });  
+*/
   }
 
   return {
@@ -1330,10 +1392,8 @@ angular.module('starter.services', [])
         $scope.filter = conf.defaultFilter;
         $scope.showFilterPopup = function () {
           openFilterPopup($scope, $scope.filterOptions, $scope.filter, function (res) {
-            if (res) {
               $scope.filter = res;
               conf.doFilter(res);
-            }  
           });
         };
       }

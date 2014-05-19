@@ -1,33 +1,40 @@
 <ion-view title="Trento in tasca">
   <ion-content class="has-header content-stable" scroll="false" id="content-home">
-    <ion-slide-box does-continue="true" slide-interval="30000" id="slide-box-home">
-        <ion-slide>
+    <div class="home-container">
+      <div class="home-box-top">
+        <ion-slide-box does-continue="true" slide-interval="30000" id="slide-box-home">
+          <ion-slide>
             <div class="hp-box festival"><h3 class="title">Festival dell'Economia</h2></div>
-        </ion-slide>
-        <ion-slide>
+          </ion-slide>
+          <ion-slide>
             <div class="hp-box sport"><h3 class="title">Ben...essere in movimento!</h2></div>
-        </ion-slide>
-        <ion-slide>
+          </ion-slide>
+          <ion-slide>
             <div class="hp-box palazzi"><h3 class="title">Palazzi Aperti</h2></div>
-        </ion-slide>
-    </ion-slide-box>
-    <div id="home-buttons">
-        <div class="row">
+          </ion-slide>
+        </ion-slide-box>
+      </div>
+      <div class="home-box-bottom">
+        <div id="home-buttons">
+          <div class="row">
             <div class="col"><button class="button button-full button-comuni icon-left ion-document-text" ng-click="goto('cate/info')">{{'sidemenu_div_Conoscere' | i18n}}</button></div>
             <div class="col"><button class="button button-full button-comuni icon-right ion-film-marker" ng-click="goto('cate/events')">{{'sidemenu_div_Vivere' | i18n}}</button></div>
-        </div>
-        <div class="row">
+          </div>
+          <div class="row">
             <div class="col"><button class="button button-full button-comuni icon-left ion-location" ng-click="goto('cate/places')">{{'sidemenu_div_Scoprire' | i18n}}</button></div>
             <div class="col"><button class="button button-full button-comuni icon-right ion-map" ng-click="goto('itineraries')">{{'sidemenu_div_Percorsi' | i18n}}</button></div>
-        </div>
-        <div class="row">
+          </div>
+          <div class="row">
             <div class="col"><button class="button button-full button-comuni icon-left ion-pizza" ng-click="goto('cate/hospitality')">{{'sidemenu_div_Mangiare-dormire' | i18n}}</button></div>
             <div class="col"><button class="button button-full button-comuni icon-right ion-information-circled" ng-click="goto('cate/useful')">{{'sidemenu_div_Info-utili' | i18n}}</button></div>
-        </div>
-        <div class="row">
+          </div>
+          <div class="row">
             <div class="col"><button class="button button-full button-comuni icon-left ion-model-s">{{'homemenu_Viaggia-Trento' | i18n}}</button></div>
             <div class="col"><button class="button button-full button-comuni icon-right ion-ios7-star" ng-click="goto('favourites')">{{'sidemenu_Favourites' | i18n}}</button></div>
-        </div>
-    </div>      
+          </div>
+        </div>      
+
+      </div>
+    </div>
   </ion-content>
 </ion-view>

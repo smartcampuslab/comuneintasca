@@ -145,14 +145,13 @@ ion-side-menu .item {
   color: #fff;
 }
 #slide-box-home {
-  /*    position:absolute;bottom:0;*/
+  height: 100%;
 }
 .hp-box {
+  height: 100%;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 350px;
-  background-color: #fff;
 }
 .hp-box .title {
   background-color: rgba(0, 0, 0, .7);
@@ -236,4 +235,24 @@ ion-side-menu .item {
 .list .item.item-accordion.ng-hide-add,
 .list .item.item-accordion.ng-hide-remove {
   display: block !important;
+}
+
+
+.home-container {
+    position: relative;
+    height: 100%;
+}
+.home-box-top {
+    position:absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 250px; /* or whatever height of upper div*/
+    background: red;
+}
+.home-box-bottom {
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:100%;
 }

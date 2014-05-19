@@ -13,6 +13,20 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   }
   $ionicPlatform.ready(function() {
+    /*
+    if (window.cordova && cordova.plugins && cordova.plugins.Keyboard) {
+      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+      window.addEventListener('native.showkeyboard', function(e){
+        console.log('Keyboard height is: ' + e.keyboardHeight);
+        angular.element(document.querySelector('#ion-footer-bar'))
+        footer.addClass('keyboard').css('bottom',e.keyboardHeight+'px');
+      });
+      window.addEventListener('native.hidekeyboard', function(e){
+        console.log('Keyboard closed');
+        angular.element(document.querySelector('#ion-footer-bar')).css('bottom','0').removeClass('keyboard');
+      });
+    } 
+    */
     if(window.StatusBar) {
       // org.apache.cordova.statusbar required
       StatusBar.hide();

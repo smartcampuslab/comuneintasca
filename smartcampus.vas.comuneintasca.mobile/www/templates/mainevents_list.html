@@ -4,7 +4,7 @@
       <div class="item item-divider" align="center">{{'list_results' | i18nplur:mainevents.length}}</div>
       <ion-item collection-repeat="obj in mainevents | extOrderBy:ordering" 
                 collection-item-width="'100%'" collection-item-height="getListItemHeight(item, $index)"
-                href="#/app/mainevent/{{obj.id}}" class="item-thumbnail-left">
+                href="#/app/mainevent/{{obj.id}}" class="item-thumbnail-left coll-item">
         <comuni-img class="item-image comuni-item-image" image="obj.image" gotdata="gotdata"></comuni-img>
         <h2>{{obj.title | translate}}</h2>
         <p class="comuni-item-bottomdetail">{{obj.eventDateDescription | translate}}</p>

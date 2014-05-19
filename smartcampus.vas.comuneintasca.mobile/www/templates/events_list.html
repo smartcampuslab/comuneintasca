@@ -2,7 +2,9 @@
   <ion-content class="has-header">
     <ion-list>
       <div class="item item-divider" align="center">{{'list_results' | i18nplur:events.length}}</div>
-      <ion-item class="item-thumbnail-left" ng-repeat="event in events | extOrderBy:ordering track by event.id" href="#/app/event/{{event.id}}">
+      <ion-item collection-repeat="event in events | extOrderBy:ordering track by event.id" 
+                collection-item-width="'100%'" collection-item-height="getListItemHeight(item, $index)"
+                href="#/app/event/{{event.id}}" class="item-thumbnail-left">
         <comuni-img class="item-image comuni-item-image" image="event.image" gotdata="gotdata"></comuni-img>
         <h2>{{event.title | translate}}</h2>
         <p>{{event.fromTime | date:'fullDate'}}<span ng-if="event.fromTime !== event.toTime"> - {{event.toTime | date:'fullDate'}}</span>

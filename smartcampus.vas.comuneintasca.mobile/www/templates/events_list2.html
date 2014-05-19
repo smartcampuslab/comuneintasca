@@ -4,8 +4,7 @@
       <div class="item item-divider" align="center">{{'list_results' | i18nplur:events.length}}</div>
       <ion-item class="coll-item item-thumbnail-left"
                 collection-repeat="event in events|extOrderBy:ordering track by event.id"
-                collection-item-width="'100%'"
-                collection-item-height="getItemHeight(item, $index)"
+                collection-item-width="'100%'" collection-item-height="getListItemHeight(item, $index)"
                 href="#/app/event/{{event.id}}">
         <comuni-img class="item-image comuni-item-image" image="event.image" gotdata="gotdata"></comuni-img>
         <h2>{{event.title | translate}}</h2>

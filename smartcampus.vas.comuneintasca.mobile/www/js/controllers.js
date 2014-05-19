@@ -16,7 +16,8 @@ angular.module('starter.controllers', ['google-maps'])
   };
 })
 
-.controller('HomeCtrl', function ($scope, Files) {
+.controller('HomeCtrl', function ($scope, DatiDB) {
+  DatiDB.sync();
   /*
 $scope.show = function() {
 

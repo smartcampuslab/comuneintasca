@@ -50,7 +50,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     location = '#/app/' + link;
   };
 
-  DatiDB.sync();
   $rootScope.getListItemHeight = function(item, index) {
     return 100;
   };

@@ -756,7 +756,10 @@ angular.module('starter.services', [])
         dbObj.transaction(function (tx) {
           //console.log('type: '+types[dbname]);
           console.log('category: ' + cateId);
-          tx.executeSql('SELECT id, type, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=? AND (classification=? OR classification2=? OR classification3=?)', [types[dbname], cateId, cateId, cateId], function (tx2, cateResults) {
+
+          var sql = 'SELECT id, type, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=?'+ (cateId ? ' AND (classification=? OR classification2=? OR classification3=?)':'');
+          var params = cateId ? [types[dbname], cateId, cateId, cateId] : [types[dbname]];
+          tx.executeSql(sql, params, function (tx2, cateResults) {
             console.log('cateResults.rows.length: ' + cateResults.rows.length);
             var len = cateResults.rows.length,
               i;
@@ -1240,7 +1243,7 @@ angular.module('starter.services', [])
   };
 })
 
-.factory('ListToolbox', function ($ionicPopup, $filter, MapHelper) {
+.factory('ListToolbox', function ($ionicPopup, $ionicModal, $filter, MapHelper) {
   var keys = {
     'Stars': {
       'it': 'Stelle',
@@ -1272,6 +1275,11 @@ angular.module('starter.services', [])
       'en': 'Cancel',
       'de': 'Cancel'
     },    
+    'All': {
+      'it': 'Tutte',
+      'en': 'All',
+      'de': 'All'
+    },
     'A-Z': {
       'it': 'A-Z',
       'en': 'A-Z',
@@ -1290,7 +1298,7 @@ angular.module('starter.services', [])
       var template = '<div class="list">';
       for (var i = 0; i < options.length; i++) {
         var s = $filter('translate')(keys[options[i]]);
-        template += '<a class="item item-icon-right" ng-click="show.close(\'' + options[i] + '\')">' + s + '<i class="icon ' + (options[i] == presel ? 'ion-ios7-checkmark-outline' : '') + '"></i></a>';
+        template += '<a class="item item-icon-right" ng-click="show.close(\'' + options[i] + '\')">' + $filter('translate')(keys['OrderBy']) + '<i class="icon ' + (options[i] == presel ? 'ion-ios7-checkmark-outline' : '') + '"></i></a>';
       }
       // An elaborate, custom popup
       var myPopup = $ionicPopup.show({
@@ -1311,12 +1319,34 @@ angular.module('starter.services', [])
   var openFilterPopup = function($scope, options, presel, callback) {
       var title = $filter('translate')(keys['Filter']);
 
-      var template = '<div class="list">';
+      var template = '<div class="modal"><ion-header-bar><h1 class="title">'+title+'</h1></ion-header-bar><ion-content><div class="list">';
+      var body = '<a class="item item-icon-right" ng-click="closeModal(\'__all\')">' + $filter('translate')(keys['All']) + '<i class="icon ' + (presel == null ? 'ion-ios7-checkmark-outline' : '') + '"></i></a>';
+      var selected = '';
       for (var key in options) {
         var value = options[key].it;
         var s = $filter('translate')(options[key]);
-        template += '<a class="item item-icon-right" ng-click="show.close(\'' + value + '\')">' + s + '<i class="icon ' + (value == presel ? 'ion-ios7-checkmark-outline' : '') + '"></i></a>';
+        s = '<a class="item item-icon-right" ng-click="closeModal(\'' + value + '\')">' + s + '<i class="icon ' + (value == presel ? 'ion-ios7-checkmark-outline' : '') + '"></i></a>';
+        if (value == presel) {
+          selected = s;
+        } else {
+          body += s;
+        }
       }
+      template += selected + body+'</div></ion-content><ion-footer-bar><div class="tabs" ng-click="closeModal()"><a class="tab-item">'+$filter('translate')(keys['Cancel'])+'</a></div></ion-footer-bar></div>';
+      $scope.modal = $ionicModal.fromTemplate(template, {
+        scope: $scope,
+        animation: 'slide-in-up'
+      });
+      $scope.modal.show();
+      $scope.$on('$destroy', function() {
+        $scope.modal.remove();
+      });
+      $scope.closeModal = function(val) {
+        $scope.modal.hide();
+        if ('__all' == val) callback(null);
+        else if (val) callback(val);
+      }
+/*
       // An elaborate, custom popup
       var myPopup = $ionicPopup.show({
         template: template,
@@ -1331,6 +1361,7 @@ angular.module('starter.services', [])
         console.log('sort popup res: ' + res);
         callback(res);
       });  
+*/
   }
 
   return {
@@ -1361,10 +1392,8 @@ angular.module('starter.services', [])
         $scope.filter = conf.defaultFilter;
         $scope.showFilterPopup = function () {
           openFilterPopup($scope, $scope.filterOptions, $scope.filter, function (res) {
-            if (res) {
               $scope.filter = res;
               conf.doFilter(res);
-            }  
           });
         };
       }

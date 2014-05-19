@@ -210,7 +210,27 @@ ion-side-menu .item {
   opacity: .8;
   text-align: center;
 }
-
 .coll-item {
-  width:100%;height:100px;
+  width: 100%;
+  height: 100px;
+}
+.list .item.item-header {
+  background-color: #2975a7;
+  color: #ffffff;
+  opacity: 0.5;
+  font-weight: bold;
+
+}
+.list .item.item-header i.icon {
+  padding-right: 10px;
+}
+.list .item.item-accordion {
+  transition: 0.1s all linear;
+}
+.list .item.item-accordion.ng-hide {
+  line-height: 0px;
+}
+.list .item.item-accordion.ng-hide-add,
+.list .item.item-accordion.ng-hide-remove {
+  display: block !important;
 }

@@ -20,73 +20,79 @@
     </header>
     <ion-content class="has-header content-calm">
       <ion-list>
-        <ion-item nav-clear menu-close class="item-calm2" href="#/app/home">
+        <ion-item nav-clear menu-close class="item-accordion" href="#/app/home">
           <span data-i18n="sidemenu_Home"></span>
         </ion-item>
-        <ion-item nav-clear menu-close class="item-calm2" href="#/app/favourites">
+        <ion-item nav-clear menu-close class="item-accordion" href="#/app/favourites">
           <span data-i18n="sidemenu_Favourites"></span>
         </ion-item>
 
-        <div class="item-divider">
+        <ion-item class="item-header" ng-click="showGroup(0)">
+          <i class="icon" ng-class="{'ion-plus': !isGroupShown(0), 'ion-minus': isGroupShown(0)}"></i>
           <span data-i18n="sidemenu_div_Conoscere"></span>
-        </div>
-        <ion-item nav-clear menu-close class="item-calm2" href="#/app/contents/text.3001,text.3004">
+        </ion-item>
+        <ion-item nav-clear menu-close class=" item-accordion" href="#/app/contents/text.3001,text.3004" ng-show="isGroupShown(0)">
           <span data-i18n="sidemenu_Info"></span>
         </ion-item>
-        <ion-item nav-clear menu-close class="item-calm2" href="#/app/content/text.3002">
+        <ion-item nav-clear menu-close class=" item-accordion" href="#/app/content/text.3002" ng-show="isGroupShown(0)">
           <span data-i18n="sidemenu_Storia"></span>
         </ion-item>
-        <ion-item nav-clear menu-close class="item-calm2" href="#/app/content/text.3003">
+        <ion-item nav-clear menu-close class=" item-accordion" href="#/app/content/text.3003" ng-show="isGroupShown(0)">
           <span data-i18n="sidemenu_Concilio"></span>
         </ion-item>
-        <ion-item nav-clear menu-close class="item-calm2" href="#/app/mainevents">
+        <ion-item nav-clear menu-close class=" item-accordion" href="#/app/mainevents" ng-show="isGroupShown(0)">
           <span data-i18n="sidemenu_Eventi-Principali"></span>
         </ion-item>
-        <ion-item nav-clear menu-close class="item-calm2" href="#/app/contentscate/bondone">
+        <ion-item nav-clear menu-close class=" item-accordion" href="#/app/contentscate/bondone" ng-show="isGroupShown(0)">
           <span data-i18n="sidemenu_Bondone"></span>
         </ion-item>
 
-        <div class="item-divider">
+        <ion-item class="item-header" ng-click="showGroup(1)">
+          <i class="icon" ng-class="{'ion-plus': !isGroupShown(1), 'ion-minus': isGroupShown(1)}"></i>
           <span data-i18n="sidemenu_div_Vivere"></span>
-        </div>
-        <ion-item ng-repeat="(key, type) in eventTypes" nav-clear menu-close class="item-calm2" ng-href="#/app/events/{{key}}">
+        </ion-item>
+        <ion-item ng-repeat="(key, type) in eventTypes" nav-clear menu-close class="item-accordion" ng-href="#/app/events/{{key}}" ng-show="isGroupShown(1)">
           <span ng-bind="type | translate"></span>
         </ion-item>
 
-        <div class="item-divider">
+        <ion-item class="item-header" ng-click="showGroup(2)">
+          <i class="icon" ng-class="{'ion-plus': !isGroupShown(2), 'ion-minus': isGroupShown(2)}"></i>
           <span data-i18n="sidemenu_div_Scoprire"></span>
-        </div>
-        <!-- <ion-item nav-clear menu-close class="item-calm2" href="#/app/mappa">
+        </ion-item>
+        <!-- <ion-item nav-clear menu-close class="item-accordion" href="#/app/mappa" ng-show="isGroupShown(2)">
           <span data-i18n="sidemenu_Mappa"></span>
         </ion-item> -->
-        <ion-item ng-repeat="(key, type) in poiTypes" nav-clear menu-close class="item-calm2" ng-href="#/app/places/{{key}}">
+        <ion-item ng-repeat="(key, type) in poiTypes" nav-clear menu-close class="item-accordion" ng-href="#/app/places/{{key}}" ng-show="isGroupShown(2)">
           <span ng-bind="type | translate"></span>
         </ion-item>
 
-        <div class="item-divider">
+        <ion-item class="item-header" ng-click="showGroup(3)">
+          <i class="icon" ng-class="{'ion-plus': !isGroupShown(3), 'ion-minus': isGroupShown(3)}"></i>
           <span data-i18n="sidemenu_div_Percorsi"></span>
-        </div>
-        <ion-item nav-clear menu-close class="item-calm2" href="#/app/itineraries">
+        </ion-item>
+        <ion-item nav-clear menu-close class="item-accordion" href="#/app/itineraries" ng-show="isGroupShown(3)">
           <span data-i18n="sidemenu_Itinerari"></span>
         </ion-item>
 
-        <div class="item-divider">
+        <ion-item class="item-header" ng-click="showGroup(4)">
+          <i class="icon" ng-class="{'ion-plus': !isGroupShown(4), 'ion-minus': isGroupShown(4)}"></i>
           <span data-i18n="sidemenu_div_Mangiare-dormire"></span>
-        </div>
-        <ion-item nav-clear menu-close class="item-calm2" href="#/app/hotels">
+        </ion-item>
+        <ion-item nav-clear menu-close class="item-accordion" href="#/app/hotels" ng-show="isGroupShown(4)">
           <span data-i18n="sidemenu_Hotel"></span>
         </ion-item>
-        <ion-item nav-clear menu-close class="item-calm2" href="#/app/restaurants">
+        <ion-item nav-clear menu-close class="item-accordion" href="#/app/restaurants" ng-show="isGroupShown(4)">
           <span data-i18n="sidemenu_Ristoranti"></span>
         </ion-item>
 
-        <div class="item-divider">
+        <ion-item class="item-header" ng-click="showGroup(5)">
+          <i class="icon" ng-class="{'ion-plus': !isGroupShown(5), 'ion-minus': isGroupShown(5)}"></i>
           <span data-i18n="sidemenu_div_Info-utili"></span>
-        </div>
-        <ion-item nav-clear menu-close class="item-calm2" href="#/app/services">
+        </ion-item>
+        <ion-item nav-clear menu-close class="item-accordion" href="#/app/services" ng-show="isGroupShown(5)">
           <span data-i18n="sidemenu_Servizi"></span>
         </ion-item>
-        <ion-item nav-clear menu-close class="item-calm2" href="#/app/offices">
+        <ion-item nav-clear menu-close class="item-accordion" href="#/app/offices" ng-show="isGroupShown(5)">
           <span data-i18n="sidemenu_Uffici-comunali"></span>
         </ion-item>
       </ion-list>

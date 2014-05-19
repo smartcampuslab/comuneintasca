@@ -18,6 +18,7 @@ angular.module('starter.controllers', ['google-maps'])
 
 .controller('HomeCtrl', function ($scope, DatiDB) {
   DatiDB.sync();
+
   /*
 $scope.show = function() {
 
@@ -135,11 +136,18 @@ $scope.show = function() {
 })
 
 .controller('HotelsListCtrl', function ($scope, $filter, DatiDB, Config, ListToolbox) {
-
-  $scope.gotdata = DatiDB.all('hotel').then(function (data) {
-    $scope.hotels = data;
+    $scope._ = _;
 
     ListToolbox.prepare($scope, {
+      load: function(cache) {
+        if (cache) {
+          $scope.hotels = cache;
+        } else {
+          $scope.gotdata = DatiDB.all('hotel').then(function (data) {
+            $scope.hotels = data;
+          });
+        }  
+      },
       orderingTypes: ['A-Z', 'Z-A', 'Distance', 'Stars'],
       defaultOrdering: 'Distance',
       hasMap: true,
@@ -157,9 +165,6 @@ $scope.show = function() {
       },
       hasSearch: true
     });
-  });
-
-  $scope._ = _;
 })
 
 .controller('HotelCtrl', function ($scope, $stateParams, DatiDB) {
@@ -169,10 +174,16 @@ $scope.show = function() {
 })
 
 .controller('RestaurantsListCtrl', function ($scope, $filter, DatiDB, Config, ListToolbox) {
-  $scope.gotdata = DatiDB.all('restaurant').then(function (data) {
-    $scope.restaurants = data;
-
     ListToolbox.prepare($scope, {
+      load: function(cache) {
+        if (cache) {
+          $scope.restaurants = cache;
+        } else {
+          $scope.gotdata = DatiDB.all('restaurant').then(function (data) {
+            $scope.restaurants = data;
+          });
+        }  
+      },    
       orderingTypes: ['A-Z', 'Z-A', 'Distance'],
       defaultOrdering: 'Distance',
       hasMap: true,
@@ -190,8 +201,6 @@ $scope.show = function() {
       },
       hasSearch: true
     });
-  });
-
 })
 
 .controller('RestaurantCtrl', function ($rootScope, $scope, $stateParams, DatiDB) {
@@ -203,6 +212,22 @@ $scope.show = function() {
 
 .controller('PlacesListCtrl', function ($scope, $stateParams, $filter, DatiDB, Config, ListToolbox) {
   ListToolbox.prepare($scope, {
+    load: function(cache) {
+      if (cache) {
+        $scope.places = cache;
+      } else {
+        if ($stateParams.placeType) {
+          $scope.cate = Config.poiCateFromType($stateParams.placeType);
+          $scope.gotdata = DatiDB.cate('poi', $scope.cate.it).then(function (data) {
+            $scope.places = data;
+          });
+        } else {
+          $scope.gotdata = DatiDB.all('poi').then(function (data) {
+            $scope.places = data;
+          });
+        }
+      }  
+    },
     orderingTypes: ['A-Z', 'Z-A', 'Distance'],
     defaultOrdering: 'Distance',
     hasMap: true,
@@ -214,17 +239,6 @@ $scope.show = function() {
     },
     hasSearch: true
   });
-
-  if ($stateParams.placeType) {
-    $scope.cate = Config.poiCateFromType($stateParams.placeType);
-    $scope.gotdata = DatiDB.cate('poi', $scope.cate.it).then(function (data) {
-      $scope.places = data;
-    });
-  } else {
-    $scope.gotdata = DatiDB.all('poi').then(function (data) {
-      $scope.places = data;
-    });
-  }
 })
 
 .controller('MapCtrl', function ($scope, MapHelper) {
@@ -250,22 +264,31 @@ $scope.show = function() {
 .controller('EventsListCtrl', function ($scope, $stateParams, DatiDB, Config, ListToolbox, Profiling) {
   $scope.dateFormat = 'EEEE d MMMM yyyy';
   ListToolbox.prepare($scope, {
+     load: function(cache) {
+      if (cache) {
+        $scope.events = cache;
+      } else {
+        if ($stateParams.eventType) {
+          $scope.cate = Config.eventCateFromType($stateParams.eventType);
+          Profiling.start('eventslist');
+          $scope.gotdata = DatiDB.cate('event', $scope.cate.it).then(function (data) {
+            $scope.events = data;
+            Profiling.do('eventslist');
+          });
+        } else {
+          $scope.gotdata = DatiDB.all('event').then(function (data) {
+            $scope.events = data;
+          });
+        }
+      }  
+    },    
+      getData: function () {
+        return $scope.events;
+      },
     orderingTypes: ['A-Z', 'Z-A', 'Date'],
     defaultOrdering: 'Date',
     hasSearch: true
   });
-  if ($stateParams.eventType) {
-    $scope.cate = Config.eventCateFromType($stateParams.eventType);
-    Profiling.start('eventslist');
-    $scope.gotdata = DatiDB.cate('event', $scope.cate.it).then(function (data) {
-      $scope.events = data;
-      Profiling.do('eventslist');
-    });
-  } else {
-    $scope.gotdata = DatiDB.all('event').then(function (data) {
-      $scope.events = data;
-    });
-  }
 })
 
 .controller('EventCtrl', function ($scope, DatiDB, $stateParams) {
@@ -278,13 +301,21 @@ $scope.show = function() {
 
 .controller('MainEventsListCtrl', function ($scope, DatiDB, ListToolbox) {
   ListToolbox.prepare($scope, {
+     load: function(cache) {
+      if (cache) {
+        $scope.mainevents = cache;
+      } else {
+        $scope.gotdata = DatiDB.all('mainevent').then(function (data) {
+          $scope.mainevents = data;
+        });
+      }  
+    },     
+    getData: function () {
+        return $scope.mainevents;
+    },
     orderingTypes: ['A-Z', 'Z-A', 'Date'],
     defaultOrdering: 'Date',
     hasSearch: true
-  });
-
-  $scope.gotdata = DatiDB.all('mainevent').then(function (data) {
-    $scope.mainevents = data;
   });
 })
 
@@ -296,6 +327,18 @@ $scope.show = function() {
 
 .controller('ItinerariCtrl', function ($scope, DatiDB, ListToolbox) {
   ListToolbox.prepare($scope, {
+    load: function(cache) {
+      if (cache) {
+        $scope.itinerari = cache;
+      } else {
+        $scope.gotdata = DatiDB.all('itinerary').then(function (data) {
+          $scope.itinerari = data;
+        });
+      }  
+    },    
+    getData: function () {
+      return $scope.itinerari;
+    },
     orderingTypes: ['A-Z', 'Z-A'],
     defaultOrdering: 'A-Z',
     hasSearch: true

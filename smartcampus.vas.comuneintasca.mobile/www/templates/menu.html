@@ -28,7 +28,7 @@
         </ion-item>
 
         <ion-item class="item-header" ng-click="showGroup(0)">
-          <i class="icon" ng-class="{'ion-plus': !isGroupShown(0), 'ion-minus': isGroupShown(0)}"></i>
+          <i class="icon" ng-class="{'ion-chevron-up': !isGroupShown(0), 'ion-chevron-down': isGroupShown(0)}"></i>
           <span data-i18n="sidemenu_div_Conoscere"></span>
         </ion-item>
         <ion-item nav-clear menu-close class=" item-accordion" href="#/app/contents/text.3001,text.3004" ng-show="isGroupShown(0)">
@@ -48,7 +48,7 @@
         </ion-item>
 
         <ion-item class="item-header" ng-click="showGroup(1)">
-          <i class="icon" ng-class="{'ion-plus': !isGroupShown(1), 'ion-minus': isGroupShown(1)}"></i>
+          <i class="icon" ng-class="{'ion-chevron-up': !isGroupShown(1), 'ion-chevron-down': isGroupShown(1)}"></i>
           <span data-i18n="sidemenu_div_Vivere"></span>
         </ion-item>
         <ion-item ng-repeat="(key, type) in eventTypes" nav-clear menu-close class="item-accordion" ng-href="#/app/events/{{key}}" ng-show="isGroupShown(1)">
@@ -56,7 +56,7 @@
         </ion-item>
 
         <ion-item class="item-header" ng-click="showGroup(2)">
-          <i class="icon" ng-class="{'ion-plus': !isGroupShown(2), 'ion-minus': isGroupShown(2)}"></i>
+          <i class="icon" ng-class="{'ion-chevron-up': !isGroupShown(2), 'ion-chevron-down': isGroupShown(2)}"></i>
           <span data-i18n="sidemenu_div_Scoprire"></span>
         </ion-item>
         <!-- <ion-item nav-clear menu-close class="item-accordion" href="#/app/mappa" ng-show="isGroupShown(2)">
@@ -67,7 +67,7 @@
         </ion-item>
 
         <ion-item class="item-header" ng-click="showGroup(3)">
-          <i class="icon" ng-class="{'ion-plus': !isGroupShown(3), 'ion-minus': isGroupShown(3)}"></i>
+          <i class="icon" ng-class="{'ion-chevron-up': !isGroupShown(3), 'ion-chevron-down': isGroupShown(3)}"></i>
           <span data-i18n="sidemenu_div_Percorsi"></span>
         </ion-item>
         <ion-item nav-clear menu-close class="item-accordion" href="#/app/itineraries" ng-show="isGroupShown(3)">
@@ -75,7 +75,7 @@
         </ion-item>
 
         <ion-item class="item-header" ng-click="showGroup(4)">
-          <i class="icon" ng-class="{'ion-plus': !isGroupShown(4), 'ion-minus': isGroupShown(4)}"></i>
+          <i class="icon" ng-class="{'ion-chevron-up': !isGroupShown(4), 'ion-chevron-down': isGroupShown(4)}"></i>
           <span data-i18n="sidemenu_div_Mangiare-dormire"></span>
         </ion-item>
         <ion-item nav-clear menu-close class="item-accordion" href="#/app/hotels" ng-show="isGroupShown(4)">
@@ -86,7 +86,7 @@
         </ion-item>
 
         <ion-item class="item-header" ng-click="showGroup(5)">
-          <i class="icon" ng-class="{'ion-plus': !isGroupShown(5), 'ion-minus': isGroupShown(5)}"></i>
+          <i class="icon" ng-class="{'ion-chevron-up': !isGroupShown(5), 'ion-chevron-down': isGroupShown(5)}"></i>
           <span data-i18n="sidemenu_div_Info-utili"></span>
         </ion-item>
         <ion-item nav-clear menu-close class="item-accordion" href="#/app/services" ng-show="isGroupShown(5)">

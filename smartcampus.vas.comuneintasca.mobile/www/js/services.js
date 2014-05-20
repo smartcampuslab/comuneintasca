@@ -1321,7 +1321,7 @@ angular.module('starter.services', [])
 
   var categoriesIcons = {
     'dormire': 'home',
-    'mangiare': 'restaurant',
+    'ristorazione': 'restaurant',
     'cultura': 'civic-building',
     'other': 'location'
   };

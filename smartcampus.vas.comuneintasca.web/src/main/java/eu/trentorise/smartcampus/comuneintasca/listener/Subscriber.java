@@ -26,6 +26,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class Subscriber {
 
+	public static final String SERVICE_YMIR = "smartcampus.service.festivaleconomia";
 	public static final String SERVICE_OD = "smartcampus.service.opendata";
 	public static final String METHOD_EVENTS = "GetEventi";
 	
@@ -36,6 +37,7 @@ public class Subscriber {
 			System.out.println("SUBSCRIBE");
 			Map<String, Object> params = new TreeMap<String, Object>();
 			client.subscribeService(SERVICE_OD, METHOD_EVENTS, params);
+			client.subscribeService(SERVICE_YMIR, METHOD_EVENTS, params);
 		} catch (InvocationException e) {
 			logger.error("Failed to subscribe for service events: " + e.getMessage());
 		}

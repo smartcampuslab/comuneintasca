@@ -21,7 +21,9 @@ import it.sayservice.platform.client.ServiceBusListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -33,6 +35,7 @@ import eu.trentorise.smartcampus.comuneintasca.listener.Subscriber;
 import eu.trentorise.smartcampus.comuneintasca.model.EventObject;
 import eu.trentorise.smartcampus.comuneintasca.model.Organization;
 import eu.trentorise.smartcampus.presentation.storage.sync.BasicObjectSyncStorage;
+import eu.trentorise.smartcampus.service.festivaleconomia.data.message.Festivaleconomia.Trans;
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.Evento;
 
 
@@ -57,6 +60,12 @@ public class EventProcessorImpl implements ServiceBusListener {
 			if (Subscriber.SERVICE_OD.equals(serviceId)) {
 				if (Subscriber.METHOD_EVENTS.equals(methodName)) {
 					updateEvents(data);
+				}
+
+			}
+			if (Subscriber.SERVICE_YMIR.equals(serviceId)) {
+				if (Subscriber.METHOD_EVENTS.equals(methodName)) {
+					updateEventsYmir(data);
 				}
 
 			}
@@ -117,6 +126,45 @@ public class EventProcessorImpl implements ServiceBusListener {
 		
 	}
 
+	private void updateEventsYmir(List<ByteString> data) throws Exception {
+		for (ByteString bs : data) {
+			eu.trentorise.smartcampus.service.festivaleconomia.data.message.Festivaleconomia.Evento bt = eu.trentorise.smartcampus.service.festivaleconomia.data.message.Festivaleconomia.Evento.parseFrom(bs);
+			EventObject old = null;
+			try {
+				old = storage.getObjectById(bt.getId(), EventObject.class);
+			} catch (Exception e) {}
+			if (old == null || old.getLastModified() < bt.getLastModified()) {
+				EventObject no = new EventObject();
+				no.setId(bt.getId());
+				no.setAddress(convertTranslated(bt.getAddressList()));
+				// fix for classification of the app
+				//no.setCategory(convertTranslated(bt.getCategoryList()).get("it"));
+				no.setCategory("Incontri, convegni e conferenze");
+				no.setDescription(convertTranslated(bt.getDescriptionList()));
+				no.setFromTime(bt.getFromTime());
+				no.setToTime(bt.getToTime());
+				no.setImage(bt.getImage());
+				no.setLastModified(bt.getLastModified());
+				no.setSource("festivaleconomia");
+				no.setTitle(convertTranslated(bt.getTitleList()));
+				no.setToTime(bt.getToTime());
+				no.setUrl(bt.getUrl());
+				storage.storeObject(no);
+			}
+		}	
+		
+	}
+
+	private Map<String,String> convertTranslated(List<Trans> list) {
+		Map<String,String> res = new HashMap<String, String>();
+		for (Trans t : list) {
+			String lang = t.getLang();
+			if (lang.isEmpty()) lang = "it";
+			res.put(lang, t.getValue());
+		}
+		return res;
+	}
+	
 	public BasicObjectSyncStorage getStorage() {
 		return storage;
 	}

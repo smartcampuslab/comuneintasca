@@ -219,7 +219,7 @@ angular.module('starter.services', [])
       return 'TrentoInTasca';
     },
     schemaVersion: function () {
-      return 55;
+      return 56;
     },
     syncTimeoutSeconds: function () {
       return 60 * 60; /* 60 times 60 seconds = 1 HOUR */
@@ -618,9 +618,9 @@ angular.module('starter.services', [])
                           category = item.category;
                           if (category) {
                             // "category": "{objectName=Feste, mercati e fiere, classIdentifier=tipo_eventi, datePublished=1395152152, dateModified=1395152182, objectRemoteId=a15d79dc9794d829ed43364863a8225a, objectId=835351, link=http://www.comune.trento.it/api/opendata/v1/content/object/835351}"
-                            startMrkr = "{objectName=";
-                            endMrkr = ", classIdentifier=";
-                            classification = category.substring(startMrkr.length, category.indexOf(endMrkr)) || '';
+                            //startMrkr = "{objectName=";
+                            //endMrkr = ", classIdentifier=";
+                            classification = category;//category.substring(startMrkr.length, category.indexOf(endMrkr)) || '';
                             if (!classification || classification.toString() == 'false') classification = Config.eventCateFromType('misc').it;
                             console.log('event cate: ' + classification);
                           }

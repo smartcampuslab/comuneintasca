@@ -4,7 +4,7 @@
       <div class="home-box-top">
         <ion-slide-box does-continue="true" slide-interval="30000" id="slide-box-home">
           <ion-slide ng-repeat="slide in slides">
-            <div class="hp-box" style="background-image: url({{slide.img}})">
+            <div class="hp-box" style="background-image: url({{slide.img}})" ng-click="goToItem(slide.ref)">
               <h3 class="title">{{slide.title}}</h2>
             </div>
           </ion-slide>

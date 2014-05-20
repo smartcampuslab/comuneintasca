@@ -16,15 +16,19 @@ angular.module('starter.controllers', ['google-maps'])
   };
 })
 
-.controller('HomeCtrl', function ($scope, DatiDB, $filter,$ionicSlideBoxDelegate) {
+.controller('HomeCtrl', function ($scope, DatiDB, $filter,$ionicSlideBoxDelegate, $location) {
   $scope.slides = [{title:'Trento', id:null, img:'../img/hp-box/palazziaperti.png'}];
+  $scope.goToItem = function(link) {
+    var p = link.substring(1);
+    $location.path(p);
+  }
   DatiDB.sync().then(function(data) {
     var homeObject = JSON.parse(localStorage.homeObject);
     var homeObjects = homeObject.contentIds;
     DatiDB.getAny(homeObjects).then(function(data){
       var slides = [];
       for (var i = 0; i < data.length; i++) {
-        slides.push({title:$filter('translate')(data[i].title),img:data[i].image,id:data[i].id});
+        slides.push({title:$filter('translate')(data[i].title),img:data[i].image,id:data[i].id, ref:data[i].abslink});
       }
       if (slides.length > 0) {
         $scope.slides = slides;

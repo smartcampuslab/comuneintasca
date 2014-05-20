@@ -19,7 +19,8 @@
   <preference name="AndroidPersistentFileLocation" value="Compatibility" />
   <preference name="iosPersistentFileLocation" value="Compatibility" />
   <preference name="LoadUrlTimeoutValue" value="5000"/>
-  <preference name="SplashScreenDelay" value="1000"/>
+  <preference name="SplashScreen" value="splash"/>
+  <preference name="SplashScreenDelay" value="3000"/>
   <preference name="KeyboardDisplayRequiresUserAction" value="false"/>
   <feature name="Keyboard">
     <param name="ios-package" value="IonicKeyboard" onload="true" />

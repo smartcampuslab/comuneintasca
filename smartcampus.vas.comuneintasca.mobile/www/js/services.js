@@ -325,6 +325,7 @@ angular.module('starter.services', [])
     console.log('geolocalization initing (cordova)...');
     document.addEventListener("deviceready", function () {
       console.log('geolocalization inited (cordova)');
+      navigator.splashscreen.hide();
       navigator.geolocation.watchPosition(function (position) {
         r = [position.coords.latitude, position.coords.longitude];
         $rootScope.myPosition = r;

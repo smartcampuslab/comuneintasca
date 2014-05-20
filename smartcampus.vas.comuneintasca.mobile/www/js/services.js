@@ -473,14 +473,14 @@ angular.module('starter.services', [])
   };
 
   var currentSchemaVersion = 0;
-  if (localStorage.currentSchemaVersion) currentSchemaVersion = localStorage.currentSchemaVersion;
+  if (localStorage.currentSchemaVersion) currentSchemaVersion = Number(localStorage.currentSchemaVersion);
   console.log('currentSchemaVersion: ' + currentSchemaVersion);
 
   var currentDbVersion = 0,
     lastSynced = -1;
   if (currentSchemaVersion == SCHEMA_VERSION) {
-    if (localStorage.currentDbVersion) currentDbVersion = localStorage.currentDbVersion;
-    if (localStorage.lastSynced) lastSynced = localStorage.lastSynced;
+    if (localStorage.currentDbVersion) currentDbVersion = Number(localStorage.currentDbVersion);
+    if (localStorage.lastSynced) lastSynced = Number(localStorage.lastSynced);
   }
   console.log('currentDbVersion: ' + currentDbVersion);
   console.log('lastSynced: ' + lastSynced);
@@ -573,7 +573,8 @@ angular.module('starter.services', [])
           syncronization.resolve(currentDbVersion);
         } else {
           var now_as_epoch = parseInt((new Date).getTime() / 1000);
-          if (lastSynced == -1 || now_as_epoch > (lastSynced + Config.syncTimeoutSeconds())) {
+          var to = (lastSynced + Config.syncTimeoutSeconds());
+          if (lastSynced == -1 || now_as_epoch > to) {
             console.log((now_as_epoch - lastSynced) + ' seconds since last syncronization: checking web service...');
             lastSynced = now_as_epoch;
             localStorage.lastSynced = lastSynced;

@@ -208,7 +208,8 @@ angular.module('starter.services', [])
     'restaurant': 'eu.trentorise.smartcampus.comuneintasca.model.RestaurantObject',
     'hotel': 'eu.trentorise.smartcampus.comuneintasca.model.HotelObject',
     'itinerary': 'eu.trentorise.smartcampus.comuneintasca.model.ItineraryObject',
-    'mainevent': 'eu.trentorise.smartcampus.comuneintasca.model.MainEventObject'
+    'mainevent': 'eu.trentorise.smartcampus.comuneintasca.model.MainEventObject',
+    'home': 'eu.trentorise.smartcampus.comuneintasca.model.HomeObject'
   };
 
   return {
@@ -219,7 +220,7 @@ angular.module('starter.services', [])
       return 'TrentoInTasca';
     },
     schemaVersion: function () {
-      return 56;
+      return 57;
     },
     syncTimeoutSeconds: function () {
       return 60 * 60; /* 60 times 60 seconds = 1 HOUR */
@@ -607,6 +608,11 @@ angular.module('starter.services', [])
                       updates = data.updated[contentTypeClassName];
                       console.log('updates: ' + updates.length);
 
+                      if (contentTypeKey == 'home') {
+                        localStorage.homeObject = JSON.stringify(updates[0]);
+                        return;
+                      }
+                    
                       angular.forEach(updates, function (item, idx) {
                         tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [item.id]);
 
@@ -864,6 +870,62 @@ angular.module('starter.services', [])
         }, function () { //success callback
           $ionicLoading.hide();
           Profiling.do('dbget', 'tx success');
+        });
+
+        return dbitem.promise;
+      });
+    },
+    getAny: function (itemIds) {
+      console.log('DatiDB.getAny(""' + itemIds + '")');
+
+      return this.sync().then(function (dbVersion) {
+        Profiling.start('dbget');
+        var loading = $ionicLoading.show({
+          content: 'loading...',
+          showDelay: 1000,
+          duration: Config.loadingOverlayTimeoutMillis()
+        });
+
+        var dbitem = $q.defer();
+        var lista = [];
+        dbObj.transaction(function (tx) {
+          console.log('DatiDB.getAny(); itemIds: '+itemIds);
+          var conds = [];
+          for (var i = 0; i < itemIds.length; i++) conds[i] = '?';
+          var idCond = 'id IN (' + conds.join() + ')';
+          var qParams = itemIds;
+          var dbQuery = 'SELECT id, type, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE ' + idCond;
+          //console.log('dbQuery: ' + dbQuery);
+          console.log('DatiDB.getAny("'+itemIds+'"); dbQuery launched...');
+          tx.executeSql(dbQuery, qParams, function (tx2, results) {
+            console.log('DatiDB.get("'+itemIds+'"); dbQuery completed');
+            var resultslen = results.rows.length;
+            if (resultslen > 0) {
+              for (var i = 0; i < resultslen; i++) {
+                var item = results.rows.item(i);
+                lista.push(parseDbRow(item));
+              }
+              Profiling.do('dbget','list');
+              dbitem.resolve(lista);
+            } else {
+              console.log('not found!');
+              Profiling.do('dbgetany','sql empty');
+              dbitem.reject('not found!');
+            }
+          }, function (tx2, err) {
+            $ionicLoading.hide();
+            console.log('error: ' + err);
+            Profiling.do('dbgetany','sql error');
+            dbitem.reject(err);
+          });
+        }, function (error) { //error callback
+          $ionicLoading.hide();
+          console.log('db.getAny() ERROR: ' + error);
+          Profiling.do('dbgetany','tx error');
+          dbitem.reject(error);
+        }, function () { //success callback
+          $ionicLoading.hide();
+          Profiling.do('dbgetany','tx success');
         });
 
         return dbitem.promise;

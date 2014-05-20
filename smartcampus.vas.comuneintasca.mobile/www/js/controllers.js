@@ -16,8 +16,22 @@ angular.module('starter.controllers', ['google-maps'])
   };
 })
 
-.controller('HomeCtrl', function ($scope, DatiDB) {
-  DatiDB.sync();
+.controller('HomeCtrl', function ($scope, DatiDB, $filter,$ionicSlideBoxDelegate) {
+  $scope.slides = [{title:'Trento', id:null, img:'../img/hp-box/palazziaperti.png'}];
+  DatiDB.sync().then(function(data) {
+    var homeObject = JSON.parse(localStorage.homeObject);
+    var homeObjects = homeObject.contentIds;
+    DatiDB.getAny(homeObjects).then(function(data){
+      var slides = [];
+      for (var i = 0; i < data.length; i++) {
+        slides.push({title:$filter('translate')(data[i].title),img:data[i].image,id:data[i].id});
+      }
+      if (slides.length > 0) {
+        $scope.slides = slides;
+        $ionicSlideBoxDelegate.update();
+      }  
+    });
+  });
 
   /*
 $scope.show = function() {

@@ -3,14 +3,10 @@
     <div class="home-container">
       <div class="home-box-top">
         <ion-slide-box does-continue="true" slide-interval="30000" id="slide-box-home">
-          <ion-slide>
-            <div class="hp-box festival"><h3 class="title">Festival dell'Economia</h2></div>
-          </ion-slide>
-          <ion-slide>
-            <div class="hp-box sport"><h3 class="title">Ben...essere in movimento!</h2></div>
-          </ion-slide>
-          <ion-slide>
-            <div class="hp-box palazzi"><h3 class="title">Palazzi Aperti</h2></div>
+          <ion-slide ng-repeat="slide in slides">
+            <div class="hp-box" style="background-image: url({{slide.img}})">
+              <h3 class="title">{{slide.title}}</h2>
+            </div>
           </ion-slide>
         </ion-slide-box>
       </div>

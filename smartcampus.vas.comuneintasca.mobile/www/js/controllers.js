@@ -17,7 +17,7 @@ angular.module('starter.controllers', ['google-maps'])
 })
 
 .controller('HomeCtrl', function ($scope, DatiDB, $filter,$ionicSlideBoxDelegate, $location) {
-  $scope.slides = [{title:'Trento', id:null, img:'../img/hp-box/palazziaperti.png'}];
+  $scope.slides = null;
   $scope.goToItem = function(link) {
     var p = link.substring(1);
     $location.path(p);
@@ -32,7 +32,7 @@ angular.module('starter.controllers', ['google-maps'])
       }
       if (slides.length > 0) {
         $scope.slides = slides;
-        $ionicSlideBoxDelegate.update();
+        //$ionicSlideBoxDelegate.update();
       }  
     });
   });

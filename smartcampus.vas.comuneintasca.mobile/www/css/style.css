@@ -167,6 +167,9 @@ ion-side-menu .item {
 .hp-box.palazzi {
   background-image: url(../img/hp-box/palazziaperti.png);
 }
+.hp-box.trento {
+  background-image: url(../img/hp-box/trento.png);
+}
 #home-buttons button {
   color: #2975a7;
   margin: 0;

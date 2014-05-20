@@ -171,8 +171,11 @@ ion-side-menu .item {
   background-image: url(../img/hp-box/trento.png);
 }
 #home-buttons button {
+  background-color:#b7d6e8;
   color: #2975a7;
   margin: 0;
+  height: 32px;
+  padding: 0 4px;
   /*
   border-radius: .5em;
   background-color: #b7d6e8;
@@ -180,12 +183,22 @@ ion-side-menu .item {
 */
   white-space: nowrap;
   text-overflow: ellipsis;
+  text-align: left;
+  display: table;
 }
-#home-buttons button {
-  line-height:41px;
+#home-buttons button b {
+  display: table-cell;
+  height: 32px;
+  vertical-align: middle;
+}
+#home-buttons button.variant {
+  background-color:#fff;
 }
 .angular-google-map-container {
   height: 800px;
+}
+.comuneicon::before {
+  line-height:32px !important;font-size:32px !important;
 }
 .comuni-button {
   color: #2975a7;
@@ -253,7 +266,7 @@ ion-side-menu .item {
     left: 0;
     right: 0;
     top: 0;
-    bottom: 250px; /* or whatever height of upper div*/
+    bottom: 240px; /* or whatever height of upper div*/
     background: red;
 }
 .home-box-bottom {

@@ -1265,21 +1265,28 @@ angular.module('starter.services', [])
 
 .factory('MapHelper', function ($location) {
   var map = {
+    control: {},
     draggable: 'true',
     center: {
-      latitude: 0,
-      longitude: 0
+      latitude: 45,
+      longitude: 11
     },
     zoom: 8,
     pan: false
   };
 
   var markers = {
-    models: [],
+    models: [{
+      latitude: 0,
+      longitude: 0
+    }, {
+      latitude: 0,
+      longitude: 0
+    }],
     coords: 'self',
     icon: 'icon',
     fit: true,
-    doCluster: false
+    doCluster: true
   };
 
   var showInfoWindow = false;
@@ -1315,6 +1322,7 @@ angular.module('starter.services', [])
   var categoriesIcons = {
     'dormire': 'home',
     'mangiare': 'restaurant',
+    'cultura': 'civic-building',
     'other': 'location'
   };
 

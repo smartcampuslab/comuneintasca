@@ -1,9 +1,5 @@
 [
   {
-    "key": "homemenu_Viaggia-Trento",
-    "value": "Viaggia Trento",
-    "description": "home button label"
-  }, {
     "key": "sidemenu_Title",
     "value": "TRENTO",
     "description": "side menu label"
@@ -19,6 +15,34 @@
     "key": "list_no-favourites",
     "value": "no favourites saved, yet",
     "description": "favourites list results"
+  }, {
+    "key": "home_btn_Viaggia-Trento",
+    "value": "VIAGGIA<br/>TRENTO",
+    "description": "home button label"
+  }, {
+    "key": "home_btn_Conoscere",
+    "value": "KENNEN",
+    "description": "side menu label"
+  }, {
+    "key": "home_btn_Vivere",
+    "value": "ERLEBEN",
+    "description": "side menu label"
+  }, {
+    "key": "home_btn_Scoprire",
+    "value": "ENTDECKEN",
+    "description": "side menu label"
+  }, {
+    "key": "home_btn_Percorsi",
+    "value": "TOUREN<br/>UND ROUTEN",
+    "description": "side menu label"
+  }, {
+    "key": "home_btn_Mangiare-dormire",
+    "value": "ESSEN<br/>UND SCHLAFEN",
+    "description": "side menu label"
+  }, {
+    "key": "home_btn_Info-utili",
+    "value": "KONTAKTE",
+    "description": "side menu label"
   }, {
     "key": "sidemenu_div_Conoscere",
     "value": "KENNEN",

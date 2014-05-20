@@ -41,8 +41,9 @@ blu scuro: #1b4d6e;
 .bar.bar-comuni {
   border-color: #2975a7;
   background-color: #b7d6e8;
-  background-image: linear-gradient(0deg, #2975a7, #2975a7 50%, transparent 50%);
   color: #1b4d6e;
+//  background-image: linear-gradient(0deg, #2975a7, #2975a7 50%, transparent 50%);
+  background-image:url(../svg/flag.svg);background-repeat: no-repeat;background-position: top left;background-size:auto 100%;
 }
 .bar.bar-comuni-home {
   border: none;

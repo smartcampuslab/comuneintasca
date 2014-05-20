@@ -1,9 +1,5 @@
 [
   {
-    "key": "homemenu_Viaggia-Trento",
-    "value": "Viaggia Trento",
-    "description": "home button label"
-  }, {
     "key": "sidemenu_Title",
     "value": "TRENTO",
     "description": "side menu label"
@@ -20,6 +16,34 @@
     "value": "no favourites saved, yet",
     "description": "favourites list results"
   }, {
+    "key": "home_btn_Viaggia-Trento",
+    "value": "VIAGGIA<br/>TRENTO",
+    "description": "home button label"
+  }, {
+    "key": "home_btn_Conoscere",
+    "value": "DISCOVER",
+    "description": "side menu label"
+  }, {
+    "key": "home_btn_Vivere",
+    "value": "LIVE",
+    "description": "side menu label"
+  }, {
+    "key": "home_btn_Scoprire",
+    "value": "EXPLORE",
+    "description": "side menu label"
+  }, {
+    "key": "home_btn_Percorsi",
+    "value": "TOURISTIC<br/>ITINERARIES",
+    "description": "side menu label"
+  }, {
+    "key": "home_btn_Mangiare-dormire",
+    "value": "RESTAURANTS<br/>& HOTELS",
+    "description": "side menu label"
+  }, {
+    "key": "home_btn_Info-utili",
+    "value": "CONTACTS",
+    "description": "side menu label"
+  }, {
     "key": "sidemenu_div_Conoscere",
     "value": "DISCOVER",
     "description": "side menu label"
@@ -33,11 +57,11 @@
     "description": "side menu label"
   }, {
     "key": "sidemenu_div_Percorsi",
-    "value": "TOURISTIC<br/>ITINERARIES",
+    "value": "TOURISTIC ITINERARIES",
     "description": "side menu label"
   }, {
     "key": "sidemenu_div_Mangiare-dormire",
-    "value": "RESTAURANTS<br/>& HOTELS",
+    "value": "RESTAURANTS & HOTELS",
     "description": "side menu label"
   }, {
     "key": "sidemenu_div_Info-utili",

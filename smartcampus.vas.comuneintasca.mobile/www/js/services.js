@@ -1413,6 +1413,8 @@ angular.module('starter.services', [])
 
       $scope.goToItem = function(path) {
         state.data = conf.getData();
+        state.ordering = $scope.ordering;
+        state.filter = $scope.filter;
         $location.path(path);         
       }
       

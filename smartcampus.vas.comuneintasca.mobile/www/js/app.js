@@ -34,6 +34,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   });
   GeoLocate.locate().then(function(position){
     $rootScope.myPosition=position;
+    console.log('first geolocation: '+$rootScope.myPosition);
+  },function(){
+    console.log('CANNOT LOCATE!');
   });
 
   var browserLanguage = window.navigator.userLanguage || window.navigator.language;

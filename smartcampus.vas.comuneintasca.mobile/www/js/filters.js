@@ -51,7 +51,7 @@ angular.module('starter.filters', [])
 		    if ('Date' == order) {
 				var a1 = a.fromTime ? a.fromTime : a.fromDate;
 				var b1 = b.fromTime ? b.fromTime : b.fromDate;
-				var dif = b1-a1;
+				var dif = a1-b1;
 				return dif;
 			}
 			if ('Distance' == order) {

@@ -1,0 +1,55 @@
+@font-face {
+	font-family: 'ilcomuneintasca';
+	src:url('../fonts/ilcomuneintasca.eot?-i9k42t');
+	src:url('../fonts/ilcomuneintasca.eot?#iefix-i9k42t') format('embedded-opentype'),
+		url('../fonts/ilcomuneintasca.woff?-i9k42t') format('woff'),
+		url('../fonts/ilcomuneintasca.ttf?-i9k42t') format('truetype'),
+		url('../fonts/ilcomuneintasca.svg?-i9k42t#ilcomuneintasca') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+font-family: 'HelveticaNeue-CondensedBold';
+font-weight: bold;
+src: url("../fonts/HelveticaNeue-CondensedBold.otf") format("opentype");
+}
+
+[class^="comuneicon-"], [class*=" comuneicon-"] {
+	font-family: 'ilcomuneintasca';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.comuneicon-viaggiatrento:before {
+	content: "\e600";
+}
+.comuneicon-scoprire:before {
+	content: "\e601";
+}
+.comuneicon-preferiti:before {
+	content: "\e602";
+}
+.comuneicon-percorsi:before {
+	content: "\e603";
+}
+.comuneicon-mangiaredormire:before {
+	content: "\e604";
+}
+.comuneicon-infoutili:before {
+	content: "\e605";
+}
+.comuneicon-eventi:before {
+	content: "\e606";
+}
+.comuneicon-conoscere:before {
+	content: "\e607";
+}

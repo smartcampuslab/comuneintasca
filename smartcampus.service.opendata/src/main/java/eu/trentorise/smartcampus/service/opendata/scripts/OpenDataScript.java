@@ -93,7 +93,12 @@ public class OpenDataScript {
 			builder.setParentEventId(e.get("value").toString().trim());
 		}
 		e = (Map<String, Object>) map.get("tipo_evento");
-		builder.setCategory(e.get("value").toString().trim());
+		if (e.get("value") instanceof String) {
+			builder.setCategory(e.get("value").toString().trim());
+		} else if (e.get("value") instanceof Map) {
+			builder.setCategory(((Map)e.get("value")).get("objectName").toString().trim());
+		}
+
 		e = (Map<String, Object>) map.get("materia");
 		List<Map> list = null;
 		if (e.get("value") instanceof Map) {

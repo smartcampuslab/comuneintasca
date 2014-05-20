@@ -95,7 +95,6 @@ $scope.show = function() {
       }
     ];
   }
-  console.log($scope.categories);
 })
 
 .controller('ContentCtrl', function ($scope, $state, $stateParams, DatiDB) {

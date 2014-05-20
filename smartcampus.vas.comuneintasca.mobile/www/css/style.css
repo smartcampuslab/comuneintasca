@@ -178,6 +178,9 @@ ion-side-menu .item {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+#home-buttons button {
+  line-height:41px;
+}
 .angular-google-map-container {
   height: 800px;
 }
@@ -221,7 +224,7 @@ ion-side-menu .item {
   color: #ffffff;
   opacity: 0.5;
   font-weight: bold;
-
+  padding:.5em;
 }
 .list .item.item-header i.icon {
   padding-right: 10px;
@@ -255,4 +258,8 @@ ion-side-menu .item {
   left:0;
   bottom:0;
   width:100%;
+}
+
+h1,h2,h3,h4,h5,h6,#home-buttons b, ion-side-menu b {
+  font-family: 'HelveticaNeue-CondensedBold';
 }

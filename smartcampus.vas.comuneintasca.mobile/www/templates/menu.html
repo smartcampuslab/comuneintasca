@@ -21,79 +21,79 @@
     <ion-content class="has-header content-calm">
       <ion-list>
         <ion-item nav-clear menu-close class="item-accordion" href="#/app/home">
-          <span data-i18n="sidemenu_Home"></span>
+          <b data-i18n="sidemenu_Home"></b>
         </ion-item>
         <ion-item nav-clear menu-close class="item-accordion" href="#/app/favourites">
-          <span data-i18n="sidemenu_Favourites"></span>
+          <b data-i18n="sidemenu_Favourites"></b>
         </ion-item>
 
         <ion-item class="item-header" ng-click="showGroup(0)">
           <i class="icon" ng-class="{'ion-chevron-up': !isGroupShown(0), 'ion-chevron-down': isGroupShown(0)}"></i>
-          <span data-i18n="sidemenu_div_Conoscere"></span>
+          <b data-i18n="sidemenu_div_Conoscere"></b>
         </ion-item>
         <ion-item nav-clear menu-close class=" item-accordion" href="#/app/contents/text.3001,text.3004" ng-show="isGroupShown(0)">
-          <span data-i18n="sidemenu_Info"></span>
+          <b data-i18n="sidemenu_Info"></b>
         </ion-item>
         <ion-item nav-clear menu-close class=" item-accordion" href="#/app/content/text.3002" ng-show="isGroupShown(0)">
-          <span data-i18n="sidemenu_Storia"></span>
+          <b data-i18n="sidemenu_Storia"></b>
         </ion-item>
         <ion-item nav-clear menu-close class=" item-accordion" href="#/app/content/text.3003" ng-show="isGroupShown(0)">
-          <span data-i18n="sidemenu_Concilio"></span>
+          <b data-i18n="sidemenu_Concilio"></b>
         </ion-item>
         <ion-item nav-clear menu-close class=" item-accordion" href="#/app/mainevents" ng-show="isGroupShown(0)">
-          <span data-i18n="sidemenu_Eventi-Principali"></span>
+          <b data-i18n="sidemenu_Eventi-Principali"></b>
         </ion-item>
         <ion-item nav-clear menu-close class=" item-accordion" href="#/app/contentscate/bondone" ng-show="isGroupShown(0)">
-          <span data-i18n="sidemenu_Bondone"></span>
+          <b data-i18n="sidemenu_Bondone"></b>
         </ion-item>
 
         <ion-item class="item-header" ng-click="showGroup(1)">
           <i class="icon" ng-class="{'ion-chevron-up': !isGroupShown(1), 'ion-chevron-down': isGroupShown(1)}"></i>
-          <span data-i18n="sidemenu_div_Vivere"></span>
+          <b data-i18n="sidemenu_div_Vivere"></b>
         </ion-item>
         <ion-item ng-repeat="(key, type) in eventTypes" nav-clear menu-close class="item-accordion" ng-href="#/app/events/{{key}}" ng-show="isGroupShown(1)">
-          <span ng-bind="type | translate"></span>
+          <b ng-bind="type | translate"></b>
         </ion-item>
 
         <ion-item class="item-header" ng-click="showGroup(2)">
           <i class="icon" ng-class="{'ion-chevron-up': !isGroupShown(2), 'ion-chevron-down': isGroupShown(2)}"></i>
-          <span data-i18n="sidemenu_div_Scoprire"></span>
+          <b data-i18n="sidemenu_div_Scoprire"></b>
         </ion-item>
         <!-- <ion-item nav-clear menu-close class="item-accordion" href="#/app/mappa" ng-show="isGroupShown(2)">
-          <span data-i18n="sidemenu_Mappa"></span>
+          <b data-i18n="sidemenu_Mappa"></b>
         </ion-item> -->
         <ion-item ng-repeat="(key, type) in poiTypes" nav-clear menu-close class="item-accordion" ng-href="#/app/places/{{key}}" ng-show="isGroupShown(2)">
-          <span ng-bind="type | translate"></span>
+          <b ng-bind="type | translate"></b>
         </ion-item>
 
         <ion-item class="item-header" ng-click="showGroup(3)">
           <i class="icon" ng-class="{'ion-chevron-up': !isGroupShown(3), 'ion-chevron-down': isGroupShown(3)}"></i>
-          <span data-i18n="sidemenu_div_Percorsi"></span>
+          <b data-i18n="sidemenu_div_Percorsi"></b>
         </ion-item>
         <ion-item nav-clear menu-close class="item-accordion" href="#/app/itineraries" ng-show="isGroupShown(3)">
-          <span data-i18n="sidemenu_Itinerari"></span>
+          <b data-i18n="sidemenu_Itinerari"></b>
         </ion-item>
 
         <ion-item class="item-header" ng-click="showGroup(4)">
           <i class="icon" ng-class="{'ion-chevron-up': !isGroupShown(4), 'ion-chevron-down': isGroupShown(4)}"></i>
-          <span data-i18n="sidemenu_div_Mangiare-dormire"></span>
+          <b data-i18n="sidemenu_div_Mangiare-dormire"></b>
         </ion-item>
         <ion-item nav-clear menu-close class="item-accordion" href="#/app/hotels" ng-show="isGroupShown(4)">
-          <span data-i18n="sidemenu_Hotel"></span>
+          <b data-i18n="sidemenu_Hotel"></b>
         </ion-item>
         <ion-item nav-clear menu-close class="item-accordion" href="#/app/restaurants" ng-show="isGroupShown(4)">
-          <span data-i18n="sidemenu_Ristoranti"></span>
+          <b data-i18n="sidemenu_Ristoranti"></b>
         </ion-item>
 
         <ion-item class="item-header" ng-click="showGroup(5)">
           <i class="icon" ng-class="{'ion-chevron-up': !isGroupShown(5), 'ion-chevron-down': isGroupShown(5)}"></i>
-          <span data-i18n="sidemenu_div_Info-utili"></span>
+          <b data-i18n="sidemenu_div_Info-utili"></b>
         </ion-item>
         <ion-item nav-clear menu-close class="item-accordion" href="#/app/services" ng-show="isGroupShown(5)">
-          <span data-i18n="sidemenu_Servizi"></span>
+          <b data-i18n="sidemenu_Servizi"></b>
         </ion-item>
         <ion-item nav-clear menu-close class="item-accordion" href="#/app/offices" ng-show="isGroupShown(5)">
-          <span data-i18n="sidemenu_Uffici-comunali"></span>
+          <b data-i18n="sidemenu_Uffici-comunali"></b>
         </ion-item>
       </ion-list>
     </ion-content>

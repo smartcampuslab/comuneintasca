@@ -219,7 +219,7 @@ angular.module('starter.services', [])
       return 'TrentoInTasca';
     },
     schemaVersion: function () {
-      return 54;
+      return 56;
     },
     syncTimeoutSeconds: function () {
       return 60 * 60; /* 60 times 60 seconds = 1 HOUR */
@@ -319,44 +319,47 @@ angular.module('starter.services', [])
 })
 
 .factory('GeoLocate', function ($q, $rootScope) {
+  var localization = $q.defer();
+  if (ionic.Platform.isWebView()) {
+    console.log('geolocalization initing (cordova)...');
+    document.addEventListener("deviceready", function () {
+      console.log('geolocalization inited (cordova)');
+      navigator.geolocation.watchPosition(function (position) {
+        r = [position.coords.latitude, position.coords.longitude];
+        $rootScope.myPosition = r;
+        console.log('geolocated (cordova)');
+        localization.resolve(r);
+      }, function (error) {
+        console.log('cannot geolocate (cordova)');
+        localization.reject('cannot geolocate (web)');
+      }, {
+        maximumAge: (5 * 60 * 1000), //5 mins
+        timeout: 1000, //1 sec
+        enableHighAccuracy: true
+      });
+    }, false);
+  } else {
+    console.log('geolocalization inited (web)');
+    navigator.geolocation.watchPosition(function (position) {
+      r = [position.coords.latitude, position.coords.longitude];
+      $rootScope.myPosition = r;
+      console.log('geolocated (web)');
+      localization.resolve(r);
+    }, function (error) {
+      console.log('cannot geolocate (web)');
+      localization.reject('cannot geolocate (web)');
+    }, {
+      maximumAge: (5 * 60 * 1000), //5 mins
+      timeout: 1000, //1 sec
+      enableHighAccuracy: true
+    });
+  }
   return {
     locate: function () {
-      var localization = $q.defer();
-      if ($rootScope.myPosition) {
-        localization.resolve($rootScope.myPosition);
-      } else {
-        if (ionic.Platform.isWebView()) {
-          //console.log('cordova localization...');
-          document.addEventListener("deviceready", function () {
-            console.log('cordova localization inited...');
-            navigator.geolocation.watchPosition(function (position) {
-              console.log('localizing...');
-              r = [position.coords.latitude, position.coords.longitude];
-              localization.resolve(r);
-            }, function (error) {
-              localization.reject();
-            }, {
-              //maximumAge: 3000,
-              //timeout: 5000, 
-              enableHighAccuracy: true
-            });
-          }, false);
-        } else {
-          //console.log('web localization...');
-          navigator.geolocation.watchPosition(function (position) {
-            r = [position.coords.latitude, position.coords.longitude];
-            localization.resolve(r);
-          }, function (error) {
-            localization.reject();
-          }, {
-            //maximumAge: 3000, 
-            //timeout: 5000, 
-            enableHighAccuracy: true
-          });
-        }
-
-      }
-      return localization.promise;
+      console.log('geolocalizing...');
+      return localization.promise.then(function (firstGeoLocation) {
+        return $rootScope.myPosition;
+      });
     },
     distance: function (pt1, pt2) {
       var d = false;
@@ -383,7 +386,7 @@ angular.module('starter.services', [])
     },
     distanceTo: function (gotoPosition) {
       var GL = this;
-      return this.locate().then(function (myPosition) {
+      return localization.promise.then(function (myPosition) {
         //console.log('myPosition: ' + JSON.stringify(myPosition));
         //console.log('gotoPosition: ' + JSON.stringify(gotoPosition));
         return GL.distance(myPosition, gotoPosition);
@@ -400,11 +403,12 @@ angular.module('starter.services', [])
         startTimes[label] = (new Date).getTime();
       }
     },
+
     do :
-    function (label) {
+    function (label, details) {
       if (Config.doProfiling()) {
         var startTime = startTimes[label] || -1;
-        if (startTime != -1) console.log('PROFILE: ' + label + '=' + ((new Date).getTime() - startTime));
+        if (startTime != -1) console.log('PROFILE: ' + label + (details ? '(' + details + ')' : '') + '=' + ((new Date).getTime() - startTime));
       }
     }
   };
@@ -499,7 +503,7 @@ angular.module('starter.services', [])
       console.log('cordova db inited...');
       dbObj = window.sqlitePlugin.openDatabase({
         name: "Trento",
-        bgType: 1
+        bgType: 0
       });
       syncOptions = remoteSyncOptions;
       dbopenDeferred.resolve(dbObj);
@@ -520,8 +524,6 @@ angular.module('starter.services', [])
       dbObj.transaction(function (tx) {
         tx.executeSql('DROP TABLE IF EXISTS ContentObjects');
         tx.executeSql('CREATE TABLE IF NOT EXISTS ContentObjects (id text primary key, version integer, type text, category text, classification text, classification2 text, classification3 text, data text, lat real, lon real, updateTime integer)');
-        tx.executeSql('DROP TABLE IF EXISTS Favorites');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS Favorites (id text primary key)');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_id ON ContentObjects( id )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_type ON ContentObjects( type )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_cate ON ContentObjects( category )');
@@ -532,6 +534,10 @@ angular.module('starter.services', [])
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_lon ON ContentObjects( lon )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_typeclass ON ContentObjects( type, classification )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_typeid ON ContentObjects( type, id )');
+
+        tx.executeSql('DROP TABLE IF EXISTS Favorites');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS Favorites (id text primary key)');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS fav_id ON Favorites( id )');
       }, function (error) { //error callback
         console.log('cannot initialize db! ')
         console.log(error);
@@ -615,9 +621,9 @@ angular.module('starter.services', [])
                           category = item.category;
                           if (category) {
                             // "category": "{objectName=Feste, mercati e fiere, classIdentifier=tipo_eventi, datePublished=1395152152, dateModified=1395152182, objectRemoteId=a15d79dc9794d829ed43364863a8225a, objectId=835351, link=http://www.comune.trento.it/api/opendata/v1/content/object/835351}"
-                            startMrkr = "{objectName=";
-                            endMrkr = ", classIdentifier=";
-                            classification = category.substring(startMrkr.length, category.indexOf(endMrkr)) || '';
+                            //startMrkr = "{objectName=";
+                            //endMrkr = ", classIdentifier=";
+                            classification = category; //category.substring(startMrkr.length, category.indexOf(endMrkr)) || '';
                             if (!classification || classification.toString() == 'false') classification = Config.eventCateFromType('misc').it;
                             console.log('event cate: ' + classification);
                           }
@@ -774,6 +780,7 @@ angular.module('starter.services', [])
               var item = cateResults.rows.item(i);
               lista.push(parseDbRow(item));
             }
+            data.resolve(lista);
           }, function (tx2, err) {
             $ionicLoading.hide();
             console.log('cate data error!');
@@ -808,7 +815,7 @@ angular.module('starter.services', [])
         var dbitem = $q.defer();
         var lista = [];
         dbObj.transaction(function (tx) {
-          //console.log('type: '+types[dbname]);
+          console.log('DatiDB.get(); itemId: ' + itemId);
           if (itemId.indexOf(',') == -1) {
             idCond = 'id=?';
           } else {
@@ -820,48 +827,52 @@ angular.module('starter.services', [])
           qParams.unshift(types[dbname]);
           var dbQuery = 'SELECT id, type, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=? AND ' + idCond;
           //console.log('dbQuery: ' + dbQuery);
+          console.log('DatiDB.get("' + dbname + '", "' + itemId + '"); dbQuery launched...');
           tx.executeSql(dbQuery, qParams, function (tx2, results) {
-            if (results.rows.length > 0) {
+            console.log('DatiDB.get("' + dbname + '", "' + itemId + '"); dbQuery completed');
+            var resultslen = results.rows.length;
+            if (resultslen > 0) {
               if (itemId.indexOf(',') == -1) {
                 var item = results.rows.item(0);
                 var result = parseDbRow(item);
-                Profiling.do('dbget');
+                Profiling.do('dbget', 'single');
                 dbitem.resolve(result);
               } else {
-                var len = results.rows.length,
-                  i;
-                for (i = 0; i < len; i++) {
+                for (var i = 0; i < resultslen; i++) {
                   var item = results.rows.item(i);
                   lista.push(parseDbRow(item));
                 }
+                Profiling.do('dbget', 'list');
+                dbitem.resolve(lista);
               }
             } else {
               console.log('not found!');
-              Profiling.do('dbget');
+              Profiling.do('dbget', 'sql empty');
               dbitem.reject('not found!');
             }
           }, function (tx2, err) {
             $ionicLoading.hide();
             console.log('error: ' + err);
-            Profiling.do('dbget');
+            Profiling.do('dbget', 'sql error');
             dbitem.reject(err);
           });
         }, function (error) { //error callback
           $ionicLoading.hide();
           console.log('db.get() ERROR: ' + error);
-          Profiling.do('dbget');
+          Profiling.do('dbget', 'tx error');
           dbitem.reject(error);
         }, function () { //success callback
           $ionicLoading.hide();
-          Profiling.do('dbget');
-          dbitem.resolve(lista);
+          Profiling.do('dbget', 'tx success');
         });
+
         return dbitem.promise;
       });
     },
     getFavorites: function () {
       console.log('DatiDB.getFavorites()');
 
+      Profiling.start('dbfavs');
       var loading = $ionicLoading.show({
         content: 'loading...',
         showDelay: 1000,
@@ -873,34 +884,35 @@ angular.module('starter.services', [])
       dbObj.transaction(function (tx) {
         //console.log('type: '+types[dbname]);
         var dbQuery = 'SELECT co.id, co.type, co.classification, co.classification2, co.classification3, co.data, co.category FROM ContentObjects co, Favorites f WHERE f.id=co.id';
-        console.log('dbQuery: ' + dbQuery);
+        //console.log('dbQuery: ' + dbQuery);
         tx.executeSql(dbQuery, null, function (tx, results) {
-          if (results.rows.length > 0) {
-            var len = results.rows.length,
-              i;
-            console.log('results.rows.length: ' + len);
-            for (i = 0; i < len; i++) {
+          var resultslen = results.rows.length;
+          if (resultslen > 0) {
+            for (var i = 0; i < resultslen; i++) {
               var item = results.rows.item(i);
               lista.push(parseDbRow(item));
             }
+            Profiling.do('dbfavs', 'list');
+            dbitem.resolve(lista);
           } else {
             console.log('not found!');
+            Profiling.do('dbfavs', 'sql empty');
             dbitem.reject('not found!');
           }
         }, function (tx, err) {
-          console.log('error: ' + err);
-
           $ionicLoading.hide();
+          console.log('error: ' + err);
+          Profiling.do('dbfavs', 'sql error');
           dbitem.reject(err);
         });
       }, function (error) { //error callback
-        console.log('db.get() ERROR: ' + error);
         $ionicLoading.hide();
+        console.log('db.get() ERROR: ' + error);
+        Profiling.do('dbfavs', 'tx error');
         dbitem.reject(error);
       }, function () { //success callback
-        console.log('db.get() DONE!');
         $ionicLoading.hide();
-        dbitem.resolve(lista);
+        Profiling.do('dbfavs', 'tx success');
       });
       return dbitem.promise;
     },
@@ -908,39 +920,42 @@ angular.module('starter.services', [])
       console.log('DatiDB.getFavorites()');
 
       var dbitem = $q.defer();
-      var result = false;
-
       dbObj.transaction(function (tx) {
+        Profiling.start('dbfav');
+
         //console.log('type: '+types[dbname]);
         var dbQuery = 'SELECT id FROM Favorites f WHERE f.id=?';
-        console.log('dbQuery: ' + dbQuery);
+        //console.log('dbQuery: ' + dbQuery);
         tx.executeSql(dbQuery, [itemId], function (tx, results) {
           if (results.rows.length > 0) {
-            result = true;
+            Profiling.do('dbfav', 'found');
+            dbitem.resolve(true);
           } else {
             console.log('not found!');
+            Profiling.do('dbfav', 'not found');
+            dbitem.resolve(false);
           }
         }, function (tx, err) {
           console.log('error: ' + err);
+          Profiling.do('dbfav', 'sql error');
           dbitem.resolve(false);
         });
       }, function (error) { //error callback
-        console.log('db.get() ERROR: ' + error);
+        console.log('db.isFavorite() ERROR: ' + error);
+        Profiling.do('dbfav', 'tx error');
         dbitem.resolve(false);
       }, function () { //success callback
-        console.log('db.get() DONE!');
-        dbitem.resolve(result);
+        console.log('db.isFavorite() DONE!');
+        Profiling.do('dbfav', 'tx success');
       });
-
       return dbitem.promise;
     },
     setFavorite: function (itemId, val) {
       console.log('DatiDB.setFavorite(' + itemId + ',' + val + ')');
 
       var dbitem = $q.defer();
-      var result = false;
-
       dbObj.transaction(function (tx) {
+        Profiling.start('dbfavsave');
         //console.log('type: '+types[dbname]);
         var dbQuery = null;
         if (val) {
@@ -948,34 +963,38 @@ angular.module('starter.services', [])
         } else {
           dbQuery = 'DELETE FROM Favorites WHERE id = ?';
         }
-        console.log('dbQuery: ' + dbQuery);
+        //console.log('dbQuery: ' + dbQuery);
         tx.executeSql(dbQuery, [itemId], function (tx, results) {
-          result = val;
+          dbitem.resolve(val);
+          Profiling.do('dbfavsave', 'done');
         }, function (tx, err) {
           console.log('error: ' + err);
+          Profiling.do('dbfavsave', 'sql error');
           dbitem.resolve(!val);
         });
       }, function (error) { //error callback
-        console.log('db.get() ERROR: ' + error);
+        console.log('db.setFavorite() ERROR: ' + error);
+        Profiling.do('dbfavsave', 'tx error');
         dbitem.resolve(!val);
       }, function () { //success callback
-        console.log('db.get() DONE!');
-        dbitem.resolve(result);
+        console.log('db.setFavorite() DONE!');
+        Profiling.do('dbfavsave', 'tx success');
       });
-
       return dbitem.promise;
     }
   }
 })
 
-.factory('Files', function ($q, $http, Config, $queue) {
+.factory('Files', function ($q, $http, Config, $queue, Profiling) {
   var queueFileDownload = function (obj) {
     var fileTransfer = new FileTransfer();
     fileTransfer.download(obj.url, obj.savepath, function (fileEntry) {
       console.log("download complete: " + obj.savepath);
+      Profiling.do('fileget', 'saved');
       obj.promise.resolve(obj.savepath);
     }, function (error) {
       //console.log("download error source " + error.source);console.log("download error target " + error.target);console.log("donwload error code: " + error.code);
+      Profiling.do('fileget', 'save error');
       obj.promise.reject(error);
     }, true, { /* headers: { "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA==" } */ });
   };
@@ -1106,6 +1125,7 @@ angular.module('starter.services', [])
       var filegot = $q.defer();
       filesystem.then(function (mainDir) {
         if (ionic.Platform.isWebView()) {
+          Profiling.start('fileget');
           //console.log('rootDir: ' + rootDir.fullPath);
           mainDir.getFile(filename, {}, function (fileEntry) {
             /*
@@ -1124,30 +1144,21 @@ angular.module('starter.services', [])
             */
             var filesavepath = rootFS.toURL() + IMAGESDIR_NAME + '/' + filename;
             console.log('already downloaded to "' + filesavepath + '"');
+            Profiling.do('fileget', 'already');
             filegot.resolve(filesavepath);
           }, function () {
-            if (ionic.Platform.isWebView()) {
-              if (navigator.connection.type == Connection.NONE) {
-                console.log('no network connection: cannot download missing images!');
-                filegot.reject('no network connection');
-              } else {
-                var fileObj = {
-                  savepath: rootFS.toURL() + IMAGESDIR_NAME + '/' + filename,
-                  url: fileurl,
-                  promise: filegot
-                };
-                console.log('not found: downloading to "' + fileObj.savepath + '"');
-                queueFileDownload(fileObj);
-              }
+            if (navigator.connection.type == Connection.NONE) {
+              console.log('no network connection: cannot download missing images!');
+              Profiling.do('fileget', 'offline');
+              filegot.reject('no network connection');
             } else {
-              // NON CORDOVA IMPLEMENTATION PARKED: returning the same web url get got as input, for the moment
-              filegot.resolve(fileurl);
-              /*
-              $http({ method:'GET', url:fileurl, responseType:'arraybuffer' }).success(function(data,status,headers,config){
-                  console.log(typeof data);
-                  console.log('data.byteLength='+data.byteLength);
-              });
-              */
+              var fileObj = {
+                savepath: rootFS.toURL() + IMAGESDIR_NAME + '/' + filename,
+                url: fileurl,
+                promise: filegot
+              };
+              console.log('not found: downloading to "' + fileObj.savepath + '"');
+              queueFileDownload(fileObj);
             }
           });
           //this.listRoot();
@@ -1412,6 +1423,8 @@ angular.module('starter.services', [])
 
       $scope.goToItem = function (path) {
         state.data = conf.getData();
+        state.ordering = $scope.ordering;
+        state.filter = $scope.filter;
         $location.path(path);
       }
 

@@ -212,7 +212,7 @@ angular.module('starter.services', [])
   };
 
   return {
-    doProfiling: function() {
+    doProfiling: function () {
       return true;
     },
     savedImagesDirName: function () {
@@ -223,8 +223,8 @@ angular.module('starter.services', [])
     },
     syncTimeoutSeconds: function () {
       return 60 * 60; /* 60 times 60 seconds = 1 HOUR */
-//      return 60 * 60 * 24; /* 60 times 60 seconds = 1 HOUR --> x24 = 1 DAY */
-//      return 60 * 60 * 24 * 10; /* 60 times 60 seconds = 1 HOUR --> x24 = 1 DAY x10 */
+      //      return 60 * 60 * 24; /* 60 times 60 seconds = 1 HOUR --> x24 = 1 DAY */
+      //      return 60 * 60 * 24 * 10; /* 60 times 60 seconds = 1 HOUR --> x24 = 1 DAY x10 */
     },
     syncingOverlayTimeoutMillis: function () {
       return 30 * 1000; /* 30 seconds before automatically hiding syncing overlay */
@@ -393,17 +393,18 @@ angular.module('starter.services', [])
 })
 
 .factory('Profiling', function (Config) {
-  var startTimes={};
+  var startTimes = {};
   return {
-    start: function(label) {
+    start: function (label) {
       if (Config.doProfiling()) {
-        startTimes[label]=(new Date).getTime();
+        startTimes[label] = (new Date).getTime();
       }
     },
-    do: function(label) {
+    do :
+    function (label) {
       if (Config.doProfiling()) {
-        var startTime=startTimes[label] || -1;
-        if (startTime!=-1) console.log('PROFILE: '+label+'='+((new Date).getTime()-startTime));
+        var startTime = startTimes[label] || -1;
+        if (startTime != -1) console.log('PROFILE: ' + label + '=' + ((new Date).getTime() - startTime));
       }
     }
   };
@@ -470,11 +471,12 @@ angular.module('starter.services', [])
   if (localStorage.currentSchemaVersion) currentSchemaVersion = localStorage.currentSchemaVersion;
   console.log('currentSchemaVersion: ' + currentSchemaVersion);
 
-  var currentDbVersion = 0, lastSynced = -1;
+  var currentDbVersion = 0,
+    lastSynced = -1;
   if (currentSchemaVersion == SCHEMA_VERSION) {
     if (localStorage.currentDbVersion) currentDbVersion = localStorage.currentDbVersion;
     if (localStorage.lastSynced) lastSynced = localStorage.lastSynced;
-  } 
+  }
   console.log('currentDbVersion: ' + currentDbVersion);
   console.log('lastSynced: ' + lastSynced);
 
@@ -761,7 +763,7 @@ angular.module('starter.services', [])
           //console.log('type: '+types[dbname]);
           console.log('category: ' + cateId);
 
-          var sql = 'SELECT id, type, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=?'+ (cateId ? ' AND (classification=? OR classification2=? OR classification3=?)':'');
+          var sql = 'SELECT id, type, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=?' + (cateId ? ' AND (classification=? OR classification2=? OR classification3=?)' : '');
           var params = cateId ? [types[dbname], cateId, cateId, cateId] : [types[dbname]];
           tx.executeSql(sql, params, function (tx2, cateResults) {
             console.log('cateResults.rows.length: ' + cateResults.rows.length);
@@ -967,7 +969,7 @@ angular.module('starter.services', [])
 })
 
 .factory('Files', function ($q, $http, Config, $queue) {
-  var queueFileDownload=function(obj) {
+  var queueFileDownload = function (obj) {
     var fileTransfer = new FileTransfer();
     fileTransfer.download(obj.url, obj.savepath, function (fileEntry) {
       console.log("download complete: " + obj.savepath);
@@ -1129,8 +1131,8 @@ angular.module('starter.services', [])
                 console.log('no network connection: cannot download missing images!');
                 filegot.reject('no network connection');
               } else {
-                var fileObj={ 
-                  savepath:rootFS.toURL() + IMAGESDIR_NAME + '/' + filename,
+                var fileObj = {
+                  savepath: rootFS.toURL() + IMAGESDIR_NAME + '/' + filename,
                   url: fileurl,
                   promise: filegot
                 };
@@ -1188,23 +1190,23 @@ angular.module('starter.services', [])
   };
 })
 
-.factory('MapHelper', function($location){
+.factory('MapHelper', function ($location) {
   var map = {
     draggable: 'true',
     center: {
       latitude: 0,
       longitude: 0
     },
-    zoom: 8
+    zoom: 8,
+    pan: false
   };
+
   var markers = {
-    models: [{
-      latitude: 0,
-      longitude: 0
-    }],
+    models: [],
     coords: 'self',
+    icon: 'icon',
     fit: true,
-    doCluster: true
+    doCluster: false
   };
 
   var showInfoWindow = false;
@@ -1216,7 +1218,7 @@ angular.module('starter.services', [])
     options: null,
   };
 
-  openInfoWindow = function ($markerModel) {
+  var openInfoWindow = function ($markerModel) {
     infoWindow.coords = {
       latitude: $markerModel.latitude,
       longitude: $markerModel.longitude
@@ -1234,25 +1236,32 @@ angular.module('starter.services', [])
     infoWindow.coords = null;
     infoWindow.options = null;
   };
-  
-  var title = '';  
-    
+
+  var title = '';
+
+  var categoriesIcons = {
+    'dormire': 'home',
+    'mangiare': 'restaurant',
+    'other': 'location'
+  };
+
   return {
     prepare: function (t, data) {
       showInfoWindow = false;
       markers.models = [];
       title = t;
-      
+
       angular.forEach(data, function (luogo, idx) {
-        if (luogo.location) {
+        if (!!luogo.location) {
           luogo.latitude = luogo.location[0];
           luogo.longitude = luogo.location[1];
+          luogo.icon = 'https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=' + (!!categoriesIcons[luogo.category] ? categoriesIcons[luogo.category] : categoriesIcons['other']) + '|2975A7';
           markers.models.push(luogo)
         }
       });
       $location.path('/app/mappa');
     },
-    start: function($scope) {
+    start: function ($scope) {
       $scope.map = map;
       $scope.markers = markers;
       $scope.showInfoWindow = showInfoWindow;
@@ -1260,7 +1269,7 @@ angular.module('starter.services', [])
       $scope.openInfoWindow = openInfoWindow;
       $scope.closeInfoWindow = closeInfoWindow;
       $scope.title = title;
-    }     
+    }
   };
 })
 
@@ -1295,7 +1304,7 @@ angular.module('starter.services', [])
       'it': 'Annula',
       'en': 'Cancel',
       'de': 'Cancel'
-    },    
+    },
     'All': {
       'it': 'Tutte',
       'en': 'All',
@@ -1314,55 +1323,55 @@ angular.module('starter.services', [])
   };
 
   var openSortPopup = function ($scope, options, presel, callback) {
-      var title = $filter('translate')(keys['OrderBy']);
+    var title = $filter('translate')(keys['OrderBy']);
 
-      var template = '<div class="list">';
-      for (var i = 0; i < options.length; i++) {
-        var s = $filter('translate')(keys[options[i]]);
-        template += '<a class="item item-icon-right" ng-click="show.close(\'' + options[i] + '\')">' + s + '<i class="icon ' + (options[i] == presel ? 'ion-ios7-checkmark-outline' : '') + '"></i></a>';
-      }
-      // An elaborate, custom popup
-      var myPopup = $ionicPopup.show({
-        template: template,
-        title: title,
-        scope: $scope,
-        buttons: [{
-          text: $filter('translate')(keys['Cancel'])
+    var template = '<div class="list">';
+    for (var i = 0; i < options.length; i++) {
+      var s = $filter('translate')(keys[options[i]]);
+      template += '<a class="item item-icon-right" ng-click="show.close(\'' + options[i] + '\')">' + s + '<i class="icon ' + (options[i] == presel ? 'ion-ios7-checkmark-outline' : '') + '"></i></a>';
+    }
+    // An elaborate, custom popup
+    var myPopup = $ionicPopup.show({
+      template: template,
+      title: title,
+      scope: $scope,
+      buttons: [{
+        text: $filter('translate')(keys['Cancel'])
         }]
-      });
-      $scope.show = myPopup;
-      myPopup.then(function (res) {
-        console.log('sort popup res: ' + res);
-        callback(res);
-      });
+    });
+    $scope.show = myPopup;
+    myPopup.then(function (res) {
+      console.log('sort popup res: ' + res);
+      callback(res);
+    });
   }
-  
-  var openFilterPopup = function($scope, options, presel, callback) {
-      var title = $filter('translate')(keys['Filter']);
 
-      var template = '<div class="modal"><ion-header-bar><h1 class="title">'+title+'</h1></ion-header-bar><ion-content><div class="list">';
-      var body = '<a class="item item-icon-right" ng-click="closeModal(\'__all\')">' + $filter('translate')(keys['All']) + '<i class="icon ' + (presel == null ? 'ion-ios7-checkmark-outline' : '') + '"></i></a>';
-      for (var key in options) {
-        var value = options[key].it;
-        var s = $filter('translate')(options[key]);
-        s = '<a class="item item-icon-right" ng-click="closeModal(\'' + value + '\')">' + s + '<i class="icon ' + (value == presel ? 'ion-ios7-checkmark-outline' : '') + '"></i></a>';
-        body += s;
-      }
-      template += body+'</div></ion-content><ion-footer-bar><div class="tabs" ng-click="closeModal()"><a class="tab-item">'+$filter('translate')(keys['Cancel'])+'</a></div></ion-footer-bar></div>';
-      $scope.modal = $ionicModal.fromTemplate(template, {
-        scope: $scope,
-        animation: 'slide-in-up'
-      });
-      $scope.modal.show();
-      $scope.$on('$destroy', function() {
-        $scope.modal.remove();
-      });
-      $scope.closeModal = function(val) {
-        $scope.modal.hide();
-        if ('__all' == val) callback(null);
-        else if (val) callback(val);
-      }
-/*
+  var openFilterPopup = function ($scope, options, presel, callback) {
+    var title = $filter('translate')(keys['Filter']);
+
+    var template = '<div class="modal"><ion-header-bar><h1 class="title">' + title + '</h1></ion-header-bar><ion-content><div class="list">';
+    var body = '<a class="item item-icon-right" ng-click="closeModal(\'__all\')">' + $filter('translate')(keys['All']) + '<i class="icon ' + (presel == null ? 'ion-ios7-checkmark-outline' : '') + '"></i></a>';
+    for (var key in options) {
+      var value = options[key].it;
+      var s = $filter('translate')(options[key]);
+      s = '<a class="item item-icon-right" ng-click="closeModal(\'' + value + '\')">' + s + '<i class="icon ' + (value == presel ? 'ion-ios7-checkmark-outline' : '') + '"></i></a>';
+      body += s;
+    }
+    template += body + '</div></ion-content><ion-footer-bar><div class="tabs" ng-click="closeModal()"><a class="tab-item">' + $filter('translate')(keys['Cancel']) + '</a></div></ion-footer-bar></div>';
+    $scope.modal = $ionicModal.fromTemplate(template, {
+      scope: $scope,
+      animation: 'slide-in-up'
+    });
+    $scope.modal.show();
+    $scope.$on('$destroy', function () {
+      $scope.modal.remove();
+    });
+    $scope.closeModal = function (val) {
+      $scope.modal.hide();
+      if ('__all' == val) callback(null);
+      else if (val) callback(val);
+    }
+    /*
       // An elaborate, custom popup
       var myPopup = $ionicPopup.show({
         template: template,
@@ -1381,14 +1390,14 @@ angular.module('starter.services', [])
   }
 
   var state = {
-    ordering : null,
-    filter : null,
+    ordering: null,
+    filter: null,
     data: null
   };
-  
+
   return {
     // expect conf with load, orderingTypes, defaultOrdering, getData, title, filterOptions, defaultFilter, doFilter
-    prepare: function($scope, conf) {
+    prepare: function ($scope, conf) {
       var d = $q.defer();
       $scope.gotdata = d.promise;
       if ($scope.$navDirection == 'back') {
@@ -1399,18 +1408,21 @@ angular.module('starter.services', [])
         state.filter = null;
         state.data = null;
         conf.load(null);
-      }     
-
-      $scope.goToItem = function(path) {
-        state.data = conf.getData();
-        $location.path(path);         
       }
-      
+
+      $scope.goToItem = function (path) {
+        state.data = conf.getData();
+        $location.path(path);
+      }
+
       if (conf.orderingTypes) {
         $scope.hasSort = true;
         $scope.orderingTypes = conf.orderingTypes;
-        $scope.ordering = $scope.$navDirection != 'back' ? {ordering:conf.defaultOrdering,searchText:null} : state.ordering;
-        
+        $scope.ordering = $scope.$navDirection != 'back' ? {
+          ordering: conf.defaultOrdering,
+          searchText: null
+        } : state.ordering;
+
         $scope.showSortPopup = function () {
           openSortPopup($scope, $scope.orderingTypes, $scope.ordering.ordering, function (res) {
             if (res && $scope.ordering.ordering != res) {
@@ -1420,12 +1432,12 @@ angular.module('starter.services', [])
           });
         };
       }
-      
+
       if (conf.hasMap) {
         $scope.hasMap = true;
-        $scope.showMap = function(){
+        $scope.showMap = function () {
           state.data = conf.getData();
-          MapHelper.prepare(conf.getTitle(),conf.getData());
+          MapHelper.prepare(conf.getTitle(), conf.getData());
         };
       }
       if (conf.doFilter) {
@@ -1434,19 +1446,19 @@ angular.module('starter.services', [])
         $scope.filter = $scope.$navDirection != 'back' ? conf.defaultFilter : state.filter;
         $scope.showFilterPopup = function () {
           openFilterPopup($scope, $scope.filterOptions, $scope.filter, function (res) {
-              $scope.filter = res;
-              state.filter = res;
-              conf.doFilter(res);
+            $scope.filter = res;
+            state.filter = res;
+            conf.doFilter(res);
           });
         };
       }
       if (conf.hasSearch) {
         $scope.hasSearch = true;
         $scope.searching = false;
-        $scope.showSearch = function(){
+        $scope.showSearch = function () {
           $scope.searching = true;
         };
-        $scope.cancelSearch = function() {
+        $scope.cancelSearch = function () {
           $scope.searching = false;
           $scope.ordering.searchText = null;
         };

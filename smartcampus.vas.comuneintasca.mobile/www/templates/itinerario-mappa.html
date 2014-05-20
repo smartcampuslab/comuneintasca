@@ -2,7 +2,8 @@
   <ion-content class="has-header" scroll="false">
     <div class="item item-divider" align="center">{{itinerario.title | translate}}</div>
     <div id="map2">
-      <google-map center="map.center" zoom="map.zoom" draggable="{{map.draggable}}" control="map.control">
+      <google-map center="map.center" zoom="map.zoom" pan="map.pan" draggable="{{map.draggable}}" refresh="map.refresh">
+        <!-- control="map.control"-->
         <!--
               <window coords="infoWindow.coords" show="infoWindow.show" isIconVisibleOnClick="infoWindow.isIconVisibleOnClick" closeClick="closeInfoWindow"  options="infoWindow.options">
                 {{infoWindow.content}}
@@ -10,16 +11,17 @@
         -->
         <!-- with WINDOW: click="openInfoWindow" -->
         <!-- with WINDOWS: click="showInfoWindow = true" -->
-        <markers models="markers.models" coords="markers.coords" fit="markers.fit" doCluster="markers.doCluster" click="showInfoWindow = true">
+        <markers models="markers.models" coords="markers.coords" fit="markers.fit" icon="markers.icon" doCluster="markers.doCluster">
           <!-- icon="markers.icon"-->
-          <!-- click="markers.click"-->
-          <windows>
-            <!-- show="showInfoWindow" closeClick="showInfoWindow = false" ng-cloak-->
+          click="markers.click"-- windows>
+          <!-- show="showInfoWindow" closeClick="showInfoWindow = false" ng-cloak
             <p ng-non-bindable>{{title | translate}}</p>
-          </windows>
+          </windows> -->
         </markers>
+        <!--
         <polyline path="markers.poly" stroke="polyline.stroke" clickable="polyline.clickable" draggable="polyline.draggable" editable="polyline.editable" geodesic="polyline.geodesic" visible="polyline.visible">
         </polyline>
+        -->
       </google-map>
     </div>
   </ion-content>

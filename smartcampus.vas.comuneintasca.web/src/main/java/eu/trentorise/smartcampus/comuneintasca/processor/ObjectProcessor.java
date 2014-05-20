@@ -190,7 +190,7 @@ public class ObjectProcessor {
 	private RestaurantObject convertRestaurantObject(List<String> row) throws ParseException {
 		RestaurantObject r = new RestaurantObject();
 		r.setId(row.get(0));
-		r.setCategory(row.get(2));
+		r.setCategory(row.get(1));
 		Map<String,String> classifications = new HashMap<String, String>();
 		classifications.put("it", row.get(3));
 		classifications.put("de", row.get(4));

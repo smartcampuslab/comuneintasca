@@ -178,6 +178,17 @@ ion-side-menu .item {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+#home-buttons button .comuni-icon {
+  display: inline-block;
+  position:absolute;
+  top:5px;
+  left:5px;
+  pointer-events: none;
+  width:40px;height:40px;background-repeat:no-repeat;background-size:cover;
+}
+#home-buttons button .comuni-icon.viaggiatrento {
+  background-image:url(../svg/viaggiatrento.svg);
+}
 .angular-google-map-container {
   height: 800px;
 }

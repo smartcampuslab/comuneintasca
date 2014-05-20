@@ -15,6 +15,9 @@
  ******************************************************************************/
 package eu.trentorise.smartcampus.comuneintasca.controller;
 
+import java.util.Calendar;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +30,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import eu.trentorise.smartcampus.comuneintasca.model.EventObject;
 import eu.trentorise.smartcampus.presentation.common.util.Util;
+import eu.trentorise.smartcampus.presentation.data.BasicObject;
 import eu.trentorise.smartcampus.presentation.data.SyncData;
 import eu.trentorise.smartcampus.presentation.data.SyncDataRequest;
 
@@ -40,11 +45,30 @@ public class SyncController extends AbstractObjectController {
 			SyncDataRequest syncReq = Util.convertRequest(obj, since);
 			storage.cleanSyncData(syncReq.getSyncData(), null);
 			SyncData result = storage.getSyncData(syncReq.getSince(), null, syncReq.getSyncData().getInclude(), syncReq.getSyncData().getExclude());
+			cleanResult(result);
 			return new ResponseEntity<SyncData>(result,HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
+	}
+
+	private void cleanResult(SyncData result) {
+		List<BasicObject> list = result.getUpdated().get(EventObject.class.getName());
+		Calendar ref = Calendar.getInstance();
+		ref.set(Calendar.HOUR_OF_DAY, 0);
+		ref.set(Calendar.MINUTE, 0);
+		if (list != null) {
+			for (Iterator<BasicObject> iterator = list.iterator(); iterator.hasNext();) {
+				EventObject event = (EventObject) iterator.next();
+				if (event.getToTime() > 0 && event.getToTime() < ref.getTimeInMillis() ||
+					event.getToTime() == 0 && event.getFromTime() < ref.getTimeInMillis()) {
+					iterator.remove();
+				}
+				
+			}
+		}
+		result.getUpdated().put(EventObject.class.getName(), list);
 	}
 
 }

@@ -1,4 +1,4 @@
-package eu.trentorise.smartcampus.service.roveretoexplorer;
+package eu.trentorise.smartcampus.service.opendata;
 
 import it.sayservice.platform.servicebus.test.DataFlowTestHelper;
 
@@ -22,7 +22,7 @@ public class TestDataFlow extends TestCase {
 		Map<String, Object> out1 = helper.executeDataFlow("smartcampus.service.opendata", "GetEventi", new GetEventiDataFlow(), parameters);
 		List<Message> data1 = (List<Message>)out1.get("data");
 		for (Message msg: data1) {
-			System.err.println(((Evento)msg).getTitle());
+			System.err.println(((Evento)msg).getCategory());
 			System.err.println("-----------");
 		}
 		

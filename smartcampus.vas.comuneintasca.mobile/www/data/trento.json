@@ -1,5 +1,5 @@
 {
-    "version": 1660,
+    "version": 2122,
     "updated": {
         "eu.trentorise.smartcampus.comuneintasca.model.RestaurantObject": [
             {
@@ -40593,7 +40593,7 @@
             {
                 "id": "537b1cb7975ab6f74b9b84ad",
                 "updateTime": 1400577207696,
-                "version": 1528,
+                "version": 2121,
                 "user": null,
                 "contentIds": [
                     "event.major.3","7a5a2856ed22ff46f50c88748393ba69", "60d9c631509d00ff12eb95cbfc5b699e"

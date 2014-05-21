@@ -259,6 +259,7 @@ $scope.show = function() {
 })
 
 .controller('MapCtrl', function ($scope, MapHelper) {
+  $scope._ = _;
   MapHelper.start($scope);
 })
 

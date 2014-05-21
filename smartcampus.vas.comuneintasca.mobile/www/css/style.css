@@ -280,3 +280,6 @@ ion-side-menu .item {
 h1,h2,h3,h4,h5,h6,#home-buttons b, ion-side-menu b {
   font-family: 'HelveticaNeue-CondensedBold';
 }
+.map-popup {
+  text-align: center;
+}

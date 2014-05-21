@@ -447,7 +447,7 @@ angular.module('starter.services', [])
       if (item.dbClassification3 != '') item.dbClassification3 = Config.restaurantCateFromDbClassification(item.dbClassification3);
 
     } else if (dbtype == 'hotel') {
-      item['abslink'] = '#/app/event/' + item.id;
+      item['abslink'] = '#/app/hotel/' + item.id;
 
     } else if (dbtype == 'itinerary') {
       item['abslink'] = '#/app/itinerary/' + item.id + '/info';
@@ -1267,6 +1267,11 @@ angular.module('starter.services', [])
 
 .factory('MapHelper', function ($location, $filter, $ionicPopup) {
   var keys = {
+    'Details': {
+      'it': 'Dettagli',
+      'en': 'Details',
+      'de': 'Details'
+    },
     'Cancel': {
       'it': 'Annulla',
       'en': 'Cancel',
@@ -1321,22 +1326,39 @@ angular.module('starter.services', [])
       $location.path('/app/mappa');
     },
     start: function ($scope) {
+      $scope.activeMarker = null;
       $scope.map = map;
       $scope.markers = markers;
 
       $scope.openMarkerPopup = function ($markerModel) {
+        $scope.activeMarker = $markerModel;
+
         var title = $filter('translate')($markerModel.title);
         var template = '<div>';
         template += title;
         template += '</div>';
+        var templateUrl = 'templates/mappa_popup.html';
 
         // An elaborate, custom popup
         var myPopup = $ionicPopup.show({
-          template: template,
-          title: title,
+          // template: template,
+          templateUrl: templateUrl,
+          title: $filter('translate')($scope.activeMarker.title),
+          subTitle: !!$scope.activeMarker.distance ? $filter('number')($scope.activeMarker.distance, 1) + ' Km' : '',
           scope: $scope,
           buttons: [{
-            text: $filter('translate')(keys['Cancel'])
+            text: $filter('translate')(keys['Cancel']),
+            type: 'button-default',
+            onTap: function (e) {
+              $scope.activeMarker = null;
+            }
+            }, {
+            text: $filter('translate')(keys['Details']),
+            type: 'button-positive',
+            onTap: function (e) {
+              var itemUrl = $scope.activeMarker.abslink.substring(1);
+              $location.path(itemUrl);
+            }
         }]
         });
         $scope.show = myPopup;

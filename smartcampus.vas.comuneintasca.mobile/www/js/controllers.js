@@ -419,7 +419,7 @@ angular.module('starter.controllers', ['google-maps'])
 
 .controller('ItinerarioTappeCtrl', function ($scope, DatiDB, $stateParams) {})
 
-.controller('ItinerarioMappaCtrl', function ($scope, DatiDB, $stateParams, $filter, $ionicPopup) {
+.controller('ItinerarioMappaCtrl', function ($scope, DatiDB, $stateParams, $filter, $ionicPopup, $location) {
   var keys = {
     'Details': {
       'it': 'Dettagli',

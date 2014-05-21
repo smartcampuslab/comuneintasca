@@ -242,7 +242,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     })
     .state('app.itinerary.step', {
-      url: "/step/:stepId",
+      url: "/step/:placeId",
       views: {
         'itinerary-steps' :{
           templateUrl: "templates/place.html", controller: 'PlaceCtrl'

@@ -59,10 +59,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
   // global functions for toolbox
   $rootScope.extLink = function(url) {
-	window.open(url,'_system');
+    if (url.indexOf('http') != 0 && url.indexOf('tel') != 0 && url.indexOf('mailto') != 0 && url.indexOf('sms') != 0) {
+      url = 'http://'+url;
+      
+    }
+	  window.open(url,'_system');
   } 
   $rootScope.email = function(to) {
-	window.plugin.email.open({to: [to]});
+	  window.plugin.email.open({to: [to]});
   }
   $rootScope.hasNav = function(loc) {
 	return loc != null;

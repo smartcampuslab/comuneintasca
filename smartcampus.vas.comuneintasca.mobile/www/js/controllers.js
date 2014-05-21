@@ -15,7 +15,6 @@ angular.module('starter.controllers', ['google-maps'])
     return $scope.shownGroup == groupId;
   };
 
-  //  $scope.credits = $ionicModal.fromTemplate('<div class="modal"><ion-header-bar><h1>titolo</h1></ion-header-bar><ion-content>contenuto</ion-content></div>', {
   $ionicModal.fromTemplateUrl('templates/credits.html', {
     scope: $scope,
     animation: 'slide-in-up'
@@ -64,9 +63,23 @@ angular.module('starter.controllers', ['google-maps'])
     });
   });
 
-  /*
-$scope.show = function() {
+  $scope.openViaggiaTrento = function () {
+    if (ionic.Platform.isWebView()) {
+      cordova.plugins.startapp.start({
+        android: 'eu.trentorise.smartcampus.jp/eu.trentorise.smartcampus.jp.HomeActivity'
+      }, function () {
+        console.log('VIAGGIA TRENTO: success.');
+      }, function () {
+        console.log('VIAGGIA TRENTO: failed!');
+        window.open('https://play.google.com/store/apps/details?id=eu.trentorise.smartcampus.viaggiatrento', '_system');
+      });
+    } else {
+      window.open('https://play.google.com/store/apps/details?id=eu.trentorise.smartcampus.viaggiatrento', '_blank');
+    }
+  };
 
+  /*
+  $scope.show = function() {
    // Show the action sheet
    $ionicActionSheet.show({
      buttons: [
@@ -80,10 +93,8 @@ $scope.show = function() {
        return true;
      }
    });
-
- };
-*/
-  //    $state.go('contact.detail')
+  };
+  */
 })
 
 .controller('CategoriesListCtrl', function ($scope, $stateParams, Config) {

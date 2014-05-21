@@ -14,3 +14,4 @@ cordova plugin add de.appplant.cordova.plugin.email-composer
 cordova plugin add https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git
 cordova plugin add org.apache.cordova.network-information
 cordova plugin add org.apache.cordova.splashscreen
+cordova plugin add https://github.com/enricomarchesin/cordova-startapp.git

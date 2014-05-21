@@ -16,6 +16,8 @@
   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true" />
   </feature>
+  <preference name="StatusBarOverlaysWebView" value="false" />
+  <preference name="StatusBarBackgroundColor" value="#000000" />
   <preference name="AndroidPersistentFileLocation" value="Compatibility" />
   <preference name="iosPersistentFileLocation" value="Compatibility" />
   <preference name="LoadUrlTimeoutValue" value="5000"/>

@@ -7,6 +7,7 @@
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'starter.filters', 'starter.directives', 'localization', 'ngQueue'])
 
 .run(function($ionicPlatform, $rootScope, DatiDB, GeoLocate, Config) {
+//  ionic.Platform.fullScreen(false,true);
   if (typeof(Number.prototype.toRad) === "undefined") {
     Number.prototype.toRad = function() {
       return this * Math.PI / 180;
@@ -29,8 +30,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     */
     if(window.StatusBar) {
       // org.apache.cordova.statusbar required
-      StatusBar.hide();
+      StatusBar.overlaysWebView(false);
+      StatusBar.styleBlackOpaque();
+      StatusBar.show();
     }
+    //ionic.Platform.showStatusBar(false);
   });
   GeoLocate.locate().then(function(position){
     $rootScope.myPosition=position;
@@ -40,7 +44,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   });
 
   var browserLanguage = window.navigator.userLanguage || window.navigator.language;
-  // alert(browserLanguage);
   var lang = browserLanguage.substring(0, 2);
   if (lang != 'it' && lang != 'en' && lang != 'de') {
     $rootScope.lang = 'en';

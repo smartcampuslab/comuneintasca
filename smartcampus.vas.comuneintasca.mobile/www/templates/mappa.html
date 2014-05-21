@@ -1,23 +1,10 @@
 <ion-view title="{{title}}">
   <ion-content class="has-header" scroll="false">
     <div id="map1">
-      <google-map center="map.center" zoom="map.zoom" pan="map.pan" draggable="{{map.draggable}}" refresh="map.refresh">
-        <!--
-              <window coords="infoWindow.coords" show="infoWindow.show" isIconVisibleOnClick="infoWindow.isIconVisibleOnClick" closeClick="closeInfoWindow"  options="infoWindow.options">
-                {{infoWindow.content}}
-              </window>
-        -->
-        <!-- with WINDOW: click="openInfoWindow" -->
-        <!-- with WINDOWS: click="showInfoWindow = true" -->
-        <markers models="markers.models" coords="markers.coords" fit="markers.fit" icon="markers.icon" doCluster="markers.doCluster" doRebuildAll="markers.doRebuildAll" click="showInfoWindow = true">
-          <!-- icon="markers.icon"-->
-          <!-- click="markers.click"-->
-          <windows>
-            <!-- show="showInfoWindow" closeClick="showInfoWindow = false" ng-cloak-->
-            <p ng-non-bindable>{{title | translate}}</p>
-          </windows>
+      <div class="google-map" center="map.center" zoom="map.zoom" pan="map.pan" draggable="{{map.draggable}}" refresh="map.refresh">
+        <markers models="markers.models" coords="markers.coords" fit="markers.fit" icon="markers.icon" doCluster="markers.doCluster" click="openMarkerPopup">
         </markers>
-      </google-map>
+      </div>
     </div>
   </ion-content>
 </ion-view>

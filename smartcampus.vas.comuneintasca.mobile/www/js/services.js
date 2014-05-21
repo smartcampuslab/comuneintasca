@@ -612,7 +612,7 @@ angular.module('starter.services', [])
                         localStorage.homeObject = JSON.stringify(updates[0]);
                         return;
                       }
-                    
+
                       angular.forEach(updates, function (item, idx) {
                         tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [item.id]);
 
@@ -889,43 +889,43 @@ angular.module('starter.services', [])
         var dbitem = $q.defer();
         var lista = [];
         dbObj.transaction(function (tx) {
-          console.log('DatiDB.getAny(); itemIds: '+itemIds);
+          console.log('DatiDB.getAny(); itemIds: ' + itemIds);
           var conds = [];
           for (var i = 0; i < itemIds.length; i++) conds[i] = '?';
           var idCond = 'id IN (' + conds.join() + ')';
           var qParams = itemIds;
           var dbQuery = 'SELECT id, type, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE ' + idCond;
           //console.log('dbQuery: ' + dbQuery);
-          console.log('DatiDB.getAny("'+itemIds+'"); dbQuery launched...');
+          console.log('DatiDB.getAny("' + itemIds + '"); dbQuery launched...');
           tx.executeSql(dbQuery, qParams, function (tx2, results) {
-            console.log('DatiDB.get("'+itemIds+'"); dbQuery completed');
+            console.log('DatiDB.get("' + itemIds + '"); dbQuery completed');
             var resultslen = results.rows.length;
             if (resultslen > 0) {
               for (var i = 0; i < resultslen; i++) {
                 var item = results.rows.item(i);
                 lista.push(parseDbRow(item));
               }
-              Profiling.do('dbget','list');
+              Profiling.do('dbget', 'list');
               dbitem.resolve(lista);
             } else {
               console.log('not found!');
-              Profiling.do('dbgetany','sql empty');
+              Profiling.do('dbgetany', 'sql empty');
               dbitem.reject('not found!');
             }
           }, function (tx2, err) {
             $ionicLoading.hide();
             console.log('error: ' + err);
-            Profiling.do('dbgetany','sql error');
+            Profiling.do('dbgetany', 'sql error');
             dbitem.reject(err);
           });
         }, function (error) { //error callback
           $ionicLoading.hide();
           console.log('db.getAny() ERROR: ' + error);
-          Profiling.do('dbgetany','tx error');
+          Profiling.do('dbgetany', 'tx error');
           dbitem.reject(error);
         }, function () { //success callback
           $ionicLoading.hide();
-          Profiling.do('dbgetany','tx success');
+          Profiling.do('dbgetany', 'tx success');
         });
 
         return dbitem.promise;
@@ -1263,7 +1263,15 @@ angular.module('starter.services', [])
   };
 })
 
-.factory('MapHelper', function ($location) {
+.factory('MapHelper', function ($location, $filter, $ionicPopup) {
+  var keys = {
+    'Cancel': {
+      'it': 'Annulla',
+      'en': 'Cancel',
+      'de': 'Cancel'
+    }
+  };
+
   var map = {
     control: {},
     draggable: 'true',
@@ -1276,45 +1284,11 @@ angular.module('starter.services', [])
   };
 
   var markers = {
-    models: [{
-      latitude: 0,
-      longitude: 0
-    }, {
-      latitude: 0,
-      longitude: 0
-    }],
+    models: [],
     coords: 'self',
     icon: 'icon',
     fit: true,
     doCluster: true
-  };
-
-  var showInfoWindow = false;
-  var infoWindow = {
-    show: false,
-    coords: null,
-    content: '',
-    isIconVisibleOnClick: true,
-    options: null,
-  };
-
-  var openInfoWindow = function ($markerModel) {
-    infoWindow.coords = {
-      latitude: $markerModel.latitude,
-      longitude: $markerModel.longitude
-    };
-    infoWindow.content = $markerModel.latitude + ',' + $markerModel.longitude + '\n' + $markerModel.title.it;
-    infoWindow.options = {
-      content: infoWindow.content
-    };
-    infoWindow.show = true;
-    alert(infoWindow.content);
-  };
-
-  var closeInfoWindow = function () {
-    infoWindow.show = false;
-    infoWindow.coords = null;
-    infoWindow.options = null;
   };
 
   var title = '';
@@ -1336,19 +1310,39 @@ angular.module('starter.services', [])
         if (!!luogo.location) {
           luogo.latitude = luogo.location[0];
           luogo.longitude = luogo.location[1];
-          luogo.icon = 'https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=' + (!!categoriesIcons[luogo.category] ? categoriesIcons[luogo.category] : categoriesIcons['other']) + '|2975A7';
+          luogo.icon = 'https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=';
+          luogo.icon += (!!categoriesIcons[luogo.category] ? categoriesIcons[luogo.category] : categoriesIcons['other']) + '|2975A7';
           markers.models.push(luogo)
         }
       });
+
       $location.path('/app/mappa');
     },
     start: function ($scope) {
       $scope.map = map;
       $scope.markers = markers;
-      $scope.showInfoWindow = showInfoWindow;
-      $scope.infoWindow = infoWindow;
-      $scope.openInfoWindow = openInfoWindow;
-      $scope.closeInfoWindow = closeInfoWindow;
+
+      $scope.openMarkerPopup = function ($markerModel) {
+        var title = $filter('translate')($markerModel.title);
+        var template = '<div>';
+        template += title;
+        template += '</div>';
+
+        // An elaborate, custom popup
+        var myPopup = $ionicPopup.show({
+          template: template,
+          title: title,
+          scope: $scope,
+          buttons: [{
+            text: $filter('translate')(keys['Cancel'])
+        }]
+        });
+        $scope.show = myPopup;
+        myPopup.then(function (res) {
+          // console.log('Marker popup: ' + res);
+        });
+      }
+
       $scope.title = title;
     }
   };
@@ -1382,7 +1376,7 @@ angular.module('starter.services', [])
       'de': 'Filter'
     },
     'Cancel': {
-      'it': 'Annula',
+      'it': 'Annulla',
       'en': 'Cancel',
       'de': 'Cancel'
     },

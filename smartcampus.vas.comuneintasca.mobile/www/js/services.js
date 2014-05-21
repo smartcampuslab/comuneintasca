@@ -220,7 +220,7 @@ angular.module('starter.services', [])
       return 'TrentoInTasca';
     },
     schemaVersion: function () {
-      return 58;
+      return 60;
     },
     syncTimeoutSeconds: function () {
       return 60 * 60; /* 60 times 60 seconds = 1 HOUR */
@@ -325,6 +325,7 @@ angular.module('starter.services', [])
     console.log('geolocalization initing (cordova)...');
     document.addEventListener("deviceready", function () {
       console.log('geolocalization inited (cordova)');
+      navigator.splashscreen.hide();
       navigator.geolocation.watchPosition(function (position) {
         r = [position.coords.latitude, position.coords.longitude];
         $rootScope.myPosition = r;
@@ -473,14 +474,14 @@ angular.module('starter.services', [])
   };
 
   var currentSchemaVersion = 0;
-  if (localStorage.currentSchemaVersion) currentSchemaVersion = localStorage.currentSchemaVersion;
+  if (localStorage.currentSchemaVersion) currentSchemaVersion = Number(localStorage.currentSchemaVersion);
   console.log('currentSchemaVersion: ' + currentSchemaVersion);
 
   var currentDbVersion = 0,
     lastSynced = -1;
   if (currentSchemaVersion == SCHEMA_VERSION) {
-    if (localStorage.currentDbVersion) currentDbVersion = localStorage.currentDbVersion;
-    if (localStorage.lastSynced) lastSynced = localStorage.lastSynced;
+    if (localStorage.currentDbVersion) currentDbVersion = Number(localStorage.currentDbVersion);
+    if (localStorage.lastSynced) lastSynced = Number(localStorage.lastSynced);
   }
   console.log('currentDbVersion: ' + currentDbVersion);
   console.log('lastSynced: ' + lastSynced);
@@ -573,7 +574,8 @@ angular.module('starter.services', [])
           syncronization.resolve(currentDbVersion);
         } else {
           var now_as_epoch = parseInt((new Date).getTime() / 1000);
-          if (lastSynced == -1 || now_as_epoch > (lastSynced + Config.syncTimeoutSeconds())) {
+          var to = (lastSynced + Config.syncTimeoutSeconds());
+          if (lastSynced == -1 || now_as_epoch > to) {
             console.log((now_as_epoch - lastSynced) + ' seconds since last syncronization: checking web service...');
             lastSynced = now_as_epoch;
             localStorage.lastSynced = lastSynced;
@@ -647,7 +649,7 @@ angular.module('starter.services', [])
                               classification3 = classifications[2].trim();
                             }
                           }
-                          item.category = 'mainevent';
+                          item.category = 'ristorazione';
                         }
                         values = [item.id, item.version, contentTypeClassName, item.category, classification, classification2, classification3, JSON.stringify(item), ((item.location && item.location.length == 2) ? item.location[0] : -1), ((item.location && item.location.length == 2) ? item.location[1] : -1), item.updateTime];
                         tx.executeSql('INSERT INTO ContentObjects (id, version, type, category, classification, classification2, classification3, data, lat, lon, updateTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', values, function (tx, res) { //success callback

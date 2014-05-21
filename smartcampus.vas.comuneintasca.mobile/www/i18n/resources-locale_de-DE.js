@@ -21,51 +21,51 @@
     "description": "home button label"
   }, {
     "key": "home_btn_Conoscere",
-    "value": "DISCOVER",
+    "value": "KENNEN",
     "description": "side menu label"
   }, {
     "key": "home_btn_Vivere",
-    "value": "LIVE",
+    "value": "ERLEBEN",
     "description": "side menu label"
   }, {
     "key": "home_btn_Scoprire",
-    "value": "EXPLORE",
+    "value": "ENTDECKEN",
     "description": "side menu label"
   }, {
     "key": "home_btn_Percorsi",
-    "value": "TOURISTIC<br/>ITINERARIES",
+    "value": "TOUREN<br/>UND ROUTEN",
     "description": "side menu label"
   }, {
     "key": "home_btn_Mangiare-dormire",
-    "value": "RESTAURANTS<br/>& HOTELS",
+    "value": "ESSEN<br/>UND SCHLAFEN",
     "description": "side menu label"
   }, {
     "key": "home_btn_Info-utili",
-    "value": "CONTACTS",
+    "value": "KONTAKTE",
     "description": "side menu label"
   }, {
     "key": "sidemenu_div_Conoscere",
-    "value": "DISCOVER",
+    "value": "KENNEN",
     "description": "side menu label"
   }, {
     "key": "sidemenu_div_Vivere",
-    "value": "LIVE",
+    "value": "ERLEBEN",
     "description": "side menu label"
   }, {
     "key": "sidemenu_div_Scoprire",
-    "value": "EXPLORE",
+    "value": "ENTDECKEN",
     "description": "side menu label"
   }, {
     "key": "sidemenu_div_Percorsi",
-    "value": "TOURISTIC ITINERARIES",
+    "value": "TOUREN UND ROUTEN",
     "description": "side menu label"
   }, {
     "key": "sidemenu_div_Mangiare-dormire",
-    "value": "RESTAURANTS & HOTELS",
+    "value": "ESSEN UND SCHLAFEN",
     "description": "side menu label"
   }, {
     "key": "sidemenu_div_Info-utili",
-    "value": "CONTACTS",
+    "value": "KONTAKTE",
     "description": "side menu label"
   }, {
     "key": "sidemenu_Info",

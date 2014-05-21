@@ -1283,8 +1283,8 @@ angular.module('starter.services', [])
     control: {},
     draggable: 'true',
     center: {
-      latitude: 45,
-      longitude: 11
+      latitude: 46.07,
+      longitude: 11.12
     },
     zoom: 8,
     pan: false
@@ -1329,6 +1329,8 @@ angular.module('starter.services', [])
       $scope.activeMarker = null;
       $scope.map = map;
       $scope.markers = markers;
+
+      console.log('[cordova] map started!!!');
 
       $scope.openMarkerPopup = function ($markerModel) {
         $scope.activeMarker = $markerModel;

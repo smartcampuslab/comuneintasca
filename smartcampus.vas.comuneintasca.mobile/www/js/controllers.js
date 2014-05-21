@@ -15,48 +15,52 @@ angular.module('starter.controllers', ['google-maps'])
     return $scope.shownGroup == groupId;
   };
 
-//  $scope.credits = $ionicModal.fromTemplate('<div class="modal"><ion-header-bar><h1>titolo</h1></ion-header-bar><ion-content>contenuto</ion-content></div>', {
+  //  $scope.credits = $ionicModal.fromTemplate('<div class="modal"><ion-header-bar><h1>titolo</h1></ion-header-bar><ion-content>contenuto</ion-content></div>', {
   $ionicModal.fromTemplateUrl('templates/credits.html', {
     scope: $scope,
     animation: 'slide-in-up'
   })
-  .then(function(modal){
-    $scope.credits = modal;
-  })
-  ;
-  $scope.showCredits=function(){
+    .then(function (modal) {
+      $scope.credits = modal;
+    });
+  $scope.showCredits = function () {
     console.log($scope);
     $scope.credits.show();
   };
-  $scope.$on('$destroy', function() {
+  $scope.$on('$destroy', function () {
     $scope.credits.remove();
   });
 })
 
 .controller('HomeCtrl', function ($scope, $rootScope, DatiDB, $filter, $ionicSlideBoxDelegate, $location) {
-  $rootScope.inHome=true;
-  var navbarElement=angular.element(document.getElementById('navbar'));
+  $rootScope.inHome = true;
+  var navbarElement = angular.element(document.getElementById('navbar'));
   navbarElement.addClass('bar-comuni-home');
-  $scope.$on('$destroy', function() {
+  $scope.$on('$destroy', function () {
     navbarElement.removeClass('bar-comuni-home');
   });
 
   $scope.slides = null;
-  $scope.goToItem = function(link) {
+  $scope.goToItem = function (link) {
     $location.path(link.substring(1));
   }
-  DatiDB.sync().then(function(data) {
+  DatiDB.sync().then(function (data) {
     var homeObject = JSON.parse(localStorage.homeObject);
     var homeObjects = homeObject.contentIds;
-    DatiDB.getAny(homeObjects).then(function(data){
+    DatiDB.getAny(homeObjects).then(function (data) {
       var slides = [];
       for (var i = 0; i < data.length; i++) {
-        slides.push({title:$filter('translate')(data[i].title),img:data[i].image,id:data[i].id, ref:data[i].abslink});
+        slides.push({
+          title: $filter('translate')(data[i].title),
+          img: data[i].image,
+          id: data[i].id,
+          ref: data[i].abslink
+        });
       }
       if (slides.length > 0) {
         $scope.slides = slides;
         //$ionicSlideBoxDelegate.update();
-      }  
+      }
     });
   });
 
@@ -404,13 +408,26 @@ $scope.show = function() {
 
 .controller('ItinerarioTappeCtrl', function ($scope, DatiDB, $stateParams) {})
 
-.controller('ItinerarioMappaCtrl', function ($scope, DatiDB, $stateParams) {
+.controller('ItinerarioMappaCtrl', function ($scope, DatiDB, $stateParams, $filter, $ionicPopup) {
+  var keys = {
+    'Details': {
+      'it': 'Dettagli',
+      'en': 'Details',
+      'de': 'Details'
+    },
+    'Cancel': {
+      'it': 'Annulla',
+      'en': 'Cancel',
+      'de': 'Cancel'
+    }
+  };
+
   $scope.map = {
     control: {},
     draggable: 'true',
     center: {
-      latitude: 0,
-      longitude: 0
+      latitude: 46.07,
+      longitude: 11.12
     },
     zoom: 8,
     pan: false
@@ -438,6 +455,43 @@ $scope.show = function() {
     // click: 'openInfoWindow($markerModel)',
     doCluster: false
   };
+
+  $scope.openMarkerPopup = function ($markerModel) {
+    $scope.activeMarker = $markerModel;
+
+    var title = $filter('translate')($markerModel.title);
+    var template = '<div>';
+    template += title;
+    template += '</div>';
+    var templateUrl = 'templates/mappa_popup.html';
+
+    // An elaborate, custom popup
+    var myPopup = $ionicPopup.show({
+      // template: template,
+      templateUrl: templateUrl,
+      title: $filter('translate')($scope.activeMarker.title),
+      subTitle: !!$scope.activeMarker.distance ? $filter('number')($scope.activeMarker.distance, 1) + ' Km' : '',
+      scope: $scope,
+      buttons: [{
+        text: $filter('translate')(keys['Cancel']),
+        type: 'button-default',
+        onTap: function (e) {
+          $scope.activeMarker = null;
+        }
+            }, {
+        text: $filter('translate')(keys['Details']),
+        type: 'button-positive',
+        onTap: function (e) {
+          var itemUrl = $scope.activeMarker.abslink.substring(1);
+          $location.path(itemUrl);
+        }
+        }]
+    });
+    $scope.show = myPopup;
+    myPopup.then(function (res) {
+      // console.log('Marker popup: ' + res);
+    });
+  }
 
   $scope.polylineOptions = {
     strokeColor: '#ff0000',
@@ -478,8 +532,6 @@ $scope.show = function() {
     }
   };
    */
-
-  $scope.showInfoWindow = false;
 
   /*
   var directionsService = new google.maps.DirectionsService();

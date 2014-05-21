@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['google-maps'])
 
-.controller('MenuCtrl', function ($scope) {
+.controller('MenuCtrl', function ($scope, $ionicModal) {
   $scope.shownGroup = null;
 
   $scope.showGroup = function (groupId) {
@@ -14,6 +14,23 @@ angular.module('starter.controllers', ['google-maps'])
   $scope.isGroupShown = function (groupId) {
     return $scope.shownGroup == groupId;
   };
+
+//  $scope.credits = $ionicModal.fromTemplate('<div class="modal"><ion-header-bar><h1>titolo</h1></ion-header-bar><ion-content>contenuto</ion-content></div>', {
+  $ionicModal.fromTemplateUrl('templates/credits.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  })
+  .then(function(modal){
+    $scope.credits = modal;
+  })
+  ;
+  $scope.showCredits=function(){
+    console.log($scope);
+    $scope.credits.show();
+  };
+  $scope.$on('$destroy', function() {
+    $scope.credits.remove();
+  });
 })
 
 .controller('HomeCtrl', function ($scope, DatiDB, $filter,$ionicSlideBoxDelegate, $location) {

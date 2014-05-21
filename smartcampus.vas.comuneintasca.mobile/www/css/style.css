@@ -45,8 +45,14 @@ blu scuro: #1b4d6e;
 //  background-image: linear-gradient(0deg, #2975a7, #2975a7 50%, transparent 50%);
   background-image:url(../svg/flag.svg);background-repeat: no-repeat;background-position: top left;background-size:auto 100%;
 }
+.bar.bar-comuni #credits-button {
+  display: none;
+}
 .bar.bar-comuni-home {
   border: none;
+}
+.bar.bar-comuni-home #credits-button {
+  display: block;
 }
 h1,
 h2 {
@@ -279,4 +285,14 @@ ion-side-menu .item {
 
 h1,h2,h3,h4,h5,h6,#home-buttons b, ion-side-menu b {
   font-family: 'HelveticaNeue-CondensedBold';
+}
+
+#credits .row {
+  display: table;
+  height:100%;
+}
+#credits .col {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
 }

@@ -2,12 +2,14 @@
 .scroll-content > #map2 {
   height: 100%;
 }
+/*
 .platform-ios .tabs {
   height: 70px;
 }
 .platform-ios .has-tabs {
   bottom: 70px;
 }
+*/
 ion-footer-bar.bar {
   padding:0;
 }
@@ -15,10 +17,10 @@ ion-footer-bar.bar {
   /*    background-color: #999; color:#fff; border-top:2px solid #000;*/
   padding: .3em .5em;
 }
-/*
-.pane, .view {
-  background-color: #fff;
+.menu-open ion-side-menu {
+  z-index:1 !important;
 }
+/*
 .content-stable {
   background-color: #2976aa;
   color:#fff;
@@ -291,11 +293,13 @@ h1,h2,h3,h4,h5,h6,#home-buttons b, ion-side-menu b {
 #credits .row {
   display: table;
   height:100%;
+  padding:0;
 }
 #credits .col {
   display: table-cell;
   vertical-align: middle;
   text-align: center;
+  padding:0;
 }
 .map-popup {
   text-align: center;

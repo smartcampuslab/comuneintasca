@@ -43,10 +43,16 @@ blu scuro: #1b4d6e;
   background-color: #b7d6e8;
   color: #1b4d6e;
 //  background-image: linear-gradient(0deg, #2975a7, #2975a7 50%, transparent 50%);
-  background-image:url(../svg/flag.svg);background-repeat: no-repeat;background-position: top left;background-size:auto 100%;
+}
+.bar.bar-comuni #credits-button {
+  display: none;
 }
 .bar.bar-comuni-home {
   border: none;
+  background-image:url(../svg/flag.svg);background-repeat: no-repeat;background-position: top left;background-size:auto 100%;
+}
+.bar.bar-comuni-home #credits-button {
+  display: block;
 }
 h1,
 h2 {
@@ -158,6 +164,7 @@ ion-side-menu .item {
   background-color: rgba(0, 0, 0, .7);
   color: #fff;
   padding: .5em;
+  text-align: center;
 }
 .hp-box.festival {
   background-image: url(../img/hp-box/festivaleconomia.png);
@@ -186,6 +193,7 @@ ion-side-menu .item {
   text-overflow: ellipsis;
   text-align: left;
   display: table;
+  border:none;
 }
 #home-buttons button b {
   display: table-cell;
@@ -279,6 +287,15 @@ ion-side-menu .item {
 
 h1,h2,h3,h4,h5,h6,#home-buttons b, ion-side-menu b {
   font-family: 'HelveticaNeue-CondensedBold';
+}
+#credits .row {
+  display: table;
+  height:100%;
+}
+#credits .col {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
 }
 .map-popup {
   text-align: center;

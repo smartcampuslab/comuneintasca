@@ -3,19 +3,8 @@
     "key": "sidemenu_Title",
     "value": "TRENTO",
     "description": "side menu label"
-  }, {
-    "key": "sidemenu_Home",
-    "value": "Prima pagina",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Favourites",
-    "value": "Preferiti",
-    "description": "side menu label"
-  }, {
-    "key": "list_no-favourites",
-    "value": "nessun preferito salvato",
-    "description": "favourites list results"
-  }, {
+  },
+  {
     "key": "home_btn_Viaggia-Trento",
     "value": "VIAGGIA<br/>TRENTO",
     "description": "home button label"
@@ -33,7 +22,7 @@
     "description": "side menu label"
   }, {
     "key": "home_btn_Percorsi",
-    "value": "PERCORSI<br/>TURISTICI",
+    "value": "PERCORSI",
     "description": "side menu label"
   }, {
     "key": "home_btn_Mangiare-dormire",
@@ -43,7 +32,8 @@
     "key": "home_btn_Info-utili",
     "value": "INFO UTILI",
     "description": "side menu label"
-  }, {
+  },
+  {
     "key": "sidemenu_div_Conoscere",
     "value": "CONOSCERE",
     "description": "side menu label"
@@ -57,7 +47,7 @@
     "description": "side menu label"
   }, {
     "key": "sidemenu_div_Percorsi",
-    "value": "PERCORSI TURISTICI",
+    "value": "PERCORSI",
     "description": "side menu label"
   }, {
     "key": "sidemenu_div_Mangiare-dormire",
@@ -67,6 +57,19 @@
     "key": "sidemenu_div_Info-utili",
     "value": "INFO UTILI",
     "description": "side menu label"
+  },
+  {
+    "key": "sidemenu_Home",
+    "value": "Prima pagina",
+    "description": "side menu label"
+  }, {
+    "key": "sidemenu_Favourites",
+    "value": "Preferiti",
+    "description": "side menu label"
+  }, {
+    "key": "list_no-favourites",
+    "value": "nessun preferito salvato",
+    "description": "favourites list results"
   }, {
     "key": "sidemenu_Info",
     "value": "Informazioni",
@@ -93,15 +96,15 @@
     "description": "side menu label"
   }, {
     "key": "sidemenu_Itinerari",
-    "value": "Itinerari",
+    "value": "Percorsi Turistici",
     "description": "side menu label"
   }, {
     "key": "sidemenu_Hotel",
-    "value": "Hotel",
+    "value": "Dormire",
     "description": "side menu label"
   }, {
     "key": "sidemenu_Ristoranti",
-    "value": "Ristoranti",
+    "value": "Mangiare",
     "description": "side menu label"
   }, {
     "key": "sidemenu_Servizi",
@@ -109,19 +112,20 @@
     "description": "side menu label"
   }, {
     "key": "sidemenu_Uffici-comunali",
-    "value": "Uffici Comunali",
+    "value": "Contatti",
     "description": "side menu label"
-  }, {
+  },
+  {
     "key": "leaf_Itinerario",
     "value": "Itinerario",
     "description": "detail label"
   }, {
-    "key": "leaf_Hotel",
-    "value": "Hotel",
-    "description": "detail label"
-  }, {
     "key": "leaf_Event",
     "value": "Evento",
+    "description": "detail label"
+  }, {
+    "key": "leaf_Hotel",
+    "value": "Hotel",
     "description": "detail label"
   }, {
     "key": "leaf_Restaurant",
@@ -167,5 +171,9 @@
     "key": "search",
     "value": "Cerca",
     "description": "button"
+  }, {
+    "key": "credits_title",
+    "value": "Credits",
+    "description": "credits popup title"
   }
 ]

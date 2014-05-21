@@ -1,10 +1,10 @@
 <ion-view title="{{title}}">
   <ion-content class="has-header" scroll="false">
     <div id="map1">
-      <div class="google-map" center="map.center" zoom="map.zoom" pan="map.pan" draggable="{{map.draggable}}" refresh="map.refresh">
+      <google-map data-tap-disabled="true" center="map.center" zoom="map.zoom" pan="map.pan" draggable="{{map.draggable}}" refresh="map.refresh">
         <markers models="markers.models" coords="markers.coords" fit="markers.fit" icon="markers.icon" doCluster="markers.doCluster" click="openMarkerPopup">
         </markers>
-      </div>
+      </google-map>
     </div>
   </ion-content>
 </ion-view>

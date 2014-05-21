@@ -71,10 +71,10 @@ angular.module('starter.controllers', ['google-maps'])
         console.log('VIAGGIA TRENTO: success.');
       }, function () {
         console.log('VIAGGIA TRENTO: failed!');
-        window.open('https://play.google.com/store/apps/details?id=eu.trentorise.smartcampus.viaggiatrento','_system');
+        window.open('https://play.google.com/store/apps/details?id=eu.trentorise.smartcampus.viaggiatrento', '_system');
       });
     } else {
-      window.open('https://play.google.com/store/apps/details?id=eu.trentorise.smartcampus.viaggiatrento','_blank');
+      window.open('https://play.google.com/store/apps/details?id=eu.trentorise.smartcampus.viaggiatrento', '_blank');
     }
   };
 
@@ -419,13 +419,26 @@ angular.module('starter.controllers', ['google-maps'])
 
 .controller('ItinerarioTappeCtrl', function ($scope, DatiDB, $stateParams) {})
 
-.controller('ItinerarioMappaCtrl', function ($scope, DatiDB, $stateParams) {
+.controller('ItinerarioMappaCtrl', function ($scope, DatiDB, $stateParams, $filter, $ionicPopup, $location) {
+  var keys = {
+    'Details': {
+      'it': 'Dettagli',
+      'en': 'Details',
+      'de': 'Details'
+    },
+    'Cancel': {
+      'it': 'Annulla',
+      'en': 'Cancel',
+      'de': 'Cancel'
+    }
+  };
+
   $scope.map = {
     control: {},
     draggable: 'true',
     center: {
-      latitude: 0,
-      longitude: 0
+      latitude: 46.07,
+      longitude: 11.12
     },
     zoom: 8,
     pan: false
@@ -453,6 +466,43 @@ angular.module('starter.controllers', ['google-maps'])
     // click: 'openInfoWindow($markerModel)',
     doCluster: false
   };
+
+  $scope.openMarkerPopup = function ($markerModel) {
+    $scope.activeMarker = $markerModel;
+
+    var title = $filter('translate')($markerModel.title);
+    var template = '<div>';
+    template += title;
+    template += '</div>';
+    var templateUrl = 'templates/mappa_popup.html';
+
+    // An elaborate, custom popup
+    var myPopup = $ionicPopup.show({
+      // template: template,
+      templateUrl: templateUrl,
+      title: $filter('translate')($scope.activeMarker.title),
+      subTitle: !!$scope.activeMarker.distance ? $filter('number')($scope.activeMarker.distance, 1) + ' Km' : '',
+      scope: $scope,
+      buttons: [{
+        text: $filter('translate')(keys['Cancel']),
+        type: 'button-default',
+        onTap: function (e) {
+          $scope.activeMarker = null;
+        }
+            }, {
+        text: $filter('translate')(keys['Details']),
+        type: 'button-positive',
+        onTap: function (e) {
+          var itemUrl = $scope.activeMarker.abslink.substring(1);
+          $location.path(itemUrl);
+        }
+        }]
+    });
+    $scope.show = myPopup;
+    myPopup.then(function (res) {
+      // console.log('Marker popup: ' + res);
+    });
+  }
 
   $scope.polylineOptions = {
     strokeColor: '#ff0000',
@@ -493,8 +543,6 @@ angular.module('starter.controllers', ['google-maps'])
     }
   };
    */
-
-  $scope.showInfoWindow = false;
 
   /*
   var directionsService = new google.maps.DirectionsService();

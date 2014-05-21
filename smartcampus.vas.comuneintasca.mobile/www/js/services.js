@@ -889,7 +889,6 @@ angular.module('starter.services', [])
         });
 
         var dbitem = $q.defer();
-        var lista = [];
         dbObj.transaction(function (tx) {
           console.log('DatiDB.getAny(); itemIds: ' + itemIds);
           var conds = [];
@@ -902,11 +901,21 @@ angular.module('starter.services', [])
           tx.executeSql(dbQuery, qParams, function (tx2, results) {
             console.log('DatiDB.get("' + itemIds + '"); dbQuery completed');
             var resultslen = results.rows.length;
+            var res = {};
+            var lista = [];
             if (resultslen > 0) {
               for (var i = 0; i < resultslen; i++) {
                 var item = results.rows.item(i);
-                lista.push(parseDbRow(item));
+                var row = parseDbRow(item); 
+                res[row.id] = row;
               }
+              for (var i = 0; i < itemIds.length; i++) {
+                if (res[itemIds[i]] != null) {
+                  lista.push(res[itemIds[i]]);
+                }
+              }
+              
+              lista.push();
               Profiling.do('dbget', 'list');
               dbitem.resolve(lista);
             } else {
@@ -1283,8 +1292,8 @@ angular.module('starter.services', [])
     control: {},
     draggable: 'true',
     center: {
-      latitude: 45,
-      longitude: 11
+      latitude: 46.07,
+      longitude: 11.12
     },
     zoom: 8,
     pan: false
@@ -1329,6 +1338,8 @@ angular.module('starter.services', [])
       $scope.activeMarker = null;
       $scope.map = map;
       $scope.markers = markers;
+
+      console.log('[cordova] map started!!!');
 
       $scope.openMarkerPopup = function ($markerModel) {
         $scope.activeMarker = $markerModel;

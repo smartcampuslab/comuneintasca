@@ -11,7 +11,7 @@
 }
 */
 ion-footer-bar.bar {
-  padding:0;
+  padding: 0;
 }
 .item-divider {
   /*    background-color: #999; color:#fff; border-top:2px solid #000;*/
@@ -44,14 +44,18 @@ blu scuro: #1b4d6e;
   border-color: #2975a7;
   background-color: #b7d6e8;
   color: #1b4d6e;
-//  background-image: linear-gradient(0deg, #2975a7, #2975a7 50%, transparent 50%);
+  //  background-image: linear-gradient(0deg, #2975a7, #2975a7 50%, transparent 50%);
+
 }
 .bar.bar-comuni #credits-button {
   display: none;
 }
 .bar.bar-comuni-home {
   border: none;
-  background-image:url(../svg/flag.svg);background-repeat: no-repeat;background-position: top left;background-size:auto 100%;
+  background-image: url(../svg/flag.svg);
+  background-repeat: no-repeat;
+  background-position: top left;
+  background-size: auto 100%;
 }
 .bar.bar-comuni-home #credits-button {
   display: block;
@@ -181,7 +185,7 @@ ion-side-menu .item {
   background-image: url(../img/hp-box/trento.png);
 }
 #home-buttons button {
-  background-color:#b7d6e8;
+  background-color: #b7d6e8;
   color: #2975a7;
   margin: 0;
   height: 32px;
@@ -195,7 +199,7 @@ ion-side-menu .item {
   text-overflow: ellipsis;
   text-align: left;
   display: table;
-  border:none;
+  border: none;
 }
 #home-buttons button b {
   display: table-cell;
@@ -203,13 +207,14 @@ ion-side-menu .item {
   vertical-align: middle;
 }
 #home-buttons button.variant {
-  background-color:#fff;
+  background-color: #fff;
 }
 .angular-google-map-container {
   height: 800px;
 }
 .comuneicon::before {
-  line-height:32px !important;font-size:32px !important;
+  line-height: 32px !important;
+  font-size: 32px !important;
 }
 .comuni-button {
   color: #2975a7;
@@ -251,7 +256,7 @@ ion-side-menu .item {
   color: #ffffff;
   opacity: 0.5;
   font-weight: bold;
-  padding:.5em;
+  padding: .5em;
 }
 .list .item.item-header i.icon {
   padding-right: 10px;
@@ -266,28 +271,33 @@ ion-side-menu .item {
 .list .item.item-accordion.ng-hide-remove {
   display: block !important;
 }
-
-
 .home-container {
-    position: relative;
-    height: 100%;
+  position: relative;
+  height: 100%;
 }
 .home-box-top {
-    position:absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 240px; /* or whatever height of upper div*/
-    background: red;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 240px;
+  /* or whatever height of upper div*/
+  background: red;
 }
 .home-box-bottom {
-  position:absolute;
-  left:0;
-  bottom:0;
-  width:100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
 }
-
-h1,h2,h3,h4,h5,h6,#home-buttons b, ion-side-menu b {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+#home-buttons b,
+ion-side-menu b {
   font-family: 'HelveticaNeue-CondensedBold';
 }
 #credits .row {

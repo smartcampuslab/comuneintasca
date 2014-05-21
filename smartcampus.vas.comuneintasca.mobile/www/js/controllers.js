@@ -33,11 +33,17 @@ angular.module('starter.controllers', ['google-maps'])
   });
 })
 
-.controller('HomeCtrl', function ($scope, DatiDB, $filter,$ionicSlideBoxDelegate, $location) {
+.controller('HomeCtrl', function ($scope, $rootScope, DatiDB, $filter, $ionicSlideBoxDelegate, $location) {
+  $rootScope.inHome=true;
+  var navbarElement=angular.element(document.getElementById('navbar'));
+  navbarElement.addClass('bar-comuni-home');
+  $scope.$on('$destroy', function() {
+    navbarElement.removeClass('bar-comuni-home');
+  });
+
   $scope.slides = null;
   $scope.goToItem = function(link) {
-    var p = link.substring(1);
-    $location.path(p);
+    $location.path(link.substring(1));
   }
   DatiDB.sync().then(function(data) {
     var homeObject = JSON.parse(localStorage.homeObject);

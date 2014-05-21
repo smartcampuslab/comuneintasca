@@ -26,7 +26,7 @@
     "description": "side menu label"
   }, {
     "key": "home_btn_Mangiare-dormire",
-    "value": "GASTRONOMIE UND<br/>ÜBERNACHTUNG",
+    "value": "ÜBERNACHTUNG<br/>UND GASTRONOMIE",
     "description": "side menu label"
   }, {
     "key": "home_btn_Info-utili",
@@ -51,7 +51,7 @@
     "description": "side menu label"
   }, {
     "key": "sidemenu_div_Mangiare-dormire",
-    "value": "GASTRONOMIE UND ÜBERNACHTUNG",
+    "value": "ÜBERNACHTUNG UND GASTRONOMIE",
     "description": "side menu label"
   }, {
     "key": "sidemenu_div_Info-utili",

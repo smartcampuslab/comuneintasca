@@ -34,6 +34,11 @@ angular.module('starter.services', [])
     }
   };
   var eventTypes = {
+    'all': {
+      de: 'Alle Veranstaltungen',
+      it: 'Tutti gli eventi',
+      en: 'All events'
+    },
     'fairs': {
       de: 'Festivals, Märkte und Messen',
       it: 'Feste, mercati e fiere',
@@ -681,7 +686,7 @@ angular.module('starter.services', [])
                   });
                   // TODO events cleanup
                   var nowTime = (new Date()).getTime();
-                  tx.executeSql('DELETE FROM ContentObjects WHERE refTime < '+nowTime, [], function (tx, res) { //success callback
+                  tx.executeSql('DELETE FROM ContentObjects WHERE type = "eu.trentorise.smartcampus.comuneintasca.model.EventObject" AND refTime < '+nowTime, [], function (tx, res) { //success callback
                           console.log('deleted old events');
                         }, function (e) { //error callback
                           console.log('unable to delete old events: ' + e.message);

@@ -323,8 +323,9 @@ angular.module('starter.controllers', ['google-maps'])
     load: function (cache) {
       if (cache) {
         $scope.events = cache;
+          $scope.cate = Config.eventCateFromType($stateParams.eventType);
       } else {
-        if ($stateParams.eventType) {
+        if ($stateParams.eventType && $stateParams.eventType != 'all') {
           $scope.cate = Config.eventCateFromType($stateParams.eventType);
           Profiling.start('eventslist');
           $scope.gotdata = DatiDB.cate('event', $scope.cate.it).then(function (data) {
@@ -333,6 +334,7 @@ angular.module('starter.controllers', ['google-maps'])
           });
         } else {
           $scope.gotdata = DatiDB.all('event').then(function (data) {
+            $scope.cate = Config.eventCateFromType('all');
             $scope.events = data;
           });
         }

@@ -13,19 +13,20 @@
   <preference name="webviewbounce" value="false" />
   <preference name="UIWebViewBounce" value="false" />
   <preference name="DisallowOverscroll" value="true" />
-  <preference name="Orientation" value="portrait" />
   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true" />
   </feature>
   <preference name="StatusBarOverlaysWebView" value="false" />
+  <preference name="BackgroundColor" value="0xff2976aa" />
   <preference name="StatusBarBackgroundColor" value="#000000" />
   <preference name="AndroidPersistentFileLocation" value="Compatibility" />
   <preference name="iosPersistentFileLocation" value="Compatibility" />
-  <preference name="LoadUrlTimeoutValue" value="5000"/>
   <preference name="SplashScreen" value="splash"/>
   <preference name="SplashScreenDelay" value="2000"/>
   <preference name="KeyboardDisplayRequiresUserAction" value="false"/>
+  <preference name="LoadUrlTimeoutValue" value="20000" />
   <feature name="Keyboard">
     <param name="ios-package" value="IonicKeyboard" onload="true" />
   </feature>
+  <!-- preference name="Orientation" value="portrait" / -->
 </widget>

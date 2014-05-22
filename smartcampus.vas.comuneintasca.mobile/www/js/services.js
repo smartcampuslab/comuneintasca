@@ -267,7 +267,7 @@ angular.module('starter.services', [])
       return 'TrentoInTasca';
     },
     schemaVersion: function () {
-      return 63;
+      return 64;
     },
     syncTimeoutSeconds: function () {
       return 60 * 60; /* 60 times 60 seconds = 1 HOUR */
@@ -388,7 +388,7 @@ angular.module('starter.services', [])
         localization.reject('cannot geolocate (web)');
       }, {
         maximumAge: (5 * 60 * 1000), //5 mins
-        timeout: 1000, //1 sec
+        timeout: 10*1000, //10 secs
         enableHighAccuracy: true
       });
     }, false);

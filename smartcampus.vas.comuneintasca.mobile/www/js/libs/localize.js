@@ -141,7 +141,7 @@ angular.module('localization', [])
     .filter('i18nplur', ['localize', function (localize) {
         return function (input, count) {
 		    var key = input;
-			if (!count) return '';
+			if (count == null) return '';
 			if (count == 1)  key += '_single'; 
 			else  key += '_plural'; 
             return count + ' ' + localize.getLocalizedString(key);

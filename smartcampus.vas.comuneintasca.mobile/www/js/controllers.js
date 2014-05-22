@@ -269,6 +269,9 @@ angular.module('starter.controllers', ['google-maps'])
   ListToolbox.prepare($scope, {
     load: function (cache) {
       if (cache) {
+        if ($stateParams.placeType) {
+          $scope.cate = Config.poiCateFromType($stateParams.placeType);
+        }  
         $scope.places = cache;
       } else {
         if ($stateParams.placeType) {
@@ -317,35 +320,71 @@ angular.module('starter.controllers', ['google-maps'])
 })
 
 
-.controller('EventsListCtrl', function ($scope, $stateParams, DatiDB, Config, ListToolbox, Profiling) {
+.controller('EventsListCtrl', function ($scope, $stateParams, $filter, DatiDB, Config, ListToolbox, Profiling) {
   $scope.dateFormat = 'EEEE d MMMM yyyy';
+
+  if ($stateParams.eventType && $stateParams.eventType != 'all') {
+    $scope.cate = Config.eventCateFromType($stateParams.eventType);
+  } else {
+    $scope.cate = Config.eventCateFromType('all');
+  }
+  
+  $scope.filterDef = function () {
+    if ($scope.filter) {
+      return $filter('translate')(Config.eventFilterTypeList()[$scope.filter])+': ';
+    } 
+    else return '';
+  }
+  
+  var search = function (filter) {
+      var t;
+      var d = new Date();
+      var f = new Date(d.getFullYear(),d.getMonth(),d.getDate()).getTime()-1;
+      if (filter == 'today') {
+        t = new Date(d.getFullYear(),d.getMonth(),d.getDate()+1).getTime();
+      } else if (filter == 'week') {
+        t = new Date(d.getFullYear(),d.getMonth(),d.getDate()+7).getTime();
+      } else if (filter == 'month') {
+        t = new Date(d.getFullYear(),d.getMonth(),d.getDate()+30).getTime();
+      } else {
+        t = 0;
+      }
+      var post = function (data) {
+          if (data) $scope.events = data;
+          else $scope.events = [];
+      };
+      if (t > 0) {
+        if ($stateParams.eventType && $stateParams.eventType != 'all') {
+          $scope.gotdata = DatiDB.byTimeInterval('event', f, t, $scope.cate.it).then(post);
+        } else {
+          $scope.gotdata = DatiDB.byTimeInterval('event', f, t, null).then(post);
+        }  
+      } else {
+        if ($stateParams.eventType && $stateParams.eventType != 'all') {
+          $scope.gotdata = DatiDB.cate('event', $scope.cate.it).then(post);
+        } else {
+          $scope.gotdata = DatiDB.all('event').then(post);
+        }
+      }
+  };
   ListToolbox.prepare($scope, {
     load: function (cache) {
       if (cache) {
         $scope.events = cache;
-          $scope.cate = Config.eventCateFromType($stateParams.eventType);
+        $scope.cate = Config.eventCateFromType($stateParams.eventType);
       } else {
-        if ($stateParams.eventType && $stateParams.eventType != 'all') {
-          $scope.cate = Config.eventCateFromType($stateParams.eventType);
-          Profiling.start('eventslist');
-          $scope.gotdata = DatiDB.cate('event', $scope.cate.it).then(function (data) {
-            $scope.events = data;
-            Profiling.do('eventslist');
-          });
-        } else {
-          $scope.gotdata = DatiDB.all('event').then(function (data) {
-            $scope.cate = Config.eventCateFromType('all');
-            $scope.events = data;
-          });
-        }
+        search('today');
       }
     },
     getData: function () {
       return $scope.events;
     },
-    orderingTypes: ['A-Z', 'Z-A', 'Date'],
-    defaultOrdering: 'Date',
-    hasSearch: true
+    orderingTypes: ['A-Z', 'Z-A', 'DateFrom', 'DateTo'],
+    defaultOrdering: 'DateFrom',
+    hasSearch: true,
+    filterOptions: Config.eventFilterTypeList(),
+    doFilter: search,
+    defaultFilter: 'today'
   });
 })
 

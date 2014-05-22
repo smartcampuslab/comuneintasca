@@ -217,6 +217,24 @@ angular.module('starter.services', [])
     'home': 'eu.trentorise.smartcampus.comuneintasca.model.HomeObject'
   };
 
+  var eventFilterTypes = {
+    'today' : {
+      it: 'Oggi',
+      en: 'Today',
+      de: 'Heute'
+    },
+    'week' : {
+      it: 'Settimana',
+      en: 'Week',
+      de: 'Woche'
+    },
+    'month' : {
+      it: 'Mese',
+      en: 'Month',
+      de: 'Monat'
+    }
+  };
+  
   return {
     doProfiling: function () {
       return true;
@@ -225,7 +243,7 @@ angular.module('starter.services', [])
       return 'TrentoInTasca';
     },
     schemaVersion: function () {
-      return 61;
+      return 62;
     },
     syncTimeoutSeconds: function () {
       return 60 * 60; /* 60 times 60 seconds = 1 HOUR */
@@ -240,6 +258,9 @@ angular.module('starter.services', [])
     },
     contentTypesList: function () {
       return contentTypes;
+    },
+    eventFilterTypeList: function() {
+      return eventFilterTypes;
     },
     contentKeyFromDbType: function (dbtype) {
       for (var contentType in contentTypes) {
@@ -475,6 +496,8 @@ angular.module('starter.services', [])
     } else {
       console.log('item.location UNKNOWN');
     }
+    if (dbrow.fromTime > 0) item['fromTime'] = dbrow.fromTime;
+    if (dbrow.toTime > 0) item['toTime'] = dbrow.toTime;
     return item;
   };
 
@@ -530,7 +553,7 @@ angular.module('starter.services', [])
       console.log('initializing database...');
       dbObj.transaction(function (tx) {
         tx.executeSql('DROP TABLE IF EXISTS ContentObjects');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS ContentObjects (id text primary key, version integer, type text, category text, classification text, classification2 text, classification3 text, data text, lat real, lon real, refTime integer)');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS ContentObjects (id text primary key, version integer, type text, category text, classification text, classification2 text, classification3 text, data text, lat real, lon real, fromTime integer, toTime integer)');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_id ON ContentObjects( id )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_type ON ContentObjects( type )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_cate ON ContentObjects( category )');
@@ -622,6 +645,8 @@ angular.module('starter.services', [])
 
                       angular.forEach(updates, function (item, idx) {
                         tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [item.id]);
+                        var fromTime = 0;
+                        var toTime = 0; 
 
                         var classification = '',
                           classification2 = '',
@@ -639,6 +664,9 @@ angular.module('starter.services', [])
                             classification = category; //category.substring(startMrkr.length, category.indexOf(endMrkr)) || '';
                             if (!classification || classification.toString() == 'false') classification = Config.eventCateFromType('misc').it;
                             console.log('event cate: ' + classification);
+                            fromTime = item.fromTime;
+                            if (item.toTime > 0) toTime = item.toTime;
+                            else toTime = fromTime;
                           }
                         } else if (contentTypeKey == 'mainevent') {
                           classification = item.classification.it;
@@ -656,9 +684,8 @@ angular.module('starter.services', [])
                           }
                           item.category = 'ristorazione';
                         }
-                        var refTime = contentTypeKey != 'event' ? 0 : item.toTime > 0 ? item.toTime : item.fromTime; 
-                        values = [item.id, item.version, contentTypeClassName, item.category, classification, classification2, classification3, JSON.stringify(item), ((item.location && item.location.length == 2) ? item.location[0] : -1), ((item.location && item.location.length == 2) ? item.location[1] : -1), refTime];
-                        tx.executeSql('INSERT INTO ContentObjects (id, version, type, category, classification, classification2, classification3, data, lat, lon, refTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', values, function (tx, res) { //success callback
+                        values = [item.id, item.version, contentTypeClassName, item.category, classification, classification2, classification3, JSON.stringify(item), ((item.location && item.location.length == 2) ? item.location[0] : -1), ((item.location && item.location.length == 2) ? item.location[1] : -1), fromTime, toTime];
+                        tx.executeSql('INSERT INTO ContentObjects (id, version, type, category, classification, classification2, classification3, data, lat, lon, fromTime, toTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', values, function (tx, res) { //success callback
                           console.log('inserted obj with id: ' + item.id);
                         }, function (e) { //error callback
                           console.log('unable to insert obj with id ' + item.id + ': ' + e.message);
@@ -686,7 +713,7 @@ angular.module('starter.services', [])
                   });
                   // TODO events cleanup
                   var nowTime = (new Date()).getTime();
-                  tx.executeSql('DELETE FROM ContentObjects WHERE type = "eu.trentorise.smartcampus.comuneintasca.model.EventObject" AND refTime < '+nowTime, [], function (tx, res) { //success callback
+                  tx.executeSql('DELETE FROM ContentObjects WHERE type = "eu.trentorise.smartcampus.comuneintasca.model.EventObject" AND toTime < '+nowTime, [], function (tx, res) { //success callback
                           console.log('deleted old events');
                         }, function (e) { //error callback
                           console.log('unable to delete old events: ' + e.message);
@@ -808,6 +835,53 @@ angular.module('starter.services', [])
             console.log('cate data error!');
             console.log(err);
             Profiling.do('dbcate');
+            data.reject(err);
+          });
+        }, function (error) { //error callback
+          $ionicLoading.hide();
+          console.log('db.cate() ERROR: ' + error);
+          Profiling.do('dbcate');
+          data.reject(error);
+        }, function () { //success callback
+          $ionicLoading.hide();
+          Profiling.do('dbcate');
+          data.resolve(lista);
+        });
+      });
+      return data.promise;
+    },
+    byTimeInterval: function (dbname, fromTime, toTime, cateId) {
+      var data = $q.defer();
+      this.sync().then(function (dbVersion) {
+        Profiling.start('byTimeInterval');
+        var loading = $ionicLoading.show({
+          content: 'loading...',
+          showDelay: 1000,
+          duration: Config.loadingOverlayTimeoutMillis()
+        });
+
+        var lista = []
+        dbObj.transaction(function (tx) {
+          //console.log('type: '+types[dbname]);
+          
+          var sql = 'SELECT id, type, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=? AND ' +
+                    'fromTime > 0 AND fromTime <'+toTime +' AND toTime > '+fromTime + (cateId ? ' AND (classification=? OR classification2=? OR classification3=?)' : '');
+          var params = cateId ? [types[dbname], cateId, cateId, cateId] : [types[dbname]];
+          tx.executeSql(sql, params, function (tx2, cateResults) {
+            console.log('cateResults.rows.length: ' + cateResults.rows.length);
+            var len = cateResults.rows.length,
+              i;
+            console.log('results.rows.length: ' + len);
+            for (i = 0; i < len; i++) {
+              var item = cateResults.rows.item(i);
+              lista.push(parseDbRow(item));
+            }
+            data.resolve(lista);
+          }, function (tx2, err) {
+            $ionicLoading.hide();
+            console.log('byTimeInterval data error!');
+            console.log(err);
+            Profiling.do('byTimeInterval');
             data.reject(err);
           });
         }, function (error) { //error callback
@@ -1402,22 +1476,32 @@ angular.module('starter.services', [])
     'Stars': {
       'it': 'Stelle',
       'en': 'Stars',
-      'de': 'Stars'
+      'de': 'Star'
     },
     'Date': {
       'it': 'Data',
       'en': 'Date',
-      'de': 'Date'
+      'de': 'Datum'
+    },
+    'DateFrom': {
+      'it': 'Data di inizio',
+      'en': 'Start date',
+      'de': 'Startdatum'
+    },
+    'DateTo': {
+      'it': 'Data di fine',
+      'en': 'End date',
+      'de': 'Endatum'
     },
     'Distance': {
       'it': 'Distanza',
       'en': 'Distance',
-      'de': 'Distance'
+      'de': 'Distanz'
     },
     'OrderBy': {
       'it': 'Ordinare per',
       'en': 'Order by',
-      'de': 'Order by'
+      'de': 'Bestellung'
     },
     'Filter': {
       'it': 'Filtra',
@@ -1427,12 +1511,12 @@ angular.module('starter.services', [])
     'Cancel': {
       'it': 'Annulla',
       'en': 'Cancel',
-      'de': 'Cancel'
+      'de': 'Annullieren'
     },
     'All': {
       'it': 'Tutte',
       'en': 'All',
-      'de': 'All'
+      'de': 'Alles'
     },
     'A-Z': {
       'it': 'A-Z',
@@ -1476,9 +1560,8 @@ angular.module('starter.services', [])
     var template = '<div class="modal"><ion-header-bar><h1 class="title">' + title + '</h1></ion-header-bar><ion-content><div class="list">';
     var body = '<a class="item item-icon-right" ng-click="closeModal(\'__all\')">' + $filter('translate')(keys['All']) + '<i class="icon ' + (presel == null ? 'ion-ios7-checkmark-outline' : '') + '"></i></a>';
     for (var key in options) {
-      var value = options[key].it;
       var s = $filter('translate')(options[key]);
-      s = '<a class="item item-icon-right" ng-click="closeModal(\'' + value + '\')">' + s + '<i class="icon ' + (value == presel ? 'ion-ios7-checkmark-outline' : '') + '"></i></a>';
+      s = '<a class="item item-icon-right" ng-click="closeModal(\'' + key + '\')">' + s + '<i class="icon ' + (key == presel ? 'ion-ios7-checkmark-outline' : '') + '"></i></a>';
       body += s;
     }
     template += body + '</div></ion-content><ion-footer-bar><div class="tabs" ng-click="closeModal()"><a class="tab-item">' + $filter('translate')(keys['Cancel']) + '</a></div></ion-footer-bar></div>';

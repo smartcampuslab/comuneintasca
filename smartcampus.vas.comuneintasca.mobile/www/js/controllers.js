@@ -66,7 +66,7 @@ angular.module('starter.controllers', ['google-maps'])
   $scope.openViaggiaTrento = function () {
     if (ionic.Platform.isWebView()) {
       cordova.plugins.startapp.start({
-        android: 'eu.trentorise.smartcampus.jp/eu.trentorise.smartcampus.jp.HomeActivity'
+        android: 'eu.trentorise.smartcampus.viaggiatrento'
       }, function () {
         console.log('VIAGGIA TRENTO: success.');
       }, function () {

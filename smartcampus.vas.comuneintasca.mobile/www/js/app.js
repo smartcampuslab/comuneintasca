@@ -35,6 +35,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       StatusBar.show();
     }
     //ionic.Platform.showStatusBar(false);
+    //setTimeout(function(){ navigator.splashscreen.hide(); },10000);
   });
   GeoLocate.locate().then(function(position){
     $rootScope.myPosition=position;

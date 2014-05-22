@@ -220,7 +220,7 @@ angular.module('starter.services', [])
       return 'TrentoInTasca';
     },
     schemaVersion: function () {
-      return 60;
+      return 61;
     },
     syncTimeoutSeconds: function () {
       return 60 * 60; /* 60 times 60 seconds = 1 HOUR */
@@ -525,7 +525,7 @@ angular.module('starter.services', [])
       console.log('initializing database...');
       dbObj.transaction(function (tx) {
         tx.executeSql('DROP TABLE IF EXISTS ContentObjects');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS ContentObjects (id text primary key, version integer, type text, category text, classification text, classification2 text, classification3 text, data text, lat real, lon real, updateTime integer)');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS ContentObjects (id text primary key, version integer, type text, category text, classification text, classification2 text, classification3 text, data text, lat real, lon real, refTime integer)');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_id ON ContentObjects( id )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_type ON ContentObjects( type )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_cate ON ContentObjects( category )');
@@ -651,8 +651,9 @@ angular.module('starter.services', [])
                           }
                           item.category = 'ristorazione';
                         }
-                        values = [item.id, item.version, contentTypeClassName, item.category, classification, classification2, classification3, JSON.stringify(item), ((item.location && item.location.length == 2) ? item.location[0] : -1), ((item.location && item.location.length == 2) ? item.location[1] : -1), item.updateTime];
-                        tx.executeSql('INSERT INTO ContentObjects (id, version, type, category, classification, classification2, classification3, data, lat, lon, updateTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', values, function (tx, res) { //success callback
+                        var refTime = contentTypeKey != 'event' ? 0 : item.toTime > 0 ? item.toTime : item.fromTime; 
+                        values = [item.id, item.version, contentTypeClassName, item.category, classification, classification2, classification3, JSON.stringify(item), ((item.location && item.location.length == 2) ? item.location[0] : -1), ((item.location && item.location.length == 2) ? item.location[1] : -1), refTime];
+                        tx.executeSql('INSERT INTO ContentObjects (id, version, type, category, classification, classification2, classification3, data, lat, lon, refTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', values, function (tx, res) { //success callback
                           console.log('inserted obj with id: ' + item.id);
                         }, function (e) { //error callback
                           console.log('unable to insert obj with id ' + item.id + ': ' + e.message);
@@ -678,6 +679,14 @@ angular.module('starter.services', [])
                       console.log('nothing to delete');
                     }
                   });
+                  // TODO events cleanup
+                  var nowTime = (new Date()).getTime();
+                  tx.executeSql('DELETE FROM ContentObjects WHERE refTime < '+nowTime, [], function (tx, res) { //success callback
+                          console.log('deleted old events');
+                        }, function (e) { //error callback
+                          console.log('unable to delete old events: ' + e.message);
+                        });
+                  
                 }, function () { //error callback
                   console.log('cannot sync');
                   objsDone.reject(false);

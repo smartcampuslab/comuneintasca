@@ -1,9 +1,9 @@
-<ion-view title="TRENTO">
+<ion-view title="{{'sidemenu_Title' | i18n | nl2br}}">
   <ion-content class="has-header content-stable" scroll="false" id="content-home">
     <div class="home-container">
       <div class="home-box-top">
         <div ng-if="!slides" class="hp-box trento">
-          <h3 class="title">Trento - Il comune in tasca</h3>
+          <h3 class="title">{{'sidemenu_Title' | i18n | nl2br}}</h3>
         </div>
         <ion-slide-box ng-if="slides" does-continue="true" slide-interval="30000" id="slide-box-home">
           <ion-slide ng-repeat="slide in slides">
@@ -16,20 +16,20 @@
       <div class="home-box-bottom">
         <div id="home-buttons">
           <div class="row">
-            <div class="col"><button class="button button-full button-comuni icon-left comuneicon comuneicon-conoscere" ng-click="goto('cate/info')"><b ng-bind-html="'home_btn_Conoscere' | i18n | nl2br"></b></button></div>
-            <div class="col"><button class="button button-full button-comuni icon-left comuneicon comuneicon-eventi" ng-click="goto('cate/events')"><b ng-bind-html="'home_btn_Vivere' | i18n | nl2br"></b></button></div>
+            <div class="col"><button class="button button-full button-comuni icon-left comuneicon comuneicon-conoscere" ng-class="{'german': lang == 'de'}" ng-click="goto('cate/info')"><b ng-bind-html="'home_btn_Conoscere' | i18n | nl2br"></b></button></div>
+            <div class="col"><button class="button button-full button-comuni icon-left comuneicon comuneicon-eventi" ng-class="{'german': lang == 'de'}" ng-click="goto('cate/events')"><b ng-bind-html="'home_btn_Vivere' | i18n | nl2br"></b></button></div>
           </div>
           <div class="row">
-            <div class="col"><button class="button button-full button-comuni icon-left comuneicon comuneicon-scoprire" ng-click="goto('cate/places')"><b ng-bind-html="'home_btn_Scoprire' | i18n | nl2br"></b></button></div>
-            <div class="col"><button class="button button-full button-comuni icon-left comuneicon comuneicon-percorsi" ng-click="goto('itineraries')"><b ng-bind-html="'home_btn_Percorsi' | i18n | nl2br"></b></button></div>
+            <div class="col"><button class="button button-full button-comuni icon-left comuneicon comuneicon-scoprire" ng-class="{'german': lang == 'de'}" ng-click="goto('cate/places')"><b ng-bind-html="'home_btn_Scoprire' | i18n | nl2br"></b></button></div>
+            <div class="col"><button class="button button-full button-comuni icon-left comuneicon comuneicon-percorsi" ng-class="{'german': lang == 'de'}" ng-click="goto('itineraries')"><b ng-bind-html="'home_btn_Percorsi' | i18n | nl2br"></b></button></div>
           </div>
           <div class="row">
-            <div class="col"><button class="button button-full button-comuni icon-left comuneicon comuneicon-mangiaredormire" ng-click="goto('cate/hospitality')"><b ng-bind-html="'home_btn_Mangiare-dormire' | i18n | nl2br"></b></b></button></div>
-            <div class="col"><button class="button button-full button-comuni icon-left comuneicon comuneicon-infoutili" ng-click="goto('cate/useful')"><b ng-bind-html="'home_btn_Info-utili' | i18n | nl2br"></b></button></div>
+            <div class="col"><button class="button button-full button-comuni icon-left comuneicon comuneicon-mangiaredormire" ng-class="{'german': lang == 'de'}" ng-click="goto('cate/hospitality')"><b ng-bind-html="'home_btn_Mangiare-dormire' | i18n | nl2br"></b></b></button></div>
+            <div class="col"><button class="button button-full button-comuni icon-left comuneicon comuneicon-infoutili" ng-class="{'german': lang == 'de'}" ng-click="goto('cate/useful')"><b ng-bind-html="'home_btn_Info-utili' | i18n | nl2br"></b></button></div>
           </div>
           <div class="row">
-            <div class="col"><button class="button button-full button-comuni variant icon-left comuneicon comuneicon-viaggiatrento" ng-click="openViaggiaTrento()"><b ng-bind-html="'home_btn_Viaggia-Trento' | i18n | nl2br"></b></button></div>
-            <div class="col"><button class="button button-full button-comuni variant icon-left comuneicon comuneicon-preferiti" ng-click="goto('favourites')"><b ng-bind-html="'sidemenu_Favourites' | i18n | nl2br"></b></button></div>
+            <div class="col"><button class="button button-full button-comuni variant icon-left comuneicon comuneicon-viaggiatrento" ng-class="{'german': lang == 'de'}" ng-click="openViaggiaTrento()"><b ng-bind-html="'home_btn_Viaggia-Trento' | i18n | nl2br"></b></button></div>
+            <div class="col"><button class="button button-full button-comuni icon-left comuneicon comuneicon-preferiti" ng-class="{'german': lang == 'de'}" ng-click="goto('favourites')"><b ng-bind-html="'sidemenu_Favourites' | i18n | nl2br"></b></button></div>
           </div>
         </div>
       </div>

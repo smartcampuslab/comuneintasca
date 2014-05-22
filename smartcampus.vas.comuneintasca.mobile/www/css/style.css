@@ -10,6 +10,7 @@
   bottom: 70px;
 }
 */
+
 ion-footer-bar.bar {
   padding: 0;
 }
@@ -18,7 +19,7 @@ ion-footer-bar.bar {
   padding: .3em .5em;
 }
 .menu-open ion-side-menu {
-  z-index:1 !important;
+  z-index: 1 !important;
 }
 /*
 .content-stable {
@@ -40,15 +41,46 @@ blu: #2975a7;
 blu scuro: #1b4d6e;
 */
 
-.bar.bar-comuni {
-  border-color: #2975a7;
-  background-color: #b7d6e8;
+h1,
+h2 {
   color: #1b4d6e;
+}
+.bar.bar-comuni-home .title,
+.bar .title-home {
+  line-height: 22px;
+  vertical-align: middle;
+}
+.bar.bar-comuni {
+  border-color: #1b4d6e;
+  background-color: #2975a7;
+  color: #fff;
   //  background-image: linear-gradient(0deg, #2975a7, #2975a7 50%, transparent 50%);
 
 }
-.bar.bar-comuni #credits-button {
-  display: none;
+.bar.bar-comuni h1,
+.bar.bar-comuni .button {
+  color: #fff;
+}
+.bar.bar-footer .tabs {
+  border-color: #2975a7;
+  background-color: #b7d6e8;
+  color: #2975a7;
+}
+.bar.bar-footer .tabs .tab-item {
+  opacity: 1;
+}
+.bar.bar-footer .item-input-inset {
+  background-color: #b7d6e8;
+}
+.bar.bar-footer .item-input-inset .item-input-wrapper {
+  background-color: #fff;
+}
+.bar.bar-footer .item-input-inset .item-input-wrapper .placeholder-icon,
+.bar.bar-footer .item-input-inset .item-input-wrapper input {
+  color: #2975a7;
+}
+.bar.bar-footer .item-input-inset .button.button-clear {
+  color: #2975a7;
 }
 .bar.bar-comuni-home {
   border: none;
@@ -56,13 +88,6 @@ blu scuro: #1b4d6e;
   background-repeat: no-repeat;
   background-position: top left;
   background-size: auto 100%;
-}
-.bar.bar-comuni-home #credits-button {
-  display: block;
-}
-h1,
-h2 {
-  color: #1b4d6e;
 }
 .bar.bar-dark-comuni {
   border-color: #111;
@@ -209,6 +234,9 @@ ion-side-menu .item {
 #home-buttons button.variant {
   background-color: #fff;
 }
+#home-buttons button.german {
+  font-size: smaller;
+}
 .angular-google-map-container {
   height: 800px;
 }
@@ -302,14 +330,14 @@ ion-side-menu b {
 }
 #credits .row {
   display: table;
-  height:100%;
-  padding:0;
+  height: 100%;
+  padding: 0;
 }
 #credits .col {
   display: table-cell;
   vertical-align: middle;
   text-align: center;
-  padding:0;
+  padding: 0;
 }
 .map-popup {
   text-align: center;

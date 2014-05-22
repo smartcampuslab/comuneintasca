@@ -1,7 +1,7 @@
 [
   {
     "key": "sidemenu_Title",
-    "value": "TRENTO",
+    "value": "TRENTO<br/>THE CITY IN YOUR POCKET",
     "description": "side menu label"
   },
   {
@@ -14,11 +14,11 @@
     "description": "side menu label"
   }, {
     "key": "home_btn_Vivere",
-    "value": "LIVE",
+    "value": "EVENTS",
     "description": "side menu label"
   }, {
     "key": "home_btn_Scoprire",
-    "value": "EXPLORE",
+    "value": "HIGHLIGHTS",
     "description": "side menu label"
   }, {
     "key": "home_btn_Percorsi",
@@ -64,11 +64,11 @@
     "description": "side menu label"
   }, {
     "key": "sidemenu_Favourites",
-    "value": "Favourites",
+    "value": "FAVORITES",
     "description": "side menu label"
   }, {
     "key": "list_no-favourites",
-    "value": "no favourites saved, yet",
+    "value": "No favorites saved, yet",
     "description": "favourites list results"
   }, {
     "key": "sidemenu_Info",

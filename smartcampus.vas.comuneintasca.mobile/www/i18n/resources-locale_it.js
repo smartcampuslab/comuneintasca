@@ -1,7 +1,7 @@
 [
   {
     "key": "sidemenu_Title",
-    "value": "TRENTO",
+    "value": "TRENTO<br/>IL COMUNE IN TASCA",
     "description": "side menu label"
   },
   {
@@ -14,11 +14,11 @@
     "description": "side menu label"
   }, {
     "key": "home_btn_Vivere",
-    "value": "VIVERE",
+    "value": "EVENTI",
     "description": "side menu label"
   }, {
     "key": "home_btn_Scoprire",
-    "value": "SCOPRIRE",
+    "value": "VISITARE",
     "description": "side menu label"
   }, {
     "key": "home_btn_Percorsi",
@@ -64,11 +64,11 @@
     "description": "side menu label"
   }, {
     "key": "sidemenu_Favourites",
-    "value": "Preferiti",
+    "value": "PREFERITI",
     "description": "side menu label"
   }, {
     "key": "list_no-favourites",
-    "value": "nessun preferito salvato",
+    "value": "Nessun preferito salvato",
     "description": "favourites list results"
   }, {
     "key": "sidemenu_Info",

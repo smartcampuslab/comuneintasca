@@ -5,14 +5,16 @@
       <h1>{{obj.title | translate}}</h1>
       <h4>{{obj.classification | translate}}</h4>
       <h5>{{obj.address | translate}}</h5>
-      <p>
-        <ul>
-          <li ng-if="!! obj.timetable[lang]"><strong>{{'restaurant_opening' | i18n}}: </strong> {{obj.timetable | translate}}</li>
-          <li ng-if="!! obj.closing[lang]"><strong>{{'restaurant_closing' | i18n}}: </strong> {{obj.closing | translate}}</li>
-          <li ng-if="!! obj.prices[lang]"><strong>{{'restaurant_price' | i18n}}: </strong> {{obj.prices | translate}} &euro;</li>
-          <li ng-if="!! obj.equipment[lang]"><strong>{{'restaurant_services' | i18n}}: </strong> {{obj.equipment | translate}}</li>
-        </ul>
-      </p>
+      <div class="htmldesc">
+        <p>
+          <ul>
+            <li ng-if="!! obj.timetable[lang]"><strong>{{'restaurant_opening' | i18n}}: </strong> {{obj.timetable | translate}}</li>
+            <li ng-if="!! obj.closing[lang]"><strong>{{'restaurant_closing' | i18n}}: </strong> {{obj.closing | translate}}</li>
+            <li ng-if="!! obj.prices[lang]"><strong>{{'restaurant_price' | i18n}}: </strong> {{obj.prices | translate}} &euro;</li>
+            <li ng-if="!! obj.equipment[lang]"><strong>{{'restaurant_services' | i18n}}: </strong> {{obj.equipment | translate}}</li>
+          </ul>
+        </p>
+      </div>
     </div>
   </ion-content>
   <ion-footer-bar>

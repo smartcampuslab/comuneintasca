@@ -115,7 +115,7 @@ angular.module('starter.controllers', ['google-maps'])
         link: 'mainevents'
       }, {
         key: 'sidemenu_Bondone',
-        link: 'bondone'
+        link: 'contentscate/bondone'
       }
     ];
 
@@ -164,17 +164,22 @@ angular.module('starter.controllers', ['google-maps'])
   });
 })
 
-.controller('ContentsListCtrl', function ($scope, $state, $stateParams, DatiDB) {
+.controller('ContentsListCtrl', function ($scope, $state, $stateParams, DatiDB, Config) {
   if ($stateParams.contentsCate) {
     $scope.gotdata = DatiDB.cate('content', $stateParams.contentsCate).then(function (data) {
       $scope.contents = data;
+      $scope.title = Config.textTypesList()[$stateParams.contentsCate];
     });
   } else if ($stateParams.contentsIds) {
     $scope.gotdata = DatiDB.get('content', $stateParams.contentsIds).then(function (data) {
       $scope.contents = data;
+      if (data && data.length > 0) {
+        $scope.title = Config.textTypesList()[data[0].classification];
+      }
     });
   } else if ($state.current.data.contentsCate) {
     $scope.gotdata = DatiDB.cate('content', $state.current.data.contentsCate).then(function (data) {
+      $scope.title = Config.textTypesList()[$state.current.data.contentsCate];
       $scope.contents = data;
     });
   } else {

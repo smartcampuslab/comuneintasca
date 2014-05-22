@@ -147,7 +147,7 @@ angular.module('starter.controllers', ['google-maps'])
         link: 'services'
       }, {
         key: 'sidemenu_Uffici-comunali',
-        link: 'offices'
+        link: 'contacts'
       }
     ];
   }

@@ -153,6 +153,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             templateUrl:"templates/contents_list.html", controller:"ContentsListCtrl"
         } }, data:{ contentsCate:'Servizi' }
     })
+    .state('app.contacts', {
+        url:"/contacts", views:{ 'menuContent':{
+            templateUrl:"templates/contents_list.html", controller:"ContentsListCtrl"
+        } }, data:{ contentsCate:'Contatti' }
+    })
 
     .state('app.hotels', {
         url:"/hotels", views:{ 'menuContent':{

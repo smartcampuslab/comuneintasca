@@ -206,6 +206,30 @@ angular.module('starter.services', [])
       en: 'Oriental specialities'
     }
   };
+  
+  var textTypes = {
+    'città': {
+      de: 'Die Stadt',
+      it: 'Città',
+      en: 'The City'
+    },
+    'bondone': {
+      de: 'Mont Bondone',
+      it: 'Monte Bondone',
+      en: 'Mount Bondone'
+    },
+    'Servizi' : {
+      de: 'Dienstleistungen',
+      it: 'Servizi',
+      en: 'Services'
+    },
+    'Contatti': {
+      de: 'Kontakten',
+      it: 'Contatti',
+      en: 'Contacts'
+    }
+  }
+  
   var contentTypes = {
     'content': 'eu.trentorise.smartcampus.comuneintasca.model.ContentObject',
     'poi': 'eu.trentorise.smartcampus.comuneintasca.model.POIObject',
@@ -243,7 +267,7 @@ angular.module('starter.services', [])
       return 'TrentoInTasca';
     },
     schemaVersion: function () {
-      return 62;
+      return 63;
     },
     syncTimeoutSeconds: function () {
       return 60 * 60; /* 60 times 60 seconds = 1 HOUR */
@@ -272,6 +296,9 @@ angular.module('starter.services', [])
     },
     poiTypesList: function () {
       return poiTypes;
+    },
+    textTypesList: function () {
+      return textTypes;
     },
     poiCateFromType: function (type) {
       return poiTypes[type];

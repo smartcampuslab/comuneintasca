@@ -153,11 +153,11 @@
     "description": "restaurant leaf"
   }, {
     "key": "list_results_single",
-    "value": "result",
+    "value": "Ergebnis",
     "description": "list results"
   }, {
     "key": "list_results_plural",
-    "value": "results",
+    "value": "Ergebnisse",
     "description": "list results"
   }, {
     "key": "entry_km",

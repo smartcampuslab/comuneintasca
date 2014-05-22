@@ -153,11 +153,11 @@
     "description": "restaurant leaf"
   }, {
     "key": "list_results_single",
-    "value": "resultato",
+    "value": "risultato",
     "description": "list results"
   }, {
     "key": "list_results_plural",
-    "value": "resultati",
+    "value": "risultati",
     "description": "list results"
   }, {
     "key": "entry_km",
@@ -169,7 +169,7 @@
     "description": "restaurant entry"
   }, {
     "key": "cancel",
-    "value": "Annula",
+    "value": "Annulla",
     "description": "button"
   }, {
     "key": "search",

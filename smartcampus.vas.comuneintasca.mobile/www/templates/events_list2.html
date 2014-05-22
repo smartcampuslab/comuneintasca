@@ -8,7 +8,7 @@
                 ng-click="goToItem('/app/event/'+event.id)">
         <comuni-img class="item-image comuni-item-image" image="event.image" gotdata="gotdata"></comuni-img>
         <h2>{{event.title | translate}}</h2>
-        <p>{{event.fromTime | date:'fullDate'}}<span ng-if="event.fromTime !== event.toTime"> - {{event.toTime | date:'fullDate'}}</span>
+        <p>{{event.fromTime | date:'dd/MM/yyyy'}}<span ng-if="event.fromTime !== event.toTime"> - {{event.toTime | date:'dd/MM/yyyy'}}</span>
         </p>
         <div class="row comuni-item-bottom">
           <div class="col comuni-item-bottom-text">

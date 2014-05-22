@@ -61,25 +61,25 @@ h2 {
 .bar.bar-comuni .button {
   color: #fff;
 }
-.bar.bar-footer .tabs {
+.tabs {
   border-color: #2975a7;
   background-color: #b7d6e8;
   color: #2975a7;
 }
-.bar.bar-footer .tabs .tab-item {
-  opacity: 1;
+.tabs .tab-item {
+/*  opacity: 1;*/
 }
-.bar.bar-footer .item-input-inset {
+.item-input-inset {
   background-color: #b7d6e8;
 }
-.bar.bar-footer .item-input-inset .item-input-wrapper {
+.item-input-inset .item-input-wrapper {
   background-color: #fff;
 }
-.bar.bar-footer .item-input-inset .item-input-wrapper .placeholder-icon,
-.bar.bar-footer .item-input-inset .item-input-wrapper input {
+.item-input-inset .item-input-wrapper .placeholder-icon,
+.item-input-inset .item-input-wrapper input {
   color: #2975a7;
 }
-.bar.bar-footer .item-input-inset .button.button-clear {
+.item-input-inset .button.button-clear {
   color: #2975a7;
 }
 .bar.bar-comuni-home {
@@ -344,4 +344,7 @@ ion-side-menu b {
 }*/
 .map-popup {
   text-align: center;
+}
+.ion-ios7-circle-outline, .ion-ios7-checkmark {
+  color: #2975a7;
 }

@@ -218,23 +218,23 @@ angular.module('starter.services', [])
   };
 
   var eventFilterTypes = {
-    'today' : {
+    'today': {
       it: 'Oggi',
       en: 'Today',
       de: 'Heute'
     },
-    'week' : {
+    'week': {
       it: 'Prossimi 7 giorni',
       en: 'Next 7 days',
       de: 'Nächsten 7 Tage'
     },
-    'month' : {
+    'month': {
       it: 'Prossimi 30 giorni',
       en: 'Next 30 days',
       de: 'Nächsten 30 Tage'
     }
   };
-  
+
   return {
     doProfiling: function () {
       return true;
@@ -259,7 +259,7 @@ angular.module('starter.services', [])
     contentTypesList: function () {
       return contentTypes;
     },
-    eventFilterTypeList: function() {
+    eventFilterTypeList: function () {
       return eventFilterTypes;
     },
     contentKeyFromDbType: function (dbtype) {
@@ -645,7 +645,7 @@ angular.module('starter.services', [])
                       angular.forEach(updates, function (item, idx) {
                         tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [item.id]);
                         var fromTime = 0;
-                        var toTime = 0; 
+                        var toTime = 0;
 
                         var classification = '',
                           classification2 = '',
@@ -712,12 +712,12 @@ angular.module('starter.services', [])
                   });
                   // TODO events cleanup
                   var nowTime = (new Date()).getTime();
-                  tx.executeSql('DELETE FROM ContentObjects WHERE type = "eu.trentorise.smartcampus.comuneintasca.model.EventObject" AND toTime < '+nowTime, [], function (tx, res) { //success callback
-                          console.log('deleted old events');
-                        }, function (e) { //error callback
-                          console.log('unable to delete old events: ' + e.message);
-                        });
-                  
+                  tx.executeSql('DELETE FROM ContentObjects WHERE type = "eu.trentorise.smartcampus.comuneintasca.model.EventObject" AND toTime < ' + nowTime, [], function (tx, res) { //success callback
+                    console.log('deleted old events');
+                  }, function (e) { //error callback
+                    console.log('unable to delete old events: ' + e.message);
+                  });
+
                 }, function () { //error callback
                   console.log('cannot sync');
                   objsDone.reject(false);
@@ -862,9 +862,9 @@ angular.module('starter.services', [])
         var lista = []
         dbObj.transaction(function (tx) {
           //console.log('type: '+types[dbname]);
-          
+
           var sql = 'SELECT id, type, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=? AND ' +
-                    'fromTime > 0 AND fromTime <'+toTime +' AND toTime > '+fromTime + (cateId ? ' AND (classification=? OR classification2=? OR classification3=?)' : '');
+            'fromTime > 0 AND fromTime <' + toTime + ' AND toTime > ' + fromTime + (cateId ? ' AND (classification=? OR classification2=? OR classification3=?)' : '');
           var params = cateId ? [types[dbname], cateId, cateId, cateId] : [types[dbname]];
           tx.executeSql(sql, params, function (tx2, cateResults) {
             console.log('cateResults.rows.length: ' + cateResults.rows.length);
@@ -993,7 +993,7 @@ angular.module('starter.services', [])
             if (resultslen > 0) {
               for (var i = 0; i < resultslen; i++) {
                 var item = results.rows.item(i);
-                var row = parseDbRow(item); 
+                var row = parseDbRow(item);
                 res[row.id] = row;
               }
               for (var i = 0; i < itemIds.length; i++) {
@@ -1001,7 +1001,7 @@ angular.module('starter.services', [])
                   lista.push(res[itemIds[i]]);
                 }
               }
-              
+
               lista.push();
               Profiling.do('dbget', 'list');
               dbitem.resolve(lista);
@@ -1535,7 +1535,7 @@ angular.module('starter.services', [])
     var template = '<div class="list">';
     for (var i = 0; i < options.length; i++) {
       var s = $filter('translate')(keys[options[i]]);
-      template += '<a class="item item-icon-right" ng-click="show.close(\'' + options[i] + '\')">' + s + '<i class="icon ' + (options[i] == presel ? 'ion-ios7-checkmark-outline' : '') + '"></i></a>';
+      template += '<a class="item item-icon-right" ng-click="show.close(\'' + options[i] + '\')">' + s + '<i class="icon ' + (options[i] == presel ? 'ion-ios7-checkmark' : 'ion-ios7-circle-outline') + '"></i></a>';
     }
     // An elaborate, custom popup
     var myPopup = $ionicPopup.show({
@@ -1557,10 +1557,10 @@ angular.module('starter.services', [])
     var title = $filter('translate')(keys['Filter']);
 
     var template = '<div class="modal"><ion-header-bar><h1 class="title">' + title + '</h1></ion-header-bar><ion-content><div class="list">';
-    var body = '<a class="item item-icon-right" ng-click="closeModal(\'__all\')">' + $filter('translate')(keys['All']) + '<i class="icon ' + (presel == null ? 'ion-ios7-checkmark-outline' : '') + '"></i></a>';
+    var body = '<a class="item item-icon-right" ng-click="closeModal(\'__all\')">' + $filter('translate')(keys['All']) + '<i class="icon ' + (presel == null ? 'ion-ios7-checkmark' : 'ion-ios7-circle-outline') + '"></i></a>';
     for (var key in options) {
       var s = $filter('translate')(options[key]);
-      s = '<a class="item item-icon-right" ng-click="closeModal(\'' + key + '\')">' + s + '<i class="icon ' + (key == presel ? 'ion-ios7-checkmark-outline' : '') + '"></i></a>';
+      s = '<a class="item item-icon-right" ng-click="closeModal(\'' + key + '\')">' + s + '<i class="icon ' + (key == presel ? 'ion-ios7-checkmark' : 'ion-ios7-circle-outline') + '"></i></a>';
       body += s;
     }
     template += body + '</div></ion-content><ion-footer-bar><div class="tabs" ng-click="closeModal()"><a class="tab-item">' + $filter('translate')(keys['Cancel']) + '</a></div></ion-footer-bar></div>';
@@ -1671,6 +1671,28 @@ angular.module('starter.services', [])
           $scope.ordering.searchText = null;
         };
       }
+    }
+  }
+})
+
+.factory('DateUtility', function () {
+  return {
+    getLocaleDateString: function (lang, time) {
+      var locale = 'en-EN';
+      if (lang == 'it') {
+        locale = 'it-IT';
+      } else if (lang == 'de') {
+        locale = 'de-DE';
+      }
+      console.log(locale);
+      var date = new Date(time);
+      var dateString = date.toLocaleDateString(locale, {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+      return dateString;
     }
   }
 })

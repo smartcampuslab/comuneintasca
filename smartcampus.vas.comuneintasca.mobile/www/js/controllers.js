@@ -340,8 +340,10 @@ angular.module('starter.controllers', ['google-maps'])
 })
 
 
-.controller('EventsListCtrl', function ($scope, $stateParams, $filter, DatiDB, Config, ListToolbox, Profiling) {
-  $scope.dateFormat = 'EEEE d MMMM yyyy';
+.controller('EventsListCtrl', function ($rootScope, $scope, $stateParams, $filter, DatiDB, Config, ListToolbox, Profiling, DateUtility) {
+  $scope.getLocaleDateString = function(time) {
+    return DateUtility.getLocaleDateString($rootScope.lang, time);
+  };
 
   if ($stateParams.eventType && $stateParams.eventType != 'all') {
     $scope.cate = Config.eventCateFromType($stateParams.eventType);
@@ -408,8 +410,10 @@ angular.module('starter.controllers', ['google-maps'])
   });
 })
 
-.controller('EventCtrl', function ($scope, DatiDB, $stateParams) {
-  $scope.dateFormat = 'EEEE d MMMM yyyy';
+.controller('EventCtrl', function ($scope, DatiDB, $stateParams, $rootScope, DateUtility) {
+  $scope.getLocaleDateString = function(time) {
+    return DateUtility.getLocaleDateString($rootScope.lang, time);
+  };
 
   $scope.gotdata = DatiDB.get('event', $stateParams.eventId).then(function (data) {
     $scope.obj = data;

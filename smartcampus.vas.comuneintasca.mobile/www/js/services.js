@@ -224,14 +224,14 @@ angular.module('starter.services', [])
       de: 'Heute'
     },
     'week' : {
-      it: 'Settimana',
-      en: 'Week',
-      de: 'Woche'
+      it: 'Prossimi 7 giorni',
+      en: 'Next 7 days',
+      de: 'Nächsten 7 Tage'
     },
     'month' : {
-      it: 'Mese',
-      en: 'Month',
-      de: 'Monat'
+      it: 'Prossimi 30 giorni',
+      en: 'Next 30 days',
+      de: 'Nächsten 30 Tage'
     }
   };
   

@@ -3,7 +3,6 @@
     <div class="home-container">
       <div class="home-box-top">
         <div ng-if="!slides" class="hp-box trento">
-          <h3 class="title" ng-bind-html="'sidemenu_Title' | i18n | nl2br"></h3>
         </div>
         <ion-slide-box ng-if="slides" does-continue="true" slide-interval="30000" id="slide-box-home">
           <ion-slide ng-repeat="slide in slides">

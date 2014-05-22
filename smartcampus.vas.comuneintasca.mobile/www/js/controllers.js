@@ -193,6 +193,15 @@ angular.module('starter.controllers', ['google-maps'])
 .controller('HotelsListCtrl', function ($scope, $filter, DatiDB, Config, ListToolbox) {
   $scope._ = _;
 
+  $scope.filterDef = function () {
+    if ($scope.filter) {
+      var r = $filter('translate')(Config.hotelTypesList()[$scope.filter]);
+      if (r.length > 20) r = r.substr(0,20)+'...';
+      return r + ': ';
+    } 
+    else return '';
+  }
+
   ListToolbox.prepare($scope, {
     load: function (cache) {
       if (cache) {
@@ -214,7 +223,8 @@ angular.module('starter.controllers', ['google-maps'])
     },
     filterOptions: Config.hotelTypesList(),
     doFilter: function (filter) {
-      DatiDB.cate('hotel', filter).then(function (data) {
+      var f = filter ? Config.hotelTypesList()[filter].it : filter;
+      DatiDB.cate('hotel', f).then(function (data) {
         $scope.hotels = data;
       });
     },
@@ -229,6 +239,15 @@ angular.module('starter.controllers', ['google-maps'])
 })
 
 .controller('RestaurantsListCtrl', function ($scope, $filter, DatiDB, Config, ListToolbox) {
+  $scope.filterDef = function () {
+    if ($scope.filter) {
+      var r = $filter('translate')(Config.restaurantTypesList()[$scope.filter]);
+      if (r.length > 20) r = r.substr(0,20)+'...';
+      return r + ': ';
+    } 
+    else return '';
+  }
+
   ListToolbox.prepare($scope, {
     load: function (cache) {
       if (cache) {
@@ -250,7 +269,8 @@ angular.module('starter.controllers', ['google-maps'])
     },
     filterOptions: Config.restaurantTypesList(),
     doFilter: function (filter) {
-      DatiDB.cate('restaurant', filter).then(function (data) {
+      var f = filter ? Config.restaurantTypesList()[filter].it : filter;
+      DatiDB.cate('restaurant', f).then(function (data) {
         $scope.restaurants = data;
       });
     },

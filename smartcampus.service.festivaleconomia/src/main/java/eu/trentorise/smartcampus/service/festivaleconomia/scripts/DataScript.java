@@ -256,7 +256,7 @@ public class DataScript {
 	    	    	Element contentElement = (Element) contentNodeList.item(j);
 	    	    	String lang = contentElement.getAttribute("language-id");
 	    	    	if (lang == null) lang = "";
-	    	    	values.put(lang, contentElement.getTextContent());
+	    	    	values.put(mapLanguage(lang), preprocessContent(contentElement.getTextContent()));
 	    	    }
 	    		res.put(key, values);
 	    	}
@@ -265,7 +265,14 @@ public class DataScript {
 	    return res;
 	} 
 
+	private String preprocessContent(String textContent) {
+		return textContent
+				.replace("href=\"/-/", " href=\""+URL_PRE)
+				.replace("src=\"/documents", " src=\""+IMG_PRE+"/documents");
+	}
+
 	private String mapLanguage(String lang) {
+		if (lang == null || lang.trim().isEmpty()) return "it";
 		return lang.substring(0, lang.indexOf('_'));
 	}
 

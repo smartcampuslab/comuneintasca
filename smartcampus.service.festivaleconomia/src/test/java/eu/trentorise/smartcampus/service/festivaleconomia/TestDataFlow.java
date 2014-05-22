@@ -1,4 +1,4 @@
-package eu.trentorise.smartcampus.service.roveretoexplorer;
+package eu.trentorise.smartcampus.service.festivaleconomia;
 
 import it.sayservice.platform.servicebus.test.DataFlowTestHelper;
 
@@ -23,6 +23,7 @@ public class TestDataFlow extends TestCase {
 		List<Message> data1 = (List<Message>)out1.get("data");
 		for (Message msg: data1) {
 			System.err.println(((Evento)msg).getTitle(0).getValue());
+			System.err.println(((Evento)msg).getDescription(0).getValue());
 			System.err.println("-----------");
 		}
 		

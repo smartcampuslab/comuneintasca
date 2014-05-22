@@ -32,6 +32,10 @@
     "key": "home_btn_Info-utili",
     "value": "WEITERE<br/>INFORMATIONEN",
     "description": "side menu label"
+  }, {
+    "key": "home_btn_Favorites",
+    "value": "FAVORITEN",
+    "description": "side menu label"
   },
   {
     "key": "sidemenu_div_Conoscere",
@@ -64,7 +68,7 @@
     "description": "side menu label"
   }, {
     "key": "sidemenu_Favourites",
-    "value": "FAVORITEN",
+    "value": "Favoriten",
     "description": "side menu label"
   }, {
     "key": "list_no-favourites",

@@ -339,6 +339,9 @@ ion-side-menu b {
   text-align: center;
   padding: 0;
 }
+/*#credits .button-icon:before {
+  font-size: smaller;
+}*/
 .map-popup {
   text-align: center;
 }

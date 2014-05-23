@@ -64,7 +64,7 @@
   },
   {
     "key": "sidemenu_Home",
-    "value": "Prima pagina",
+    "value": "Home",
     "description": "side menu label"
   }, {
     "key": "sidemenu_Favourites",

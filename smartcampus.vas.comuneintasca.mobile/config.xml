@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <widget id="it.smartcampuslab.comuni.trento" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>Trento</name>
+  <name>Trento - Il Comune in Tasca</name>
   <description>
     Trento - Il Comune in tasca
   </description>
@@ -24,7 +24,7 @@
   <preference name="LoadUrlTimeoutValue" value="20000" />
   <!-- preference name="AutoHideSplashScreen" value="false" / -->
   <preference name="SplashScreen" value="splash" />
-  <preference name="SplashScreenDelay" value="4000" />
+  <preference name="SplashScreenDelay" value="3000" />
   <preference name="KeyboardDisplayRequiresUserAction" value="false" />
   <feature name="Keyboard">
     <param name="ios-package" value="IonicKeyboard" onload="true" />

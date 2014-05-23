@@ -43,11 +43,11 @@
     "description": "side menu label"
   }, {
     "key": "sidemenu_div_Vivere",
-    "value": "VIVERE",
+    "value": "EVENTI",
     "description": "side menu label"
   }, {
     "key": "sidemenu_div_Scoprire",
-    "value": "SCOPRIRE",
+    "value": "VISITARE",
     "description": "side menu label"
   }, {
     "key": "sidemenu_div_Percorsi",

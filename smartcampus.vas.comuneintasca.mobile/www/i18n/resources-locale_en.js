@@ -179,5 +179,25 @@
     "key": "credits_title",
     "value": "Credits",
     "description": "credits popup title"
+  }, {
+    "key": "credits_app",
+    "value": "The City in your Pocket",
+    "description": "credits"
+  }, {
+    "key": "credits_appfamily",
+    "value": "The Trentino Municipalities app",
+    "description": "credits"
+  }, {
+    "key": "credits_project",
+    "value": "A project by:",
+    "description": "credits"
+  }, {
+    "key": "credits_sponsored",
+    "value": "With the patronage of:",
+    "description": "credits"
+  }, {
+    "key": "credits_info",
+    "value": "Further information:",
+    "description": "credits"
   }
 ]

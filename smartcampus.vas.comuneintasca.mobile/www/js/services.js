@@ -458,7 +458,7 @@ angular.module('starter.services', [])
       }
     },
 
-    do :
+    _do :
     function (label, details) {
       if (Config.doProfiling()) {
         var startTime = startTimes[label] || -1;
@@ -624,7 +624,7 @@ angular.module('starter.services', [])
         if (ionic.Platform.isWebView() && navigator.connection.type == Connection.NONE) {
           $ionicLoading.hide();
           console.log('no network connection');
-          Profiling.do('dbsync');
+          Profiling._do('dbsync');
           syncronization.resolve(currentDbVersion);
         } else {
           var now_as_epoch = parseInt((new Date).getTime() / 1000);
@@ -757,31 +757,31 @@ angular.module('starter.services', [])
                   $ionicLoading.hide();
                   currentDbVersion = nextVersion;
                   localStorage.currentDbVersion = currentDbVersion;
-                  Profiling.do('dbsync');
+                  Profiling._do('dbsync');
                   syncronization.resolve(currentDbVersion);
                 }, function () {
                   $ionicLoading.hide();
                   console.log('cannot initialize (2)');
-                  Profiling.do('dbsync');
+                  Profiling._do('dbsync');
                   syncronization.reject();
                 });
               } else {
                 $ionicLoading.hide();
                 console.log('local database already up-to-date!');
-                Profiling.do('dbsync');
+                Profiling._do('dbsync');
                 syncronization.resolve(currentDbVersion);
               }
             }).error(function (data, status, headers, config) {
               $ionicLoading.hide();
               console.log('cannot check for new data: network unavailable?');
               console.log(status);
-              Profiling.do('dbsync');
+              Profiling._do('dbsync');
               syncronization.resolve(currentDbVersion);
             });
           } else {
             $ionicLoading.hide();
             console.log('avoiding too frequent syncronizations. seconds since last one: ' + (now_as_epoch - lastSynced));
-            Profiling.do('dbsync');
+            Profiling._do('dbsync');
             syncronization.resolve(currentDbVersion);
           }
         }
@@ -813,17 +813,17 @@ angular.module('starter.services', [])
             $ionicLoading.hide();
             console.log('data error!');
             console.log(err);
-            Profiling.do('dball');
+            Profiling._do('dball');
             data.reject();
           });
         }, function (error) { //error callback
           $ionicLoading.hide();
           console.log('db.all() ERROR: ' + error);
-          Profiling.do('dball');
+          Profiling._do('dball');
           data.reject(error);
         }, function () { //success callback
           $ionicLoading.hide();
-          Profiling.do('dball');
+          Profiling._do('dball');
           data.resolve(lista);
         });
       });
@@ -860,17 +860,17 @@ angular.module('starter.services', [])
             $ionicLoading.hide();
             console.log('cate data error!');
             console.log(err);
-            Profiling.do('dbcate');
+            Profiling._do('dbcate');
             data.reject(err);
           });
         }, function (error) { //error callback
           $ionicLoading.hide();
           console.log('db.cate() ERROR: ' + error);
-          Profiling.do('dbcate');
+          Profiling._do('dbcate');
           data.reject(error);
         }, function () { //success callback
           $ionicLoading.hide();
-          Profiling.do('dbcate');
+          Profiling._do('dbcate');
           data.resolve(lista);
         });
       });
@@ -907,17 +907,17 @@ angular.module('starter.services', [])
             $ionicLoading.hide();
             console.log('byTimeInterval data error!');
             console.log(err);
-            Profiling.do('byTimeInterval');
+            Profiling._do('byTimeInterval');
             data.reject(err);
           });
         }, function (error) { //error callback
           $ionicLoading.hide();
           console.log('db.cate() ERROR: ' + error);
-          Profiling.do('dbcate');
+          Profiling._do('dbcate');
           data.reject(error);
         }, function () { //success callback
           $ionicLoading.hide();
-          Profiling.do('dbcate');
+          Profiling._do('dbcate');
           data.resolve(lista);
         });
       });
@@ -957,35 +957,35 @@ angular.module('starter.services', [])
               if (itemId.indexOf(',') == -1) {
                 var item = results.rows.item(0);
                 var result = parseDbRow(item);
-                Profiling.do('dbget', 'single');
+                Profiling._do('dbget', 'single');
                 dbitem.resolve(result);
               } else {
                 for (var i = 0; i < resultslen; i++) {
                   var item = results.rows.item(i);
                   lista.push(parseDbRow(item));
                 }
-                Profiling.do('dbget', 'list');
+                Profiling._do('dbget', 'list');
                 dbitem.resolve(lista);
               }
             } else {
               console.log('not found!');
-              Profiling.do('dbget', 'sql empty');
+              Profiling._do('dbget', 'sql empty');
               dbitem.reject('not found!');
             }
           }, function (tx2, err) {
             $ionicLoading.hide();
             console.log('error: ' + err);
-            Profiling.do('dbget', 'sql error');
+            Profiling._do('dbget', 'sql error');
             dbitem.reject(err);
           });
         }, function (error) { //error callback
           $ionicLoading.hide();
           console.log('db.get() ERROR: ' + error);
-          Profiling.do('dbget', 'tx error');
+          Profiling._do('dbget', 'tx error');
           dbitem.reject(error);
         }, function () { //success callback
           $ionicLoading.hide();
-          Profiling.do('dbget', 'tx success');
+          Profiling._do('dbget', 'tx success');
         });
 
         return dbitem.promise;
@@ -1030,27 +1030,27 @@ angular.module('starter.services', [])
               }
 
               lista.push();
-              Profiling.do('dbget', 'list');
+              Profiling._do('dbget', 'list');
               dbitem.resolve(lista);
             } else {
               console.log('not found!');
-              Profiling.do('dbgetany', 'sql empty');
+              Profiling._do('dbgetany', 'sql empty');
               dbitem.reject('not found!');
             }
           }, function (tx2, err) {
             $ionicLoading.hide();
             console.log('error: ' + err);
-            Profiling.do('dbgetany', 'sql error');
+            Profiling._do('dbgetany', 'sql error');
             dbitem.reject(err);
           });
         }, function (error) { //error callback
           $ionicLoading.hide();
           console.log('db.getAny() ERROR: ' + error);
-          Profiling.do('dbgetany', 'tx error');
+          Profiling._do('dbgetany', 'tx error');
           dbitem.reject(error);
         }, function () { //success callback
           $ionicLoading.hide();
-          Profiling.do('dbgetany', 'tx success');
+          Profiling._do('dbgetany', 'tx success');
         });
 
         return dbitem.promise;
@@ -1079,27 +1079,27 @@ angular.module('starter.services', [])
               var item = results.rows.item(i);
               lista.push(parseDbRow(item));
             }
-            Profiling.do('dbfavs', 'list');
+            Profiling._do('dbfavs', 'list');
             dbitem.resolve(lista);
           } else {
             console.log('not found!');
-            Profiling.do('dbfavs', 'sql empty');
+            Profiling._do('dbfavs', 'sql empty');
             dbitem.reject('not found!');
           }
         }, function (tx, err) {
           $ionicLoading.hide();
           console.log('error: ' + err);
-          Profiling.do('dbfavs', 'sql error');
+          Profiling._do('dbfavs', 'sql error');
           dbitem.reject(err);
         });
       }, function (error) { //error callback
         $ionicLoading.hide();
         console.log('db.get() ERROR: ' + error);
-        Profiling.do('dbfavs', 'tx error');
+        Profiling._do('dbfavs', 'tx error');
         dbitem.reject(error);
       }, function () { //success callback
         $ionicLoading.hide();
-        Profiling.do('dbfavs', 'tx success');
+        Profiling._do('dbfavs', 'tx success');
       });
       return dbitem.promise;
     },
@@ -1115,25 +1115,25 @@ angular.module('starter.services', [])
         //console.log('dbQuery: ' + dbQuery);
         tx.executeSql(dbQuery, [itemId], function (tx, results) {
           if (results.rows.length > 0) {
-            Profiling.do('dbfav', 'found');
+            Profiling._do('dbfav', 'found');
             dbitem.resolve(true);
           } else {
             console.log('not found!');
-            Profiling.do('dbfav', 'not found');
+            Profiling._do('dbfav', 'not found');
             dbitem.resolve(false);
           }
         }, function (tx, err) {
           console.log('error: ' + err);
-          Profiling.do('dbfav', 'sql error');
+          Profiling._do('dbfav', 'sql error');
           dbitem.resolve(false);
         });
       }, function (error) { //error callback
         console.log('db.isFavorite() ERROR: ' + error);
-        Profiling.do('dbfav', 'tx error');
+        Profiling._do('dbfav', 'tx error');
         dbitem.resolve(false);
       }, function () { //success callback
         console.log('db.isFavorite() DONE!');
-        Profiling.do('dbfav', 'tx success');
+        Profiling._do('dbfav', 'tx success');
       });
       return dbitem.promise;
     },
@@ -1153,19 +1153,19 @@ angular.module('starter.services', [])
         //console.log('dbQuery: ' + dbQuery);
         tx.executeSql(dbQuery, [itemId], function (tx, results) {
           dbitem.resolve(val);
-          Profiling.do('dbfavsave', 'done');
+          Profiling._do('dbfavsave', 'done');
         }, function (tx, err) {
           console.log('error: ' + err);
-          Profiling.do('dbfavsave', 'sql error');
+          Profiling._do('dbfavsave', 'sql error');
           dbitem.resolve(!val);
         });
       }, function (error) { //error callback
         console.log('db.setFavorite() ERROR: ' + error);
-        Profiling.do('dbfavsave', 'tx error');
+        Profiling._do('dbfavsave', 'tx error');
         dbitem.resolve(!val);
       }, function () { //success callback
         console.log('db.setFavorite() DONE!');
-        Profiling.do('dbfavsave', 'tx success');
+        Profiling._do('dbfavsave', 'tx success');
       });
       return dbitem.promise;
     }
@@ -1177,11 +1177,11 @@ angular.module('starter.services', [])
     var fileTransfer = new FileTransfer();
     fileTransfer.download(obj.url, obj.savepath, function (fileEntry) {
       console.log("download complete: " + obj.savepath);
-      Profiling.do('fileget', 'saved');
+      Profiling._do('fileget', 'saved');
       obj.promise.resolve(obj.savepath);
     }, function (error) {
       //console.log("download error source " + error.source);console.log("download error target " + error.target);console.log("donwload error code: " + error.code);
-      Profiling.do('fileget', 'save error');
+      Profiling._do('fileget', 'save error');
       obj.promise.reject(error);
     }, true, { /* headers: { "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA==" } */ });
   };
@@ -1331,12 +1331,12 @@ angular.module('starter.services', [])
             */
             var filesavepath = rootFS.toURL() + IMAGESDIR_NAME + '/' + filename;
             console.log('already downloaded to "' + filesavepath + '"');
-            Profiling.do('fileget', 'already');
+            Profiling._do('fileget', 'already');
             filegot.resolve(filesavepath);
           }, function () {
             if (navigator.connection.type == Connection.NONE) {
               console.log('no network connection: cannot download missing images!');
-              Profiling.do('fileget', 'offline');
+              Profiling._do('fileget', 'offline');
               filegot.reject('no network connection');
             } else {
               var fileObj = {

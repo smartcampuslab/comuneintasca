@@ -354,3 +354,15 @@ ion-side-menu b {
 .ion-ios7-checkmark {
   color: #2975a7;
 }
+
+.h2.h2-credits {
+  color: #2975a7;
+  font-family: 'HelveticaNeue-CondensedBold';
+}
+.h4.h4-credits {
+  font-family: 'HelveticaNeue-CondensedBold';
+}
+
+.h4.credits-title {
+  color: #2975a7;
+}

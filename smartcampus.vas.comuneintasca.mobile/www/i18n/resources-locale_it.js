@@ -179,5 +179,25 @@
     "key": "credits_title",
     "value": "Credits",
     "description": "credits popup title"
+  }, {
+    "key": "credits_app",
+    "value": "Il Comune in Tasca",
+    "description": "credits"
+  }, {
+    "key": "credits_appfamily",
+    "value": "L'app dei Comuni Trentini",
+    "description": "credits"
+  }, {
+    "key": "credits_project",
+    "value": "Un progetto di:",
+    "description": "credits"
+  }, {
+    "key": "credits_sponsored",
+    "value": "Con il patrocinio di:",
+    "description": "credits"
+  }, {
+    "key": "credits_info",
+    "value": "Per informazioni:",
+    "description": "credits"
   }
 ]

@@ -1396,9 +1396,9 @@ angular.module('starter.services', [])
       'de': 'Details'
     },
     'Cancel': {
-      'it': 'Annulla',
-      'en': 'Cancel',
-      'de': 'Cancel'
+      'it': 'Chiudi',
+      'en': 'Close',
+      'de': 'Schließen'
     }
   };
 
@@ -1535,12 +1535,12 @@ angular.module('starter.services', [])
       'de': 'Filter'
     },
     'Cancel': {
-      'it': 'Annulla',
+      'it': 'Chiudi',
       'en': 'Cancel',
       'de': 'Annullieren'
     },
     'All': {
-      'it': 'Tutte',
+      'it': 'Tutti',
       'en': 'All',
       'de': 'Alles'
     },
@@ -1583,14 +1583,15 @@ angular.module('starter.services', [])
   var openFilterPopup = function ($scope, options, presel, callback) {
     var title = $filter('translate')(keys['Filter']);
 
-    var template = '<div class="modal"><ion-header-bar><h1 class="title">' + title + '</h1></ion-header-bar><ion-content><div class="list">';
+    var template = '<div class="modal modal-filter"><ion-header-bar><h1 class="title">' + title + '</h1></ion-header-bar><ion-content><div class="list">';
     var body = '<a class="item item-icon-right" ng-click="closeModal(\'__all\')">' + $filter('translate')(keys['All']) + '<i class="icon ' + (presel == null ? 'ion-ios7-checkmark' : 'ion-ios7-circle-outline') + '"></i></a>';
     for (var key in options) {
       var s = $filter('translate')(options[key]);
       s = '<a class="item item-icon-right" ng-click="closeModal(\'' + key + '\')">' + s + '<i class="icon ' + (key == presel ? 'ion-ios7-checkmark' : 'ion-ios7-circle-outline') + '"></i></a>';
       body += s;
     }
-    template += body + '</div></ion-content><ion-footer-bar><div class="tabs" ng-click="closeModal()"><a class="tab-item">' + $filter('translate')(keys['Cancel']) + '</a></div></ion-footer-bar></div>';
+    template += body + '</div></ion-content><ion-footer-bar class="bar-modal"><button class="col button button-default button-block button-modal" ng-click="closeModal()">' + $filter('translate')(keys['Cancel']) + '</button></ion-footer-bar></div>';
+
     $scope.modal = $ionicModal.fromTemplate(template, {
       scope: $scope,
       animation: 'slide-in-up'

@@ -172,9 +172,10 @@ ion-side-menu .item {
 .content-image-main.unavailable,
 .content-image-main.missing,
 .content-image-main.error {
-  height: 40px;
+  /*height: 40px;
   line-height: 40px;
-  background-color: #AA3B2C;
+  background-color: #AA3B2C;*/
+  display: none;
 }
 .content-image-main.unavailable:after {
   content: '...';

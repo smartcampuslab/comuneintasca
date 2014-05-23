@@ -5,9 +5,9 @@
     </div>
     <ion-list ng-if="!! favourites.length">
       <div class="item item-divider" align="center">{{'list_results' | i18nplur:favourites.length}}</div>
-      <ion-item class="item-thumbnail-left" ng-repeat="fav in favourites" collection-item-width="'100%'" collection-item-height="'80px'" nav-clear href="{{fav.abslink}}">
-        <comuni-img class="item-image comuni-item-image" image="fav.image" gotdata="gotdata"></comuni-img>
-        <h2>{{fav.title | translate}}</h2>
+      <ion-item class="item-thumbnail-left" ng-repeat="obj in favourites" collection-item-width="'100%'" collection-item-height="'80px'" nav-clear href="{{obj.abslink}}">
+        <comuni-img class="item-image comuni-item-image" image="obj.image" gotdata="gotdata"></comuni-img>
+        <h2>{{obj.title | translate}}</h2>
       </ion-item>
     </ion-list>
   </ion-content>

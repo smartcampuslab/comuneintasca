@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'ilcomuneintasca';
-	src:url('../fonts/ilcomuneintasca.eot?6zfpd4');
-	src:url('../fonts/ilcomuneintasca.eot?#iefix6zfpd4') format('embedded-opentype'),
-		url('../fonts/ilcomuneintasca.woff?6zfpd4') format('woff'),
-		url('../fonts/ilcomuneintasca.ttf?6zfpd4') format('truetype'),
-		url('../fonts/ilcomuneintasca.svg?6zfpd4#ilcomuneintasca') format('svg');
+	src:url('../fonts/ilcomuneintasca.eot?-acao9y');
+	src:url('../fonts/ilcomuneintasca.eot?#iefix-acao9y') format('embedded-opentype'),
+		url('../fonts/ilcomuneintasca.woff?-acao9y') format('woff'),
+		url('../fonts/ilcomuneintasca.ttf?-acao9y') format('truetype'),
+		url('../fonts/ilcomuneintasca.svg?-acao9y#ilcomuneintasca') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -29,6 +29,9 @@ src: url("../fonts/HelveticaNeue-CondensedBold.otf") format("opentype");
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.comuneicon-filter:before {
+	content: "\e60a";
+}
 .comuneicon-placeholder:before {
 	content: "\e608";
 }
@@ -58,7 +61,4 @@ src: url("../fonts/HelveticaNeue-CondensedBold.otf") format("opentype");
 }
 .comuneicon-conoscere:before {
 	content: "\e607";
-}
-.comuneicon-filter:before {
-	content: "\e60a";
 }

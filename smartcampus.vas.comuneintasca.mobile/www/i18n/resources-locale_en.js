@@ -43,15 +43,15 @@
     "description": "side menu label"
   }, {
     "key": "sidemenu_div_Vivere",
-    "value": "LIVE",
+    "value": "EVENTS",
     "description": "side menu label"
   }, {
     "key": "sidemenu_div_Scoprire",
-    "value": "EXPLORE",
+    "value": "HIGHLIGHTS",
     "description": "side menu label"
   }, {
     "key": "sidemenu_div_Percorsi",
-    "value": "ITINERARIES",
+    "value": "TOURISTIC ITINERARIES",
     "description": "side menu label"
   }, {
     "key": "sidemenu_div_Mangiare-dormire",

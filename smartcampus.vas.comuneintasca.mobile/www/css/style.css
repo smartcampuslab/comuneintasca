@@ -45,7 +45,8 @@ h1,
 h2 {
   color: #1b4d6e;
 }
-.htmldesc a {
+.htmldesc a,
+.comuni-htmldesc a {
   color: #2975a7;
   font-weight: bold;
 }

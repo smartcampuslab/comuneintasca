@@ -14,7 +14,7 @@
 // and splash screen files here, even if 
 // we don't build for all platforms 
 // on each developer's box.
-var dirstocreate = ['platforms/android/res/values-en','platforms/android/res/values-de'];
+var dirstocreate = ['platforms/android/res/values-en', 'platforms/android/res/values-de'];
  
 var filestocopy = [{
     "config/android/AndroidManifest.xml": 
@@ -61,7 +61,9 @@ var filestocopy = [{
 }, {
     "config/android/res/values-de/strings.xml": 
     "platforms/android/res/values-de/strings.xml"
-}, {
+}, 
+
+{
     "config/ios/Resources/icons/icon-40@2x.png": 
     "platforms/ios/Trento/Resources/icons/icon-40@2x.png"
 }, {
@@ -151,4 +153,22 @@ filestocopy.forEach(function(obj) {
                fs.createWriteStream(destfile));
         }
     });
+});
+
+['','en-','de-']
+.forEach(function(lang) {
+    ['long-port-hdpi', 'long-port-ldpi', 'long-port-xhdpi', 'notlong-port-hdpi', 'notlong-port-ldpi', 'notlong-port-xhdpi', 'notlong-port-mdpi']
+    .forEach(function(d) {
+      var destdir = path.join(rootdir, 'platforms/android/res/drawable-'+lang + d);
+      var srcdir = path.join(rootdir, 'config/android/res/drawable-'+lang + d);
+      if (!fs.existsSync(destdir)) {
+        fs.mkdirSync(destdir);
+        var srcfile = path.join(srcdir,'splash.png');
+        var destfile = path.join(destdir,'splash.png');
+         if (fs.existsSync(srcfile)) {
+            fs.createReadStream(srcfile).pipe(
+               fs.createWriteStream(destfile));
+        }
+      }
+    }); 
 });

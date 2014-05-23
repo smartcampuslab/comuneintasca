@@ -179,5 +179,25 @@
     "key": "credits_title",
     "value": "Credits",
     "description": "credits popup title"
+  }, {
+    "key": "credits_app",
+    "value": "Die Stadt in der Tasche",
+    "description": "credits"
+  }, {
+    "key": "credits_appfamily",
+    "value": "App der Gemeinden im Trentino",
+    "description": "credits"
+  }, {
+    "key": "credits_project",
+    "value": "Ein projekt:",
+    "description": "credits"
+  }, {
+    "key": "credits_sponsored",
+    "value": "Unter der Schirmherrschaft der:",
+    "description": "credits"
+  }, {
+    "key": "credits_info",
+    "value": "Informationen:",
+    "description": "credits"
   }
 ]

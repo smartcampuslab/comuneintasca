@@ -19,20 +19,25 @@
     </div>
 
     <div class="row" style="margin-top: 10px;">
-      <div class="col col-center"><img src="img/credits/smart_campus_credits.png" width="50%" /></div>
+        <div class="col col-50" ng-click="extLink('http://www.fbk.eu')">
+          <img src="img/credits/fbk.png" width="40%"/>
+        </div>
+        <div class="col col-50 col-center" style="text-align:left" ng-click="extLink('http://www.smartcampuslab.it')">
+          <img src="img/credits/smart_campus_credits.png" width="60%" />
+        </div>  
     </div>
-    <div class="row" style="margin-top: 10px;">
+    <div class="row" style="margin-top: 10px;" ng-click="extLink('http://www.innovazione.comunitrentini.tn.it')">
       <div class="col col-center"><img src="img/credits/consorzio_comuni_trentini.png" width="50%" /></div>
     </div>
     
-    <div class="row" style="margin-top: 30px;">
+    <div class="row" style="margin-top: 20px;">
       <div class="col"><span class="h4 credits-title">{{'credits_sponsored' | i18n}}</span></div>
     </div>
-    <div class="row" style="margin-top: 10px;">
+    <div class="row" style="margin-top: 10px;" ng-click="extLink('http://www.comune.trento.it')">
       <div class="col col-center"><img src="img/credits/comune_trento.png" width="60%" /></div>
     </div>
 
-    <div class="row" style="margin-top: 30px;">
+    <div class="row" style="margin-top: 20px;">
       <div class="col"><span class="h4 credits-title">{{'credits_info' | i18n}}</span>
       <br/><span class="h5" ng-click="extLink('mailto:ilcomuneintasca@smartcampuslab.it')">ilcomuneintasca@smartcampuslab.it</span></div>
     </div>

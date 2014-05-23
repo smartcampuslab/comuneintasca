@@ -267,7 +267,7 @@ angular.module('starter.services', [])
       return 'TrentoInTasca';
     },
     schemaVersion: function () {
-      return 64;
+      return 65;
     },
     syncTimeoutSeconds: function () {
       return 60 * 60; /* 60 times 60 seconds = 1 HOUR */
@@ -1673,6 +1673,8 @@ angular.module('starter.services', [])
         $scope.hasMap = true;
         $scope.showMap = function () {
           state.data = conf.getData();
+          state.ordering = $scope.ordering;
+          state.filter = $scope.filter;
           MapHelper.prepare(conf.getTitle(), conf.getData());
         };
       }

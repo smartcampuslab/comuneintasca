@@ -338,13 +338,9 @@ ion-side-menu b {
   font-family: 'HelveticaNeue-CondensedBold';
 }
 #credits .row {
-  display: table;
-  height: 100%;
   padding: 0;
 }
 #credits .col {
-  display: table-cell;
-  vertical-align: middle;
   text-align: center;
   padding: 0;
 }

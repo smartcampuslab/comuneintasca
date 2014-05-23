@@ -55,10 +55,10 @@ public class SyncController extends AbstractObjectController {
 
 	private void cleanResult(SyncData result) {
 		List<BasicObject> list = result.getUpdated().get(EventObject.class.getName());
-		Calendar ref = Calendar.getInstance();
-		ref.set(Calendar.HOUR_OF_DAY, 0);
-		ref.set(Calendar.MINUTE, 0);
 		if (list != null) {
+			Calendar ref = Calendar.getInstance();
+			ref.set(Calendar.HOUR_OF_DAY, 0);
+			ref.set(Calendar.MINUTE, 0);
 			for (Iterator<BasicObject> iterator = list.iterator(); iterator.hasNext();) {
 				EventObject event = (EventObject) iterator.next();
 				if (event.getToTime() > 0 && event.getToTime() < ref.getTimeInMillis() ||
@@ -67,8 +67,8 @@ public class SyncController extends AbstractObjectController {
 				}
 
 			}
+			result.getUpdated().put(EventObject.class.getName(), list);
 		}
-		result.getUpdated().put(EventObject.class.getName(), list);
 	}
 
 }

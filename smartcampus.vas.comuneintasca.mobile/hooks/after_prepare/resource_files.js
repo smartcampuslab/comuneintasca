@@ -14,6 +14,7 @@
 // and splash screen files here, even if 
 // we don't build for all platforms 
 // on each developer's box.
+var dirstocreate = ['platforms/android/res/values-en','platforms/android/res/values-de'];
  
 var filestocopy = [{
     "config/android/AndroidManifest.xml": 
@@ -51,6 +52,15 @@ var filestocopy = [{
 }, {
     "config/android/res/drawable-xhdpi/splash.png": 
     "platforms/android/res/drawable-xhdpi/splash.png"
+}, {
+    "config/android/res/values/strings.xml": 
+    "platforms/android/res/values/strings.xml"
+}, {
+    "config/android/res/values-en/strings.xml": 
+    "platforms/android/res/values-en/strings.xml"
+}, {
+    "config/android/res/values-de/strings.xml": 
+    "platforms/android/res/values-de/strings.xml"
 }, {
     "config/ios/Resources/icons/icon-40@2x.png": 
     "platforms/ios/Trento/Resources/icons/icon-40@2x.png"
@@ -121,6 +131,13 @@ var path = require('path');
  
 // no need to configure below
 var rootdir = process.argv[2];
+
+dirstocreate.forEach(function(d) {
+  var destdir = path.join(rootdir, d);
+  if (!fs.existsSync(destdir)) {
+    fs.mkdirSync(destdir);
+  }
+});
  
 filestocopy.forEach(function(obj) {
     Object.keys(obj).forEach(function(key) {

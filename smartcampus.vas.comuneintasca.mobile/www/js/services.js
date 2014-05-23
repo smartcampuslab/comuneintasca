@@ -209,9 +209,9 @@ angular.module('starter.services', [])
   
   var textTypes = {
     'città': {
-      de: 'Die Stadt',
-      it: 'Città',
-      en: 'The City'
+      de: 'Info',
+      it: 'Informazioni',
+      en: 'Info'
     },
     'bondone': {
       de: 'Mont Bondone',

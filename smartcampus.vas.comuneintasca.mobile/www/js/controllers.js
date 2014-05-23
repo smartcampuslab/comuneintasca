@@ -39,6 +39,13 @@ angular.module('starter.controllers', ['google-maps'])
     navbarElement.removeClass('bar-comuni-home');
   });
 
+  var defaultSlide = {
+          title: 'Trento',
+          img: 'img/hp-box/trento.png',
+          id: null,
+          ref: '#/app/contents/text.3001,text.3004'
+        };
+  
   $scope.slides = null;
   $scope.goToItem = function (link) {
     $location.path(link.substring(1));
@@ -47,7 +54,7 @@ angular.module('starter.controllers', ['google-maps'])
     var homeObject = JSON.parse(localStorage.homeObject);
     var homeObjects = homeObject.contentIds;
     DatiDB.getAny(homeObjects).then(function (data) {
-      var slides = [];
+      var slides = [defaultSlide];
       for (var i = 0; i < data.length; i++) {
         slides.push({
           title: $filter('translate')(data[i].title),

@@ -1,9 +1,14 @@
-<ion-view title="{{'leaf_Itinerario' | i18n}}">
+<ion-view title="{{'leaf_Itinerario' | i18n}}"  hide-back-button="true">
   <ion-content class="has-header">
+      <ion-nav-buttons side="left">
+      <button class="button button-clear" ng-click="bk()">
+      <i class="icon ion-ios7-arrow-back"></i>
+      </button>
+      </ion-nav-buttons>
     <ion-list>
       <div class="item item-divider" align="center">{{itinerario.title | translate}}</div>
       <ion-item class="item-thumbnail-left" ng-repeat="place in tappe track by $index" collection-item-width="'100%'" collection-item-height="'80px'" 
-       href="#/app/place/{{place.id}}"> 
+       href="#/app/itineraryplace/{{place.id}}"> 
         <comuni-img class="item-image comuni-item-image" image="place.image" gotdata="gotdata"></comuni-img>
         <h2>{{$index + 1}}. {{place.title | translate}}</h2>
         <p class="comuni-item-bottomdetail">{{place.address | translate}}</p>

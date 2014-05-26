@@ -254,13 +254,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         }
       }
     })
-    .state('app.itinerary.step', {
-      url: "/step/:placeId",
+    .state('app.itinerary_step', {
+      url: "/itineraryplace/:placeId",
       views: {
-        'itinerary-steps' :{
+        'menuContent' :{
           templateUrl: "templates/place.html", controller: 'PlaceCtrl'
         }
-      }
+      },data: {explicitBack:true}
     })
     .state('app.itinerary.map', {
       url: "/map",

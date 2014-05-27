@@ -276,11 +276,12 @@ angular.module('starter.services', [])
     },
     syncTimeoutSeconds: function () {
       return 60 * 60; /* 60 times 60 seconds = 1 HOUR */
-      //      return 60 * 60 * 24; /* 60 times 60 seconds = 1 HOUR --> x24 = 1 DAY */
-      //      return 60 * 60 * 24 * 10; /* 60 times 60 seconds = 1 HOUR --> x24 = 1 DAY x10 */
+      //return 60 * 60 * 6; /* 60 times 60 seconds = 1 HOUR --> x12 = TWICE A DAY */
+      //return 60 * 60 * 24; /* 60 times 60 seconds = 1 HOUR --> x24 = ONCE A DAY */
+      //return 60 * 60 * 24 * 10; /* 60 times 60 seconds = 1 HOUR --> x24 = 1 DAY x10 */
     },
     syncingOverlayTimeoutMillis: function () {
-      return 30 * 1000; /* 30 seconds before automatically hiding syncing overlay */
+      return 40 * 1000; /* 40 seconds before automatically hiding syncing overlay */
     },
     loadingOverlayTimeoutMillis: function () {
       return 10 * 1000; /* 10 seconds before automatically hiding loading overlay */
@@ -639,7 +640,7 @@ angular.module('starter.services', [])
             lastSynced = now_as_epoch;
             localStorage.lastSynced = lastSynced;
 
-            syncing = $ionicLoading.show({
+            var syncingOverlay = $ionicLoading.show({
               content: 'syncing...',
               duration: Config.syncingOverlayTimeoutMillis()
             });

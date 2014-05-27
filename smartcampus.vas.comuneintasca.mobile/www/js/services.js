@@ -227,6 +227,11 @@ angular.module('starter.services', [])
       de: 'Kontakten',
       it: 'Contatti',
       en: 'Contacts'
+    },
+    'In preparazione...': {
+      de: 'Kommt bald...',
+      it: 'In preparazione...',
+      en: 'Coming soon...'
     }
   }
   

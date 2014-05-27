@@ -31,7 +31,7 @@ angular.module('starter.controllers', ['google-maps'])
   });
 })
 
-.controller('HomeCtrl', function ($scope, $rootScope, DatiDB, $filter, $ionicSlideBoxDelegate, $location) {
+.controller('HomeCtrl', function ($scope, $rootScope, DatiDB, $filter, $ionicSlideBoxDelegate, $ionicPopup, $location, Config) {
   $rootScope.inHome = true;
   var navbarElement = angular.element(document.getElementById('navbar'));
   navbarElement.addClass('bar-comuni-home');
@@ -71,7 +71,7 @@ angular.module('starter.controllers', ['google-maps'])
   });
 
   $scope.openViaggiaTrento = function () {
-    if (ionic.Platform.isWebView()) {
+    if (ionic.Platform.isWebView() && device.platform=='Android') {
       cordova.plugins.startapp.start({
         android: 'eu.trentorise.smartcampus.viaggiatrento'
       }, function () {
@@ -81,7 +81,14 @@ angular.module('starter.controllers', ['google-maps'])
         window.open('https://play.google.com/store/apps/details?id=eu.trentorise.smartcampus.viaggiatrento', '_system');
       });
     } else {
-      window.open('https://play.google.com/store/apps/details?id=eu.trentorise.smartcampus.viaggiatrento', '_blank');
+      //window.open('https://play.google.com/store/apps/details?id=eu.trentorise.smartcampus.viaggiatrento', '_blank');
+      var alertPopup = $ionicPopup.alert({
+        title: 'Viaggia Trento',
+        template: Config.textTypesList()['In preparazione...'][$rootScope.lang]
+      });
+      alertPopup.then(function(res) {
+        console.log('viagga trento done');
+      });
     }
   };
 
@@ -336,7 +343,16 @@ angular.module('starter.controllers', ['google-maps'])
   MapHelper.start($scope);
 })
 
-.controller('PlaceCtrl', function ($scope, DatiDB, GeoLocate, $stateParams) {
+.controller('PlaceCtrl', function ($scope, DatiDB, GeoLocate, $stateParams, $state, $window) {
+  $scope.explicitBack = function() {
+    return $state.current && $state.current.data && $state.current.data.explicitBack;
+  };
+
+  
+  $scope.bk = function() {
+    $window.history.back();
+  };
+
   $scope.gotdata = DatiDB.get('poi', $stateParams.placeId).then(function (data) {
     $scope.place = data;
     $scope.obj = data;
@@ -481,12 +497,23 @@ angular.module('starter.controllers', ['google-maps'])
   });
 })
 
-.controller('ItinerarioCtrl', function ($scope, DatiDB, $stateParams) {
+.controller('ItinerarioCtrl', function ($scope, DatiDB, $stateParams, $window, $location) {
+  $scope.bk = function() {
+    $window.history.back();
+  };
+  $scope.clr = function() {
+    $location.replace();
+  };
+  
   $scope.itinerarioId = $stateParams.itinerarioId;
   $scope.gotdata = DatiDB.get('itinerary', $stateParams.itinerarioId).then(function (data) {
     $scope.itinerario = data;
     DatiDB.get('poi', data.steps.join()).then(function (luoghi) {
-      $scope.tappe = luoghi;
+      var tappe = [];
+      angular.forEach(luoghi, function(luogo,idx) {
+        tappe[data.steps.indexOf(luogo.id)] = luogo;
+      });
+      $scope.tappe = tappe;
       $scope.location = luoghi[0].location;
     });
   });
@@ -574,7 +601,7 @@ angular.module('starter.controllers', ['google-maps'])
         text: $filter('translate')(keys['Details']),
         type: 'button-positive',
         onTap: function (e) {
-          var itemUrl = $scope.activeMarker.abslink.substring(1);
+          var itemUrl = '/app/itineraryplace/'+$scope.activeMarker.id;//$scope.activeMarker.abslink.substring(1);
           $location.path(itemUrl);
         }
         }]
@@ -609,78 +636,6 @@ angular.module('starter.controllers', ['google-maps'])
     visible: $scope.polylineOptions.visible
   };
 
-  /*
-   * google.maps.TravelMode.DRIVING (Default)
-   * google.maps.TravelMode.BICYCLING
-   * google.maps.TravelMode.TRANSIT
-   * google.maps.TravelMode.WALKING
-  $scope.directionsOptions = {
-    directionsServiceOptions: {
-      travelMode: google.maps.TravelMode.WALKING
-    },
-    directionsRendererOptions: {
-      suppressMarkers: true,
-      polylineOptions: $scope.polylineOptions
-    }
-  };
-   */
-
-  /*
-  var directionsService = new google.maps.DirectionsService();
-  var directionsDisplay = new google.maps.DirectionsRenderer($scope.directionsOptions.directionsRendererOptions);
-
-  var drawDirections = function (control, models, caller) {
-    if (!!control && !!models && models.length >= 2) {
-      var max = 10;
-      var splittedModels = [];
-      var array = new Array();
-      for (var i = 0; i < models.length; i++) {
-        if (array.length == 0 && i > 0) {
-          i--;
-        }
-        array.push(models[i]);
-        if (array.length == max || (i + 1) == models.length) {
-          splittedModels.push(array);
-          array = new Array();
-        }
-      }
-
-      for (var i = 0; i < splittedModels.length; i++) {
-        var partialModels = splittedModels[i];
-
-        var origin = new google.maps.LatLng(partialModels[0].latitude, partialModels[0].longitude);
-        var destination = new google.maps.LatLng(partialModels[partialModels.length - 1].latitude, partialModels[partialModels.length - 1].longitude);
-        var waypoints = [];
-
-        if (partialModels.length > 2) {
-          for (var j = 1; j < (partialModels.length - 1); j++) {
-            var waypoint = {
-              location: new google.maps.LatLng(partialModels[j].latitude, partialModels[j].longitude)
-            };
-            waypoints.push(waypoint);
-          }
-        }
-
-        var request = {
-          origin: origin,
-          destination: destination,
-          waypoints: waypoints,
-          travelMode: $scope.directionsOptions.directionsServiceOptions.travelMode
-        };
-        directionsService.route(request, function (result, status) {
-          if (status == google.maps.DirectionsStatus.OK) {
-            directionsDisplay = new google.maps.DirectionsRenderer($scope.directionsOptions.directionsRendererOptions);
-            directionsDisplay.setMap(control.getGMap());
-            directionsDisplay.setDirections(result);
-
-            if (!!caller) alert(caller);
-          }
-        });
-      }
-    }
-  }
-*/
-  // map2 = new mxn.Mapstraction('map2', 'openlayers');
   DatiDB.get('itinerary', $stateParams.itinerarioId).then(function (data) {
     $scope.markers.poly = [];
     angular.forEach(data.stepLines, function (line) {

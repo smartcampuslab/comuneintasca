@@ -31,7 +31,7 @@ angular.module('starter.controllers', ['google-maps'])
   });
 })
 
-.controller('HomeCtrl', function ($scope, $rootScope, DatiDB, $filter, $ionicSlideBoxDelegate, $location) {
+.controller('HomeCtrl', function ($scope, $rootScope, DatiDB, $filter, $ionicSlideBoxDelegate, $ionicPopup, $location, Config) {
   $rootScope.inHome = true;
   var navbarElement = angular.element(document.getElementById('navbar'));
   navbarElement.addClass('bar-comuni-home');
@@ -71,7 +71,7 @@ angular.module('starter.controllers', ['google-maps'])
   });
 
   $scope.openViaggiaTrento = function () {
-    if (ionic.Platform.isWebView()) {
+    if (ionic.Platform.isWebView() && device.platform=='Android') {
       cordova.plugins.startapp.start({
         android: 'eu.trentorise.smartcampus.viaggiatrento'
       }, function () {
@@ -81,7 +81,14 @@ angular.module('starter.controllers', ['google-maps'])
         window.open('https://play.google.com/store/apps/details?id=eu.trentorise.smartcampus.viaggiatrento', '_system');
       });
     } else {
-      window.open('https://play.google.com/store/apps/details?id=eu.trentorise.smartcampus.viaggiatrento', '_blank');
+      //window.open('https://play.google.com/store/apps/details?id=eu.trentorise.smartcampus.viaggiatrento', '_blank');
+      var alertPopup = $ionicPopup.alert({
+        title: 'Viaggia Trento',
+        template: Config.textTypesList()['In preparazione...'][$rootScope.lang]
+      });
+      alertPopup.then(function(res) {
+        console.log('viagga trento done');
+      });
     }
   };
 
@@ -538,7 +545,11 @@ angular.module('starter.controllers', ['google-maps'])
       longitude: 11.12
     },
     zoom: 8,
-    pan: false
+    pan: false,
+    options: {
+      'streetViewControl': false,
+      'zoomControl': true
+    }
   };
 
   /* Very dirty workaround!!! */

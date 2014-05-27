@@ -88,7 +88,7 @@
     "description": "side menu label"
   }, {
     "key": "sidemenu_Eventi-Principali",
-    "value": "Main Events",
+    "value": "Hauptereignisse",
     "description": "side menu label"
   }, {
     "key": "sidemenu_Bondone",
@@ -199,5 +199,10 @@
     "key": "credits_info",
     "value": "Informationen:",
     "description": "credits"
+  }, 
+  {
+    "key": "in_preparazione",
+    "value": "Kommt bald...",
+    "description": "per viaggia trento"
   }
 ]

@@ -227,6 +227,11 @@ angular.module('starter.services', [])
       de: 'Kontakten',
       it: 'Contatti',
       en: 'Contacts'
+    },
+    'In preparazione...': {
+      de: 'Kommt bald...',
+      it: 'In preparazione...',
+      en: 'Coming soon...'
     }
   }
   
@@ -1176,9 +1181,14 @@ angular.module('starter.services', [])
   var queueFileDownload = function (obj) {
     var fileTransfer = new FileTransfer();
     fileTransfer.download(obj.url, obj.savepath, function (fileEntry) {
-      console.log("download complete: " + obj.savepath);
       Profiling._do('fileget', 'saved');
-      obj.promise.resolve(obj.savepath);
+      if (device.version.indexOf('2.3')==0) {
+        console.log("download complete: " + fileEntry.nativeURL + " (Android 2.3)");
+        obj.promise.resolve(fileEntry.nativeURL);
+      } else {
+        console.log("download complete: " + obj.savepath);
+        obj.promise.resolve(obj.savepath);
+      }
     }, function (error) {
       //console.log("download error source " + error.source);console.log("download error target " + error.target);console.log("donwload error code: " + error.code);
       Profiling._do('fileget', 'save error');
@@ -1316,8 +1326,9 @@ angular.module('starter.services', [])
           //console.log('rootDir: ' + rootDir.fullPath);
           mainDir.getFile(filename, {}, function (fileEntry) {
             /*
-            console.log('file url: ' + fileEntry.toURL());
-            console.log('file path: ' + fileEntry.fullPath);
+            console.log('fileEntry.toURL(): ' + fileEntry.toURL());
+            console.log('fileEntry.nativeURL: ' + fileEntry.nativeURL);
+            console.log('fileEntry.fullPath: ' + fileEntry.fullPath);
             window.resolveLocalFileSystemURL(filesavepath,function(entry){
               console.log('entry.nativeURL: '+entry.nativeURL);
               console.log('entry.toUrl(): '+entry.toUrl());
@@ -1330,9 +1341,14 @@ angular.module('starter.services', [])
             });
             */
             var filesavepath = rootFS.toURL() + IMAGESDIR_NAME + '/' + filename;
-            console.log('already downloaded to "' + filesavepath + '"');
             Profiling._do('fileget', 'already');
-            filegot.resolve(filesavepath);
+            if (device.version.indexOf('2.3')==0) {
+              console.log('already downloaded to "' + fileEntry.nativeURL + '" (Android 2.3)');
+              filegot.resolve(fileEntry.nativeURL);
+            } else {
+              console.log('already downloaded to "' + filesavepath + '"');
+              filegot.resolve(filesavepath);
+            }
           }, function () {
             if (navigator.connection.type == Connection.NONE) {
               console.log('no network connection: cannot download missing images!');
@@ -1410,7 +1426,11 @@ angular.module('starter.services', [])
       longitude: 11.12
     },
     zoom: 8,
-    pan: false
+    pan: false,
+    options: {
+      'streetViewControl': false,
+      'zoomControl': true
+    }
   };
 
   var markers = {

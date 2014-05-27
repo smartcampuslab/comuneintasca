@@ -199,5 +199,10 @@
     "key": "credits_info",
     "value": "Per informazioni:",
     "description": "credits"
+  }, 
+  {
+    "key": "in_preparazione",
+    "value": "In preparazione...",
+    "description": "credits"
   }
 ]

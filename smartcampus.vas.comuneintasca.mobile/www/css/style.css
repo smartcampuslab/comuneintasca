@@ -319,7 +319,7 @@ ion-side-menu .item {
   top: 0;
   bottom: 240px;
   /* or whatever height of upper div*/
-  background: red;
+  /* background: red; */
 }
 .home-box-bottom {
   position: absolute;

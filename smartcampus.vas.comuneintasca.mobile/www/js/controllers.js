@@ -518,7 +518,11 @@ angular.module('starter.controllers', ['google-maps'])
       longitude: 11.12
     },
     zoom: 8,
-    pan: false
+    pan: false,
+    options: {
+      'streetViewControl': false,
+      'zoomControl': true
+    }
   };
 
   /* Very dirty workaround!!! */

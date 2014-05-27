@@ -1182,8 +1182,8 @@ angular.module('starter.services', [])
     var fileTransfer = new FileTransfer();
     fileTransfer.download(obj.url, obj.savepath, function (fileEntry) {
       Profiling._do('fileget', 'saved');
-      if (device.version.indexOf('2.3')==0) {
-        console.log("download complete: " + fileEntry.nativeURL + " (Android 2.3)");
+      if (device.version.indexOf('2.')==0) {
+        console.log("download complete: " + fileEntry.nativeURL + " (Android 2.x)");
         obj.promise.resolve(fileEntry.nativeURL);
       } else {
         console.log("download complete: " + obj.savepath);
@@ -1342,8 +1342,8 @@ angular.module('starter.services', [])
             */
             var filesavepath = rootFS.toURL() + IMAGESDIR_NAME + '/' + filename;
             Profiling._do('fileget', 'already');
-            if (device.version.indexOf('2.3')==0) {
-              console.log('already downloaded to "' + fileEntry.nativeURL + '" (Android 2.3)');
+            if (device.version.indexOf('2.')==0) {
+              console.log('already downloaded to "' + fileEntry.nativeURL + '" (Android 2.x)');
               filegot.resolve(fileEntry.nativeURL);
             } else {
               console.log('already downloaded to "' + filesavepath + '"');

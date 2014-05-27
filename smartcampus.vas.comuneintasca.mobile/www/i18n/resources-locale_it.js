@@ -204,5 +204,9 @@
     "key": "in_preparazione",
     "value": "In preparazione...",
     "description": "credits"
+  }, {
+    "key": "itinerari_title_accessibilita",
+    "value": "Accessibilità",
+    "description": "titoletto accessibilita in itinerari"
   }
 ]

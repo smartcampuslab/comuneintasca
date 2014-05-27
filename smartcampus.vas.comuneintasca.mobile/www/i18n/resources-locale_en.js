@@ -204,5 +204,9 @@
     "key": "in_preparazione",
     "value": "Coming soon...",
     "description": "per viaggia trento"
+  }, {
+    "key": "itinerari_title_accessibilita",
+    "value": "Accessibility",
+    "description": "titoletto accessibilita in itinerari"
   }
 ]

@@ -66,15 +66,20 @@ angular.module('starter.directives', [])
             element.on('click', function (event) {
 			  // process only non-angular links / links starting with hash	
 			  if (element[0].href && !element[0].attributes['ng-href'] && element[0].attributes['href'].value.indexOf('#') != 0) {
-				console.log(element[0].attributes['href'].value);
 				event.preventDefault();
-			    var url = element[0].href;
-                var protocol = element[0].protocol;
-				// do not open relative links
-				if (protocol && element[0].attributes['href'].value.indexOf(protocol) == 0) {
+
+                var url = element[0].attributes['href'].value.replace(/“/gi,'').replace(/”/gi,'').replace(/"/gi,'').replace(/‘/gi,'').replace(/’/gi,'').replace(/'/gi,'');
+				console.log('url: <'+url+'>');
+                //var protocol = element[0].protocol;
+				//console.log('protocol: '+protocol);
+				//if (protocol && url.indexOf(protocol) == 0) {
+
+                // do not open broken/relative links
+                if (url.indexOf('http://')==00 || url.indexOf('https://')==0 || url.indexOf('mailto:')==0 || url.indexOf('tel:')==0) {
 					window.open(url,'_system');
-					console.log("blocking link "+ element[0].attributes['href'].value);             
-				}
+				} else {
+					console.log("blocking broken link: "+ url);
+                }
 			  } 
             });
         }

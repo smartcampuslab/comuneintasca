@@ -199,5 +199,10 @@
     "key": "credits_info",
     "value": "Further information:",
     "description": "credits"
+  }, 
+  {
+    "key": "in_preparazione",
+    "value": "Coming soon...",
+    "description": "per viaggia trento"
   }
 ]

@@ -46,11 +46,16 @@ h2 {
   color: #1b4d6e;
 }
 .htmldesc a,
+.comuni-html-desc a,
 .comuni-htmldesc a {
   color: #2975a7;
   font-weight: bold;
 }
-.htmldesc { margin-bottom:.4em; }
+.htmldesc,
+.comuni-html-desc,
+.comuni-htmldesc { 
+  margin-bottom:.4em; 
+}
 .bar.bar-comuni-home .title,
 .bar .title-home {
   line-height: 22px;

@@ -523,20 +523,7 @@ angular.module('starter.controllers', ['google-maps'])
 
 .controller('ItinerarioTappeCtrl', function ($scope, DatiDB, $stateParams) {})
 
-.controller('ItinerarioMappaCtrl', function ($scope, DatiDB, $stateParams, $filter, $ionicPopup, $location) {
-  var keys = {
-    'Details': {
-      'it': 'Dettagli',
-      'en': 'Details',
-      'de': 'Details'
-    },
-    'Cancel': {
-      'it': 'Annulla',
-      'en': 'Cancel',
-      'de': 'Cancel'
-    }
-  };
-
+.controller('ItinerarioMappaCtrl', function ($scope, DatiDB, $stateParams, $filter, $ionicPopup, $location, Config) {
   $scope.map = {
     control: {},
     draggable: 'true',
@@ -592,13 +579,13 @@ angular.module('starter.controllers', ['google-maps'])
       subTitle: !!$scope.activeMarker.distance ? $filter('number')($scope.activeMarker.distance, 1) + ' Km' : '',
       scope: $scope,
       buttons: [{
-        text: $filter('translate')(keys['Cancel']),
+        text: $filter('translate')(Config.keys()['Close']),
         type: 'button-default',
         onTap: function (e) {
           $scope.activeMarker = null;
         }
             }, {
-        text: $filter('translate')(keys['Details']),
+        text: $filter('translate')(Config.keys()['Details']),
         type: 'button-positive',
         onTap: function (e) {
           var itemUrl = '/app/itineraryplace/'+$scope.activeMarker.id;//$scope.activeMarker.abslink.substring(1);

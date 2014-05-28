@@ -1518,7 +1518,7 @@ angular.module('starter.services', [])
   };
 })
 
-.factory('ListToolbox', function ($q, $ionicPopup, $ionicModal, $filter, MapHelper, $location) {
+.factory('ListToolbox', function ($q, $ionicPopup, $ionicModal, $filter, MapHelper, $location, $timeout) {
   var keys = {
     'Stars': {
       'it': 'Stelle',
@@ -1714,8 +1714,19 @@ angular.module('starter.services', [])
       if (conf.hasSearch) {
         $scope.hasSearch = true;
         $scope.searching = false;
-        $scope.showSearch = function () {
+        $scope.showSearch = function (e) {
           $scope.searching = true;
+          var footer=e.target.parentNode.parentNode.parentNode;
+          console.log(footer);
+          $timeout(function(){
+            var fields=angular.element(footer).find('input');
+            console.log(fields.length);
+            if (fields.length>0) {
+              field=fields[0];
+              console.log(field);
+              field.focus();
+            }
+          },200);
         };
         $scope.cancelSearch = function () {
           $scope.searching = false;

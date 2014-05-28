@@ -209,7 +209,7 @@ angular.module('starter.controllers', ['google-maps'])
   });
 })
 
-.controller('HotelsListCtrl', function ($scope, $filter, DatiDB, Config, ListToolbox) {
+.controller('HotelsListCtrl', function ($scope, $filter, DatiDB, Config, ListToolbox, $ionicScrollDelegate) {
   $scope._ = _;
 
   $scope.filterDef = function () {
@@ -245,6 +245,7 @@ angular.module('starter.controllers', ['google-maps'])
       var f = filter ? Config.hotelTypesList()[filter].it : filter;
       DatiDB.cate('hotel', f).then(function (data) {
         $scope.hotels = data;
+        $ionicScrollDelegate.$getByHandle('hotelslistScroll').scrollTop(false);
       });
     },
     hasSearch: true
@@ -257,7 +258,7 @@ angular.module('starter.controllers', ['google-maps'])
   });
 })
 
-.controller('RestaurantsListCtrl', function ($scope, $filter, DatiDB, Config, ListToolbox) {
+.controller('RestaurantsListCtrl', function ($scope, $filter, DatiDB, Config, ListToolbox, $ionicScrollDelegate) {
   $scope.filterDef = function () {
     if ($scope.filter) {
       var r = $filter('translate')(Config.restaurantTypesList()[$scope.filter]);
@@ -291,6 +292,7 @@ angular.module('starter.controllers', ['google-maps'])
       var f = filter ? Config.restaurantTypesList()[filter].it : filter;
       DatiDB.cate('restaurant', f).then(function (data) {
         $scope.restaurants = data;
+        $ionicScrollDelegate.$getByHandle('restaurantslistScroll').scrollTop(false);
       });
     },
     hasSearch: true
@@ -402,8 +404,12 @@ angular.module('starter.controllers', ['google-maps'])
         t = 0;
       }
       var post = function (data) {
-          if (data) $scope.events = data;
-          else $scope.events = [];
+        if (data) {
+          $scope.events = data;
+        } else {
+          $scope.events = [];
+        }
+        $ionicScrollDelegate.$getByHandle('eventslistScroll').scrollTop(false);
       };
       if (t > 0) {
         if ($stateParams.eventType && $stateParams.eventType != 'all') {

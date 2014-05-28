@@ -373,10 +373,12 @@ angular.module('starter.controllers', ['google-maps'])
     return DateUtility.getLocaleDateString($rootScope.lang, time);
   };
 
+  var defaultTimeFilter = 'week';
   if ($stateParams.eventType && $stateParams.eventType != 'all') {
     $scope.cate = Config.eventCateFromType($stateParams.eventType);
   } else {
     $scope.cate = Config.eventCateFromType('all');
+    defaultTimeFilter = 'today';
   }
   
   $scope.filterDef = function () {
@@ -423,7 +425,7 @@ angular.module('starter.controllers', ['google-maps'])
         $scope.events = cache;
         $scope.cate = Config.eventCateFromType($stateParams.eventType);
       } else {
-        search('today');
+        search(defaultTimeFilter);
       }
     },
     getData: function () {
@@ -434,7 +436,7 @@ angular.module('starter.controllers', ['google-maps'])
     hasSearch: true,
     filterOptions: Config.eventFilterTypeList(),
     doFilter: search,
-    defaultFilter: 'today'
+    defaultFilter: defaultTimeFilter
   });
 })
 

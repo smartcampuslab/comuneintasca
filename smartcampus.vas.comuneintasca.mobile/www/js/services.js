@@ -206,7 +206,7 @@ angular.module('starter.services', [])
       en: 'Oriental specialities'
     }
   };
-  
+
   var textTypes = {
     'città': {
       de: 'Info',
@@ -218,7 +218,7 @@ angular.module('starter.services', [])
       it: 'Monte Bondone',
       en: 'Mount Bondone'
     },
-    'Servizi' : {
+    'Servizi': {
       de: 'Dienstleistungen',
       it: 'Servizi',
       en: 'Services'
@@ -234,7 +234,7 @@ angular.module('starter.services', [])
       en: 'Coming soon...'
     }
   }
-  
+
   var contentTypes = {
     'content': 'eu.trentorise.smartcampus.comuneintasca.model.ContentObject',
     'poi': 'eu.trentorise.smartcampus.comuneintasca.model.POIObject',
@@ -394,7 +394,7 @@ angular.module('starter.services', [])
         localization.reject('cannot geolocate (web)');
       }, {
         maximumAge: (5 * 60 * 1000), //5 mins
-        timeout: 10*1000, //10 secs
+        timeout: 10 * 1000, //10 secs
         enableHighAccuracy: true
       });
     }, false);
@@ -464,8 +464,7 @@ angular.module('starter.services', [])
       }
     },
 
-    _do :
-    function (label, details) {
+    _do: function (label, details) {
       if (Config.doProfiling()) {
         var startTime = startTimes[label] || -1;
         if (startTime != -1) console.log('PROFILE: ' + label + (details ? '(' + details + ')' : '') + '=' + ((new Date).getTime() - startTime));
@@ -1183,7 +1182,7 @@ angular.module('starter.services', [])
     var fileTransfer = new FileTransfer();
     fileTransfer.download(obj.url, obj.savepath, function (fileEntry) {
       Profiling._do('fileget', 'saved');
-      if (device.version.indexOf('2.')==0) {
+      if (device.version.indexOf('2.') == 0) {
         console.log("download complete: " + fileEntry.nativeURL + " (Android 2.x)");
         obj.promise.resolve(fileEntry.nativeURL);
       } else {
@@ -1343,7 +1342,7 @@ angular.module('starter.services', [])
             */
             var filesavepath = rootFS.toURL() + IMAGESDIR_NAME + '/' + filename;
             Profiling._do('fileget', 'already');
-            if (device.version.indexOf('2.')==0) {
+            if (device.version.indexOf('2.') == 0) {
               console.log('already downloaded to "' + fileEntry.nativeURL + '" (Android 2.x)');
               filegot.resolve(fileEntry.nativeURL);
             } else {
@@ -1405,7 +1404,7 @@ angular.module('starter.services', [])
   };
 })
 
-.factory('MapHelper', function ($location, $filter, $ionicPopup) {
+.factory('MapHelper', function ($location, $filter, $ionicPopup, $ionicScrollDelegate) {
   var keys = {
     'Details': {
       'it': 'Dettagli',
@@ -1432,6 +1431,13 @@ angular.module('starter.services', [])
       'streetViewControl': false,
       'zoomControl': true
     }
+//    events: {
+//      'drag': function () {
+//        var handle = $ionicScrollDelegate.$getByHandle('mapScroll');
+//        var scrollView = $ionicScrollDelegate.$getByHandle('mapScroll').getScrollView();
+//        console.log(scrollView);
+//      }
+//    }
   };
 
   var markers = {

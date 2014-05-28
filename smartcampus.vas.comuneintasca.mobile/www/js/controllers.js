@@ -40,12 +40,12 @@ angular.module('starter.controllers', ['google-maps'])
   });
 
   var defaultSlide = {
-          title: 'Trento',
-          img: 'img/hp-box/trento.png',
-          id: null,
-          ref: '#/app/contents/text.3001,text.3004'
-        };
-  
+    title: 'Trento',
+    img: 'img/hp-box/trento.png',
+    id: null,
+    ref: '#/app/contents/text.3001,text.3004'
+  };
+
   $scope.slides = null;
   $scope.goToItem = function (link) {
     $location.path(link.substring(1));
@@ -71,7 +71,7 @@ angular.module('starter.controllers', ['google-maps'])
   });
 
   $scope.openViaggiaTrento = function () {
-    if (ionic.Platform.isWebView() && device.platform=='Android') {
+    if (ionic.Platform.isWebView() && device.platform == 'Android') {
       cordova.plugins.startapp.start({
         android: 'eu.trentorise.smartcampus.viaggiatrento'
       }, function () {
@@ -86,7 +86,7 @@ angular.module('starter.controllers', ['google-maps'])
         title: 'Viaggia Trento',
         template: Config.textTypesList()['In preparazione...'][$rootScope.lang]
       });
-      alertPopup.then(function(res) {
+      alertPopup.then(function (res) {
         console.log('viagga trento done');
       });
     }
@@ -215,10 +215,9 @@ angular.module('starter.controllers', ['google-maps'])
   $scope.filterDef = function () {
     if ($scope.filter) {
       var r = $filter('translate')(Config.hotelTypesList()[$scope.filter]);
-      if (r.length > 20) r = r.substr(0,20)+'...';
+      if (r.length > 20) r = r.substr(0, 20) + '...';
       return r + ': ';
-    } 
-    else return '';
+    } else return '';
   }
 
   ListToolbox.prepare($scope, {
@@ -261,10 +260,9 @@ angular.module('starter.controllers', ['google-maps'])
   $scope.filterDef = function () {
     if ($scope.filter) {
       var r = $filter('translate')(Config.restaurantTypesList()[$scope.filter]);
-      if (r.length > 20) r = r.substr(0,20)+'...';
+      if (r.length > 20) r = r.substr(0, 20) + '...';
       return r + ': ';
-    } 
-    else return '';
+    } else return '';
   }
 
   ListToolbox.prepare($scope, {
@@ -310,7 +308,7 @@ angular.module('starter.controllers', ['google-maps'])
       if (cache) {
         if ($stateParams.placeType) {
           $scope.cate = Config.poiCateFromType($stateParams.placeType);
-        }  
+        }
         $scope.places = cache;
       } else {
         if ($stateParams.placeType) {
@@ -338,18 +336,24 @@ angular.module('starter.controllers', ['google-maps'])
   });
 })
 
-.controller('MapCtrl', function ($scope, MapHelper) {
+.controller('MapCtrl', function ($scope, MapHelper, $ionicScrollDelegate, $timeout) {
   $scope._ = _;
   MapHelper.start($scope);
+
+  $scope.$on('$viewContentLoaded', function () {
+    var mapHeight = 10; // or any other calculated value
+    mapHeight = angular.element(document.querySelector('#map-container'))[0].offsetHeight;
+    angular.element(document.querySelector('.angular-google-map-container'))[0].style.height = mapHeight + 'px';
+  });
 })
 
 .controller('PlaceCtrl', function ($scope, DatiDB, GeoLocate, $stateParams, $state, $window) {
-  $scope.explicitBack = function() {
+  $scope.explicitBack = function () {
     return $state.current && $state.current.data && $state.current.data.explicitBack;
   };
 
-  
-  $scope.bk = function() {
+
+  $scope.bk = function () {
     $window.history.back();
   };
 
@@ -369,7 +373,7 @@ angular.module('starter.controllers', ['google-maps'])
 
 
 .controller('EventsListCtrl', function ($rootScope, $scope, $stateParams, $filter, DatiDB, Config, ListToolbox, Profiling, DateUtility) {
-  $scope.getLocaleDateString = function(time) {
+  $scope.getLocaleDateString = function (time) {
     return DateUtility.getLocaleDateString($rootScope.lang, time);
   };
 
@@ -378,44 +382,43 @@ angular.module('starter.controllers', ['google-maps'])
   } else {
     $scope.cate = Config.eventCateFromType('all');
   }
-  
+
   $scope.filterDef = function () {
     if ($scope.filter) {
-      return $filter('translate')(Config.eventFilterTypeList()[$scope.filter])+': ';
-    } 
-    else return '';
+      return $filter('translate')(Config.eventFilterTypeList()[$scope.filter]) + ': ';
+    } else return '';
   }
-  
+
   var search = function (filter) {
-      var t;
-      var d = new Date();
-      var f = new Date(d.getFullYear(),d.getMonth(),d.getDate()).getTime()-1;
-      if (filter == 'today') {
-        t = new Date(d.getFullYear(),d.getMonth(),d.getDate()+1).getTime();
-      } else if (filter == 'week') {
-        t = new Date(d.getFullYear(),d.getMonth(),d.getDate()+7).getTime();
-      } else if (filter == 'month') {
-        t = new Date(d.getFullYear(),d.getMonth(),d.getDate()+30).getTime();
+    var t;
+    var d = new Date();
+    var f = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime() - 1;
+    if (filter == 'today') {
+      t = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1).getTime();
+    } else if (filter == 'week') {
+      t = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 7).getTime();
+    } else if (filter == 'month') {
+      t = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 30).getTime();
+    } else {
+      t = 0;
+    }
+    var post = function (data) {
+      if (data) $scope.events = data;
+      else $scope.events = [];
+    };
+    if (t > 0) {
+      if ($stateParams.eventType && $stateParams.eventType != 'all') {
+        $scope.gotdata = DatiDB.byTimeInterval('event', f, t, $scope.cate.it).then(post);
       } else {
-        t = 0;
+        $scope.gotdata = DatiDB.byTimeInterval('event', f, t, null).then(post);
       }
-      var post = function (data) {
-          if (data) $scope.events = data;
-          else $scope.events = [];
-      };
-      if (t > 0) {
-        if ($stateParams.eventType && $stateParams.eventType != 'all') {
-          $scope.gotdata = DatiDB.byTimeInterval('event', f, t, $scope.cate.it).then(post);
-        } else {
-          $scope.gotdata = DatiDB.byTimeInterval('event', f, t, null).then(post);
-        }  
+    } else {
+      if ($stateParams.eventType && $stateParams.eventType != 'all') {
+        $scope.gotdata = DatiDB.cate('event', $scope.cate.it).then(post);
       } else {
-        if ($stateParams.eventType && $stateParams.eventType != 'all') {
-          $scope.gotdata = DatiDB.cate('event', $scope.cate.it).then(post);
-        } else {
-          $scope.gotdata = DatiDB.all('event').then(post);
-        }
+        $scope.gotdata = DatiDB.all('event').then(post);
       }
+    }
   };
   ListToolbox.prepare($scope, {
     load: function (cache) {
@@ -439,7 +442,7 @@ angular.module('starter.controllers', ['google-maps'])
 })
 
 .controller('EventCtrl', function ($scope, DatiDB, $stateParams, $rootScope, DateUtility) {
-  $scope.getLocaleDateString = function(time) {
+  $scope.getLocaleDateString = function (time) {
     return DateUtility.getLocaleDateString($rootScope.lang, time);
   };
 
@@ -498,19 +501,19 @@ angular.module('starter.controllers', ['google-maps'])
 })
 
 .controller('ItinerarioCtrl', function ($scope, DatiDB, $stateParams, $window, $location) {
-  $scope.bk = function() {
+  $scope.bk = function () {
     $window.history.back();
   };
-  $scope.clr = function() {
+  $scope.clr = function () {
     $location.replace();
   };
-  
+
   $scope.itinerarioId = $stateParams.itinerarioId;
   $scope.gotdata = DatiDB.get('itinerary', $stateParams.itinerarioId).then(function (data) {
     $scope.itinerario = data;
     DatiDB.get('poi', data.steps.join()).then(function (luoghi) {
       var tappe = [];
-      angular.forEach(luoghi, function(luogo,idx) {
+      angular.forEach(luoghi, function (luogo, idx) {
         tappe[data.steps.indexOf(luogo.id)] = luogo;
       });
       $scope.tappe = tappe;
@@ -536,6 +539,13 @@ angular.module('starter.controllers', ['google-maps'])
       'de': 'Cancel'
     }
   };
+
+  $scope.$on('$viewContentLoaded', function () {
+    var mapHeight = 10; // or any other calculated value
+    mapHeight = angular.element(document.querySelector('#map-container-itineraries'))[0].offsetHeight;
+    mapHeight = mapHeight - 32 - 44; // header + footer
+    angular.element(document.querySelector('.angular-google-map-container'))[0].style.height = mapHeight + 'px';
+  });
 
   $scope.map = {
     control: {},
@@ -601,7 +611,7 @@ angular.module('starter.controllers', ['google-maps'])
         text: $filter('translate')(keys['Details']),
         type: 'button-positive',
         onTap: function (e) {
-          var itemUrl = '/app/itineraryplace/'+$scope.activeMarker.id;//$scope.activeMarker.abslink.substring(1);
+          var itemUrl = '/app/itineraryplace/' + $scope.activeMarker.id; //$scope.activeMarker.abslink.substring(1);
           $location.path(itemUrl);
         }
         }]

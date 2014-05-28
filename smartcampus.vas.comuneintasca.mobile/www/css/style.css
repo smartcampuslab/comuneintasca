@@ -2,6 +2,9 @@
 .scroll-content > #map2 {
   height: 100%;
 }
+.angular-google-map-container {
+  height: 600px;
+}
 /*
 .platform-ios .tabs {
   height: 70px;
@@ -245,9 +248,6 @@ ion-side-menu .item {
 }
 #home-buttons button.german {
   font-size: smaller;
-}
-.angular-google-map-container {
-  height: 800px;
 }
 .comuneicon::before {
   line-height: 32px !important;

@@ -1,5 +1,5 @@
 <ion-view title="{{'sidemenu_Hotel' | i18n}}">
-  <ion-content class="has-header" delegate-handle="hotelslistScroll">
+  <ion-content class="has-header" delegate-handle="listScroll">
     <ion-list>
       <div class="item item-divider" align="center">{{filterDef()}}{{'list_results' | i18nplur:hotels.length}}</div>
       <ion-item collection-repeat="hotel in hotels | extOrderBy:ordering" collection-item-width="'100%'" collection-item-height="getListItemHeight(item, $index)" ng-click="goToItem('/app/hotel/'+hotel.id)" class="item-thumbnail-left coll-item">

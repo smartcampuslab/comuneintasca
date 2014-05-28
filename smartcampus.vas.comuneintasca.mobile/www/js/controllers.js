@@ -244,7 +244,7 @@ angular.module('starter.controllers', ['google-maps'])
       var f = filter ? Config.hotelTypesList()[filter].it : filter;
       DatiDB.cate('hotel', f).then(function (data) {
         $scope.hotels = data;
-        $ionicScrollDelegate.$getByHandle('hotelslistScroll').scrollTop(false);
+        $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false);
       });
     },
     hasSearch: true
@@ -290,7 +290,7 @@ angular.module('starter.controllers', ['google-maps'])
       var f = filter ? Config.restaurantTypesList()[filter].it : filter;
       DatiDB.cate('restaurant', f).then(function (data) {
         $scope.restaurants = data;
-        $ionicScrollDelegate.$getByHandle('restaurantslistScroll').scrollTop(false);
+        $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false);
       });
     },
     hasSearch: true
@@ -304,7 +304,7 @@ angular.module('starter.controllers', ['google-maps'])
   });
 })
 
-.controller('PlacesListCtrl', function ($scope, $stateParams, $filter, DatiDB, Config, ListToolbox) {
+.controller('PlacesListCtrl', function ($scope, $stateParams, $filter, DatiDB, Config, ListToolbox, $ionicScrollDelegate) {
   ListToolbox.prepare($scope, {
     load: function (cache) {
       if (cache) {
@@ -317,10 +317,12 @@ angular.module('starter.controllers', ['google-maps'])
           $scope.cate = Config.poiCateFromType($stateParams.placeType);
           $scope.gotdata = DatiDB.cate('poi', $scope.cate.it).then(function (data) {
             $scope.places = data;
+            $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false);
           });
         } else {
           $scope.gotdata = DatiDB.all('poi').then(function (data) {
             $scope.places = data;
+            $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false);
           });
         }
       }
@@ -374,7 +376,7 @@ angular.module('starter.controllers', ['google-maps'])
 })
 
 
-.controller('EventsListCtrl', function ($rootScope, $scope, $stateParams, $filter, DatiDB, Config, ListToolbox, Profiling, DateUtility) {
+.controller('EventsListCtrl', function ($rootScope, $scope, $stateParams, $filter, DatiDB, Config, ListToolbox, Profiling, DateUtility, $ionicScrollDelegate) {
   $scope.getLocaleDateString = function (time) {
     return DateUtility.getLocaleDateString($rootScope.lang, time);
   };
@@ -412,7 +414,7 @@ angular.module('starter.controllers', ['google-maps'])
       } else {
         $scope.events = [];
       }
-      $ionicScrollDelegate.$getByHandle('eventslistScroll').scrollTop(false);
+      $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false);
     };
     if (t > 0) {
       if ($stateParams.eventType && $stateParams.eventType != 'all') {
@@ -459,7 +461,7 @@ angular.module('starter.controllers', ['google-maps'])
   });
 })
 
-.controller('MainEventsListCtrl', function ($scope, DatiDB, ListToolbox) {
+.controller('MainEventsListCtrl', function ($scope, DatiDB, ListToolbox, $ionicScrollDelegate) {
   ListToolbox.prepare($scope, {
     load: function (cache) {
       if (cache) {
@@ -467,6 +469,7 @@ angular.module('starter.controllers', ['google-maps'])
       } else {
         $scope.gotdata = DatiDB.all('mainevent').then(function (data) {
           $scope.mainevents = data;
+          $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false);
         });
       }
     },

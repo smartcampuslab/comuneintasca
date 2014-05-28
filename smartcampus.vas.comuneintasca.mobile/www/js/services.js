@@ -1581,7 +1581,7 @@ angular.module('starter.services', [])
   };
 })
 
-.factory('ListToolbox', function ($q, $ionicPopup, $ionicModal, $filter, MapHelper, $location, Config, $timeout) {
+.factory('ListToolbox', function ($q, $ionicPopup, $ionicModal, $filter, MapHelper, $location, Config, $timeout, $ionicScrollDelegate) {
   var openSortPopup = function ($scope, options, presel, callback) {
     var title = $filter('translate')(Config.keys()['OrderBy']);
 
@@ -1722,6 +1722,9 @@ angular.module('starter.services', [])
         $scope.showSearch = function (e) {
           $scope.searching = true;
           var footer = e.target.parentNode.parentNode.parentNode;
+          if (!!$ionicScrollDelegate.$getByHandle('listScroll')) {
+            $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false);
+          }  
           console.log(footer);
           $timeout(function () {
             var fields = angular.element(footer).find('input');

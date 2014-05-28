@@ -802,11 +802,11 @@ angular.module('starter.services', [])
                       console.log('deletions: ' + deletions.length);
 
                       angular.forEach(deletions, function (item, idx) {
-                        console.log('deleting obj with id: ' + item.id);
-                        tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [item.id], function (tx, res) { //success callback
-                          console.log('deleted obj with id: ' + item.id);
+                        console.log('deleting obj with id: ' + item);
+                        tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [item], function (tx, res) { //success callback
+                          console.log('deleted obj with id: ' + item);
                         }, function (e) { //error callback
-                          console.log('unable to deleted obj with id ' + item.id + ': ' + e.message);
+                          console.log('unable to deleted obj with id ' + item + ': ' + e.message);
                         });
                       });
                     } else {

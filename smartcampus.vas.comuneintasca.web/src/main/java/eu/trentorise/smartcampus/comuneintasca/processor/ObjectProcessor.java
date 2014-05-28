@@ -5,8 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
@@ -25,6 +27,7 @@ import eu.trentorise.smartcampus.comuneintasca.model.RestaurantObject;
 import eu.trentorise.smartcampus.network.RemoteException;
 import eu.trentorise.smartcampus.presentation.common.exception.DataException;
 import eu.trentorise.smartcampus.presentation.common.exception.NotFoundException;
+import eu.trentorise.smartcampus.presentation.data.BasicObject;
 import eu.trentorise.smartcampus.presentation.storage.sync.BasicObjectSyncStorage;
 
 public class ObjectProcessor {
@@ -56,10 +59,23 @@ public class ObjectProcessor {
 			e.printStackTrace();
 		}
 	}
-	
+
+	private <T extends BasicObject> Set<String> getOldIds(Class<T> cls) throws DataException {
+		List<T> oldList = storage.getObjectsByType(cls);
+		Set<String> oldIds = new HashSet<String>();
+		for (T o : oldList) {
+			oldIds.add(o.getId());
+		}
+		return oldIds;
+	}
+
 	private void updateMainEvents() throws Exception {
+		Set<String> oldIds = getOldIds(MainEventObject.class);
+		
 		List<MainEventObject> contents = parseMainEventObjects();
 		for (MainEventObject content : contents) {
+			oldIds.remove(content.getId());
+			
 			MainEventObject old = null;
 			try {
 				old = storage.getObjectById(content.getId(), MainEventObject.class);
@@ -68,11 +84,19 @@ public class ObjectProcessor {
 				storage.storeObject(content);
 			}
 		}
+		
+		for (String s : oldIds) {
+			logger.info("Deleting object "+s);
+			storage.deleteObjectById(s);
+		}
 	}
 
 	private void updateContents() throws Exception {
+		Set<String> oldIds = getOldIds(ContentObject.class);
+
 		List<ContentObject> contents = parseContentObjects();
 		for (ContentObject content : contents) {
+			oldIds.remove(content.getId());
 			ContentObject old = null;
 			try {
 				old = storage.getObjectById(content.getId(), ContentObject.class);
@@ -81,11 +105,18 @@ public class ObjectProcessor {
 				storage.storeObject(content);
 			}
 		}
+		for (String s : oldIds) {
+			logger.info("Deleting object "+s);
+			storage.deleteObjectById(s);
+		}
 	}
 
 	private void updatePOIs() throws Exception {
+		Set<String> oldIds = getOldIds(POIObject.class);
+		
 		List<POIObject> pois = parsePOIObjects();
 		for (POIObject poi : pois) {
+			oldIds.remove(poi.getId());
 			POIObject old = null;
 			try {
 				old = storage.getObjectById(poi.getId(), POIObject.class);
@@ -94,11 +125,18 @@ public class ObjectProcessor {
 				storage.storeObject(poi);
 			}
 		}
+		for (String s : oldIds) {
+			logger.info("Deleting object "+s);
+			storage.deleteObjectById(s);
+		}
 	}
 
 	private void updateRestaurants() throws Exception {
+		Set<String> oldIds = getOldIds(RestaurantObject.class);
+
 		List<RestaurantObject> restaurants = parseRestaurantObjects();
 		for (RestaurantObject r : restaurants) {
+			oldIds.remove(r.getId());
 			RestaurantObject old = null;
 			try {
 				old = storage.getObjectById(r.getId(), RestaurantObject.class);
@@ -107,10 +145,17 @@ public class ObjectProcessor {
 				storage.storeObject(r);
 			}
 		}
+		for (String s : oldIds) {
+			logger.info("Deleting object "+s);
+			storage.deleteObjectById(s);
+		}
 	}
 	private void updateHotels() throws Exception {
+		Set<String> oldIds = getOldIds(HotelObject.class);
+
 		List<HotelObject> hotels = parseHotelObjects();
 		for (HotelObject h : hotels) {
+			oldIds.remove(h.getId());
 			HotelObject old = null;
 			try {
 				old = storage.getObjectById(h.getId(), HotelObject.class);
@@ -119,10 +164,17 @@ public class ObjectProcessor {
 				storage.storeObject(h);
 			}
 		}
+		for (String s : oldIds) {
+			logger.info("Deleting object "+s);
+			storage.deleteObjectById(s);
+		}
 	}
 	private void updateItineraries() throws Exception {
+		Set<String> oldIds = getOldIds(ItineraryObject.class);
+
 		List<ItineraryObject> itins = parseItineraryObjects();
 		for (ItineraryObject i : itins) {
+			oldIds.remove(i.getId());
 			ItineraryObject old = null;
 			try {
 				old = storage.getObjectById(i.getId(), ItineraryObject.class);
@@ -130,6 +182,10 @@ public class ObjectProcessor {
 			if (old == null || old.getLastModified() < i.getLastModified()) {
 				storage.storeObject(i);
 			}
+		}
+		for (String s : oldIds) {
+			logger.info("Deleting object "+s);
+			storage.deleteObjectById(s);
 		}
 	}
 

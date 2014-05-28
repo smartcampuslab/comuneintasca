@@ -28,13 +28,11 @@ public class HomeProcessor {
 
 	@Scheduled(fixedRate = 60000)
 	public void updateMessages() {
-		logger.info("Refresh home object");
 
 		if (feedFile == null) return;
 
 		try {
 			String json = readJson();
-			logger.info("Refresh home object: "+json);
 			HomeObject home = JsonUtils.toObject(json, HomeObject.class);
 			processObject(home);
 		} catch (Exception e) {

@@ -65,12 +65,20 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   $rootScope.extLink = function(url) {
     if (url.indexOf('http') != 0 && url.indexOf('tel') != 0 && url.indexOf('mailto') != 0 && url.indexOf('sms') != 0) {
       url = 'http://'+url;
-      
     }
-	  window.open(url,'_system');
+    if (ionic.Platform.isWebView()) {
+      win_target='_system';
+    } else {
+      win_target='_blank';	
+    }
+    window.open(url,win_target);
   } 
   $rootScope.email = function(to) {
+    if (ionic.Platform.isWebView()) {
 	  window.plugin.email.open({to: [to]});
+    } else {
+      window.location="mailto:"+to;
+    }
   }
   $rootScope.hasNav = function(loc) {
 	return loc != null;

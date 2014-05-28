@@ -5,6 +5,9 @@
       <h1>{{obj.title | translate}}</h1>
       <h4>{{obj.eventDateDescription | translate}}</h4>
       <div class="htmldesc" compile="obj.description | translate"></div>
+      <div class="htmldesc" ng-if="obj.contacts.phone">Tel: <a href="tel:{{obj.contacts.phone}}">{{obj.contacts.phone}}</a></div>
+      <div class="htmldesc" ng-if="obj.contacts.email">E-mail: <a ng-click="email(obj.contacts.email)">{{obj.contacts.email}}</a></div>
+      <div class="htmldesc" ng-if="obj.url">Web: <a ng-click="extLink(obj.url)">{{obj.url}}</a></div>
     </div>
   </ion-content>
   <ion-footer-bar>

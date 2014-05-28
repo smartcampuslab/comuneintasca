@@ -22,8 +22,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -33,7 +35,10 @@ import com.google.protobuf.ByteString;
 
 import eu.trentorise.smartcampus.comuneintasca.listener.Subscriber;
 import eu.trentorise.smartcampus.comuneintasca.model.EventObject;
+import eu.trentorise.smartcampus.comuneintasca.model.MainEventObject;
 import eu.trentorise.smartcampus.comuneintasca.model.Organization;
+import eu.trentorise.smartcampus.presentation.common.exception.DataException;
+import eu.trentorise.smartcampus.presentation.data.BasicObject;
 import eu.trentorise.smartcampus.presentation.storage.sync.BasicObjectSyncStorage;
 import eu.trentorise.smartcampus.service.festivaleconomia.data.message.Festivaleconomia.Trans;
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.Evento;
@@ -75,9 +80,22 @@ public class EventProcessorImpl implements ServiceBusListener {
 		}
 	}
 	
+	private Set<String> getOldIds(String src) throws DataException {
+		List<EventObject> oldList = storage.searchObjects(EventObject.class, Collections.<String,Object>singletonMap("source", src));
+		Set<String> oldIds = new HashSet<String>();
+		for (EventObject o : oldList) {
+			oldIds.add(o.getId());
+		}
+		return oldIds;
+	}
+
+	
 	private void updateEvents(List<ByteString> data) throws Exception {
+		Set<String> oldIds = getOldIds("opendata.trento");
+		
 		for (ByteString bs : data) {
 			Evento bt = Evento.parseFrom(bs);
+			oldIds.remove(bt.getId());
 			EventObject old = null;
 			try {
 				old = storage.getObjectById(bt.getId(), EventObject.class);
@@ -123,13 +141,20 @@ public class EventProcessorImpl implements ServiceBusListener {
 				storage.storeObject(no);
 			}
 		}	
-		
+		for (String s : oldIds) {
+			logger.info("Deleting event "+s);
+			storage.deleteObjectById(s);
+		}
+
 	}
 
 	private void updateEventsYmir(List<ByteString> data) throws Exception {
+		Set<String> oldIds = getOldIds("festivaleconomia");
+
 		for (ByteString bs : data) {
 			eu.trentorise.smartcampus.service.festivaleconomia.data.message.Festivaleconomia.Evento bt = eu.trentorise.smartcampus.service.festivaleconomia.data.message.Festivaleconomia.Evento.parseFrom(bs);
 			EventObject old = null;
+			oldIds.remove(bt.getId());
 			try {
 				old = storage.getObjectById(bt.getId(), EventObject.class);
 			} catch (Exception e) {}
@@ -153,6 +178,10 @@ public class EventProcessorImpl implements ServiceBusListener {
 			}
 		}
 
+		for (String s : oldIds) {
+			logger.info("Deleting event "+s);
+			storage.deleteObjectById(s);
+		}
 	}
 
 	private Map<String,String> convertTranslated(List<Trans> list) {

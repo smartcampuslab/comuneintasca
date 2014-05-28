@@ -169,7 +169,7 @@
     "description": "restaurant entry"
   }, {
     "key": "cancel",
-    "value": "Cancel",
+    "value": "Annullieren",
     "description": "button"
   }, {
     "key": "search",

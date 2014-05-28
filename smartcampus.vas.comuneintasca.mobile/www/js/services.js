@@ -1,9 +1,76 @@
 angular.module('starter.services', [])
 
 .factory('Config', function ($q) {
+  var keys = {
+    'Stars': {
+      'it': 'Stelle',
+      'en': 'Stars',
+      'de': 'Star'
+    },
+    'Date': {
+      'it': 'Data',
+      'en': 'Date',
+      'de': 'Datum'
+    },
+    'DateFrom': {
+      'it': 'Data di inizio',
+      'en': 'Start date',
+      'de': 'Startdatum'
+    },
+    'DateTo': {
+      'it': 'Data di fine',
+      'en': 'End date',
+      'de': 'Endatum'
+    },
+    'Distance': {
+      'it': 'Distanza',
+      'en': 'Distance',
+      'de': 'Distanz'
+    },
+    'OrderBy': {
+      'it': 'Ordinare per',
+      'en': 'Order by',
+      'de': 'Bestellung'
+    },
+    'Filter': {
+      'it': 'Filtra',
+      'en': 'Filter',
+      'de': 'Filter'
+    },
+    'Cancel': {
+      'it': 'Chiudi',
+      'en': 'Cancel',
+      'de': 'Annullieren'
+    },
+    'All': {
+      'it': 'Tutti',
+      'en': 'All',
+      'de': 'Alles'
+    },
+    'A-Z': {
+      'it': 'A-Z',
+      'en': 'A-Z',
+      'de': 'A-Z'
+    },
+    'Z-A': {
+      'it': 'Z-A',
+      'en': 'Z-A',
+      'de': 'Z-A'
+    },
+    'Details': {
+      'it': 'Dettagli',
+      'en': 'Details',
+      'de': 'Details'
+    },
+    'Close': {
+      'it': 'Chiudi',
+      'en': 'Close',
+      'de': 'Schließen'
+    }
+  };
   var poiTypes = {
     'museums': {
-      de: 'Musei',
+      de: 'Museen',
       it: 'Musei',
       en: 'Museums'
     },
@@ -265,6 +332,9 @@ angular.module('starter.services', [])
   };
 
   return {
+    keys: function () {
+      return keys;
+    },
     doProfiling: function () {
       return true;
     },
@@ -731,11 +801,11 @@ angular.module('starter.services', [])
                       console.log('deletions: ' + deletions.length);
 
                       angular.forEach(deletions, function (item, idx) {
-                        console.log('deleting obj with id: ' + item.id);
-                        tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [item.id], function (tx, res) { //success callback
-                          console.log('deleted obj with id: ' + item.id);
+                        console.log('deleting obj with id: ' + item);
+                        tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [item], function (tx, res) { //success callback
+                          console.log('deleted obj with id: ' + item);
                         }, function (e) { //error callback
-                          console.log('unable to deleted obj with id ' + item.id + ': ' + e.message);
+                          console.log('unable to deleted obj with id ' + item + ': ' + e.message);
                         });
                       });
                     } else {
@@ -1404,20 +1474,7 @@ angular.module('starter.services', [])
   };
 })
 
-.factory('MapHelper', function ($location, $filter, $ionicPopup, $ionicScrollDelegate) {
-  var keys = {
-    'Details': {
-      'it': 'Dettagli',
-      'en': 'Details',
-      'de': 'Details'
-    },
-    'Cancel': {
-      'it': 'Chiudi',
-      'en': 'Close',
-      'de': 'Schließen'
-    }
-  };
-
+.factory('MapHelper', function ($location, $filter, $ionicPopup, Config, $ionicScrollDelegate) {
   var map = {
     control: {},
     draggable: 'true',
@@ -1431,13 +1488,13 @@ angular.module('starter.services', [])
       'streetViewControl': false,
       'zoomControl': true
     }
-//    events: {
-//      'drag': function () {
-//        var handle = $ionicScrollDelegate.$getByHandle('mapScroll');
-//        var scrollView = $ionicScrollDelegate.$getByHandle('mapScroll').getScrollView();
-//        console.log(scrollView);
-//      }
-//    }
+    //    events: {
+    //      'drag': function () {
+    //        var handle = $ionicScrollDelegate.$getByHandle('mapScroll');
+    //        var scrollView = $ionicScrollDelegate.$getByHandle('mapScroll').getScrollView();
+    //        console.log(scrollView);
+    //      }
+    //    }
   };
 
   var markers = {
@@ -1499,13 +1556,13 @@ angular.module('starter.services', [])
           subTitle: !!$scope.activeMarker.distance ? $filter('number')($scope.activeMarker.distance, 1) + ' Km' : '',
           scope: $scope,
           buttons: [{
-            text: $filter('translate')(keys['Cancel']),
+            text: $filter('translate')(Config.keys()['Close']),
             type: 'button-default',
             onTap: function (e) {
               $scope.activeMarker = null;
             }
             }, {
-            text: $filter('translate')(keys['Details']),
+            text: $filter('translate')(Config.keys()['Details']),
             type: 'button-positive',
             onTap: function (e) {
               var itemUrl = $scope.activeMarker.abslink.substring(1);
@@ -1524,71 +1581,13 @@ angular.module('starter.services', [])
   };
 })
 
-.factory('ListToolbox', function ($q, $ionicPopup, $ionicModal, $filter, MapHelper, $location) {
-  var keys = {
-    'Stars': {
-      'it': 'Stelle',
-      'en': 'Stars',
-      'de': 'Star'
-    },
-    'Date': {
-      'it': 'Data',
-      'en': 'Date',
-      'de': 'Datum'
-    },
-    'DateFrom': {
-      'it': 'Data di inizio',
-      'en': 'Start date',
-      'de': 'Startdatum'
-    },
-    'DateTo': {
-      'it': 'Data di fine',
-      'en': 'End date',
-      'de': 'Endatum'
-    },
-    'Distance': {
-      'it': 'Distanza',
-      'en': 'Distance',
-      'de': 'Distanz'
-    },
-    'OrderBy': {
-      'it': 'Ordinare per',
-      'en': 'Order by',
-      'de': 'Bestellung'
-    },
-    'Filter': {
-      'it': 'Filtra',
-      'en': 'Filter',
-      'de': 'Filter'
-    },
-    'Cancel': {
-      'it': 'Chiudi',
-      'en': 'Cancel',
-      'de': 'Annullieren'
-    },
-    'All': {
-      'it': 'Tutti',
-      'en': 'All',
-      'de': 'Alles'
-    },
-    'A-Z': {
-      'it': 'A-Z',
-      'en': 'A-Z',
-      'de': 'A-Z'
-    },
-    'Z-A': {
-      'it': 'Z-A',
-      'en': 'Z-A',
-      'de': 'Z-A'
-    }
-  };
-
+.factory('ListToolbox', function ($q, $ionicPopup, $ionicModal, $filter, MapHelper, $location, Config, $timeout) {
   var openSortPopup = function ($scope, options, presel, callback) {
-    var title = $filter('translate')(keys['OrderBy']);
+    var title = $filter('translate')(Config.keys()['OrderBy']);
 
     var template = '<div class="list">';
     for (var i = 0; i < options.length; i++) {
-      var s = $filter('translate')(keys[options[i]]);
+      var s = $filter('translate')(Config.keys()[options[i]]);
       template += '<a class="item item-icon-right" ng-click="show.close(\'' + options[i] + '\')">' + s + '<i class="icon ' + (options[i] == presel ? 'ion-ios7-checkmark' : 'ion-ios7-circle-outline') + '"></i></a>';
     }
     // An elaborate, custom popup
@@ -1597,7 +1596,7 @@ angular.module('starter.services', [])
       title: title,
       scope: $scope,
       buttons: [{
-        text: $filter('translate')(keys['Cancel'])
+        text: $filter('translate')(Config.keys()['Cancel'])
         }]
     });
     $scope.show = myPopup;
@@ -1608,16 +1607,16 @@ angular.module('starter.services', [])
   }
 
   var openFilterPopup = function ($scope, options, presel, callback) {
-    var title = $filter('translate')(keys['Filter']);
+    var title = $filter('translate')(Config.keys()['Filter']);
 
     var template = '<div class="modal modal-filter"><ion-header-bar><h1 class="title">' + title + '</h1></ion-header-bar><ion-content><div class="list">';
-    var body = '<a class="item item-icon-right" ng-click="closeModal(\'__all\')">' + $filter('translate')(keys['All']) + '<i class="icon ' + (presel == null ? 'ion-ios7-checkmark' : 'ion-ios7-circle-outline') + '"></i></a>';
+    var body = '<a class="item item-icon-right" ng-click="closeModal(\'__all\')">' + $filter('translate')(Config.keys()['All']) + '<i class="icon ' + (presel == null ? 'ion-ios7-checkmark' : 'ion-ios7-circle-outline') + '"></i></a>';
     for (var key in options) {
       var s = $filter('translate')(options[key]);
       s = '<a class="item item-icon-right" ng-click="closeModal(\'' + key + '\')">' + s + '<i class="icon ' + (key == presel ? 'ion-ios7-checkmark' : 'ion-ios7-circle-outline') + '"></i></a>';
       body += s;
     }
-    template += body + '</div></ion-content><ion-footer-bar class="bar-modal"><button class="col button button-default button-block button-modal" ng-click="closeModal()">' + $filter('translate')(keys['Cancel']) + '</button></ion-footer-bar></div>';
+    template += body + '</div></ion-content><ion-footer-bar class="bar-modal"><button class="col button button-default button-block button-modal" ng-click="closeModal()">' + $filter('translate')(Config.keys()['Cancel']) + '</button></ion-footer-bar></div>';
 
     $scope.modal = $ionicModal.fromTemplate(template, {
       scope: $scope,
@@ -1639,7 +1638,7 @@ angular.module('starter.services', [])
         title: title,
         scope: $scope,
         buttons: [{
-          text: $filter('translate')(keys['Cancel'])
+          text: $filter('translate')(Config.keys()['Cancel'])
         }]
       });
       $scope.show = myPopup;
@@ -1720,8 +1719,19 @@ angular.module('starter.services', [])
       if (conf.hasSearch) {
         $scope.hasSearch = true;
         $scope.searching = false;
-        $scope.showSearch = function () {
+        $scope.showSearch = function (e) {
           $scope.searching = true;
+          var footer = e.target.parentNode.parentNode.parentNode;
+          console.log(footer);
+          $timeout(function () {
+            var fields = angular.element(footer).find('input');
+            console.log(fields.length);
+            if (fields.length > 0) {
+              field = fields[0];
+              console.log(field);
+              field.focus();
+            }
+          }, 200);
         };
         $scope.cancelSearch = function () {
           $scope.searching = false;

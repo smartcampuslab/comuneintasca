@@ -137,19 +137,19 @@
     "description": "detail label"
   }, {
     "key": "restaurant_opening",
-    "value": "Opening",
+    "value": "Geschäftszeiten",
     "description": "restaurant leaf"
   }, {
     "key": "restaurant_closing",
-    "value": "Closing days",
+    "value": "Ruhetag",
     "description": "restaurant leaf"
   }, {
     "key": "restaurant_price",
-    "value": "Price range",
+    "value": "Preise",
     "description": "restaurant leaf"
   }, {
     "key": "restaurant_services",
-    "value": "Services",
+    "value": "Anlagen",
     "description": "restaurant leaf"
   }, {
     "key": "list_results_single",
@@ -165,15 +165,15 @@
     "description": "restaurant entry"
   }, {
     "key": "entry_km-to",
-    "value": "Km to",
+    "value": "Km zu",
     "description": "restaurant entry"
   }, {
     "key": "cancel",
-    "value": "Cancel",
+    "value": "Annullieren",
     "description": "button"
   }, {
     "key": "search",
-    "value": "Search",
+    "value": "Suche",
     "description": "button"
   }, {
     "key": "credits_title",
@@ -206,7 +206,7 @@
     "description": "per viaggia trento"
   }, {
     "key": "itinerari_title_accessibilita",
-    "value": "Accessibility",
+    "value": "Zugänglichkeit",
     "description": "titoletto accessibilita in itinerari"
   }
 ]

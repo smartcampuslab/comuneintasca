@@ -10,7 +10,9 @@
     <div class="padding">
       <h1>{{place.title | translate}}</h1>
       <div class="comuni-html-desc" compile="place.description | translate"></div>
-      <!-- <div class="comuni-distance">Km {{place.distance | number:1}}</div>-->
+      <div class="htmldesc" ng-if="place.contacts.phone"><b>Tel:</b> <a href="tel:{{place.contacts.phone}}">{{place.contacts.phone}}</a></div>
+      <div class="htmldesc" ng-if="place.contacts.email"><b>E-mail:</b> <a ng-click="email(place.contacts.email)">{{place.contacts.email}}</a></div>
+      <div class="htmldesc" ng-if="place.url"><b>Web:</b> <a ng-click="extLink(place.url)">{{place.url}}</a></div>
     </div>
   </ion-content>
   <ion-footer-bar>

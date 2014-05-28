@@ -209,7 +209,7 @@ angular.module('starter.controllers', ['google-maps'])
   });
 })
 
-.controller('HotelsListCtrl', function ($scope, $filter, DatiDB, Config, ListToolbox) {
+.controller('HotelsListCtrl', function ($scope, $filter, DatiDB, Config, ListToolbox, $ionicScrollDelegate) {
   $scope._ = _;
 
   $scope.filterDef = function () {
@@ -244,6 +244,7 @@ angular.module('starter.controllers', ['google-maps'])
       var f = filter ? Config.hotelTypesList()[filter].it : filter;
       DatiDB.cate('hotel', f).then(function (data) {
         $scope.hotels = data;
+        $ionicScrollDelegate.$getByHandle('hotelslistScroll').scrollTop(false);
       });
     },
     hasSearch: true
@@ -256,7 +257,7 @@ angular.module('starter.controllers', ['google-maps'])
   });
 })
 
-.controller('RestaurantsListCtrl', function ($scope, $filter, DatiDB, Config, ListToolbox) {
+.controller('RestaurantsListCtrl', function ($scope, $filter, DatiDB, Config, ListToolbox, $ionicScrollDelegate) {
   $scope.filterDef = function () {
     if ($scope.filter) {
       var r = $filter('translate')(Config.restaurantTypesList()[$scope.filter]);
@@ -289,6 +290,7 @@ angular.module('starter.controllers', ['google-maps'])
       var f = filter ? Config.restaurantTypesList()[filter].it : filter;
       DatiDB.cate('restaurant', f).then(function (data) {
         $scope.restaurants = data;
+        $ionicScrollDelegate.$getByHandle('restaurantslistScroll').scrollTop(false);
       });
     },
     hasSearch: true
@@ -377,10 +379,12 @@ angular.module('starter.controllers', ['google-maps'])
     return DateUtility.getLocaleDateString($rootScope.lang, time);
   };
 
+  var defaultTimeFilter = 'week';
   if ($stateParams.eventType && $stateParams.eventType != 'all') {
     $scope.cate = Config.eventCateFromType($stateParams.eventType);
   } else {
     $scope.cate = Config.eventCateFromType('all');
+    defaultTimeFilter = 'today';
   }
 
   $scope.filterDef = function () {
@@ -403,8 +407,12 @@ angular.module('starter.controllers', ['google-maps'])
       t = 0;
     }
     var post = function (data) {
-      if (data) $scope.events = data;
-      else $scope.events = [];
+      if (data) {
+        $scope.events = data;
+      } else {
+        $scope.events = [];
+      }
+      $ionicScrollDelegate.$getByHandle('eventslistScroll').scrollTop(false);
     };
     if (t > 0) {
       if ($stateParams.eventType && $stateParams.eventType != 'all') {
@@ -426,7 +434,7 @@ angular.module('starter.controllers', ['google-maps'])
         $scope.events = cache;
         $scope.cate = Config.eventCateFromType($stateParams.eventType);
       } else {
-        search('today');
+        search(defaultTimeFilter);
       }
     },
     getData: function () {
@@ -437,7 +445,7 @@ angular.module('starter.controllers', ['google-maps'])
     hasSearch: true,
     filterOptions: Config.eventFilterTypeList(),
     doFilter: search,
-    defaultFilter: 'today'
+    defaultFilter: defaultTimeFilter
   });
 })
 
@@ -526,20 +534,7 @@ angular.module('starter.controllers', ['google-maps'])
 
 .controller('ItinerarioTappeCtrl', function ($scope, DatiDB, $stateParams) {})
 
-.controller('ItinerarioMappaCtrl', function ($scope, DatiDB, $stateParams, $filter, $ionicPopup, $location) {
-  var keys = {
-    'Details': {
-      'it': 'Dettagli',
-      'en': 'Details',
-      'de': 'Details'
-    },
-    'Cancel': {
-      'it': 'Annulla',
-      'en': 'Cancel',
-      'de': 'Cancel'
-    }
-  };
-
+.controller('ItinerarioMappaCtrl', function ($scope, DatiDB, $stateParams, $filter, $ionicPopup, $location, Config) {
   $scope.$on('$viewContentLoaded', function () {
     var mapHeight = 10; // or any other calculated value
     mapHeight = angular.element(document.querySelector('#map-container-itineraries'))[0].offsetHeight;
@@ -602,13 +597,13 @@ angular.module('starter.controllers', ['google-maps'])
       subTitle: !!$scope.activeMarker.distance ? $filter('number')($scope.activeMarker.distance, 1) + ' Km' : '',
       scope: $scope,
       buttons: [{
-        text: $filter('translate')(keys['Cancel']),
+        text: $filter('translate')(Config.keys()['Close']),
         type: 'button-default',
         onTap: function (e) {
           $scope.activeMarker = null;
         }
             }, {
-        text: $filter('translate')(keys['Details']),
+        text: $filter('translate')(Config.keys()['Details']),
         type: 'button-positive',
         onTap: function (e) {
           var itemUrl = '/app/itineraryplace/' + $scope.activeMarker.id; //$scope.activeMarker.abslink.substring(1);

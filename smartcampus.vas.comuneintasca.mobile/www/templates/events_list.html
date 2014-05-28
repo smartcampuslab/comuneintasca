@@ -1,5 +1,5 @@
 <ion-view title="{{cate | translate}}">
-  <ion-content class="has-header">
+  <ion-content class="has-header" delegate-handle="eventslistScroll">
     <ion-list>
       <div class="item item-divider" align="center">{{'list_results' | i18nplur:events.length}}</div>
       <ion-item collection-repeat="event in events | extOrderBy:ordering track by event.id" 

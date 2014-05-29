@@ -1709,6 +1709,9 @@ angular.module('starter.services', [])
         $scope.filterOptions = conf.filterOptions;
         $scope.filter = $scope.$navDirection != 'back' ? conf.defaultFilter : state.filter;
         $scope.showFilterPopup = function () {
+          if (!!$ionicScrollDelegate.$getByHandle('listScroll')) {
+            $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false);
+          }  
           openFilterPopup($scope, $scope.filterOptions, $scope.filter, function (res) {
             $scope.filter = res;
             state.filter = res;

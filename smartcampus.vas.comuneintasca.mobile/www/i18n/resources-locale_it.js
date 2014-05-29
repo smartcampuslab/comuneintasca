@@ -193,7 +193,7 @@
     "description": "credits"
   }, {
     "key": "credits_sponsored",
-    "value": "Con il patrocinio di:",
+    "value": "Con la collaborazione di:",
     "description": "credits"
   }, {
     "key": "credits_info",

@@ -171,7 +171,9 @@ public class DataScript {
 		} else {
 			builder.setToTime(builder.getFromTime());
 		}
-		builder.setImage(IMG_PRE+ eventPlaces.get(0).image);
+		if (eventPlaces.get(0).image != null && !"".equals(eventPlaces.get(0).image)) {
+			builder.setImage(IMG_PRE+ eventPlaces.get(0).image);
+		}
 		return builder.build();
 	}
 

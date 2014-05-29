@@ -193,7 +193,7 @@
     "description": "credits"
   }, {
     "key": "credits_sponsored",
-    "value": "Unter der Schirmherrschaft der:",
+    "value": "In Zusammenarbeit mit der:",
     "description": "credits"
   }, {
     "key": "credits_info",

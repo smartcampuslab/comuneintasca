@@ -193,7 +193,7 @@
     "description": "credits"
   }, {
     "key": "credits_sponsored",
-    "value": "With the patronage of:",
+    "value": "In collaboration with:",
     "description": "credits"
   }, {
     "key": "credits_info",

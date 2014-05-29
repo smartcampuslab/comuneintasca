@@ -463,9 +463,10 @@ angular.module('starter.services', [])
         console.log('cannot geolocate (cordova)');
         localization.reject('cannot geolocate (web)');
       }, {
-        maximumAge: (5 * 60 * 1000), //5 mins
+        //frequency: (20 * 60 * 1000), //20 mins
+        maximumAge: (10 * 60 * 1000), //10 mins
         timeout: 10 * 1000, //10 secs
-        enableHighAccuracy: true
+        enableHighAccuracy: (device.version.indexOf('2.') == 0) // true for Android 2.x
       });
     }, false);
   } else {
@@ -1710,6 +1711,9 @@ angular.module('starter.services', [])
         $scope.filterOptions = conf.filterOptions;
         $scope.filter = $scope.$navDirection != 'back' ? conf.defaultFilter : state.filter;
         $scope.showFilterPopup = function () {
+          if (!!$ionicScrollDelegate.$getByHandle('listScroll')) {
+            $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false);
+          }  
           openFilterPopup($scope, $scope.filterOptions, $scope.filter, function (res) {
             $scope.filter = res;
             state.filter = res;

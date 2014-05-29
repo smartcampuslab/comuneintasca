@@ -1,4 +1,3 @@
-<ion-view title="{{'leaf_Itinerario' | i18n}}">
   <ion-tabs class="tabs-icon-only">
     <ion-tab icon="icon ion-information-circled" href="#/app/itinerary/{{itinerarioId}}/info" on-select="clr()">
       <ion-nav-view name="itinerary-info"></ion-nav-view>
@@ -18,4 +17,3 @@
     <ion-tab ng-if="isFavorite(itinerario)" icon="icon ion-ios7-star" ng-click="toggleFavorite(itinerario)">
     </ion-tab>
   </ion-tabs>
-</ion-view>

@@ -342,7 +342,7 @@ angular.module('starter.services', [])
       return 'TrentoInTasca';
     },
     schemaVersion: function () {
-      return 67;
+      return 69;
     },
     syncTimeoutSeconds: function () {
       return 60 * 60; /* 60 times 60 seconds = 1 HOUR */
@@ -787,7 +787,7 @@ angular.module('starter.services', [])
                         }
                         values = [item.id, item.version, contentTypeClassName, item.category, classification, classification2, classification3, JSON.stringify(item), ((item.location && item.location.length == 2) ? item.location[0] : -1), ((item.location && item.location.length == 2) ? item.location[1] : -1), fromTime, toTime];
                         tx.executeSql('INSERT INTO ContentObjects (id, version, type, category, classification, classification2, classification3, data, lat, lon, fromTime, toTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', values, function (tx, res) { //success callback
-                          console.log('inserted obj with id: ' + item.id);
+                          //console.log('inserted obj with id: ' + item.id);
                         }, function (e) { //error callback
                           console.log('unable to insert obj with id ' + item.id + ': ' + e.message);
                         });
@@ -1386,9 +1386,10 @@ angular.module('starter.services', [])
       });
     },
     get: function (fileurl) {
-      //console.log('fileurl: '+fileurl);
-      var filename = fileurl.substring(fileurl.lastIndexOf('/') + 1);
-      //console.log('filename: '+filename);
+      console.log('fileurl: '+fileurl);
+      //var filename = fileurl.substring(fileurl.lastIndexOf('/') + 1);
+      var filename = CryptoJS.SHA1(fileurl).toString(CryptoJS.enc.Hex) + '.jpg';
+      console.log('filename: '+filename);
       var filegot = $q.defer();
       filesystem.then(function (mainDir) {
         if (ionic.Platform.isWebView()) {

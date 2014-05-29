@@ -7,12 +7,26 @@
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'starter.filters', 'starter.directives', 'localization', 'ngQueue'])
 
 .run(function($ionicPlatform, $rootScope, DatiDB, GeoLocate, Config) {
+  $rootScope.locationWatchID=undefined;
 //  ionic.Platform.fullScreen(false,true);
   if (typeof(Number.prototype.toRad) === "undefined") {
     Number.prototype.toRad = function() {
       return this * Math.PI / 180;
     }
   }
+  document.addEventListener("pause", function () {
+    console.log('app paused');
+    if (typeof $rootScope.locationWatchID!='undefined') {
+      navigator.geolocation.clearWatch($rootScope.locationWatchID);
+      $rootScope.locationWatchID=undefined;
+      GeoLocate.reset();
+      console.log('geolocation reset');
+    }
+  }, false);
+  document.addEventListener("resume", function () {
+    console.log('app resumed');
+    GeoLocate.locate();
+  }, false);
   $ionicPlatform.ready(function() {
     /*
     if (window.cordova && cordova.plugins && cordova.plugins.Keyboard) {

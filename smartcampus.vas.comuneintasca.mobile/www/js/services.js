@@ -342,7 +342,7 @@ angular.module('starter.services', [])
       return 'TrentoInTasca';
     },
     schemaVersion: function () {
-      return 69;
+      return 71;
     },
     syncTimeoutSeconds: function () {
       return 60 * 60; /* 60 times 60 seconds = 1 HOUR */
@@ -449,46 +449,55 @@ angular.module('starter.services', [])
 })
 
 .factory('GeoLocate', function ($q, $rootScope) {
-  var localization = $q.defer();
-  if (ionic.Platform.isWebView()) {
-    console.log('geolocalization initing (cordova)...');
-    document.addEventListener("deviceready", function () {
-      console.log('geolocalization inited (cordova)');
-      navigator.geolocation.watchPosition(function (position) {
-        r = [position.coords.latitude, position.coords.longitude];
-        $rootScope.myPosition = r;
-        console.log('geolocated (cordova)');
-        localization.resolve(r);
-      }, function (error) {
-        console.log('cannot geolocate (cordova)');
-        localization.reject('cannot geolocate (web)');
-      }, {
-        //frequency: (20 * 60 * 1000), //20 mins
-        maximumAge: (10 * 60 * 1000), //10 mins
-        timeout: 10 * 1000, //10 secs
-        enableHighAccuracy: (device.version.indexOf('2.') == 0) // true for Android 2.x
-      });
-    }, false);
-  } else {
-    console.log('geolocalization inited (web)');
-    navigator.geolocation.watchPosition(function (position) {
-      r = [position.coords.latitude, position.coords.longitude];
-      $rootScope.myPosition = r;
-      console.log('geolocated (web)');
-      localization.resolve(r);
-    }, function (error) {
-      console.log('cannot geolocate (web)');
-      localization.reject('cannot geolocate (web)');
-    }, {
-      maximumAge: (5 * 60 * 1000), //5 mins
-      timeout: 1000, //1 sec
-      enableHighAccuracy: true
-    });
-  }
+  var localization = undefined;
+  var initLocalization = function () {
+    if (typeof localization=='undefined') {
+      localization = $q.defer();
+      if (ionic.Platform.isWebView()) {
+        console.log('geolocalization initing (cordova)...');
+        document.addEventListener("deviceready", function () {
+          console.log('geolocalization inited (cordova)');
+          $rootScope.locationWatchID=navigator.geolocation.watchPosition(function (position) {
+            r = [position.coords.latitude, position.coords.longitude];
+            $rootScope.myPosition = r;
+            console.log('geolocated (cordova)');
+            localization.resolve(r);
+          }, function (error) {
+            console.log('cannot geolocate (cordova)');
+            localization.reject('cannot geolocate (web)');
+          }, {
+            //frequency: (20 * 60 * 1000), //20 mins
+            maximumAge: (10 * 60 * 1000), //10 mins
+            timeout: 10 * 1000, //10 secs
+            enableHighAccuracy: (device.version.indexOf('2.') == 0) // true for Android 2.x
+          });
+        }, false);
+      } else {
+        console.log('geolocalization inited (web)');
+        $rootScope.locationWatchID=navigator.geolocation.watchPosition(function (position) {
+          r = [position.coords.latitude, position.coords.longitude];
+          $rootScope.myPosition = r;
+          console.log('geolocated (web)');
+          localization.resolve(r);
+        }, function (error) {
+          console.log('cannot geolocate (web)');
+          localization.reject('cannot geolocate (web)');
+        }, {
+          maximumAge: (5 * 60 * 1000), //5 mins
+          timeout: 1000, //1 sec
+          enableHighAccuracy: true
+        });
+      }
+    }
+    return localization.promise;
+  };
   return {
+    reset: function () {
+      localization=undefined;
+    },
     locate: function () {
       console.log('geolocalizing...');
-      return localization.promise.then(function (firstGeoLocation) {
+      return initLocalization(localization).then(function (firstGeoLocation) {
         return $rootScope.myPosition;
       });
     },
@@ -765,7 +774,7 @@ angular.module('starter.services', [])
                             //endMrkr = ", classIdentifier=";
                             classification = category; //category.substring(startMrkr.length, category.indexOf(endMrkr)) || '';
                             if (!classification || classification.toString() == 'false') classification = Config.eventCateFromType('misc').it;
-                            console.log('event cate: ' + classification);
+                            //console.log('event cate: ' + classification);
                             fromTime = item.fromTime;
                             if (item.toTime > 0) toTime = item.toTime;
                             else toTime = fromTime;
@@ -802,11 +811,11 @@ angular.module('starter.services', [])
                       console.log('deletions: ' + deletions.length);
 
                       angular.forEach(deletions, function (item, idx) {
-                        console.log('deleting obj with id: ' + item);
+                        //console.log('deleting obj with id: ' + item);
                         tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [item], function (tx, res) { //success callback
-                          console.log('deleted obj with id: ' + item);
+                          //console.log('deleted obj with id: ' + item);
                         }, function (e) { //error callback
-                          console.log('unable to deleted obj with id ' + item + ': ' + e.message);
+                          console.log('unable to delete obj with id ' + item + ': ' + e.message);
                         });
                       });
                     } else {

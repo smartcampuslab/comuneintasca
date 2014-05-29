@@ -1,7 +1,7 @@
 <ion-view title="{{'leaf_Itinerario' | i18n}}"  hide-back-button="true">
   <ion-content class="has-header" ng-cloak>
       <ion-nav-buttons side="left">
-      <button class="button button-clear" ng-click="bk()">
+      <button class="button button-clear" ng-click="bk()" ng-if="backActive">
       <i class="icon ion-ios7-arrow-back"></i>
       </button>
       </ion-nav-buttons>

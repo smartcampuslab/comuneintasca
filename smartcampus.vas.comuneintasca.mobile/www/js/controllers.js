@@ -511,7 +511,21 @@ angular.module('starter.controllers', ['google-maps'])
   });
 })
 
-.controller('ItinerarioCtrl', function ($scope, DatiDB, $stateParams, $window, $location) {
+.controller('ItinerarioCtrl', function ($scope, DatiDB, $stateParams, $window, $location, $ionicPlatform, $timeout) {
+/*  
+  var back = function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    $scope.bk();
+  };
+  $ionicPlatform.onHardwareBackButton(back);
+  $scope.$on('$destroy', function() {
+    $ionicPlatform.offHardwareBackButton(back);
+  });
+*/
+  $scope.backActive = false;
+  $timeout(function(){$scope.backActive = true;},200);
+    
   $scope.bk = function () {
     $window.history.back();
   };
@@ -519,6 +533,7 @@ angular.module('starter.controllers', ['google-maps'])
     $location.replace();
   };
 
+  
   $scope.itinerarioId = $stateParams.itinerarioId;
   $scope.gotdata = DatiDB.get('itinerary', $stateParams.itinerarioId).then(function (data) {
     $scope.itinerario = data;

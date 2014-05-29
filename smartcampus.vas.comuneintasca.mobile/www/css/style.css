@@ -50,7 +50,9 @@ h2 {
 }
 .htmldesc a,
 .comuni-html-desc a,
-.comuni-htmldesc a {
+.comuni-htmldesc a,
+.comuni-html-description a,
+.comuni-html-info a {
   color: #2975a7;
   font-weight: bold;
 }

@@ -44,9 +44,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     */
     if(window.StatusBar) {
       // org.apache.cordova.statusbar required
-      StatusBar.overlaysWebView(false);
-      StatusBar.styleBlackOpaque();
-      StatusBar.show();
+//      StatusBar.overlaysWebView(false);
+//      StatusBar.styleBlackOpaque();
+//      StatusBar.show();
+      if (device.model.indexOf('iPhone6,2')==0) StatusBar.hide();
     }
     //ionic.Platform.showStatusBar(false);
     //setTimeout(function(){ navigator.splashscreen.hide(); },10000);

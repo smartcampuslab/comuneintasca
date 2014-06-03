@@ -342,7 +342,7 @@ angular.module('starter.services', [])
       return 'TrentoInTasca';
     },
     schemaVersion: function () {
-      return 71;
+      return 72;
     },
     syncTimeoutSeconds: function () {
       return 60 * 60; /* 60 times 60 seconds = 1 HOUR */
@@ -631,7 +631,7 @@ angular.module('starter.services', [])
   };
   var remoteSyncOptions = {
     method: 'POST',
-    url: 'https://vas-dev.smartcampuslab.it/comuneintasca/sync?since=' + currentDbVersion,
+    url: 'https://tn.smartcampuslab.it/comuneintasca/sync?since=' + currentDbVersion,
     data: '{"updated":{}}'
   };
 

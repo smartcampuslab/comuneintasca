@@ -1288,7 +1288,7 @@ angular.module('starter.services', [])
   var IMAGESDIR_NAME = Config.savedImagesDirName();
   console.log('savedImagesDirName: ' + IMAGESDIR_NAME);
   var onErrorFS = function (e) {
-    console.log('Exception:');
+    console.log('File API Exception:');
     console.log(e);
     var msg = '';
     switch (e.code) {

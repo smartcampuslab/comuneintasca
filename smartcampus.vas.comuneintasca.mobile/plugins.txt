@@ -15,3 +15,4 @@ cordova plugin add https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plug
 cordova plugin add org.apache.cordova.network-information
 cordova plugin add org.apache.cordova.splashscreen
 cordova plugin add https://github.com/enricomarchesin/cordova-startapp.git
+cordova plugin add https://github.com/smartcampuslab/cordova-file-metadata.git

@@ -1262,6 +1262,7 @@ angular.module('starter.services', [])
     var fileTransfer = new FileTransfer();
     fileTransfer.download(obj.url, obj.savepath, function (fileEntry) {
       Profiling._do('fileget', 'saved');
+      window.FileMetadata.getMetadataForFileURI(fileEntry.nativeURL, function() {}, function() {});
       if (device.version.indexOf('2.') == 0) {
         console.log("download complete: " + fileEntry.nativeURL + " (Android 2.x)");
         obj.promise.resolve(fileEntry.nativeURL);

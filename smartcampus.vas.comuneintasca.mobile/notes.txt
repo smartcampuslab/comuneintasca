@@ -7,6 +7,6 @@ http://ticons.fokkezb.nl
 
 ##iOS
 
-How to make Cordova work on arm64 architectures (iphone5s)
+[FIXED IN VERSION 3.4.1+] How to make Cordova work on arm64 architectures (iphone5s)
 https://git-wip-us.apache.org/repos/asf?p=cordova-ios.git;h=82ce4f2
 (linked from JIRA thread: https://issues.apache.org/jira/browse/CB-6150)

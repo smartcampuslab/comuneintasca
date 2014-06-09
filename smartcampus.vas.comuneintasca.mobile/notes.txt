@@ -7,6 +7,39 @@ http://ticons.fokkezb.nl
 
 ##iOS
 
-[FIXED IN VERSION 3.4.1+] How to make Cordova work on arm64 architectures (iphone5s)
+###[FIXED IN VERSION 3.4.1+] How to make Cordova work on arm64 architectures (iphone5s)
 https://git-wip-us.apache.org/repos/asf?p=cordova-ios.git;h=82ce4f2
 (linked from JIRA thread: https://issues.apache.org/jira/browse/CB-6150)
+
+###Localized splash screen
+add new key to -Info.plist file called "Launch image", with value "Default"
+
+patch file CDVSplashScreen.m, lines (131-139)
+
+>BOOL isOrientationLocked = !(supportsPortrait && supportsLandscape);
+>
+>if (imageName) {
+>	imageName = [imageName stringByDeletingPathExtension];
+>} else {
+>	imageName = @"Default";
+>}
+>
+>if (CDV_IsIPhone5()) {
+
+must become
+
+>BOOL isOrientationLocked = !(supportsPortrait && supportsLandscape);
+>
+>if (imageName) {
+>	imageName = [imageName stringByDeletingPathExtension];
+>	NSLog(@"INFO: The temp custom splashscreen is named %@", imageName);
+>	imageName = NSLocalizedString(imageName, "localized splash screen name");
+>	NSLog(@"INFO: The localized custom splashscreen name is %@", imageName);
+>	NSLog(NSLocalizedString(@"logmsg","testing localization"));
+>} else {
+>	imageName = @"Default";
+>	NSLog(@"INFO: The default splashscreen is named %@", imageName);
+>}
+
+if (CDV_IsIPhone5()) {
+

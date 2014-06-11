@@ -336,7 +336,7 @@ angular.module('starter.services', [])
       return keys;
     },
     doProfiling: function () {
-      return true;
+      return false;
     },
     savedImagesDirName: function () {
       return 'TrentoInTasca';
@@ -345,8 +345,8 @@ angular.module('starter.services', [])
       return 72;
     },
     syncTimeoutSeconds: function () {
-      return 60 * 60; /* 60 times 60 seconds = 1 HOUR */
-      //return 60 * 60 * 6; /* 60 times 60 seconds = 1 HOUR --> x12 = TWICE A DAY */
+      //return 60 * 60; /* 60 times 60 seconds = EVERY HOUR */
+      return 60 * 60 * 8; /* 60 times 60 seconds = 1 HOUR --> x8 = THREE TIMES A DAY */
       //return 60 * 60 * 24; /* 60 times 60 seconds = 1 HOUR --> x24 = ONCE A DAY */
       //return 60 * 60 * 24 * 10; /* 60 times 60 seconds = 1 HOUR --> x24 = 1 DAY x10 */
     },
@@ -355,6 +355,13 @@ angular.module('starter.services', [])
     },
     loadingOverlayTimeoutMillis: function () {
       return 10 * 1000; /* 10 seconds before automatically hiding loading overlay */
+    },
+    fileCleanupTimeoutSeconds: function () {
+      //return 60 * 60 * 12; /* 60 times 60 seconds = 1 HOUR --> x12 = TWICE A DAY */
+      return 10;
+    },
+    fileCleanupOverlayTimeoutMillis: function () {
+      return 10 * 1000; /* 10 seconds before automatically hiding cleaning overlay */
     },
     contentTypesList: function () {
       return contentTypes;
@@ -879,7 +886,7 @@ angular.module('starter.services', [])
         Profiling.start('dball');
         var loading = $ionicLoading.show({
           content: 'loading...',
-          showDelay: 1000,
+          showDelay: 2000, // how many milliseconds to delay before showing the indicator
           duration: Config.loadingOverlayTimeoutMillis()
         });
 
@@ -1257,12 +1264,28 @@ angular.module('starter.services', [])
   }
 })
 
-.factory('Files', function ($q, $http, Config, $queue, Profiling) {
-  var queueFileDownload = function (obj) {
+.factory('Files', function ($q, $http, Config, $queue, Profiling, $ionicLoading) {
+  var lastFileCleanup = -1;
+  if (localStorage.lastFileCleanup) lastFileCleanup = Number(localStorage.lastFileCleanup);
+  console.log('lastFileCleanup: ' + lastFileCleanup);
+
+    var queueFileDownload = function (obj) {
     var fileTransfer = new FileTransfer();
     fileTransfer.download(obj.url, obj.savepath, function (fileEntry) {
       Profiling._do('fileget', 'saved');
-      window.FileMetadata.getMetadataForFileURI(fileEntry.nativeURL, function() {}, function() {});
+      window.FileMetadata.getMetadataForURL(obj.url,function(url_metadata){
+        if (url_metadata.modified>0) {
+          window.FileMetadata.setModifiedForFileURI(url_metadata.modified,fileEntry.nativeURL,function(){
+            console.log("success modifing date for file uri: " + fileEntry.nativeURL);
+          },function(){
+            console.log("error changing modified date for file uri: " + fileEntry.nativeURL);
+          });
+        } else {
+          console.log("unknowm modified date for url: " + obj.url);
+        }
+      }, function() {
+        console.log("url metadata error for " + obj.url);
+      });
       if (device.version.indexOf('2.') == 0) {
         console.log("download complete: " + fileEntry.nativeURL + " (Android 2.x)");
         obj.promise.resolve(fileEntry.nativeURL);
@@ -1365,44 +1388,99 @@ angular.module('starter.services', [])
     fsObj.resolve();
   }
   return {
-    listRoot: function (dirname) {
-      return filesystem.then(function (mainDir) {
-        /*
-        var dirReader = rootDir.createReader();
-        dirReader.readEntries(function(entries) {
-          for(var i = 0; i < entries.length; i++) {
-            var entry = entries[i];
-            if (entry.isDirectory){
-              console.log('Directory: ' + entry.toUrl());
-            } else if (entry.isFile){
-              console.log('File: ' + entry.toUrl());
-            }
+    cleanup: function () {
+      var cleaned = $q.defer();
+      filesystem.then(function (mainDir) {
+        if (ionic.Platform.isWebView()) {
+          console.log('mainDir:' + mainDir.toURL());
+          console.log(mainDir.nativeUrl);
+          var now_as_epoch = parseInt((new Date).getTime() / 1000);
+          var to = (lastFileCleanup + Config.fileCleanupTimeoutSeconds());
+          if (lastFileCleanup == -1 || now_as_epoch > to) {
+            Profiling.start('filecleanup');
+
+            console.log((now_as_epoch - lastFileCleanup) + ' seconds since last file cleanup: checking data dir...');
+            lastFileCleanup = now_as_epoch;
+            localStorage.lastFileCleanup = lastFileCleanup;
+
+            var syncingOverlay = $ionicLoading.show({
+              content: 'cleaning...',
+              //showDelay: 5000, // how many milliseconds to delay before showing the indicator
+              duration: Config.fileCleanupOverlayTimeoutMillis()
+            });
+
+            var allTotalSizes = {};
+            var totalSize=0;
+            var dirReader=mainDir.createReader()
+
+            var toArray=function(list){ return Array.prototype.slice.call(list || [], 0); };
+            // we'll keep calling readEntries() until no more results are returned (https://developer.mozilla.org/en-US/docs/Web/API/DirectoryReader#readEntries)
+            var readAllEntries = function() {
+              dirReader.readEntries(function(results) {
+                if (!results.length) {
+                  console.log('data dir reading done');
+
+                  //console.log('allTotalSizes.length: '+allTotalSizes.length);
+                  $q.all(allTotalSizes).then(function(){
+                    console.log('total data dir size: ' + totalSize);
+
+                    $ionicLoading.hide();
+                    Profiling._do('filecleanup');
+                    cleaned.resolve(mainDir);
+                  });
+                } else {
+                  for (i=0; i<results.length; i++) {
+                    entry=results[i];
+                    if (entry.isDirectory) {
+                      console.log('Directory: ' + entry.nativeURL);
+                    } else if (entry.isFile) {
+                      console.log('File: ' + entry.nativeURL);
+                      allTotalSizes[entry.nativeURL]=$q.defer();
+                      window.FileMetadata.getMetadataForFileURI(entry.nativeURL, function(metadata) {
+                        console.log('file uri size: ' + metadata.size);
+                        totalSize+=metadata.size;
+                        allTotalSizes[metadata.uri].resolve();
+                      });
+                    }
+                  }
+                  readAllEntries();
+                }
+              }, function() {
+                console.log('error reading data dir');
+              });
+            };
+            readAllEntries();
+/*
+            },function(){
+              console.log('error getting data dir size');
+
+              $ionicLoading.hide();
+              Profiling._do('filecleanup');
+              cleaned.resolve(mainDir);
+            //})['finally'](function(){
+              //$ionicLoading.hide();
+              //Profiling._do('filecleanup');
+              //return mainDir;
+            });
+*/
+          } else {
+            $ionicLoading.hide();
+            //console.log('avoiding too frequent file cleanups. seconds since last one: ' + (now_as_epoch - lastFileCleanup));
+            cleaned.resolve(mainDir);
           }
-        }, function(e){
-          console.log('fsRoot Exception: '+e);
-        });
-        */
-        var dirReader = mainDir.createReader();
-        dirReader.readEntries(function (entries) {
-          for (entry in entries) {
-            if (entry.isDirectory) {
-              console.log('Directory: ' + entry.nativeUrl);
-            } else if (entry.isFile) {
-              console.log('File: ' + entry.nativeUrl);
-            }
-          }
-        }, function (e) {
-          console.log('fsMain Exception: ' + e);
-        });
+        } else {
+          cleaned.resolve(mainDir);
+        }
       });
+      return cleaned.promise;
     },
     get: function (fileurl) {
-      console.log('fileurl: '+fileurl);
-      //var filename = fileurl.substring(fileurl.lastIndexOf('/') + 1);
-      var filename = CryptoJS.SHA1(fileurl).toString(CryptoJS.enc.Hex) + '.jpg';
-      console.log('filename: '+filename);
       var filegot = $q.defer();
-      filesystem.then(function (mainDir) {
+      this.cleanup().then(function (mainDir) {
+        //console.log('fileurl: '+fileurl);
+        //var filename = fileurl.substring(fileurl.lastIndexOf('/') + 1);
+        var filename = CryptoJS.SHA1(fileurl).toString(CryptoJS.enc.Hex) + '.jpg';
+        //console.log('filename: '+filename);
         if (ionic.Platform.isWebView()) {
           Profiling.start('fileget');
           //console.log('rootDir: ' + rootDir.fullPath);
@@ -1446,11 +1524,10 @@ angular.module('starter.services', [])
               queueFileDownload(fileObj);
             }
           });
-          //this.listRoot();
         } else {
           filegot.resolve(fileurl);
         }
-      });
+    });
       return filegot.promise;
     }
   };

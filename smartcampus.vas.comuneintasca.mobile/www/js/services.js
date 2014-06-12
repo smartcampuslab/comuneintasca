@@ -356,6 +356,9 @@ angular.module('starter.services', [])
     loadingOverlayTimeoutMillis: function () {
       return 10 * 1000; /* 10 seconds before automatically hiding loading overlay */
     },
+    fileDatadirMaxSizeMB: function () {
+      return 50;
+    },
     fileCleanupTimeoutSeconds: function () {
       //return 60 * 60 * 12; /* 60 times 60 seconds = 1 HOUR --> x12 = TWICE A DAY */
       return 10;
@@ -1412,6 +1415,7 @@ angular.module('starter.services', [])
 
             var allTotalSizesDeferreds = {};
             var allTotalSizesPromises = {};
+            var allFilesMetadata = [];
             var totalSize=0;
             var dirReader=mainDir.createReader()
 
@@ -1420,11 +1424,44 @@ angular.module('starter.services', [])
             var readAllEntries = function() {
               dirReader.readEntries(function(results) {
                 if (!results.length) {
-                  console.log('data dir reading done: waiting for all files metadata...');
+                  console.log('data dir reading done: waiting for all files ('+allTotalSizesPromises.length+') metadata...');
                   //console.log('allTotalSizesPromises.length: '+allTotalSizesPromises.length);
                   $q.all(allTotalSizesPromises).then(function(){
-                    console.log('total data dir size: ' + totalSize);
+                    var totalSizeMB=totalSize/1000000;
+                    var totalSizeMB_MAX=Config.fileDatadirMaxSizeMB();
+                    console.log('total data dir size (MB): ' + totalSizeMB + '/' + totalSizeMB_MAX);
+                    if (totalSizeMB > totalSizeMB_MAX) {
+                      var totalSize_MAX=totalSizeMB_MAX*1000000*.8;
+                      console.log('desired total data dir maximum size: '+totalSize_MAX);
+                      allFilesMetadata.sort(function(a,b){ return a.modified - b.modified; });
+                      for (mdi in allFilesMetadata) {
+                        md=allFilesMetadata[mdi];
+                        if (md.size>0) {
+                          if (totalSize>totalSize_MAX) {
+                            window.resolveLocalFileSystemURL(md.uri, function(fileEntry) {
+                              fileEntry.remove(function(){
+                                console.log('file deleted');
+                              },function(){
+                                console.log('ERROR: cannot delete file!');
+                              });
+                            });
+                            totalSize-=md.size;
+                          }
+                        } else {
+                          console.log('size error ('+md.size+') for uri ' + md.uri);
 
+                          //should we delete "broken" files?
+                          window.resolveLocalFileSystemURL(md.uri, function(fileEntry) {
+                            fileEntry.remove(function(){
+                              console.log('file deleted');
+                            },function(){
+                              console.log('ERROR: cannot delete file!');
+                            });
+                          });
+                        }
+                      }
+                      console.log('cleaned data dir size: ' + totalSize);
+                    }
                     $ionicLoading.hide();
                     Profiling._do('filecleanup');
                     cleaned.resolve(mainDir);
@@ -1436,13 +1473,15 @@ angular.module('starter.services', [])
                     if (entry.isDirectory) {
                       console.log('Directory: ' + entry.nativeURL);
                     } else if (entry.isFile) {
-                      console.log('File: ' + entry.nativeURL);
-                      allTotalSizesDeferreds[entry.nativeURL]=$q.defer();
-                      allTotalSizesPromises[entry.nativeURL]=allTotalSizesDeferreds[entry.nativeURL].promise;
-                      window.FileMetadata.getMetadataForFileURI(entry.nativeURL, function(metadata) {
-                        console.log('file uri size: ' + metadata.size);
-                        totalSize+=metadata.size;
+                      var fileURI=entry.nativeURL;
+                      //console.log('File: ' + fileURI);
+                      allTotalSizesDeferreds[fileURI]=$q.defer();
+                      allTotalSizesPromises[fileURI]=allTotalSizesDeferreds[fileURI].promise;
+                      window.FileMetadata.getMetadataForFileURI(fileURI, function(metadata) {
+                        //console.log('file uri size: ' + metadata.size);
+                        if (metadata.size>0) totalSize+=metadata.size;
                         allTotalSizesDeferreds[metadata.uri].resolve();
+                        allFilesMetadata.push(metadata);
                       });
                     }
                   }

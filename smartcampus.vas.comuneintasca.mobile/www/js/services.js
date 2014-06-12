@@ -1360,7 +1360,7 @@ angular.module('starter.services', [])
         }, function (dirEntry) {
           console.log('main dirEntry.nativeURL: ' + dirEntry.nativeURL);
           //console.log('main dirEntry.toUrl(): '+dirEntry.toUrl());
-          console.log('main dirEntry.fullPath: ' + dirEntry.fullPath);
+          //console.log('main dirEntry.fullPath: ' + dirEntry.fullPath);
           fsObj.resolve(dirEntry);
         }, function (err) {
           console.log('cannot find main folder fs');
@@ -1389,10 +1389,11 @@ angular.module('starter.services', [])
   }
   return {
     cleanup: function () {
+      console.log('cleanup()...');
       var cleaned = $q.defer();
       filesystem.then(function (mainDir) {
         if (ionic.Platform.isWebView()) {
-          console.log('mainDir:' + mainDir.toURL());
+          console.log('cleaning mainDir: ' + mainDir.toURL());
           console.log(mainDir.nativeUrl);
           var now_as_epoch = parseInt((new Date).getTime() / 1000);
           var to = (lastFileCleanup + Config.fileCleanupTimeoutSeconds());
@@ -1405,11 +1406,12 @@ angular.module('starter.services', [])
 
             var syncingOverlay = $ionicLoading.show({
               content: 'cleaning...',
-              //showDelay: 5000, // how many milliseconds to delay before showing the indicator
+              showDelay: 1500, // how many milliseconds to delay before showing the indicator
               duration: Config.fileCleanupOverlayTimeoutMillis()
             });
 
-            var allTotalSizes = {};
+            var allTotalSizesDeferreds = {};
+            var allTotalSizesPromises = {};
             var totalSize=0;
             var dirReader=mainDir.createReader()
 
@@ -1418,10 +1420,9 @@ angular.module('starter.services', [])
             var readAllEntries = function() {
               dirReader.readEntries(function(results) {
                 if (!results.length) {
-                  console.log('data dir reading done');
-
-                  //console.log('allTotalSizes.length: '+allTotalSizes.length);
-                  $q.all(allTotalSizes).then(function(){
+                  console.log('data dir reading done: waiting for all files metadata...');
+                  //console.log('allTotalSizesPromises.length: '+allTotalSizesPromises.length);
+                  $q.all(allTotalSizesPromises).then(function(){
                     console.log('total data dir size: ' + totalSize);
 
                     $ionicLoading.hide();
@@ -1429,17 +1430,19 @@ angular.module('starter.services', [])
                     cleaned.resolve(mainDir);
                   });
                 } else {
+                  console.log('reading data dir: '+results.length+' entries');
                   for (i=0; i<results.length; i++) {
                     entry=results[i];
                     if (entry.isDirectory) {
                       console.log('Directory: ' + entry.nativeURL);
                     } else if (entry.isFile) {
                       console.log('File: ' + entry.nativeURL);
-                      allTotalSizes[entry.nativeURL]=$q.defer();
+                      allTotalSizesDeferreds[entry.nativeURL]=$q.defer();
+                      allTotalSizesPromises[entry.nativeURL]=allTotalSizesDeferreds[entry.nativeURL].promise;
                       window.FileMetadata.getMetadataForFileURI(entry.nativeURL, function(metadata) {
                         console.log('file uri size: ' + metadata.size);
                         totalSize+=metadata.size;
-                        allTotalSizes[metadata.uri].resolve();
+                        allTotalSizesDeferreds[metadata.uri].resolve();
                       });
                     }
                   }

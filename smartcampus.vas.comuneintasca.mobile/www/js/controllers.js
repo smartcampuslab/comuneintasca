@@ -31,7 +31,7 @@ angular.module('starter.controllers', ['google-maps'])
   });
 })
 
-.controller('HomeCtrl', function ($scope, $rootScope, DatiDB, $filter, $ionicSlideBoxDelegate, $ionicPopup, $location, Config) {
+.controller('HomeCtrl', function ($scope, $rootScope, DatiDB, Files, $filter, $ionicSlideBoxDelegate, $ionicPopup, $location, Config) {
   $rootScope.inHome = true;
   var navbarElement = angular.element(document.getElementById('navbar'));
   navbarElement.addClass('bar-comuni-home');
@@ -50,6 +50,7 @@ angular.module('starter.controllers', ['google-maps'])
   $scope.goToItem = function (link) {
     $location.path(link.substring(1));
   }
+
   DatiDB.sync().then(function (data) {
     var homeObject = JSON.parse(localStorage.homeObject);
     var homeObjects = homeObject.contentIds;
@@ -68,6 +69,10 @@ angular.module('starter.controllers', ['google-maps'])
         //$ionicSlideBoxDelegate.update();
       }
     });
+  });
+
+  Files.cleanup().then(function (data) {
+    console.log('files cleaned!');
   });
 
   $scope.openViaggiaTrento = function () {

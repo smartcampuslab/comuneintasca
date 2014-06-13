@@ -457,3 +457,21 @@ angular.module('ilcomuneintasca.services.conf', [])
     }
   }
 })
+
+.factory('Profiling', function (Config) {
+  var startTimes = {};
+  return {
+    start: function (label) {
+      if (Config.doProfiling()) {
+        startTimes[label] = (new Date).getTime();
+      }
+    },
+
+    _do: function (label, details) {
+      if (Config.doProfiling()) {
+        var startTime = startTimes[label] || -1;
+        if (startTime != -1) console.log('PROFILE: ' + label + (details ? '(' + details + ')' : '') + '=' + ((new Date).getTime() - startTime));
+      }
+    }
+  };
+})

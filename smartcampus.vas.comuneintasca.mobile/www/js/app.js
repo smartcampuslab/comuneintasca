@@ -1,10 +1,26 @@
-// Ionic Starter App
-
 // angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
+// 'ilcomuneintasca' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-// 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'starter.filters', 'starter.directives', 'localization', 'ngQueue'])
+angular.module('ilcomuneintasca', [
+  'ionic', 
+  'ilcomuneintasca.controllers.common',
+  'ilcomuneintasca.controllers.home',
+  'ilcomuneintasca.controllers.events',
+  'ilcomuneintasca.controllers.places',
+  'ilcomuneintasca.controllers.itineraries',
+  'ilcomuneintasca.controllers.hospitality',
+  'ilcomuneintasca.services.conf',
+  'ilcomuneintasca.services.date',
+  'ilcomuneintasca.services.list',
+  'ilcomuneintasca.services.geo',
+  'ilcomuneintasca.services.map',
+  'ilcomuneintasca.services.db',
+  'ilcomuneintasca.services.fs',
+  'ilcomuneintasca.filters',
+  'ilcomuneintasca.directives',
+  'localization',
+  'ngQueue'
+])
 
 .run(function ($ionicPlatform, $rootScope, $window, DatiDB, GeoLocate, Config) {
   $rootScope.locationWatchID = undefined;

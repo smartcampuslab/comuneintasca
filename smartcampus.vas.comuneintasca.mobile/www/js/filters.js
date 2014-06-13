@@ -1,4 +1,4 @@
-angular.module('starter.filters', [])
+angular.module('ilcomuneintasca.filters', [])
 
 .filter('translate', function ($rootScope) {
   lang = $rootScope.lang;

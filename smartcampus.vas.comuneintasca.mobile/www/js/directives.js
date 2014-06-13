@@ -1,4 +1,4 @@
-angular.module('starter.directives', [])
+angular.module('ilcomuneintasca.directives', [])
 
 .directive('comuniImg', function ($q, Files) {
   var emptyImageUrl = 'img/placeholder-512x512.gif';

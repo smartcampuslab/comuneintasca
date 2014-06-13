@@ -1272,10 +1272,12 @@ angular.module('starter.services', [])
   if (localStorage.lastFileCleanup) lastFileCleanup = Number(localStorage.lastFileCleanup);
   console.log('lastFileCleanup: ' + lastFileCleanup);
 
-    var queueFileDownload = function (obj) {
+  var queueFileDownload = function (obj) {
     var fileTransfer = new FileTransfer();
     fileTransfer.download(obj.url, obj.savepath, function (fileEntry) {
       Profiling._do('fileget', 'saved');
+      //DISABLED 
+      /*
       window.FileMetadata.getMetadataForURL(obj.url,function(url_metadata){
         if (url_metadata.modified>0) {
           window.FileMetadata.setModifiedForFileURI(url_metadata.modified,fileEntry.nativeURL,function(){
@@ -1289,6 +1291,7 @@ angular.module('starter.services', [])
       }, function() {
         console.log("url metadata error for " + obj.url);
       });
+      */
       if (device.version.indexOf('2.') == 0) {
         console.log("download complete: " + fileEntry.nativeURL + " (Android 2.x)");
         obj.promise.resolve(fileEntry.nativeURL);

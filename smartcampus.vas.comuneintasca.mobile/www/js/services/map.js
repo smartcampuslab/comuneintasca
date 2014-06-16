@@ -12,7 +12,14 @@ angular.module('ilcomuneintasca.services.map', [])
     pan: false,
     options: {
       'streetViewControl': false,
-      'zoomControl': true
+      'zoomControl': true,
+      styles:[{
+        featureType:"poi",
+        elementType:"labels",
+        stylers:[{
+          visibility:"off"
+        }]
+      }]
     }
     //    events: {
     //      'drag': function () {

@@ -7,7 +7,7 @@
     </ion-nav-buttons>
     <div class="item item-divider" align="center">{{itinerario.title | translate}}</div>
     <div id="map2">
-      <google-map data-tap-disabled="true" center="map.center" zoom="map.zoom" pan="map.pan" draggable="{{map.draggable}}" refresh="map.refresh">
+      <google-map data-tap-disabled="true" center="map.center" zoom="map.zoom" pan="map.pan" options="map.options" draggable="{{map.draggable}}" refresh="map.refresh">
         <markers models="markers.models" coords="markers.coords" fit="markers.fit" icon="markers.icon" doCluster="markers.doCluster" click="openMarkerPopup">
         </markers>
         <!--

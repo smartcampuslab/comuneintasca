@@ -19,6 +19,7 @@ angular.module('ilcomuneintasca', [
   'ilcomuneintasca.filters',
   'ilcomuneintasca.directives',
   'localization',
+  'google-maps',
   'ngQueue'
 ])
 

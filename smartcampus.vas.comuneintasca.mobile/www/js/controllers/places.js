@@ -1,4 +1,4 @@
-angular.module('ilcomuneintasca.controllers.places', ['google-maps'])
+angular.module('ilcomuneintasca.controllers.places', [])
 
 .controller('PlacesListCtrl', function ($scope, $stateParams, $filter, DatiDB, Config, ListToolbox, $ionicScrollDelegate) {
   ListToolbox.prepare($scope, {

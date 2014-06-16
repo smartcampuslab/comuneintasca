@@ -11,6 +11,19 @@ http://ticons.fokkezb.nl
 https://git-wip-us.apache.org/repos/asf?p=cordova-ios.git;h=82ce4f2
 (linked from JIRA thread: https://issues.apache.org/jira/browse/CB-6150)
 
+###Missing headers during archive
+
+As per instructions here:
+
+http://stackoverflow.com/questions/5543854/xcode-4-cant-locate-public-header-files-from-static-library-dependency
+
+set "Public Headers Folder Path" of xcode subproject "Build Settings" of target "MagicKit-ios" to "MagicKit" and 
+set "Public Headers Folder Path" of xcode subproject "Build Settings" of target "CordovaLib" to "Cordova". Then go to "Build Settings" panel of main Xcode project and set "User Header Search Paths" to these two values:
+
+$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts
+$(BUILT_PRODUCTS_DIR)
+
+
 ###Localized splash screen
 add new key to -Info.plist file called "Launch image", with value "Default"
 

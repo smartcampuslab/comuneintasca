@@ -1,0 +1,57 @@
+{
+  "highlights":[],
+  "navigationItems":[],
+  "menu":[
+    {
+      "id":"info",
+      "name":{ "it":"CONOSCERE", "en":"DISCOVER", "de":"KENNEN" },
+      "items":[
+        { 
+          "name":{ "it":"Informazioni", "en":"Info", "de":"Info" },
+          "objectIds":[ "text.3001", "text.3004" ]
+        }, {
+          "id":"storia",
+          "name":{ "it":"Storia", "en":"History", "de":"Geschichte" },
+          "objectIds":[ "text.3002" ]
+        }, {
+          "id":"concilio",
+          "name":{ "it":"Concilio", "en":"Concilio", "de":"Concilio" },
+          "objectIds":[ "text.3003" ]
+        }, { 
+          "id":"mainevents",
+          "name":{ "it":"Eventi Principali", "en":"Main Events", "de":"Hauptereignisse" },
+          "objectIds":[ "text.3003" ]
+        }, { 
+          "id":"bondone",
+          "name":{ "it":"Monte Bondone", "en":"Mount Bondone", "de":"Mont Bondone" },
+          "objectIds":[ "text.3003" ]
+        }
+      ]
+    }, {
+      "id":"events",
+      "name":{ "it":"EVENTI", "en":"EVENTS", "de":"VERANSTALTUNGEN" },
+      "items":[
+      ]
+    }, {
+      "id":"places",
+      "name":{ "it":"VISITARE", "en":"HIGHLIGHTS", "de":"WAS SU  BESICHTIGEN" },
+      "items":[
+      ]
+    }, {
+      "id":"itineraries",
+      "name":{ "it":"PERCORSI", "en":"TOURISTIC  ITINERARIES", "de":"TOUREN  UND ROUTEN" },
+      "items":[
+      ]
+    }, {
+      "id":"hospitality",
+      "name":{ "it":"MANGIARE  E DORMIRE", "en":"HOTELS &  RESTAURANTS", "de":"ÜBERNACHTUNG  UND GASTRONOMIE" },
+      "items":[
+      ]
+    }, {
+      "id":"utils",
+      "name":{ "it":"INFO UTILI", "en":"USEFUL  INFORMATIONS", "de":"WEITERE  INFORMATIONEN" },
+      "items":[
+      ]
+    }
+  ]
+}

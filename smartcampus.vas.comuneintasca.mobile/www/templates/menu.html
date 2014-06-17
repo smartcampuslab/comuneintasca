@@ -27,26 +27,18 @@
           <b data-i18n="sidemenu_Favourites"></b>
         </ion-item>
 
-        <ion-item class="item-header" ng-click="showGroup(0)">
-          <i class="icon" ng-class="{'ion-chevron-up': !isGroupShown(0), 'ion-chevron-down': isGroupShown(0)}"></i>
-          <b data-i18n="sidemenu_div_Conoscere"></b>
-        </ion-item>
-        <ion-item nav-clear menu-close class=" item-accordion" href="#/app/contents/text.3001,text.3004" ng-show="isGroupShown(0)">
-          <b data-i18n="sidemenu_Info"></b>
-        </ion-item>
-        <ion-item nav-clear menu-close class=" item-accordion" href="#/app/content/text.3002" ng-show="isGroupShown(0)">
-          <b data-i18n="sidemenu_Storia"></b>
-        </ion-item>
-        <ion-item nav-clear menu-close class=" item-accordion" href="#/app/content/text.3003" ng-show="isGroupShown(0)">
-          <b data-i18n="sidemenu_Concilio"></b>
-        </ion-item>
-        <ion-item nav-clear menu-close class=" item-accordion" href="#/app/mainevents" ng-show="isGroupShown(0)">
-          <b data-i18n="sidemenu_Eventi-Principali"></b>
-        </ion-item>
-        <ion-item nav-clear menu-close class=" item-accordion" href="#/app/contentscate/bondone" ng-show="isGroupShown(0)">
-          <b data-i18n="sidemenu_Bondone"></b>
-        </ion-item>
-
+        <div ng-if="menu" ng-repeat="(groupIndex, menuGroup) in menu">
+          <ion-item class="item-header" ng-click="showGroup(groupIndex)">
+            <i class="icon" ng-class="{'ion-chevron-up': !isGroupShown(groupIndex), 'ion-chevron-down': isGroupShown(groupIndex)}"></i>
+            <b ng-bind="menuGroup.name | translate">test</b>
+          </ion-item>
+          <div ng-show="isGroupShown(groupIndex)">
+            <ion-item ng-repeat="(itemIndex, menuItem) in menuGroup.items" nav-clear menu-close class="item-accordion" ng-href="{{menuItem.href}}">
+              <b ng-bind="menuItem.name | translate"></b>
+            </ion-item>
+          </div>
+        </div>
+<!--
         <ion-item class="item-header" ng-click="showGroup(1)">
           <i class="icon" ng-class="{'ion-chevron-up': !isGroupShown(1), 'ion-chevron-down': isGroupShown(1)}"></i>
           <b data-i18n="sidemenu_div_Vivere"></b>
@@ -59,9 +51,11 @@
           <i class="icon" ng-class="{'ion-chevron-up': !isGroupShown(2), 'ion-chevron-down': isGroupShown(2)}"></i>
           <b data-i18n="sidemenu_div_Scoprire"></b>
         </ion-item>
+-->
         <!-- <ion-item nav-clear menu-close class="item-accordion" href="#/app/mappa" ng-show="isGroupShown(2)">
           <b data-i18n="sidemenu_Mappa"></b>
         </ion-item> -->
+<!--
         <ion-item ng-repeat="(key, type) in poiTypes" nav-clear menu-close class="item-accordion" ng-href="#/app/places/{{key}}" ng-show="isGroupShown(2)">
           <b ng-bind="type | translate"></b>
         </ion-item>
@@ -95,7 +89,7 @@
         <ion-item nav-clear menu-close class="item-accordion" href="#/app/contacts" ng-show="isGroupShown(5)">
           <b data-i18n="sidemenu_Uffici-comunali"></b>
         </ion-item>
-
+-->
         <ion-item nav-clear menu-close class="item-accordion" ng-click="showCredits()">
           <b data-i18n="credits_title"></b>
         </ion-item>

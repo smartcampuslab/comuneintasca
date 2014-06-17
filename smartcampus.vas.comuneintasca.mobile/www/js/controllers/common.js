@@ -1,6 +1,6 @@
 angular.module('ilcomuneintasca.controllers.common', [])
 
-.controller('MenuCtrl', function ($scope, $ionicModal) {
+.controller('MenuCtrl', function ($scope, $ionicModal, $http) {
   $scope.shownGroup = null;
 
   $scope.showGroup = function (groupId) {
@@ -11,6 +11,25 @@ angular.module('ilcomuneintasca.controllers.common', [])
     }
   };
 
+  $http.get('data/menu.json').success(function(data, status, headers, config){
+    console.log('menu json loaded!');
+    for (gi=0; gi<data.menu.length; gi++) {
+      var group=data.menu[gi];
+      for (ii=0; ii<group.items.length; ii++) {
+        var item=group.items[ii];
+        if (item.objectIds) {
+          item.href="#/app/content/"+item.objectIds.join(',');
+        } else {
+          item.href="#/menu/"+group.id+"/"+ii;
+        }
+      }
+    }
+    $scope.menu=data.menu;
+  }).error(function(data, status, headers, config){
+    console.log('error getting menu json!');
+    $scope.menu=null;
+  });
+  
   $scope.isGroupShown = function (groupId) {
     return $scope.shownGroup == groupId;
   };

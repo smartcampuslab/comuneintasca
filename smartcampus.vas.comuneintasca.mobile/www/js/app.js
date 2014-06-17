@@ -87,12 +87,12 @@ angular.module('ilcomuneintasca', [
   }
 
   var lang = browserLanguage.substring(0, 2);
-  console.log('Language: ' + lang);
   if (lang != 'it' && lang != 'en' && lang != 'de') {
     $rootScope.lang = 'en';
   } else {
     $rootScope.lang = lang;
   }
+
   $rootScope.poiTypes = Config.poiTypesList();
   $rootScope.eventTypes = Config.eventTypesList();
   $rootScope.goto = function (link) {

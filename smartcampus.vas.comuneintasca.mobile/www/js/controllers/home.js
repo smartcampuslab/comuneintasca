@@ -65,22 +65,4 @@ angular.module('ilcomuneintasca.controllers.home', [])
       });
     }
   };
-
-  /*
-  $scope.show = function() {
-   // Show the action sheet
-   $ionicActionSheet.show({
-     buttons: [
-       { text: '<b>Share</b> This' },
-       { text: 'Move' },
-     ],
-     destructiveText: 'Delete',
-     titleText: 'Modify your album',
-     cancelText: 'Cancel',
-     buttonClicked: function(index) {
-       return true;
-     }
-   });
-  };
-  */
 })

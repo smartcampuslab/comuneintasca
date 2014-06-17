@@ -20,11 +20,11 @@
         }, { 
           "id":"mainevents",
           "name":{ "it":"Eventi Principali", "en":"Main Events", "de":"Hauptereignisse" },
-          "objectIds":[ "text.3003" ]
+          "query":{ "type":"mainevents" }
         }, { 
           "id":"bondone",
           "name":{ "it":"Monte Bondone", "en":"Mount Bondone", "de":"Mont Bondone" },
-          "objectIds":[ "text.3003" ]
+          "query":{ "type":"content", "classification":"bondone" }
         }
       ]
     }, {
@@ -41,16 +41,39 @@
       "id":"itineraries",
       "name":{ "it":"PERCORSI", "en":"TOURISTIC  ITINERARIES", "de":"TOUREN  UND ROUTEN" },
       "items":[
+        { 
+          "id":"servizi",
+          "name":{ "it":"Percorsi Turistici", "en":"Touristic Itineraries", "de":"Touren und Routen" },
+          "query":{ "type":"itineraries" }
+        }
       ]
     }, {
       "id":"hospitality",
       "name":{ "it":"MANGIARE  E DORMIRE", "en":"HOTELS &  RESTAURANTS", "de":"ÜBERNACHTUNG  UND GASTRONOMIE" },
       "items":[
+        { 
+          "id":"hotel",
+          "name":{ "it":"Dormire", "en":"Hotels", "de":"Übernachtung" },
+          "query":{ "type":"hotels" }
+        }, { 
+          "id":"restaurants",
+          "name":{ "it":"Mangiare", "en":"Restaurants", "de":"Gastronomie" },
+          "query":{ "type":"restaurants" }
+        }
       ]
     }, {
       "id":"utils",
       "name":{ "it":"INFO UTILI", "en":"USEFUL  INFORMATIONS", "de":"WEITERE  INFORMATIONEN" },
       "items":[
+        { 
+          "id":"servizi",
+          "name":{ "it":"Servizi", "en":"Services", "de":"Dienstleistungen" },
+          "query":{ "type":"contents", "classification":"Servizi" }
+        }, { 
+          "id":"contatti",
+          "name":{ "it":"Contatti", "en":"Contacts", "de":"Kontakten" },
+          "query":{ "type":"contents", "classification":"Contatti" }
+        }
       ]
     }
   ]

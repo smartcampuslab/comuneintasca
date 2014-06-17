@@ -38,31 +38,6 @@
     "description": "side menu label"
   },
   {
-    "key": "sidemenu_div_Conoscere",
-    "value": "CONOSCERE",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_div_Vivere",
-    "value": "EVENTI",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_div_Scoprire",
-    "value": "VISITARE",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_div_Percorsi",
-    "value": "PERCORSI",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_div_Mangiare-dormire",
-    "value": "MANGIARE E DORMIRE",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_div_Info-utili",
-    "value": "INFO UTILI",
-    "description": "side menu label"
-  },
-  {
     "key": "sidemenu_Home",
     "value": "Home",
     "description": "side menu label"
@@ -75,34 +50,6 @@
     "value": "Nessun preferito salvato",
     "description": "favourites list results"
   }, {
-    "key": "sidemenu_Info",
-    "value": "Informazioni",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Storia",
-    "value": "Storia",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Concilio",
-    "value": "Concilio",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Eventi-Principali",
-    "value": "Eventi Principali",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Bondone",
-    "value": "Monte Bondone",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Mappa",
-    "value": "Mappa",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Itinerari",
-    "value": "Percorsi Turistici",
-    "description": "side menu label"
-  }, {
     "key": "sidemenu_Hotel",
     "value": "Dormire",
     "description": "side menu label"
@@ -111,12 +58,16 @@
     "value": "Mangiare",
     "description": "side menu label"
   }, {
-    "key": "sidemenu_Servizi",
-    "value": "Servizi",
+    "key": "sidemenu_Eventi-Principali",
+    "value": "Eventi Principali",
     "description": "side menu label"
   }, {
-    "key": "sidemenu_Uffici-comunali",
-    "value": "Contatti",
+    "key": "sidemenu_Itinerari",
+    "value": "Percorsi Turistici",
+    "description": "side menu label"
+  }, {
+    "key": "sidemenu_Mappa",
+    "value": "Mappa",
     "description": "side menu label"
   },
   {

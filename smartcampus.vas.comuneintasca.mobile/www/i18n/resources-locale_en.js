@@ -38,31 +38,6 @@
     "description": "side menu label"
   },
   {
-    "key": "sidemenu_div_Conoscere",
-    "value": "DISCOVER",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_div_Vivere",
-    "value": "EVENTS",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_div_Scoprire",
-    "value": "HIGHLIGHTS",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_div_Percorsi",
-    "value": "TOURISTIC ITINERARIES",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_div_Mangiare-dormire",
-    "value": "HOTELS & RESTAURANTS",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_div_Info-utili",
-    "value": "USEFUL INFORMATIONS",
-    "description": "side menu label"
-  },
-  {
     "key": "sidemenu_Home",
     "value": "Home",
     "description": "side menu label"
@@ -75,34 +50,6 @@
     "value": "No favorites saved, yet",
     "description": "favourites list results"
   }, {
-    "key": "sidemenu_Info",
-    "value": "Info",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Storia",
-    "value": "History",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Concilio",
-    "value": "Concilio",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Eventi-Principali",
-    "value": "Main Events",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Bondone",
-    "value": "Mount Bondone",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Mappa",
-    "value": "Map",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Itinerari",
-    "value": "Touristic Itineraries",
-    "description": "side menu label"
-  }, {
     "key": "sidemenu_Hotel",
     "value": "Hotels",
     "description": "side menu label"
@@ -111,12 +58,16 @@
     "value": "Restaurants",
     "description": "side menu label"
   }, {
-    "key": "sidemenu_Servizi",
-    "value": "Services",
+    "key": "sidemenu_Eventi-Principali",
+    "value": "Main Events",
     "description": "side menu label"
   }, {
-    "key": "sidemenu_Uffici-comunali",
-    "value": "Contacts",
+    "key": "sidemenu_Itinerari",
+    "value": "Touristic Itineraries",
+    "description": "side menu label"
+  }, {
+    "key": "sidemenu_Mappa",
+    "value": "Map",
     "description": "side menu label"
   },
   {

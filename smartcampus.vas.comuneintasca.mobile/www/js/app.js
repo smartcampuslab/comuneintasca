@@ -200,6 +200,15 @@ angular.module('ilcomuneintasca', [
         }
       }
     })
+    .state('app.contentscatelist', {
+      url: "/contentscatelist/:contentsCate",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/contents_list.html",
+          controller: "ContentsListCtrl"
+        }
+      }
+    })
     .state('app.contentscate', {
       url: "/contentscate/:contentsCate",
       views: {
@@ -225,31 +234,6 @@ angular.module('ilcomuneintasca', [
           templateUrl: "templates/content.html",
           controller: "ContentCtrl"
         }
-      }
-    })
-
-  .state('app.services', {
-    url: "/services",
-    views: {
-      'menuContent': {
-        templateUrl: "templates/contents_list.html",
-        controller: "ContentsListCtrl"
-      }
-    },
-    data: {
-      contentsCate: 'Servizi'
-    }
-  })
-    .state('app.contacts', {
-      url: "/contacts",
-      views: {
-        'menuContent': {
-          templateUrl: "templates/contents_list.html",
-          controller: "ContentsListCtrl"
-        }
-      },
-      data: {
-        contentsCate: 'Contatti'
       }
     })
 

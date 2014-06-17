@@ -38,31 +38,6 @@
     "description": "side menu label"
   },
   {
-    "key": "sidemenu_div_Conoscere",
-    "value": "KENNEN",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_div_Vivere",
-    "value": "VERANSTALTUNGEN",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_div_Scoprire",
-    "value": "WAS SU BESICHTIGEN",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_div_Percorsi",
-    "value": "TOUREN UND ROUTEN",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_div_Mangiare-dormire",
-    "value": "ÜBERNACHTUNG UND GASTRONOMIE",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_div_Info-utili",
-    "value": "WEITERE INFORMATIONEN",
-    "description": "side menu label"
-  },
-  {
     "key": "sidemenu_Home",
     "value": "Home",
     "description": "side menu label"
@@ -75,34 +50,6 @@
     "value": "Keine Favoriten gespeichert, aber",
     "description": "favourites list results"
   }, {
-    "key": "sidemenu_Info",
-    "value": "Info",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Storia",
-    "value": "Geschichte",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Concilio",
-    "value": "Concilio",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Eventi-Principali",
-    "value": "Hauptereignisse",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Bondone",
-    "value": "Mont Bondone",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Mappa",
-    "value": "Map",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Itinerari",
-    "value": "Touren und Routen",
-    "description": "side menu label"
-  }, {
     "key": "sidemenu_Hotel",
     "value": "Übernachtung",
     "description": "side menu label"
@@ -111,12 +58,16 @@
     "value": "Gastronomie",
     "description": "side menu label"
   }, {
-    "key": "sidemenu_Servizi",
-    "value": "Dienstleistungen",
+    "key": "sidemenu_Eventi-Principali",
+    "value": "Hauptereignisse",
     "description": "side menu label"
   }, {
-    "key": "sidemenu_Uffici-comunali",
-    "value": "Kontakten",
+    "key": "sidemenu_Itinerari",
+    "value": "Touren und Routen",
+    "description": "side menu label"
+  }, {
+    "key": "sidemenu_Mappa",
+    "value": "Map",
     "description": "side menu label"
   },
   {

@@ -18,7 +18,23 @@ angular.module('ilcomuneintasca.controllers.common', [])
       for (ii=0; ii<group.items.length; ii++) {
         var item=group.items[ii];
         if (item.objectIds) {
-          item.href="#/app/content/"+item.objectIds.join(',');
+          if (item.objectIds.length>1) {
+            item.href="#/app/contents/"+item.objectIds.join(',');
+          } else {
+            item.href="#/app/content/"+item.objectIds[0];
+          }
+        } else if (item.query && item.query.type=='itineraries') {
+          item.href="#/app/itineraries";
+        } else if (item.query && item.query.type=='mainevents') {
+          item.href="#/app/mainevents";
+        } else if (item.query && item.query.type=='hotels') {
+          item.href="#/app/hotels";
+        } else if (item.query && item.query.type=='restaurants') {
+          item.href="#/app/restaurants";
+        } else if (item.query && item.query.type=='contents') {
+          item.href="#/app/contentscatelist/"+item.query.classification;
+        } else if (item.query && item.query.type=='content') {
+          item.href="#/app/contentscate/"+item.query.classification;
         } else {
           item.href="#/menu/"+group.id+"/"+ii;
         }

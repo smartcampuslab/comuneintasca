@@ -18,7 +18,7 @@
     "description": "side menu label"
   }, {
     "key": "home_btn_Scoprire",
-    "value": "WAS SU<br/>BESICHTIGEN",
+    "value": "WAS ZU<br/>BESICHTIGEN",
     "description": "side menu label"
   }, {
     "key": "home_btn_Percorsi",
@@ -34,7 +34,7 @@
     "description": "side menu label"
   }, {
     "key": "home_btn_Favorites",
-    "value": "FAVORITEN",
+    "value": "LIEBLINGSSEITEN",
     "description": "side menu label"
   },
   {
@@ -47,7 +47,7 @@
     "description": "side menu label"
   }, {
     "key": "sidemenu_div_Scoprire",
-    "value": "WAS SU BESICHTIGEN",
+    "value": "WAS ZU BESICHTIGEN",
     "description": "side menu label"
   }, {
     "key": "sidemenu_div_Percorsi",
@@ -68,7 +68,7 @@
     "description": "side menu label"
   }, {
     "key": "sidemenu_Favourites",
-    "value": "Favoriten",
+    "value": "Lieblingsseiten",
     "description": "side menu label"
   }, {
     "key": "list_no-favourites",
@@ -92,7 +92,7 @@
     "description": "side menu label"
   }, {
     "key": "sidemenu_Bondone",
-    "value": "Mont Bondone",
+    "value": "Monte Bondone",
     "description": "side menu label"
   }, {
     "key": "sidemenu_Mappa",

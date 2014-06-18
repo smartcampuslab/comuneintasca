@@ -281,7 +281,7 @@ angular.module('ilcomuneintasca.services.conf', [])
       en: 'Info'
     },
     'bondone': {
-      de: 'Mont Bondone',
+      de: 'Monte Bondone',
       it: 'Monte Bondone',
       en: 'Mount Bondone'
     },

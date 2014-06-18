@@ -25,6 +25,22 @@ angular.module('ilcomuneintasca.services.fs', [])
         console.log("url metadata error for " + obj.url);
       });
       */
+      window.FileMetadata.getMetadataForFileURI(fileEntry.nativeURL,function(metadata){
+        if (metadata.size>0 && metadata.type && metadata.type.indexOf('image/')==0) {
+          console.log("keeping valid downloaded file: " + metadata.uri);
+        } else {
+          console.log("deleting invalid downloaded file: " + metadata.uri);
+          console.log("file size: " + metadata.size);
+          console.log("mime type: " + metadata.type);
+          window.resolveLocalFileSystemURL(metadata.uri, function(fileEntry){
+            fileEntry.remove(function() {
+              console.log('invalid file removed');
+            }, function() {
+              console.log('cannot remove invalid file');
+            });
+          });
+        }
+      });
       if (device.version.indexOf('2.') == 0) {
         console.log("download complete: " + fileEntry.nativeURL + " (Android 2.x)");
         obj.promise.resolve(fileEntry.nativeURL);

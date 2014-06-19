@@ -1,6 +1,6 @@
 angular.module('ilcomuneintasca.services.db', [])
 
-.factory('DatiDB', function ($q, $http, $rootScope, $ionicLoading, Config, GeoLocate, Profiling) {
+.factory('DatiDB', function ($q, $http, $rootScope, $ionicLoading, $filter, Config, GeoLocate, Profiling) {
   var SCHEMA_VERSION = Config.schemaVersion();
   var types = Config.contentTypesList();
 
@@ -167,7 +167,7 @@ angular.module('ilcomuneintasca.services.db', [])
             localStorage.lastSynced = lastSynced;
 
             var syncingOverlay = $ionicLoading.show({
-              content: Config.keys()['syncing'],
+              content: $filter('translate')(Config.keys()['syncing']),
               duration: Config.syncingOverlayTimeoutMillis()
             });
 

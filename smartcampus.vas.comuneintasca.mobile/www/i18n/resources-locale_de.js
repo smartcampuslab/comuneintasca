@@ -47,7 +47,7 @@
     "description": "side menu label"
   }, {
     "key": "list_no-favourites",
-    "value": "Keine Favoriten gespeichert, aber",
+    "value": "Keine Lieblingsseiten gespeichert",
     "description": "favourites list results"
   }, {
     "key": "sidemenu_Hotel",

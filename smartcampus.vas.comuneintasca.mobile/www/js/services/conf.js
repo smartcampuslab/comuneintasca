@@ -66,6 +66,21 @@ angular.module('ilcomuneintasca.services.conf', [])
       'it': 'Chiudi',
       'en': 'Close',
       'de': 'Schließen'
+    },
+    'loading': {
+      'it': 'caricamento in corso...',
+      'en': 'loading...',
+      'de': 'loading...'
+    },
+    'syncing': {
+      'it': 'aggiornamento in corso...',
+      'en': 'syncing...',
+      'de': 'syncing...'
+    },
+    'cleaning': {
+      'it': 'pulizia in corso...',
+      'en': 'cleaning...',
+      'de': 'cleaning...'
     }
   };
   var poiTypes = {

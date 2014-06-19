@@ -167,7 +167,7 @@ angular.module('ilcomuneintasca.services.db', [])
             localStorage.lastSynced = lastSynced;
 
             var syncingOverlay = $ionicLoading.show({
-              content: 'syncing...',
+              content: Config.keys()['syncing'],
               duration: Config.syncingOverlayTimeoutMillis()
             });
 
@@ -325,7 +325,7 @@ angular.module('ilcomuneintasca.services.db', [])
       this.sync().then(function (dbVersion) {
         Profiling.start('dball');
         var loading = $ionicLoading.show({
-          content: 'loading...',
+          content: Config.keys()['loading'],
           showDelay: 2000, // how many milliseconds to delay before showing the indicator
           duration: Config.loadingOverlayTimeoutMillis()
         });
@@ -366,7 +366,7 @@ angular.module('ilcomuneintasca.services.db', [])
       this.sync().then(function (dbVersion) {
         Profiling.start('dbcate');
         var loading = $ionicLoading.show({
-          content: 'loading...',
+          content: Config.keys()['loading'],
           showDelay: 1000,
           duration: Config.loadingOverlayTimeoutMillis()
         });
@@ -413,7 +413,7 @@ angular.module('ilcomuneintasca.services.db', [])
       this.sync().then(function (dbVersion) {
         Profiling.start('byTimeInterval');
         var loading = $ionicLoading.show({
-          content: 'loading...',
+          content: Config.keys()['loading'],
           showDelay: 1000,
           duration: Config.loadingOverlayTimeoutMillis()
         });
@@ -461,7 +461,7 @@ angular.module('ilcomuneintasca.services.db', [])
       return this.sync().then(function (dbVersion) {
         Profiling.start('dbget');
         var loading = $ionicLoading.show({
-          content: 'loading...',
+          content: Config.keys()['loading'],
           showDelay: 1000,
           duration: Config.loadingOverlayTimeoutMillis()
         });
@@ -529,7 +529,7 @@ angular.module('ilcomuneintasca.services.db', [])
       return this.sync().then(function (dbVersion) {
         Profiling.start('dbget');
         var loading = $ionicLoading.show({
-          content: 'loading...',
+          content: Config.keys()['loading'],
           showDelay: 1000,
           duration: Config.loadingOverlayTimeoutMillis()
         });
@@ -593,7 +593,7 @@ angular.module('ilcomuneintasca.services.db', [])
 
       Profiling.start('dbfavs');
       var loading = $ionicLoading.show({
-        content: 'loading...',
+        content: Config.keys()['loading'],
         showDelay: 1000,
         duration: Config.loadingOverlayTimeoutMillis()
       });

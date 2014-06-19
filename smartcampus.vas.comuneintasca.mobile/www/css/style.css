@@ -392,3 +392,7 @@ ion-side-menu b {
 .h4.credits-title {
   color: #2975a7;
 }
+
+p.phone-button {
+  font-size: 1.5em; font-weight: bold; color:1b4d6e;
+}

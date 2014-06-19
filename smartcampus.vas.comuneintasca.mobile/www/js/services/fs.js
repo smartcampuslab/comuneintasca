@@ -160,7 +160,7 @@ angular.module('ilcomuneintasca.services.fs', [])
             localStorage.lastFileCleanup = lastFileCleanup;
 
             var syncingOverlay = $ionicLoading.show({
-              content: 'cleaning...',
+              content: Config.keys()['cleaning'],
               showDelay: 1500, // how many milliseconds to delay before showing the indicator
               duration: Config.fileCleanupOverlayTimeoutMillis()
             });

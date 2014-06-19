@@ -397,6 +397,20 @@ angular.module('ilcomuneintasca', [
         }
       }
     });
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/home');
+  $urlRouterProvider
+    .when("/menu/:gid/:cid", function ($match, Menu) {
+      console.log('MENU handler');
+      console.log('gid: '+$match.gid);
+      console.log('cid: '+$match.cid);
+      Menu.fetch().then(function(menu) {
+        console.log('MENU fetched');
+        var group=menu[$match.gid];
+        //console.log('group: '+JSON.stringify(group));
+        var item=group.items[$match.cid];
+        console.log('item: '+JSON.stringify(item));
+        var newstate=item.href.substring(1);
+        console.log('new state: '+newstate);
+      });
+    })
+    .otherwise('/app/home'); // if none of the above states are matched, use this as the fallback
 });

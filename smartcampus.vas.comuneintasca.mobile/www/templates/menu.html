@@ -33,7 +33,7 @@
             <b ng-bind="menuGroup.name | translate">test</b>
           </ion-item>
           <div ng-show="isGroupShown(groupIndex)">
-            <ion-item ng-repeat="(itemIndex, menuItem) in menuGroup.items" nav-clear menu-close class="item-accordion" ng-href="{{menuItem.href}}">
+            <ion-item ng-repeat="(itemIndex, menuItem) in menuGroup.items" nav-clear menu-close class="item-accordion" ng-href="{{menuItem.href}}" off_ng-href="#/menu/{{groupIndex}}/{{itemIndex}}">
               <b ng-bind="menuItem.name | translate"></b>
             </ion-item>
           </div>

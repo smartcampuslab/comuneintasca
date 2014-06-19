@@ -1,6 +1,50 @@
 angular.module('ilcomuneintasca.services.conf', [])
 
-.factory('Config', function ($q) {
+.factory('Menu', function($q, $http) {
+  console.log('service Menu inited');
+  return {
+    fetch: function () {
+      var fetched = $q.defer();
+      $http.get('data/menu.json').success(function(data, status, headers, config){
+        //console.log('menu json loaded!');
+        for (gi=0; gi<data.menu.length; gi++) {
+          var group=data.menu[gi];
+          for (ii=0; ii<group.items.length; ii++) {
+            var item=group.items[ii];
+            if (item.objectIds) {
+              if (item.objectIds.length>1) {
+                item.href="#/app/contents/"+item.objectIds.join(',');
+              } else {
+                item.href="#/app/content/"+item.objectIds[0];
+              }
+            } else if (item.query && item.query.type=='itineraries') {
+              item.href="#/app/itineraries";
+            } else if (item.query && item.query.type=='mainevents') {
+              item.href="#/app/mainevents";
+            } else if (item.query && item.query.type=='hotels') {
+              item.href="#/app/hotels";
+            } else if (item.query && item.query.type=='restaurants') {
+              item.href="#/app/restaurants";
+            } else if (item.query && item.query.type=='contents') {
+              item.href="#/app/contentscatelist/"+item.query.classification;
+            } else if (item.query && item.query.type=='content') {
+              item.href="#/app/contentscate/"+item.query.classification;
+            } else {
+              item.href="#/menu/"+group.id+"/"+ii;
+            }
+          }
+        }
+        fetched.resolve(data.menu);
+      }).error(function(data, status, headers, config){
+        console.log('error getting menu json!');
+        fetched.reject();
+      });
+      return fetched.promise;
+    }
+  }
+})
+
+.factory('Config', function () {
   var keys = {
     'Stars': {
       'it': 'Stelle',

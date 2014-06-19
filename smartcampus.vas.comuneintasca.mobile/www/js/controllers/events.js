@@ -67,7 +67,7 @@ angular.module('ilcomuneintasca.controllers.events', [])
       return $scope.events;
     },
     orderingTypes: ['A-Z', 'Z-A', 'DateFrom', 'DateTo'],
-    defaultOrdering: 'DateFrom',
+    defaultOrdering: 'DateTo',
     hasSearch: true,
     filterOptions: Config.eventFilterTypeList(),
     doFilter: search,

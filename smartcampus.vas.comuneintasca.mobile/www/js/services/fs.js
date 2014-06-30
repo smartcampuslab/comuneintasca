@@ -105,10 +105,9 @@ angular.module('ilcomuneintasca.services.fs', [])
         if (device.platform == 'Android') {
           console.log('cordova (android) fs...');
           fsRoot = 'files-external';
-          //fsRoot = 'documents';
         } else {
           console.log('cordova (ios) fs...');
-          fsRoot = 'documents';
+          fsRoot = 'documents-nosync';
         }
         fs.root.getDirectory(IMAGESDIR_NAME, {
           create: true

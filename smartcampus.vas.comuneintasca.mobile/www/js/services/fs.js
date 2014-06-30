@@ -1,6 +1,6 @@
 angular.module('ilcomuneintasca.services.fs', [])
 
-.factory('Files', function ($q, $http, Config, $queue, Profiling, $ionicLoading) {
+.factory('Files', function ($q, $http, Config, $queue, Profiling, $ionicLoading, $filter) {
   var lastFileCleanup = -1;
   if (localStorage.lastFileCleanup) lastFileCleanup = Number(localStorage.lastFileCleanup);
   console.log('lastFileCleanup: ' + lastFileCleanup);
@@ -105,10 +105,9 @@ angular.module('ilcomuneintasca.services.fs', [])
         if (device.platform == 'Android') {
           console.log('cordova (android) fs...');
           fsRoot = 'files-external';
-          //fsRoot = 'documents';
         } else {
           console.log('cordova (ios) fs...');
-          fsRoot = 'documents';
+          fsRoot = 'documents-nosync';
         }
         fs.root.getDirectory(IMAGESDIR_NAME, {
           create: true
@@ -159,8 +158,8 @@ angular.module('ilcomuneintasca.services.fs', [])
             lastFileCleanup = now_as_epoch;
             localStorage.lastFileCleanup = lastFileCleanup;
 
-            var syncingOverlay = $ionicLoading.show({
-              content: Config.keys()['cleaning'],
+            var cleaningOverlay = $ionicLoading.show({
+              content: $filter('translate')(Config.keys()['cleaning']),
               showDelay: 1500, // how many milliseconds to delay before showing the indicator
               duration: Config.fileCleanupOverlayTimeoutMillis()
             });

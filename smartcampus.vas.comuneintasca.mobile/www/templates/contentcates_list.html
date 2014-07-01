@@ -1,11 +1,8 @@
-<ion-view title="{{title | i18n}}">
+<ion-view title="{{group.name | translate}}">
   <ion-content class="has-header">
     <ion-list>
-      <ion-item ng-repeat="cate in categories" ng-click="goto(cate.link)">
-        {{cate.key | i18n}}
-      </ion-item>
-      <ion-item ng-repeat="(key, cate) in categories2" ng-click="goto(basecate+'/'+key)">
-        {{cate | translate}}
+      <ion-item ng-repeat="item in group.items" ng-click="goto(item.path)">
+        {{item.name | translate}}
       </ion-item>
     </ion-list>
   </ion-content>

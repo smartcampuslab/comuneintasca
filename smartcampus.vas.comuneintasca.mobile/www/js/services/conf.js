@@ -33,6 +33,14 @@ angular.module('ilcomuneintasca.services.conf', [])
   return {
     fetch: function () {
       return fetched.promise;
+    },
+    group: function (label) {
+      return fetched.promise.then(function(menu) {
+        for (gi=0; gi<menu.length; gi++) {
+          if (menu[gi].id==label) return menu[gi];
+        }
+        return null;
+      });
     }
   }
 })

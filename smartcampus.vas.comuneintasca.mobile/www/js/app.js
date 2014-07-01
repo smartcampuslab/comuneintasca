@@ -23,7 +23,7 @@ angular.module('ilcomuneintasca', [
   'ngQueue'
 ])
 
-.run(function ($ionicPlatform, $rootScope, $window, DatiDB, GeoLocate, Config) {
+.run(function ($ionicPlatform, $rootScope, $window, DatiDB, GeoLocate, Config, $location) {
   $rootScope.locationWatchID = undefined;
   //  ionic.Platform.fullScreen(false,true);
   if (typeof (Number.prototype.toRad) === "undefined") {
@@ -93,10 +93,9 @@ angular.module('ilcomuneintasca', [
     $rootScope.lang = lang;
   }
 
-  $rootScope.poiTypes = Config.poiTypesList();
-  $rootScope.eventTypes = Config.eventTypesList();
   $rootScope.goto = function (link) {
-    location = '#/app/' + link;
+    if (link.indexOf('/app/')!=0) link='/app/'+link;
+    $location.path(link);
   };
 
   $rootScope.getListItemHeight = function (item, index) {
@@ -408,7 +407,7 @@ angular.module('ilcomuneintasca', [
         //console.log('group: '+JSON.stringify(group));
         var item=group.items[$match.cid];
         //console.log('item: '+JSON.stringify(item));
-        var newstate=item.href.substring(1);
+        var newstate=item.path;
         //console.log('new state: '+newstate);
         $location.path(newstate);
       });

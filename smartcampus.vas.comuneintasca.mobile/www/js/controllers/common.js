@@ -43,60 +43,11 @@ angular.module('ilcomuneintasca.controllers.common', [])
   });
 })
 
-.controller('CategoriesListCtrl', function ($scope, $stateParams, Config) {
-  if ($stateParams.cateId == 'info') {
-    $scope.title = 'sidemenu_div_Conoscere';
-    $scope.categories = [
-      {
-        key: 'sidemenu_Info',
-        link: 'contents/text.3001,text.3004'
-      }, {
-        key: 'sidemenu_Storia',
-        link: 'content/text.3002'
-      }, {
-        key: 'sidemenu_Concilio',
-        link: 'content/text.3003'
-      }, {
-        key: 'sidemenu_Eventi-Principali',
-        link: 'mainevents'
-      }, {
-        key: 'sidemenu_Bondone',
-        link: 'contentscate/bondone'
-      }
-    ];
-
-  } else if ($stateParams.cateId == 'events') {
-    $scope.basecate = $stateParams.cateId;
-    $scope.title = 'sidemenu_div_Vivere';
-    $scope.categories2 = Config.eventTypesList();
-  } else if ($stateParams.cateId == 'places') {
-    $scope.basecate = $stateParams.cateId;
-    $scope.title = 'sidemenu_div_Scoprire';
-    $scope.categories2 = Config.poiTypesList();
-
-  } else if ($stateParams.cateId == 'hospitality') {
-    $scope.title = 'sidemenu_div_Mangiare-dormire';
-    $scope.categories = [
-      {
-        key: 'sidemenu_Hotel',
-        link: 'hotels'
-      }, {
-        key: 'sidemenu_Ristoranti',
-        link: 'restaurants'
-      }
-    ];
-  } else if ($stateParams.cateId == 'useful') {
-    $scope.title = 'sidemenu_div_Info-utili';
-    $scope.categories = [
-      {
-        key: 'sidemenu_Servizi',
-        link: 'services'
-      }, {
-        key: 'sidemenu_Uffici-comunali',
-        link: 'contacts'
-      }
-    ];
-  }
+.controller('CategoriesListCtrl', function ($scope, $stateParams, Menu) {
+  var cate=$stateParams.cateId;
+  Menu.group(cate).then(function(g){
+      $scope.group=g;
+  });
 })
 
 .controller('ContentCtrl', function ($scope, $state, $stateParams, DatiDB) {

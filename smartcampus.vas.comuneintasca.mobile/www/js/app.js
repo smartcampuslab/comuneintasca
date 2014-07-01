@@ -398,10 +398,10 @@ angular.module('ilcomuneintasca', [
       }
     });
   $urlRouterProvider
-    .when("/menu/:gid/:cid", function ($match, Menu) {
-      console.log('MENU handler');
-      console.log('gid: '+$match.gid);
-      console.log('cid: '+$match.cid);
+    .when("/menu/:gid/:cid", function ($match, Menu, $location) {
+      //console.log('MENU handler');
+      //console.log('gid: '+$match.gid);
+      //console.log('cid: '+$match.cid);
       Menu.fetch().then(function(menu) {
         //console.log('MENU fetched');
         var group=menu[$match.gid];
@@ -410,7 +410,9 @@ angular.module('ilcomuneintasca', [
         //console.log('item: '+JSON.stringify(item));
         var newstate=item.href.substring(1);
         //console.log('new state: '+newstate);
+        $location.path(newstate);
       });
+      return true;
     })
     .otherwise('/app/home'); // if none of the above states are matched, use this as the fallback
 });

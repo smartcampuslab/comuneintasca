@@ -20,7 +20,7 @@ angular.module('ilcomuneintasca.services.list', [])
     });
     $scope.show = myPopup;
     myPopup.then(function (res) {
-      console.log('sort popup res: ' + res);
+      //console.log('sort popup res: ' + res);
       callback(res);
     });
   }
@@ -147,13 +147,13 @@ angular.module('ilcomuneintasca.services.list', [])
           if (!!$ionicScrollDelegate.$getByHandle('listScroll')) {
             $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false);
           }  
-          console.log(footer);
+          //console.log(footer);
           $timeout(function () {
             var fields = angular.element(footer).find('input');
-            console.log(fields.length);
+            //console.log(fields.length);
             if (fields.length > 0) {
               field = fields[0];
-              console.log(field);
+              //console.log(field);
               field.focus();
             }
           }, 200);

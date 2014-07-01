@@ -1,7 +1,6 @@
 angular.module('ilcomuneintasca.services.conf', [])
 
 .factory('Menu', function($q, $http) {
-  console.log('service Menu inited');
   return {
     fetch: function () {
       var fetched = $q.defer();

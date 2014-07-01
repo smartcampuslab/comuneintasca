@@ -3,7 +3,7 @@ angular.module('ilcomuneintasca.services.fs', [])
 .factory('Files', function ($q, $http, Config, $queue, Profiling, $ionicLoading, $filter) {
   var lastFileCleanup = -1;
   if (localStorage.lastFileCleanup) lastFileCleanup = Number(localStorage.lastFileCleanup);
-  console.log('lastFileCleanup: ' + lastFileCleanup);
+  //console.log('lastFileCleanup: ' + lastFileCleanup);
 
   var queueFileDownload = function (obj) {
     var fileTransfer = new FileTransfer();
@@ -27,7 +27,7 @@ angular.module('ilcomuneintasca.services.fs', [])
       */
       window.FileMetadata.getMetadataForFileURI(fileEntry.nativeURL,function(metadata){
         if (metadata.size>0 && metadata.type && metadata.type.indexOf('image/')==0) {
-          console.log("keeping valid downloaded file: " + metadata.uri);
+          //console.log("keeping valid downloaded file: " + metadata.uri);
         } else {
           console.log("deleting invalid downloaded file: " + metadata.uri);
           console.log("file size: " + metadata.size);
@@ -42,10 +42,10 @@ angular.module('ilcomuneintasca.services.fs', [])
         }
       });
       if (device.version.indexOf('2.') == 0) {
-        console.log("download complete: " + fileEntry.nativeURL + " (Android 2.x)");
+        //console.log("download complete: " + fileEntry.nativeURL + " (Android 2.x)");
         obj.promise.resolve(fileEntry.nativeURL);
       } else {
-        console.log("download complete: " + obj.savepath);
+        //console.log("download complete: " + obj.savepath);
         obj.promise.resolve(obj.savepath);
       }
     }, function (error) {
@@ -65,7 +65,7 @@ angular.module('ilcomuneintasca.services.fs', [])
   }
   */
   var IMAGESDIR_NAME = Config.savedImagesDirName();
-  console.log('savedImagesDirName: ' + IMAGESDIR_NAME);
+  //console.log('savedImagesDirName: ' + IMAGESDIR_NAME);
   var onErrorFS = function (e) {
     console.log('File API Exception:');
     console.log(e);
@@ -96,23 +96,23 @@ angular.module('ilcomuneintasca.services.fs', [])
   var rootFS;
   var fsObj = $q.defer();
   var filesystem = fsObj.promise;
-  console.log('Opening file system...');
+  //console.log('Opening file system...');
   if (ionic.Platform.isWebView()) {
     document.addEventListener("deviceready", function () {
       window.requestFileSystem(window.PERSISTENT, 50 * 1024 * 1024 /*50MB*/ , function (fs) {
         rootFS = fs.root;
-        console.log('Opened file system: ' + rootFS.toURL());
+        //console.log('Opened file system: ' + rootFS.toURL());
         if (device.platform == 'Android') {
-          console.log('cordova (android) fs...');
+          //console.log('cordova (android) fs...');
           fsRoot = 'files-external';
         } else {
-          console.log('cordova (ios) fs...');
+          //console.log('cordova (ios) fs...');
           fsRoot = 'documents-nosync';
         }
         fs.root.getDirectory(IMAGESDIR_NAME, {
           create: true
         }, function (dirEntry) {
-          console.log('main dirEntry.nativeURL: ' + dirEntry.nativeURL);
+          //console.log('main dirEntry.nativeURL: ' + dirEntry.nativeURL);
           //console.log('main dirEntry.toUrl(): '+dirEntry.toUrl());
           //console.log('main dirEntry.fullPath: ' + dirEntry.fullPath);
           fsObj.resolve(dirEntry);
@@ -143,11 +143,11 @@ angular.module('ilcomuneintasca.services.fs', [])
   }
   return {
     cleanup: function () {
-      console.log('cleanup()...');
+      //console.log('cleanup()...');
       var cleaned = $q.defer();
       filesystem.then(function (mainDir) {
         if (ionic.Platform.isWebView()) {
-          console.log('cleaning mainDir: ' + mainDir.toURL());
+          //console.log('cleaning mainDir: ' + mainDir.toURL());
           console.log(mainDir.nativeUrl);
           var now_as_epoch = parseInt((new Date).getTime() / 1000);
           var to = (lastFileCleanup + Config.fileCleanupTimeoutSeconds());
@@ -222,7 +222,7 @@ angular.module('ilcomuneintasca.services.fs', [])
                   for (i=0; i<results.length; i++) {
                     entry=results[i];
                     if (entry.isDirectory) {
-                      console.log('Directory: ' + entry.nativeURL);
+                      //console.log('Directory: ' + entry.nativeURL);
                     } else if (entry.isFile) {
                       var fileURI=entry.nativeURL;
                       //console.log('File: ' + fileURI);
@@ -296,10 +296,10 @@ angular.module('ilcomuneintasca.services.fs', [])
             var filesavepath = rootFS.toURL() + IMAGESDIR_NAME + '/' + filename;
             Profiling._do('fileget', 'already');
             if (device.version.indexOf('2.') == 0) {
-              console.log('already downloaded to "' + fileEntry.nativeURL + '" (Android 2.x)');
+              //console.log('already downloaded to "' + fileEntry.nativeURL + '" (Android 2.x)');
               filegot.resolve(fileEntry.nativeURL);
             } else {
-              console.log('already downloaded to "' + filesavepath + '"');
+              //console.log('already downloaded to "' + filesavepath + '"');
               filegot.resolve(filesavepath);
             }
           }, function () {
@@ -313,7 +313,7 @@ angular.module('ilcomuneintasca.services.fs', [])
                 url: fileurl,
                 promise: filegot
               };
-              console.log('not found: downloading to "' + fileObj.savepath + '"');
+              //console.log('not found: downloading to "' + fileObj.savepath + '"');
               queueFileDownload(fileObj);
             }
           });

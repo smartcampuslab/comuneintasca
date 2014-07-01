@@ -6,13 +6,13 @@ angular.module('ilcomuneintasca.services.geo', [])
     if (typeof localization=='undefined') {
       localization = $q.defer();
       if (ionic.Platform.isWebView()) {
-        console.log('geolocalization initing (cordova)...');
+        //console.log('geolocalization initing (cordova)...');
         document.addEventListener("deviceready", function () {
-          console.log('geolocalization inited (cordova)');
+          //console.log('geolocalization inited (cordova)');
           $rootScope.locationWatchID=navigator.geolocation.watchPosition(function (position) {
             r = [position.coords.latitude, position.coords.longitude];
             $rootScope.myPosition = r;
-            console.log('geolocated (cordova)');
+            //console.log('geolocated (cordova)');
             localization.resolve(r);
           }, function (error) {
             console.log('cannot geolocate (cordova)');
@@ -25,11 +25,11 @@ angular.module('ilcomuneintasca.services.geo', [])
           });
         }, false);
       } else {
-        console.log('geolocalization inited (web)');
+        //console.log('geolocalization inited (web)');
         $rootScope.locationWatchID=navigator.geolocation.watchPosition(function (position) {
           r = [position.coords.latitude, position.coords.longitude];
           $rootScope.myPosition = r;
-          console.log('geolocated (web)');
+          //console.log('geolocated (web)');
           localization.resolve(r);
         }, function (error) {
           console.log('cannot geolocate (web)');
@@ -48,7 +48,7 @@ angular.module('ilcomuneintasca.services.geo', [])
       localization=undefined;
     },
     locate: function () {
-      console.log('geolocalizing...');
+      //console.log('geolocalizing...');
       return initLocalization(localization).then(function (firstGeoLocation) {
         return $rootScope.myPosition;
       });

@@ -41,7 +41,7 @@ angular.module('ilcomuneintasca.controllers.home', [])
   });
 
   Files.cleanup().then(function (data) {
-    console.log('files cleaned!');
+    //console.log('files cleaned!');
   });
 
   $scope.openViaggiaTrento = function () {

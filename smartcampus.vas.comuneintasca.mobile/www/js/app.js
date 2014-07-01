@@ -71,7 +71,7 @@ angular.module('ilcomuneintasca', [
   });
   GeoLocate.locate().then(function (position) {
     $rootScope.myPosition = position;
-    console.log('first geolocation: ' + $rootScope.myPosition);
+    //console.log('first geolocation: ' + $rootScope.myPosition);
   }, function () {
     console.log('CANNOT LOCATE!');
   });
@@ -403,13 +403,13 @@ angular.module('ilcomuneintasca', [
       console.log('gid: '+$match.gid);
       console.log('cid: '+$match.cid);
       Menu.fetch().then(function(menu) {
-        console.log('MENU fetched');
+        //console.log('MENU fetched');
         var group=menu[$match.gid];
         //console.log('group: '+JSON.stringify(group));
         var item=group.items[$match.cid];
-        console.log('item: '+JSON.stringify(item));
+        //console.log('item: '+JSON.stringify(item));
         var newstate=item.href.substring(1);
-        console.log('new state: '+newstate);
+        //console.log('new state: '+newstate);
       });
     })
     .otherwise('/app/home'); // if none of the above states are matched, use this as the fallback

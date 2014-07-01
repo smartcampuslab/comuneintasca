@@ -52,7 +52,7 @@ angular.module('ilcomuneintasca.services.db', [])
         });
       }
     } else {
-      console.log('item.location UNKNOWN');
+      //console.log('item.location UNKNOWN');
     }
     if (dbrow.fromTime > 0) item['fromTime'] = dbrow.fromTime;
     if (dbrow.toTime > 0) item['toTime'] = dbrow.toTime;
@@ -61,7 +61,7 @@ angular.module('ilcomuneintasca.services.db', [])
 
   var currentSchemaVersion = 0;
   if (localStorage.currentSchemaVersion) currentSchemaVersion = Number(localStorage.currentSchemaVersion);
-  console.log('currentSchemaVersion: ' + currentSchemaVersion);
+  //console.log('currentSchemaVersion: ' + currentSchemaVersion);
 
   var currentDbVersion = 0,
     lastSynced = -1;
@@ -69,8 +69,8 @@ angular.module('ilcomuneintasca.services.db', [])
     if (localStorage.currentDbVersion) currentDbVersion = Number(localStorage.currentDbVersion);
     if (localStorage.lastSynced) lastSynced = Number(localStorage.lastSynced);
   }
-  console.log('currentDbVersion: ' + currentDbVersion);
-  console.log('lastSynced: ' + lastSynced);
+  //console.log('currentDbVersion: ' + currentDbVersion);
+  //console.log('lastSynced: ' + lastSynced);
 
   var localSyncOptions = {
     method: 'GET',
@@ -86,9 +86,9 @@ angular.module('ilcomuneintasca.services.db', [])
 
   var dbopenDeferred = $q.defer();
   if (ionic.Platform.isWebView()) {
-    console.log('cordova db...');
+    //console.log('cordova db...');
     document.addEventListener("deviceready", function () {
-      console.log('cordova db inited...');
+      //console.log('cordova db inited...');
       dbObj = window.sqlitePlugin.openDatabase({
         name: "Trento",
         bgType: 0
@@ -97,7 +97,7 @@ angular.module('ilcomuneintasca.services.db', [])
       dbopenDeferred.resolve(dbObj);
     }, false);
   } else {
-    console.log('web db...');
+    //console.log('web db...');
     dbObj = window.openDatabase('Trento', '1.0', 'Trento in Tasca', 2 * 1024 * 1024);
     syncOptions = localSyncOptions;
     //syncOptions=remoteSyncOptions;
@@ -142,7 +142,7 @@ angular.module('ilcomuneintasca.services.db', [])
         dbDeferred.resolve(dbObj);
       });
     } else {
-      console.log('no need to init database...');
+      //console.log('no need to init database...');
       dbDeferred.resolve(dbObj);
     }
   });
@@ -312,7 +312,7 @@ angular.module('ilcomuneintasca.services.db', [])
             });
           } else {
             $ionicLoading.hide();
-            console.log('avoiding too frequent syncronizations. seconds since last one: ' + (now_as_epoch - lastSynced));
+            //console.log('avoiding too frequent syncronizations. seconds since last one: ' + (now_as_epoch - lastSynced));
             Profiling._do('dbsync');
             syncronization.resolve(currentDbVersion);
           }
@@ -336,7 +336,6 @@ angular.module('ilcomuneintasca.services.db', [])
           tx.executeSql('SELECT id, type, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=?', [types[dbname]], function (tx, results) {
             var len = results.rows.length,
               i;
-            console.log('results.rows.length: ' + len);
             for (i = 0; i < len; i++) {
               var item = results.rows.item(i);
               lista.push(parseDbRow(item));
@@ -374,15 +373,13 @@ angular.module('ilcomuneintasca.services.db', [])
         var lista = []
         dbObj.transaction(function (tx) {
           //console.log('type: '+types[dbname]);
-          console.log('category: ' + cateId);
+          //console.log('category: ' + cateId);
 
           var sql = 'SELECT id, type, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=?' + (cateId ? ' AND (classification=? OR classification2=? OR classification3=?)' : '');
           var params = cateId ? [types[dbname], cateId, cateId, cateId] : [types[dbname]];
           tx.executeSql(sql, params, function (tx2, cateResults) {
-            console.log('cateResults.rows.length: ' + cateResults.rows.length);
             var len = cateResults.rows.length,
               i;
-            console.log('results.rows.length: ' + len);
             for (i = 0; i < len; i++) {
               var item = cateResults.rows.item(i);
               lista.push(parseDbRow(item));
@@ -426,10 +423,8 @@ angular.module('ilcomuneintasca.services.db', [])
             'fromTime > 0 AND fromTime <' + toTime + ' AND toTime > ' + fromTime + (cateId ? ' AND (classification=? OR classification2=? OR classification3=?)' : '');
           var params = cateId ? [types[dbname], cateId, cateId, cateId] : [types[dbname]];
           tx.executeSql(sql, params, function (tx2, cateResults) {
-            console.log('cateResults.rows.length: ' + cateResults.rows.length);
             var len = cateResults.rows.length,
               i;
-            console.log('results.rows.length: ' + len);
             for (i = 0; i < len; i++) {
               var item = cateResults.rows.item(i);
               lista.push(parseDbRow(item));
@@ -456,8 +451,7 @@ angular.module('ilcomuneintasca.services.db', [])
       return data.promise;
     },
     get: function (dbname, itemId) {
-      console.log('DatiDB.get("' + dbname + '","' + itemId + '")');
-
+      //console.log('DatiDB.get("' + dbname + '","' + itemId + '")');
       return this.sync().then(function (dbVersion) {
         Profiling.start('dbget');
         var loading = $ionicLoading.show({
@@ -469,7 +463,7 @@ angular.module('ilcomuneintasca.services.db', [])
         var dbitem = $q.defer();
         var lista = [];
         dbObj.transaction(function (tx) {
-          console.log('DatiDB.get(); itemId: ' + itemId);
+          //console.log('DatiDB.get(); itemId: ' + itemId);
           if (itemId.indexOf(',') == -1) {
             idCond = 'id=?';
           } else {
@@ -481,9 +475,9 @@ angular.module('ilcomuneintasca.services.db', [])
           qParams.unshift(types[dbname]);
           var dbQuery = 'SELECT id, type, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=? AND ' + idCond;
           //console.log('dbQuery: ' + dbQuery);
-          console.log('DatiDB.get("' + dbname + '", "' + itemId + '"); dbQuery launched...');
+          //console.log('DatiDB.get("' + dbname + '", "' + itemId + '"); dbQuery launched...');
           tx.executeSql(dbQuery, qParams, function (tx2, results) {
-            console.log('DatiDB.get("' + dbname + '", "' + itemId + '"); dbQuery completed');
+            //console.log('DatiDB.get("' + dbname + '", "' + itemId + '"); dbQuery completed');
             var resultslen = results.rows.length;
             if (resultslen > 0) {
               if (itemId.indexOf(',') == -1) {
@@ -524,7 +518,7 @@ angular.module('ilcomuneintasca.services.db', [])
       });
     },
     getAny: function (itemIds) {
-      console.log('DatiDB.getAny(""' + itemIds + '")');
+      //console.log('DatiDB.getAny(""' + itemIds + '")');
 
       return this.sync().then(function (dbVersion) {
         Profiling.start('dbget');
@@ -536,16 +530,16 @@ angular.module('ilcomuneintasca.services.db', [])
 
         var dbitem = $q.defer();
         dbObj.transaction(function (tx) {
-          console.log('DatiDB.getAny(); itemIds: ' + itemIds);
+          //console.log('DatiDB.getAny(); itemIds: ' + itemIds);
           var conds = [];
           for (var i = 0; i < itemIds.length; i++) conds[i] = '?';
           var idCond = 'id IN (' + conds.join() + ')';
           var qParams = itemIds;
           var dbQuery = 'SELECT id, type, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE ' + idCond;
           //console.log('dbQuery: ' + dbQuery);
-          console.log('DatiDB.getAny("' + itemIds + '"); dbQuery launched...');
+          //console.log('DatiDB.getAny("' + itemIds + '"); dbQuery launched...');
           tx.executeSql(dbQuery, qParams, function (tx2, results) {
-            console.log('DatiDB.get("' + itemIds + '"); dbQuery completed');
+            //console.log('DatiDB.get("' + itemIds + '"); dbQuery completed');
             var resultslen = results.rows.length;
             var res = {};
             var lista = [];
@@ -589,7 +583,7 @@ angular.module('ilcomuneintasca.services.db', [])
       });
     },
     getFavorites: function () {
-      console.log('DatiDB.getFavorites()');
+      //console.log('DatiDB.getFavorites()');
 
       Profiling.start('dbfavs');
       var loading = $ionicLoading.show({
@@ -614,7 +608,7 @@ angular.module('ilcomuneintasca.services.db', [])
             Profiling._do('dbfavs', 'list');
             dbitem.resolve(lista);
           } else {
-            console.log('not found!');
+            //console.log('not found!');
             Profiling._do('dbfavs', 'sql empty');
             dbitem.reject('not found!');
           }
@@ -636,7 +630,7 @@ angular.module('ilcomuneintasca.services.db', [])
       return dbitem.promise;
     },
     isFavorite: function (itemId) {
-      console.log('DatiDB.getFavorites()');
+      //console.log('DatiDB.isFavorite()');
 
       var dbitem = $q.defer();
       dbObj.transaction(function (tx) {
@@ -650,7 +644,7 @@ angular.module('ilcomuneintasca.services.db', [])
             Profiling._do('dbfav', 'found');
             dbitem.resolve(true);
           } else {
-            console.log('not found!');
+            //console.log('not found!');
             Profiling._do('dbfav', 'not found');
             dbitem.resolve(false);
           }
@@ -664,13 +658,13 @@ angular.module('ilcomuneintasca.services.db', [])
         Profiling._do('dbfav', 'tx error');
         dbitem.resolve(false);
       }, function () { //success callback
-        console.log('db.isFavorite() DONE!');
+        //console.log('db.isFavorite() DONE!');
         Profiling._do('dbfav', 'tx success');
       });
       return dbitem.promise;
     },
     setFavorite: function (itemId, val) {
-      console.log('DatiDB.setFavorite(' + itemId + ',' + val + ')');
+      //console.log('DatiDB.setFavorite(' + itemId + ',' + val + ')');
 
       var dbitem = $q.defer();
       dbObj.transaction(function (tx) {
@@ -696,40 +690,10 @@ angular.module('ilcomuneintasca.services.db', [])
         Profiling._do('dbfavsave', 'tx error');
         dbitem.resolve(!val);
       }, function () { //success callback
-        console.log('db.setFavorite() DONE!');
+        //console.log('db.setFavorite() DONE!');
         Profiling._do('dbfavsave', 'tx success');
       });
       return dbitem.promise;
     }
   }
-})
-
-.factory('DatiJSON', function ($http) {
-  return {
-    all: function (dbname) {
-      return $http.get('data/' + dbname + '-it.json').then(function (res) {
-        return res.data;
-      });
-    },
-    cate: function (dbname, cateId) {
-      return this.all(dbname).then(function (data) {
-        r = [];
-        for (i = 0; i < data.length; i++) {
-          if (data[i].classifications == cateId) {
-            r.push(data[i]);
-          }
-        }
-        return r;
-      });
-    },
-    get: function (dbname, itemId) {
-      return this.all(dbname).then(function (data) {
-        for (i = 0; i < data.length; i++) {
-          if (data[i].id == itemId) {
-            return data[i];
-          }
-        }
-      });
-    }
-  };
 })

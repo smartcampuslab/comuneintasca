@@ -195,7 +195,7 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
 
       angular.forEach(luoghi, function (luogo, idx) {
         // for (var i = 0; i < luoghi.length; i++) {
-        console.log(luogo.title.it);
+        //console.log(luogo.title.it);
         if (!!luogo.location) {
           /*m = new mxn.Marker(new mxn.LatLonPoint(luogo.location[0], luogo.location[1]));
           m.setIcon('img/mapmarker.png', [25, 40], [25 / 2, 40 / 2]);

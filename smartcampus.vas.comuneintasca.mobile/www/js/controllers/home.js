@@ -49,7 +49,7 @@ angular.module('ilcomuneintasca.controllers.home', [])
       cordova.plugins.startapp.start({
         android: 'eu.trentorise.smartcampus.viaggiatrento'
       }, function () {
-        console.log('VIAGGIA TRENTO: success.');
+        //console.log('VIAGGIA TRENTO: success.');
       }, function () {
         console.log('VIAGGIA TRENTO: failed!');
         window.open('https://play.google.com/store/apps/details?id=eu.trentorise.smartcampus.viaggiatrento', '_system');
@@ -61,7 +61,7 @@ angular.module('ilcomuneintasca.controllers.home', [])
         template: Config.textTypesList()['In preparazione...'][$rootScope.lang]
       });
       alertPopup.then(function (res) {
-        console.log('viagga trento done');
+        //console.log('viagga trento done');
       });
     }
   };

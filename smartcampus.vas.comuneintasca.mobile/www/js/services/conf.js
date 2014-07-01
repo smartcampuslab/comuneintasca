@@ -1,35 +1,37 @@
 angular.module('ilcomuneintasca.services.conf', [])
 
 .factory('Menu', function($q, $http) {
+  var fetched = $q.defer();
+  $http.get('data/menu.json').success(function(data, status, headers, config){
+    //console.log('menu json loaded!');
+    for (gi=0; gi<data.menu.length; gi++) {
+      var group=data.menu[gi];
+      for (ii=0; ii<group.items.length; ii++) {
+        var item=group.items[ii];
+        if (item.objectIds) {
+          if (item.objectIds.length>1) {
+            item.path="/app/contents/"+item.objectIds.join(',');
+          } else {
+            item.path="/app/content/"+item.objectIds[0];
+          }
+        } else if (item.query && item.query.classification) {
+          item.path="/app/"+item.query.type+"/"+item.query.classification;
+        } else if (item.query) {
+          item.path="/app/"+item.query.type;
+        } else {
+          item.path="/menu/"+group.id+"/"+ii;
+          console.log('unkown menu item: '+item.path);
+        }
+      }
+    }
+    fetched.resolve(data.menu);
+  }).error(function(data, status, headers, config){
+    console.log('error getting menu json!');
+    fetched.reject();
+  });
+
   return {
     fetch: function () {
-      var fetched = $q.defer();
-      $http.get('data/menu.json').success(function(data, status, headers, config){
-        //console.log('menu json loaded!');
-        for (gi=0; gi<data.menu.length; gi++) {
-          var group=data.menu[gi];
-          for (ii=0; ii<group.items.length; ii++) {
-            var item=group.items[ii];
-            if (item.objectIds) {
-              if (item.objectIds.length>1) {
-                item.href="#/app/contents/"+item.objectIds.join(',');
-              } else {
-                item.href="#/app/content/"+item.objectIds[0];
-              }
-            } else if (item.query && item.query.classification) {
-              item.href="#/app/"+item.query.type+"/"+item.query.classification;
-            } else if (item.query) {
-              item.href="#/app/"+item.query.type;
-            } else {
-              item.href="#/menu/"+group.id+"/"+ii;
-            }
-          }
-        }
-        fetched.resolve(data.menu);
-      }).error(function(data, status, headers, config){
-        console.log('error getting menu json!');
-        fetched.reject();
-      });
       return fetched.promise;
     }
   }
@@ -190,7 +192,7 @@ angular.module('ilcomuneintasca.services.conf', [])
       de: 'Verschiedene Initiativen',
       it: 'Iniziative varie',
       en: 'Various initiatives'
-    },
+    }
   };
 
   var hotelTypes = {

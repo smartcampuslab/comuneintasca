@@ -24,7 +24,7 @@
         }, { 
           "id":"bondone",
           "name":{ "it":"Monte Bondone", "en":"Mount Bondone", "de":"Mont Bondone" },
-          "query":{ "type":"content", "classification":"bondone" }
+          "query":{ "type":"contentscate", "classification":"bondone" }
         }
       ]
     }, {
@@ -68,11 +68,11 @@
         { 
           "id":"servizi",
           "name":{ "it":"Servizi", "en":"Services", "de":"Dienstleistungen" },
-          "query":{ "type":"contents", "classification":"Servizi" }
+          "query":{ "type":"contentscatelist", "classification":"Servizi" }
         }, { 
           "id":"contatti",
           "name":{ "it":"Contatti", "en":"Contacts", "de":"Kontakten" },
-          "query":{ "type":"contents", "classification":"Contatti" }
+          "query":{ "type":"contentscatelist", "classification":"Contatti" }
         }
       ]
     }

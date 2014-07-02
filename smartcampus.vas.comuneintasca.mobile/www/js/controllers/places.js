@@ -3,14 +3,12 @@ angular.module('ilcomuneintasca.controllers.places', [])
 .controller('PlacesListCtrl', function ($scope, $stateParams, $filter, DatiDB, Config, ListToolbox, $ionicScrollDelegate) {
   ListToolbox.prepare($scope, {
     load: function (cache) {
+      if ($stateParams.placeType) $scope.cate = Config.poiCateFromType($stateParams.placeType);
+
       if (cache) {
-        if ($stateParams.placeType) {
-          $scope.cate = Config.poiCateFromType($stateParams.placeType);
-        }
         $scope.places = cache;
       } else {
         if ($stateParams.placeType) {
-          $scope.cate = Config.poiCateFromType($stateParams.placeType);
           $scope.gotdata = DatiDB.cate('poi', $scope.cate.it).then(function (data) {
             $scope.places = data;
             $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false);

@@ -16,12 +16,12 @@ angular.module('ilcomuneintasca.services.db', [])
     } else if (dbtype == 'poi') {
       item['abslink'] = '#/app/place/' + item.id;
 
-      item.dbClassification = Config.poiCateFromDbClassification(item.dbClassification);
+      item.dbClassification = Config.menuGroupSubgroup('places',item.dbClassification);
 
     } else if (dbtype == 'event') {
       item['abslink'] = '#/app/event/' + item.id;
 
-      item.dbClassification = Config.eventCateFromDbClassification(item.dbClassification);
+      item.dbClassification = Config.menuGroupSubgroup('events',item.dbClassification);
 
     } else if (dbtype == 'restaurant') {
       item['abslink'] = '#/app/restaurant/' + item.id;
@@ -188,44 +188,65 @@ angular.module('ilcomuneintasca.services.db', [])
                 objsUpdated = {};
                 objsDeleted = {};
 
-                dbObj.transaction(function (tx) {
-                  angular.forEach(types, function (contentTypeClassName, contentTypeKey) {
-                    console.log('type (' + contentTypeKey + '): ' + contentTypeClassName);
+                angular.forEach(types, function (contentTypeClassName, contentTypeKey) {
+                  console.log('type (' + contentTypeKey + '): ' + contentTypeClassName);
 
-                    if (!angular.isUndefined(data.updated[contentTypeClassName])) {
-                      updates = data.updated[contentTypeClassName];
-                      console.log('updates: ' + updates.length);
+                  if (!angular.isUndefined(data.updated[contentTypeClassName])) {
+                    updates = data.updated[contentTypeClassName];
+                    console.log('updates: ' + updates.length);
 
-                      if (contentTypeKey == 'home') {
-                        localStorage.homeObject = JSON.stringify(updates[0]);
-                        return;
-                      }
+                    if (contentTypeKey == 'home') {
+                      localStorage.homeObject = JSON.stringify(updates[0]);
+                      return;
+                    }
 
-                      angular.forEach(updates, function (item, idx) {
-                        tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [item.id]);
-                        var fromTime = 0;
-                        var toTime = 0;
+                    angular.forEach(updates, function (item, idx) {
+                      var fromTime = 0;
+                      var toTime = 0;
 
-                        var classification = '',
-                          classification2 = '',
-                          classification3 = '';
+                      var classification = '',
+                        classification2 = '',
+                        classification3 = '';
+
+                      var classified=$q.defer();
+                      if (contentTypeKey == 'event') {
+                        category = item.category;
+                        //console.log('event cate: ' + category);
+                        if (category) {
+                          // "category": "{objectName=Feste, mercati e fiere, classIdentifier=tipo_eventi, datePublished=1395152152, dateModified=1395152182, objectRemoteId=a15d79dc9794d829ed43364863a8225a, objectId=835351, link=http://www.comune.trento.it/api/opendata/v1/content/object/835351}"
+                          //startMrkr = "{objectName=";
+                          //endMrkr = ", classIdentifier=";
+                          classification = category; //category.substring(startMrkr.length, category.indexOf(endMrkr)) || '';
+                          fromTime = item.fromTime;
+                          if (item.toTime > 0) toTime = item.toTime;
+                          else toTime = fromTime;
+
+                          Config.menuGroupSubgroupByLocaleName('events','it',classification).then(function(sg){
+                            if (sg) {
+                              //console.log('content db sg classification: '+sg.id);
+                              classified.resolve([sg.id,'','']);
+                            } else {
+                              console.log('content db sg classification is NULL for event cate: '+classification);
+                              classified.resolve(['misc','','']);
+                            }
+                          });
+                        } else {
+                          console.log('content db category is NULL for item: '+item.id);
+                          classified.resolve(['misc','','']);
+                        }
+                      } else if (contentTypeKey == 'poi') {
+                        Config.menuGroupSubgroupByLocaleName('places','it',item.classification.it).then(function(sg){
+                          if (sg) {
+                            //console.log('content db sg classification: '+sg.id);
+                            classified.resolve([sg.id,'','']);
+                          } else {
+                            console.log('content db sg classification is NULL for place cate: '+item.classification.it);
+                            classified.resolve(['unknown','','']);
+                          }
+                        });
+                      } else {
                         if (contentTypeKey == 'content') {
                           classification = item.classification;
-                        } else if (contentTypeKey == 'poi') {
-                          classification = item.classification.it;
-                        } else if (contentTypeKey == 'event') {
-                          category = item.category;
-                          if (category) {
-                            // "category": "{objectName=Feste, mercati e fiere, classIdentifier=tipo_eventi, datePublished=1395152152, dateModified=1395152182, objectRemoteId=a15d79dc9794d829ed43364863a8225a, objectId=835351, link=http://www.comune.trento.it/api/opendata/v1/content/object/835351}"
-                            //startMrkr = "{objectName=";
-                            //endMrkr = ", classIdentifier=";
-                            classification = category; //category.substring(startMrkr.length, category.indexOf(endMrkr)) || '';
-                            if (!classification || classification.toString() == 'false') classification = Config.eventCateFromType('misc').it;
-                            //console.log('event cate: ' + classification);
-                            fromTime = item.fromTime;
-                            if (item.toTime > 0) toTime = item.toTime;
-                            else toTime = fromTime;
-                          }
                         } else if (contentTypeKey == 'mainevent') {
                           classification = item.classification.it;
                           item.category = 'mainevent';
@@ -242,17 +263,33 @@ angular.module('ilcomuneintasca.services.db', [])
                           }
                           item.category = 'ristorazione';
                         }
-                        values = [item.id, item.version, contentTypeClassName, item.category, classification, classification2, classification3, JSON.stringify(item), ((item.location && item.location.length == 2) ? item.location[0] : -1), ((item.location && item.location.length == 2) ? item.location[1] : -1), fromTime, toTime];
-                        tx.executeSql('INSERT INTO ContentObjects (id, version, type, category, classification, classification2, classification3, data, lat, lon, fromTime, toTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', values, function (tx, res) { //success callback
-                          //console.log('inserted obj with id: ' + item.id);
-                        }, function (e) { //error callback
-                          console.log('unable to insert obj with id ' + item.id + ': ' + e.message);
+
+                        classified.resolve([classification,classification2,classification3]);
+                      }
+                      classified.promise.then(function(clfs){
+                        dbObj.transaction(function (tx) {
+                          tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [item.id]);
+
+                          values = [item.id, item.version, contentTypeClassName, item.category, clfs[0], clfs[1], clfs[2], JSON.stringify(item), ((item.location && item.location.length == 2) ? item.location[0] : -1), ((item.location && item.location.length == 2) ? item.location[1] : -1), fromTime, toTime];
+                          tx.executeSql('INSERT INTO ContentObjects (id, version, type, category, classification, classification2, classification3, data, lat, lon, fromTime, toTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', values, function (tx, res) { //success callback
+                            //console.log('inserted obj with id: ' + item.id);
+                          }, function (e) { //error callback
+                            console.log('unable to insert obj with id ' + item.id + ': ' + e.message);
+                          });
+                        }, function () { //error callback
+                          console.log('cannot insert');
+                          objsDone.reject(false);
+                        }, function () { //success callback
+                          //console.log('inserted');
+                          objsDone.resolve(true);
                         });
                       });
-                    } else {
-                      console.log('nothing to update');
-                    }
+                    });
+                  } else {
+                    console.log('nothing to update');
+                  }
 
+                  dbObj.transaction(function (tx) {
                     if (!angular.isUndefined(data.deleted[contentTypeClassName])) {
                       deletions = data.deleted[contentTypeClassName];
                       console.log('deletions: ' + deletions.length);
@@ -266,22 +303,31 @@ angular.module('ilcomuneintasca.services.db', [])
                         });
                       });
                     } else {
-                      console.log('nothing to delete');
+                      //console.log('nothing to delete');
                     }
+                  }, function () { //error callback
+                    console.log('cannot sync (deleted)');
+                    objsDone.reject(false);
+                  }, function () { //success callback
+                    //console.log('synced (deleted)');
+                    objsDone.resolve(true);
                   });
-                  // TODO events cleanup
+                });
+
+                // TODO events cleanup
+                dbObj.transaction(function (tx) {
                   var nowTime = (new Date()).getTime();
                   tx.executeSql('DELETE FROM ContentObjects WHERE type = "eu.trentorise.smartcampus.comuneintasca.model.EventObject" AND toTime < ' + nowTime, [], function (tx, res) { //success callback
-                    console.log('deleted old events');
+                    //console.log('deleted old events');
                   }, function (e) { //error callback
                     console.log('unable to delete old events: ' + e.message);
                   });
 
                 }, function () { //error callback
-                  console.log('cannot sync');
+                  console.log('cannot sync (cleanup)');
                   objsDone.reject(false);
                 }, function () { //success callback
-                  console.log('synced');
+                  //console.log('synced (cleanup)');
                   objsDone.resolve(true);
                 });
 

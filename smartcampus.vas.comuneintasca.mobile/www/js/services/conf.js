@@ -112,80 +112,6 @@ angular.module('ilcomuneintasca.services.conf', [])
       'de': 'cleaning...'
     }
   };
-  var poiTypes = {
-    'museums': {
-      de: 'Museen',
-      it: 'Musei',
-      en: 'Museums'
-    },
-    'buildings': {
-      de: 'Historische Gebäude',
-      it: 'Edifici storici',
-      en: 'Historic Buildings'
-    },
-    'churches': {
-      de: 'Kirchen',
-      it: 'Chiese',
-      en: 'Churches'
-    },
-    'acheo': {
-      de: 'Archäologische Areas',
-      it: 'Aree Archeologiche',
-      en: 'Archaeological Areas'
-    },
-    'parks': {
-      de: 'Natur',
-      it: 'Natura',
-      en: 'Nature'
-    },
-    'misc': {
-      de: 'Andere Seiten von historischem und künstlerischem Interesse',
-      it: 'Altri siti di interesse storico artistico',
-      en: 'Other sites of historical and artistic interest'
-    }
-  };
-  var eventTypes = {
-    'all': {
-      de: 'Alle Veranstaltungen',
-      it: 'Tutti gli eventi',
-      en: 'All events'
-    },
-    'fairs': {
-      de: 'Festivals, Märkte und Messen',
-      it: 'Feste, mercati e fiere',
-      en: 'Festivals, markets and fairs'
-    },
-    'conferences': {
-      de: 'Tagungen, Seminare und Konferenzen',
-      it: 'Incontri, convegni e conferenze',
-      en: 'Meetings, seminars and conferences'
-    },
-    'shows': {
-      de: 'Shows',
-      it: 'Spettacoli',
-      en: 'Shows'
-    },
-    'exhibitions': {
-      de: 'Ausstellungen',
-      it: 'Mostre',
-      en: 'Exhibitions'
-    },
-    'labs': {
-      de: 'Kurse und Workshops',
-      it: 'Corsi e laboratori',
-      en: 'Courses and workshops'
-    },
-    'competitions': {
-      de: 'Wettbewerbe und Gewinnspiele',
-      it: 'Competizioni e gare',
-      en: 'Competitions and contests'
-    },
-    'misc': {
-      de: 'Verschiedene Initiativen',
-      it: 'Iniziative varie',
-      en: 'Various initiatives'
-    }
-  };
 
   var hotelTypes = {
     'hotel': {
@@ -392,6 +318,26 @@ angular.module('ilcomuneintasca.services.conf', [])
         return null;
       });
     },
+    menuGroupSubgroup: function (label1, label2) {
+      return this.menuGroup(label1).then(function(group) {
+        if (group) {
+          for (sgi=0; sgi<group.items.length; sgi++) {
+            if (group.items[sgi].id==label2) return group.items[sgi];
+          }
+        }
+        return null;
+      });
+    },
+    menuGroupSubgroupByLocaleName: function (label1, lcl, label2) {
+      return this.menuGroup(label1).then(function(group) {
+        if (group) {
+          for (sgi=0; sgi<group.items.length; sgi++) {
+            if (group.items[sgi].name[lcl]==label2) return group.items[sgi];
+          }
+        }
+        return null;
+      });
+    },
     keys: function () {
       return keys;
     },
@@ -402,7 +348,7 @@ angular.module('ilcomuneintasca.services.conf', [])
       return 'TrentoInTasca';
     },
     schemaVersion: function () {
-      return 72;
+      return 74;
     },
     syncTimeoutSeconds: function () {
       //return 60 * 60; /* 60 times 60 seconds = EVERY HOUR */
@@ -439,44 +385,8 @@ angular.module('ilcomuneintasca.services.conf', [])
       }
       return '';
     },
-    poiTypesList: function () {
-      return poiTypes;
-    },
     textTypesList: function () {
       return textTypes;
-    },
-    poiCateFromType: function (type) {
-      return poiTypes[type];
-    },
-    poiCateFromDbClassification: function (dbclassification) {
-      for (var poiType in poiTypes) {
-        if (poiTypes.hasOwnProperty(poiType)) {
-          if (poiTypes[poiType].it == dbclassification) return poiTypes[poiType];
-        }
-      }
-      return {
-        de: 'UNKNOWN',
-        it: 'UNKNOWN',
-        en: 'UNKNOWN'
-      };
-    },
-    eventTypesList: function () {
-      return eventTypes;
-    },
-    eventCateFromType: function (type) {
-      return eventTypes[type];
-    },
-    eventCateFromDbClassification: function (dbclassification) {
-      for (var eventType in eventTypes) {
-        if (eventTypes.hasOwnProperty(eventType)) {
-          if (eventTypes[eventType].it == dbclassification) return eventTypes[eventType];
-        }
-      }
-      return {
-        de: 'UNKNOWN',
-        it: 'UNKNOWN',
-        en: 'UNKNOWN'
-      };
     },
     hotelTypesList: function () {
       return hotelTypes;

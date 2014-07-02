@@ -5,13 +5,15 @@ angular.module('ilcomuneintasca.controllers.events', [])
     return DateUtility.getLocaleDateString($rootScope.lang, time);
   };
 
-  var defaultTimeFilter = 'week';
-  if ($stateParams.eventType && $stateParams.eventType != 'all') {
-    $scope.cate = Config.eventCateFromType($stateParams.eventType);
-  } else {
-    $scope.cate = Config.eventCateFromType('all');
-    defaultTimeFilter = 'today';
+  var eventType = 'all';
+  var defaultTimeFilter = 'today';
+  if ($stateParams.eventType && $stateParams.eventType != eventType) {
+    eventType=$stateParams.eventType
+    defaultTimeFilter = 'week';
   }
+  Config.menuGroupSubgroup('events',eventType).then(function(sg){
+    $scope.cate = sg.name;
+  });
 
   $scope.filterDef = function () {
     if ($scope.filter) {
@@ -42,13 +44,13 @@ angular.module('ilcomuneintasca.controllers.events', [])
     };
     if (t > 0) {
       if ($stateParams.eventType && $stateParams.eventType != 'all') {
-        $scope.gotdata = DatiDB.byTimeInterval('event', f, t, $scope.cate.it).then(post);
+        $scope.gotdata = DatiDB.byTimeInterval('event', f, t, eventType).then(post);
       } else {
         $scope.gotdata = DatiDB.byTimeInterval('event', f, t, null).then(post);
       }
     } else {
       if ($stateParams.eventType && $stateParams.eventType != 'all') {
-        $scope.gotdata = DatiDB.cate('event', $scope.cate.it).then(post);
+        $scope.gotdata = DatiDB.cate('event', eventType).then(post);
       } else {
         $scope.gotdata = DatiDB.all('event').then(post);
       }
@@ -58,7 +60,11 @@ angular.module('ilcomuneintasca.controllers.events', [])
     load: function (cache) {
       if (cache) {
         $scope.events = cache;
-        $scope.cate = Config.eventCateFromType($stateParams.eventType);
+/*
+        Config.menuGroup(eventType).then(function(g){
+          $scope.cate = g;
+        });
+*/
       } else {
         search(defaultTimeFilter);
       }

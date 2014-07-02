@@ -1,8 +1,8 @@
 angular.module('ilcomuneintasca.services.conf', [])
 
-.factory('Menu', function($q, $http) {
+.factory('Config', function ($q, $http) {
   var fetched = $q.defer();
-  $http.get('data/menu.json').success(function(data, status, headers, config){
+  $http.get('data/config.json').success(function(data, status, headers, config){
     //console.log('menu json loaded!');
     for (gi=0; gi<data.menu.length; gi++) {
       var group=data.menu[gi];
@@ -24,28 +24,12 @@ angular.module('ilcomuneintasca.services.conf', [])
         }
       }
     }
-    fetched.resolve(data.menu);
+    fetched.resolve(data);
   }).error(function(data, status, headers, config){
-    console.log('error getting menu json!');
+    console.log('error getting config json!');
     fetched.reject();
   });
 
-  return {
-    fetch: function () {
-      return fetched.promise;
-    },
-    group: function (label) {
-      return fetched.promise.then(function(menu) {
-        for (gi=0; gi<menu.length; gi++) {
-          if (menu[gi].id==label) return menu[gi];
-        }
-        return null;
-      });
-    }
-  }
-})
-
-.factory('Config', function () {
   var keys = {
     'Stars': {
       'it': 'Stelle',
@@ -392,6 +376,22 @@ angular.module('ilcomuneintasca.services.conf', [])
   };
 
   return {
+    fetch: function () {
+      return fetched.promise;
+    },
+    menu: function () {
+      return this.fetch().then(function(data) {
+        return data.menu;
+      });
+    },
+    menuGroup: function (label) {
+      return this.menu().then(function(menu) {
+        for (gi=0; gi<menu.length; gi++) {
+          if (menu[gi].id==label) return menu[gi];
+        }
+        return null;
+      });
+    },
     keys: function () {
       return keys;
     },

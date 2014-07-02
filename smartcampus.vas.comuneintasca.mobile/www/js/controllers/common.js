@@ -1,6 +1,6 @@
 angular.module('ilcomuneintasca.controllers.common', [])
 
-.controller('MenuCtrl', function ($scope, $ionicModal, Menu) {
+.controller('MenuCtrl', function ($scope, $ionicModal, Config) {
   $scope.shownGroup = null;
 
   $scope.showGroup = function (groupId) {
@@ -11,7 +11,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
     }
   };
 
-  Menu.fetch().then(function(menu) {
+  Config.menu().then(function(menu) {
     $scope.menu=menu;
   },function(menu) {
     $scope.menu=null;
@@ -43,9 +43,8 @@ angular.module('ilcomuneintasca.controllers.common', [])
   });
 })
 
-.controller('CategoriesListCtrl', function ($scope, $stateParams, Menu) {
-  var cate=$stateParams.cateId;
-  Menu.group(cate).then(function(g){
+.controller('CategoriesListCtrl', function ($scope, $stateParams, Config) {
+  Config.menuGroup($stateParams.cateId).then(function(g){
       $scope.group=g;
   });
 })

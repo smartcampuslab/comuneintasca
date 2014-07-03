@@ -1,13 +1,7 @@
 angular.module('ilcomuneintasca.controllers.home', [])
 
-.controller('HomeCtrl', function ($scope, $rootScope, DatiDB, Files, $filter, $ionicSlideBoxDelegate, $ionicPopup, $location, Config) {
+.controller('HomeCtrl', function ($scope, $rootScope, $location, $ionicPopup, Config, DatiDB, Files) {
   $rootScope.inHome = true;
-  var navbarElement = angular.element(document.getElementById('navbar'));
-  navbarElement.addClass('bar-comuni-home');
-  $scope.$on('$destroy', function () {
-    navbarElement.removeClass('bar-comuni-home');
-  });
-
   $scope.openApp = function (appname,appdata) {
     if (ionic.Platform.isWebView() && device.platform == 'Android' && appdata.android) {
       cordova.plugins.startapp.start({
@@ -30,18 +24,6 @@ angular.module('ilcomuneintasca.controllers.home', [])
       });
     }
   };
-
-  var defaultSlide = {
-    title: 'Trento',
-    img: 'img/hp-box/trento.png',
-    id: null,
-    ref: '#/app/contents/text.3001,text.3004'
-  };
-  $scope.slides = null;
-  $scope.goToItem = function (link) {
-    $location.path(link.substring(1));
-  }
-
   $scope.gotoButton = function (btn) {
     if (btn.hasOwnProperty('app')) {
       $scope.openApp(btn.name,btn.app);
@@ -49,6 +31,24 @@ angular.module('ilcomuneintasca.controllers.home', [])
       $rootScope.goto(btn.path);
     }
   }
+  $scope.goToItem = function (link) {
+    $location.path(link.substring(1));
+  }
+  $scope.slides = null;
+
+  var defaultSlide = {
+    title: 'Trento',
+    img: 'img/hp-box/trento.png',
+    id: null,
+    ref: '#/app/contents/text.3001,text.3004'
+  };
+
+  var navbarElement = angular.element(document.getElementById('navbar'));
+  navbarElement.addClass('bar-comuni-home');
+  $scope.$on('$destroy', function () {
+    navbarElement.removeClass('bar-comuni-home');
+  });
+
   Config.navigationItems().then(function(items) {
     if (items) {
       var rows=[], row=-1;
@@ -72,7 +72,7 @@ angular.module('ilcomuneintasca.controllers.home', [])
       var slides = [defaultSlide];
       for (var i = 0; i < data.length; i++) {
         slides.push({
-          title: $filter('translate')(data[i].title),
+          title: data[i].title[$rootScope.lang],
           img: data[i].image,
           id: data[i].id,
           ref: data[i].abslink
@@ -80,7 +80,6 @@ angular.module('ilcomuneintasca.controllers.home', [])
       }
       if (slides.length > 0) {
         $scope.slides = slides;
-        //$ionicSlideBoxDelegate.update();
       }
     });
   });

@@ -1,6 +1,43 @@
 {
   "highlights":[],
-  "navigationItems":[],
+  "navigationItems":[
+    {
+      "name":{ "it":"CONOSCERE", "en":"DISCOVER", "de":"KENNEN" },
+      "icon":"conoscere",
+      "cate":"info"
+    }, {
+      "name":{ "it":"EVENTI", "en":"EVENTS", "de":"VERANSTALTUNGEN" },
+      "icon":"eventi",
+      "cate":"events"
+    }, {
+      "name":{ "it":"VISITARE", "en":"HIGHLIGHTS", "de":"WAS SU  BESICHTIGEN" },
+      "icon":"scoprire",
+      "cate":"places"
+    }, {
+      "name":{ "it":"PERCORSI", "en":"TOURISTIC  ITINERARIES", "de":"TOUREN  UND ROUTEN" },
+      "icon":"percorsi",
+      "menu":"itineraries"
+    }, {
+      "name":{ "it":"MANGIARE  E DORMIRE", "en":"HOTELS &  RESTAURANTS", "de":"ÜBERNACHTUNG  UND GASTRONOMIE" },
+      "icon":"mangiaredormire",
+      "cate":"hospitality"
+    }, {
+      "name":{ "it":"INFO UTILI", "en":"USEFUL  INFORMATIONS", "de":"WEITERE  INFORMATIONEN" },
+      "icon":"infoutili",
+      "cate":"useful"
+    }, {
+      "name":{ "it":"VIAGGIA  TRENTO", "en":"VIAGGIA  TRENTO", "de":"VIAGGIA  TRENTO" },
+      "icon":"viaggiatrento",
+      "app":{
+        "android":"eu.trentorise.smartcampus.viaggiatrento", 
+        "ios":null
+      }
+    }, {
+      "name":{ "it":"PREFERITI", "en":"FAVORITES", "de":"LIEBLINGSSEITEN" },
+      "icon":"preferiti",
+      "menu":"favorites"
+    }
+  ],
   "menu":[
     {
       "id":"info",

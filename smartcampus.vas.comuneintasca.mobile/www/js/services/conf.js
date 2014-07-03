@@ -3,7 +3,22 @@ angular.module('ilcomuneintasca.services.conf', [])
 .factory('Config', function ($q, $http) {
   var fetched = $q.defer();
   $http.get('data/config.json').success(function(data, status, headers, config){
-    //console.log('menu json loaded!');
+    for (gi=0; gi<data.navigationItems.length; gi++) {
+      var item=data.navigationItems[gi];
+      angular.forEach(item.name, function (txt, loc) {
+        console.log('loc='+loc);
+        console.log('txt='+txt);
+        item.name[loc]=txt.replace("  ","<br/>");
+      });
+      console.log('item.name='+JSON.stringify(item.name));
+      if (item.hasOwnProperty('app')) {
+        item.extraClasses='variant';
+      } else if (item.hasOwnProperty('cate')) {
+        item.path='cate/'+item.cate;
+      } else if (item.hasOwnProperty('menu')) {
+        item.path=item.menu;
+      }
+    }
     for (gi=0; gi<data.menu.length; gi++) {
       var group=data.menu[gi];
       for (ii=0; ii<group.items.length; ii++) {
@@ -304,6 +319,19 @@ angular.module('ilcomuneintasca.services.conf', [])
   return {
     fetch: function () {
       return fetched.promise;
+    },
+    navigationItems: function () {
+      return this.fetch().then(function(data) {
+        return data.navigationItems;
+      });
+    },
+    navigationItemsGroup: function (label) {
+      return this.navigationItems().then(function(items) {
+        for (gi=0; gi<items.length; gi++) {
+          if (items[gi].id==label) return items[gi];
+        }
+        return null;
+      });
     },
     menu: function () {
       return this.fetch().then(function(data) {

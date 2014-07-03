@@ -8,17 +8,62 @@ angular.module('ilcomuneintasca.controllers.home', [])
     navbarElement.removeClass('bar-comuni-home');
   });
 
+  $scope.openApp = function (appname,appdata) {
+    if (ionic.Platform.isWebView() && device.platform == 'Android' && appdata.android) {
+      cordova.plugins.startapp.start({
+        android: appdata.android
+      }, function () {
+        //console.log('android app "'+appdata.android+'" success!');
+      }, function () {
+        console.log('app "'+appdata.android+'" failed!');
+        window.open('https://play.google.com/store/apps/details?id='+appdata.android, '_system');
+      });
+    } else if (ionic.Platform.isWebView() && device.platform == 'iOS ' && appdata.ios) {
+      window.open('itms-apps://itunes.apple.com/app/id'+appdata.ios, '_system');
+    } else {
+      var alertPopup = $ionicPopup.alert({
+        title: appname[$rootScope.lang],
+        template: Config.textTypesList()['In preparazione...'][$rootScope.lang]
+      });
+      alertPopup.then(function (res) {
+        //console.log('app "'+JSON.stringify(appdata)+'" done');
+      });
+    }
+  };
+
   var defaultSlide = {
     title: 'Trento',
     img: 'img/hp-box/trento.png',
     id: null,
     ref: '#/app/contents/text.3001,text.3004'
   };
-
   $scope.slides = null;
   $scope.goToItem = function (link) {
     $location.path(link.substring(1));
   }
+
+  $scope.gotoButton = function (btn) {
+    if (btn.hasOwnProperty('app')) {
+      $scope.openApp(btn.name,btn.app);
+    } else if (btn.hasOwnProperty('path')) {
+      $rootScope.goto(btn.path);
+    }
+  }
+  Config.navigationItems().then(function(items) {
+    if (items) {
+      var rows=[], row=-1;
+      for (ii=0; ii<items.length; ii++) {
+        if ((ii%2)==0) {
+          row++;
+          rows[row]=[];
+        }
+        rows[row].push(items[ii]);
+      }
+      $scope.buttonsRows=rows;
+    }
+  },function(menu) {
+    $scope.buttonRows=null;
+  });
 
   DatiDB.sync().then(function (data) {
     var homeObject = JSON.parse(localStorage.homeObject);
@@ -43,26 +88,4 @@ angular.module('ilcomuneintasca.controllers.home', [])
   Files.cleanup().then(function (data) {
     //console.log('files cleaned!');
   });
-
-  $scope.openViaggiaTrento = function () {
-    if (ionic.Platform.isWebView() && device.platform == 'Android') {
-      cordova.plugins.startapp.start({
-        android: 'eu.trentorise.smartcampus.viaggiatrento'
-      }, function () {
-        //console.log('VIAGGIA TRENTO: success.');
-      }, function () {
-        console.log('VIAGGIA TRENTO: failed!');
-        window.open('https://play.google.com/store/apps/details?id=eu.trentorise.smartcampus.viaggiatrento', '_system');
-      });
-    } else {
-      //window.open('https://play.google.com/store/apps/details?id=eu.trentorise.smartcampus.viaggiatrento', '_blank');
-      var alertPopup = $ionicPopup.alert({
-        title: 'Viaggia Trento',
-        template: Config.textTypesList()['In preparazione...'][$rootScope.lang]
-      });
-      alertPopup.then(function (res) {
-        //console.log('viagga trento done');
-      });
-    }
-  };
 })

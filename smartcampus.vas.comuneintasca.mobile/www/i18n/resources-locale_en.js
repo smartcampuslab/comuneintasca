@@ -5,39 +5,6 @@
     "description": "side menu label"
   },
   {
-    "key": "home_btn_Viaggia-Trento",
-    "value": "VIAGGIA<br/>TRENTO",
-    "description": "home button label"
-  }, {
-    "key": "home_btn_Conoscere",
-    "value": "DISCOVER",
-    "description": "side menu label"
-  }, {
-    "key": "home_btn_Vivere",
-    "value": "EVENTS",
-    "description": "side menu label"
-  }, {
-    "key": "home_btn_Scoprire",
-    "value": "HIGHLIGHTS",
-    "description": "side menu label"
-  }, {
-    "key": "home_btn_Percorsi",
-    "value": "TOURISTIC<br/>ITINERARIES",
-    "description": "side menu label"
-  }, {
-    "key": "home_btn_Mangiare-dormire",
-    "value": "HOTELS &<br/>RESTAURANTS",
-    "description": "side menu label"
-  }, {
-    "key": "home_btn_Info-utili",
-    "value": "USEFUL<br/>INFORMATIONS",
-    "description": "side menu label"
-  }, {
-    "key": "home_btn_Favorites",
-    "value": "FAVORITES",
-    "description": "side menu label"
-  },
-  {
     "key": "sidemenu_Home",
     "value": "Home",
     "description": "side menu label"

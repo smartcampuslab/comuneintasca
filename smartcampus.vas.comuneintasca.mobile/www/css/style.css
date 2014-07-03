@@ -254,7 +254,7 @@ ion-side-menu .item {
 #home-buttons button.variant {
   background-color: #fff;
 }
-#home-buttons button.german {
+#home-buttons.lang_de button {
   font-size: smaller;
 }
 .comuneicon::before {

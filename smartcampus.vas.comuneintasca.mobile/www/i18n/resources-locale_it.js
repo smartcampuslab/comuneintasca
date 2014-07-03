@@ -46,9 +46,9 @@
     "value": "Preferiti",
     "description": "side menu label"
   }, {
-    "key": "list_no-favourites",
+    "key": "list_no-favorites",
     "value": "Nessun preferito salvato",
-    "description": "favourites list results"
+    "description": "favorites list results"
   }, {
     "key": "sidemenu_Hotel",
     "value": "Dormire",

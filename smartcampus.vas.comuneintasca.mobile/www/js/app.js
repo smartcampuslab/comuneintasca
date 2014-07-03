@@ -190,11 +190,11 @@ angular.module('ilcomuneintasca', [
         }
       }
     })
-    .state('app.favourites', {
-      url: "/favourites",
+    .state('app.favorites', {
+      url: "/favorites",
       views: {
         'menuContent': {
-          templateUrl: "templates/favourites_list.html",
+          templateUrl: "templates/favorites_list.html",
           controller: "FavouritesListCtrl"
         }
       }

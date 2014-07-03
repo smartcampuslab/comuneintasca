@@ -39,7 +39,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
 
 .controller('FavouritesListCtrl', function ($scope, DatiDB) {
   $scope.gotdata = DatiDB.getFavorites().then(function (data) {
-    $scope.favourites = data;
+    $scope.favorites = data;
   });
 })
 

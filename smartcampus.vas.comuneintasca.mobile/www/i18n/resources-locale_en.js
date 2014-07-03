@@ -46,9 +46,9 @@
     "value": "Favorites",
     "description": "side menu label"
   }, {
-    "key": "list_no-favourites",
+    "key": "list_no-favorites",
     "value": "No favorites saved, yet",
-    "description": "favourites list results"
+    "description": "favorites list results"
   }, {
     "key": "sidemenu_Hotel",
     "value": "Hotels",

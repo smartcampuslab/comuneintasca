@@ -7,6 +7,7 @@
       "name":{ "it":"CONOSCERE", "en":"DISCOVER", "de":"KENNEN" },
       "items":[
         { 
+          "id":"data",
           "name":{ "it":"Informazioni", "en":"Info", "de":"Info" },
           "objectIds":[ "text.3001", "text.3004" ]
         }, {

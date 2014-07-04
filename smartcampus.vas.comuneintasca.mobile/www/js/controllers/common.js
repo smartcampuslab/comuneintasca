@@ -3,6 +3,9 @@ angular.module('ilcomuneintasca.controllers.common', [])
 .controller('MenuCtrl', function ($scope, $ionicModal, Config) {
   $scope.shownGroup = null;
 
+  $scope.isGroupShown = function (groupId) {
+    return $scope.shownGroup == groupId;
+  };
   $scope.showGroup = function (groupId) {
     if (groupId != $scope.shownGroup) {
       $scope.shownGroup = groupId;
@@ -17,17 +20,12 @@ angular.module('ilcomuneintasca.controllers.common', [])
     $scope.menu=null;
   });
   
-  $scope.isGroupShown = function (groupId) {
-    return $scope.shownGroup == groupId;
-  };
-
   $ionicModal.fromTemplateUrl('templates/credits.html', {
     scope: $scope,
     animation: 'slide-in-up'
-  })
-    .then(function (modal) {
-      $scope.credits = modal;
-    });
+  }).then(function (modal) {
+    $scope.credits = modal;
+  });
   $scope.showCredits = function () {
     console.log($scope);
     $scope.credits.show();

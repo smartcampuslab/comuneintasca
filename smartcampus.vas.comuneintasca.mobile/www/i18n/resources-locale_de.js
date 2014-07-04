@@ -1,22 +1,5 @@
 [
   {
-    "key": "sidemenu_Title",
-    "value": "TRENTO<br/>DIE STADT IN DER TASCHE",
-    "description": "side menu label"
-  },
-  {
-    "key": "sidemenu_Home",
-    "value": "Home",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Favourites",
-    "value": "Lieblingsseiten",
-    "description": "side menu label"
-  }, {
-    "key": "list_no-favorites",
-    "value": "Keine Lieblingsseiten gespeichert",
-    "description": "favorites list results"
-  }, {
     "key": "sidemenu_Hotel",
     "value": "Übernachtung",
     "description": "side menu label"
@@ -93,30 +76,6 @@
     "key": "search",
     "value": "Suche",
     "description": "button"
-  }, {
-    "key": "credits_title",
-    "value": "Credits",
-    "description": "credits popup title"
-  }, {
-    "key": "credits_app",
-    "value": "Die Stadt in der Tasche",
-    "description": "credits"
-  }, {
-    "key": "credits_appfamily",
-    "value": "App der Gemeinden im Trentino",
-    "description": "credits"
-  }, {
-    "key": "credits_project",
-    "value": "Ein projekt:",
-    "description": "credits"
-  }, {
-    "key": "credits_sponsored",
-    "value": "In Zusammenarbeit mit der:",
-    "description": "credits"
-  }, {
-    "key": "credits_info",
-    "value": "Informationen:",
-    "description": "credits"
   }, 
   {
     "key": "in_preparazione",

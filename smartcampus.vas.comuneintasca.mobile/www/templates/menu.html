@@ -16,17 +16,17 @@
 
   <ion-side-menu side="right">
     <header class="bar bar-header bar-dark-comuni">
-      <h1 class="title title-home" ng-bind-html="'sidemenu_Title' | i18n | nl2br"></h1>
+      <h1 class="title title-home" ng-bind-html="'app_title' | translate | nl2br"></h1>
     </header>
     <ion-content class="has-header content-calm">
       <ion-list>
         <ion-item nav-clear menu-close class="item-accordion item-utility" ng-click="goto('home')">
           <i class="icon ion-home"></i>
-          <b data-i18n="sidemenu_Home"></b>
+          <b ng-bind="'sidemenu_Home' | translate"></b>
         </ion-item>
         <ion-item nav-clear menu-close class="item-accordion item-utility" ng-click="goto('favorites')">
           <i class="icon ion-ios7-star"></i>
-          <b data-i18n="sidemenu_Favourites"></b>
+          <b ng-bind="'sidemenu_Favourites' | translate"></b>
         </ion-item>
 
         <div ng-if="menu" ng-repeat="(groupIndex, menuGroup) in menu">
@@ -43,9 +43,10 @@
 
         <ion-item nav-clear menu-close class="item-accordion item-utility" ng-click="showCredits()">
           <i class="icon ion-android-information"></i>
-          <b data-i18n="credits_title"></b>
+          <b ng-bind="'credits_title' | translate"></b>
         </ion-item>
       </ion-list>
     </ion-content>
   </ion-side-menu>
+
 </ion-side-menus>

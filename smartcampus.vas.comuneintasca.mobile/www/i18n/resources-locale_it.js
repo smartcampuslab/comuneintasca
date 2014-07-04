@@ -1,22 +1,5 @@
 [
   {
-    "key": "sidemenu_Title",
-    "value": "TRENTO<br/>IL COMUNE IN TASCA",
-    "description": "side menu label"
-  },
-  {
-    "key": "sidemenu_Home",
-    "value": "Home",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Favourites",
-    "value": "Preferiti",
-    "description": "side menu label"
-  }, {
-    "key": "list_no-favorites",
-    "value": "Nessun preferito salvato",
-    "description": "favorites list results"
-  }, {
     "key": "sidemenu_Hotel",
     "value": "Dormire",
     "description": "side menu label"
@@ -93,30 +76,6 @@
     "key": "search",
     "value": "Cerca",
     "description": "button"
-  }, {
-    "key": "credits_title",
-    "value": "Credits",
-    "description": "credits popup title"
-  }, {
-    "key": "credits_app",
-    "value": "Il Comune in Tasca",
-    "description": "credits"
-  }, {
-    "key": "credits_appfamily",
-    "value": "L'app dei Comuni Trentini",
-    "description": "credits"
-  }, {
-    "key": "credits_project",
-    "value": "Un progetto di:",
-    "description": "credits"
-  }, {
-    "key": "credits_sponsored",
-    "value": "Con la collaborazione di:",
-    "description": "credits"
-  }, {
-    "key": "credits_info",
-    "value": "Per informazioni:",
-    "description": "credits"
   }, 
   {
     "key": "in_preparazione",

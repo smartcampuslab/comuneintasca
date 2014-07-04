@@ -1,22 +1,5 @@
 [
   {
-    "key": "sidemenu_Title",
-    "value": "TRENTO<br/>THE CITY IN YOUR POCKET",
-    "description": "side menu label"
-  },
-  {
-    "key": "sidemenu_Home",
-    "value": "Home",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Favourites",
-    "value": "Favorites",
-    "description": "side menu label"
-  }, {
-    "key": "list_no-favorites",
-    "value": "No favorites saved, yet",
-    "description": "favorites list results"
-  }, {
     "key": "sidemenu_Hotel",
     "value": "Hotels",
     "description": "side menu label"
@@ -93,30 +76,6 @@
     "key": "search",
     "value": "Search",
     "description": "button"
-  }, {
-    "key": "credits_title",
-    "value": "Credits",
-    "description": "credits popup title"
-  }, {
-    "key": "credits_app",
-    "value": "The City in your Pocket",
-    "description": "credits"
-  }, {
-    "key": "credits_appfamily",
-    "value": "The Trentino Municipalities app",
-    "description": "credits"
-  }, {
-    "key": "credits_project",
-    "value": "A project by:",
-    "description": "credits"
-  }, {
-    "key": "credits_sponsored",
-    "value": "In collaboration with:",
-    "description": "credits"
-  }, {
-    "key": "credits_info",
-    "value": "Further information:",
-    "description": "credits"
   }, 
   {
     "key": "in_preparazione",

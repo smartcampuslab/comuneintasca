@@ -1,6 +1,6 @@
 angular.module('ilcomuneintasca.controllers.home', [])
 
-.controller('HomeCtrl', function ($scope, $rootScope, $location, $ionicPopup, Config, DatiDB, Files) {
+.controller('HomeCtrl', function ($scope, $rootScope, $location, $filter, $ionicPopup, Config, DatiDB, Files) {
   $rootScope.inHome = true;
   $scope.openApp = function (appname,appdata) {
     if (ionic.Platform.isWebView() && device.platform == 'Android' && appdata.android) {
@@ -16,8 +16,8 @@ angular.module('ilcomuneintasca.controllers.home', [])
       window.open('itms-apps://itunes.apple.com/app/id'+appdata.ios, '_system');
     } else {
       var alertPopup = $ionicPopup.alert({
-        title: appname[$rootScope.lang],
-        template: Config.textTypesList()['In preparazione...'][$rootScope.lang]
+        title: $filter('translate')(appname),
+        template: $filter('translate')(Config.keys()['coming_soon'])
       });
       alertPopup.then(function (res) {
         //console.log('app "'+JSON.stringify(appdata)+'" done');
@@ -72,7 +72,7 @@ angular.module('ilcomuneintasca.controllers.home', [])
       var slides = [defaultSlide];
       for (var i = 0; i < data.length; i++) {
         slides.push({
-          title: data[i].title[$rootScope.lang],
+          title: $filter('translate')(data[i].title),
           img: data[i].image,
           id: data[i].id,
           ref: data[i].abslink

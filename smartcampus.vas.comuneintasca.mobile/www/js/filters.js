@@ -1,16 +1,17 @@
 angular.module('ilcomuneintasca.filters', [])
 
-.filter('translate', function ($rootScope) {
+.filter('translate', function ($rootScope, Config) {
   lang = $rootScope.lang;
   return function (input) {
     // console.log('translate: lang='+lang);
     if (!input) {
       return '';
     } else {
+      if (typeof input=='string') input=Config.keys()[input] || input;
       if (input[lang] && input[lang] != '') {
         return input[lang];
       } else {
-        return input.it || '';
+        return input.it || input || '';
       }
     }
   };

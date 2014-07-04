@@ -1,16 +1,13 @@
 angular.module('ilcomuneintasca.services.conf', [])
 
-.factory('Config', function ($q, $http) {
+.factory('Config', function ($q, $http, $window) {
   var fetched = $q.defer();
   $http.get('data/config.json').success(function(data, status, headers, config){
     for (gi=0; gi<data.navigationItems.length; gi++) {
       var item=data.navigationItems[gi];
       angular.forEach(item.name, function (txt, loc) {
-        console.log('loc='+loc);
-        console.log('txt='+txt);
         item.name[loc]=txt.replace("  ","<br/>");
       });
-      console.log('item.name='+JSON.stringify(item.name));
       if (item.hasOwnProperty('app')) {
         item.extraClasses='variant';
       } else if (item.hasOwnProperty('cate')) {
@@ -47,84 +44,139 @@ angular.module('ilcomuneintasca.services.conf', [])
 
   var keys = {
     'Stars': {
-      'it': 'Stelle',
-      'en': 'Stars',
-      'de': 'Star'
+      it: 'Stelle',
+      en: 'Stars',
+      de: 'Star'
     },
     'Date': {
-      'it': 'Data',
-      'en': 'Date',
-      'de': 'Datum'
+      it: 'Data',
+      en: 'Date',
+      de: 'Datum'
     },
     'DateFrom': {
-      'it': 'Data di inizio',
-      'en': 'Start date',
-      'de': 'Startdatum'
+      it: 'Data di inizio',
+      en: 'Start date',
+      de: 'Startdatum'
     },
     'DateTo': {
-      'it': 'Data di fine',
-      'en': 'End date',
-      'de': 'Endatum'
+      it: 'Data di fine',
+      en: 'End date',
+      de: 'Endatum'
     },
     'Distance': {
-      'it': 'Distanza',
-      'en': 'Distance',
-      'de': 'Distanz'
+      it: 'Distanza',
+      en: 'Distance',
+      de: 'Distanz'
     },
     'OrderBy': {
-      'it': 'Ordinare per',
-      'en': 'Order by',
-      'de': 'Bestellung'
+      it: 'Ordinare per',
+      en: 'Order by',
+      de: 'Bestellung'
     },
     'Filter': {
-      'it': 'Filtra',
-      'en': 'Filter',
-      'de': 'Filter'
+      it: 'Filtra',
+      en: 'Filter',
+      de: 'Filter'
     },
     'Cancel': {
-      'it': 'Chiudi',
-      'en': 'Cancel',
-      'de': 'Annullieren'
+      it: 'Chiudi',
+      en: 'Cancel',
+      de: 'Annullieren'
     },
     'All': {
-      'it': 'Tutti',
-      'en': 'All',
-      'de': 'Alles'
+      it: 'Tutti',
+      en: 'All',
+      de: 'Alles'
     },
     'A-Z': {
-      'it': 'A-Z',
-      'en': 'A-Z',
-      'de': 'A-Z'
+      it: 'A-Z',
+      en: 'A-Z',
+      de: 'A-Z'
     },
     'Z-A': {
-      'it': 'Z-A',
-      'en': 'Z-A',
-      'de': 'Z-A'
+      it: 'Z-A',
+      en: 'Z-A',
+      de: 'Z-A'
     },
     'Details': {
-      'it': 'Dettagli',
-      'en': 'Details',
-      'de': 'Details'
+      it: 'Dettagli',
+      en: 'Details',
+      de: 'Details'
     },
     'Close': {
-      'it': 'Chiudi',
-      'en': 'Close',
-      'de': 'Schließen'
+      it: 'Chiudi',
+      en: 'Close',
+      de: 'Schließen'
     },
     'loading': {
-      'it': 'caricamento in corso...',
-      'en': 'loading...',
-      'de': 'loading...'
+      it: 'caricamento in corso...',
+      en: 'loading...',
+      de: 'loading...'
     },
     'syncing': {
-      'it': 'aggiornamento in corso...',
-      'en': 'syncing...',
-      'de': 'syncing...'
+      it: 'aggiornamento in corso...',
+      en: 'syncing...',
+      de: 'syncing...'
     },
     'cleaning': {
-      'it': 'pulizia in corso...',
-      'en': 'cleaning...',
-      'de': 'cleaning...'
+      it: 'pulizia in corso...',
+      en: 'cleaning...',
+      de: 'cleaning...'
+    },
+    'coming_soon': {
+      it: 'In preparazione...',
+      en: 'Coming soon...',
+      de: 'Kommt bald...'
+    },
+    'app_title': {
+      it: 'TRENTO<br/>IL COMUNE IN TASCA',
+      en: 'TRENTO<br/>THE CITY IN YOUR POCKET',
+      de: 'TRENTO<br/>DIE STADT IN DER TASCHE'
+    },
+    'sidemenu_Home': {
+      it: 'Home',
+      en: 'Home',
+      de: 'Home'
+    },
+    'sidemenu_Favourites': {
+      it: 'Preferiti',
+      en: 'Favorites',
+      de: 'Lieblingsseiten'
+    },
+    'list_no-favorites': {
+      it: 'Nessun preferito salvato',
+      en: 'No favorites saved, yet',
+      de: 'Keine Lieblingsseiten gespeichert'
+    },
+    'credits_title': {
+      it: 'Credits',
+      en: 'Credits',
+      de: 'Credits'
+    },
+    'credits_app': {
+      it: 'Il Comune in Tasca',
+      en: 'The City in your Pocket',
+      de: 'Die Stadt in der Tasche'
+    },
+    'credits_appfamily': {
+      it: 'L\'app dei Comuni Trentini',
+      en: 'The Trentino Municipalities app',
+      de: 'App der Gemeinden im Trentino'
+    },
+    'credits_project': {
+      it: 'Un progetto di:',
+      en: 'A project by:',
+      de: 'Ein projekt:'
+    },
+    'credits_sponsored': {
+      it: 'Con la collaborazione di:',
+      en: 'In collaboration with:',
+      de: 'In Zusammenarbeit mit der:'
+    },
+    'credits_info': {
+      it: 'Per informazioni:',
+      en: 'Further information:',
+      de: 'Informationen:'
     }
   };
 
@@ -279,11 +331,6 @@ angular.module('ilcomuneintasca.services.conf', [])
       de: 'Kontakten',
       it: 'Contatti',
       en: 'Contacts'
-    },
-    'In preparazione...': {
-      de: 'Kommt bald...',
-      it: 'In preparazione...',
-      en: 'Coming soon...'
     }
   }
 
@@ -317,6 +364,20 @@ angular.module('ilcomuneintasca.services.conf', [])
   };
 
   return {
+    getLang: function () {
+      var browserLanguage = '';
+      // works for earlier version of Android (2.3.x)
+      var androidLang;
+      if ($window.navigator && $window.navigator.userAgent && (androidLang = $window.navigator.userAgent.match(/android.*\W(\w\w)-(\w\w)\W/i))) {
+        browserLanguage = androidLang[1];
+      } else {
+        // works for iOS, Android 4.x and other devices
+        browserLanguage = $window.navigator.userLanguage || $window.navigator.language;
+      }
+      var lang = browserLanguage.substring(0, 2);
+      if (lang != 'it' && lang != 'en' && lang != 'de') lang = 'en';
+      return lang;
+    },
     fetch: function () {
       return fetched.promise;
     },

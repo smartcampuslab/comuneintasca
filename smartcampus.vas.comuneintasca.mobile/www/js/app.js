@@ -23,7 +23,7 @@ angular.module('ilcomuneintasca', [
   'ngQueue'
 ])
 
-.run(function ($ionicPlatform, $rootScope, $window, DatiDB, GeoLocate, Config, $location) {
+.run(function ($ionicPlatform, $rootScope, DatiDB, GeoLocate, Config, $location) {
   $rootScope.locationWatchID = undefined;
   //  ionic.Platform.fullScreen(false,true);
   if (typeof (Number.prototype.toRad) === "undefined") {
@@ -76,22 +76,14 @@ angular.module('ilcomuneintasca', [
     console.log('CANNOT LOCATE!');
   });
 
-  var browserLanguage = '';
-  // works for earlier version of Android (2.3.x)
-  var androidLang;
-  if ($window.navigator && $window.navigator.userAgent && (androidLang = $window.navigator.userAgent.match(/android.*\W(\w\w)-(\w\w)\W/i))) {
-    browserLanguage = androidLang[1];
+  var lang = Config.getLang();
+  if (localStorage.lang && localStorage.lang!=lang) {
+    lang=localStorage.lang;
+    console.log('language configured: '+lang);
   } else {
-    // works for iOS, Android 4.x and other devices
-    browserLanguage = $window.navigator.userLanguage || $window.navigator.language;
+    console.log('language detected: '+lang);
   }
-
-  var lang = browserLanguage.substring(0, 2);
-  if (lang != 'it' && lang != 'en' && lang != 'de') {
-    $rootScope.lang = 'en';
-  } else {
-    $rootScope.lang = lang;
-  }
+  $rootScope.lang=localStorage.lang=lang;
 
   $rootScope.goto = function (link) {
     if (link.indexOf('/app/')!=0) link='/app/'+link;

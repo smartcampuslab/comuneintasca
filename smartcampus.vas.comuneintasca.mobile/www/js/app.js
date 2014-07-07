@@ -86,7 +86,7 @@ angular.module('ilcomuneintasca', [
   $rootScope.lang=localStorage.lang=lang;
 
   $rootScope.goto = function (link) {
-    if (link.indexOf('/app/')!=0) link='/app/'+link;
+    if (link.indexOf('/menu/')!=0 && link.indexOf('/app/')!=0) link='/app/'+link;
     $location.path(link);
   };
 
@@ -389,12 +389,24 @@ angular.module('ilcomuneintasca', [
       }
     });
   $urlRouterProvider
-    .when("/menu/:gid/:cid", function ($match, Config, $location) {
+    .when("/menu/:gidx/:cidx", function ($match, Config, $location) {
       Config.menu().then(function(menu) {
-        var group=menu[$match.gid];
-        var item=group.items[$match.cid];
+        var group=menu[$match.gidx];
+        var item=group.items[$match.cidx];
         var newstate=item.path;
         $location.path(item.path);
+      });
+      return true;
+    })
+    .when("/menu/:gid", function ($match, Config, $location) {
+      console.log('$match.gid='+$match.gid);
+      Config.menuGroup($match.gid).then(function(group) {
+        console.log('group='+group);
+        if (group && group.items && group.items.length>1) {
+          $location.path('/app/cate/'+$match.gid);
+        } else {
+          $location.path('/app/'+$match.gid);
+        }
       });
       return true;
     })

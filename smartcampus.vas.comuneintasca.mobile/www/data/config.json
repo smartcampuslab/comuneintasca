@@ -2,40 +2,40 @@
   "highlights":[],
   "navigationItems":[
     {
+      "id":"conoscere",
       "name":{ "it":"CONOSCERE", "en":"DISCOVER", "de":"KENNEN" },
-      "icon":"conoscere",
-      "cate":"info"
+      "ref":"info"
     }, {
+      "id":"eventi",
       "name":{ "it":"EVENTI", "en":"EVENTS", "de":"VERANSTALTUNGEN" },
-      "icon":"eventi",
-      "cate":"events"
+      "ref":"events"
     }, {
+      "id":"scoprire",
       "name":{ "it":"VISITARE", "en":"HIGHLIGHTS", "de":"WAS SU  BESICHTIGEN" },
-      "icon":"scoprire",
-      "cate":"places"
+      "ref":"places"
     }, {
+      "id":"percorsi",
       "name":{ "it":"PERCORSI", "en":"TOURISTIC  ITINERARIES", "de":"TOUREN  UND ROUTEN" },
-      "icon":"percorsi",
-      "menu":"itineraries"
+      "ref":"itineraries"
     }, {
+      "id":"mangiaredormire",
       "name":{ "it":"MANGIARE  E DORMIRE", "en":"HOTELS &  RESTAURANTS", "de":"ÜBERNACHTUNG  UND GASTRONOMIE" },
-      "icon":"mangiaredormire",
-      "cate":"hospitality"
+      "ref":"hospitality"
     }, {
+      "id":"infoutili",
       "name":{ "it":"INFO UTILI", "en":"USEFUL  INFORMATIONS", "de":"WEITERE  INFORMATIONEN" },
-      "icon":"infoutili",
-      "cate":"useful"
+      "ref":"useful"
     }, {
+      "id":"viaggiatrento",
       "name":{ "it":"VIAGGIA  TRENTO", "en":"VIAGGIA  TRENTO", "de":"VIAGGIA  TRENTO" },
-      "icon":"viaggiatrento",
       "app":{
         "android":"eu.trentorise.smartcampus.viaggiatrento", 
         "ios":null
       }
     }, {
+      "id":"preferiti",
       "name":{ "it":"PREFERITI", "en":"FAVORITES", "de":"LIEBLINGSSEITEN" },
-      "icon":"preferiti",
-      "menu":"favorites"
+      "ref":"favorites"
     }
   ],
   "menu":[
@@ -138,7 +138,7 @@
       "name":{ "it":"PERCORSI", "en":"TOURISTIC  ITINERARIES", "de":"TOUREN  UND ROUTEN" },
       "items":[
         { 
-          "id":"servizi",
+          "id":"itineraries",
           "name":{ "it":"Percorsi Turistici", "en":"Touristic Itineraries", "de":"Touren und Routen" },
           "query":{ "type":"itineraries" }
         }
@@ -148,7 +148,7 @@
       "name":{ "it":"MANGIARE  E DORMIRE", "en":"HOTELS &  RESTAURANTS", "de":"ÜBERNACHTUNG  UND GASTRONOMIE" },
       "items":[
         { 
-          "id":"hotel",
+          "id":"hotels",
           "name":{ "it":"Dormire", "en":"Hotels", "de":"Übernachtung" },
           "query":{ "type":"hotels" }
         }, { 

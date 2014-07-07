@@ -8,12 +8,10 @@ angular.module('ilcomuneintasca.services.conf', [])
       angular.forEach(item.name, function (txt, loc) {
         item.name[loc]=txt.replace("  ","<br/>");
       });
-      if (item.hasOwnProperty('app')) {
-        item.extraClasses='variant';
-      } else if (item.hasOwnProperty('cate')) {
-        item.path='cate/'+item.cate;
-      } else if (item.hasOwnProperty('menu')) {
-        item.path=item.menu;
+      if (item.hasOwnProperty("app")) {
+        item.extraClasses="variant";
+      } else if (item.hasOwnProperty("ref")) {
+        item.path="/menu/"+item.ref;
       }
     }
     for (gi=0; gi<data.menu.length; gi++) {

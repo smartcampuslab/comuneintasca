@@ -1,26 +1,5 @@
 [
   {
-    "key": "sidemenu_Hotel",
-    "value": "Dormire",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Ristoranti",
-    "value": "Mangiare",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Eventi-Principali",
-    "value": "Eventi Principali",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Itinerari",
-    "value": "Percorsi Turistici",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Mappa",
-    "value": "Mappa",
-    "description": "side menu label"
-  },
-  {
     "key": "leaf_Itinerario",
     "value": "Itinerario",
     "description": "detail label"

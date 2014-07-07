@@ -1,26 +1,5 @@
 [
   {
-    "key": "sidemenu_Hotel",
-    "value": "Übernachtung",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Ristoranti",
-    "value": "Gastronomie",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Eventi-Principali",
-    "value": "Hauptereignisse",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Itinerari",
-    "value": "Touren und Routen",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Mappa",
-    "value": "Map",
-    "description": "side menu label"
-  },
-  {
     "key": "leaf_Itinerario",
     "value": "Itinerary",
     "description": "detail label"

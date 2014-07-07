@@ -1,26 +1,5 @@
 [
   {
-    "key": "sidemenu_Hotel",
-    "value": "Hotels",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Ristoranti",
-    "value": "Restaurants",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Eventi-Principali",
-    "value": "Main Events",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Itinerari",
-    "value": "Touristic Itineraries",
-    "description": "side menu label"
-  }, {
-    "key": "sidemenu_Mappa",
-    "value": "Map",
-    "description": "side menu label"
-  },
-  {
     "key": "leaf_Itinerario",
     "value": "Itinerary",
     "description": "detail label"

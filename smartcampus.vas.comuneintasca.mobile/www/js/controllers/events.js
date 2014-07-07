@@ -91,7 +91,12 @@ angular.module('ilcomuneintasca.controllers.events', [])
   });
 })
 
-.controller('MainEventsListCtrl', function ($scope, DatiDB, ListToolbox, $ionicScrollDelegate) {
+.controller('MainEventsListCtrl', function ($scope, Config, DatiDB, ListToolbox, $ionicScrollDelegate) {
+  Config.menuGroupSubgroup('info','mainevents').then(function(sg){
+    console.log(JSON.stringify(sg));
+    $scope.title = sg.name;
+  });
+
   ListToolbox.prepare($scope, {
     load: function (cache) {
       if (cache) {

@@ -11,6 +11,10 @@ angular.module('ilcomuneintasca.controllers.hospitality', [])
     } else return '';
   }
 
+  Config.menuGroupSubgroup('hospitality','hotels').then(function(sg){
+    $scope.title = sg.name;
+  });
+
   ListToolbox.prepare($scope, {
     load: function (cache) {
       if (cache) {
@@ -28,7 +32,7 @@ angular.module('ilcomuneintasca.controllers.hospitality', [])
       return $scope.hotels;
     },
     getTitle: function () {
-      return $filter('i18n')('sidemenu_Hotel');
+      return $filter('translate')($scope.title);
     },
     filterOptions: Config.hotelTypesList(),
     doFilter: function (filter) {
@@ -57,6 +61,10 @@ angular.module('ilcomuneintasca.controllers.hospitality', [])
     } else return '';
   }
 
+  Config.menuGroupSubgroup('hospitality','restaurants').then(function(sg){
+    $scope.title = sg.name;
+  });
+
   ListToolbox.prepare($scope, {
     load: function (cache) {
       if (cache) {
@@ -74,7 +82,7 @@ angular.module('ilcomuneintasca.controllers.hospitality', [])
       return $scope.restaurants;
     },
     getTitle: function () {
-      return $filter('i18n')('sidemenu_Ristoranti');
+      return $filter('translate')($scope.title);
     },
     filterOptions: Config.restaurantTypesList(),
     doFilter: function (filter) {

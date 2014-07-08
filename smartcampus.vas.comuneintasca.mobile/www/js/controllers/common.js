@@ -1,5 +1,8 @@
 angular.module('ilcomuneintasca.controllers.common', [])
 
+.controller('SettingsCtrl', function ($scope, Config) {
+})
+
 .controller('MenuCtrl', function ($scope, $ionicModal, Config) {
   $scope.shownGroup = null;
 

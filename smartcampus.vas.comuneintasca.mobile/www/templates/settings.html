@@ -1,0 +1,12 @@
+<ion-view title="{{'settings_title'|translate}}">
+  <ion-content class="has-header">
+    <div class="comuni-content">
+        <comuni-img ng-if="content.image" class="content-image-main" image="content.image" gotdata="gotdata"></comuni-img>
+        <div class="padding">
+            <h2>{{content.title | translate}}</h2>
+            <div class="comuni-html-description" compile="content.description | translate"></div>
+            <div class="comuni-html-info" compile="content.info | translate"></div>
+        </div>
+    </div>
+  </ion-content>
+</ion-view>

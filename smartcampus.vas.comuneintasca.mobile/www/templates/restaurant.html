@@ -1,4 +1,4 @@
-<ion-view title="{{'leaf_Restaurant' | i18n}}">
+<ion-view title="{{'leaf_Restaurant' | translate}}">
   <ion-content class="has-header" ng-cloak>
     <comuni-img ng-if="obj.image" class="content-image-main" image="obj.image" gotdata="gotdata"></comuni-img>
     <div class="padding">
@@ -8,10 +8,10 @@
       <div class="htmldesc">
         <p>
           <ul>
-            <li ng-if="!! obj.timetable[lang]"><strong>{{'restaurant_opening' | i18n}}: </strong> {{obj.timetable | translate}}</li>
-            <li ng-if="!! obj.closing[lang]"><strong>{{'restaurant_closing' | i18n}}: </strong> {{obj.closing | translate}}</li>
-            <li ng-if="!! obj.prices[lang]"><strong>{{'restaurant_price' | i18n}}: </strong> {{obj.prices | translate}} &euro;</li>
-            <li ng-if="!! obj.equipment[lang]"><strong>{{'restaurant_services' | i18n}}: </strong> {{obj.equipment | translate}}</li>
+            <li ng-if="!! obj.timetable[lang]"><strong>{{'restaurant_opening' | translate}}: </strong> {{obj.timetable | translate}}</li>
+            <li ng-if="!! obj.closing[lang]"><strong>{{'restaurant_closing' | translate}}: </strong> {{obj.closing | translate}}</li>
+            <li ng-if="!! obj.prices[lang]"><strong>{{'restaurant_price' | translate}}: </strong> {{obj.prices | translate}} &euro;</li>
+            <li ng-if="!! obj.equipment[lang]"><strong>{{'restaurant_services' | translate}}: </strong> {{obj.equipment | translate}}</li>
           </ul>
         </p>
       </div>

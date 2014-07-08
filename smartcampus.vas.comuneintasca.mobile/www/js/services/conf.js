@@ -41,6 +41,86 @@ angular.module('ilcomuneintasca.services.conf', [])
   });
 
   var keys = {
+    'settings_title': {
+      it: 'Impostazioni',
+      en: 'Settings',
+      de: 'Settings'
+    },
+    'itinerari_title_accessibilita': {
+      it: 'Accessibilità',
+      en: 'Accessibility',
+      de: 'Zugänglichkeit'
+    },
+    'entry_km': {
+      it: 'Km',
+      en: 'Km',
+      de: 'Km'
+    },
+    'cancel': {
+      it: 'Annulla',
+      en: 'Cancel',
+      de: 'Annullieren'
+    },
+    'search': {
+      it: 'Cerca',
+      en: 'Search',
+      de: 'Suche'
+    },
+    'list_results_none': {
+      it: 'nessun risultato',
+      en: 'no results',
+      de: 'Keine Ergebnisse'
+    },
+    'list_results_single': {
+      it: 'risultato',
+      en: 'result',
+      de: 'Ergebnis'
+    },
+    'list_results_plural': {
+      it: 'risultati',
+      en: 'results',
+      de: 'Ergebnisse'
+    },
+    'restaurant_opening': {
+      it: 'Orari',
+      en: 'Opening',
+      de: 'Geschäftszeiten'
+    },
+    'restaurant_closing': {
+      it: 'Giorni di chiusura',
+      en: 'Closing days',
+      de: 'Ruhetag'
+    },
+    'restaurant_price': {
+      it: 'Prezzo indicativo',
+      en: 'Price range',
+      de: 'Preise'
+    },
+    'restaurant_services': {
+      it: 'Servizi disponibili',
+      en: 'Services',
+      de: 'Anlagen'
+    },
+    'leaf_Hotel': {
+      it: 'Hotel',
+      en: 'Hotel',
+      de: 'Übernachtung'
+    },
+    'leaf_Restaurant': {
+      it: 'Ristorante',
+      en: 'Restaurant',
+      de: 'Gastronomie'
+    },
+    'leaf_Event': {
+      it: 'Evento',
+      en: 'Event',
+      de: 'Event'
+    },
+    'leaf_Itinerario': {
+      it: 'Itinerario',
+      en: 'Itinerary',
+      de: 'Itinerary'
+    },
     'Stars': {
       it: 'Stelle',
       en: 'Stars',

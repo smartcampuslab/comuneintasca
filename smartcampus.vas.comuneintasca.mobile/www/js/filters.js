@@ -17,6 +17,22 @@ angular.module('ilcomuneintasca.filters', [])
   };
 })
 
+.filter('translate_plur', function ($filter) {
+  return function (input, count) {
+    if (typeof input=='string' && typeof count=='number') {
+      if (count == 0) {
+        return $filter('translate')(input+'_none');
+      } else if (count == 1) {
+        return $filter('translate')(input+'_single');
+      } else {
+        return $filter('translate')(input+'_plural'); 
+      }
+    } else {
+      return $filter('translate')(input);
+    }
+  };
+})
+
 .filter('extOrderBy', function ($rootScope, $filter, GeoLocate) {
   return function (input, params) {
     if (!input || !params || !params.ordering) return input;

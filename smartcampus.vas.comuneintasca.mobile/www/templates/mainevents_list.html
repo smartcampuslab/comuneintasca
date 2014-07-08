@@ -1,7 +1,7 @@
 <ion-view title="{{title | translate}}">
   <ion-content class="has-header" delegate-handle="listScroll">
     <ion-list>
-      <div class="item item-divider" align="center">{{'list_results' | i18nplur:mainevents.length}}</div>
+      <div class="item item-divider" align="center">{{'list_results' | translate_plur:mainevents.length}}</div>
       <ion-item collection-repeat="obj in mainevents | extOrderBy:ordering" 
                 collection-item-width="'100%'" collection-item-height="getListItemHeight(item, $index)"
                 ng-click="goToItem('/app/mainevent/'+obj.id)" class="item-thumbnail-left coll-item">

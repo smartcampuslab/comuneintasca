@@ -93,14 +93,12 @@ angular.module('ilcomuneintasca.services.db', [])
         name: "Trento",
         bgType: 0
       });
-      syncOptions = remoteSyncOptions;
       dbopenDeferred.resolve(dbObj);
     }, false);
   } else {
     //console.log('web db...');
-    dbObj = window.openDatabase('Trento', '1.0', 'Trento in Tasca', 2 * 1024 * 1024);
-    syncOptions = localSyncOptions;
-    //syncOptions=remoteSyncOptions;
+    dbObj = window.openDatabase('Trento', '1.0', 'Trento - Il Comune in Tasca', 5 * 1024 * 1024);
+    remoteSyncOptions = localSyncOptions;
     dbopenDeferred.resolve(dbObj);
   }
   dbopen = dbopenDeferred.promise;
@@ -148,23 +146,37 @@ angular.module('ilcomuneintasca.services.db', [])
   });
   db = dbDeferred.promise;
 
+  var syncinprogress = null;
+
   return {
     sync: function () {
+      if (syncinprogress!=null) {
+        console.log('sync already in progress...');
+        return syncinprogress;
+      }
       syncronization = $q.defer();
+      syncinprogress=syncronization.promise;
       db.then(function (dbObj) {
         Profiling.start('dbsync');
         if (ionic.Platform.isWebView() && navigator.connection.type == Connection.NONE) {
           $ionicLoading.hide();
           console.log('no network connection');
           Profiling._do('dbsync');
+          syncinprogress=null;
           syncronization.resolve(currentDbVersion);
         } else {
           var now_as_epoch = parseInt((new Date).getTime() / 1000);
           var to = (lastSynced + Config.syncTimeoutSeconds());
+          console.log('lastSynced='+lastSynced);
           if (lastSynced == -1 || now_as_epoch > to) {
-            console.log((now_as_epoch - lastSynced) + ' seconds since last syncronization: checking web service...');
-            lastSynced = now_as_epoch;
-            localStorage.lastSynced = lastSynced;
+            console.log('currentDbVersion: ' + currentDbVersion);
+            if (currentDbVersion == 0) {
+              console.log('on first run, skipping sync time tagging to allow real remote sync on next check');
+            } else {
+              console.log((now_as_epoch - lastSynced) + ' seconds since last syncronization: checking web service...');
+              lastSynced = now_as_epoch;
+              localStorage.lastSynced = lastSynced;
+            }
 
             var syncingOverlay = $ionicLoading.show({
               content: $filter('translate')(Config.keys()['syncing']),
@@ -178,8 +190,9 @@ angular.module('ilcomuneintasca.services.db', [])
             if (currentDbVersion == 0) {
               currentSyncOptions = localSyncOptions;
             } else {
-              currentSyncOptions = syncOptions;
+              currentSyncOptions = remoteSyncOptions;
             }
+            console.log('currentSyncOptions: ' + JSON.stringify(currentSyncOptions));
             $http(currentSyncOptions).success(function (data, status, headers, config) {
               nextVersion = data.version;
               console.log('nextVersion: ' + nextVersion);
@@ -335,18 +348,22 @@ angular.module('ilcomuneintasca.services.db', [])
                   $ionicLoading.hide();
                   currentDbVersion = nextVersion;
                   localStorage.currentDbVersion = currentDbVersion;
+                  console.log('synced to version: ' + currentDbVersion);
                   Profiling._do('dbsync');
+                  syncinprogress=null;
                   syncronization.resolve(currentDbVersion);
                 }, function () {
                   $ionicLoading.hide();
                   console.log('cannot initialize (2)');
                   Profiling._do('dbsync');
+                  syncinprogress=null;
                   syncronization.reject();
                 });
               } else {
                 $ionicLoading.hide();
                 console.log('local database already up-to-date!');
                 Profiling._do('dbsync');
+                syncinprogress=null;
                 syncronization.resolve(currentDbVersion);
               }
             }).error(function (data, status, headers, config) {
@@ -354,12 +371,14 @@ angular.module('ilcomuneintasca.services.db', [])
               console.log('cannot check for new data: network unavailable?');
               console.log(status);
               Profiling._do('dbsync');
+              syncinprogress=null;
               syncronization.resolve(currentDbVersion);
             });
           } else {
             $ionicLoading.hide();
-            //console.log('avoiding too frequent syncronizations. seconds since last one: ' + (now_as_epoch - lastSynced));
+            console.log('avoiding too frequent syncronizations. seconds since last one: ' + (now_as_epoch - lastSynced));
             Profiling._do('dbsync');
+            syncinprogress=null;
             syncronization.resolve(currentDbVersion);
           }
         }

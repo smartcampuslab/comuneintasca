@@ -2,7 +2,7 @@
   <ion-content class="has-header" delegate-handle="eventslistScroll">
     <ion-list>
       <div class="item item-divider" align="center">{{'list_results' | i18nplur:events.length}}</div>
-      <ion-item collection-repeat="event in events | extOrderBy:ordering track by event.id" 
+      <ion-item no-collection-repeat="" ng-repeat="event in events | extOrderBy:ordering track by event.id"
                 collection-item-width="'100%'" collection-item-height="getListItemHeight(item, $index)"
                 ng-click="goToItem('/app/event/'+event.id)" class="item-thumbnail-left coll-item">
         <comuni-img class="item-image comuni-item-image" image="event.image" gotdata="gotdata"></comuni-img>

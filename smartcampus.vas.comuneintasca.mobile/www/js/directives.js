@@ -1,12 +1,12 @@
 angular.module('ilcomuneintasca.directives', [])
 
-.directive('comuniImg', function ($q, Files) {
+.directive('comuniImg', function ($q, $filter, Config, Files) {
   var emptyImageUrl = 'img/placeholder-512x512.gif';
   return {
     restrict: 'E',
     replace: true, //scope:{ image:'=image',gotdata:'=gotdata' },
     template: function (tElem, tAttrs) {
-      return '<div>loading...</div>';
+      return '<div>'+$filter('translate')(Config.keys()['loading'])+'</div>';
     },
     link: function (scope, element, attrs) {
       // added since scope can be not yet filled with actual data,

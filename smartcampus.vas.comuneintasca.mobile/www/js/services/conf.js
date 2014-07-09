@@ -354,10 +354,10 @@ angular.module('ilcomuneintasca.services.conf', [])
       return false;
     },
     savedImagesDirName: function () {
-      return 'TrentoInTasca';
+      return 'IlComuneInTasca-ImagesCache';
     },
     schemaVersion: function () {
-      return 72;
+      return 73;
     },
     syncTimeoutSeconds: function () {
       //return 60 * 60; /* 60 times 60 seconds = EVERY HOUR */

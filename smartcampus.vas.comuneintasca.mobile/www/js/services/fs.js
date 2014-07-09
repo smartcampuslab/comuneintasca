@@ -8,8 +8,8 @@ angular.module('ilcomuneintasca.services.fs', [])
   var queueFileDownload = function (obj) {
     var fileTransfer = new FileTransfer();
     fileTransfer.download(obj.url, obj.savepath, function (fileEntry) {
-     console.log("downloaded file: " + obj.url);
-     console.log("downloaded to: " + fileEntry.nativeURL);
+     //console.log("downloaded file: " + obj.url);
+     //console.log("downloaded to: " + fileEntry.nativeURL);
      Profiling._do('fileget', 'saved');
       //DISABLED 
       /*
@@ -29,7 +29,7 @@ angular.module('ilcomuneintasca.services.fs', [])
       */
       window.FileMetadata.getMetadataForFileURI(fileEntry.nativeURL,function(metadata){
         if (metadata.size>0 && metadata.type && metadata.type.indexOf('image/')==0) {
-          console.log("keeping valid downloaded file: " + metadata.uri);
+          //console.log("keeping valid downloaded file: " + metadata.uri);
         } else {
           console.log("deleting invalid downloaded file: " + metadata.uri);
           console.log("file size: " + metadata.size);
@@ -316,7 +316,7 @@ angular.module('ilcomuneintasca.services.fs', [])
                 url: fileurl,
                 promise: filegot
               };
-              console.log('not found: downloading to "' + fileObj.savepath + '"');
+              //console.log('not found: downloading to "' + fileObj.savepath + '"');
               queueFileDownload(fileObj);
             }
           });

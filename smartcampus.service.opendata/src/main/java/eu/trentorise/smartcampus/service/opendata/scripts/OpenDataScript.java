@@ -29,10 +29,11 @@ import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.Organiza
 
 public class OpenDataScript {
 
+	private static ObjectMapper mapper = new ObjectMapper();
+	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<String> extractLinks(String json) throws Exception {
 		List<String> links = new ArrayList<String>();
-		ObjectMapper mapper = new ObjectMapper();
 		Map<String,Object> map = mapper.readValue(json, Map.class);
 		List<Map> list = (List<Map>) map.get("nodes");
 		if (list != null) {
@@ -67,9 +68,15 @@ public class OpenDataScript {
 		e = (Map<String, Object>) map.get("text");
 		builder.setDescription(e.get("value").toString());
 		e = (Map<String, Object>) map.get("from_time");
-		builder.setFromTime(Long.parseLong(e.get("value").toString())*1000);
+		try {
+			builder.setFromTime(Long.parseLong(e.get("value").toString())*1000);
+		} catch (Exception e1) {
+		}
 		e = (Map<String, Object>) map.get("to_time");
-		builder.setToTime(Long.parseLong(e.get("value").toString())*1000);
+		try {
+			builder.setToTime(Long.parseLong(e.get("value").toString())*1000);
+		} catch (Exception e1) {
+		}
 		e = (Map<String, Object>) map.get("periodo_svolgimento");
 		builder.setEventPeriod(e.get("value").toString());
 		e = (Map<String, Object>) map.get("orario_svolgimento");
@@ -89,7 +96,11 @@ public class OpenDataScript {
 			builder.setEventType(((Map)e.get("value")).get("objectName").toString());
 		}
 		e = (Map<String, Object>) map.get("iniziativa");
-		if (!(e.get("value") instanceof Boolean) || (Boolean)e.get("value")) {
+
+		if (e.get("value") instanceof Map) {
+			builder.setParentEventId(mapper.writeValueAsString(e.get("value")));
+		}
+		else if (!(e.get("value") instanceof Boolean) || (Boolean)e.get("value")) {
 			builder.setParentEventId(e.get("value").toString().trim());
 		}
 		e = (Map<String, Object>) map.get("tipo_evento");

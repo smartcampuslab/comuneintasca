@@ -3,12 +3,14 @@ angular.module('ilcomuneintasca.services.fs', [])
 .factory('Files', function ($q, $http, Config, $queue, Profiling, $ionicLoading, $filter) {
   var lastFileCleanup = -1;
   if (localStorage.lastFileCleanup) lastFileCleanup = Number(localStorage.lastFileCleanup);
-  console.log('lastFileCleanup: ' + lastFileCleanup);
+  //console.log('lastFileCleanup: ' + lastFileCleanup);
 
   var queueFileDownload = function (obj) {
     var fileTransfer = new FileTransfer();
     fileTransfer.download(obj.url, obj.savepath, function (fileEntry) {
-      Profiling._do('fileget', 'saved');
+     console.log("downloaded file: " + obj.url);
+     console.log("downloaded to: " + fileEntry.nativeURL);
+     Profiling._do('fileget', 'saved');
       //DISABLED 
       /*
       window.FileMetadata.getMetadataForURL(obj.url,function(url_metadata){
@@ -42,10 +44,10 @@ angular.module('ilcomuneintasca.services.fs', [])
         }
       });
       if (device.version.indexOf('2.') == 0) {
-        console.log("download complete: " + fileEntry.nativeURL + " (Android 2.x)");
+        //console.log("download complete: " + fileEntry.nativeURL + " (Android 2.x)");
         obj.promise.resolve(fileEntry.nativeURL);
       } else {
-        console.log("download complete: " + obj.savepath);
+        //console.log("download complete: " + obj.savepath);
         obj.promise.resolve(obj.savepath);
       }
     }, function (error) {
@@ -93,28 +95,29 @@ angular.module('ilcomuneintasca.services.fs', [])
     console.log('Error: ' + msg);
     fsObj.reject();
   };
-  var rootFS;
+  var fsRoot;
   var fsObj = $q.defer();
   var filesystem = fsObj.promise;
-  console.log('Opening file system...');
+  //console.log('Opening file system...');
   if (ionic.Platform.isWebView()) {
     document.addEventListener("deviceready", function () {
-      window.requestFileSystem(window.PERSISTENT, 50 * 1024 * 1024 /*50MB*/ , function (fs) {
-        rootFS = fs.root;
-        console.log('Opened file system: ' + rootFS.toURL());
-        if (device.platform == 'Android') {
-          console.log('cordova (android) fs...');
-          fsRoot = 'files-external';
-        } else {
-          console.log('cordova (ios) fs...');
-          fsRoot = 'documents-nosync';
-        }
-        fs.root.getDirectory(IMAGESDIR_NAME, {
+//      window.requestFileSystem(window.PERSISTENT, 50 * 1024 * 1024 /*50MB*/ , function (fs) {
+//        fsRoot = fs.root;
+//        //console.log('Opened file system: ' + fsRoot.toURL());
+//        if (device.platform == 'Android') {
+//          //console.log('cordova (android) fs...');
+//          fsRoot = 'files-external';
+//        } else {
+//          //console.log('cordova (ios) fs...');
+//          fsRoot = 'documents-nosync';
+//        }
+//        fs.root.getDirectory(IMAGESDIR_NAME, {
+      window.resolveLocalFileSystemURL(cordova.file.cacheDirectory,function(fsRootEntry){
+        fsRoot = fsRootEntry;
+        fsRoot.getDirectory(IMAGESDIR_NAME, {
           create: true
         }, function (dirEntry) {
-          console.log('main dirEntry.nativeURL: ' + dirEntry.nativeURL);
-          //console.log('main dirEntry.toUrl(): '+dirEntry.toUrl());
-          //console.log('main dirEntry.fullPath: ' + dirEntry.fullPath);
+          console.log('images cache dirEntry nativeURL: ' + dirEntry.nativeURL);
           fsObj.resolve(dirEntry);
         }, function (err) {
           console.log('cannot find main folder fs');
@@ -143,12 +146,12 @@ angular.module('ilcomuneintasca.services.fs', [])
   }
   return {
     cleanup: function () {
-      console.log('cleanup()...');
+      //console.log('cleanup()...');
       var cleaned = $q.defer();
       filesystem.then(function (mainDir) {
         if (ionic.Platform.isWebView()) {
-          console.log('cleaning mainDir: ' + mainDir.toURL());
-          console.log(mainDir.nativeUrl);
+          //console.log('cleaning mainDir: ' + mainDir.toURL());
+          //console.log(mainDir.nativeUrl);
           var now_as_epoch = parseInt((new Date).getTime() / 1000);
           var to = (lastFileCleanup + Config.fileCleanupTimeoutSeconds());
           if (lastFileCleanup == -1 || now_as_epoch > to) {
@@ -222,7 +225,7 @@ angular.module('ilcomuneintasca.services.fs', [])
                   for (i=0; i<results.length; i++) {
                     entry=results[i];
                     if (entry.isDirectory) {
-                      console.log('Directory: ' + entry.nativeURL);
+                      //console.log('Directory: ' + entry.nativeURL);
                     } else if (entry.isFile) {
                       var fileURI=entry.nativeURL;
                       //console.log('File: ' + fileURI);
@@ -276,7 +279,7 @@ angular.module('ilcomuneintasca.services.fs', [])
         //console.log('filename: '+filename);
         if (ionic.Platform.isWebView()) {
           Profiling.start('fileget');
-          //console.log('rootDir: ' + rootDir.fullPath);
+          //console.log('rootDir: ' + mainDir.fullPath);
           mainDir.getFile(filename, {}, function (fileEntry) {
             /*
             console.log('fileEntry.toURL(): ' + fileEntry.toURL());
@@ -293,13 +296,13 @@ angular.module('ilcomuneintasca.services.fs', [])
               filegot.resolve(fileurl);
             });
             */
-            var filesavepath = rootFS.toURL() + IMAGESDIR_NAME + '/' + filename;
+            var filesavepath = fsRoot.toURL() + IMAGESDIR_NAME + '/' + filename;
             Profiling._do('fileget', 'already');
             if (device.version.indexOf('2.') == 0) {
-              console.log('already downloaded to "' + fileEntry.nativeURL + '" (Android 2.x)');
+              //console.log('already downloaded to "' + fileEntry.nativeURL + '" (Android 2.x)');
               filegot.resolve(fileEntry.nativeURL);
             } else {
-              console.log('already downloaded to "' + filesavepath + '"');
+              //console.log('already downloaded to "' + filesavepath + '"');
               filegot.resolve(filesavepath);
             }
           }, function () {
@@ -309,7 +312,7 @@ angular.module('ilcomuneintasca.services.fs', [])
               filegot.reject('no network connection');
             } else {
               var fileObj = {
-                savepath: rootFS.toURL() + IMAGESDIR_NAME + '/' + filename,
+                savepath: fsRoot.toURL() + IMAGESDIR_NAME + '/' + filename,
                 url: fileurl,
                 promise: filegot
               };

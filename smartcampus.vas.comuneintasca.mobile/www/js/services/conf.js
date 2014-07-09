@@ -72,6 +72,11 @@ angular.module('ilcomuneintasca.services.conf', [])
       'en': 'loading...',
       'de': 'loading...'
     },
+    'loading_short': {
+      'it': 'carico...',
+      'en': 'loading...',
+      'de': 'loading...'
+    },
     'syncing': {
       'it': 'aggiornamento in corso...',
       'en': 'syncing...',

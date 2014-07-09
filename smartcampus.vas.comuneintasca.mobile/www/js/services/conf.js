@@ -512,7 +512,7 @@ angular.module('ilcomuneintasca.services.conf', [])
       return false;
     },
     savedImagesDirName: function () {
-      return 'TrentoInTasca';
+      return 'IlComuneInTasca-ImagesCache';
     },
     schemaVersion: function () {
       return 74;

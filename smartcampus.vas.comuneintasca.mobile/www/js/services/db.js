@@ -303,10 +303,10 @@ angular.module('ilcomuneintasca.services.db', [])
                 // TODO events cleanup
                 dbObj.transaction(function (tx) {
                   var nowTime = (new Date()).getTime();
-                  console.log('[TODO events cleanup] nowTime=' + new Date(nowTime));
+                  //console.log('[TODO events cleanup] nowTime=' + new Date(nowTime));
                   var yesterdayTime = nowTime - (24 * 60 * 60 * 1000);
                   console.log('[TODO events cleanup] yesterdayTime=' + new Date(yesterdayTime));
-
+/*
                   tx.executeSql('SELECT id, fromTime, toTime FROM ContentObjects WHERE type = ? AND toTime < ?', [ types['event'],yesterdayTime ], function (tx, results) {
                     var len = results.rows.length;
                     console.log('date check items: '+len);
@@ -314,7 +314,7 @@ angular.module('ilcomuneintasca.services.db', [])
                   }, function (tx, err) {
                     console.log('date check error!');
                   });
-
+*/
                   tx.executeSql('DELETE FROM ContentObjects WHERE type = ? AND toTime < ?', [ types['event'],yesterdayTime ], function (tx, res) { //success callback
                     //console.log('deleted old events');
                   }, function (e) { //error callback

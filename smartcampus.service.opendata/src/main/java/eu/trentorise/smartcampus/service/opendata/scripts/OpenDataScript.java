@@ -51,7 +51,7 @@ public class OpenDataScript {
 		Map<String,Object> map = mapper.readValue(json, Map.class);
 		Map<String,Object> e = (Map<String,Object>)map.get("metadata");
 		builder.setId(e.get("objectRemoteId").toString());
-		builder.setLastModified((Integer)e.get("dateModified")*1000);
+		builder.setLastModified(Long.parseLong(e.get("dateModified").toString())*1000);
 		builder.setUrl(e.get("fullUrl").toString());
 
 		map = (Map<String, Object>) map.get("fields");

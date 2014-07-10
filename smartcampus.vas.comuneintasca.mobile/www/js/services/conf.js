@@ -19,19 +19,14 @@ angular.module('ilcomuneintasca.services.conf', [])
       for (ii=0; ii<group.items.length; ii++) {
         var item=group.items[ii];
         if (item.objectIds) {
-          if (item.objectIds.length>1) {
-            item.path="/app/contents/"+item.objectIds.join(',');
-          } else {
-            item.path="/app/content/"+item.objectIds[0];
-          }
-        } else if (item.query && item.query.classification) {
-          item.path="/app/"+item.query.type+"/"+item.query.classification;
+          item.path="/"+(item.view||"page")+"/"+item.type+"/"+item.objectIds.join(',');
         } else if (item.query) {
-          item.path="/app/"+item.query.type;
+          item.path="/"+(item.view||"list")+"/"+item.query.type+(item.query.classification?"/"+item.query.classification:"");
         } else {
           item.path="/menu/"+group.id+"/"+ii;
           console.log('unkown menu item: '+item.path);
         }
+        console.log('item['+group.id+']['+item.id+'].path="'+item.path+'"');
       }
     }
     fetched.resolve(data);

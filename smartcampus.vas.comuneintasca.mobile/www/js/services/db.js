@@ -1,6 +1,6 @@
 angular.module('ilcomuneintasca.services.db', [])
 
-.factory('DatiDB', function ($q, $http, $rootScope, $ionicLoading, $filter, Config, GeoLocate, Profiling) {
+.factory('DatiDB', function ($q, $http, $rootScope, $filter, Config, Profiling, GeoLocate, $ionicLoading) {
   var SCHEMA_VERSION = Config.schemaVersion();
   var types = Config.contentTypesList();
 

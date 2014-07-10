@@ -85,4 +85,3 @@ angular.module('ilcomuneintasca.controllers.common', [])
     });
   }
 })
-

@@ -1,7 +1,7 @@
 angular.module('ilcomuneintasca.controllers.itineraries', [])
 
 .controller('ItinerariCtrl', function ($scope, Config, DatiDB, ListToolbox) {
-  Config.menuGroupSubgroup('itineraries','itineraries').then(function(sg){
+  Config.menuGroupSubgroup('itins','itineraries').then(function(sg){
     $scope.title = sg.name;
   });
 

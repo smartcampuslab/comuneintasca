@@ -46,23 +46,26 @@
         { 
           "id":"data",
           "name":{ "it":"Informazioni", "en":"Info", "de":"Info" },
-          "objectIds":[ "text.3001", "text.3004" ]
+          "objectIds":[ "text.3001", "text.3004" ],
+          "type": "content"
         }, {
           "id":"storia",
           "name":{ "it":"Storia", "en":"History", "de":"Geschichte" },
-          "objectIds":[ "text.3002" ]
+          "objectIds":[ "text.3002" ],
+          "type": "content"
         }, {
           "id":"concilio",
           "name":{ "it":"Concilio", "en":"Concilio", "de":"Concilio" },
-          "objectIds":[ "text.3003" ]
+          "objectIds":[ "text.3003" ],
+          "type": "content"
         }, { 
           "id":"mainevents",
           "name":{ "it":"Eventi Principali", "en":"Main Events", "de":"Hauptereignisse" },
-          "query":{ "type":"mainevents" }
+          "query":{ "type":"mainevent" }
         }, { 
           "id":"bondone",
           "name":{ "it":"Monte Bondone", "en":"Mount Bondone", "de":"Mont Bondone" },
-          "query":{ "type":"contentscate", "classification":"bondone" }
+          "query":{ "type":"content", "classification":"bondone", "view":"page" }
         }
       ]
     }, {
@@ -72,35 +75,35 @@
         {
           "id":"all",
           "name":{ "it": "Tutti gli eventi", "en": "All events", "de": "Alle Veranstaltungen" },
-          "query":{ "type":"events", "classification":"all" }
+          "query":{ "type":"event", "classification":"all" }
         }, { 
           "id":"fairs",
           "name":{ "it": "Feste, mercati e fiere", "en": "Festivals, markets and fairs", "de": "Festivals, Märkte und Messen" },
-          "query":{ "type":"events", "classification":"fairs" }
+          "query":{ "type":"event", "classification":"fairs" }
         }, { 
           "id":"conferences",
           "name":{ "it": "Incontri, convegni e conferenze", "en": "Meetings, seminars and conferences", "de": "Tagungen, Seminare und Konferenzen" },
-          "query":{ "type":"events", "classification":"conferences" }
+          "query":{ "type":"event", "classification":"conferences" }
         }, { 
           "id":"shows",
           "name":{ "it": "Spettacoli", "en": "Shows", "de": "Shows" },
-          "query":{ "type":"events", "classification":"shows" }
+          "query":{ "type":"event", "classification":"shows" }
         }, { 
           "id":"exhibitions",
           "name":{ "it": "Mostre", "en": "Exhibitions", "de": "Ausstellungen" },
-          "query":{ "type":"events", "classification":"exhibitions" }
+          "query":{ "type":"event", "classification":"exhibitions" }
         }, { 
           "id":"labs",
           "name":{ "it": "Corsi e laboratori", "en": "Courses and workshops", "de": "Kurse und Workshops" },
-          "query":{ "type":"events", "classification":"labs" }
+          "query":{ "type":"event", "classification":"labs" }
         }, { 
           "id":"competitions",
           "name":{ "it": "Competizioni e gare", "en": "Competitions and contests", "de": "Wettbewerbe und Gewinnspiele" },
-          "query":{ "type":"events", "classification":"competitions" }
+          "query":{ "type":"event", "classification":"competitions" }
         }, { 
           "id":"misc",
           "name":{ "it": "Iniziative varie", "en": "Various initiatives", "de": "Verschiedene Initiativen" },
-          "query":{ "type":"events", "classification":"misc" }
+          "query":{ "type":"event", "classification":"misc" }
         }
       ]
     }, {
@@ -134,7 +137,7 @@
         }
       ]
     }, {
-      "id":"itineraries",
+      "id":"itins",
       "name":{ "it":"PERCORSI", "en":"TOURISTIC  ITINERARIES", "de":"TOUREN  UND ROUTEN" },
       "items":[
         { 

@@ -191,6 +191,11 @@ angular.module('ilcomuneintasca.services.conf', [])
       en: 'loading...',
       de: 'loading...'
     },
+    'loading_short': {
+      'it': 'carico...',
+      'en': 'loading...',
+      'de': 'loading...'
+    },
     'syncing': {
       it: 'aggiornamento in corso...',
       en: 'syncing...',
@@ -515,7 +520,7 @@ angular.module('ilcomuneintasca.services.conf', [])
       return 'IlComuneInTasca-ImagesCache';
     },
     schemaVersion: function () {
-      return 74;
+      return 75;
     },
     syncTimeoutSeconds: function () {
       //return 60 * 60; /* 60 times 60 seconds = EVERY HOUR */

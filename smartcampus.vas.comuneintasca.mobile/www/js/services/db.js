@@ -172,13 +172,13 @@ angular.module('ilcomuneintasca.services.db', [])
           console.log('lastSynced='+lastSynced);
           if (lastSynced == -1 || now_as_epoch > to) {
             console.log('currentDbVersion: ' + currentDbVersion);
-            if (currentDbVersion == 0) {
-              console.log('on first run, skipping sync time tagging to allow real remote sync on next check');
-            } else {
+//            if (currentDbVersion == 0) {
+//              console.log('on first run, skipping sync time tagging to allow real remote sync on next check');
+//            } else {
               console.log((now_as_epoch - lastSynced) + ' seconds since last syncronization: checking web service...');
               lastSynced = now_as_epoch;
               localStorage.lastSynced = lastSynced;
-            }
+//            }
 
             var syncingOverlay = $ionicLoading.show({
               content: $filter('translate')(Config.keys()['syncing']),
@@ -218,7 +218,11 @@ angular.module('ilcomuneintasca.services.db', [])
 
                     dbObj.transaction(function (tx) {
                       angular.forEach(updates, function (item, idx) {
-                        tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [item.id]);
+                        tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [item.id], function (tx, res) { //success callback
+													console.log('deleted obj with id: ' + item.id);
+												}, function (e) { //error callback
+													console.log('unable to delete obj with id ' + item.id + ': ' + e.message);
+												});
 
                         var fromTime = 0;
                         var toTime = 0;
@@ -260,9 +264,22 @@ angular.module('ilcomuneintasca.services.db', [])
                           item.category = 'ristorazione';
                         }
 
-												values = [item.id, item.version, contentTypeClassName, item.category, classification, classification2, classification3, JSON.stringify(item), ((item.location && item.location.length == 2) ? item.location[0] : -1), ((item.location && item.location.length == 2) ? item.location[1] : -1), fromTime, toTime];
+												values = [
+                          item.id,
+                          item.version,
+                          contentTypeClassName,
+                          item.category,
+                          classification,
+                          classification2,
+                          classification3,
+                          JSON.stringify(item),
+                          ((item.location && item.location.length == 2) ? item.location[0] : -1),
+                          ((item.location && item.location.length == 2) ? item.location[1] : -1),
+                          fromTime,
+                          toTime
+                        ];
 												tx.executeSql('INSERT INTO ContentObjects (id, version, type, category, classification, classification2, classification3, data, lat, lon, fromTime, toTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', values, function (tx, res) { //success callback
-													//console.log('inserted obj with id: ' + item.id);
+													console.log('inserted obj with id: ' + item.id);
 												}, function (e) { //error callback
 													console.log('unable to insert obj with id ' + item.id + ': ' + e.message);
 												});

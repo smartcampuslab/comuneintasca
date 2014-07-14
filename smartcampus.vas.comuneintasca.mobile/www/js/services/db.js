@@ -172,13 +172,13 @@ angular.module('ilcomuneintasca.services.db', [])
           console.log('lastSynced='+lastSynced);
           if (lastSynced == -1 || now_as_epoch > to) {
             console.log('currentDbVersion: ' + currentDbVersion);
-//            if (currentDbVersion == 0) {
-//              console.log('on first run, skipping sync time tagging to allow real remote sync on next check');
-//            } else {
+            if (currentDbVersion == 0) {
+              console.log('on first run, skipping sync time tagging to allow real remote sync on next check');
+            } else {
               console.log((now_as_epoch - lastSynced) + ' seconds since last syncronization: checking web service...');
               lastSynced = now_as_epoch;
               localStorage.lastSynced = lastSynced;
-//            }
+            }
 
             var syncingOverlay = $ionicLoading.show({
               content: $filter('translate')(Config.keys()['syncing']),
@@ -206,25 +206,24 @@ angular.module('ilcomuneintasca.services.db', [])
 
                 dbObj.transaction(function (tx) {
 
-                angular.forEach(types, function (contentTypeClassName, contentTypeKey) {
-                  console.log('type (' + contentTypeKey + '): ' + contentTypeClassName);
+                  angular.forEach(types, function (contentTypeClassName, contentTypeKey) {
+                    console.log('type (' + contentTypeKey + '): ' + contentTypeClassName);
 
-                  if (!angular.isUndefined(data.updated[contentTypeClassName])) {
-                    updates = data.updated[contentTypeClassName];
-                    console.log('updates: ' + updates.length);
+                    if (!angular.isUndefined(data.updated[contentTypeClassName])) {
+                      updates = data.updated[contentTypeClassName];
+                      console.log('updates: ' + updates.length);
 
-                    if (contentTypeKey == 'home') {
-                      localStorage.homeObject = JSON.stringify(updates[0]);
-                      return;
-                    }
+                      if (contentTypeKey == 'home') {
+                        localStorage.homeObject = JSON.stringify(updates[0]);
+                        return;
+                      }
 
-//                    dbObj.transaction(function (tx) {
                       angular.forEach(updates, function (item, idx) {
                         tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [item.id], function (tx, res) { //success callback
-													console.log('deleted obj with id: ' + item.id);
-												}, function (e) { //error callback
-													console.log('unable to delete obj with id ' + item.id + ': ' + e.message);
-												});
+                          //console.log('deleted obj with id: ' + item.id);
+                        }, function (e) { //error callback
+                          //console.log('unable to delete obj with id ' + item.id + ': ' + e.message);
+                        });
 
                         var fromTime = 0;
                         var toTime = 0;
@@ -266,7 +265,7 @@ angular.module('ilcomuneintasca.services.db', [])
                           item.category = 'ristorazione';
                         }
 
-												values = [
+                        values = [
                           item.id,
                           item.version,
                           contentTypeClassName,
@@ -280,26 +279,16 @@ angular.module('ilcomuneintasca.services.db', [])
                           fromTime,
                           toTime
                         ];
-												tx.executeSql('INSERT INTO ContentObjects (id, version, type, category, classification, classification2, classification3, data, lat, lon, fromTime, toTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', values, function (tx, res) { //success callback
-													console.log('inserted obj with id: ' + item.id);
-												}, function (e) { //error callback
-													console.log('unable to insert obj with id ' + item.id + ': ' + e.message);
-												});
+                        tx.executeSql('INSERT INTO ContentObjects (id, version, type, category, classification, classification2, classification3, data, lat, lon, fromTime, toTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', values, function (tx, res) { //success callback
+                          //console.log('inserted obj with id: ' + item.id);
+                        }, function (e) { //error callback
+                          console.log('unable to insert obj with id ' + item.id + ': ' + e.message);
+                        });
                       });
-/*
-                    }, function () { //error callback
-                      console.log('cannot sync (inserts-' + contentTypeKey + ')');
-                      objsDone.reject(false);
-                    }, function () { //success callback
-                      //console.log('synced (inserts-' + contentTypeKey + ')');
-                      objsDone.resolve(true);
-                    });
-*/
-									} else {
-										console.log('nothing to update');
-									}
+                    } else {
+                      console.log('nothing to update');
+                    }
 
-//                  dbObj.transaction(function (tx) {
                     if (!angular.isUndefined(data.deleted[contentTypeClassName])) {
                       deletions = data.deleted[contentTypeClassName];
                       console.log('deletions: ' + deletions.length);
@@ -315,32 +304,15 @@ angular.module('ilcomuneintasca.services.db', [])
                     } else {
                       //console.log('nothing to delete');
                     }
-/*
-                  }, function () { //error callback
-                    console.log('cannot sync (deleted)');
-                    objsDone.reject(false);
-                  }, function () { //success callback
-                    //console.log('synced (deleted)');
-                    objsDone.resolve(true);
-                  });
-*/
-                });
 
-                // events cleanup
-//                dbObj.transaction(function (tx) {
+                  });
+
+                  // events cleanup
                   var nowTime = (new Date()).getTime();
                   //console.log('[TODO events cleanup] nowTime=' + new Date(nowTime));
                   var yesterdayTime = nowTime - (24 * 60 * 60 * 1000);
                   console.log('[TODO events cleanup] yesterdayTime=' + new Date(yesterdayTime));
-/*
-                  tx.executeSql('SELECT id, fromTime, toTime FROM ContentObjects WHERE type = ? AND toTime < ?', [ types['event'],yesterdayTime ], function (tx, results) {
-                    var len = results.rows.length;
-                    console.log('date check items: '+len);
-                    for (i = 0; i < len; i++) console.log(results.rows.item(i));
-                  }, function (tx, err) {
-                    console.log('date check error!');
-                  });
-*/
+
                   tx.executeSql('DELETE FROM ContentObjects WHERE type = ? AND toTime < ?', [ types['event'],yesterdayTime ], function (tx, res) { //success callback
                     //console.log('deleted old events');
                   }, function (e) { //error callback
@@ -348,10 +320,10 @@ angular.module('ilcomuneintasca.services.db', [])
                   });
 
                 }, function () { //error callback
-                  console.log('cannot sync (cleanup)');
+                  console.log('cannot sync');
                   objsDone.reject(false);
                 }, function () { //success callback
-                  //console.log('synced (cleanup)');
+                  //console.log('synced');
                   objsDone.resolve(true);
                 });
 

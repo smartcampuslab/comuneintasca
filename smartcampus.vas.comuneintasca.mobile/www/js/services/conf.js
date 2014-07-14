@@ -70,7 +70,7 @@ angular.module('ilcomuneintasca.services.conf', [])
     'loading': {
       'it': 'caricamento in corso...',
       'en': 'loading...',
-      'de': 'loading...'
+      'de': 'Uploaden im Laufe...'
     },
     'loading_short': {
       'it': 'carico...',
@@ -80,12 +80,12 @@ angular.module('ilcomuneintasca.services.conf', [])
     'syncing': {
       'it': 'aggiornamento in corso...',
       'en': 'syncing...',
-      'de': 'syncing...'
+      'de': 'Laufende Aktualisierung...'
     },
     'cleaning': {
       'it': 'pulizia in corso...',
       'en': 'cleaning...',
-      'de': 'cleaning...'
+      'de': 'Reinigung im Laufe...'
     }
   };
   var poiTypes = {

@@ -1,6 +1,6 @@
 angular.module('ilcomuneintasca.directives', [])
 
-.directive('comuniImg', function ($q, $filter, Config, Files) {
+.directive('comuniImg', function ($q, $filter, $timeout, Config, Files) {
   var emptyImageUrl = 'img/placeholder-512x512.gif';
   return {
     restrict: 'E',
@@ -17,12 +17,17 @@ angular.module('ilcomuneintasca.directives', [])
         };
         if (content.image && content.image != '' && content.image != 'false') {
           Files.get(content.image).then(function (fileUrl) {
-            //if (element.hasClass('item-image')) {
-            element.html('&nbsp;');
-            element.attr('style', 'background-image:url(' + fileUrl + ')');
-            //} else {
-            //  element.html('<img src="'+fileUrl+'" />');
-            //}
+            //$timeout(function () {
+              //if (element.hasClass('item-image')) {
+              element.html('&nbsp;');
+              element.css({
+                'background-image':'url(' + fileUrl + ')'
+              });
+              //element.attr('style', 'background-image:url(' + fileUrl + ')');
+              //} else {
+              //  element.html('<img src="'+fileUrl+'" />');
+              //}
+            //});
           }, function () {
             element.html('&nbsp;').addClass('unavailable');
           });

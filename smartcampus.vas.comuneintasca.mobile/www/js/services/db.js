@@ -204,6 +204,8 @@ angular.module('ilcomuneintasca.services.db', [])
                 objsUpdated = {};
                 objsDeleted = {};
 
+                dbObj.transaction(function (tx) {
+
                 angular.forEach(types, function (contentTypeClassName, contentTypeKey) {
                   console.log('type (' + contentTypeKey + '): ' + contentTypeClassName);
 
@@ -216,7 +218,7 @@ angular.module('ilcomuneintasca.services.db', [])
                       return;
                     }
 
-                    dbObj.transaction(function (tx) {
+//                    dbObj.transaction(function (tx) {
                       angular.forEach(updates, function (item, idx) {
                         tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [item.id], function (tx, res) { //success callback
 													console.log('deleted obj with id: ' + item.id);
@@ -284,6 +286,7 @@ angular.module('ilcomuneintasca.services.db', [])
 													console.log('unable to insert obj with id ' + item.id + ': ' + e.message);
 												});
                       });
+/*
                     }, function () { //error callback
                       console.log('cannot sync (inserts-' + contentTypeKey + ')');
                       objsDone.reject(false);
@@ -291,11 +294,12 @@ angular.module('ilcomuneintasca.services.db', [])
                       //console.log('synced (inserts-' + contentTypeKey + ')');
                       objsDone.resolve(true);
                     });
+*/
 									} else {
 										console.log('nothing to update');
 									}
 
-                  dbObj.transaction(function (tx) {
+//                  dbObj.transaction(function (tx) {
                     if (!angular.isUndefined(data.deleted[contentTypeClassName])) {
                       deletions = data.deleted[contentTypeClassName];
                       console.log('deletions: ' + deletions.length);
@@ -311,6 +315,7 @@ angular.module('ilcomuneintasca.services.db', [])
                     } else {
                       //console.log('nothing to delete');
                     }
+/*
                   }, function () { //error callback
                     console.log('cannot sync (deleted)');
                     objsDone.reject(false);
@@ -318,10 +323,11 @@ angular.module('ilcomuneintasca.services.db', [])
                     //console.log('synced (deleted)');
                     objsDone.resolve(true);
                   });
+*/
                 });
 
-                // TODO events cleanup
-                dbObj.transaction(function (tx) {
+                // events cleanup
+//                dbObj.transaction(function (tx) {
                   var nowTime = (new Date()).getTime();
                   //console.log('[TODO events cleanup] nowTime=' + new Date(nowTime));
                   var yesterdayTime = nowTime - (24 * 60 * 60 * 1000);

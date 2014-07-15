@@ -1,0 +1,198 @@
+{
+  "highlights":[
+      {
+      "image": "http://tn.smartcampuslab.it/comuneintasca/images/nettuno.jpg",
+      "objectIds": ["text.3001","text.3004"],
+      "type": "ContentObject"
+    },
+    {
+      "objectIds": ["event.major.4"],
+      "type": "MainEventObject"
+    },
+    {
+      "objectIds": ["cultura.72"],
+      "type": "POIObject"
+      
+    },
+    {
+      "objectIds": ["60d9c631509d00ff12eb95cbfc5b699e"]
+      "type": "EventObject"
+    }    
+  ],
+  "navigationItems":[
+    {
+      "id":"conoscere",
+      "name":{ "it":"CONOSCERE", "en":"DISCOVER", "de":"KENNEN" },
+      "ref":"info"
+    }, {
+      "id":"eventi",
+      "name":{ "it":"EVENTI", "en":"EVENTS", "de":"VERANSTALTUNGEN" },
+      "ref":"events"
+    }, {
+      "id":"scoprire",
+      "name":{ "it":"VISITARE", "en":"HIGHLIGHTS", "de":"WAS SU  BESICHTIGEN" },
+      "ref":"places"
+    }, {
+      "id":"percorsi",
+      "name":{ "it":"PERCORSI", "en":"TOURISTIC  ITINERARIES", "de":"TOUREN  UND ROUTEN" },
+      "ref":"itineraries"
+    }, {
+      "id":"mangiaredormire",
+      "name":{ "it":"MANGIARE  E DORMIRE", "en":"HOTELS &  RESTAURANTS", "de":"ÜBERNACHTUNG  UND GASTRONOMIE" },
+      "ref":"hospitality"
+    }, {
+      "id":"infoutili",
+      "name":{ "it":"INFO UTILI", "en":"USEFUL  INFORMATIONS", "de":"WEITERE  INFORMATIONEN" },
+      "ref":"useful"
+    }, {
+      "id":"viaggiatrento",
+      "name":{ "it":"VIAGGIA  TRENTO", "en":"VIAGGIA  TRENTO", "de":"VIAGGIA  TRENTO" },
+      "app":{
+        "android":"eu.trentorise.smartcampus.viaggiatrento", 
+        "ios":null
+      }
+    }, {
+      "id":"preferiti",
+      "name":{ "it":"PREFERITI", "en":"FAVORITES", "de":"LIEBLINGSSEITEN" },
+      "ref":"favorites"
+    }
+  ],
+  "menu":[
+    {
+      "id":"info",
+      "name":{ "it":"CONOSCERE", "en":"DISCOVER", "de":"KENNEN" },
+      "items":[
+        { 
+          "id":"data",
+          "name":{ "it":"Informazioni", "en":"Info", "de":"Info" },
+          "objectIds":[ "text.3001", "text.3004" ],
+          "type": "content"
+        }, {
+          "id":"storia",
+          "name":{ "it":"Storia", "en":"History", "de":"Geschichte" },
+          "objectIds":[ "text.3002" ],
+          "type": "content"
+        }, {
+          "id":"concilio",
+          "name":{ "it":"Concilio", "en":"Concilio", "de":"Concilio" },
+          "objectIds":[ "text.3003" ],
+          "type": "content"
+        }, { 
+          "id":"mainevents",
+          "name":{ "it":"Eventi Principali", "en":"Main Events", "de":"Hauptereignisse" },
+          "query":{ "type":"mainevent" }
+        }, { 
+          "id":"bondone",
+          "name":{ "it":"Monte Bondone", "en":"Mount Bondone", "de":"Mont Bondone" },
+          "query":{ "type":"content", "classification":"bondone", "view":"page" }
+        }
+      ]
+    }, {
+      "id":"events",
+      "name":{ "it":"EVENTI", "en":"EVENTS", "de":"VERANSTALTUNGEN" },
+      "items":[
+        {
+          "id":"all",
+          "name":{ "it": "Tutti gli eventi", "en": "All events", "de": "Alle Veranstaltungen" },
+          "query":{ "type":"event", "classification":"all" }
+        }, { 
+          "id":"fairs",
+          "name":{ "it": "Feste, mercati e fiere", "en": "Festivals, markets and fairs", "de": "Festivals, Märkte und Messen" },
+          "query":{ "type":"event", "classification":"fairs" }
+        }, { 
+          "id":"conferences",
+          "name":{ "it": "Incontri, convegni e conferenze", "en": "Meetings, seminars and conferences", "de": "Tagungen, Seminare und Konferenzen" },
+          "query":{ "type":"event", "classification":"conferences" }
+        }, { 
+          "id":"shows",
+          "name":{ "it": "Spettacoli", "en": "Shows", "de": "Shows" },
+          "query":{ "type":"event", "classification":"shows" }
+        }, { 
+          "id":"exhibitions",
+          "name":{ "it": "Mostre", "en": "Exhibitions", "de": "Ausstellungen" },
+          "query":{ "type":"event", "classification":"exhibitions" }
+        }, { 
+          "id":"labs",
+          "name":{ "it": "Corsi e laboratori", "en": "Courses and workshops", "de": "Kurse und Workshops" },
+          "query":{ "type":"event", "classification":"labs" }
+        }, { 
+          "id":"competitions",
+          "name":{ "it": "Competizioni e gare", "en": "Competitions and contests", "de": "Wettbewerbe und Gewinnspiele" },
+          "query":{ "type":"event", "classification":"competitions" }
+        }, { 
+          "id":"misc",
+          "name":{ "it": "Iniziative varie", "en": "Various initiatives", "de": "Verschiedene Initiativen" },
+          "query":{ "type":"event", "classification":"misc" }
+        }
+      ]
+    }, {
+      "id":"places",
+      "name":{ "it":"VISITARE", "en":"HIGHLIGHTS", "de":"WAS SU  BESICHTIGEN" },
+      "items":[
+        { 
+          "id":"museums",
+          "name":{ "it": "Musei", "en": "Museums", "de": "Museen" },
+          "query":{ "type":"places", "classification":"museums" }
+        }, { 
+          "id":"buildings",
+          "name":{ "it": "Edifici storici", "en": "Historic Buildings", "de": "Historische Gebäude" },
+          "query":{ "type":"places", "classification":"buildings" }
+        }, { 
+          "id":"churches",
+          "name":{ "it": "Chiese", "en": "Churches", "de": "Kirchen" },
+          "query":{ "type":"places", "classification":"churches" }
+        }, { 
+          "id":"archeo",
+          "name":{ "it": "Aree Archeologiche", "en": "Archaeological Areas", "de": "Archäologische Areas" },
+          "query":{ "type":"places", "classification":"archeo" }
+        }, { 
+          "id":"parks",
+          "name":{ "it": "Natura", "en": "Nature", "de": "Natur" },
+          "query":{ "type":"places", "classification":"parks" }
+        }, { 
+          "id":"misc",
+          "name":{ "it": "Altri siti di interesse storico artistico", "en": "Other sites of historical and artistic interest", "de": "Andere Seiten von historischem und künstlerischem Interesse" },
+          "query":{ "type":"places", "classification":"misc" }
+        }
+      ]
+    }, {
+      "id":"itins",
+      "name":{ "it":"PERCORSI", "en":"TOURISTIC  ITINERARIES", "de":"TOUREN  UND ROUTEN" },
+      "items":[
+        { 
+          "id":"itineraries",
+          "name":{ "it":"Percorsi Turistici", "en":"Touristic Itineraries", "de":"Touren und Routen" },
+          "query":{ "type":"itineraries" }
+        }
+      ]
+    }, {
+      "id":"hospitality",
+      "name":{ "it":"MANGIARE  E DORMIRE", "en":"HOTELS &  RESTAURANTS", "de":"ÜBERNACHTUNG  UND GASTRONOMIE" },
+      "items":[
+        { 
+          "id":"hotels",
+          "name":{ "it":"Dormire", "en":"Hotels", "de":"Übernachtung" },
+          "query":{ "type":"hotels" }
+        }, { 
+          "id":"restaurants",
+          "name":{ "it":"Mangiare", "en":"Restaurants", "de":"Gastronomie" },
+          "query":{ "type":"restaurants" }
+        }
+      ]
+    }, {
+      "id":"useful",
+      "name":{ "it":"INFO UTILI", "en":"USEFUL  INFORMATIONS", "de":"WEITERE  INFORMATIONEN" },
+      "items":[
+        { 
+          "id":"servizi",
+          "name":{ "it":"Servizi", "en":"Services", "de":"Dienstleistungen" },
+          "query":{ "type":"contentscatelist", "classification":"Servizi" }
+        }, { 
+          "id":"contatti",
+          "name":{ "it":"Contatti", "en":"Contacts", "de":"Kontakten" },
+          "query":{ "type":"contentscatelist", "classification":"Contatti" }
+        }
+      ]
+    }
+  ]
+}

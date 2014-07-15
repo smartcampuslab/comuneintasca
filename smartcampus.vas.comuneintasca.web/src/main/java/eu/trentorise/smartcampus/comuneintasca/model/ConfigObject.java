@@ -15,31 +15,15 @@
  ******************************************************************************/
 package eu.trentorise.smartcampus.comuneintasca.model;
 
-import java.util.Map;
+import java.util.List;
 
-public class POIObject extends GeoCITObject {
-	private static final long serialVersionUID = -5567010752470052310L;
+import eu.trentorise.smartcampus.presentation.data.BasicObject;
 
-	private Map<String,String> classification;
-	private String relatedObjectId;
-	private String contactFullName;
+public class ConfigObject extends BasicObject {
+	private static final long serialVersionUID = 3952436037350859543L;
 
-	public Map<String, String> getClassification() {
-		return classification;
-	}
-	public void setClassification(Map<String, String> classification) {
-		this.classification = classification;
-	}
-	public String getRelatedObjectId() {
-		return relatedObjectId;
-	}
-	public void setRelatedObjectId(String relatedObjectId) {
-		this.relatedObjectId = relatedObjectId;
-	}
-	public String getContactFullName() {
-		return contactFullName;
-	}
-	public void setContactFullName(String contackFullName) {
-		this.contactFullName = contackFullName;
-	}
+	private List<MenuItem> highlights;
+	private List<MenuItem> navigationItems;
+	private List<MenuItem> menu;
+	
 }

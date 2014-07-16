@@ -5,7 +5,6 @@ angular.module('ilcomuneintasca', [
   'ionic', 
   'ilcomuneintasca.controllers.common',
   'ilcomuneintasca.controllers.home',
-  'ilcomuneintasca.controllers.events',
   'ilcomuneintasca.controllers.places',
   'ilcomuneintasca.controllers.itineraries',
   'ilcomuneintasca.controllers.hospitality',

@@ -52,6 +52,7 @@ public class ConfigProcessor {
 			ConfigObject home = JsonUtils.toObject(json, ConfigObject.class);
 			processObject(home, lastModified);
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger .error("Problem reading file: "+ e.getMessage());
 		}
 
@@ -90,6 +91,7 @@ public class ConfigProcessor {
 	}
 	
 //	public static void main(String[] args) throws FileNotFoundException, IOException {
-//		System.err.println(new ConfigProcessor().readJson(new FileInputStream("config.json")));
+//		String json = new ConfigProcessor().readJson(new FileInputStream("config.json"));
+//		System.err.println(new ObjectMapper().writeValueAsString(JsonUtils.toObject(json, ConfigObject.class)));
 //	}
 }

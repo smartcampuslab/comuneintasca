@@ -188,7 +188,7 @@ angular.module('ilcomuneintasca.services.conf', [])
     'loading': {
       it: 'caricamento in corso...',
       en: 'loading...',
-      de: 'Uploaden im Laufe...'
+      de: 'loading...'
     },
     'loading_short': {
       it: 'carico...',

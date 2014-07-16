@@ -4,6 +4,8 @@ xmlns="http://www.example.org/mml-schema"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.example.org/mml-schema mml-schema.xsd ">
 
+    <input name="url" type="String" />
+    
 	<variable name="eventi" type="String"/>
 	<variable name="links" type="List"/>
 	
@@ -12,7 +14,7 @@ xsi:schemaLocation="http://www.example.org/mml-schema mml-schema.xsd ">
 	<connect name="c1" connector="connector" outputVar="eventi" transformer="string">
 		<properties>
 			<property name="url">
-				<value>"http://www.comune.trento.it/api/opendata/v1/content/class/event/offset/0/limit/1000"</value>
+				<value>url</value>
 			</property>
 		</properties>
 	</connect>		

@@ -1,7 +1,7 @@
 angular.module('ilcomuneintasca.services.conf', [])
 
 .factory('Config', function ($q, $http, $window) {
-  var SCHEMA_VERSION=78;
+  var SCHEMA_VERSION=79;
   
   var fetched = $q.defer();
   $http.get('data/config.json').success(function(data, status, headers, config){
@@ -571,6 +571,15 @@ angular.module('ilcomuneintasca.services.conf', [])
     hotelCateFromType: function (type) {
       return hotelTypes[type];
     },
+    hotelTypeFromCate: function (cate) {
+      for (var hotelType in hotelTypes) {
+        if (hotelTypes.hasOwnProperty(hotelType)) {
+          if (hotelTypes[hotelType].it == cate) return hotelType;
+        }
+      }
+      console.log('unknown hotel cate: "'+cate+'"');
+      return null;
+    },
     hotelCateFromDbClassification: function (dbclassification) {
       for (var hotelType in hotelTypes) {
         if (hotelTypes.hasOwnProperty(hotelType)) {
@@ -588,6 +597,15 @@ angular.module('ilcomuneintasca.services.conf', [])
     },
     restaurantCateFromType: function (type) {
       return restaurantTypes[type];
+    },
+    restaurantTypeFromCate: function (cate) {
+      for (var restaurantType in restaurantTypes) {
+        if (restaurantTypes.hasOwnProperty(restaurantType)) {
+          if (restaurantTypes[restaurantType].it == cate) return restaurantType;
+        }
+      }
+      console.log('unknown restaurant cate: "'+cate+'"');
+      return null;
     },
     restaurantCateFromDbClassification: function (dbclassification) {
       for (var restaurantType in restaurantTypes) {

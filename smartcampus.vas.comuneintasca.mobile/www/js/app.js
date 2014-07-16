@@ -6,7 +6,6 @@ angular.module('ilcomuneintasca', [
   'ilcomuneintasca.controllers.common',
   'ilcomuneintasca.controllers.home',
   'ilcomuneintasca.controllers.itineraries',
-  'ilcomuneintasca.controllers.hospitality',
   'ilcomuneintasca.services.conf',
   'ilcomuneintasca.services.date',
   'ilcomuneintasca.services.list',

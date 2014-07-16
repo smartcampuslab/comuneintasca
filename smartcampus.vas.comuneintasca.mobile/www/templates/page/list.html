@@ -1,6 +1,6 @@
 <ion-content class="has-header">
   <ion-list>
-    <ion-item ng-repeat="content in results" ng-href="goToItem(content.id)">
+    <ion-item ng-repeat="content in results" ng-click="goToItem(content.id)">
       {{content.title|translate}}
     </ion-item>
   </ion-list>

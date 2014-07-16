@@ -269,18 +269,21 @@ angular.module('ilcomuneintasca.services.db', [])
                       } else {
                         if (contentTypeKey == 'content') {
                           classification = item.classification;
+
                         } else if (contentTypeKey == 'mainevent') {
                           classification = item.classification.it;
                           item.category = 'mainevent';
+
                         } else if (contentTypeKey == 'hotel') {
-                          classification = item.classification.it;
+                          classification = Config.hotelTypeFromCate(item.classification.it);
+
                         } else if (contentTypeKey == 'restaurant') {
                           classifications = item.classification.it.split(';');
-                          classification = classifications[0].trim();
+                          classification = Config.restaurantTypeFromCate(classifications[0].trim());
                           if (classifications.length > 1) {
-                            classification2 = classifications[1].trim();
+                            classification2 = Config.restaurantTypeFromCate(classifications[1].trim());
                             if (classifications.length > 2) {
-                              classification3 = classifications[2].trim();
+                              classification3 = Config.restaurantTypeFromCate(classifications[2].trim());
                             }
                           }
                           item.category = 'ristorazione';

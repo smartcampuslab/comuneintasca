@@ -88,6 +88,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
 
 
 .controller('PageCtrl', function ($scope, $state, $stateParams, $window, Config, DatiDB, ListToolbox, DateUtility, GeoLocate, MapHelper, $ionicScrollDelegate) {
+  $scope._ = _;
   $scope.getLocaleDateString = function (time) {
     return DateUtility.getLocaleDateString($rootScope.lang, time);
   };
@@ -166,8 +167,15 @@ angular.module('ilcomuneintasca.controllers.common', [])
 
         $scope.filterDef='';
         if (sg.query.hasOwnProperty('filter') || sg._parent.hasOwnProperty('filter')) {
+          if (sg.query.type=="hotel") {
+            tboptions.filterOptions=Config.hotelTypesList();
+          } else if (sg.query.type=="restaurant") {
+            tboptions.filterOptions=Config.restaurantTypesList();
+          }
+
           tboptions.doFilter=function(filter) {
-            var t;
+            console.log('filter: '+filter);
+            var t=0;
             var d = new Date();
             var f = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime() - 1;
             if (filter == 'today') {
@@ -176,8 +184,6 @@ angular.module('ilcomuneintasca.controllers.common', [])
               t = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 7).getTime();
             } else if (filter == 'month') {
               t = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 30).getTime();
-            } else {
-              t = 0;
             }
             if (t > 0) {
               if (sg.query.classification) {
@@ -186,8 +192,8 @@ angular.module('ilcomuneintasca.controllers.common', [])
                 $scope.gotdbdata=DatiDB.byTimeInterval(sg.query.type, f, t, null);
               }
             } else {
-              if (sg.query.classification) {
-                $scope.gotdbdata=DatiDB.cate(sg.query.type, sg.query.classification);
+              if (filter) {
+                $scope.gotdbdata=DatiDB.cate(sg.query.type, filter);
               } else {
                 $scope.gotdbdata=DatiDB.all(sg.query.type);
               }
@@ -214,12 +220,17 @@ angular.module('ilcomuneintasca.controllers.common', [])
           if ($scope.filter) {
             if (sg._parent.hasOwnProperty('sort')) {
               Config.menuGroupSubgroup($stateParams.groupId,$root.lang,$scope.filter).then(function(sg) {
-                if (sg) $scope.filterDef=$filter('translate')(sg.name) + ': ';
+                if (sg) {
+                  var fd = $filter('translate')(sg.name);
+                  if (fd.length > 20) fd = fd.substr(0, 20) + '...';
+                  $scope.filterDef= fd + ': ';
+                }
               });
             }
           }
         }
-        if (tboptions.hasFilter || tboptions.hasSearch || tboptions.hasSearch) {
+
+        if (tboptions.hasMap || tboptions.hasFilter || tboptions.hasSort || tboptions.hasSearch) {
           ListToolbox.prepare($scope, tboptions);
         } else {
           if (sg.query.classification) {

@@ -177,11 +177,11 @@
         { 
           "id":"hotels",
           "name":{ "it":"Dormire", "en":"Hotels", "de":"Übernachtung" },
-          "query":{ "type":"hotels" }
+          "query":{ "type":"hotel", "sort":{ "options":["A-Z", "Z-A", "Distance", "Stars"], "default":"Distance" }, "filter":true, "map":true }
         }, { 
           "id":"restaurants",
           "name":{ "it":"Mangiare", "en":"Restaurants", "de":"Gastronomie" },
-          "query":{ "type":"restaurants" }
+          "query":{ "type":"restaurant", "sort":{ "options":["A-Z", "Z-A", "Distance"], "default":"Distance" }, "filter":true, "map":true }
         }
       ]
     }, {

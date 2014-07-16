@@ -74,14 +74,16 @@ angular.module('ilcomuneintasca.services.db', [])
 
   var localSyncOptions = {
     method: 'GET',
-    url: 'data/trento.json'
+    url: 'data/trento.json',
+    remote: false
   };
 
   var remoteSyncURL = 'https://tn.smartcampuslab.it/comuneintasca/sync?since=';
   var remoteSyncOptions = {
     method: 'POST',
     url: remoteSyncURL + currentDbVersion,
-    data: '{"updated":{}}'
+    data: '{"updated":{}}',
+    remote: true
   };
 
   var dbObj;
@@ -169,7 +171,7 @@ angular.module('ilcomuneintasca.services.db', [])
         } else {
           var now_as_epoch = parseInt((new Date).getTime() / 1000);
           var to = (lastSynced + Config.syncTimeoutSeconds());
-          console.log('lastSynced='+lastSynced);
+          //console.log('lastSynced='+lastSynced);
           if (lastSynced == -1 || now_as_epoch > to) {
             console.log('currentDbVersion: ' + currentDbVersion);
             if (currentDbVersion == 0) {
@@ -185,172 +187,179 @@ angular.module('ilcomuneintasca.services.db', [])
               duration: Config.syncingOverlayTimeoutMillis()
             });
 
-            $http.defaults.headers.common.Accept = 'application/json';
-            $http.defaults.headers.post = {
-              'Content-Type': 'application/json'
-            };
             if (currentDbVersion == 0) {
               currentSyncOptions = localSyncOptions;
-            } else {
+            } else if (currentSyncOptions.remote) {
               currentSyncOptions = remoteSyncOptions;
               currentSyncOptions.url = remoteSyncURL + currentDbVersion;
             }
-            console.log('currentSyncOptions: ' + JSON.stringify(currentSyncOptions));
+            //console.log('currentSyncOptions: ' + JSON.stringify(currentSyncOptions));
+
+            $http.defaults.headers.common.Accept = 'application/json';
+            $http.defaults.headers.post = { 'Content-Type': 'application/json' };
             $http(currentSyncOptions).success(function (data, status, headers, config) {
               nextVersion = data.version;
               console.log('nextVersion: ' + nextVersion);
               if (nextVersion > currentDbVersion) {
-                objsDone = $q.defer();
-                objsUpdated = {};
-                objsDeleted = {};
+                var itemsToInsert=[];
+                var objsReady=[];
+                angular.forEach(types, function (contentTypeClassName, contentTypeKey) {
+                  console.log('[INSERTS] type (' + contentTypeKey + '): ' + contentTypeClassName);
 
-                dbObj.transaction(function (tx) {
+                  if (!angular.isUndefined(data.updated[contentTypeClassName])) {
+                    updates = data.updated[contentTypeClassName];
+                    console.log('updates: ' + updates.length);
 
-                  angular.forEach(types, function (contentTypeClassName, contentTypeKey) {
-                    console.log('type (' + contentTypeKey + '): ' + contentTypeClassName);
+                    if (contentTypeKey == 'home') {
+                      localStorage.homeObject = JSON.stringify(updates[0]);
+                      return;
+                    }
 
-                    if (!angular.isUndefined(data.updated[contentTypeClassName])) {
-                      updates = data.updated[contentTypeClassName];
-                      console.log('updates: ' + updates.length);
 
-                      if (contentTypeKey == 'home') {
-                        localStorage.homeObject = JSON.stringify(updates[0]);
-                        return;
-                      }
+                    angular.forEach(updates, function (item, idx) {
+                      //console.log('item.category: ' + item.category);
 
-                      angular.forEach(updates, function (item, idx) {
-                        tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [item.id], function (tx, res) { //success callback
-                          //console.log('deleted obj with id: ' + item.id);
-                        }, function (e) { //error callback
-                          //console.log('unable to delete obj with id ' + item.id + ': ' + e.message);
-                        });
+                      var fromTime = 0;
+                      var toTime = 0;
 
-                        var classified=$q.defer();
-                        if (contentTypeKey == 'event') {
-                          category = item.category;
-                          //console.log('event cate: ' + category);
-                          if (category) {
-                            // "category": "{objectName=Feste, mercati e fiere, classIdentifier=tipo_eventi, datePublished=1395152152, dateModified=1395152182, objectRemoteId=a15d79dc9794d829ed43364863a8225a, objectId=835351, link=http://www.comune.trento.it/api/opendata/v1/content/object/835351}"
-                            //startMrkr = "{objectName=";
-                            //endMrkr = ", classIdentifier=";
-                            classification = category; //category.substring(startMrkr.length, category.indexOf(endMrkr)) || '';
-                            fromTime = item.fromTime;
-                            if (item.toTime > 0) toTime = item.toTime;
-                            else toTime = fromTime;
+                      var classification = '', 
+                          classification2 = '', 
+                          classification3 = '';
 
-                            Config.menuGroupSubgroupByLocaleName('events','it',classification).then(function(sg){
-                              if (sg) {
-                                //console.log('content db sg classification: '+sg.id);
-                                classified.resolve([sg.id,'','']);
-                              } else {
-                                console.log('content db sg classification is NULL for event cate: '+classification);
-                                classified.resolve(['misc','','']);
-                              }
-                            });
-                          } else {
-                            console.log('content db category is NULL for item: '+item.id);
-                            classified.resolve(['misc','','']);
-                          }
-                        } else if (contentTypeKey == 'poi') {
-                          Config.menuGroupSubgroupByLocaleName('places','it',item.classification.it).then(function(sg){
+                      var classified=$q.defer();
+                      if (contentTypeKey == 'event') {
+                        category = item.category;
+                        //console.log('event cate: ' + category);
+                        if (category) {
+                          // "category": "{objectName=Feste, mercati e fiere, classIdentifier=tipo_eventi, datePublished=1395152152, dateModified=1395152182, objectRemoteId=a15d79dc9794d829ed43364863a8225a, objectId=835351, link=http://www.comune.trento.it/api/opendata/v1/content/object/835351}"
+                          //startMrkr = "{objectName=";
+                          //endMrkr = ", classIdentifier=";
+                          classification = category; //category.substring(startMrkr.length, category.indexOf(endMrkr)) || '';
+                          fromTime = item.fromTime;
+                          if (item.toTime > 0) toTime = item.toTime;
+                          else toTime = fromTime;
+
+                          Config.menuGroupSubgroupByLocaleName('events','it',classification).then(function(sg){
                             if (sg) {
                               //console.log('content db sg classification: '+sg.id);
                               classified.resolve([sg.id,'','']);
                             } else {
-                              console.log('content db sg classification is NULL for place cate: '+item.classification.it);
-                              classified.resolve(['unknown','','']);
+                              console.log('content db sg classification is NULL for event cate: '+classification);
+                              classified.resolve(['misc','','']);
                             }
                           });
                         } else {
-                          if (contentTypeKey == 'content') {
-                            classification = item.classification;
-                          } else if (contentTypeKey == 'mainevent') {
-                            classification = item.classification.it;
-                            item.category = 'mainevent';
-                          } else if (contentTypeKey == 'hotel') {
-                            classification = item.classification.it;
-                          } else if (contentTypeKey == 'restaurant') {
-                            classifications = item.classification.it.split(';');
-                            classification = classifications[0].trim();
-                            if (classifications.length > 1) {
-                              classification2 = classifications[1].trim();
-                              if (classifications.length > 2) {
-                                classification3 = classifications[2].trim();
-                              }
-                            }
-                            item.category = 'ristorazione';
-                          }
-
-                          classified.resolve([classification,classification2,classification3]);
+                          console.log('content db category is NULL for item: '+item.id);
+                          classified.resolve(['misc','','']);
                         }
-                        classified.promise.then(function(clfs){
-                          values = [item.id, item.version, contentTypeClassName, item.category, clfs[0], clfs[1], clfs[2], JSON.stringify(item), ((item.location && item.location.length == 2) ? item.location[0] : -1), ((item.location && item.location.length == 2) ? item.location[1] : -1), fromTime, toTime];
-                          tx.executeSql('INSERT INTO ContentObjects (id, version, type, category, classification, classification2, classification3, data, lat, lon, fromTime, toTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', values, function (tx, res) { //success callback
-                            //console.log('inserted obj with id: ' + item.id);
+                      } else if (contentTypeKey == 'poi') {
+                        Config.menuGroupSubgroupByLocaleName('places','it',item.classification.it).then(function(sg){
+                          if (sg) {
+                            //console.log('content db sg classification: '+sg.id);
+                            classified.resolve([sg.id,'','']);
+                          } else {
+                            console.log('content db sg classification is NULL for place cate: '+item.classification.it);
+                            classified.resolve(['unknown','','']);
+                          }
+                        });
+                      } else {
+                        if (contentTypeKey == 'content') {
+                          classification = item.classification;
+                        } else if (contentTypeKey == 'mainevent') {
+                          classification = item.classification.it;
+                          item.category = 'mainevent';
+                        } else if (contentTypeKey == 'hotel') {
+                          classification = item.classification.it;
+                        } else if (contentTypeKey == 'restaurant') {
+                          classifications = item.classification.it.split(';');
+                          classification = classifications[0].trim();
+                          if (classifications.length > 1) {
+                            classification2 = classifications[1].trim();
+                            if (classifications.length > 2) {
+                              classification3 = classifications[2].trim();
+                            }
+                          }
+                          item.category = 'ristorazione';
+                        }
+
+                        classified.resolve([classification,classification2,classification3]);
+                      }
+                      objsReady.push(classified.promise.then(function(clfs){
+                        values = [item.id, item.version, contentTypeClassName, item.category, clfs[0], clfs[1], clfs[2], JSON.stringify(item), ((item.location && item.location.length == 2) ? item.location[0] : -1), ((item.location && item.location.length == 2) ? item.location[1] : -1), fromTime, toTime];
+                        itemsToInsert.push(values)
+                      }));
+
+                    });
+
+                  } else {
+                    console.log('nothing to update');
+                  }
+
+                });
+
+                $q.all(objsReady).then(function(){
+                  dbObj.transaction(function (tx) {
+                    angular.forEach(itemsToInsert, function (rowData, rowIdx) {
+                      tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [rowData[0]], function (tx, res) { //success callback
+                        tx.executeSql('INSERT INTO ContentObjects (id, version, type, category, classification, classification2, classification3, data, lat, lon, fromTime, toTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', rowData, function (tx, res) { //success callback
+                          //console.log('inserted obj with id: ' + rowData[0]);
+                        }, function (e) { //error callback
+                          console.log('unable to insert obj with id ' + rowData[0] + ': ' + e.message);
+                        });
+                      }, function (e) { //error callback
+                        console.log('unable to delete obj with id ' + rowData[0] + ': ' + e.message);
+                      });
+                    });
+
+                    angular.forEach(types, function (contentTypeClassName, contentTypeKey) {
+                      console.log('[DELETIONS] type (' + contentTypeKey + '): ' + contentTypeClassName);
+
+                      if (!angular.isUndefined(data.deleted[contentTypeClassName])) {
+                        deletions = data.deleted[contentTypeClassName];
+                        console.log('deletions: ' + deletions.length);
+
+                        angular.forEach(deletions, function (item, idx) {
+                          //console.log('deleting obj with id: ' + item);
+                          tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [item], function (tx, res) { //success callback
+                            //console.log('deleted obj with id: ' + item);
                           }, function (e) { //error callback
-                            console.log('unable to insert obj with id ' + item.id + ': ' + e.message);
+                            console.log('unable to delete obj with id ' + item + ': ' + e.message);
                           });
                         });
+                      } else {
+                        //console.log('nothing to delete');
+                      }
+                    });
 
-                      });
+                    // events cleanup
+                    var nowTime = (new Date()).getTime();
+                    //console.log('[TODO events cleanup] nowTime=' + new Date(nowTime));
+                    var yesterdayTime = nowTime - (24 * 60 * 60 * 1000);
+                    console.log('[TODO events cleanup] yesterdayTime=' + new Date(yesterdayTime));
+                    tx.executeSql('DELETE FROM ContentObjects WHERE type = ? AND toTime < ?', [ types['event'],yesterdayTime ], function (tx, res) { //success callback
+                      //console.log('deleted old events');
+                    }, function (e) { //error callback
+                      console.log('unable to delete old events: ' + e.message);
+                    });
 
-                    } else {
-                      console.log('nothing to update');
-                    }
-
-                    if (!angular.isUndefined(data.deleted[contentTypeClassName])) {
-                      deletions = data.deleted[contentTypeClassName];
-                      console.log('deletions: ' + deletions.length);
-
-                      angular.forEach(deletions, function (item, idx) {
-                        //console.log('deleting obj with id: ' + item);
-                        tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [item], function (tx, res) { //success callback
-                          //console.log('deleted obj with id: ' + item);
-                        }, function (e) { //error callback
-                          console.log('unable to delete obj with id ' + item + ': ' + e.message);
-                        });
-                      });
-                    } else {
-                      //console.log('nothing to delete');
-                    }
-
+                  }, function () { //error callback
+                    console.log('cannot sync');
+                    $ionicLoading.hide();
+                    Profiling._do('dbsync');
+                    syncinprogress=null;
+                    syncronization.reject();
+                  }, function () { //success callback
+                    //console.log('synced');
+                    $ionicLoading.hide();
+                    currentDbVersion = nextVersion;
+                    localStorage.currentDbVersion = currentDbVersion;
+                    console.log('synced to version: ' + currentDbVersion);
+                    Profiling._do('dbsync');
+                    syncinprogress=null;
+                    syncronization.resolve(currentDbVersion);
                   });
-
-                  // events cleanup
-                  var nowTime = (new Date()).getTime();
-                  //console.log('[TODO events cleanup] nowTime=' + new Date(nowTime));
-                  var yesterdayTime = nowTime - (24 * 60 * 60 * 1000);
-                  console.log('[TODO events cleanup] yesterdayTime=' + new Date(yesterdayTime));
-
-                  tx.executeSql('DELETE FROM ContentObjects WHERE type = ? AND toTime < ?', [ types['event'],yesterdayTime ], function (tx, res) { //success callback
-                    //console.log('deleted old events');
-                  }, function (e) { //error callback
-                    console.log('unable to delete old events: ' + e.message);
-                  });
-
-                }, function () { //error callback
-                  console.log('cannot sync');
-                  objsDone.reject(false);
-                }, function () { //success callback
-                  //console.log('synced');
-                  objsDone.resolve(true);
                 });
 
-                objsDone.promise.then(function () {
-                  $ionicLoading.hide();
-                  currentDbVersion = nextVersion;
-                  localStorage.currentDbVersion = currentDbVersion;
-                  console.log('synced to version: ' + currentDbVersion);
-                  Profiling._do('dbsync');
-                  syncinprogress=null;
-                  syncronization.resolve(currentDbVersion);
-                }, function () {
-                  $ionicLoading.hide();
-                  console.log('cannot initialize (2)');
-                  Profiling._do('dbsync');
-                  syncinprogress=null;
-                  syncronization.reject();
-                });
               } else {
                 $ionicLoading.hide();
                 console.log('local database already up-to-date!');
@@ -368,7 +377,7 @@ angular.module('ilcomuneintasca.services.db', [])
             });
           } else {
             $ionicLoading.hide();
-            console.log('avoiding too frequent syncronizations. seconds since last one: ' + (now_as_epoch - lastSynced));
+            //console.log('avoiding too frequent syncronizations. seconds since last one: ' + (now_as_epoch - lastSynced));
             Profiling._do('dbsync');
             syncinprogress=null;
             syncronization.resolve(currentDbVersion);
@@ -532,6 +541,7 @@ angular.module('ilcomuneintasca.services.db', [])
           qParams.unshift(types[dbname]);
           var dbQuery = 'SELECT id, type, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=? AND ' + idCond;
           //console.log('dbQuery: ' + dbQuery);
+          //console.log('qParams: ' + qParams);
           //console.log('DatiDB.get("' + dbname + '", "' + itemId + '"); dbQuery launched...');
           tx.executeSql(dbQuery, qParams, function (tx2, results) {
             //console.log('DatiDB.get("' + dbname + '", "' + itemId + '"); dbQuery completed');

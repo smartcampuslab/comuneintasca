@@ -85,3 +85,56 @@ angular.module('ilcomuneintasca.controllers.common', [])
     });
   }
 })
+
+
+.controller('PageCtrl', function ($scope, $stateParams, DatiDB, Config) {
+  Config.menuGroupSubgroup($stateParams.groupId,$stateParams.menuId).then(function(sg){
+    $scope.title=sg.name;
+    if (sg.query) {
+      $scope.hasSort=(sg.query.sort||true);
+      $scope.hasSearch=(sg.query.search||true);
+      $scope.template='templates/page/'+(sg.view||sg.query.type+'_list')+'.html';
+      console.log(sg.query);
+      if (sg.query.classification) {
+        gotdbdata=DatiDB.cate(sg.query.type, sg.query.classification);
+      } else {
+        gotdbdata=DatiDB.all(sg.query.type);
+      }
+      $scope.gotdata = gotdbdata.then(function (data) {
+        $scope.contents = data;
+      });
+    } else if (sg.objectIds) {
+      $scope.template='templates/page/'+(sg.view||'single')+'.html';
+      $scope.gotdata = DatiDB.get(sg.type, sg.objectIds.join(',')).then(function (data) {
+        data=(data.hasOwnProperty('length')?data:[data]);
+        $scope.contents = data;
+      });
+    } else {
+    }
+  });
+/*
+    for (mgi=0; mgi<data.menu.length; mgi++) {
+      var group=data.menu[mgi];
+      for (ii=0; ii<group.items.length; ii++) {
+        var item=group.items[ii];
+        if (item.objectIds) {
+          item.path="/app/"+(item.view||"page")+"/"+item.type+"/"+item.objectIds.join(',');
+        } else if (item.query) {
+          item.path="/app/"+(item.view||"list")+"/"+item.query.type+(item.query.classification?"/"+item.query.classification:"");
+        } else {
+          item.path="/menu/"+group.id+"/"+ii;
+          console.log('unkown menu item: '+item.path);
+        }
+        //console.log('item['+group.id+']['+item.id+'].path="'+item.path+'"');
+      }
+    }
+
+  console.log('$stateParams.type='+$stateParams.type);
+  $scope.gotdata = DatiDB.get($stateParams.type, $stateParams.id).then(function (data) {
+    console.log(data);
+    data=(data.hasOwnProperty('length')?data:[data]);
+    $scope.title = data[0].title;
+    $scope.contents = data;
+  });
+*/
+})

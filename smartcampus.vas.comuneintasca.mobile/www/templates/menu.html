@@ -11,13 +11,14 @@
         <button menu-toggle="right" class="button button-icon icon ion-navicon"></button>
       </ion-nav-buttons>
     </ion-nav-bar>
-    <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
+    <ion-nav-view name="menuContent" animation="slide-left-right">
+    </ion-nav-view>
   </ion-pane>
 
   <ion-side-menu side="right">
-    <header class="bar bar-header bar-dark-comuni">
+    <ion-header-bar class="bar-dark-comuni">
       <h1 class="title title-home" ng-bind-html="'app_title' | translate | nl2br"></h1>
-    </header>
+    </ion-header-bar>
     <ion-content class="has-header content-calm">
       <ion-list>
         <ion-item nav-clear menu-close class="item-accordion item-utility" ng-click="goto('home')">
@@ -35,7 +36,7 @@
             <b ng-bind="menuGroup.name | translate">test</b>
           </ion-item>
           <div ng-show="isGroupShown(groupIndex)">
-            <ion-item ng-repeat="(itemIndex, menuItem) in menuGroup.items" nav-clear menu-close class="item-accordion" title="{{menuItem.path}}" ng-href="#/menu/{{groupIndex}}/{{itemIndex}}">
+            <ion-item ng-repeat="(itemIndex, menuItem) in menuGroup.items" nav-clear menu-close class="item-accordion" title="{{menuGroup.id}}/{{menuItem.id}}" ng-href="#/app/page/{{menuGroup.id}}/{{menuItem.id}}">
               <b ng-bind="menuItem.name | translate"></b>
             </ion-item>
           </div>

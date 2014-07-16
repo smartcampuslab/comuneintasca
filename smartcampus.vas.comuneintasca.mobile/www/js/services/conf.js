@@ -1,10 +1,12 @@
 angular.module('ilcomuneintasca.services.conf', [])
 
 .factory('Config', function ($q, $http, $window) {
+  var SCHEMA_VERSION=78;
+  
   var fetched = $q.defer();
   $http.get('data/config.json').success(function(data, status, headers, config){
-    for (gi=0; gi<data.navigationItems.length; gi++) {
-      var item=data.navigationItems[gi];
+    for (ngi=0; ngi<data.navigationItems.length; ngi++) {
+      var item=data.navigationItems[ngi];
       angular.forEach(item.name, function (txt, loc) {
         item.name[loc]=txt.replace("  ","<br/>");
       });
@@ -14,21 +16,23 @@ angular.module('ilcomuneintasca.services.conf', [])
         item.path="/menu/"+item.ref;
       }
     }
-    for (gi=0; gi<data.menu.length; gi++) {
-      var group=data.menu[gi];
+    /*
+    for (mgi=0; mgi<data.menu.length; mgi++) {
+      var group=data.menu[mgi];
       for (ii=0; ii<group.items.length; ii++) {
         var item=group.items[ii];
         if (item.objectIds) {
-          item.path="/"+(item.view||"page")+"/"+item.type+"/"+item.objectIds.join(',');
+          item.path="/app/"+(item.view||"page")+"/"+item.type+"/"+item.objectIds.join(',');
         } else if (item.query) {
-          item.path="/"+(item.view||"list")+"/"+item.query.type+(item.query.classification?"/"+item.query.classification:"");
+          item.path="/app/"+(item.view||"list")+"/"+item.query.type+(item.query.classification?"/"+item.query.classification:"");
         } else {
           item.path="/menu/"+group.id+"/"+ii;
           console.log('unkown menu item: '+item.path);
         }
-        console.log('item['+group.id+']['+item.id+'].path="'+item.path+'"');
+        //console.log('item['+group.id+']['+item.id+'].path="'+item.path+'"');
       }
     }
+    */
     fetched.resolve(data);
   }).error(function(data, status, headers, config){
     console.log('error getting config json!');
@@ -515,7 +519,7 @@ angular.module('ilcomuneintasca.services.conf', [])
       return 'IlComuneInTasca-ImagesCache';
     },
     schemaVersion: function () {
-      return 75;
+      return SCHEMA_VERSION;
     },
     syncTimeoutSeconds: function () {
       //return 60 * 60; /* 60 times 60 seconds = EVERY HOUR */

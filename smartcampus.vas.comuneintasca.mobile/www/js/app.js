@@ -163,6 +163,35 @@ angular.module('ilcomuneintasca', [
       controller: 'MenuCtrl'
 
     })
+    .state('app.page', {
+      url: "/page/:groupId/:menuId",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/page.html",
+          controller: "PageCtrl"
+        }
+      }
+    })
+/*
+    .state('app.page', {
+      url: "/page/:ref",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/page.html",
+          controller: "PageCtrl"
+        }
+      }
+    })
+    .state('app.list', {
+      url: "/list/:ref",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/list.html",
+          controller: "ListCtrl"
+        }
+      }
+    })
+*/
     .state('app.cate', {
       url: "/cate/:cateId",
       views: {

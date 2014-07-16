@@ -93,7 +93,8 @@ angular.module('ilcomuneintasca.services.list', [])
         state.data = conf.getData();
         state.ordering = $scope.ordering;
         state.filter = $scope.filter;
-        $location.path(path);
+        //$location.path(path);
+        $location.path($location.path()+path);
       }
 
       if (conf.orderingTypes) {

@@ -493,7 +493,10 @@ angular.module('ilcomuneintasca.services.conf', [])
       return this.menuGroup(label1).then(function(group) {
         if (group) {
           for (sgi=0; sgi<group.items.length; sgi++) {
-            if (group.items[sgi].id==label2) return group.items[sgi];
+            if (group.items[sgi].id==label2) {
+              group.items[sgi]._parent=group;
+              return group.items[sgi];
+            }
           }
         }
         return null;
@@ -503,7 +506,10 @@ angular.module('ilcomuneintasca.services.conf', [])
       return this.menuGroup(label1).then(function(group) {
         if (group) {
           for (sgi=0; sgi<group.items.length; sgi++) {
-            if (group.items[sgi].name[lcl]==label2) return group.items[sgi];
+            if (group.items[sgi].name[lcl]==label2) {
+              group.items[sgi]._parent=group;
+              return group.items[sgi];
+            }
           }
         }
         return null;

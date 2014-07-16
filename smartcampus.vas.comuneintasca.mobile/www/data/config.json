@@ -61,7 +61,7 @@
         }, { 
           "id":"mainevents",
           "name":{ "it":"Eventi Principali", "en":"Main Events", "de":"Hauptereignisse" },
-          "query":{ "type":"mainevent" }
+          "query":{ "type":"mainevent", "sort":{ "types":["A-Z", "Z-A", "Date"], "default":"Date" } }
         }, { 
           "id":"bondone",
           "name":{ "it":"Monte Bondone", "en":"Mount Bondone", "de":"Mont Bondone" },
@@ -72,6 +72,7 @@
     }, {
       "id":"events",
       "name":{ "it":"EVENTI", "en":"EVENTS", "de":"VERANSTALTUNGEN" },
+      "sort":{ "types":["A-Z", "Z-A", "DateFrom", "DateTo"], "default":"DateTo" },
       "items":[
         {
           "id":"all",

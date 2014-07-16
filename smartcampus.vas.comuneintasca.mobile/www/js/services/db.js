@@ -11,17 +11,18 @@ angular.module('ilcomuneintasca.services.db', [])
     item['dbClassification2'] = dbrow.classification2 || '';
     item['dbClassification3'] = dbrow.classification3 || '';
     if (dbtype == 'content') {
-      item['abslink'] = '#/app/content/' + item.id;
+      //NO-OP
 
     } else if (dbtype == 'poi') {
       item['abslink'] = '#/app/place/' + item.id;
-
-      item.dbClassification = Config.menuGroupSubgroup('places',item.dbClassification);
+      Config.menuGroupSubgroup('places',item.dbClassification).then(function(sg){
+        item.dbClassification=sg.name;
+      });
 
     } else if (dbtype == 'event') {
-      item['abslink'] = '#/app/event/' + item.id;
-
-      item.dbClassification = Config.menuGroupSubgroup('events',item.dbClassification);
+      Config.menuGroupSubgroup('events',item.dbClassification).then(function(sg){
+        item.dbClassification=sg.name;
+      });
 
     } else if (dbtype == 'restaurant') {
       item['abslink'] = '#/app/restaurant/' + item.id;

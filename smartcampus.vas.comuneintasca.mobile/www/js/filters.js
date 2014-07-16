@@ -2,16 +2,22 @@ angular.module('ilcomuneintasca.filters', [])
 
 .filter('translate', function ($rootScope, Config) {
   lang = $rootScope.lang;
-  return function (input) {
-    // console.log('translate: lang='+lang);
+  return function (input, debug) {
+    if (debug) console.log('translate: lang='+lang);
     if (!input) {
       return '';
     } else {
+      if (debug) console.log('input var type: '+typeof input);
       if (typeof input=='string') input=Config.keys()[input] || input;
       if (input[lang] && input[lang] != '') {
         return input[lang];
       } else {
-        return input.it || input || '';
+        if (debug) console.log('input it: '+(input.it||'FALSY'));
+        if (input.hasOwnProperty('it')) {
+          return input.it || '';
+        } else {
+          return input || '';
+        }
       }
     }
   };

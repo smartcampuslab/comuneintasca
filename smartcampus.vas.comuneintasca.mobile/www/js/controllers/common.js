@@ -87,54 +87,68 @@ angular.module('ilcomuneintasca.controllers.common', [])
 })
 
 
-.controller('PageCtrl', function ($scope, $stateParams, DatiDB, Config) {
+.controller('PageCtrl', function ($scope, $stateParams, Config, DatiDB, ListToolbox, DateUtility, $ionicScrollDelegate) {
+  $scope.getLocaleDateString = function (time) {
+    return DateUtility.getLocaleDateString($rootScope.lang, time);
+  };
   Config.menuGroupSubgroup($stateParams.groupId,$stateParams.menuId).then(function(sg){
     $scope.title=sg.name;
     if (sg.query) {
-      $scope.hasSort=(sg.query.sort||true);
-      $scope.hasSearch=(sg.query.search||true);
-      $scope.template='templates/page/'+(sg.view||sg.query.type+'_list')+'.html';
-      console.log(sg.query);
-      if (sg.query.classification) {
-        gotdbdata=DatiDB.cate(sg.query.type, sg.query.classification);
+      if ($stateParams.itemId!='') {
+        $scope.template='templates/page/'+(sg.view||sg.query.type+'_detail')+'.html';
+        $scope.gotdata = DatiDB.get(sg.query.type, $stateParams.itemId).then(function (data) {
+          console.log(data);
+          $scope.obj = data;
+        });
       } else {
-        gotdbdata=DatiDB.all(sg.query.type);
+        $scope.template='templates/page/'+(sg.view||sg.query.type+'_list')+'.html';
+
+        //console.log(sg.query);
+        if (sg.query.classification) {
+          $scope.gotdbdata=DatiDB.cate(sg.query.type, sg.query.classification);
+        } else {
+          $scope.gotdbdata=DatiDB.all(sg.query.type);
+        }
+        $scope.gotdata = $scope.gotdbdata.then(function (data) {
+          $scope.results = data;
+          var tboptions={
+            hasSort: false,
+            hasSearch: (sg.query.search||true),
+            load: function (cache) {
+              if (cache) {
+                $scope.results = cache;
+              } else {
+                $scope.gotdata = $scope.gotdbdata.then(function (data) {
+                  $scope.results = data;
+                  $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false);
+                });
+              }
+            },
+            getData: function () {
+              return $scope.results;
+            }
+          };
+          if (sg.query.hasOwnProperty('sort')) {
+            tboptions.hasSort=true
+            tboptions.orderingTypes=sg.query.sort.types;
+            tboptions.defaultOrdering=sg.query.sort.default;
+          } else if (sg._parent.hasOwnProperty('sort')) {
+            tboptions.hasSort=true
+            tboptions.orderingTypes=sg._parent.sort.types;
+            tboptions.defaultOrdering=sg._parent.sort.default;
+          }
+          if (tboptions.hasSort || tboptions.hasSearch) {
+            ListToolbox.prepare($scope, tboptions);
+          }
+        });
       }
-      $scope.gotdata = gotdbdata.then(function (data) {
-        $scope.contents = data;
-      });
     } else if (sg.objectIds) {
       $scope.template='templates/page/'+(sg.view||'single')+'.html';
       $scope.gotdata = DatiDB.get(sg.type, sg.objectIds.join(',')).then(function (data) {
         data=(data.hasOwnProperty('length')?data:[data]);
-        $scope.contents = data;
+        $scope.results = data;
       });
     } else {
     }
   });
-/*
-    for (mgi=0; mgi<data.menu.length; mgi++) {
-      var group=data.menu[mgi];
-      for (ii=0; ii<group.items.length; ii++) {
-        var item=group.items[ii];
-        if (item.objectIds) {
-          item.path="/app/"+(item.view||"page")+"/"+item.type+"/"+item.objectIds.join(',');
-        } else if (item.query) {
-          item.path="/app/"+(item.view||"list")+"/"+item.query.type+(item.query.classification?"/"+item.query.classification:"");
-        } else {
-          item.path="/menu/"+group.id+"/"+ii;
-          console.log('unkown menu item: '+item.path);
-        }
-        //console.log('item['+group.id+']['+item.id+'].path="'+item.path+'"');
-      }
-    }
-
-  console.log('$stateParams.type='+$stateParams.type);
-  $scope.gotdata = DatiDB.get($stateParams.type, $stateParams.id).then(function (data) {
-    console.log(data);
-    data=(data.hasOwnProperty('length')?data:[data]);
-    $scope.title = data[0].title;
-    $scope.contents = data;
-  });
-*/
 })

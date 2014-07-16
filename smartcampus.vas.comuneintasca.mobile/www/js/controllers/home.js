@@ -31,9 +31,16 @@ angular.module('ilcomuneintasca.controllers.home', [])
       $rootScope.goto(btn.path);
     }
   }
+/*
   $scope.goToItem = function (link) {
-    $location.path(link.substring(1));
+    console.log("goToItem('"+link+"')");
+    if (link.charAt(0)=='/') {
+      $location.path(link.substring(1));
+    } else {
+      $location.path($location.path+'/'+link);
+    }
   }
+*/
   $scope.slides = null;
 
   var defaultSlide = {

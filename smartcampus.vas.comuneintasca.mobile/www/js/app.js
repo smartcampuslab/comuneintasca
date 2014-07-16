@@ -163,8 +163,8 @@ angular.module('ilcomuneintasca', [
       controller: 'MenuCtrl'
 
     })
-    .state('app.page', {
-      url: "/page/:groupId/:menuId",
+    .state('app.detail', {
+      url: "/page/:groupId/:menuId/:itemId",
       views: {
         'menuContent': {
           templateUrl: "templates/page.html",
@@ -298,25 +298,6 @@ angular.module('ilcomuneintasca', [
         'menuContent': {
           templateUrl: "templates/restaurant.html",
           controller: "RestaurantCtrl"
-        }
-      }
-    })
-
-  .state('app.mainevents', {
-    url: "/mainevents",
-    views: {
-      'menuContent': {
-        templateUrl: "templates/mainevents_list.html",
-        controller: "MainEventsListCtrl"
-      }
-    }
-  })
-    .state('app.mainevent', {
-      url: "/mainevent/:maineventId",
-      views: {
-        'menuContent': {
-          templateUrl: "templates/mainevent.html",
-          controller: "MainEventCtrl"
         }
       }
     })

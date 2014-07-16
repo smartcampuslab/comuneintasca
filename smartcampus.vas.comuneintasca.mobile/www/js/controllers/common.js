@@ -87,19 +87,33 @@ angular.module('ilcomuneintasca.controllers.common', [])
 })
 
 
-.controller('PageCtrl', function ($scope, $stateParams, Config, DatiDB, ListToolbox, DateUtility, $ionicScrollDelegate) {
+.controller('PageCtrl', function ($scope, $state, $stateParams, $window, Config, DatiDB, ListToolbox, DateUtility, GeoLocate, MapHelper, $ionicScrollDelegate) {
   $scope.getLocaleDateString = function (time) {
     return DateUtility.getLocaleDateString($rootScope.lang, time);
+  };
+  $scope.explicitBack = function () {
+    return $state.current && $state.current.data && $state.current.data.explicitBack;
+  };
+  $scope.bk = function () {
+    $window.history.back();
   };
 
   Config.menuGroupSubgroup($stateParams.groupId,$stateParams.menuId).then(function(sg){
     $scope.title=sg.name;
     if (sg.query) {
       if ($stateParams.itemId!='') {
-        $scope.template='templates/page/'+(sg.view||sg.query.type+'_detail')+'.html';
+        $scope.template='templates/page/'+(sg.view||sg.query.type)+'.html';
         $scope.gotdata = DatiDB.get(sg.query.type, $stateParams.itemId).then(function (data) {
-          console.log(data);
+          console.log('obj: '+data);
           $scope.obj = data;
+
+          if (data.location) {
+            GeoLocate.locate().then(function (latlon) {
+              $scope.distance = GeoLocate.distance(latlon, data.location);
+            });
+          } else {
+            console.log('no known location for place');
+          }
         });
       } else {
         $scope.template='templates/page/'+(sg.view||sg.query.type+'_list')+'.html';
@@ -128,8 +142,12 @@ angular.module('ilcomuneintasca.controllers.common', [])
           },
           getData: function () {
             return $scope.results;
+          },
+          getTitle: function () {
+            return $scope.title;
           }
         };
+
         if (sg.query.hasOwnProperty('sort')) {
           tboptions.hasSort=true
           tboptions.orderingTypes=sg.query.sort.options;
@@ -138,6 +156,12 @@ angular.module('ilcomuneintasca.controllers.common', [])
           tboptions.hasSort=true
           tboptions.orderingTypes=sg._parent.sort.options;
           tboptions.defaultOrdering=sg._parent.sort.default;
+        }
+
+        if (sg.query.hasOwnProperty('map')) {
+          tboptions.hasMap=true;
+        } else if (sg._parent.hasOwnProperty('map')) {
+          tboptions.hasMap=true;
         }
 
         $scope.filterDef='';

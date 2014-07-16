@@ -1,10 +1,9 @@
 <ion-content class="has-header" delegate-handle="listScroll">
   <ion-list>
     <div class="item item-divider" align="center">{{filterDef}}{{'list_results' | translate_plur:results.length}}</div>
-    <ion-item class="coll-item item-thumbnail-left"
-              collection-repeat="event in results|extOrderBy:ordering track by event.id"
+    <ion-item collection-repeat="event in results|extOrderBy:ordering track by event.id"
               collection-item-width="'100%'" collection-item-height="getListItemHeight(item, $index)"
-              ng-click="goToItem(event.id)">
+              ng-click="goToItem(event.id)" class="coll-item item-thumbnail-left">
       <comuni-img class="item-image comuni-item-image" image="event.image" gotdata="gotdata"></comuni-img>
       <h2>{{event.title | translate}}</h2>
       <p ng-if="event.fromTime">{{event.fromTime | date:'dd/MM/yyyy'}}<span ng-if="event.fromTime !== event.toTime"> - {{event.toTime | date:'dd/MM/yyyy'}}</span></p>

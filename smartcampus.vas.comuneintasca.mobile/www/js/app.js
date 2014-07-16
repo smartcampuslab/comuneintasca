@@ -5,7 +5,6 @@ angular.module('ilcomuneintasca', [
   'ionic', 
   'ilcomuneintasca.controllers.common',
   'ilcomuneintasca.controllers.home',
-  'ilcomuneintasca.controllers.places',
   'ilcomuneintasca.controllers.itineraries',
   'ilcomuneintasca.controllers.hospitality',
   'ilcomuneintasca.services.conf',
@@ -162,7 +161,7 @@ angular.module('ilcomuneintasca', [
       controller: 'MenuCtrl'
 
     })
-    .state('app.detail', {
+    .state('app.page', {
       url: "/page/:groupId/:menuId/:itemId",
       views: {
         'menuContent': {
@@ -245,24 +244,6 @@ angular.module('ilcomuneintasca', [
         }
       }
     })
-    .state('app.contents', {
-      url: "/contents/:contentsIds",
-      views: {
-        'menuContent': {
-          templateUrl: "templates/contents_page.html",
-          controller: "ContentsListCtrl"
-        }
-      }
-    })
-    .state('app.content', {
-      url: "/content/:contentId",
-      views: {
-        'menuContent': {
-          templateUrl: "templates/content.html",
-          controller: "ContentCtrl"
-        }
-      }
-    })
 
   .state('app.hotels', {
     url: "/hotels",
@@ -297,43 +278,6 @@ angular.module('ilcomuneintasca', [
         'menuContent': {
           templateUrl: "templates/restaurant.html",
           controller: "RestaurantCtrl"
-        }
-      }
-    })
-
-  .state('app.places', {
-    url: "/places/:placeType",
-    views: {
-      'menuContent': {
-        templateUrl: "templates/places_list.html",
-        controller: "PlacesListCtrl"
-      }
-    }
-  })
-    .state('app.place', {
-      url: "/place/:placeId",
-      views: {
-        'menuContent': {
-          templateUrl: "templates/place.html",
-          controller: "PlaceCtrl"
-        }
-      }
-    })
-    .state('app.events', {
-      url: "/events/:eventType",
-      views: {
-        'menuContent': {
-          templateUrl: "templates/events_list2.html",
-          controller: 'EventsListCtrl'
-        }
-      }
-    })
-    .state('app.event', {
-      url: "/event/:eventId",
-      views: {
-        'menuContent': {
-          templateUrl: "templates/event.html",
-          controller: 'EventCtrl'
         }
       }
     })
@@ -406,26 +350,5 @@ angular.module('ilcomuneintasca', [
       }
     });
   $urlRouterProvider
-    .when("/menu/:gidx/:cidx", function ($match, Config, $location) {
-      Config.menu().then(function(menu) {
-        var group=menu[$match.gidx];
-        var item=group.items[$match.cidx];
-        var newstate=item.path;
-        $location.path(item.path);
-      });
-      return true;
-    })
-    .when("/menu/:gid", function ($match, Config, $location) {
-      console.log('$match.gid='+$match.gid);
-      Config.menuGroup($match.gid).then(function(group) {
-        console.log('group='+group);
-        if (group && group.items && group.items.length>1) {
-          $location.path('/app/cate/'+$match.gid);
-        } else {
-          $location.path('/app/'+$match.gid);
-        }
-      });
-      return true;
-    })
     .otherwise('/app/home'); // if none of the above states are matched, use this as the fallback
 });

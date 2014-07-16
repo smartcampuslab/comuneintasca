@@ -131,31 +131,33 @@
     }, {
       "id":"places",
       "name":{ "it":"VISITARE", "en":"HIGHLIGHTS", "de":"WAS SU  BESICHTIGEN" },
+      "sort":{ "options":["A-Z", "Z-A", "Distance"], "default":"Distance" },
+      "map":true,
       "items":[
         { 
           "id":"museums",
           "name":{ "it": "Musei", "en": "Museums", "de": "Museen" },
-          "query":{ "type":"places", "classification":"museums" }
+          "query":{ "type":"poi", "classification":"museums" }
         }, { 
           "id":"buildings",
           "name":{ "it": "Edifici storici", "en": "Historic Buildings", "de": "Historische Gebäude" },
-          "query":{ "type":"places", "classification":"buildings" }
+          "query":{ "type":"poi", "classification":"buildings" }
         }, { 
           "id":"churches",
           "name":{ "it": "Chiese", "en": "Churches", "de": "Kirchen" },
-          "query":{ "type":"places", "classification":"churches" }
+          "query":{ "type":"poi", "classification":"churches" }
         }, { 
           "id":"archeo",
           "name":{ "it": "Aree Archeologiche", "en": "Archaeological Areas", "de": "Archäologische Areas" },
-          "query":{ "type":"places", "classification":"archeo" }
+          "query":{ "type":"poi", "classification":"archeo" }
         }, { 
           "id":"parks",
           "name":{ "it": "Natura", "en": "Nature", "de": "Natur" },
-          "query":{ "type":"places", "classification":"parks" }
+          "query":{ "type":"poi", "classification":"parks" }
         }, { 
           "id":"misc",
           "name":{ "it": "Altri siti di interesse storico artistico", "en": "Other sites of historical and artistic interest", "de": "Andere Seiten von historischem und künstlerischem Interesse" },
-          "query":{ "type":"places", "classification":"misc" }
+          "query":{ "type":"poi", "classification":"misc" }
         }
       ]
     }, {

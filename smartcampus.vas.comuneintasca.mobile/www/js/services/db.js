@@ -7,14 +7,19 @@ angular.module('ilcomuneintasca.services.db', [])
   var parseDbRow = function (dbrow) {
     var dbtype = Config.contentKeyFromDbType(dbrow.type);
     var item = JSON.parse(dbrow.data);
+
+    Config.menuGroupSubgroupByTypeAndClassification(dbtype,dbrow.classification).then(function(sg){
+      if (sg) item['abslink'] = '#/app/page/'+sg._parent.id+'/'+sg.id+'/' + item.id;
+    });
+
     item['dbClassification'] = dbrow.classification || '';
     item['dbClassification2'] = dbrow.classification2 || '';
     item['dbClassification3'] = dbrow.classification3 || '';
+
     if (dbtype == 'content') {
       //NO-OP
 
     } else if (dbtype == 'poi') {
-      item['abslink'] = '#/app/place/' + item.id;
       Config.menuGroupSubgroup('places',item.dbClassification).then(function(sg){
         item.dbClassification=sg.name;
       });
@@ -25,20 +30,18 @@ angular.module('ilcomuneintasca.services.db', [])
       });
 
     } else if (dbtype == 'restaurant') {
-      item['abslink'] = '#/app/restaurant/' + item.id;
-
       if (item.dbClassification != '') item.dbClassification = Config.restaurantCateFromDbClassification(item.dbClassification);
       if (item.dbClassification2 != '') item.dbClassification2 = Config.restaurantCateFromDbClassification(item.dbClassification2);
       if (item.dbClassification3 != '') item.dbClassification3 = Config.restaurantCateFromDbClassification(item.dbClassification3);
 
     } else if (dbtype == 'hotel') {
-      item['abslink'] = '#/app/hotel/' + item.id;
+      //NO-OP
 
     } else if (dbtype == 'itinerary') {
       item['abslink'] = '#/app/itinerary/' + item.id + '/info';
 
     } else if (dbtype == 'mainevent') {
-      item['abslink'] = '#/app/mainevent/' + item.id;
+      //NO-OP
 
     }
     //console.log('item.location: ' + JSON.stringify(item.location));

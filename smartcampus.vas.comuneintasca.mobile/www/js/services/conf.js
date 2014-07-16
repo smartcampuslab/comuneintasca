@@ -497,6 +497,24 @@ angular.module('ilcomuneintasca.services.conf', [])
         return null;
       });
     },
+    menuGroupSubgroupByTypeAndClassification: function (type, classification) {
+      return this.menu().then(function(menu) {
+        for (gi=0; gi<menu.length; gi++) {
+          var group=menu[gi];
+          for (sgi=0; sgi<group.items.length; sgi++) {
+            var sg=group.items[sgi];
+            if ( sg.query && sg.query.type==type && ( (!classification&&!sg.query.classification) || (classification&&sg.query.classification&&classification==sg.query.classification) ) ) {
+              sg._parent=group;
+              return sg;
+            } else if (sg.type && sg.type==type && classification==null) {
+              sg._parent=group;
+              return sg;
+            }
+          }
+        }
+        return null;
+      });
+    },
     keys: function () {
       return keys;
     },

@@ -18,6 +18,7 @@ public class TestDataFlow extends TestCase {
 	public void testRun() throws Exception {
 		DataFlowTestHelper helper = new DataFlowTestHelper();
 		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("url", "http://www.comune.trento.it/api/opendata/v1/content/class/event/offset/0/limit/10");
 
 		Map<String, Object> out1 = helper.executeDataFlow("smartcampus.service.opendata", "GetEventi", new GetEventiDataFlow(), parameters);
 		List<Message> data1 = (List<Message>)out1.get("data");

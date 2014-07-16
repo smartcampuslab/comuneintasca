@@ -91,6 +91,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
   $scope.getLocaleDateString = function (time) {
     return DateUtility.getLocaleDateString($rootScope.lang, time);
   };
+
   Config.menuGroupSubgroup($stateParams.groupId,$stateParams.menuId).then(function(sg){
     $scope.title=sg.name;
     if (sg.query) {
@@ -103,44 +104,109 @@ angular.module('ilcomuneintasca.controllers.common', [])
       } else {
         $scope.template='templates/page/'+(sg.view||sg.query.type+'_list')+'.html';
 
-        //console.log(sg.query);
-        if (sg.query.classification) {
-          $scope.gotdbdata=DatiDB.cate(sg.query.type, sg.query.classification);
-        } else {
-          $scope.gotdbdata=DatiDB.all(sg.query.type);
-        }
-        $scope.gotdata = $scope.gotdbdata.then(function (data) {
-          $scope.results = data;
-          var tboptions={
-            hasSort: false,
-            hasSearch: (sg.query.search||true),
-            load: function (cache) {
-              if (cache) {
-                $scope.results = cache;
+        var tboptions={
+          hasSort: false,
+          hasSearch: (sg.query.search||true),
+          load: function (cache) {
+            if (cache) {
+              $scope.results = cache;
+            } else {
+              if (typeof this.doFilter=='function') {
+                this.doFilter(this.defaultFilter);
               } else {
+                if (sg.query.classification) {
+                  $scope.gotdbdata=DatiDB.cate(sg.query.type, sg.query.classification);
+                } else {
+                  $scope.gotdbdata=DatiDB.all(sg.query.type);
+                }
                 $scope.gotdata = $scope.gotdbdata.then(function (data) {
                   $scope.results = data;
                   $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false);
                 });
               }
-            },
-            getData: function () {
-              return $scope.results;
             }
+          },
+          getData: function () {
+            return $scope.results;
+          }
+        };
+        if (sg.query.hasOwnProperty('sort')) {
+          tboptions.hasSort=true
+          tboptions.orderingTypes=sg.query.sort.options;
+          tboptions.defaultOrdering=sg.query.sort.default;
+        } else if (sg._parent.hasOwnProperty('sort')) {
+          tboptions.hasSort=true
+          tboptions.orderingTypes=sg._parent.sort.options;
+          tboptions.defaultOrdering=sg._parent.sort.default;
+        }
+
+        $scope.filterDef='';
+        if (sg.query.hasOwnProperty('filter') || sg._parent.hasOwnProperty('filter')) {
+          tboptions.doFilter=function(filter) {
+            var t;
+            var d = new Date();
+            var f = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime() - 1;
+            if (filter == 'today') {
+              t = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1).getTime();
+            } else if (filter == 'week') {
+              t = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 7).getTime();
+            } else if (filter == 'month') {
+              t = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 30).getTime();
+            } else {
+              t = 0;
+            }
+            if (t > 0) {
+              if (sg.query.classification) {
+                $scope.gotdbdata=DatiDB.byTimeInterval(sg.query.type, f, t, sg.query.classification);
+              } else {
+                $scope.gotdbdata=DatiDB.byTimeInterval(sg.query.type, f, t, null);
+              }
+            } else {
+              if (sg.query.classification) {
+                $scope.gotdbdata=DatiDB.cate(sg.query.type, sg.query.classification);
+              } else {
+                $scope.gotdbdata=DatiDB.all(sg.query.type);
+              }
+            }
+            $scope.gotdata = $scope.gotdbdata.then(function (data) {
+              if (data) {
+                $scope.results = data;
+              } else {
+                $scope.results = [];
+              }
+              $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false);
+            });
           };
-          if (sg.query.hasOwnProperty('sort')) {
-            tboptions.hasSort=true
-            tboptions.orderingTypes=sg.query.sort.types;
-            tboptions.defaultOrdering=sg.query.sort.default;
-          } else if (sg._parent.hasOwnProperty('sort')) {
-            tboptions.hasSort=true
-            tboptions.orderingTypes=sg._parent.sort.types;
-            tboptions.defaultOrdering=sg._parent.sort.default;
+          if (sg.query.hasOwnProperty('filter') && sg.query.filter.hasOwnProperty('options')) {
+            tboptions.filterOptions=sg.query.filter.options;
+          } else if (sg._parent.hasOwnProperty('filter') && sg._parent.filter.hasOwnProperty('options')) {
+            tboptions.filterOptions=sg._parent.filter.options;
           }
-          if (tboptions.hasSort || tboptions.hasSearch) {
-            ListToolbox.prepare($scope, tboptions);
+          if (sg.query.hasOwnProperty('filter') && sg.query.filter.hasOwnProperty('default')) {
+            tboptions.defaultFilter=sg.query.filter.default;
+          } else if (sg._parent.hasOwnProperty('filter') && sg._parent.filter.hasOwnProperty('default')) {
+            tboptions.defaultFilter=sg._parent.filter.default;
           }
-        });
+          if ($scope.filter) {
+            if (sg._parent.hasOwnProperty('sort')) {
+              Config.menuGroupSubgroup($stateParams.groupId,$root.lang,$scope.filter).then(function(sg) {
+                if (sg) $scope.filterDef=$filter('translate')(sg.name) + ': ';
+              });
+            }
+          }
+        }
+        if (tboptions.hasFilter || tboptions.hasSearch || tboptions.hasSearch) {
+          ListToolbox.prepare($scope, tboptions);
+        } else {
+          if (sg.query.classification) {
+            $scope.gotdbdata=DatiDB.cate(sg.query.type, sg.query.classification);
+          } else {
+            $scope.gotdbdata=DatiDB.all(sg.query.type);
+          }
+          $scope.gotdata = $scope.gotdbdata.then(function (data) {
+            $scope.results = data;
+          });
+        }
       }
     } else if (sg.objectIds) {
       $scope.template='templates/page/'+(sg.view||'single')+'.html';

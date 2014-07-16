@@ -1,25 +1,6 @@
 angular.module('ilcomuneintasca.controllers.events', [])
 
 .controller('EventsListCtrl', function ($rootScope, $scope, $stateParams, $filter, DatiDB, Config, ListToolbox, Profiling, DateUtility, $ionicScrollDelegate) {
-  $scope.getLocaleDateString = function (time) {
-    return DateUtility.getLocaleDateString($rootScope.lang, time);
-  };
-
-  var eventType = 'all';
-  var defaultTimeFilter = 'today';
-  if ($stateParams.eventType && $stateParams.eventType != eventType) {
-    eventType=$stateParams.eventType
-    defaultTimeFilter = 'week';
-  }
-  Config.menuGroupSubgroup('events',eventType).then(function(sg){
-    $scope.cate = sg.name;
-  });
-
-  $scope.filterDef = function () {
-    if ($scope.filter) {
-      return $filter('translate')(Config.eventFilterTypeList()[$scope.filter]) + ': ';
-    } else return '';
-  }
 
   var search = function (filter) {
     var t;

@@ -31,7 +31,7 @@ angular.module('ilcomuneintasca.filters', [])
       } else if (count == 1) {
         return $filter('translate')(input+'_single');
       } else {
-        return $filter('translate')(input+'_plural'); 
+        return count+' '+$filter('translate')(input+'_plural'); 
       }
     } else {
       return $filter('translate')(input);

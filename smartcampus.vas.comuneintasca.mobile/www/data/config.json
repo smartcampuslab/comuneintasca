@@ -61,7 +61,7 @@
         }, { 
           "id":"mainevents",
           "name":{ "it":"Eventi Principali", "en":"Main Events", "de":"Hauptereignisse" },
-          "query":{ "type":"mainevent", "sort":{ "types":["A-Z", "Z-A", "Date"], "default":"Date" } }
+          "query":{ "type":"mainevent", "sort":{ "options":["A-Z", "Z-A", "Date"], "default":"Date" } }
         }, { 
           "id":"bondone",
           "name":{ "it":"Monte Bondone", "en":"Mount Bondone", "de":"Mont Bondone" },
@@ -72,12 +72,32 @@
     }, {
       "id":"events",
       "name":{ "it":"EVENTI", "en":"EVENTS", "de":"VERANSTALTUNGEN" },
-      "sort":{ "types":["A-Z", "Z-A", "DateFrom", "DateTo"], "default":"DateTo" },
+      "sort":{ "options":["A-Z", "Z-A", "DateFrom", "DateTo"], "default":"DateTo" },
+      "filter":{ 
+        "options": {
+          "today": {
+            "it": "Oggi",
+            "en": "Today",
+            "de": "Heute"
+          },
+          "week": {
+            "it": "Prossimi 7 giorni",
+            "en": "Next 7 days",
+            "de": "Nächsten 7 Tage"
+          },
+          "month": {
+            "it": "Prossimi 30 giorni",
+            "en": "Next 30 days",
+            "de": "Nächsten 30 Tage"
+          }
+        }, 
+        "default":"week" 
+      },
       "items":[
         {
           "id":"all",
           "name":{ "it": "Tutti gli eventi", "en": "All events", "de": "Alle Veranstaltungen" },
-          "query":{ "type":"event", "classification":"all" }
+          "query":{ "type":"event", "filter":{ "default":"today" } }
         }, { 
           "id":"fairs",
           "name":{ "it": "Feste, mercati e fiere", "en": "Festivals, markets and fairs", "de": "Festivals, Märkte und Messen" },

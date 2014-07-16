@@ -71,9 +71,9 @@ angular.module('ilcomuneintasca.services.conf', [])
       de: 'Keine Ergebnisse'
     },
     'list_results_single': {
-      it: 'risultato',
-      en: 'result',
-      de: 'Ergebnis'
+      it: 'un solo risultato',
+      en: 'one result only',
+      de: 'Ein Ergebnis'
     },
     'list_results_plural': {
       it: 'risultati',
@@ -425,24 +425,6 @@ angular.module('ilcomuneintasca.services.conf', [])
     'itinerary': 'eu.trentorise.smartcampus.comuneintasca.model.ItineraryObject',
     'mainevent': 'eu.trentorise.smartcampus.comuneintasca.model.MainEventObject',
     'home': 'eu.trentorise.smartcampus.comuneintasca.model.HomeObject'
-  };
-
-  var eventFilterTypes = {
-    'today': {
-      it: 'Oggi',
-      en: 'Today',
-      de: 'Heute'
-    },
-    'week': {
-      it: 'Prossimi 7 giorni',
-      en: 'Next 7 days',
-      de: 'Nächsten 7 Tage'
-    },
-    'month': {
-      it: 'Prossimi 30 giorni',
-      en: 'Next 30 days',
-      de: 'Nächsten 30 Tage'
-    }
   };
 
   return {

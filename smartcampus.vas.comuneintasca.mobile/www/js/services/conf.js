@@ -40,6 +40,11 @@ angular.module('ilcomuneintasca.services.conf', [])
   });
   
   var keys = {
+    'settings_language': {
+      it: 'Lingua',
+      en: 'Language',
+      de: '[language]'
+    },
     'settings_title': {
       it: 'Impostazioni',
       en: 'Settings',

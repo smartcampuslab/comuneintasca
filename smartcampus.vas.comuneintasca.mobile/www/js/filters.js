@@ -1,8 +1,8 @@
 angular.module('ilcomuneintasca.filters', [])
 
 .filter('translate', function ($rootScope, Config) {
-  lang = $rootScope.lang;
   return function (input, debug) {
+    lang = $rootScope.lang;
     if (debug) console.log('translate: lang='+lang);
     if (!input) {
       return '';

@@ -1,5 +1,15 @@
 angular.module('ilcomuneintasca.directives', [])
 
+.directive('langRadio', function ($q, $filter, $timeout, Config, Files) {
+  return {
+    restrict: 'A',
+    replace: false,
+    link: function (scope, element, attrs) {
+      if (scope.lang==element.attr('rel')) element.attr('checked', 'checked');
+    }
+  }
+})
+
 .directive('comuniImg', function ($q, $filter, $timeout, Config, Files) {
   var emptyImageUrl = 'img/placeholder-512x512.gif';
   return {

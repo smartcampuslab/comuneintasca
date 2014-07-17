@@ -28,8 +28,8 @@ angular.module('ilcomuneintasca.controllers.home', [])
     if (btn.hasOwnProperty('app')) {
       $scope.openApp(btn.name,btn.app);
     } else if (btn.hasOwnProperty('ref')) {
-      if (btn.ref=='itineraries') {
-        $rootScope.goto('itineraries');
+      if (btn.ref=='itineraries' || btn.ref=='favorites') {
+        $rootScope.goto(btn.ref);
       } else {
         $rootScope.goto('menu/'+btn.ref+'/');
       }

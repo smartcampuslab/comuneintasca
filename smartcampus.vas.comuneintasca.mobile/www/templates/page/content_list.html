@@ -1,4 +1,4 @@
-<ion-content class="has-header">
+<ion-content class="has-header" delegate-handle="listScroll">
   <ion-list>
     <ion-item ng-repeat="content in results" ng-click="gotoSubpath(content.id)">
       {{content.title|translate}}

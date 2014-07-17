@@ -1,12 +1,12 @@
 <ion-view title="{{'settings_title'|translate}}">
   <ion-content class="has-header">
-    <div class="comuni-content">
-        <comuni-img ng-if="content.image" class="content-image-main" image="content.image" gotdata="gotdata"></comuni-img>
-        <div class="padding">
-            <h2>{{content.title | translate}}</h2>
-            <div class="comuni-html-description" compile="content.description | translate"></div>
-            <div class="comuni-html-info" compile="content.info | translate"></div>
-        </div>
+    <div class="card">
+      <div class="item item-divider">{{'settings_language'|translate}}</div>
+      <div class="list">
+        <label class="item item-radio"><input lang-radio type="radio" name="group" ng-click="setLang('it')" rel="it"><div class="item-content">Italiano</div><i class="radio-icon ion-checkmark"></i></label>
+        <label class="item item-radio"><input lang-radio type="radio" name="group" ng-click="setLang('en')" rel="en"><div class="item-content">English</div><i class="radio-icon ion-checkmark"></i></label>
+        <label class="item item-radio"><input lang-radio type="radio" name="group" ng-click="setLang('de')" rel="de"><div class="item-content">Deutsch</div><i class="radio-icon ion-checkmark"></i></label>
+      </div>
     </div>
   </ion-content>
 </ion-view>

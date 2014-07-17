@@ -1,6 +1,15 @@
 angular.module('ilcomuneintasca.controllers.common', [])
 
-.controller('SettingsCtrl', function ($scope, Config) {
+.controller('SettingsCtrl', function ($scope, $rootScope, $filter, $window, $timeout, Config, $ionicLoading) {
+  $scope.setLang=function(l){
+    $rootScope.lang=localStorage.lang=l;
+    var loading = $ionicLoading.show({
+      content: $filter('translate')(Config.keys()['loading']),
+    });
+    $timeout(function(){
+      $window.location.reload();
+    },500);
+  };
 })
 
 .controller('MenuCtrl', function ($scope, $ionicModal, Config) {

@@ -188,35 +188,7 @@ angular.module('ilcomuneintasca', [
         }
       }
     })
-/*
-    .state('app.page', {
-      url: "/page/:ref",
-      views: {
-        'menuContent': {
-          templateUrl: "templates/page.html",
-          controller: "PageCtrl"
-        }
-      }
-    })
-    .state('app.list', {
-      url: "/list/:ref",
-      views: {
-        'menuContent': {
-          templateUrl: "templates/list.html",
-          controller: "ListCtrl"
-        }
-      }
-    })
-*/
-    .state('app.cate', {
-      url: "/cate/:cateId",
-      views: {
-        'menuContent': {
-          templateUrl: "templates/contentcates_list.html",
-          controller: "CategoriesListCtrl"
-        }
-      }
-    })
+
     .state('app.home', {
       url: "/home",
       views: {
@@ -244,62 +216,6 @@ angular.module('ilcomuneintasca', [
         }
       }
     })
-    .state('app.contentscatelist', {
-      url: "/contentscatelist/:contentsCate",
-      views: {
-        'menuContent': {
-          templateUrl: "templates/contents_list.html",
-          controller: "ContentsListCtrl"
-        }
-      }
-    })
-    .state('app.contentscate', {
-      url: "/contentscate/:contentsCate",
-      views: {
-        'menuContent': {
-          templateUrl: "templates/contents_page.html",
-          controller: "ContentsListCtrl"
-        }
-      }
-    })
-
-  .state('app.hotels', {
-    url: "/hotels",
-    views: {
-      'menuContent': {
-        templateUrl: "templates/hotels_list.html",
-        controller: "HotelsListCtrl"
-      }
-    }
-  })
-    .state('app.hotel', {
-      url: "/hotel/:hotelId",
-      views: {
-        'menuContent': {
-          templateUrl: "templates/hotel.html",
-          controller: "HotelCtrl"
-        }
-      }
-    })
-    .state('app.restaurants', {
-      url: "/restaurants",
-      views: {
-        'menuContent': {
-          templateUrl: "templates/restaurants_list.html",
-          controller: "RestaurantsListCtrl"
-        }
-      }
-    })
-    .state('app.restaurant', {
-      url: "/restaurant/:restaurantId",
-      views: {
-        'menuContent': {
-          templateUrl: "templates/restaurant.html",
-          controller: "RestaurantCtrl"
-        }
-      }
-    })
-
 
   .state('app.mappa', {
     url: "/mappa",
@@ -310,6 +226,7 @@ angular.module('ilcomuneintasca', [
       }
     }
   })
+
     .state('app.itineraries', {
       url: "/itineraries",
       views: {

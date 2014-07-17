@@ -38,7 +38,7 @@ angular.module('ilcomuneintasca.services.conf', [])
     console.log('error getting config json!');
     fetched.reject();
   });
-
+  
   var keys = {
     'settings_title': {
       it: 'Impostazioni',
@@ -428,6 +428,54 @@ angular.module('ilcomuneintasca.services.conf', [])
   };
 
   return {
+    jsonProfileExtensions: function() {
+      return {
+        "mainevent":{
+          "sort":{ "options":["A-Z", "Z-A", "Date"], "default":"Date" }
+        },
+        "event":{
+          "sort":{ "options":["A-Z", "Z-A", "DateFrom", "DateTo"], "default":"DateTo" },
+          "filter":{ 
+            "options": {
+              "today": {
+                "it": "Oggi",
+                "en": "Today",
+                "de": "Heute"
+              },
+              "week": {
+                "it": "Prossimi 7 giorni",
+                "en": "Next 7 days",
+                "de": "Nächsten 7 Tage"
+              },
+              "month": {
+                "it": "Prossimi 30 giorni",
+                "en": "Next 30 days",
+                "de": "Nächsten 30 Tage"
+              }
+            }, 
+            "default":"week" 
+          },
+          //overrides for specific query classifications
+          "classifications":{
+            "_none_":{ "filter":{ "default":"today" } }
+          }
+        },
+        "poi":{
+          "sort":{ "options":["A-Z", "Z-A", "Distance"], "default":"Distance" },
+          "map":true
+        },
+        "hotel":{
+          "sort":{ "options":["A-Z", "Z-A", "Distance", "Stars"], "default":"Distance" }, 
+          "filter":true, 
+          "map":true
+        },
+        "restaurant":{
+          "sort":{ "options":["A-Z", "Z-A", "Distance"], "default":"Distance" }, 
+          "filter":true,
+          "map":true
+        }
+      }
+    },
     getLang: function () {
       var browserLanguage = '';
       // works for earlier version of Android (2.3.x)

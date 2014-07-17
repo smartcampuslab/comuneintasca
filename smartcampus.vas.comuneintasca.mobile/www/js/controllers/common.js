@@ -110,6 +110,11 @@ angular.module('ilcomuneintasca.controllers.common', [])
     Config.menuGroupSubgroup($stateParams.groupId,$stateParams.menuId).then(function(sg){
       $scope.title=sg.name;
       if (sg.query) {
+        var dbtypeCustomisations=Config.jsonProfileExtensions()[sg.query.type] || {};
+        var dbtypeClass=sg.query.classification||'_none_';
+        var dbtypeClassCustomisations={};
+        if (dbtypeCustomisations.classifications && dbtypeCustomisations.classifications[dbtypeClass]) dbtypeClassCustomisations=dbtypeCustomisations.classifications[dbtypeClass];
+
         if ($stateParams.itemId!='') {
           $scope.template='templates/page/'+(sg.view||sg.query.type||'content')+'.html';
           $scope.gotdata = DatiDB.get(sg.query.type, $stateParams.itemId).then(function (data) {
@@ -164,16 +169,28 @@ angular.module('ilcomuneintasca.controllers.common', [])
             tboptions.hasSort=true
             tboptions.orderingTypes=sg._parent.sort.options;
             tboptions.defaultOrdering=sg._parent.sort.default;
+          } else if (dbtypeClassCustomisations.hasOwnProperty('sort')) {
+            tboptions.hasSort=true
+            tboptions.orderingTypes=dbtypeClassCustomisations.sort.options;
+            tboptions.defaultOrdering=dbtypeClassCustomisations.sort.default;
+          } else if (dbtypeCustomisations.hasOwnProperty('sort')) {
+            tboptions.hasSort=true
+            tboptions.orderingTypes=dbtypeCustomisations.sort.options;
+            tboptions.defaultOrdering=dbtypeCustomisations.sort.default;
           }
 
           if (sg.query.hasOwnProperty('map')) {
             tboptions.hasMap=true;
           } else if (sg._parent.hasOwnProperty('map')) {
             tboptions.hasMap=true;
+          } else if (dbtypeClassCustomisations.hasOwnProperty('map')) {
+            tboptions.hasMap=true;
+          } else if (dbtypeCustomisations.hasOwnProperty('map')) {
+            tboptions.hasMap=true;
           }
 
           $scope.filterDef='';
-          if (sg.query.hasOwnProperty('filter') || sg._parent.hasOwnProperty('filter')) {
+          if (sg.query.hasOwnProperty('filter') || sg._parent.hasOwnProperty('filter') || dbtypeCustomisations.hasOwnProperty('filter')) {
             if (sg.query.type=="hotel") {
               tboptions.filterOptions=Config.hotelTypesList();
             } else if (sg.query.type=="restaurant") {
@@ -218,23 +235,33 @@ angular.module('ilcomuneintasca.controllers.common', [])
               tboptions.filterOptions=sg.query.filter.options;
             } else if (sg._parent.hasOwnProperty('filter') && sg._parent.filter.hasOwnProperty('options')) {
               tboptions.filterOptions=sg._parent.filter.options;
+            } else if (dbtypeClassCustomisations.hasOwnProperty('filter') && dbtypeClassCustomisations.filter.hasOwnProperty('options')) {
+              tboptions.filterOptions=dbtypeClassCustomisations.filter.options;
+            } else if (dbtypeCustomisations.hasOwnProperty('filter') && dbtypeCustomisations.filter.hasOwnProperty('options')) {
+              tboptions.filterOptions=dbtypeCustomisations.filter.options;
             }
             if (sg.query.hasOwnProperty('filter') && sg.query.filter.hasOwnProperty('default')) {
               tboptions.defaultFilter=sg.query.filter.default;
             } else if (sg._parent.hasOwnProperty('filter') && sg._parent.filter.hasOwnProperty('default')) {
               tboptions.defaultFilter=sg._parent.filter.default;
+            } else if (dbtypeClassCustomisations.hasOwnProperty('filter') && dbtypeClassCustomisations.filter.hasOwnProperty('default')) {
+              tboptions.defaultFilter=dbtypeClassCustomisations.filter.default;
+            } else if (dbtypeCustomisations.hasOwnProperty('filter') && dbtypeCustomisations.filter.hasOwnProperty('default')) {
+              tboptions.defaultFilter=dbtypeCustomisations.filter.default;
             }
+/* TODO: serve davvero?
             if ($scope.filter) {
               if (sg._parent.hasOwnProperty('sort')) {
                 Config.menuGroupSubgroup($stateParams.groupId,$root.lang,$scope.filter).then(function(sg) {
                   if (sg) {
                     var fd = $filter('translate')(sg.name);
-                    if (fd.length > 20) fd = fd.substr(0, 20) + '...';
+                    if (fd.length > 10) fd = fd.substr(0, 10) + '...';
                     $scope.filterDef= fd + ': ';
                   }
                 });
               }
             }
+*/
           }
 
           if (tboptions.hasMap || tboptions.hasFilter || tboptions.hasSort || tboptions.hasSearch) {

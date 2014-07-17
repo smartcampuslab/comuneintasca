@@ -61,7 +61,7 @@
         }, { 
           "id":"mainevents",
           "name":{ "it":"Eventi Principali", "en":"Main Events", "de":"Hauptereignisse" },
-          "query":{ "type":"mainevent", "sort":{ "options":["A-Z", "Z-A", "Date"], "default":"Date" } }
+          "query":{ "type":"mainevent" }
         }, { 
           "id":"bondone",
           "name":{ "it":"Monte Bondone", "en":"Mount Bondone", "de":"Mont Bondone" },
@@ -72,32 +72,11 @@
     }, {
       "id":"events",
       "name":{ "it":"EVENTI", "en":"EVENTS", "de":"VERANSTALTUNGEN" },
-      "sort":{ "options":["A-Z", "Z-A", "DateFrom", "DateTo"], "default":"DateTo" },
-      "filter":{ 
-        "options": {
-          "today": {
-            "it": "Oggi",
-            "en": "Today",
-            "de": "Heute"
-          },
-          "week": {
-            "it": "Prossimi 7 giorni",
-            "en": "Next 7 days",
-            "de": "Nächsten 7 Tage"
-          },
-          "month": {
-            "it": "Prossimi 30 giorni",
-            "en": "Next 30 days",
-            "de": "Nächsten 30 Tage"
-          }
-        }, 
-        "default":"week" 
-      },
       "items":[
         {
           "id":"all",
           "name":{ "it": "Tutti gli eventi", "en": "All events", "de": "Alle Veranstaltungen" },
-          "query":{ "type":"event", "filter":{ "default":"today" } }
+          "query":{ "type":"event" }
         }, { 
           "id":"fairs",
           "name":{ "it": "Feste, mercati e fiere", "en": "Festivals, markets and fairs", "de": "Festivals, Märkte und Messen" },
@@ -131,8 +110,6 @@
     }, {
       "id":"places",
       "name":{ "it":"VISITARE", "en":"HIGHLIGHTS", "de":"WAS SU  BESICHTIGEN" },
-      "sort":{ "options":["A-Z", "Z-A", "Distance"], "default":"Distance" },
-      "map":true,
       "items":[
         { 
           "id":"museums",
@@ -177,11 +154,11 @@
         { 
           "id":"hotels",
           "name":{ "it":"Dormire", "en":"Hotels", "de":"Übernachtung" },
-          "query":{ "type":"hotel", "sort":{ "options":["A-Z", "Z-A", "Distance", "Stars"], "default":"Distance" }, "filter":true, "map":true }
+          "query":{ "type":"hotel" }
         }, { 
           "id":"restaurants",
           "name":{ "it":"Mangiare", "en":"Restaurants", "de":"Gastronomie" },
-          "query":{ "type":"restaurant", "sort":{ "options":["A-Z", "Z-A", "Distance"], "default":"Distance" }, "filter":true, "map":true }
+          "query":{ "type":"restaurant" }
         }
       ]
     }, {

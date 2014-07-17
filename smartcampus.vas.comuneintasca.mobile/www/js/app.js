@@ -82,9 +82,19 @@ angular.module('ilcomuneintasca', [
   $rootScope.lang=localStorage.lang=lang;
 
   $rootScope.goto = function (link) {
-    if (link.indexOf('/menu/')!=0 && link.indexOf('/app/')!=0) link='/app/'+link;
+    if (link.indexOf('/app/')!=0) link='/app/'+link;
     $location.path(link);
   };
+  $rootScope.getMenuPath = function (group,menu) {
+    if (group.id=='itins' && menu.id=='itineraries') {
+      return 'itineraries';
+    } else {
+      return 'page/'+group.id+'/'+menu.id+'/';
+    }
+  }
+  $rootScope.gotoSubpath = function (subpath) {
+    $location.path($location.path()+subpath);
+  }
 
   $rootScope.getListItemHeight = function (item, index) {
     return 100;
@@ -159,6 +169,15 @@ angular.module('ilcomuneintasca', [
       templateUrl: "templates/menu.html",
       controller: 'MenuCtrl'
 
+    })
+    .state('app.menulist', {
+      url: "/menu/:groupId/",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/menu_list.html",
+          controller: "MenuListCtrl"
+        }
+      }
     })
     .state('app.page', {
       url: "/page/:groupId/:menuId/:itemId",

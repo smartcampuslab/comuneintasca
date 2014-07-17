@@ -1,0 +1,9 @@
+<ion-view title="{{group.name|translate}}">
+  <ion-content class="has-header">
+    <ion-list>
+      <ion-item ng-repeat="menu in group.items" ng-href="#/app/{{getMenuPath(group,menu)}}">
+        {{menu.name|translate}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

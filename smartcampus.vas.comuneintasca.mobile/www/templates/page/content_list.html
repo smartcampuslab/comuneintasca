@@ -1,0 +1,7 @@
+<ion-content class="has-header">
+  <ion-list>
+    <ion-item ng-repeat="content in results" ng-click="gotoSubpath(content.id)">
+      {{content.title|translate}}
+    </ion-item>
+  </ion-list>
+</ion-content>

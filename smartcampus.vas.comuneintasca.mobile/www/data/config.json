@@ -191,11 +191,11 @@
         { 
           "id":"servizi",
           "name":{ "it":"Servizi", "en":"Services", "de":"Dienstleistungen" },
-          "query":{ "type":"contentscatelist", "classification":"Servizi" }
+          "query":{ "type":"content", "classification":"Servizi" }
         }, { 
           "id":"contatti",
           "name":{ "it":"Contatti", "en":"Contacts", "de":"Kontakten" },
-          "query":{ "type":"contentscatelist", "classification":"Contatti" }
+          "query":{ "type":"content", "classification":"Contatti" }
         }
       ]
     }

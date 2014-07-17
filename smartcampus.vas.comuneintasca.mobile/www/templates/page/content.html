@@ -1,0 +1,22 @@
+<ion-content class="has-header">
+  <div ng-if="obj">
+    <div class="comuni-content">
+      <comuni-img ng-if="obj.image" class="content-image-main" image="obj.image" gotdata="gotdata"></comuni-img>
+      <div class="padding">
+          <h2>{{obj.title | translate}}</h2>
+          <div class="comuni-html-description" compile="obj.description | translate"></div>
+          <div class="comuni-html-info" compile="obj.info | translate"></div>
+      </div>
+    </div>
+  </div>
+  <div ng-if="results">
+    <div class="comuni-content" ng-repeat="content in results">
+      <comuni-img ng-if="content.image" class="content-image-main" image="content.image" gotdata="gotdata"></comuni-img>
+      <div class="padding">
+          <h2>{{content.title | translate}}</h2>
+          <div class="comuni-html-description" compile="content.description | translate"></div>
+          <div class="comuni-html-info" compile="content.info | translate"></div>
+      </div>
+    </div>
+  </div>
+</ion-content>

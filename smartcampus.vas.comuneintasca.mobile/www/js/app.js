@@ -348,6 +348,5 @@ angular.module('ilcomuneintasca', [
         }
       }
     });
-  $urlRouterProvider
-    .otherwise('/app/home'); // if none of the above states are matched, use this as the fallback
+  $urlRouterProvider.otherwise('/app/home'); // if none of the above states are matched, use this as the fallback
 });

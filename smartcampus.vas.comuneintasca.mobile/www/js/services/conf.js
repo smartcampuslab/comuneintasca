@@ -371,10 +371,10 @@ angular.module('ilcomuneintasca.services.conf', [])
       //return 60 * 60 * 24 * 10; /* 60 times 60 seconds = 1 HOUR --> x24 = 1 DAY x10 */
     },
     syncingOverlayTimeoutMillis: function () {
-      return 40 * 1000; /* 40 seconds before automatically hiding syncing overlay */
+      return 50 * 1000; /* seconds before automatically hiding syncing overlay */
     },
     loadingOverlayTimeoutMillis: function () {
-      return 10 * 1000; /* 10 seconds before automatically hiding loading overlay */
+      return 20 * 1000; /* seconds before automatically hiding loading overlay */
     },
     fileDatadirMaxSizeMB: function () {
       return 100;
@@ -383,7 +383,7 @@ angular.module('ilcomuneintasca.services.conf', [])
       return 60 * 60 * 12; /* 60 times 60 seconds = 1 HOUR --> x12 = TWICE A DAY */
     },
     fileCleanupOverlayTimeoutMillis: function () {
-      return 20 * 1000; /* 10 seconds before automatically hiding cleaning overlay */
+      return 20 * 1000; /* seconds before automatically hiding cleaning overlay */
     },
     contentTypesList: function () {
       return contentTypes;

@@ -32,9 +32,9 @@
 					<div id="obsolete"><h4 class="color">-{{'obsolete' | i18n}}-</h4></div>
 					<div class="text">{{'txt1' | i18n}}</div>
 					<div id="web">
-						<div class="text" ng-hide="ionic.Platform.isWebView()">{{'txt2_web' | i18n}}</div>
-						<div class="text" ng-show="platform == 'iOS'">{{'txt2_ios' | i18n}}</div>
-						<div class="text" ng-show="platform == 'Android'">{{'txt2_android' | i18n}}</div>
+						<div class="text" ng-hide="platform">{{'txt2_web' | i18n}}</div>
+						<div class="text" ng-show="iosPlatform">{{'txt2_ios' | i18n}}</div>
+						<div class="text" ng-show="androidPlatform">{{'txt2_android' | i18n}}</div>
 						<div class="row row-center" id="box">
 							<div class="col image"><img src="img/icon.png" /></div>
 							<div class="col new">

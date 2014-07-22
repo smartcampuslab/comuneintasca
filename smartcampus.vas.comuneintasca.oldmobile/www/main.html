@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+	  <script src="js/lib/localize.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+	  <script src="js/lib/ng-cordova.min.js"></script>
+    <script src="cordova.js"></script>
+
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+  </head>
+  <body ng-app="starter">
+
+    <ion-pane>
+      <ion-content class="padding">
+				<div class="row row-center" id="main"><div class="col">
+					<div class="appname"><h2>{{'appname1' | i18n}}<br/>{{'appname2' | i18n}}</h2></div>
+					<div id="obsolete"><h4 class="color">-{{'obsolete' | i18n}}-</h4></div>
+					<div class="text">{{'txt1' | i18n}}</div>
+					<div id="web">
+						<div class="text" ng-hide="ionic.Platform.isWebView()">{{'txt2_web' | i18n}}</div>
+						<div class="text" ng-show="platform == 'iOS'">{{'txt2_ios' | i18n}}</div>
+						<div class="text" ng-show="platform == 'Android'">{{'txt2_android' | i18n}}</div>
+						<div class="row row-center" id="box">
+							<div class="col image"><img src="img/icon.png" /></div>
+							<div class="col new">
+								<h4 class="color">{{'new_app' | i18n}}</h4>
+								<div class="button-download" ng-click="appDownload()">
+									<img src="img/appstore{{ '_suffix' | i18n}}.svg" ng-show="platform == 'iOS'" />
+									<img src="img/play{{ '_suffix' | i18n}}.png" ng-show="platform == 'Android'" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div></div>
+      </ion-content>
+			<div id="flag">&nbsp;</div>
+			<div id="download"><button class="button button-block  button-comuni" ng-click="appDownload()">{{'download' | i18n}}</button></div>
+    </ion-pane>
+  </body>
+</html>

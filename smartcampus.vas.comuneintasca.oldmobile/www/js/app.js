@@ -39,16 +39,21 @@ angular.module('starter', ['ionic', 'localization', 'ngCordova'])
 		if (ionic.Platform.isWebView()) {
 			if ($rootScope.platform == 'iOS') {
 				itmsurl='https://itunes.apple.com/app/id881529924';
-				console.log('opening  appstore: '+itmsurl);
+				//console.log('opening  appstore: '+itmsurl);
 				window.open(itmsurl, '_system');
 			} else {
+				var pkgName='it.smartcampuslab.comuni.trento';
 				cordova.plugins.startapp.start({
-					android: 'it.smartcampuslab.comuni.trento'
+					android: pkgName
 				}, function () {
 					console.log('START APP: success.');
 				}, function () {
 					console.log('START APP: failed!');
-					window.open('https://play.google.com/store/apps/details?id=it.smartcampuslab.comuni.trento', '_system');
+					setTimeout(function(){
+						var marketurl='market://details?id='+pkgName;
+						console.log('opening market: '+marketurl);
+						window.open(marketurl, '_system');
+					},0);
 				});
 			}
 		} else {

@@ -1,10 +1,6 @@
 angular.module('ilcomuneintasca.services.fs', [])
 
 .factory('Files', function ($q, $http, Config, $queue, Profiling, $ionicLoading, $filter) {
-  var lastFileCleanup = -1;
-  if (localStorage.lastFileCleanup) lastFileCleanup = Number(localStorage.lastFileCleanup);
-  //console.log('lastFileCleanup: ' + lastFileCleanup);
-
   var queueFileDownload = function (obj) {
     var fileTransfer = new FileTransfer();
     fileTransfer.download(obj.url, obj.savepath, function (fileEntry) {
@@ -150,8 +146,13 @@ angular.module('ilcomuneintasca.services.fs', [])
       var cleaned = $q.defer();
       filesystem.then(function (mainDir) {
         if (ionic.Platform.isWebView()) {
-          //console.log('cleaning mainDir: ' + mainDir.toURL());
+					//console.log('cleaning mainDir: ' + mainDir.toURL());
           //console.log(mainDir.nativeUrl);
+
+					var lastFileCleanup = -1;
+					if (localStorage.lastFileCleanup) lastFileCleanup = Number(localStorage.lastFileCleanup);
+					//console.log('lastFileCleanup: ' + lastFileCleanup);
+
           var now_as_epoch = parseInt((new Date).getTime() / 1000);
           var to = (lastFileCleanup + Config.fileCleanupTimeoutSeconds());
           if (lastFileCleanup == -1 || now_as_epoch > to) {

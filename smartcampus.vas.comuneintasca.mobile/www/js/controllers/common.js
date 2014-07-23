@@ -1,18 +1,6 @@
 angular.module('ilcomuneintasca.controllers.common', [])
 
-.controller('SettingsCtrl', function ($scope, $rootScope, $filter, $window, $timeout, Config, $ionicLoading) {
-  $scope.setLang=function(l){
-    $rootScope.lang=localStorage.lang=l;
-    var loading = $ionicLoading.show({
-      content: $filter('translate')(Config.keys()['loading']),
-    });
-    $timeout(function(){
-      $window.location.reload();
-    },500);
-  };
-})
-
-.controller('MenuCtrl', function ($scope, $ionicModal, Config) {
+.controller('MenuCtrl', function ($scope, $rootScope, $ionicModal, Config, Files, DatiDB) {
   $scope.shownGroup = null;
 
   $scope.isGroupShown = function (groupId) {
@@ -31,7 +19,29 @@ angular.module('ilcomuneintasca.controllers.common', [])
   },function(menu) {
     $scope.menu=null;
   });
-  
+ 
+  $scope.setLang=function(l){
+    $rootScope.lang=localStorage.lang=l;
+    var loading = $ionicLoading.show({
+      content: $filter('translate')(Config.keys()['loading']),
+    });
+		/*
+    $timeout(function(){
+      $window.location.reload();
+    },500);
+		*/
+  };
+  $scope.fsCleanup=function(){
+		console.log('cleanup!');
+		localStorage.lastFileCleanup=-1;
+		Files.cleanup();
+	};
+  $scope.dbReset=function(){
+		console.log('sync!');
+		DatiDB.reset();
+	};
+
+	
   $ionicModal.fromTemplateUrl('templates/credits.html', {
     scope: $scope,
     animation: 'slide-in-up'
@@ -39,11 +49,23 @@ angular.module('ilcomuneintasca.controllers.common', [])
     $scope.credits = modal;
   });
   $scope.showCredits = function () {
-    console.log($scope);
     $scope.credits.show();
   };
-  $scope.$on('$destroy', function () {
+
+	$ionicModal.fromTemplateUrl('templates/settings.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function (modal) {
+    $scope.settings = modal;
+  });
+  $scope.showSettings = function () {
+    $scope.settings.show();
+  };
+
+	
+	$scope.$on('$destroy', function () {
     $scope.credits.remove();
+    $scope.settings.remove();
   });
 })
 

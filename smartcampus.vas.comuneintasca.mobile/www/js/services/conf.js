@@ -40,6 +40,21 @@ angular.module('ilcomuneintasca.services.conf', [])
   });
   
   var keys = {
+    'settings_data_clean': {
+      it: 'Cancella dati temporanei',
+      en: 'Empty cache',
+      de: '[clean]'
+    },
+    'settings_data_sync': {
+      it: 'Cancella e ripristina',
+      en: 'Erase and restore',
+      de: '[sync]'
+    },
+    'settings_data': {
+      it: 'Gestione dati',
+      en: 'Data management',
+      de: '[data]'
+    },
     'settings_language': {
       it: 'Lingua',
       en: 'Language',

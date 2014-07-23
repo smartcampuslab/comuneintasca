@@ -157,6 +157,11 @@ angular.module('ilcomuneintasca.services.db', [])
   var syncinprogress = null;
 
   return {
+		reset: function () { 
+			localStorage.lastSynced=lastSynced=-1;
+			localStorage.currentDbVersion=currentDbVersion=0;
+			return this.sync();
+		},
     sync: function () {
       if (syncinprogress!=null) {
         console.log('sync already in progress...');

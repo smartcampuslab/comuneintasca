@@ -7,6 +7,11 @@ angular.module('ilcomuneintasca.services.db', [])
   var parseDbRow = function (dbrow) {
     var dbtype = Config.contentKeyFromDbType(dbrow.type);
     var item = JSON.parse(dbrow.data);
+		if (dbrow.parentid) {
+			item['parentid']=dbrow.parentid;
+			item['parent']=JSON.parse(dbrow.parent);
+		}
+		item['sonsnum']=dbrow.sonsnum;
 
     Config.menuGroupSubgroupByTypeAndClassification(dbtype,dbrow.classification).then(function(sg){
       if (sg) item['abslink'] = '#/app/page/'+sg._parent.id+'/'+sg.id+'/' + item.id;
@@ -117,8 +122,10 @@ angular.module('ilcomuneintasca.services.db', [])
       console.log('initializing database...');
       dbObj.transaction(function (tx) {
         tx.executeSql('DROP TABLE IF EXISTS ContentObjects');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS ContentObjects (id text primary key, version integer, type text, category text, classification text, classification2 text, classification3 text, data text, lat real, lon real, fromTime integer, toTime integer)');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS ContentObjects (id text primary key, parentid text, version integer, type text, category text, classification text, classification2 text, classification3 text, data text, lat real, lon real, fromTime integer, toTime integer)');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_id ON ContentObjects( id )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_parentid ON ContentObjects( parentid )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_idparentid ON ContentObjects( id, parentid )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_type ON ContentObjects( type )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_cate ON ContentObjects( category )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_class ON ContentObjects( classification )');
@@ -227,6 +234,7 @@ angular.module('ilcomuneintasca.services.db', [])
 
                     angular.forEach(updates, function (item, idx) {
                       //console.log('item.category: ' + item.category);
+											var parentid=null;
 
                       var fromTime = 0;
                       var toTime = 0;
@@ -237,7 +245,26 @@ angular.module('ilcomuneintasca.services.db', [])
 
                       var classified=$q.defer();
                       if (contentTypeKey == 'event') {
-                        category = item.category;
+												if (item.parentEventId) {
+													var parentFound=false;
+
+													var parent_attributes=item.parentEventId.split(',');
+													for (pattr_idx in parent_attributes) {
+														var pattribute=parent_attributes[pattr_idx].split('=');
+														if (pattribute[0].trim()=='objectRemoteId') {
+															parentid=pattribute[1].trim();
+														}
+													}
+
+													if (parentFound) {
+														console.log('parentid: '+parentid);
+													} else {
+														console.log('parent not found: '+item.parentEventId);
+													}
+												}
+                        //console.log('event cate: ' + category);
+
+												category = item.category;
                         //console.log('event cate: ' + category);
                         if (category) {
                           // "category": "{objectName=Feste, mercati e fiere, classIdentifier=tipo_eventi, datePublished=1395152152, dateModified=1395152182, objectRemoteId=a15d79dc9794d829ed43364863a8225a, objectId=835351, link=http://www.comune.trento.it/api/opendata/v1/content/object/835351}"
@@ -297,7 +324,7 @@ angular.module('ilcomuneintasca.services.db', [])
                         classified.resolve([classification,classification2,classification3]);
                       }
                       objsReady.push(classified.promise.then(function(clfs){
-                        values = [item.id, item.version, contentTypeClassName, item.category, clfs[0], clfs[1], clfs[2], JSON.stringify(item), ((item.location && item.location.length == 2) ? item.location[0] : -1), ((item.location && item.location.length == 2) ? item.location[1] : -1), fromTime, toTime];
+                        values = [item.id, parentid, item.version, contentTypeClassName, item.category, clfs[0], clfs[1], clfs[2], JSON.stringify(item), ((item.location && item.location.length == 2) ? item.location[0] : -1), ((item.location && item.location.length == 2) ? item.location[1] : -1), fromTime, toTime];
                         itemsToInsert.push(values)
                       }));
 
@@ -313,7 +340,7 @@ angular.module('ilcomuneintasca.services.db', [])
                   dbObj.transaction(function (tx) {
                     angular.forEach(itemsToInsert, function (rowData, rowIdx) {
                       tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [rowData[0]], function (tx, res) { //success callback
-                        tx.executeSql('INSERT INTO ContentObjects (id, version, type, category, classification, classification2, classification3, data, lat, lon, fromTime, toTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', rowData, function (tx, res) { //success callback
+                        tx.executeSql('INSERT INTO ContentObjects (id, parentid, version, type, category, classification, classification2, classification3, data, lat, lon, fromTime, toTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', rowData, function (tx, res) { //success callback
                           //console.log('inserted obj with id: ' + rowData[0]);
                         }, function (e) { //error callback
                           console.log('unable to insert obj with id ' + rowData[0] + ': ' + e.message);
@@ -411,7 +438,11 @@ angular.module('ilcomuneintasca.services.db', [])
         var lista = []
         dbObj.transaction(function (tx) {
           //console.log('type: '+types[dbname]);
-          tx.executeSql('SELECT id, type, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=?', [types[dbname]], function (tx, results) {
+					_complex=false;
+          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonsnum '+
+						'FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id WHERE c.type=? ' +
+						' GROUP BY c.id HAVING count(s.id)' + (_complex?'>':'=') + '0';
+          tx.executeSql(sql, [types[dbname]], function (tx, results) {
             var len = results.rows.length,
               i;
             for (i = 0; i < len; i++) {
@@ -453,7 +484,16 @@ angular.module('ilcomuneintasca.services.db', [])
           //console.log('type: '+types[dbname]);
           //console.log('category: ' + cateId);
 
-          var sql = 'SELECT id, type, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=?' + (cateId ? ' AND (classification=? OR classification2=? OR classification3=?)' : '');
+					var _complex=false;
+					if (cateId && cateId=='_complex') {
+						_complex=true;
+						cateId=undefined;
+					}
+					
+          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonsnum '+
+						'FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id WHERE c.type=? ' +
+						(cateId ? ' AND (c.classification=? OR c.classification2=? OR c.classification3=?)' : '') + 
+						' GROUP BY c.id HAVING count(s.id)' + (_complex?'>':'=') + '0';
           var params = cateId ? [types[dbname], cateId, cateId, cateId] : [types[dbname]];
           tx.executeSql(sql, params, function (tx2, cateResults) {
             var len = cateResults.rows.length,
@@ -497,8 +537,17 @@ angular.module('ilcomuneintasca.services.db', [])
         dbObj.transaction(function (tx) {
           //console.log('type: '+types[dbname]);
 
-          var sql = 'SELECT id, type, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=? AND ' +
-            'fromTime > 0 AND fromTime <' + toTime + ' AND toTime > ' + fromTime + (cateId ? ' AND (classification=? OR classification2=? OR classification3=?)' : '');
+					var _complex=false;
+					if (cateId && cateId=='_complex') {
+						_complex=true;
+						cateId=undefined;
+					}
+
+          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonsnum '+
+						'FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id WHERE c.type=? ' +
+            'AND c.fromTime > 0 AND c.fromTime <' + toTime + ' AND c.toTime > ' + fromTime + 
+						(cateId ? ' AND (c.classification=? OR c.classification2=? OR c.classification3=?)' : '') + 
+						' GROUP BY c.id HAVING count(s.id)' + (_complex?'>':'=') + '0';
           var params = cateId ? [types[dbname], cateId, cateId, cateId] : [types[dbname]];
           tx.executeSql(sql, params, function (tx2, cateResults) {
             var len = cateResults.rows.length,
@@ -511,7 +560,7 @@ angular.module('ilcomuneintasca.services.db', [])
           }, function (tx2, err) {
             $ionicLoading.hide();
             console.log('byTimeInterval data error!');
-            console.log(err);
+            console.log(JSON.stringify(err));
             Profiling._do('byTimeInterval');
             data.reject(err);
           });
@@ -528,6 +577,76 @@ angular.module('ilcomuneintasca.services.db', [])
       });
       return data.promise;
     },
+    getByParent: function (dbname, itemId) {
+      //console.log('DatiDB.get("' + dbname + '","' + itemId + '")');
+      return this.sync().then(function (dbVersion) {
+        Profiling.start('dbget');
+        var loading = $ionicLoading.show({
+          content: $filter('translate')(Config.keys()['loading']),
+          showDelay: 1000,
+          duration: Config.loadingOverlayTimeoutMillis()
+        });
+
+        var dbitem = $q.defer();
+        var lista = [];
+        dbObj.transaction(function (tx) {
+          //console.log('DatiDB.get(); itemId: ' + itemId);
+          if (itemId.indexOf(',') == -1) {
+            idCond = 'c.id=?';
+          } else {
+            itemsIds = itemId.split(',');
+            for (i = 0; i < itemsIds.length; i++) itemsIds[i] = '?';
+            idCond = 'c.id IN (' + itemsIds.join() + ')';
+          }
+          var qParams = itemId.split(',');
+          qParams.unshift(types[dbname]);
+          var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonsnum '+
+						'FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id WHERE c.type=? ' +
+						'AND ' + idCond + ' GROUP BY c.id';
+          //console.log('dbQuery: ' + dbQuery);
+          //console.log('qParams: ' + qParams);
+          //console.log('DatiDB.get("' + dbname + '", "' + itemId + '"); dbQuery launched...');
+          tx.executeSql(dbQuery, qParams, function (tx2, results) {
+            //console.log('DatiDB.get("' + dbname + '", "' + itemId + '"); dbQuery completed');
+            var resultslen = results.rows.length;
+            if (resultslen > 0) {
+              if (itemId.indexOf(',') == -1) {
+                var item = results.rows.item(0);
+                var result = parseDbRow(item);
+                Profiling._do('dbget', 'single');
+                dbitem.resolve(result);
+              } else {
+                for (var i = 0; i < resultslen; i++) {
+                  var item = results.rows.item(i);
+                  lista.push(parseDbRow(item));
+                }
+                Profiling._do('dbget', 'list');
+                dbitem.resolve(lista);
+              }
+            } else {
+              console.log('not found!');
+              Profiling._do('dbget', 'sql empty');
+              dbitem.reject('not found!');
+            }
+          }, function (tx2, err) {
+            $ionicLoading.hide();
+            console.log('error: ' + err);
+            Profiling._do('dbget', 'sql error');
+            dbitem.reject(err);
+          });
+        }, function (error) { //error callback
+          $ionicLoading.hide();
+          console.log('db.get() ERROR: ' + error);
+          Profiling._do('dbget', 'tx error');
+          dbitem.reject(error);
+        }, function () { //success callback
+          $ionicLoading.hide();
+          Profiling._do('dbget', 'tx success');
+        });
+
+        return dbitem.promise;
+      });
+    },
     get: function (dbname, itemId) {
       //console.log('DatiDB.get("' + dbname + '","' + itemId + '")');
       return this.sync().then(function (dbVersion) {
@@ -543,15 +662,17 @@ angular.module('ilcomuneintasca.services.db', [])
         dbObj.transaction(function (tx) {
           //console.log('DatiDB.get(); itemId: ' + itemId);
           if (itemId.indexOf(',') == -1) {
-            idCond = 'id=?';
+            idCond = 'c.id=?';
           } else {
             itemsIds = itemId.split(',');
             for (i = 0; i < itemsIds.length; i++) itemsIds[i] = '?';
-            idCond = 'id IN (' + itemsIds.join() + ')';
+            idCond = 'c.id IN (' + itemsIds.join() + ')';
           }
           var qParams = itemId.split(',');
           qParams.unshift(types[dbname]);
-          var dbQuery = 'SELECT id, type, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE type=? AND ' + idCond;
+          var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonsnum '+
+						'FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id WHERE c.type=? ' +
+						'AND ' + idCond + ' GROUP BY c.id';
           //console.log('dbQuery: ' + dbQuery);
           //console.log('qParams: ' + qParams);
           //console.log('DatiDB.get("' + dbname + '", "' + itemId + '"); dbQuery launched...');

@@ -297,16 +297,19 @@ ion-side-menu .item {
   height: 100px;
 }
 
-
+.list .item {
+	color: #2975a7;
+}
 .list .item.item-header, .list .item.item-utility {
-  background-color: #2975a7;
+/*
+	background-color: #2975a7;
   color: #ffffff;
   opacity: 0.5;
-  font-weight: bold;
-  padding: .5em;
+*/
+	font-weight: bold;
 }
 .list .item.item-header i.icon, .list .item.item-utility i.icon {
-  padding-right: .25em;
+	font-size:1.5em;
 }
 .list .item.item-utility {
   opacity:.7;
@@ -314,6 +317,10 @@ ion-side-menu .item {
 }
 .list .item.item-accordion {
   transition: 0.1s all linear;
+  padding-left: 1em;
+	font-size: 1.1em;
+	line-height: .9em;
+	border:none;border-bottom:1px solid rgba(41,117,167,.2);
 }
 .list .item.item-accordion.ng-hide {
   line-height: 0px;

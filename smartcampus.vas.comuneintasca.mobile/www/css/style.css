@@ -178,8 +178,8 @@ ion-side-menu .item {
   text-align: right;
 }
 .content-image-main {
-  height: 320px;
-  line-height: 320px;
+  height: 160px;
+  line-height: 160px;
 }
 .content-image-main.unavailable,
 .content-image-main.missing,

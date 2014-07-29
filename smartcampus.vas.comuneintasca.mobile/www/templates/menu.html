@@ -21,34 +21,30 @@
     </ion-header-bar>
     <ion-content class="has-header content-calm">
       <ion-list>
-        <ion-item nav-clear menu-close class="item-accordion item-utility" ng-click="goto('home')">
-          <i class="icon ion-home"></i>
-          <b ng-bind="'sidemenu_Home' | translate"></b>
-        </ion-item>
-        <ion-item nav-clear menu-close class="item-accordion item-utility" ng-click="goto('favorites')">
-          <i class="icon ion-ios7-star"></i>
-          <b ng-bind="'sidemenu_Favourites' | translate"></b>
+        <ion-item nav-clear menu-close class="item-accordion" ng-click="goto('home')">
+          <span ng-bind="'sidemenu_Home' | translate"></span>
         </ion-item>
 
         <div ng-if="menu" ng-repeat="(groupIndex, menuGroup) in menu">
-          <ion-item class="item-header" ng-click="showGroup(groupIndex)">
-            <i class="icon" ng-class="{'ion-chevron-up': !isGroupShown(groupIndex), 'ion-chevron-down': isGroupShown(groupIndex)}"></i>
-            <b ng-bind="menuGroup.name | translate">test</b>
+          <ion-item class="item-header item-icon-right" ng-click="showGroup(groupIndex)">
+            <b ng-bind="menuGroup.name | translate"></b>
+            <i class="icon" ng-class="{'ion-chevron-down': !isGroupShown(groupIndex), 'ion-chevron-up': isGroupShown(groupIndex)}"></i>
           </ion-item>
           <div ng-show="isGroupShown(groupIndex)">
             <ion-item ng-repeat="(itemIndex, menuItem) in menuGroup.items" nav-clear menu-close class="item-accordion" ng-href="#/app/{{getMenuPath(menuGroup,menuItem)}}">
-              <b ng-bind="menuItem.name | translate"></b>
+              <span ng-bind="menuItem.name | translate"></span>
             </ion-item>
           </div>
         </div>
 
-        <ion-item nav-clear menu-close class="item-accordion item-utility" ng-click="showCredits()">
-          <i class="icon ion-android-information"></i>
-          <b ng-bind="'credits_title' | translate"></b>
+        <ion-item nav-clear menu-close class="item-accordion" ng-click="goto('favorites')">
+          <span ng-bind="'sidemenu_Favourites' | translate"></span>
         </ion-item>
-        <ion-item nav-clear menu-close class="item-accordion item-utility" ng-click="showSettings()">
-          <i class="icon ion-gear-b"></i>
-          <b ng-bind="'settings_title' | translate"></b>
+        <ion-item nav-clear menu-close class="item-accordion" ng-click="showSettings()">
+          <span ng-bind="'settings_title' | translate"></span>
+        </ion-item>
+        <ion-item nav-clear menu-close class="item-accordion" ng-click="showCredits()">
+          <span ng-bind="'credits_title' | translate"></span>
         </ion-item>
       </ion-list>
     </ion-content>

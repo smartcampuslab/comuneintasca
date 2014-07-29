@@ -16,7 +16,7 @@ angular.module('ilcomuneintasca.directives', [])
     restrict: 'E',
     replace: true, //scope:{ image:'=image',gotdata:'=gotdata' },
     template: function (tElem, tAttrs) {
-      return '<div>'+$filter('translate')(Config.keys()['loading_short'])+'</div>';
+      return '<div class="img-loading">'+$filter('translate')(Config.keys()['loading_short'])+'</div>';
     },
     link: function (scope, element, attrs) {
       // added since scope can be not yet filled with actual data,

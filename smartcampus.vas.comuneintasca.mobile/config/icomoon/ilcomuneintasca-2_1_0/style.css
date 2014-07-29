@@ -1,17 +1,10 @@
 @font-face {
-font-family: 'HelveticaNeue-CondensedBold';
-font-weight: bold;
-src: url("../fonts/HelveticaNeue-CondensedBold.otf") format("opentype");
-}
-
-
-@font-face {
 	font-family: 'ilcomuneintasca';
-	src:url('../fonts/ilcomuneintasca.eot?-l6nj9a');
-	src:url('../fonts/ilcomuneintasca.eot?#iefix-l6nj9a') format('embedded-opentype'),
-		url('../fonts/ilcomuneintasca.woff?-l6nj9a') format('woff'),
-		url('../fonts/ilcomuneintasca.ttf?-l6nj9a') format('truetype'),
-		url('../fonts/ilcomuneintasca.svg?-l6nj9a#ilcomuneintasca') format('svg');
+	src:url('fonts/ilcomuneintasca.eot?-21eajq');
+	src:url('fonts/ilcomuneintasca.eot?#iefix-21eajq') format('embedded-opentype'),
+		url('fonts/ilcomuneintasca.woff?-21eajq') format('woff'),
+		url('fonts/ilcomuneintasca.ttf?-21eajq') format('truetype'),
+		url('fonts/ilcomuneintasca.svg?-21eajq#ilcomuneintasca') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -30,9 +23,6 @@ src: url("../fonts/HelveticaNeue-CondensedBold.otf") format("opentype");
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.comuneicon-banknote:before {
-	content: "\e60b";
-}
 .comuneicon-placeholder:before {
 	content: "\e608";
 }

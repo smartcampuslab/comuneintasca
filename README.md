@@ -6,8 +6,10 @@ New mobile app made with Ionic/Cordova.
 
 Instructions:
 =============
-install nodejs,npm and ant
-add this line to the bashrc:
+
+Install nodejs, npm and ant.
+
+Then add this line to the bashrc:
 
 	export PATH=${PATH}:/Development/adt-bundle/sdk/platform-tools:/Development/adt-bundle/sdk/tools
 

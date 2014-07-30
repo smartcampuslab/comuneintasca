@@ -11,7 +11,6 @@ angular.module('ilcomuneintasca.directives', [])
 })
 
 .directive('comuniImg', function ($q, $filter, $timeout, Config, Files) {
-  var emptyImageUrl = 'img/placeholder-512x512.gif';
   return {
     restrict: 'E',
     replace: true, //scope:{ image:'=image',gotdata:'=gotdata' },
@@ -50,9 +49,8 @@ angular.module('ilcomuneintasca.directives', [])
         element.addClass('error');
 				element.children()[0].remove();
       });
-			console.log('attrs.sonscount='+attrs.sonscount);
 			if (attrs.sonscount && attrs.sonscount>0) {
-				element.append('<div class="dida">'+attrs.sonscount+' '+$filter('translate')(Config.keys()['complex_events'])+'</div>');
+				element.append('<div class="dida">'+$filter('translate_plur')('complex_events',Number(attrs.sonscount))+'</div>');
 			}
     }
   };

@@ -36,7 +36,6 @@ angular.module('ilcomuneintasca.directives', [])
               //  element.html('<img src="'+fileUrl+'" />');
               //}
             //});
-						console.log('HTML: '+element.html());
           }, function () {
             element.addClass('unavailable');
           });

@@ -1,15 +1,15 @@
 <ion-content class="has-header" delegate-handle="listScroll">
   <ion-list>
     <div class="item item-divider" align="center">{{filterDef}}{{'list_results' | translate_plur:results.length}}</div>
-    <ion-item collection-repeat="event in results|extOrderBy:ordering track by event.id"
+    <ion-item collection-repeat="obj in results|extOrderBy:ordering track by obj.id"
               collection-item-width="'100%'" collection-item-height="getListItemHeight(item, $index)"
-              ng-click="gotoSubpath(event.id)" class="coll-item item-thumbnail-left">
-      <comuni-img class="item-image comuni-item-image" sonscount="{{event.sonscount}}" ></comuni-img>
-      <h2><span ng-if="event.parentid">{{event.parent.title | translate}} &gt;&gt; </span>{{event.title | translate}}</h2>
-      <p ng-if="event.fromTime">{{event.fromTime | date:'dd/MM/yyyy'}}<span ng-if="event.fromTime !== event.toTime"> - {{event.toTime | date:'dd/MM/yyyy'}}</span></p>
+              ng-click="gotoSubpath(obj.id)" class="coll-item item-thumbnail-left">
+      <comuni-img class="item-image comuni-item-image" sonscount="{{obj.sonscount}}" ></comuni-img>
+      <h2><span ng-if="obj.parentid">{{obj.parent.title | translate}} &gt;&gt; </span>{{obj.title | translate}}</h2>
+      <p ng-if="obj.fromTime">{{obj.fromTime | date:'dd/MM/yyyy'}}<span ng-if="obj.fromTime !== obj.toTime"> - {{obj.toTime | date:'dd/MM/yyyy'}}</span></p>
       <div class="row comuni-item-bottom">
         <div class="col comuni-item-bottom-text">
-          <span>{{event.address | translate}}</span>
+          <span>{{obj.address | translate}}</span>
         </div>
       </div>
     </ion-item>

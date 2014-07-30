@@ -1,20 +1,20 @@
 <ion-content class="has-header" delegate-handle="listScroll">
   <ion-list>
     <div class="item item-divider" align="center">{{filterDef}}{{'list_results' | translate_plur:results.length}}</div>
-    <ion-item collection-repeat="hotel in results | extOrderBy:ordering" 
+    <ion-item collection-repeat="obj in results | extOrderBy:ordering" 
               collection-item-width="'100%'" collection-item-height="getListItemHeight(item, $index)" 
-              ng-click="gotoSubpath(hotel.id)" class="item-thumbnail-left coll-item">
+              ng-click="gotoSubpath(obj.id)" class="item-thumbnail-left coll-item">
       <comuni-img class="item-image comuni-item-image"></comuni-img>
-      <h2>{{hotel.title | translate}}</h2>
+      <h2>{{obj.title | translate}}</h2>
       <p>
-        <i class="icon ion-ios7-star" ng-if="!! hotel.stars" ng-repeat="n in _.range(0, hotel.stars)"></i>
+        <i class="icon ion-ios7-star" ng-if="!! obj.stars" ng-repeat="n in _.range(0, obj.stars)"></i>
       </p>
       <div class="row comuni-item-bottom">
         <div class="col-75 comuni-item-bottom-text">
-          <span>{{hotel.address | translate}}</span>
+          <span>{{obj.address | translate}}</span>
         </div>
         <div class="col-25 comuni-item-bottom-distance">
-          <span ng-if="!! hotel.distance">{{hotel.distance | number:1}} {{'entry_km' | translate}}</span>
+          <span ng-if="!! obj.distance">{{obj.distance | number:1}} {{'entry_km' | translate}}</span>
         </div>
       </div>
     </ion-item>

@@ -1,17 +1,17 @@
 <ion-content class="has-header" delegate-handle="listScroll">
   <ion-list>
     <div class="item item-divider" align="center">{{filterDef()}}{{'list_results' | translate_plur:results.length}}</div>
-    <ion-item collection-repeat="restaurant in results | extOrderBy:ordering"
+    <ion-item collection-repeat="obj in results | extOrderBy:ordering"
               collection-item-width="'100%'" collection-item-height="getListItemHeight(item, $index)"
-              ng-click="gotoSubpath(restaurant.id)" class="item-thumbnail-left coll-item">
+              ng-click="gotoSubpath(obj.id)" class="item-thumbnail-left coll-item">
       <comuni-img class="item-image comuni-item-image"></comuni-img>
-      <h2>{{restaurant.title | translate}}</h2>
+      <h2>{{obj.title | translate}}</h2>
       <div class="row comuni-item-bottom">
         <div class="col-75 comuni-item-bottom-text">
-          <span>{{restaurant.address | translate}}</span>
+          <span>{{obj.address | translate}}</span>
         </div>
         <div class="col-25 comuni-item-bottom-distance">
-          <span ng-if="!! restaurant.distance">{{restaurant.distance | number:1}} {{'entry_km' | translate}}</span>
+          <span ng-if="!! obj.distance">{{obj.distance | number:1}} {{'entry_km' | translate}}</span>
         </div>
       </div>
     </ion-item>

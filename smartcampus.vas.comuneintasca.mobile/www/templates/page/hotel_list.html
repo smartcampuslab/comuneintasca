@@ -4,7 +4,7 @@
     <ion-item collection-repeat="hotel in results | extOrderBy:ordering" 
               collection-item-width="'100%'" collection-item-height="getListItemHeight(item, $index)" 
               ng-click="gotoSubpath(hotel.id)" class="item-thumbnail-left coll-item">
-      <comuni-img class="item-image comuni-item-image" image="hotel.image" gotdata="gotdata"></comuni-img>
+      <comuni-img class="item-image comuni-item-image"></comuni-img>
       <h2>{{hotel.title | translate}}</h2>
       <p>
         <i class="icon ion-ios7-star" ng-if="!! hotel.stars" ng-repeat="n in _.range(0, hotel.stars)"></i>

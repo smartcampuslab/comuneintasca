@@ -4,7 +4,7 @@
     <ion-item collection-repeat="place in results | extOrderBy:ordering" 
               collection-item-width="'100%'" collection-item-height="getListItemHeight(item, $index)" 
               ng-click="gotoSubpath(place.id)" class="item-thumbnail-left coll-item">
-      <comuni-img class="item-image comuni-item-image" image="place.image" gotdata="gotdata"></comuni-img>
+      <comuni-img class="item-image comuni-item-image"></comuni-img>
       <h2>{{place.title | translate}}</h2>
       <div class="row comuni-item-bottom">
         <div class="col-75 comuni-item-bottom-text">

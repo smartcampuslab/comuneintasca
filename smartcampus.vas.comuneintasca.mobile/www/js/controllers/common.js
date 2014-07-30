@@ -151,6 +151,19 @@ angular.module('ilcomuneintasca.controllers.common', [])
           $scope.gotdata = DatiDB.get(sg.query.type, $stateParams.itemId).then(function (data) {
             $scope.obj = data;
 
+						if (data.sonscount>0) {
+							$scope.toggleSons=function(){
+								if ($scope.sonsVisible) {
+									$scope.sonsVisible=null;
+								} else {
+									DatiDB.getByParent(sg.query.type, data.id).then(function (data) {
+										if (!$scope.sons) $scope.sons=data;
+										$scope.sonsVisible=true;
+									});
+								}
+							}
+						}
+						
             if (data.location) {
               GeoLocate.locate().then(function (latlon) {
                 $scope.distance = GeoLocate.distance(latlon, data.location);
@@ -158,7 +171,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
             } else {
               console.log('no known location for place');
             }
-          });
+					})
         } else {
           $scope.template='templates/page/'+(sg.view||sg.query.type+'_list')+'.html';
 
@@ -315,6 +328,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
           $scope.results = data;
         });
       } else {
+				console.log('unkown menu object type!');
       }
     });
 //  }

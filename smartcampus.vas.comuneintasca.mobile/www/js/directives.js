@@ -21,9 +21,8 @@ angular.module('ilcomuneintasca.directives', [])
       // added since scope can be not yet filled with actual data,
       // since data is taken asyncronously from the database
       scope.gotdata.then(function () {
-        content = scope.obj || scope.content || scope.place || scope.hotel || scope.restaurant || scope.event || scope.itinerario || {
-          image: ''
-        };
+        //content = scope.obj || scope.content || scope.place || scope.hotel || scope.restaurant || scope.event || scope.itinerario || { image: '' };
+        content = scope.son || scope.obj || scope.itinerario || { image: '' };
         if (content.image && content.image != '' && content.image != 'false') {
           Files.get(content.image).then(function (fileUrl) {
 						element.children()[0].remove();

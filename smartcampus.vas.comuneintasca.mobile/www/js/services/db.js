@@ -577,74 +577,61 @@ angular.module('ilcomuneintasca.services.db', [])
       });
       return data.promise;
     },
-    getByParent: function (dbname, itemId) {
-      //console.log('DatiDB.get("' + dbname + '","' + itemId + '")');
+    getByParent: function (dbname, parentId) {
+      //console.log('DatiDB.get("' + dbname + '","' + parentId + '")');
       return this.sync().then(function (dbVersion) {
-        Profiling.start('dbget');
+        Profiling.start('dbsons');
         var loading = $ionicLoading.show({
           content: $filter('translate')(Config.keys()['loading']),
           showDelay: 1000,
           duration: Config.loadingOverlayTimeoutMillis()
         });
 
-        var dbitem = $q.defer();
+        var dbsons = $q.defer();
         var lista = [];
         dbObj.transaction(function (tx) {
-          //console.log('DatiDB.get(); itemId: ' + itemId);
-          if (itemId.indexOf(',') == -1) {
-            idCond = 'c.id=?';
+          //console.log('DatiDB.get(); parentId: ' + parentId);
+          if (parentId.indexOf(',') == -1) {
+            idCond = 'c.parentid=?';
           } else {
-            itemsIds = itemId.split(',');
+            itemsIds = parentId.split(',');
             for (i = 0; i < itemsIds.length; i++) itemsIds[i] = '?';
-            idCond = 'c.id IN (' + itemsIds.join() + ')';
+            idCond = 'c.parentid IN (' + itemsIds.join() + ')';
           }
-          var qParams = itemId.split(',');
+          var qParams = parentId.split(',');
           qParams.unshift(types[dbname]);
           var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount '+
 						'FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id WHERE c.type=? ' +
 						'AND ' + idCond + ' GROUP BY c.id';
           //console.log('dbQuery: ' + dbQuery);
           //console.log('qParams: ' + qParams);
-          //console.log('DatiDB.get("' + dbname + '", "' + itemId + '"); dbQuery launched...');
+          //console.log('DatiDB.get("' + dbname + '", "' + parentId + '"); dbQuery launched...');
           tx.executeSql(dbQuery, qParams, function (tx2, results) {
-            //console.log('DatiDB.get("' + dbname + '", "' + itemId + '"); dbQuery completed');
+            //console.log('DatiDB.get("' + dbname + '", "' + parentId + '"); dbQuery completed');
             var resultslen = results.rows.length;
-            if (resultslen > 0) {
-              if (itemId.indexOf(',') == -1) {
-                var item = results.rows.item(0);
-                var result = parseDbRow(item);
-                Profiling._do('dbget', 'single');
-                dbitem.resolve(result);
-              } else {
-                for (var i = 0; i < resultslen; i++) {
-                  var item = results.rows.item(i);
-                  lista.push(parseDbRow(item));
-                }
-                Profiling._do('dbget', 'list');
-                dbitem.resolve(lista);
-              }
-            } else {
-              console.log('not found!');
-              Profiling._do('dbget', 'sql empty');
-              dbitem.reject('not found!');
-            }
+						for (var i = 0; i < resultslen; i++) {
+							var item = results.rows.item(i);
+							lista.push(parseDbRow(item));
+						}
+						Profiling._do('dbsons', 'list');
+						dbsons.resolve(lista);
           }, function (tx2, err) {
             $ionicLoading.hide();
             console.log('error: ' + err);
-            Profiling._do('dbget', 'sql error');
-            dbitem.reject(err);
+            Profiling._do('dbsons', 'sql error');
+            dbsons.reject(err);
           });
         }, function (error) { //error callback
           $ionicLoading.hide();
           console.log('db.get() ERROR: ' + error);
-          Profiling._do('dbget', 'tx error');
-          dbitem.reject(error);
+          Profiling._do('dbsons', 'tx error');
+          dbsons.reject(error);
         }, function () { //success callback
           $ionicLoading.hide();
-          Profiling._do('dbget', 'tx success');
+          Profiling._do('dbsons', 'tx success');
         });
 
-        return dbitem.promise;
+        return dbsons.promise;
       });
     },
     get: function (dbname, itemId) {
@@ -670,7 +657,8 @@ angular.module('ilcomuneintasca.services.db', [])
           }
           var qParams = itemId.split(',');
           qParams.unshift(types[dbname]);
-          var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount '+
+
+					var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount '+
 						'FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id WHERE c.type=? ' +
 						'AND ' + idCond + ' GROUP BY c.id';
           //console.log('dbQuery: ' + dbQuery);

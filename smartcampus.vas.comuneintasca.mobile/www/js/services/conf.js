@@ -130,10 +130,20 @@ angular.module('ilcomuneintasca.services.conf', [])
       en: 'Restaurant',
       de: 'Gastronomie'
     },
-    'complex_events': {
+    'complex_events_none': {
+      it: 'no eventi',
+      en: 'no events',
+      de: 'no events'
+    },
+    'complex_events_single': {
+      it: 'un evento',
+      en: 'one event',
+      de: 'ein event'
+    },
+    'complex_events_plural': {
       it: 'eventi',
       en: 'events',
-      de: 'event'
+      de: 'events'
     },
     'leaf_Itinerario': {
       it: 'Itinerario',

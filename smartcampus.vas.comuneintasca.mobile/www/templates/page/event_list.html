@@ -4,7 +4,7 @@
     <ion-item collection-repeat="event in results|extOrderBy:ordering track by event.id"
               collection-item-width="'100%'" collection-item-height="getListItemHeight(item, $index)"
               ng-click="gotoSubpath(event.id)" class="coll-item item-thumbnail-left">
-      <comuni-img class="item-image comuni-item-image" image="event.image" gotdata="gotdata"></comuni-img>
+      <comuni-img class="item-image comuni-item-image" sonscount="{{event.sonscount}}" ></comuni-img>
       <h2><span ng-if="event.parentid">{{event.parent.title | translate}} &gt;&gt; </span>{{event.title | translate}}<span ng-if="event.sonsnum>0"> [{{event.sonsnum}}]</span></h2>
       <p ng-if="event.fromTime">{{event.fromTime | date:'dd/MM/yyyy'}}<span ng-if="event.fromTime !== event.toTime"> - {{event.toTime | date:'dd/MM/yyyy'}}</span></p>
       <div class="row comuni-item-bottom">

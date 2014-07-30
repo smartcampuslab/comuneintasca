@@ -16,20 +16,20 @@ angular.module('ilcomuneintasca.directives', [])
     restrict: 'E',
     replace: true, //scope:{ image:'=image',gotdata:'=gotdata' },
     template: function (tElem, tAttrs) {
-      return '<div class="img-loading">'+$filter('translate')(Config.keys()['loading_short'])+'</div>';
+      return '<div class="img-loading"><span class="loadingmsg">'+$filter('translate')(Config.keys()['loading_short'])+'</span></div>';
     },
     link: function (scope, element, attrs) {
       // added since scope can be not yet filled with actual data,
       // since data is taken asyncronously from the database
       scope.gotdata.then(function () {
-        content = scope.content || scope.place || scope.hotel || scope.restaurant || scope.event || scope.obj || scope.itinerario ||{
+        content = scope.obj || scope.content || scope.place || scope.hotel || scope.restaurant || scope.event || scope.itinerario || {
           image: ''
         };
         if (content.image && content.image != '' && content.image != 'false') {
           Files.get(content.image).then(function (fileUrl) {
+						element.children()[0].remove();
             //$timeout(function () {
               //if (element.hasClass('item-image')) {
-              element.html('&nbsp;');
               element.css({
                 'background-image':'url(' + fileUrl + ')'
               });
@@ -38,15 +38,22 @@ angular.module('ilcomuneintasca.directives', [])
               //  element.html('<img src="'+fileUrl+'" />');
               //}
             //});
+						console.log('HTML: '+element.html());
           }, function () {
-            element.html('&nbsp;').addClass('unavailable');
+            element.addClass('unavailable');
           });
         } else {
-          element.html('&nbsp;').addClass('missing');
+          element.addClass('missing');
+					element.children()[0].remove();
         }
       }, function () {
-        element.html('&nbsp;').addClass('error');
+        element.addClass('error');
+				element.children()[0].remove();
       });
+			console.log('attrs.sonscount='+attrs.sonscount);
+			if (attrs.sonscount && attrs.sonscount>0) {
+				element.append('<div class="dida">'+attrs.sonscount+' '+$filter('translate')(Config.keys()['complex_events'])+'</div>');
+			}
     }
   };
 })

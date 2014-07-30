@@ -411,3 +411,12 @@ ion-side-menu b {
 p.phone-button {
   font-size: 1.5em; font-weight: bold; color:1b4d6e;
 }
+
+
+comuni-img.item-image {
+	position: relative;
+}
+.dida {
+	width:100%;line-height:17px; color:#1b4d6e; background-color: #b7d6e8;
+	position: absolute; bottom:0;left:0;
+}

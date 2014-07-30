@@ -14,11 +14,13 @@ add this line to the bashrc:
 install all the plugins
 
 _(added by ionic)_
+
 	org.apache.cordova.console
 	org.apache.cordova.device
 	org.apache.cordova.statusbar
 
 _(project specific)_
+
 	cordova plugin add https://github.com/brodysoft/Cordova-SQLitePlugin.git
 	cordova plugin add org.apache.cordova.file
 	cordova plugin add org.apache.cordova.file-transfer

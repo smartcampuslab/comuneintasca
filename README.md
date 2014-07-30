@@ -13,12 +13,12 @@ add this line to the bashrc:
 
 install all the plugins
 
-	_(already added by ionic)_
+_(added by ionic)_
 	org.apache.cordova.console
 	org.apache.cordova.device
 	org.apache.cordova.statusbar
 
-	_(project related)_
+_(project specific)_
 	cordova plugin add https://github.com/brodysoft/Cordova-SQLitePlugin.git
 	cordova plugin add org.apache.cordova.file
 	cordova plugin add org.apache.cordova.file-transfer
@@ -33,7 +33,7 @@ install all the plugins
 	cordova plugin add https://github.com/smartcampuslab/cordova-file-metadata.git
 	cordova plugin add https://github.com/driftyco/ionic-plugins-keyboard.git
 
-Activate all needed platform with commands like:
+Activate all needed platforms with commands like:
 
 	$: cordova platform add android	
 

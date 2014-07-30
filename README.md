@@ -7,10 +7,10 @@ Instructions:
 =============
 install nodejs,npm and ant
 add this line to the bashrc:
-	 export PATH=${PATH}:/Development/adt-bundle/sdk/platform-tools:/Development/adt-bundle/sdk/tools
+
+		export PATH=${PATH}:/Development/adt-bundle/sdk/platform-tools:/Development/adt-bundle/sdk/tools
 
 install all the plugins (read plugin.txt)
 
- $: cordova platform add android
- $: cordova run
-
+		$: cordova platform add android
+		$: cordova run

@@ -147,7 +147,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
         if (dbtypeCustomisations.classifications && dbtypeCustomisations.classifications[dbtypeClass]) dbtypeClassCustomisations=dbtypeCustomisations.classifications[dbtypeClass];
 
         if ($stateParams.itemId!='') {
-          $scope.template='templates/page/'+(sg.view||sg.query.type||'content')+'.html';
+          $scope.template='templates/page/'+(sg.view||sg.query.type||'content')+($state.current.data&&$state.current.data.sons?'_sons':'')+'.html';
           $scope.gotdata = DatiDB.get(sg.query.type, $stateParams.itemId).then(function (data) {
             $scope.obj = data;
 
@@ -162,6 +162,11 @@ angular.module('ilcomuneintasca.controllers.common', [])
 									});
 								}
 							}
+              if ($state.current.data&&$state.current.data.sons) {
+                DatiDB.getByParent(sg.query.type, data.id).then(function (data) {
+                  $scope.sons=data;
+                });
+              }
 						}
 						
             if (data.location) {
@@ -242,7 +247,6 @@ angular.module('ilcomuneintasca.controllers.common', [])
             }
 
             tboptions.doFilter=function(filter) {
-              console.log('filter: '+filter);
               var t=0;
               var d = new Date();
               var f = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime() - 1;
@@ -263,7 +267,11 @@ angular.module('ilcomuneintasca.controllers.common', [])
                 if (filter) {
                   $scope.gotdbdata=DatiDB.cate(sg.query.type, filter);
                 } else {
-                  $scope.gotdbdata=DatiDB.all(sg.query.type);
+                  if (sg.query.classification) {
+                    $scope.gotdbdata=DatiDB.cate(sg.query.type, sg.query.classification);
+                  } else {
+                    $scope.gotdbdata=DatiDB.all(sg.query.type);
+                  }
                 }
               }
               $scope.gotdata = $scope.gotdbdata.then(function (data) {

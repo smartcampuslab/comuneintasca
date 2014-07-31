@@ -1,41 +1,50 @@
-<ion-content class="has-header">
-  <comuni-img ng-if="obj.image" class="content-image-main"></comuni-img>
+<div class="event_container" ng-hide="sonsVisible">
+  <ion-content class="has-header">
+    <comuni-img ng-if="obj.image" class="content-image-main"></comuni-img>
+    
+    <div class="padding event">
+      <h1>{{obj.title | translate}}</h1>
+      <h4>{{obj.dbClassification | translate}}</h4>
 
-  <div class="padding event">
-    <h1>{{obj.title | translate}}</h1>
-    <h4>{{obj.dbClassification | translate}}</h4>
-
-    <div class="list card sinottico">
-      <div ng-if="!!(obj.address | translate)" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-location-outline"></i>{{obj.address | translate}}</div>
-      <div ng-if="!!(obj.eventPeriod | translate)" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-calendar-outline"></i>{{obj.eventPeriod | translate}}Enter home address</div>
-      <div ng-if="!!(obj.eventTiming | translate)" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-time-outline"></i>{{obj.eventTiming | translate}}</div>
-      <div ng-if="!!(obj.cost | translate)" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-photos-outline"></i>{{obj.cost | translate}}</div>
-      <div ng-if="obj.topics.length > 0" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-flag-outline"></i><span ng-repeat="topic in obj.topics" ng-if="!!topic">{{topic}}<span ng-if="!$last">, </span></span></div>
+      <div class="list card sinottico">
+        <div ng-if="!!(obj.address | translate)" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-location-outline"></i>{{obj.address | translate}}</div>
+        <div ng-if="!!(obj.eventPeriod | translate)" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-calendar-outline"></i>{{obj.eventPeriod | translate}}Enter home address</div>
+        <div ng-if="!!(obj.eventTiming | translate)" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-time-outline"></i>{{obj.eventTiming | translate}}</div>
+        <div ng-if="!!(obj.cost | translate)" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-photos-outline"></i>{{obj.cost | translate}}</div>
+        <div ng-if="obj.topics.length > 0" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-flag-outline"></i><span ng-repeat="topic in obj.topics" ng-if="!!topic">{{topic}}<span ng-if="!$last">, </span></span></div>
+      </div>
+      <!-- <h5><i class="icon ion-ios7-calendar-outline"></i>{{obj.fromTime | date:'dd/MM/yyyy'}}<span ng-if="obj.fromTime !== obj.toTime"> - {{obj.toTime | date:'dd/MM/yyyy'}}</span></h5>-->
     </div>
-    <!-- <h5><i class="icon ion-ios7-calendar-outline"></i>{{obj.fromTime | date:'dd/MM/yyyy'}}<span ng-if="obj.fromTime !== obj.toTime"> - {{obj.toTime | date:'dd/MM/yyyy'}}</span></h5>-->
+    <div ng-if="obj.sonscount>0">
+      <button class="button button-full eventscount icon-right ion-chevron-down" ng-click="toggleSons()" data-off-ng-click="gotoSubpath('/sons')">{{ 'complex_events' | translate_plur:obj.sonscount }}</button>
+    </div>
+    <div class="padding event">
+      <div class="htmldesc" compile="obj.description | translate"></div>
+      <div class="htmldesc" compile="obj.info | translate"></div>
+    </div>
+  </ion-content>
+  <ion-footer-bar>
+    <div ng-include="'templates/toolbox.html'"></div>
+  </ion-footer-bar>
+</div>
+<div ng-show="sonsVisible">
+  <div class="bar bar-subheader button icon-right ion-chevron-up" ng-click="toggleSons()">
+    {{ 'complex_events' | translate_plur:obj.sonscount }}
   </div>
-	<div ng-if="obj.sonscount>0">
-  	<button class="button button-full eventscount icon-right" ng-class="{'ion-chevron-down': !sons, 'ion-chevron-up': sons}" ng-click="toggleSons()">{{ 'complex_events' | translate_plur:obj.sonscount }}</button>
-		<div ng-show="sonsVisible">
-			<ion-list>
-				<ion-item ng-repeat="son in sons|extOrderBy:ordering track by son.id" href="{{son.abslink}}" class="coll-item item-thumbnail-left">
-					<comuni-img class="item-image comuni-item-image" ></comuni-img>
-					<h2>{{son.title | translate}}</h2>
-					<p ng-if="son.fromTime">{{son.fromTime | date:'dd/MM/yyyy'}}<span ng-if="son.fromTime !== son.toTime"> - {{son.toTime | date:'dd/MM/yyyy'}}</span></p>
-					<div class="row comuni-item-bottom">
-						<div class="col comuni-item-bottom-text">
-							<span>{{son.address | translate}}</span>
-						</div>
-					</div>
-				</ion-item>
-			</ion-list>
-		</div>
-	</div>
-  <div class="padding event">
-    <div class="htmldesc" compile="obj.description | translate"></div>
-    <div class="htmldesc" compile="obj.info | translate"></div>
-  </div>
-</ion-content>
-<ion-footer-bar>
-  <div ng-include="'templates/toolbox.html'"></div>
-</ion-footer-bar>
+  <ion-content class="has-subheader">
+    <ion-list>
+      <ion-item collection-repeat="son in sons|extOrderBy:ordering track by son.id" 
+                collection-item-width="'100%'" collection-item-height="getListItemHeight(item, $index)"
+                href="{{son.abslink}}" class="coll-item item-thumbnail-left">
+        <comuni-img class="item-image comuni-item-image" ></comuni-img>
+        <h2>{{son.title | translate}}</h2>
+        <p ng-if="son.fromTime">{{son.fromTime | date:'dd/MM/yyyy'}}<span ng-if="son.fromTime !== son.toTime"> - {{son.toTime | date:'dd/MM/yyyy'}}</span></p>
+        <div class="row comuni-item-bottom">
+          <div class="col comuni-item-bottom-text">
+            <span>{{son.address | translate}}</span>
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</div>

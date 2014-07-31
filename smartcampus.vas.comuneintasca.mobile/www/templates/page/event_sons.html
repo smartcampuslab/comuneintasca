@@ -1,0 +1,17 @@
+<ion-content class="has-header">
+  <button class="button button-full eventscount icon-right ion-chevron-up" ng-click="closeSons()">{{ 'complex_events' | translate_plur:obj.sonscount }}</button>
+  <ion-list>
+    <ion-item collection-repeat="son in sons|extOrderBy:ordering track by son.id" 
+              collection-item-width="'100%'" collection-item-height="getListItemHeight(item, $index)"
+              href="{{son.abslink}}" class="coll-item item-thumbnail-left">
+      <comuni-img class="item-image comuni-item-image" ></comuni-img>
+      <h2>{{son.title | translate}}</h2>
+      <p ng-if="son.fromTime">{{son.fromTime | date:'dd/MM/yyyy'}}<span ng-if="son.fromTime !== son.toTime"> - {{son.toTime | date:'dd/MM/yyyy'}}</span></p>
+      <div class="row comuni-item-bottom">
+        <div class="col comuni-item-bottom-text">
+          <span>{{son.address | translate}}</span>
+        </div>
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -107,7 +107,7 @@
           "query":{ "type":"event", "classification":"misc" }
         }, {
           "id":"complex",
-          "name":{ "it": "Manifestazioni annuali", "en": "Yearly events", "de": "[YEARLY-EVENTS]" },
+          "name":{ "it": "Manifestazioni annuali", "en": "Annual events", "de": "[ANNUAL-EVENTS]" },
           "query":{ "type":"event", "classification":"_complex" }
         }
       ]

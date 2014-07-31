@@ -546,6 +546,7 @@ angular.module('ilcomuneintasca.services.db', [])
           var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount '+
 						'FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id WHERE c.type=? ' +
             'AND c.fromTime > 0 AND c.fromTime <' + toTime + ' AND c.toTime > ' + fromTime + 
+            (_complex?' AND s.fromTime > 0 AND s.fromTime <' + toTime + ' AND s.toTime > ' + fromTime:'=') +
 						(cateId ? ' AND (c.classification=? OR c.classification2=? OR c.classification3=?)' : '') + 
 						' GROUP BY c.id HAVING count(s.id)' + (_complex?'>':'=') + '0';
           var params = cateId ? [types[dbname], cateId, cateId, cateId] : [types[dbname]];

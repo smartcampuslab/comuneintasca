@@ -152,7 +152,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
             $scope.obj = data;
 
 						if (data.sonscount>0) {
-							$scope.toggleSons=function(){
+              $scope.toggleSons=function(){
 								if ($scope.sonsVisible) {
 									$scope.sonsVisible=null;
 								} else {

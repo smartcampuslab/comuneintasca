@@ -7,10 +7,10 @@ angular.module('ilcomuneintasca.services.list', [])
     var template = '<div class="list">';
     for (var i = 0; i < options.length; i++) {
       var s = $filter('translate')(Config.keys()[options[i]]);
-      template += '<a class="item item-icon-right" ng-click="show.close(\'' + options[i] + '\')">' + s + '<i class="icon ' + (options[i] == presel ? 'ion-ios7-checkmark' : 'ion-ios7-circle-outline') + '"></i></a>';
+      template += '<a class="item item-icon-right" ng-click="orderingPopup.close(\'' + options[i] + '\')">' + s + '<i class="icon ' + (options[i] == presel ? 'ion-ios7-checkmark' : 'ion-ios7-circle-outline') + '"></i></a>';
     }
-    // An elaborate, custom popup
-    var myPopup = $ionicPopup.show({
+    
+    var orderingPopup = $ionicPopup.show({
       template: template,
       title: title,
       scope: $scope,
@@ -18,8 +18,11 @@ angular.module('ilcomuneintasca.services.list', [])
         text: $filter('translate')(Config.keys()['Cancel'])
         }]
     });
-    $scope.show = myPopup;
-    myPopup.then(function (res) {
+    $scope.orderingPopup = orderingPopup;
+    $scope.$on('$destroy', function () {
+      orderingPopup.remove();
+    });
+    orderingPopup.then(function (res) {
       //console.log('sort popup res: ' + res);
       callback(res);
     });
@@ -37,16 +40,16 @@ angular.module('ilcomuneintasca.services.list', [])
     }
     template += body + '</div></ion-content><ion-footer-bar class="bar-modal"><button class="col button button-default button-block button-modal" ng-click="closeModal()">' + $filter('translate')(Config.keys()['Cancel']) + '</button></ion-footer-bar></div>';
 
-    $scope.modal = $ionicModal.fromTemplate(template, {
+    $scope.filtermodal = $ionicModal.fromTemplate(template, {
       scope: $scope,
       animation: 'slide-in-up'
     });
-    $scope.modal.show();
+    $scope.filtermodal.show();
     $scope.$on('$destroy', function () {
-      $scope.modal.remove();
+      $scope.filtermodal.remove();
     });
     $scope.closeModal = function (val) {
-      $scope.modal.hide();
+      $scope.filtermodal.hide();
       if ('__all' == val) callback(null);
       else if (val) callback(val);
     }
@@ -105,7 +108,8 @@ angular.module('ilcomuneintasca.services.list', [])
         } : state.ordering;
 
         $scope.showSortPopup = function () {
-          openSortPopup($scope, $scope.orderingTypes, $scope.ordering.ordering, function (res) {
+          var odef=($scope.ordering&&$scope.ordering.ordering?$scope.ordering.ordering:null);
+          openSortPopup($scope, $scope.orderingTypes, odef, function (res) {
             if (res && $scope.ordering.ordering != res) {
               $scope.ordering.ordering = res;
               state.ordering = $scope.ordering;

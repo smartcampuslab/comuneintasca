@@ -240,6 +240,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
 
           $scope.filterDef='';
           if (sg.query.hasOwnProperty('filter') || sg._parent.hasOwnProperty('filter') || dbtypeCustomisations.hasOwnProperty('filter')) {
+
             if (sg.query.type=="hotel") {
               tboptions.filterOptions=Config.hotelTypesList();
             } else if (sg.query.type=="restaurant") {

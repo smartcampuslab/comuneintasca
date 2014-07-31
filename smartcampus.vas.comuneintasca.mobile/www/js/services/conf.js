@@ -630,9 +630,6 @@ angular.module('ilcomuneintasca.services.conf', [])
     contentTypesList: function () {
       return contentTypes;
     },
-    eventFilterTypeList: function () {
-      return eventFilterTypes;
-    },
     contentKeyFromDbType: function (dbtype) {
       for (var contentType in contentTypes) {
         if (contentTypes.hasOwnProperty(contentType)) {

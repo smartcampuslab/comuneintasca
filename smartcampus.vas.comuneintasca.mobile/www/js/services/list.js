@@ -3,7 +3,6 @@ angular.module('ilcomuneintasca.services.list', [])
 .factory('ListToolbox', function ($q, $ionicPopup, $ionicModal, $filter, MapHelper, $location, Config, $timeout, $ionicScrollDelegate) {
   var openSortPopup = function ($scope, options, presel, callback) {
     var title = $filter('translate')(Config.keys()['OrderBy']);
-
     var template = '<div class="list">';
     for (var i = 0; i < options.length; i++) {
       var s = $filter('translate')(Config.keys()[options[i]]);
@@ -30,7 +29,6 @@ angular.module('ilcomuneintasca.services.list', [])
 
   var openFilterPopup = function ($scope, options, presel, callback) {
     var title = $filter('translate')(Config.keys()['Filter']);
-
     var template = '<div class="modal modal-filter"><ion-header-bar><h1 class="title">' + title + '</h1></ion-header-bar><ion-content><div class="list">';
     var body = '<a class="item item-icon-right" ng-click="closeModal(\'__all\')">' + $filter('translate')(Config.keys()['All']) + '<i class="icon ' + (presel == null ? 'ion-ios7-checkmark' : 'ion-ios7-circle-outline') + '"></i></a>';
     for (var key in options) {
@@ -103,15 +101,15 @@ angular.module('ilcomuneintasca.services.list', [])
         $scope.hasSort = true;
         $scope.orderingTypes = conf.orderingTypes;
         $scope.ordering = $scope.$navDirection != 'back' ? {
-          ordering: conf.defaultOrdering,
+          order: conf.defaultOrdering,
           searchText: null
         } : state.ordering;
 
         $scope.showSortPopup = function () {
-          var odef=($scope.ordering&&$scope.ordering.ordering?$scope.ordering.ordering:null);
+          var odef=($scope.ordering&&$scope.ordering.order?$scope.ordering.order:null);
           openSortPopup($scope, $scope.orderingTypes, odef, function (res) {
-            if (res && $scope.ordering.ordering != res) {
-              $scope.ordering.ordering = res;
+            if (res && $scope.ordering.order != res) {
+              $scope.ordering.order = res;
               state.ordering = $scope.ordering;
             }
           });

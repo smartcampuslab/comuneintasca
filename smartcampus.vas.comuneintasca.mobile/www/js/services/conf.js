@@ -145,6 +145,16 @@ angular.module('ilcomuneintasca.services.conf', [])
       en: 'events',
       de: 'events'
     },
+    'complex_events_found_single': {
+      it: 'un evento per',
+      en: 'one event found for',
+      de: 'ein event fur'
+    },
+    'complex_events_found_plural': {
+      it: 'eventi per',
+      en: 'events for',
+      de: 'events fur'
+    },
     'leaf_Itinerario': {
       it: 'Itinerario',
       en: 'Itinerary',

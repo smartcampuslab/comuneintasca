@@ -16,7 +16,7 @@
       <!-- <h5><i class="icon ion-ios7-calendar-outline"></i>{{obj.fromTime | date:'dd/MM/yyyy'}}<span ng-if="obj.fromTime !== obj.toTime"> - {{obj.toTime | date:'dd/MM/yyyy'}}</span></h5>-->
     </div>
     <div ng-if="obj.sonscount>0">
-      <button class="button button-full eventscount icon-right ion-chevron-down" ng-click="toggleSons()" data-off-ng-click="gotoSubpath('/sons')">{{ 'complex_events' | translate_plur:obj.sonscount }}</button>
+      <button class="button button-full eventscount icon-right ion-chevron-down" ng-click="toggleSons()" data-off-ng-click="gotoSubpath('/sons')">{{ 'complex_events_found' | translate_plur:obj.sonscount }} "{{obj.title|translate}}"</button>
     </div>
     <div class="padding event">
       <div class="htmldesc" compile="obj.description | translate"></div>
@@ -26,7 +26,7 @@
 </div>
 <div ng-show="sonsVisible">
   <div class="bar bar-subheader button icon-right ion-chevron-up" ng-click="toggleSons()">
-    {{ 'complex_events' | translate_plur:obj.sonscount }}
+    {{ 'complex_events_found' | translate_plur:obj.sonscount }} "{{obj.title|translate}}"
   </div>
   <ion-content class="has-subheader">
     <ion-list>

@@ -282,6 +282,12 @@ angular.module('ilcomuneintasca.controllers.common', [])
                   $scope.results = [];
                 }
                 $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false);
+
+                if (filter) {
+                  $scope.filterDef = $scope.filterOptions[filter];
+                } else {
+                  $scope.filterDef=null;
+                }
               });
             };
             if (sg.query.hasOwnProperty('filter') && sg.query.filter.hasOwnProperty('options')) {
@@ -302,19 +308,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
             } else if (dbtypeCustomisations.hasOwnProperty('filter') && dbtypeCustomisations.filter.hasOwnProperty('default')) {
               tboptions.defaultFilter=dbtypeCustomisations.filter.default;
             }
-/* TODO: serve davvero?
-            if ($scope.filter) {
-              if (sg._parent.hasOwnProperty('sort')) {
-                Config.menuGroupSubgroup($stateParams.groupId,$root.lang,$scope.filter).then(function(sg) {
-                  if (sg) {
-                    var fd = $filter('translate')(sg.name);
-                    if (fd.length > 10) fd = fd.substr(0, 10) + '...';
-                    $scope.filterDef= fd + ': ';
-                  }
-                });
-              }
-            }
-*/
+
           }
 
           if (tboptions.hasMap || tboptions.hasFilter || tboptions.hasSort || tboptions.hasSearch) {

@@ -63,7 +63,7 @@ angular.module('ilcomuneintasca.services.fs', [])
   }
   */
   var IMAGESDIR_NAME = Config.savedImagesDirName();
-  console.log('savedImagesDirName: ' + IMAGESDIR_NAME);
+  //console.log('savedImagesDirName: ' + IMAGESDIR_NAME);
   var onErrorFS = function (e) {
     console.log('File API Exception:');
     console.log(e);

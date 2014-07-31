@@ -75,9 +75,9 @@ angular.module('ilcomuneintasca', [
   var lang = Config.getLang();
   if (localStorage.lang && localStorage.lang!=lang) {
     lang=localStorage.lang;
-    console.log('language configured: '+lang);
+    //console.log('language configured: '+lang);
   } else {
-    console.log('language detected: '+lang);
+    //console.log('language detected: '+lang);
   }
   $rootScope.lang=localStorage.lang=lang;
 

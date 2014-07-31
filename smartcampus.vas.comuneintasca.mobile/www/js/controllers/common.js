@@ -1,6 +1,6 @@
 angular.module('ilcomuneintasca.controllers.common', [])
 
-.controller('MenuCtrl', function ($scope, $rootScope, $ionicModal, Config, Files, DatiDB) {
+.controller('MenuCtrl', function ($scope, $rootScope, $ionicModal, $ionicLoading, $filter, Config, Files, DatiDB) {
   $scope.shownGroup = null;
 
   $scope.isGroupShown = function (groupId) {
@@ -22,10 +22,12 @@ angular.module('ilcomuneintasca.controllers.common', [])
  
   $scope.setLang=function(l){
     $rootScope.lang=localStorage.lang=l;
+/*
     var loading = $ionicLoading.show({
       content: $filter('translate')(Config.keys()['loading']),
     });
-		/*
+*/
+/*
     $timeout(function(){
       $window.location.reload();
     },500);

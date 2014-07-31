@@ -1,5 +1,21 @@
 angular.module('ilcomuneintasca.filters', [])
 
+.filter('ellipsis', function ($rootScope) {
+  return function (input, limit) {
+    if (!input) {
+      return '';
+    } else {
+      if (input.length<limit) {
+        return input;
+      } else if (limit<4) {
+        return input.substring(0,limit);
+      } else {
+        return input.substring(0,limit-3)+'...';
+      }
+    }
+  };
+})
+
 .filter('translate', function ($rootScope, Config) {
   return function (input, debug) {
     lang = $rootScope.lang;

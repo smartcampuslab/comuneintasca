@@ -111,8 +111,6 @@ angular.module('ilcomuneintasca.services.list', [])
             if (res && $scope.ordering.order != res) {
               state.order = $scope.ordering.order = res;
             }
-            console.log('$scope.ordering.order='+$scope.ordering.order);
-            console.log('state.order='+state.order);
           });
         };
       }

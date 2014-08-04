@@ -14,7 +14,7 @@ angular.module('ilcomuneintasca.services.db', [])
 		item['sonscount']=dbrow.sonscount;
 
     Config.menuGroupSubgroupByTypeAndClassification(dbtype,dbrow.classification).then(function(sg){
-      if (sg) item['abslink'] = '#/app/page/'+sg._parent.id+'/'+sg.id+'/' + item.id;
+      if (sg) item['abslink'] = '/app/page/'+sg._parent.id+'/'+sg.id+'/' + item.id;
     });
 
     item['dbClassification'] = dbrow.classification || '';
@@ -224,14 +224,15 @@ angular.module('ilcomuneintasca.services.db', [])
 
                   if (!angular.isUndefined(data.updated[contentTypeClassName])) {
                     updates = data.updated[contentTypeClassName];
-                    console.log('updates: ' + updates.length);
 
+                    /*
                     if (contentTypeKey == 'home') {
                       localStorage.homeObject = JSON.stringify(updates[0]);
                       return;
                     }
+                    */
 
-
+                    console.log('updates: ' + updates.length);
                     angular.forEach(updates, function (item, idx) {
                       //console.log('item.category: ' + item.category);
 											var parentid=null;

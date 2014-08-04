@@ -45,15 +45,50 @@ angular.module('ilcomuneintasca.controllers.home', [])
     }
   }
 */
-  $scope.slides = null;
-
-  var defaultSlide = {
-    title: 'Trento',
-    img: 'img/hp-box/trento.png',
+  $scope.highlights = null;
+  var defaultHighlight = {
     id: null,
-    ref: '#/app/contents/text.3001,text.3004'
+    name:{ 'it':'Trento', 'en':'Trento', 'de':'Trento' },
+    image: 'img/hp-box/trento.png',
+    ref: 'info'
   };
-
+/*
+  DatiDB.sync().then(function (data) {
+    var homeObjects = JSON.parse(localStorage.homeObjects);
+    DatiDB.getAny(homeObjects).then(function (data) {
+      var highlights = [defaultHighlight];
+      for (var i = 0; i < data.length; i++) highlights.push(data[i]);
+      $scope.highlights = highlights;
+    });
+  });
+*/
+  Config.highlights().then(function(items) {
+    if (items && items.length) {
+      $scope.highlights = [];
+      for (hli=0; hli<items.length; hli++) {
+        var item=items[hli];
+        var type=(item.query&&item.query.type?item.query.type:item.type)
+        DatiDB.get(type,item.objectIds.join(',')).then(function(data){
+console.log('data.id: '+data.id);
+          $scope.highlights.push(data);
+        })
+/*
+        if (item.hasOwnProperty("ref")) {
+          item.path="/menu/"+item.ref;
+        } else if (item.hasOwnProperty("objectIds")) {
+          var classification=(item.query&&item.query.classification?item.query.classification:null);
+          Config.menuGroupSubgroupByTypeAndClassification(type,classification).then(function(sg){
+            if (sg) item['abslink'] = '#/app/page/'+sg._parent.id+'/'+sg.id+'/' + item.objectIds.join(',');
+            console.log('item.abslink: '+item['abslink']);
+          });
+        }
+*/
+}
+    }
+   },function(menu) {
+    $scope.highlights = [ defaultHighlight ];
+  });
+ 
   var navbarElement = angular.element(document.getElementById('navbar'));
   navbarElement.addClass('bar-comuni-home');
   $scope.$on('$destroy', function () {
@@ -74,25 +109,6 @@ angular.module('ilcomuneintasca.controllers.home', [])
     }
   },function(menu) {
     $scope.buttonRows=null;
-  });
-
-  DatiDB.sync().then(function (data) {
-    var homeObject = JSON.parse(localStorage.homeObject);
-    var homeObjects = homeObject.contentIds;
-    DatiDB.getAny(homeObjects).then(function (data) {
-      var slides = [defaultSlide];
-      for (var i = 0; i < data.length; i++) {
-        slides.push({
-          title: $filter('translate')(data[i].title),
-          img: data[i].image,
-          id: data[i].id,
-          ref: data[i].abslink
-        });
-      }
-      if (slides.length > 0) {
-        $scope.slides = slides;
-      }
-    });
   });
 
   Files.cleanup().then(function (data) {

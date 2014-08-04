@@ -1,5 +1,13 @@
 {
-  "highlights":[],
+  "highlights":[
+    {
+      "id":"h1", "objectIds":[ "cultura.73" ], "type":"content"
+    }, {
+      "id":"h2", "objectIds":[ "cultura.72" ], "type":"content"
+    }, {
+      "id":"h3", "objectIds":[ "c5f878d50c9271ae3dbabdbf282bc6bb" ], "type":"event"
+    }
+  ],
   "navigationItems":[
     {
       "id":"conoscere",

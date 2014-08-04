@@ -534,6 +534,11 @@ angular.module('ilcomuneintasca.services.conf', [])
     fetch: function () {
       return fetched.promise;
     },
+    highlights: function () {
+      return this.fetch().then(function(data) {
+        return data.highlights;
+      });
+    },
     navigationItems: function () {
       return this.fetch().then(function(data) {
         return data.navigationItems;

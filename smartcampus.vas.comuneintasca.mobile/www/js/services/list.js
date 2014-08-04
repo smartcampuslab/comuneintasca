@@ -121,7 +121,7 @@ angular.module('ilcomuneintasca.services.list', [])
         $scope.hasMap = true;
         $scope.showMap = function () {
           state.data = conf.getData();
-          state.order = $scope.ordering.order;
+          state.order = ( ($scope.ordering&&$scope.ordering.order) ? $scope.ordering.order : null );
           state.filter = $scope.filter;
           MapHelper.prepare(conf.getTitle(), conf.getData());
         };

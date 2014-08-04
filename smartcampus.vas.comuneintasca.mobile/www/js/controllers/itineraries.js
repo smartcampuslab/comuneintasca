@@ -147,7 +147,7 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
         text: $filter('translate')(Config.keys()['Details']),
         type: 'button-positive',
         onTap: function (e) {
-          var itemUrl = '/app/itineraryplace/' + $scope.activeMarker.id; //$scope.activeMarker.abslink.substring(1);
+          var itemUrl = '/app/itineraryplace/' + $scope.activeMarker.id;
           $location.path(itemUrl);
         }
         }]

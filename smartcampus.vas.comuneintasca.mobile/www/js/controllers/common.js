@@ -339,3 +339,15 @@ angular.module('ilcomuneintasca.controllers.common', [])
     });
 //  }
 })
+
+
+.controller('MapCtrl', function ($scope, MapHelper, $ionicScrollDelegate, $timeout) {
+  $scope._ = _;
+  MapHelper.start($scope);
+
+  $scope.$on('$viewContentLoaded', function () {
+    var mapHeight = 10; // or any other calculated value
+    mapHeight = angular.element(document.querySelector('#map-container'))[0].offsetHeight;
+    angular.element(document.querySelector('.angular-google-map-container'))[0].style.height = mapHeight + 'px';
+  });
+})

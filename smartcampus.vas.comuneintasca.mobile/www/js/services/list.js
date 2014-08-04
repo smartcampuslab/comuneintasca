@@ -1,6 +1,6 @@
 angular.module('ilcomuneintasca.services.list', [])
 
-.factory('ListToolbox', function ($q, $ionicPopup, $ionicModal, $filter, MapHelper, $location, Config, $timeout, $ionicScrollDelegate) {
+.factory('ListToolbox', function ($rootScope, $q, $ionicPopup, $ionicModal, $filter, MapHelper, $location, Config, $timeout, $ionicScrollDelegate) {
   var openSortPopup = function ($scope, options, presel, callback) {
     var title = $filter('translate')(Config.keys()['OrderBy']);
     var template = '<div class="list">';
@@ -22,7 +22,7 @@ angular.module('ilcomuneintasca.services.list', [])
       orderingPopup.remove();
     });
     orderingPopup.then(function (res) {
-      //console.log('sort popup res: ' + res);
+      console.log('sort popup res: ' + res);
       callback(res);
     });
   }
@@ -84,7 +84,7 @@ angular.module('ilcomuneintasca.services.list', [])
         d.resolve(state.data);
         conf.load(state.data);
       } else {
-        state.ordering = null;
+        state.order = null;
         state.filter = null;
         state.data = null;
         conf.load(null);
@@ -92,7 +92,7 @@ angular.module('ilcomuneintasca.services.list', [])
 /*
       $scope.goToItem = function (path) {
         //state.data = conf.getData();
-        //state.ordering = $scope.ordering;
+        //state.order = $scope.ordering.order;
         //state.filter = $scope.filter;
         $location.path($location.path()+path);
       }
@@ -103,15 +103,16 @@ angular.module('ilcomuneintasca.services.list', [])
         $scope.ordering = $scope.$navDirection != 'back' ? {
           order: conf.defaultOrdering,
           searchText: null
-        } : state.ordering;
+        } : state.order;
 
         $scope.showSortPopup = function () {
           var odef=($scope.ordering&&$scope.ordering.order?$scope.ordering.order:null);
           openSortPopup($scope, $scope.orderingTypes, odef, function (res) {
             if (res && $scope.ordering.order != res) {
-              $scope.ordering.order = res;
-              state.ordering = $scope.ordering;
+              state.order = $scope.ordering.order = res;
             }
+            console.log('$scope.ordering.order='+$scope.ordering.order);
+            console.log('state.order='+state.order);
           });
         };
       }
@@ -120,7 +121,7 @@ angular.module('ilcomuneintasca.services.list', [])
         $scope.hasMap = true;
         $scope.showMap = function () {
           state.data = conf.getData();
-          state.ordering = $scope.ordering;
+          state.order = $scope.ordering.order;
           state.filter = $scope.filter;
           MapHelper.prepare(conf.getTitle(), conf.getData());
         };

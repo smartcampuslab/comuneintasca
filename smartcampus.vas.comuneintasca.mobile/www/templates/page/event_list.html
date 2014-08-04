@@ -1,7 +1,7 @@
 <ion-content class="has-header" delegate-handle="listScroll">
   <ion-list>
-    <div class="item item-divider" align="center"><span ng-if="filterDef">{{filterDef | translate | ellipsis:20}}: </span>{{'list_results' | translate_plur:results.length}}</div>
-    <ion-item collection-repeat="obj in results|extOrderBy:ordering track by obj.id"
+    <div class="item item-divider" align="center"><span ng-if="filterDef">{{filterDef | translate | ellipsis:20}}: </span>{{'list_results' | translate_plur:results.length:ordering}}</div>
+    <ion-item collection-repeat="obj in results|extOrderBy:ordering" data-filter-disabled-2del="track by obj.id"
               collection-item-width="'100%'" collection-item-height="getListItemHeight(item, $index)"
               ng-click="gotoSubpath(obj.id)" class="coll-item item-thumbnail-left">
       <comuni-img class="item-image comuni-item-image" sonscount="{{obj.sonscount}}" ></comuni-img>

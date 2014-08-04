@@ -125,7 +125,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
       $scope.group=g;
     });
 })
-.controller('PageCtrl', function ($scope, $state, $stateParams, $location, $window, Config, DatiDB, ListToolbox, DateUtility, GeoLocate, MapHelper, $ionicScrollDelegate) {
+.controller('PageCtrl', function ($scope, $state, $stateParams, $filter, $location, $window, Config, DatiDB, ListToolbox, DateUtility, GeoLocate, MapHelper, $ionicScrollDelegate) {
 //  if ($stateParams.groupId=='itins' && $stateParams.menuId=='itineraries') {
 //    $location.path('/app/itineraries');
 //  } else {
@@ -279,6 +279,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
               }
               $scope.gotdata = $scope.gotdbdata.then(function (data) {
                 if (data) {
+//                  $scope.results = $filter('extOrderBy')(data,$scope.ordering);
                   $scope.results = data;
                 } else {
                   $scope.results = [];

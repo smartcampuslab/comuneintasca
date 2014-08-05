@@ -45,6 +45,7 @@ angular.module('ilcomuneintasca.controllers.home', [])
     }
   }
 */
+ 
   $scope.highlights = null;
   var defaultHighlight = {
     id: null,
@@ -52,22 +53,24 @@ angular.module('ilcomuneintasca.controllers.home', [])
     image: 'img/hp-box/trento.png',
     ref: 'info'
   };
-/*
   DatiDB.sync().then(function (data) {
+/*
     var homeObjects = JSON.parse(localStorage.homeObjects);
     DatiDB.getAny(homeObjects).then(function (data) {
       var highlights = [defaultHighlight];
       for (var i = 0; i < data.length; i++) highlights.push(data[i]);
       $scope.highlights = highlights;
     });
-  });
 */
+  });
   Config.highlights().then(function(items) {
     if (items && items.length) {
       $scope.highlights = [];
       for (hli=0; hli<items.length; hli++) {
         var item=items[hli];
+console.log('item id: '+item.objectIds.join(','));
         var type=(item.query&&item.query.type?item.query.type:item.type)
+console.log('item type: '+type);
         DatiDB.get(type,item.objectIds.join(',')).then(function(data){
 console.log('data.id: '+data.id);
           $scope.highlights.push(data);
@@ -83,16 +86,10 @@ console.log('data.id: '+data.id);
           });
         }
 */
-}
+      }
     }
-   },function(menu) {
+  },function(menu) {
     $scope.highlights = [ defaultHighlight ];
-  });
- 
-  var navbarElement = angular.element(document.getElementById('navbar'));
-  navbarElement.addClass('bar-comuni-home');
-  $scope.$on('$destroy', function () {
-    navbarElement.removeClass('bar-comuni-home');
   });
 
   Config.navigationItems().then(function(items) {
@@ -113,5 +110,11 @@ console.log('data.id: '+data.id);
 
   Files.cleanup().then(function (data) {
     //console.log('files cleaned!');
+  });
+
+  var navbarElement = angular.element(document.getElementById('navbar'));
+  navbarElement.addClass('bar-comuni-home');
+  $scope.$on('$destroy', function () {
+    navbarElement.removeClass('bar-comuni-home');
   });
 })

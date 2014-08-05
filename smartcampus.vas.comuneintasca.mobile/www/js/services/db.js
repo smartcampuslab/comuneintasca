@@ -205,7 +205,7 @@ angular.module('ilcomuneintasca.services.db', [])
 
             if (currentDbVersion == 0) {
               currentSyncOptions = localSyncOptions;
-            } else if (currentSyncOptions.remote) {
+            } else if (!currentSyncOptions || currentSyncOptions.remote) {
               currentSyncOptions = remoteSyncOptions;
               currentSyncOptions.url = remoteSyncURL + currentDbVersion;
             }
@@ -246,6 +246,9 @@ angular.module('ilcomuneintasca.services.db', [])
 
                       var classified=$q.defer();
                       if (contentTypeKey == 'event') {
+
+                        // per identificare questi eventi potrei usare invece l'attributo 
+                        // "eventForm": "Manifestazione"
 												if (item.parentEventId) {
 													var parentFound=false;
 

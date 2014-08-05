@@ -4,7 +4,7 @@ angular.module('ilcomuneintasca.services.conf', [])
   var SCHEMA_VERSION=80;
   
   var fetched = $q.defer();
-  $http.get('data/config.json').success(function(data, status, headers, config){
+  $http.get('data/profile.json').success(function(data, status, headers, config){
     for (ngi=0; ngi<data.navigationItems.length; ngi++) {
       var item=data.navigationItems[ngi];
       angular.forEach(item.name, function (txt, loc) {

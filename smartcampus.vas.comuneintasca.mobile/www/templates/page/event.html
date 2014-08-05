@@ -11,7 +11,7 @@
         <div ng-if="!!(obj.eventPeriod | translate)" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-calendar-outline"></i>{{obj.eventPeriod | translate}}</div>
         <div ng-if="!!(obj.eventTiming | translate)" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-time-outline"></i>{{obj.eventTiming | translate}}</div>
         <div ng-if="!!(obj.cost | translate)" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-photos-outline"></i>{{obj.cost | translate}}</div>
-        <div ng-if="obj.topics.length > 0" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-flag-outline"></i><span ng-repeat="topic in obj.topics" ng-if="!!topic">{{topic}}<span ng-if="!$last">, </span></span></div>
+        <div ng-if="obj.topics.length > 0" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-bookmarks-outline "></i><span ng-repeat="topic in obj.topics" ng-if="!!topic">{{topic}}<span ng-if="!$last">, </span></span></div>
       </div>
       <!-- <h5><i class="icon ion-ios7-calendar-outline"></i>{{obj.fromTime | date:'dd/MM/yyyy'}}<span ng-if="obj.fromTime !== obj.toTime"> - {{obj.toTime | date:'dd/MM/yyyy'}}</span></h5>-->
     </div>

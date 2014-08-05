@@ -1,16 +1,16 @@
   <ion-tabs class="tabs-icon-only">
-    <ion-tab icon="icon ion-information-circled" href="#/app/itinerary/{{itinerarioId}}/info" on-select="clr()">
+    <ion-tab icon="icon ion-ios7-information-outline" href="#/app/itinerary/{{itinerarioId}}/info" on-select="clr()">
       <ion-nav-view name="itinerary-info"></ion-nav-view>
     </ion-tab>
-    <ion-tab icon="icon ion-clipboard" href="#/app/itinerary/{{itinerarioId}}/steps" on-select="clr()">
+    <ion-tab icon="icon ion-ios7-paper-outline" href="#/app/itinerary/{{itinerarioId}}/steps" on-select="clr()">
       <ion-nav-view name="itinerary-steps"></ion-nav-view>
     </ion-tab>
     <ion-tab  icon="icon ion-map" href="#/app/itinerary/{{itinerarioId}}/map" on-select="clr()">
       <ion-nav-view name="itinerary-map"></ion-nav-view>
     </ion-tab>
-    <ion-tab  icon="icon ion-navigate" ng-click="bringmethere(location)">
+    <ion-tab  icon="icon ion-ios7-navigate-outline" ng-click="bringmethere(location)">
     </ion-tab>
-    <ion-tab  icon="icon ion-share" ng-click="share($filter('translate')( itinerario.title),itinerario.url,itinerario.image)">
+    <ion-tab  icon="icon ion-ios7-redo-outline" ng-click="share($filter('translate')( itinerario.title),itinerario.url,itinerario.image)">
     </ion-tab>
     <ion-tab ng-if="!isFavorite(itinerario)" icon="icon ion-ios7-star-outline" ng-click="toggleFavorite(itinerario)">
     </ion-tab>

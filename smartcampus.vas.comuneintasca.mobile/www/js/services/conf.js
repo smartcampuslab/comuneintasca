@@ -3,7 +3,7 @@ angular.module('ilcomuneintasca.services.conf', [])
 .factory('Config', function ($q, $http, $window) {
   var SCHEMA_VERSION=80;
   
-  var fetched = $q.defer();
+  var profile = $q.defer();
   $http.get('data/profile.json').success(function(data, status, headers, config){
     for (ngi=0; ngi<data.navigationItems.length; ngi++) {
       var item=data.navigationItems[ngi];
@@ -33,10 +33,10 @@ angular.module('ilcomuneintasca.services.conf', [])
       }
     }
     */
-    fetched.resolve(data);
+    profile.resolve(data);
   }).error(function(data, status, headers, config){
     console.log('error getting config json!');
-    fetched.reject();
+    profile.reject();
   });
   
   var keys = {
@@ -468,7 +468,24 @@ angular.module('ilcomuneintasca.services.conf', [])
   };
 
   return {
-    jsonProfileExtensions: function() {
+    getLang: function () {
+      var browserLanguage = '';
+      // works for earlier version of Android (2.3.x)
+      var androidLang;
+      if ($window.navigator && $window.navigator.userAgent && (androidLang = $window.navigator.userAgent.match(/android.*\W(\w\w)-(\w\w)\W/i))) {
+        browserLanguage = androidLang[1];
+      } else {
+        // works for iOS, Android 4.x and other devices
+        browserLanguage = $window.navigator.userLanguage || $window.navigator.language;
+      }
+      var lang = browserLanguage.substring(0, 2);
+      if (lang != 'it' && lang != 'en' && lang != 'de') lang = 'en';
+      return lang;
+    },
+    getProfile: function () {
+      return profile.promise;
+    },
+    getProfileExtensions: function() {
       return {
         "content":{
           "classifications":{
@@ -522,30 +539,13 @@ angular.module('ilcomuneintasca.services.conf', [])
         }
       }
     },
-    getLang: function () {
-      var browserLanguage = '';
-      // works for earlier version of Android (2.3.x)
-      var androidLang;
-      if ($window.navigator && $window.navigator.userAgent && (androidLang = $window.navigator.userAgent.match(/android.*\W(\w\w)-(\w\w)\W/i))) {
-        browserLanguage = androidLang[1];
-      } else {
-        // works for iOS, Android 4.x and other devices
-        browserLanguage = $window.navigator.userLanguage || $window.navigator.language;
-      }
-      var lang = browserLanguage.substring(0, 2);
-      if (lang != 'it' && lang != 'en' && lang != 'de') lang = 'en';
-      return lang;
-    },
-    fetch: function () {
-      return fetched.promise;
-    },
     highlights: function () {
-      return this.fetch().then(function(data) {
+      return this.getProfile().then(function(data) {
         return data.highlights;
       });
     },
     navigationItems: function () {
-      return this.fetch().then(function(data) {
+      return this.getProfile().then(function(data) {
         return data.navigationItems;
       });
     },
@@ -558,7 +558,7 @@ angular.module('ilcomuneintasca.services.conf', [])
       });
     },
     menu: function () {
-      return this.fetch().then(function(data) {
+      return this.getProfile().then(function(data) {
         return data.menu;
       });
     },

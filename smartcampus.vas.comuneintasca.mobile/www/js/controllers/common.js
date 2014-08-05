@@ -143,7 +143,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
     Config.menuGroupSubgroup($stateParams.groupId,$stateParams.menuId).then(function(sg){
       $scope.title=sg.name;
       if (sg.query) {
-        var dbtypeCustomisations=Config.jsonProfileExtensions()[sg.query.type] || {};
+        var dbtypeCustomisations=Config.getProfileExtensions()[sg.query.type] || {};
         var dbtypeClass=sg.query.classification||'_none_';
         var dbtypeClassCustomisations={};
         if (dbtypeCustomisations.classifications && dbtypeCustomisations.classifications[dbtypeClass]) dbtypeClassCustomisations=dbtypeCustomisations.classifications[dbtypeClass];

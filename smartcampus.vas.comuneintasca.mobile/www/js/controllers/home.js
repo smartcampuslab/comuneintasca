@@ -1,6 +1,6 @@
 angular.module('ilcomuneintasca.controllers.home', [])
 
-.controller('HomeCtrl', function ($scope, $rootScope, $location, $filter, $ionicPopup, Config, DatiDB, Files) {
+.controller('HomeCtrl', function ($scope, $rootScope, $q, $location, $filter, $ionicPopup, Config, DatiDB, Files) {
   $rootScope.inHome = true;
   $scope.openApp = function (appname,appdata) {
     if (ionic.Platform.isWebView() && device.platform == 'Android' && appdata.android) {
@@ -64,28 +64,18 @@ angular.module('ilcomuneintasca.controllers.home', [])
 */
     Config.highlights().then(function(items) {
       if (items && items.length) {
-        $scope.highlights = [];
+        highlights = [];
+        highlightsData = [];
         for (hli=0; hli<items.length; hli++) {
           var item=items[hli];
-console.log('item id: '+item.objectIds.join(','));
           var type=(item.query&&item.query.type?item.query.type:item.type)
-console.log('item type: '+type);
-          DatiDB.get(type,item.objectIds.join(',')).then(function(data){
-console.log('data.id: '+data.id);
-            $scope.highlights.push(data);
-          })
-  /*
-          if (item.hasOwnProperty("ref")) {
-            item.path="/menu/"+item.ref;
-          } else if (item.hasOwnProperty("objectIds")) {
-            var classification=(item.query&&item.query.classification?item.query.classification:null);
-            Config.menuGroupSubgroupByTypeAndClassification(type,classification).then(function(sg){
-              if (sg) item['abslink'] = '#/app/page/'+sg._parent.id+'/'+sg.id+'/' + item.objectIds.join(',');
-              console.log('item.abslink: '+item['abslink']);
-            });
-          }
-  */
+          highlightsData.push(DatiDB.get(type,item.objectIds.join(',')).then(function(data){
+            highlights.push(data);
+          }));
         }
+        $q.all(highlightsData).then(function(){
+          $scope.highlights=highlights;
+        })
       }
     },function(menu) {
       $scope.highlights = [ defaultHighlight ];

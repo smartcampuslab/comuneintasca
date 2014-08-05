@@ -62,54 +62,54 @@ angular.module('ilcomuneintasca.controllers.home', [])
       $scope.highlights = highlights;
     });
 */
-  });
-  Config.highlights().then(function(items) {
-    if (items && items.length) {
-      $scope.highlights = [];
-      for (hli=0; hli<items.length; hli++) {
-        var item=items[hli];
+    Config.highlights().then(function(items) {
+      if (items && items.length) {
+        $scope.highlights = [];
+        for (hli=0; hli<items.length; hli++) {
+          var item=items[hli];
 console.log('item id: '+item.objectIds.join(','));
-        var type=(item.query&&item.query.type?item.query.type:item.type)
+          var type=(item.query&&item.query.type?item.query.type:item.type)
 console.log('item type: '+type);
-        DatiDB.get(type,item.objectIds.join(',')).then(function(data){
+          DatiDB.get(type,item.objectIds.join(',')).then(function(data){
 console.log('data.id: '+data.id);
-          $scope.highlights.push(data);
-        })
-/*
-        if (item.hasOwnProperty("ref")) {
-          item.path="/menu/"+item.ref;
-        } else if (item.hasOwnProperty("objectIds")) {
-          var classification=(item.query&&item.query.classification?item.query.classification:null);
-          Config.menuGroupSubgroupByTypeAndClassification(type,classification).then(function(sg){
-            if (sg) item['abslink'] = '#/app/page/'+sg._parent.id+'/'+sg.id+'/' + item.objectIds.join(',');
-            console.log('item.abslink: '+item['abslink']);
-          });
+            $scope.highlights.push(data);
+          })
+  /*
+          if (item.hasOwnProperty("ref")) {
+            item.path="/menu/"+item.ref;
+          } else if (item.hasOwnProperty("objectIds")) {
+            var classification=(item.query&&item.query.classification?item.query.classification:null);
+            Config.menuGroupSubgroupByTypeAndClassification(type,classification).then(function(sg){
+              if (sg) item['abslink'] = '#/app/page/'+sg._parent.id+'/'+sg.id+'/' + item.objectIds.join(',');
+              console.log('item.abslink: '+item['abslink']);
+            });
+          }
+  */
         }
-*/
       }
-    }
-  },function(menu) {
-    $scope.highlights = [ defaultHighlight ];
-  });
+    },function(menu) {
+      $scope.highlights = [ defaultHighlight ];
+    });
 
-  Config.navigationItems().then(function(items) {
-    if (items) {
-      var rows=[], row=-1;
-      for (ii=0; ii<items.length; ii++) {
-        if ((ii%2)==0) {
-          row++;
-          rows[row]=[];
+    Config.navigationItems().then(function(items) {
+      if (items) {
+        var rows=[], row=-1;
+        for (ii=0; ii<items.length; ii++) {
+          if ((ii%2)==0) {
+            row++;
+            rows[row]=[];
+          }
+          rows[row].push(items[ii]);
         }
-        rows[row].push(items[ii]);
+        $scope.buttonsRows=rows;
       }
-      $scope.buttonsRows=rows;
-    }
-  },function(menu) {
-    $scope.buttonRows=null;
-  });
+    },function(menu) {
+      $scope.buttonRows=null;
+    });
 
-  Files.cleanup().then(function (data) {
-    //console.log('files cleaned!');
+    Files.cleanup().then(function (data) {
+      //console.log('files cleaned!');
+    });
   });
 
   var navbarElement = angular.element(document.getElementById('navbar'));

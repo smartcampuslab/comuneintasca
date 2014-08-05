@@ -180,7 +180,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
             }
 					})
         } else {
-          $scope.template='templates/page/'+(sg.view||sg.query.type+'_list')+'.html';
+          $scope.template='templates/page/'+(sg.view||dbtypeClassCustomisations.view||sg.query.type+'_list')+'.html';
 
           var tboptions={
             hasSort: false,

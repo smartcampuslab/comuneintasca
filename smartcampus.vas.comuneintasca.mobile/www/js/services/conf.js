@@ -470,6 +470,11 @@ angular.module('ilcomuneintasca.services.conf', [])
   return {
     jsonProfileExtensions: function() {
       return {
+        "content":{
+          "classifications":{
+            "bondone":{ "view":"content" },
+          }
+        },
         "mainevent":{
           "sort":{ "options":["A-Z", "Z-A", "Date"], "default":"Date" }
         },

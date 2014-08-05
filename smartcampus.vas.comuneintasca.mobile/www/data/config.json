@@ -73,8 +73,7 @@
         }, { 
           "id":"bondone",
           "name":{ "it":"Monte Bondone", "en":"Mount Bondone", "de":"Mont Bondone" },
-          "query":{ "type":"content", "classification":"bondone" },
-          "view":"single"
+          "query":{ "type":"content", "classification":"bondone" }
         }
       ]
     }, {

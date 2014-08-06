@@ -1,17 +1,10 @@
 @font-face {
-font-family: 'HelveticaNeue-CondensedBold';
-font-weight: bold;
-src: url("../fonts/HelveticaNeue-CondensedBold.otf") format("opentype");
-}
-
-
-@font-face {
 	font-family: 'ilcomuneintasca';
-	src:url('../fonts/ilcomuneintasca.eot?-7sb4rc');
-	src:url('../fonts/ilcomuneintasca.eot?#iefix-7sb4rc') format('embedded-opentype'),
-		url('../fonts/ilcomuneintasca.woff?-7sb4rc') format('woff'),
-		url('../fonts/ilcomuneintasca.ttf?-7sb4rc') format('truetype'),
-		url('../fonts/ilcomuneintasca.svg?-7sb4rc#ilcomuneintasca') format('svg');
+	src:url('ilcomuneintasca.eot?-7sb4rc');
+	src:url('ilcomuneintasca.eot?#iefix-7sb4rc') format('embedded-opentype'),
+		url('ilcomuneintasca.woff?-7sb4rc') format('woff'),
+		url('ilcomuneintasca.ttf?-7sb4rc') format('truetype'),
+		url('ilcomuneintasca.svg?-7sb4rc#ilcomuneintasca') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }

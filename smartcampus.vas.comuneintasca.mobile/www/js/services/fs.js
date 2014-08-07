@@ -164,7 +164,6 @@ angular.module('ilcomuneintasca.services.fs', [])
 
             var cleaningOverlay = $ionicLoading.show({
               content: $filter('translate')(Config.keys()['cleaning']),
-              showDelay: 1500, // how many milliseconds to delay before showing the indicator
               duration: Config.fileCleanupOverlayTimeoutMillis()
             });
 
@@ -263,11 +262,15 @@ angular.module('ilcomuneintasca.services.fs', [])
           } else {
             $ionicLoading.hide();
             //console.log('avoiding too frequent file cleanups. seconds since last one: ' + (now_as_epoch - lastFileCleanup));
+            //console.log('fs cleanup done2!');
             cleaned.resolve(mainDir);
           }
         } else {
+          //console.log('fs cleanup done1!');
           cleaned.resolve(mainDir);
         }
+      },function(err){
+        //console.log('fs cleanup error!');
       });
       return cleaned.promise;
     },

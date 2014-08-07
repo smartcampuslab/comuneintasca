@@ -165,20 +165,10 @@ angular.module('ilcomuneintasca.services.db', [])
 
   return {
 		reset: function () { 
-      var resettingOverlay = $ionicLoading.show({
-        content: $filter('translate')(Config.keys()['syncing']),
-        duration: Config.syncingOverlayTimeoutMillis()
-      });
-
       localStorage.lastSynced=lastSynced=-1;
 			localStorage.currentDbVersion=currentDbVersion=0;
 			return this.sync().then(function(){
         console.log('DB reset completed.');
-/*
-        $timeout(function(){
-          $ionicLoading.hide();
-        },1000)
-*/
       });
 		},
     sync: function () {

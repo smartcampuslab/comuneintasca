@@ -34,13 +34,16 @@ angular.module('ilcomuneintasca.controllers.common', [])
 		*/
   };
   $scope.fsCleanup=function(){
-		console.log('cleanup!');
 		localStorage.lastFileCleanup=-1;
-		Files.cleanup();
+		Files.cleanup().then(function(){
+      console.log('fs cleanup completed!');
+    });
 	};
   $scope.dbReset=function(){
 		console.log('sync!');
-		DatiDB.reset();
+		DatiDB.reset().then(function(){
+      console.log('db reset completed!');
+    });
 	};
 
 	

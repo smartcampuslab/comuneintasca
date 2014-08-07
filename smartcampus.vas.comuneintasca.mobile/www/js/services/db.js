@@ -1,6 +1,6 @@
 angular.module('ilcomuneintasca.services.db', [])
 
-.factory('DatiDB', function ($q, $http, $rootScope, $filter, Config, Profiling, GeoLocate, $ionicLoading) {
+.factory('DatiDB', function ($q, $http, $rootScope, $filter, $timeout, Config, Profiling, GeoLocate, $ionicLoading) {
   var SCHEMA_VERSION = Config.schemaVersion();
   var types = Config.contentTypesList();
 
@@ -165,13 +165,25 @@ angular.module('ilcomuneintasca.services.db', [])
 
   return {
 		reset: function () { 
-			localStorage.lastSynced=lastSynced=-1;
+      var resettingOverlay = $ionicLoading.show({
+        content: $filter('translate')(Config.keys()['syncing']),
+        duration: Config.syncingOverlayTimeoutMillis()
+      });
+
+      localStorage.lastSynced=lastSynced=-1;
 			localStorage.currentDbVersion=currentDbVersion=0;
-			return this.sync();
+			return this.sync().then(function(){
+        console.log('DB reset completed.');
+/*
+        $timeout(function(){
+          $ionicLoading.hide();
+        },1000)
+*/
+      });
 		},
     sync: function () {
       if (syncinprogress!=null) {
-        console.log('sync already in progress...');
+        console.log('waiting for previuos sync process to finish...');
         return syncinprogress;
       }
       syncronization = $q.defer();

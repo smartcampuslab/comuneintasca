@@ -19,10 +19,10 @@ angular.module('ilcomuneintasca.services.list', [])
     });
     $scope.orderingPopup = orderingPopup;
     $scope.$on('$destroy', function () {
-      orderingPopup.remove();
+      $scope.orderingPopup.remove();
     });
     orderingPopup.then(function (res) {
-      console.log('sort popup res: ' + res);
+      //console.log('sort popup res: ' + res);
       callback(res);
     });
   }
@@ -104,6 +104,7 @@ angular.module('ilcomuneintasca.services.list', [])
           order: conf.defaultOrdering,
           searchText: null
         } : state.order;
+        //console.log('$scope.ordering: '+JSON.stringify($scope.ordering));
 
         $scope.showSortPopup = function () {
           var odef=($scope.ordering&&$scope.ordering.order?$scope.ordering.order:null);

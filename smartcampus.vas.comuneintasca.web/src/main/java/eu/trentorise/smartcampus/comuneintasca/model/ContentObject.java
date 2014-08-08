@@ -15,16 +15,18 @@
  ******************************************************************************/
 package eu.trentorise.smartcampus.comuneintasca.model;
 
+import java.util.Map;
+
 
 public class ContentObject extends GeoCITObject {
 	private static final long serialVersionUID = -5567010752470052310L;
 
-	private String classification;
+	private Map<String,String> classification;
 
-	public String getClassification() {
+	public Map<String,String> getClassification() {
 		return classification;
 	}
-	public void setClassification(String classification) {
+	public void setClassification(Map<String,String> classification) {
 		this.classification = classification;
 	}
 }

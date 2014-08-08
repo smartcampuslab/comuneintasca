@@ -23,8 +23,8 @@ public class MenuItem {
 	private String id;
 	private Map<String,String> name;
 	private Map<String,String> description;
-	private String image;
-	private List<String> objectIds;
+	private Map<String,String> image;
+	private Map<String, List<String>> objectIds;
 	private List<MenuItem> items;
 	private MenuItemQuery query;
 	private String ref;
@@ -49,16 +49,16 @@ public class MenuItem {
 	public void setDescription(Map<String, String> description) {
 		this.description = description;
 	}
-	public String getImage() {
+	public Map<String,String> getImage() {
 		return image;
 	}
-	public void setImage(String image) {
+	public void setImage(Map<String,String> image) {
 		this.image = image;
 	}
-	public List<String> getObjectIds() {
+	public Map<String, List<String>> getObjectIds() {
 		return objectIds;
 	}
-	public void setObjectIds(List<String> objectIds) {
+	public void setObjectIds(Map<String, List<String>> objectIds) {
 		this.objectIds = objectIds;
 	}
 	public List<MenuItem> getItems() {

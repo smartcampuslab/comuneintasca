@@ -1,6 +1,8 @@
+<ion-header-bar class="bar-subheader item item-divider" align="center">
+  {{'list_results' | translate_plur:results.length}}
+</ion-header-bar>
 <ion-content class="has-header" delegate-handle="listScroll">
   <ion-list>
-    <div class="item item-divider" align="center">{{'list_results' | translate_plur:results.length}}</div>
     <ion-item collection-repeat="obj in results | extOrderBy:ordering" 
               collection-item-width="'100%'" collection-item-height="getListItemHeight(item, $index)"
               ng-click="gotoSubpath(obj.id)" class="item-thumbnail-left coll-item">

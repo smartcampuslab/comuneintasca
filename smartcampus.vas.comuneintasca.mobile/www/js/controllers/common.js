@@ -1,6 +1,6 @@
 angular.module('ilcomuneintasca.controllers.common', [])
 
-.controller('MenuCtrl', function ($scope, $rootScope, $ionicModal, $ionicLoading, $filter, Config, Files, DatiDB) {
+.controller('MenuCtrl', function ($scope, $rootScope, $location, $ionicModal, $ionicLoading, $filter, Config, Files, DatiDB) {
   $scope.shownGroup = null;
 
   $scope.isGroupShown = function (groupId) {
@@ -37,12 +37,16 @@ angular.module('ilcomuneintasca.controllers.common', [])
 		localStorage.lastFileCleanup=-1;
 		Files.cleanup().then(function(){
       console.log('fs cleanup completed!');
+      $location.path('#/app/home')
+      $scope.settings.hide()
     });
 	};
   $scope.dbReset=function(){
 		console.log('sync!');
 		DatiDB.reset().then(function(){
       console.log('db reset completed!');
+      $location.path('#/app/home')
+      $scope.settings.hide()
     });
 	};
 

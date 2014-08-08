@@ -15,23 +15,26 @@
  ******************************************************************************/
 package eu.trentorise.smartcampus.comuneintasca.model;
 
+import java.util.List;
+import java.util.Map;
+
 public class MenuItemQuery {
 
 	private String type;
-	private String classification;
+
+	private List<Map<String,String>> classifications;
 	
+	public List<Map<String, String>> getClassifications() {
+		return classifications;
+	}
+	public void setClassifications(List<Map<String, String>> classifications) {
+		this.classifications = classifications;
+	}
 	public String getType() {
 		return type;
 	}
 	public void setType(String type) {
 		this.type = type;
 	}
-	public String getClassification() {
-		return classification;
-	}
-	public void setClassification(String classification) {
-		this.classification = classification;
-	}
-	
 	
 }

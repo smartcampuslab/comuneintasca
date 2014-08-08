@@ -22,10 +22,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import eu.trentorise.smartcampus.comuneintasca.model.ConfigObject;
 import eu.trentorise.smartcampus.comuneintasca.model.ContentObject;
 import eu.trentorise.smartcampus.comuneintasca.model.EventObject;
+import eu.trentorise.smartcampus.comuneintasca.model.HomeObject;
+import eu.trentorise.smartcampus.comuneintasca.model.HotelObject;
+import eu.trentorise.smartcampus.comuneintasca.model.ItineraryObject;
 import eu.trentorise.smartcampus.comuneintasca.model.MainEventObject;
 import eu.trentorise.smartcampus.comuneintasca.model.POIObject;
+import eu.trentorise.smartcampus.comuneintasca.model.RestaurantObject;
 import eu.trentorise.smartcampus.presentation.common.exception.DataException;
 
 @Controller
@@ -48,5 +53,36 @@ public class ObjectController extends AbstractObjectController {
 	public @ResponseBody List<MainEventObject> getAllMainEvents() throws DataException {
 		return storage.getObjectsByType(MainEventObject.class);
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/config")
+	public @ResponseBody ConfigObject getConfig() throws DataException {
+		return storage.getObjectsByType(ConfigObject.class).get(0);
+	}	
+
+	@RequestMapping(method = RequestMethod.GET, value = "/home")
+	public @ResponseBody HomeObject getHome() throws DataException {
+		return storage.getObjectsByType(HomeObject.class).get(0);
+	}		
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/restaurants")
+	public @ResponseBody List<RestaurantObject> getAllRestaurants() throws DataException {
+		return storage.getObjectsByType(RestaurantObject.class);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/hotels")
+	public @ResponseBody List<HotelObject> getAllHotels() throws DataException {
+		return storage.getObjectsByType(HotelObject.class);
+	}	
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/itineraries")
+	public @ResponseBody List<ItineraryObject> getAllItineraries() throws DataException {
+		return storage.getObjectsByType(ItineraryObject.class);
+	}	
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/testi")
+	public @ResponseBody List<ContentObject> getAllITesti() throws DataException {
+		return storage.getObjectsByType(ContentObject.class);
+	}		
+	
 
 }

@@ -25,24 +25,45 @@ public class ConfigObject extends BasicObject {
 	private List<MenuItem> highlights;
 	private List<MenuItem> navigationItems;
 	private List<MenuItem> menu;
+	private int sourceHash;
+
+	public ConfigObject() {
+	}
+
 	public List<MenuItem> getHighlights() {
 		return highlights;
 	}
+
 	public void setHighlights(List<MenuItem> highlights) {
 		this.highlights = highlights;
 	}
+
 	public List<MenuItem> getNavigationItems() {
 		return navigationItems;
 	}
+
 	public void setNavigationItems(List<MenuItem> navigationItems) {
 		this.navigationItems = navigationItems;
 	}
+
 	public List<MenuItem> getMenu() {
 		return menu;
 	}
+
 	public void setMenu(List<MenuItem> menu) {
 		this.menu = menu;
 	}
-	
-	
+
+	public int getSourceHash() {
+		return sourceHash;
+	}
+
+	public void setSourceHash(int sourceHash) {
+		this.sourceHash = sourceHash;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 }

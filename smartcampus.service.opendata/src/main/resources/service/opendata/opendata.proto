@@ -31,4 +31,135 @@ message Organization {
  required string title = 2;
  optional string url = 3;
  }
+ 
+message I18nRestaurant {
+ required string id = 1;
+ required I18nString title = 2;
+ optional I18nString shortTitle = 3;
+ optional I18nString subtitle = 4;
+ optional I18nString info = 5;
+ optional I18nString description = 6;
+ optional I18nString classification = 7;
+ optional string url = 8;
+ optional string image = 9;
+ optional double lat = 10;
+ optional double lon = 11; 
+ optional I18nString address = 12;
+ optional I18nString prices = 13;
+ optional int64 lastModified = 14;
+ optional I18nString timetable = 15;
+ optional I18nString closing = 16;
+ optional I18nString equipment = 17;
+ optional string phone = 18;
+ optional string fax = 19;
+ optional string email = 20;
+ }
+ 
+message I18nHotel {
+ required string id = 1;
+ required I18nString title = 2;
+ optional I18nString subtitle = 3;
+ optional I18nString classification = 4;
+ optional string url = 5;
+ optional string image = 6;
+ optional double lat = 7;
+ optional double lon = 8; 
+ optional I18nString address = 9;
+ optional int64 lastModified = 10;
+ optional int32 stars = 11;
+ optional string phone = 12;
+ optional string phone2 = 13;
+ optional string fax = 14;
+ optional string email = 15; 
+ } 
+ 
+message I18nCultura {
+ required string id = 1;
+ required I18nString title = 2;
+ optional I18nString subtitle = 3;
+ optional I18nString description = 4;
+ optional I18nString classification = 5;
+ optional string url = 6;
+ optional string image = 7;
+ optional double lat = 8;
+ optional double lon = 9; 
+ optional I18nString address = 10;
+ optional int64 lastModified = 11;
+ optional string phone = 12;
+ optional string email = 13; 
+}
+
+message I18nMainEvent {
+ required string id = 1;
+ required I18nString title = 2;
+ optional I18nString subtitle = 3;
+ optional I18nString description = 4;
+ optional I18nString classification = 5;
+ optional string url = 6;
+ optional string image = 7;
+ optional double lat = 8;
+ optional double lon = 9; 
+ optional I18nString address = 10;
+ optional int64 lastModified = 11;
+ optional string phone = 12;
+ optional string email = 13;  
+ optional int64 fromDate = 14;
+ optional int64 toDate = 15;
+ optional I18nString dateDescription = 16; 
+}
+
+message I18nTesto {
+ required string id = 1;
+ required I18nString title = 2;
+ optional I18nString subtitle = 3;
+ optional I18nString description = 4;
+ optional I18nString classification = 5;
+ optional string url = 6;
+ optional string image = 7;
+ optional int64 lastModified = 8;
+}
+
+message I18nItinerario {
+ required string id = 1;
+ required I18nString title = 2;
+ optional I18nString subtitle = 3;
+ optional I18nString description = 4;
+ optional I18nString classification = 5;
+ optional string url = 6;
+ optional string image = 7;
+ optional int64 lastModified = 8;
+ repeated string steps = 9;
+ optional int32 length = 10;
+ optional int32 duration = 11;
+ optional I18nString difficulty = 12;
+ optional I18nString info = 13;
+}
+ 
+message ConfigLink {
+ required string name = 1;
+ required string uri = 2;
+}
+
+message ConfigData {
+ required string name = 1;
+ required string data = 2;
+}
+ 
+message I18nString {
+ optional string it = 1;
+ optional string en = 2;
+ optional string de = 3;
+ }
+ 
+message I18nLong {
+ optional int64 it = 1;
+ optional int64 en = 2;
+ optional int64 de = 3;
+ } 
+ 
+message I18nDouble {
+ optional double it = 1;
+ optional double en = 2;
+ optional double de = 3;
+ }  
 

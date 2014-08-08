@@ -29,7 +29,15 @@ public class Subscriber {
 	public static final String SERVICE_YMIR = "smartcampus.service.festivaleconomia";
 	public static final String SERVICE_OD = "smartcampus.service.opendata";
 	public static final String METHOD_EVENTS = "GetEventi";
-	
+	public static final String METHOD_CONFIG = "GetConfig";
+	public static final String METHOD_RESTAURANTS = "GetRestaurants";
+	public static final String METHOD_HOTELS = "GetHotels";
+	public static final String METHOD_EDIFICI = "GetEdifici";
+	public static final String METHOD_CULTURA = "GetCultura";
+	public static final String METHOD_MAINEVENTS = "GetMainEvents";
+	public static final String METHOD_TESTI = "GetTesti";
+	public static final String METHOD_ITINERARI = "GetItinerari";
+
 	private Log logger = LogFactory.getLog(getClass());
 
 	public Subscriber(ServiceBusClient client) {
@@ -37,6 +45,28 @@ public class Subscriber {
 			System.out.println("SUBSCRIBE");
 			Map<String, Object> params = new TreeMap<String, Object>();
 			client.subscribeService(SERVICE_OD, METHOD_EVENTS, params);
+
+			params.put("url", "http://trento.opencontent.it/comuneintasca/data");
+			client.subscribeService(SERVICE_OD, METHOD_CONFIG, params);
+
+			params.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754329/list/limit/1000");
+			client.subscribeService(SERVICE_OD, METHOD_RESTAURANTS, params);
+
+			params.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754211/list/limit/1000");
+			client.subscribeService(SERVICE_OD, METHOD_HOTELS, params);
+
+			params.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754058/list/limit/1000");
+			client.subscribeService(SERVICE_OD, METHOD_CULTURA, params);
+
+			params.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754317/list/limit/1000");
+			client.subscribeService(SERVICE_OD, METHOD_MAINEVENTS, params);
+
+			params.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754015/list/limit/1000");
+			client.subscribeService(SERVICE_OD, METHOD_TESTI, params);
+
+			params.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754330/list/limit/1000");
+			client.subscribeService(SERVICE_OD, METHOD_ITINERARI, params);
+
 			client.subscribeService(SERVICE_YMIR, METHOD_EVENTS, params);
 		} catch (InvocationException e) {
 			logger.error("Failed to subscribe for service events: " + e.getMessage());

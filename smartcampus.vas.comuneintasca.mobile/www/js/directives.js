@@ -21,11 +21,11 @@ angular.module('ilcomuneintasca.directives', [])
       // added since scope can be not yet filled with actual data,
       // since data is taken asyncronously from the database
       scope.gotdata.then(function () {
+        $(element).find('.loadingmsg').remove();
         //content = scope.obj || scope.content || scope.place || scope.hotel || scope.restaurant || scope.event || scope.itinerario || { image: '' };
         content = scope.son || scope.obj || scope.itinerario || { image: '' };
         if (content.image && content.image != '' && content.image != 'false') {
           Files.get(content.image).then(function (fileUrl) {
-						element.children()[0].remove();
             //$timeout(function () {
               //if (element.hasClass('item-image')) {
               element.css({
@@ -41,15 +41,15 @@ angular.module('ilcomuneintasca.directives', [])
           });
         } else {
           element.addClass('missing');
-					element.children()[0].remove();
+        }
+
+        if (attrs.sonscount && attrs.sonscount>0) {
+          element.append('<div class="dida">'+$filter('translate_plur')('complex_events',Number(attrs.sonscount))+'</div>');
         }
       }, function () {
+        $(element).find('.loadingmsg').remove();
         element.addClass('error');
-				element.children()[0].remove();
       });
-			if (attrs.sonscount && attrs.sonscount>0) {
-				element.append('<div class="dida">'+$filter('translate_plur')('complex_events',Number(attrs.sonscount))+'</div>');
-			}
     }
   };
 })

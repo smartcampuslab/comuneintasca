@@ -56,7 +56,10 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
     DatiDB.get('poi', data.steps.join()).then(function (luoghi) {
       var tappe = [];
       angular.forEach(luoghi, function (luogo, idx) {
-        tappe[data.steps.indexOf(luogo.id)] = luogo;
+        luogo.abslinkgot.then(function(){
+          luogo['abslink']='#/app/itinerarystep/'+$scope.itinerario.id+'/poi/'+luogo.id;
+          tappe[data.steps.indexOf(luogo.id)] = luogo;
+        })
       });
       $scope.tappe = tappe;
       $scope.location = luoghi[0].location;
@@ -65,8 +68,24 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
 })
 
 .controller('ItinerarioInfoCtrl', function ($scope, DatiDB, $stateParams) {})
-
 .controller('ItinerarioTappeCtrl', function ($scope, DatiDB, $stateParams) {})
+.controller('ItinerarioPoiCtrl', function ($scope, $state, $timeout, $window, DatiDB, $stateParams) {
+  $scope.backActive = false;
+  $timeout(function(){$scope.backActive = true;},200);
+    
+  $scope.explicitBack = function () {
+    return $state.current && $state.current.data && $state.current.data.explicitBack;
+  };
+  $scope.bk = function () {
+    $window.history.back();
+  };
+
+  //console.log('itin id: '+$stateParams.itinerarioId);
+  //console.log('poi id: '+$stateParams.poiId);
+  $scope.gotdata = DatiDB.get('poi', $stateParams.poiId).then(function (data) {
+    $scope.obj=data;
+  });
+})
 
 .controller('ItinerarioMappaCtrl', function ($scope, DatiDB, $stateParams, $filter, $ionicPopup, $location, Config) {
   $scope.$on('$viewContentLoaded', function () {
@@ -147,7 +166,7 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
         text: $filter('translate')(Config.keys()['Details']),
         type: 'button-positive',
         onTap: function (e) {
-          var itemUrl = '/app/itineraryplace/' + $scope.activeMarker.id;
+          var itemUrl = '/app/itinerarystep/'+$scope.itinerario.id+'/poi/'+$scope.activeMarker.id;
           $location.path(itemUrl);
         }
         }]

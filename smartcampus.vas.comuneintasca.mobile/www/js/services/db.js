@@ -13,8 +13,8 @@ angular.module('ilcomuneintasca.services.db', [])
 		}
 		item['sonscount']=dbrow.sonscount;
 
-    Config.menuGroupSubgroupByTypeAndClassification(dbtype,dbrow.classification).then(function(sg){
-      if (sg) item['abslink'] = '/app/page/'+sg._parent.id+'/'+sg.id+'/' + item.id;
+    item['abslinkgot']=Config.menuGroupSubgroupByTypeAndClassification(dbtype,dbrow.classification).then(function(sg){
+      if (sg) item['abslink'] = '#/app/page/'+sg._parent.id+'/'+sg.id+'/' + item.id;
     });
 
     item['dbClassification'] = dbrow.classification || '';

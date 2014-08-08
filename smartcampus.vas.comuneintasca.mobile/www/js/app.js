@@ -15,9 +15,9 @@ angular.module('ilcomuneintasca', [
   'ilcomuneintasca.services.fs',
   'ilcomuneintasca.filters',
   'ilcomuneintasca.directives',
-//  'ngQueue',
   'google-maps'
 ])
+//  'ngQueue',
 
 .run(function ($rootScope, $filter, $location, Config, DatiDB, GeoLocate, $ionicPlatform) {
   $rootScope.locationWatchID = undefined;
@@ -82,6 +82,7 @@ angular.module('ilcomuneintasca', [
   $rootScope.lang=localStorage.lang=lang;
 
   $rootScope.goto = function (link) {
+    if (link.indexOf('#/app/')==0) link=link.substring(1);
     if (link.indexOf('/app/')!=0) link='/app/'+link;
     $location.path(link);
   };
@@ -93,6 +94,7 @@ angular.module('ilcomuneintasca', [
     }
   }
   $rootScope.gotoSubpath = function (subpath) {
+    //console.log('full subpath: '+$location.path()+subpath)
     $location.path($location.path()+subpath);
   }
 
@@ -335,12 +337,13 @@ angular.module('ilcomuneintasca', [
         }
       }
     })
-    .state('app.itinerary_step', {
-      url: "/itineraryplace/:placeId",
+    .state('app.itinerarypoi', {
+      url: "/itinerarystep/:itinerarioId/poi/:poiId",
+//      url: "/poi/:poiId",
       views: {
         'menuContent': {
-          templateUrl: "templates/place.html",
-          controller: 'PlaceCtrl'
+          templateUrl: "templates/itinerario-poi.html",
+          controller: 'ItinerarioPoiCtrl'
         }
       },
       data: {

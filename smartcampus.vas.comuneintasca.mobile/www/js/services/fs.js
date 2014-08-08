@@ -1,6 +1,6 @@
 angular.module('ilcomuneintasca.services.fs', [])
 
-.factory('Files', function ($q, $http, Config, $queue, Profiling, $ionicLoading, $filter) {
+.factory('Files', function ($q, $http, Config, Profiling, $ionicLoading, $filter) { //, $queue
   var queueFileDownload = function (obj) {
     var fileTransfer = new FileTransfer();
     fileTransfer.download(obj.url, obj.savepath, function (fileEntry) {

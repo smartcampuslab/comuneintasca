@@ -173,7 +173,7 @@ angular.module('ilcomuneintasca.services.db', [])
 		},
     sync: function () {
       if (syncinprogress!=null) {
-        console.log('waiting for previuos sync process to finish...');
+        //console.log('waiting for previuos sync process to finish...');
         return syncinprogress;
       }
       syncronization = $q.defer();

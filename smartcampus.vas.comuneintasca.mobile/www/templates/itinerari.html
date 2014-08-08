@@ -1,8 +1,8 @@
 <ion-view title="{{title | translate}}">
   <ion-content class="has-header" delegate-handle="listScroll">
     <ion-list>
-	<div class="item item-divider" align="center">{{'list_results' | translate_plur:itinerari.length}}</div>
-	  <ion-item ng-repeat="itinerario in itinerari | extOrderBy:ordering" 
+      <div class="item item-divider" align="center">{{'list_results' | translate_plur:itinerari.length}}</div>
+      <ion-item ng-repeat="itinerario in itinerari | extOrderBy:ordering" 
               collection-item-width="'100%'" collection-item-height="'80px'"
 				      ng-href="#/app/itinerary/{{itinerario.id}}/info" class="item-thumbnail-left">
         <comuni-img class="item-image comuni-item-image"></comuni-img>

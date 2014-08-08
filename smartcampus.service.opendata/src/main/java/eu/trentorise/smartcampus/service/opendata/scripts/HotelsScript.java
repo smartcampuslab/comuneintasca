@@ -46,7 +46,7 @@ public class HotelsScript extends OpenContentScript {
 
 		// HotelObject -> classification, info
 		
-		I18nString cat = getI18NStringValue(i18n, FIELDS, "tipologia_hotel", STRING_VALUE);
+		I18nString cat = getI18NStringValue(i18n, FIELDS, "tipologia_hotel", VALUE, OBJECT_NAME);
 		if (cat.hasIt()) {
 			builder.setClassification(cat);
 		}

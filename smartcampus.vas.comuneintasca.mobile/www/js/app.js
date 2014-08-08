@@ -15,8 +15,8 @@ angular.module('ilcomuneintasca', [
   'ilcomuneintasca.services.fs',
   'ilcomuneintasca.filters',
   'ilcomuneintasca.directives',
-  'google-maps',
-  'ngQueue'
+//  'ngQueue',
+  'google-maps'
 ])
 
 .run(function ($rootScope, $filter, $location, Config, DatiDB, GeoLocate, $ionicPlatform) {

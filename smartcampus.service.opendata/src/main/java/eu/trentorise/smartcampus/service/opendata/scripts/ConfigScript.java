@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2012-2013 Trento RISE
+ * Copyright 2012-2014 Trento RISE
  * 
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -13,20 +13,21 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  ******************************************************************************/
-package eu.trentorise.smartcampus.comuneintasca.model;
+package eu.trentorise.smartcampus.service.opendata.scripts;
 
-import java.util.Map;
+import com.google.protobuf.Message;
 
+import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.ConfigData;
+import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.ConfigLink;
 
-public class ContentObject extends GeoCITObject {
-	private static final long serialVersionUID = -5567010752470052310L;
+public class ConfigScript extends OpenContentScript {
 
-	private Map<String,String> classification;
-
-	public Map<String,String> getClassification() {
-		return classification;
+	public Message copyData(ConfigLink link, String json) throws Exception {
+		ConfigData.Builder builder = ConfigData.newBuilder();
+		builder.setName(link.getName());
+		builder.setData(json);
+		
+		return builder.build();
 	}
-	public void setClassification(Map<String,String> classification) {
-		this.classification = classification;
-	}
+	
 }

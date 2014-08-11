@@ -16,6 +16,7 @@
 package eu.trentorise.smartcampus.comuneintasca.model;
 
 import java.util.List;
+import java.util.Map;
 
 public class ItineraryObject extends BaseCITObject {
 	private static final long serialVersionUID = 6325381726807197185L;
@@ -23,7 +24,7 @@ public class ItineraryObject extends BaseCITObject {
 	private List<String> steps;
 	private Integer length;
 	private Integer duration;
-	private String difficulty;
+	private Map<String,String> difficulty;
 	
 	private List<String> stepLines;
 	
@@ -45,10 +46,10 @@ public class ItineraryObject extends BaseCITObject {
 	public void setDuration(Integer duration) {
 		this.duration = duration;
 	}
-	public String getDifficulty() {
+	public Map<String,String> getDifficulty() {
 		return difficulty;
 	}
-	public void setDifficulty(String difficulty) {
+	public void setDifficulty(Map<String,String> difficulty) {
 		this.difficulty = difficulty;
 	}
 	public List<String> getStepLines() {

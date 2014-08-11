@@ -3,10 +3,10 @@
 </ion-header-bar>
 <ion-content class="has-header" delegate-handle="listScroll">
   <ion-list>
-    <ion-item collection-repeat="obj in results|extOrderBy:ordering" data-filter-disabled-2del="track by obj.id"
-              collection-item-width="'100%'" collection-item-height="getListItemHeight(item, $index)"
+    <ion-item collection-repeat="obj in results|extOrderBy:ordering track by obj.id" data-filter-disabled-2del="track by obj.id"
+              collection-item-width="'100%'" collection-item-height="getListItemHeight(obj, $index)"
               ng-click="gotoSubpath(obj.id)" class="coll-item item-thumbnail-left">
-      <comuni-img class="item-image comuni-item-image" sonscount="{{obj.sonscount}}" ></comuni-img>
+      <comuni-img class="item-image comuni-item-image" gotdata="gotdata" obj="obj" sonscount="{{obj.sonscount}}"></comuni-img>
       <h2><span ng-if="obj.parentid">{{obj.parent.title | translate}} &gt;&gt; </span>{{obj.title | translate}}</h2>
       <p ng-if="obj.fromTime">{{obj.fromTime | date:'dd/MM/yyyy'}}<span ng-if="obj.fromTime !== obj.toTime"> - {{obj.toTime | date:'dd/MM/yyyy'}}</span></p>
       <div class="row comuni-item-bottom">

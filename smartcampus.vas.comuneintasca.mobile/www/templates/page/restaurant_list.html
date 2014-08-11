@@ -4,9 +4,9 @@
 <ion-content class="has-header" delegate-handle="listScroll">
   <ion-list>
     <ion-item collection-repeat="obj in results | extOrderBy:ordering"
-              collection-item-width="'100%'" collection-item-height="getListItemHeight(item, $index)"
+              collection-item-width="'100%'" collection-item-height="getListItemHeight(obj, $index)"
               ng-click="gotoSubpath(obj.id)" class="item-thumbnail-left coll-item">
-      <comuni-img class="item-image comuni-item-image"></comuni-img>
+      <comuni-img class="item-image comuni-item-image" gotdata="gotdata" obj="obj"></comuni-img>
       <h2>{{obj.title | translate}}</h2>
       <div class="row comuni-item-bottom">
         <div class="col-75 comuni-item-bottom-text">

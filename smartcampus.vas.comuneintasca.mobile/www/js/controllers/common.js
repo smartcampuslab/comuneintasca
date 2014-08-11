@@ -165,14 +165,16 @@ angular.module('ilcomuneintasca.controllers.common', [])
 								if ($scope.sonsVisible) {
 									$scope.sonsVisible=null;
 								} else {
-									DatiDB.getByParent(sg.query.type, data.id).then(function (data) {
+                  console.log('sons');
+									$scope.gotsonsdata = DatiDB.getByParent(sg.query.type, data.id).then(function (data) {
 										if (!$scope.sons) $scope.sons=data;
 										$scope.sonsVisible=true;
 									});
 								}
 							}
               if ($state.current.data&&$state.current.data.sons) {
-                DatiDB.getByParent(sg.query.type, data.id).then(function (data) {
+                console.log('sons');
+                $scope.gotsonsdata = DatiDB.getByParent(sg.query.type, data.id).then(function (data) {
                   $scope.sons=data;
                 });
               }

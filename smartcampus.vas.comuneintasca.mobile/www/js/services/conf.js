@@ -1,7 +1,7 @@
 angular.module('ilcomuneintasca.services.conf', [])
 
 .factory('Config', function ($q, $http, $window) {
-  var SCHEMA_VERSION=80;
+  var SCHEMA_VERSION=81;
   
   var profile = $q.defer();
   $http.get('data/profile.json').success(function(data, status, headers, config){

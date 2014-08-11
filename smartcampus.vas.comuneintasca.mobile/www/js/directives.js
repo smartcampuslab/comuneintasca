@@ -11,45 +11,70 @@ angular.module('ilcomuneintasca.directives', [])
 })
 
 .directive('comuniImg', function ($q, $filter, $timeout, Config, Files) {
+  var processTag=function (scope, element, attrs) {
+    $(element).find('.loadingmsg').remove();
+    //content = scope.obj || scope.content || scope.place || scope.hotel || scope.restaurant || scope.event || scope.itinerario || { image: '' };
+    //if (scope.son) console.log('**SON');
+    content = scope.son || scope.obj || scope.itinerario || { image: '' };
+    //if (content) console.log('content: '+JSON.stringify(content));
+    //console.log('content.id: '+(content.id||'NULL'));
+
+    //console.log('content.image: '+content.image);
+    if (content.image && content.image != '' && content.image != 'false') {
+      Files.get(content.image).then(function(fileUrl){
+        //$timeout(function () {
+          //if (element.hasClass('item-image')) {
+          element.css({
+            'background-image':'url(' + fileUrl + ')'
+          });
+          //element.attr('style', 'background-image:url(' + fileUrl + ')');
+          //} else {
+          //  element.html('<img src="'+fileUrl+'" />');
+          //}
+        //});
+      }, function () {
+        element.addClass('unavailable');
+      });
+    } else {
+      element.addClass('missing');
+    }
+
+    if (attrs.sonscount) {
+      //console.log('attrs.sonscount='+attrs.sonscount);
+      var sonscount=Number(attrs.sonscount);
+      if (sonscount>0) element.append('<div class="dida">'+$filter('translate_plur')('complex_events',sonscount)+'</div>');
+    }
+  };
   return {
     restrict: 'E',
-    replace: true, //scope:{ image:'=image',gotdata:'=gotdata' },
+    replace: true, 
+    scope:{ sonscount:'@', gotdata:'=', gotsonsdata:'=', obj:'=', son:'=' },
     template: function (tElem, tAttrs) {
       return '<div class="img-loading"><span class="loadingmsg">'+$filter('translate')(Config.keys()['loading_short'])+'</span></div>';
     },
-    link: function (scope, element, attrs) {
-      // added since scope can be not yet filled with actual data,
-      // since data is taken asyncronously from the database
-      scope.gotdata.then(function () {
-        $(element).find('.loadingmsg').remove();
-        //content = scope.obj || scope.content || scope.place || scope.hotel || scope.restaurant || scope.event || scope.itinerario || { image: '' };
-        content = scope.son || scope.obj || scope.itinerario || { image: '' };
-        if (content.image && content.image != '' && content.image != 'false') {
-          Files.get(content.image).then(function (fileUrl) {
-            //$timeout(function () {
-              //if (element.hasClass('item-image')) {
-              element.css({
-                'background-image':'url(' + fileUrl + ')'
-              });
-              //element.attr('style', 'background-image:url(' + fileUrl + ')');
-              //} else {
-              //  element.html('<img src="'+fileUrl+'" />');
-              //}
-            //});
-          }, function () {
-            element.addClass('unavailable');
-          });
+    link: function (scope, element, attrs) { 
+      // added otherwise ionic releases from 1.0 beta 7 onwards, 
+      // images in collection-repeat won't load 
+      $timeout(function() {
+        // added since scope can be not yet filled with actual data,
+        // since data is taken asyncronously from the database
+        //scope.gotdata.then(function(){ processTag(scope, element, attrs); }, function () {
+        //if (scope.gotsonsdata) console.log('SONS!');
+        //if (scope.gotdata) console.log('NO SONS!!!!');
+        var gotdata;
+        if (attrs.son) {
+          //console.log('SON! '+(scope.gotsonsdata!=undefined));
+          gotdata=scope.gotsonsdata;
         } else {
-          element.addClass('missing');
+          gotdata=scope.gotdata;
         }
-
-        if (attrs.sonscount && attrs.sonscount>0) {
-          element.append('<div class="dida">'+$filter('translate_plur')('complex_events',Number(attrs.sonscount))+'</div>');
+        if (gotdata) {
+          gotdata.then(function(){ processTag(scope, element, attrs); }, function () {
+            $(element).find('.loadingmsg').remove();
+            element.addClass('error');
+          });
         }
-      }, function () {
-        $(element).find('.loadingmsg').remove();
-        element.addClass('error');
-      });
+      }, 0, true);
     }
   };
 })

@@ -1,6 +1,9 @@
+<ion-header-bar ng-if="sonsVisible" class="button bar-subheader icon-right ion-chevron-up" ng-click="toggleSons()">
+  {{ 'complex_events_found' | translate_plur:obj.sonscount }} "{{obj.title|translate}}"
+</ion-header-bar>
 <div class="event_container" ng-hide="sonsVisible">
   <ion-content class="has-header">
-    <comuni-img ng-if="obj.image" class="content-image-main"></comuni-img>
+    <comuni-img class="content-image-main" gotdata="gotdata" obj="obj"></comuni-img>
     
     <div class="padding event">
       <h1>{{obj.title | translate}}</h1>
@@ -25,15 +28,12 @@
   </ion-content>
 </div>
 <div ng-show="sonsVisible">
-  <div class="bar bar-subheader button icon-right ion-chevron-up" ng-click="toggleSons()">
-    {{ 'complex_events_found' | translate_plur:obj.sonscount }} "{{obj.title|translate}}"
-  </div>
   <ion-content class="has-subheader">
-    <ion-list>
+    <ion-list ng-if="sons">
       <ion-item collection-repeat="son in sons|extOrderBy:{ordering:'DateFrom'} track by son.id" 
-                collection-item-width="'100%'" collection-item-height="getListItemHeight(item, $index)"
+                collection-item-width="'100%'" collection-item-height="getListItemHeight(son, $index)"
                 href="{{son.abslink}}" class="coll-item item-thumbnail-left">
-        <comuni-img class="item-image comuni-item-image" ></comuni-img>
+        <comuni-img class="item-image comuni-item-image" gotsonsdata="gotsonsdata" son="son"></comuni-img>
         <h2>{{son.title | translate}}</h2>
         <p ng-if="son.fromTime">{{son.fromTime | date:'dd/MM/yyyy'}}<span ng-if="son.fromTime !== son.toTime"> - {{son.toTime | date:'dd/MM/yyyy'}}</span></p>
         <div class="row comuni-item-bottom">

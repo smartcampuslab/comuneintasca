@@ -6,7 +6,7 @@
     <ion-list>
       <div class="item item-divider" align="center">{{itinerario.title | translate}}</div>
       <ion-item class="item-thumbnail-left" ng-repeat="place in tappe track by $index" collection-item-width="'100%'" collection-item-height="'80px'" ng-click="goto(place.abslink)"> 
-        <comuni-img class="item-image comuni-item-image"></comuni-img>
+        <comuni-img class="item-image comuni-item-image" gotdata="gotdata" obj="obj"></comuni-img>
         <h2>{{$index + 1}}. {{place.title | translate}}</h2>
         <p class="comuni-item-bottomdetail">{{place.address | translate}}</p>
       </ion-item>

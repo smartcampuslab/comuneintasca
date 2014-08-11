@@ -87,7 +87,7 @@ angular.module('ilcomuneintasca.services.db', [])
     remote: false
   };
 
-  var remoteSyncURL = 'https://tn.smartcampuslab.it/comuneintasca/sync?since=';
+  var remoteSyncURL = 'https://vas-dev.smartcampuslab.it/comuneintasca/sync?since=';
   var remoteSyncOptions = {
     method: 'POST',
     url: remoteSyncURL + currentDbVersion,

@@ -428,4 +428,5 @@ comuni-img.item-image {
 .card.sinottico .icon { font-size:2.3em !important; }
 
 .bar-subheader { height:32px; }
+.button.bar-subheader { height:32px; }
 .has-subheader { top:76px; }

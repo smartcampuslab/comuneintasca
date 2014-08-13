@@ -103,7 +103,10 @@ angular.module('ilcomuneintasca.services.list', [])
         $scope.ordering = $scope.$navDirection != 'back' ? {
           order: conf.defaultOrdering,
           searchText: null
-        } : state.order;
+        } : {
+          order: state.order||conf.defaultOrdering,
+          searchText: null
+        };
         //console.log('$scope.ordering: '+JSON.stringify($scope.ordering));
 
         $scope.showSortPopup = function () {

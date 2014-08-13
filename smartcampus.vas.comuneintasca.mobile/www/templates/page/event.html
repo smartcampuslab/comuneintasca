@@ -3,7 +3,7 @@
 </ion-header-bar>
 <div class="event_container" ng-hide="sonsVisible">
   <ion-content class="has-header">
-    <comuni-img class="content-image-main" gotdata="gotdata" obj="obj"></comuni-img>
+    <comuni-img class="content-image-main" gotdata="gotdata"></comuni-img>
     
     <div class="padding event">
       <h1>{{obj.title | translate}}</h1>
@@ -29,11 +29,11 @@
 </div>
 <div ng-show="sonsVisible">
   <ion-content class="has-subheader">
-    <ion-list ng-if="sons">
+    <ion-list ng-if="gotsonsdata">
       <ion-item collection-repeat="son in sons|extOrderBy:{ordering:'DateFrom'} track by son.id" 
                 collection-item-width="'100%'" collection-item-height="getListItemHeight(son, $index)"
                 href="{{son.abslink}}" class="coll-item item-thumbnail-left">
-        <comuni-img class="item-image comuni-item-image" gotsonsdata="gotsonsdata" son="son"></comuni-img>
+        <comuni-img class="item-image comuni-item-image" gotdata="gotsonsdata"></comuni-img>
         <h2>{{son.title | translate}}</h2>
         <p ng-if="son.fromTime">{{son.fromTime | date:'dd/MM/yyyy'}}<span ng-if="son.fromTime !== son.toTime"> - {{son.toTime | date:'dd/MM/yyyy'}}</span></p>
         <div class="row comuni-item-bottom">

@@ -5,7 +5,7 @@
       <ion-item ng-repeat="itinerario in itinerari | extOrderBy:ordering" 
               collection-item-width="'100%'" collection-item-height="'80px'"
 				      ng-href="#/app/itinerary/{{itinerario.id}}/info" class="item-thumbnail-left">
-        <comuni-img class="item-image comuni-item-image" gotdata="gotdata" obj="obj"></comuni-img>
+        <comuni-img class="item-image comuni-item-image" gotdata="gotdata"></comuni-img>
         <h2>{{itinerario.title | translate}}</h2>
         <p class="comuni-item-bottomdetail">{{itinerario.subtitle | translate}}</p>
       </ion-item>

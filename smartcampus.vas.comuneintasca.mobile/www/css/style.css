@@ -417,15 +417,18 @@ comuni-img.item-image {
 	position: relative;
 }
 .dida {
-	width:100%;line-height:17px; color:#1b4d6e; background-color: #b7d6e8;
-	position: absolute; bottom:0;left:0;
+  position:relative;
+	line-height:17px; color:#1b4d6e; background-color: #b7d6e8;
+	position: absolute; bottom:0;right:0;padding:0 .4em 0 .5em;
 }
-
+.dida span { margin-right:.5em; }
+.dida i { font-size:1.4em;position:absolute;right:0;bottom:-1px; }
 
 
 .card.sinottico, .card.sinottico .item { border-color: #666 !important; color:#666 !important; }
 .card.sinottico .item { font-size:.9em !important;line-height:1.1em !important; }
 .card.sinottico .icon { font-size:2.3em !important; }
+.list:last-child.card.sinottico { margin-bottom:0; }
 
 .bar-subheader { height:32px; }
 .button.bar-subheader { height:32px; }

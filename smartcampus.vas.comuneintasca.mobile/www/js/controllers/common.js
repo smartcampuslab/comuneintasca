@@ -158,6 +158,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
         if ($stateParams.itemId!='') {
           $scope.template='templates/page/'+(sg.view||sg.query.type||'content')+($state.current.data&&$state.current.data.sons?'_sons':'')+'.html';
           $scope.gotdata = DatiDB.get(sg.query.type, $stateParams.itemId).then(function (data) {
+            //console.log('itemId gotdata!');
             $scope.obj = data;
 
 						if (data.sonscount>0) {
@@ -165,7 +166,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
 								if ($scope.sonsVisible) {
 									$scope.sonsVisible=null;
 								} else {
-                  console.log('sons');
+                  //console.log('sons');
 									$scope.gotsonsdata = DatiDB.getByParent(sg.query.type, data.id).then(function (data) {
 										if (!$scope.sons) $scope.sons=data;
 										$scope.sonsVisible=true;
@@ -173,7 +174,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
 								}
 							}
               if ($state.current.data&&$state.current.data.sons) {
-                console.log('sons');
+                //console.log('sons');
                 $scope.gotsonsdata = DatiDB.getByParent(sg.query.type, data.id).then(function (data) {
                   $scope.sons=data;
                 });
@@ -207,6 +208,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
                     $scope.gotdbdata=DatiDB.all(sg.query.type);
                   }
                   $scope.gotdata = $scope.gotdbdata.then(function (data) {
+                    //console.log('tboptions gotdata!');
                     $scope.results = data;
                     $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false);
                   });
@@ -287,8 +289,9 @@ angular.module('ilcomuneintasca.controllers.common', [])
                 }
               }
               $scope.gotdata = $scope.gotdbdata.then(function (data) {
+                //console.log('do filter gotdata!');
                 if (data) {
-//                  $scope.results = $filter('extOrderBy')(data,$scope.ordering);
+                  //$scope.results = $filter('extOrderBy')(data,$scope.ordering);
                   $scope.results = data;
                 } else {
                   $scope.results = [];
@@ -332,6 +335,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
               $scope.gotdbdata=DatiDB.all(sg.query.type);
             }
             $scope.gotdata = $scope.gotdbdata.then(function (data) {
+              //console.log('list gotdata!');
               $scope.results = data;
             });
           }
@@ -339,6 +343,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
       } else if (sg.objectIds) {
         $scope.template='templates/page/'+(sg.view||sg.type||sg._parent.view||sg._parent.type||'content')+'.html';
         $scope.gotdata = DatiDB.get(sg.type, sg.objectIds.join(',')).then(function (data) {
+          //console.log('objectIds gotdata!');
           data=(data.hasOwnProperty('length')?data:[data]);
           $scope.results = data;
         });

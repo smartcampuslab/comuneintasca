@@ -99,6 +99,7 @@ angular.module('ilcomuneintasca', [
   }
 
   $rootScope.getListItemHeight = function (item, index) {
+    //console.log('height for item #'+index);
     //console.log('height for item id: '+item.id);
     return 100;
   };

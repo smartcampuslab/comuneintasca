@@ -161,18 +161,38 @@ angular.module('ilcomuneintasca.controllers.common', [])
             //console.log('itemId gotdata!');
             $scope.obj = data;
 
-						if (data.sonscount>0) {
+						
+            if (data.parentid) {
+              console.log('siblings');
+
+              $scope.gotsonsdata = DatiDB.getByParent(sg.query.type, data.parentid).then(function (data) {
+                $scope.sons=data;
+                $scope.siblingscount=data.length;
+              });
+
+              $scope.toggleSiblings=function(){
+                if ($scope.sonsVisible) {
+                  $scope.sonsVisible=null;
+                } else {
+                  $scope.gotsonsdata.then(function(){
+                    $scope.sonsVisible=true;
+                  })
+                }
+              }
+            } else if (data.sonscount>0) {
+              console.log('sons');
+
               $scope.toggleSons=function(){
-								if ($scope.sonsVisible) {
-									$scope.sonsVisible=null;
-								} else {
-                  //console.log('sons');
-									$scope.gotsonsdata = DatiDB.getByParent(sg.query.type, data.id).then(function (data) {
-										if (!$scope.sons) $scope.sons=data;
-										$scope.sonsVisible=true;
-									});
-								}
-							}
+                if ($scope.sonsVisible) {
+                  $scope.sonsVisible=null;
+                } else {
+                  $scope.gotsonsdata = DatiDB.getByParent(sg.query.type, data.id).then(function (data) {
+                    if (!$scope.sons) $scope.sons=data;
+                    $scope.sonsVisible=true;
+                  });
+                }
+              }
+
               if ($state.current.data&&$state.current.data.sons) {
                 //console.log('sons');
                 $scope.gotsonsdata = DatiDB.getByParent(sg.query.type, data.id).then(function (data) {

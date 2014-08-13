@@ -41,6 +41,10 @@ angular.module('ilcomuneintasca.directives', [])
         element.append('<div class="dida"><span>' + sonscount + '</span> <i class="icon ion-ios7-flag-outline"></i>&nbsp;</div>');
       }
     }
+    if (content.parentid) {
+      console.log('content.parentid='+content.parentid);
+      element.append('<div class="dida"><i class="icon ion-ios7-flag-outline"></i>&nbsp;</div>');
+    }
   };
   return {
     restrict: 'E',

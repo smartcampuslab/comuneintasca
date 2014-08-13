@@ -33,10 +33,13 @@ angular.module('ilcomuneintasca.directives', [])
       element.addClass('missing');
     }
 
-    if (attrs.sonscount) {
-      //console.log('attrs.sonscount='+attrs.sonscount);
-      var sonscount = Number(attrs.sonscount);
-      if (sonscount > 0) element.append('<div class="dida">' + $filter('translate_plur')('complex_events', sonscount) + '</div>');
+    if (content.sonscount) {
+      //console.log('content.parentid='+content.parentid);
+      var sonscount = Number(content.sonscount);
+      if (sonscount > 0) {
+//        element.append('<div class="dida">' + $filter('translate_plur')('complex_events', sonscount) + '</div>');
+        element.append('<div class="dida"><span>' + sonscount + '</span> <i class="icon ion-ios7-flag-outline"></i>&nbsp;</div>');
+      }
     }
   };
   return {

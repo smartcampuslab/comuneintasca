@@ -7,7 +7,7 @@
               collection-item-width="'100%'" collection-item-height="getListItemHeight(obj, $index)"
               ng-click="gotoSubpath(obj.id)" class="coll-item item-thumbnail-left">
       <comuni-img class="item-image comuni-item-image" gotdata="gotdata"></comuni-img>
-      <h2><span ng-if="obj.parentid">{{obj.parent.title | translate}} &gt;&gt; </span>{{obj.title | translate}}</h2>
+      <h2><!-- span ng-if="obj.parentid">{{obj.parent.title | translate}} &gt;&gt; </span -->{{obj.title | translate}}</h2>
       <p ng-if="obj.fromTime">{{obj.fromTime | date:'dd/MM/yyyy'}}<span ng-if="obj.fromTime !== obj.toTime"> - {{obj.toTime | date:'dd/MM/yyyy'}}</span></p>
       <div class="row comuni-item-bottom">
         <div class="col comuni-item-bottom-text">

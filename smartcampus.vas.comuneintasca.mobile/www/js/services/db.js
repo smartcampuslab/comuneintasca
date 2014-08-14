@@ -5,13 +5,15 @@ angular.module('ilcomuneintasca.services.db', [])
   var types = Config.contentTypesList();
 
   var parseDbRow = function (dbrow) {
-    var dbtype = Config.contentKeyFromDbType(dbrow.type);
     var item = JSON.parse(dbrow.data);
 		if (dbrow.parentid) {
 			item['parentid']=dbrow.parentid;
 			item['parent']=JSON.parse(dbrow.parent);
 		}
 		item['sonscount']=dbrow.sonscount;
+
+    var dbtype = Config.contentKeyFromDbType(dbrow.type);
+    item['dbType']=dbtype;
 
     item['abslinkgot']=Config.menuGroupSubgroupByTypeAndClassification(dbtype,dbrow.classification).then(function(sg){
       if (sg) item['abslink'] = '#/app/page/'+sg._parent.id+'/'+sg.id+'/' + item.id;
@@ -26,11 +28,13 @@ angular.module('ilcomuneintasca.services.db', [])
 
     } else if (dbtype == 'poi') {
       Config.menuGroupSubgroup('places',item.dbClassification).then(function(sg){
+        item['dbClass']=sg;
         item.dbClassification=sg.name;
       });
 
     } else if (dbtype == 'event') {
       Config.menuGroupSubgroup('events',item.dbClassification).then(function(sg){
+        item['dbClass']=sg;
         item.dbClassification=sg.name;
       });
 

@@ -17,7 +17,7 @@ var android_filestocopy = [
 {
     "config/translations/values/strings.xml": "platforms/android/res/values/strings.xml"
 }, {
-    "config/translations/values-en/strings.xml": "platforms/android/res/values-en/strings.xml"
+    "config/translations/values-it/strings.xml": "platforms/android/res/values-it/strings.xml"
 }, {
     "config/translations/values-de/strings.xml": "platforms/android/res/values-de/strings.xml"
 },
@@ -43,74 +43,78 @@ var android_filestocopy = [
 var iphone_filestocopy = [
 // ticons icons -d . -p iphone icon.png 
 {
-    "config/ios/Resources/icons/icon-40@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon-40@2x.png"
+    "config/ticons/Resources/iphone/appicon-Small-40@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon-40@2x.png"
 }, {
-    "config/ios/Resources/icons/icon-40.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon-40.png"
+    "config/ticons/Resources/iphone/appicon-Small-40.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon-40.png"
 }, {
-    "config/ios/Resources/icons/icon-50@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon-50@2x.png"
+    "config/ticons/Resources/iphone/appicon-Small-50@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon-50@2x.png"
 }, {
-    "config/ios/Resources/icons/icon-50.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon-50.png"
+    "config/ticons/Resources/iphone/appicon-Small-50.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon-50.png"
 }, {
-    "config/ios/Resources/icons/icon-60@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon-60@2x.png"
+    "config/ticons/Resources/iphone/appicon-60@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon-60@2x.png"
 }, {
-    "config/ios/Resources/icons/icon-60.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon-60.png"
+    "config/ticons/Resources/iphone/appicon-60.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon-60.png"
 }, {
-    "config/ios/Resources/icons/icon-72@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon-72@2x.png"
+    "config/ticons/Resources/iphone/appicon-72@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon-72@2x.png"
 }, {
-    "config/ios/Resources/icons/icon-72.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon-72.png"
+    "config/ticons/Resources/iphone/appicon-72.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon-72.png"
 }, {
-    "config/ios/Resources/icons/icon-76@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon-76@2x.png"
+    "config/ticons/Resources/iphone/appicon-76@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon-76@2x.png"
 }, {
-    "config/ios/Resources/icons/icon-76.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon-76.png"
+    "config/ticons/Resources/iphone/appicon-76.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon-76.png"
 }, {
-    "config/ios/Resources/icons/icon-small@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon-small@2x.png"
+    "config/ticons/Resources/iphone/appicon-Small@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon-small@2x.png"
 }, {
-    "config/ios/Resources/icons/icon-small.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon-small.png"
+    "config/ticons/Resources/iphone/appicon-Small.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon-small.png"
 }, {
-    "config/ios/Resources/icons/icon@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon@2x.png"
+    "config/ticons/Resources/iphone/appicon@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon@2x.png"
 }, {
-    "config/ios/Resources/icons/icon.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon.png"
+    "config/ticons/Resources/iphone/appicon.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/icons/icon.png"
+},
+
+{
+    "config/it.lproj/InfoPlist.strings": "platforms/ios/Trento - Il Comune in Tasca/Resources/it.lproj/InfoPlist.strings"
 }, {
-    "config/ios/Resources/splash/Default@2x~iphone.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default@2x~iphone.png"
+    "config/en.lproj/InfoPlist.strings": "platforms/ios/Trento - Il Comune in Tasca/Resources/en.lproj/InfoPlist.strings"
 }, {
-    "config/ios/Resources/splash/Default_en@2x~iphone.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default_en@2x~iphone.png"
+    "config/de.lproj/InfoPlist.strings": "platforms/ios/Trento - Il Comune in Tasca/Resources/de.lproj/InfoPlist.strings"
 }, {
-    "config/ios/Resources/splash/Default_it@2x~iphone.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default_it@2x~iphone.png"
+    "config/it.lproj/Localizable.strings": "platforms/ios/Trento - Il Comune in Tasca/Resources/it.lproj/Localizable.strings"
 }, {
-    "config/ios/Resources/splash/Default_de@2x~iphone.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default_de@2x~iphone.png"
+    "config/en.lproj/Localizable.strings": "platforms/ios/Trento - Il Comune in Tasca/Resources/en.lproj/Localizable.strings"
 }, {
-    "config/ios/Resources/splash/Default-568h@2x~iphone.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default-568h@2x~iphone.png"
+    "config/de.lproj/Localizable.strings": "platforms/ios/Trento - Il Comune in Tasca/Resources/de.lproj/Localizable.strings"
+},
+
+{
+    "config/ticons/Resources/iphone/Default.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default~iphone.png"
 }, {
-    "config/ios/Resources/splash/Default_en-568h@2x~iphone.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default_en-568h@2x~iphone.png"
+    "config/ticons/Resources/iphone/Default@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default@2x~iphone.png"
 }, {
-    "config/ios/Resources/splash/Default_it-568h@2x~iphone.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default_it-568h@2x~iphone.png"
+    "config/ticons/Resources/iphone/Default-568h@2x~iphone.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default-568h@2x~iphone.png"
+//}, {
+//    "config/ticons/i18n/en/Default_en.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default_en~iphone.png"
+//}, {
+//    "config/ticons/i18n/en/Default_en@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default_en@2x~iphone.png"
+//}, {
+//    "config/ticons/i18n/en/Default_en-568h@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default_en-568h@2x~iphone.png"
 }, {
-    "config/ios/Resources/splash/Default_de-568h@2x~iphone.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default_de-568h@2x~iphone.png"
+    "config/ticons/i18n/it/Default.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default_it~iphone.png"
 }, {
-    "config/ios/Resources/splash/Default~iphone.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default~iphone.png"
+    "config/ticons/i18n/it/Default@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default_it@2x~iphone.png"
 }, {
-    "config/ios/Resources/splash/Default_en~iphone.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default_en~iphone.png"
+    "config/ticons/i18n/it/Default-568h@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default_it-568h@2x~iphone.png"
 }, {
-    "config/ios/Resources/splash/Default_it~iphone.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default_it~iphone.png"
+    "config/ticons/i18n/de/Default.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default_de~iphone.png"
 }, {
-    "config/ios/Resources/splash/Default_de~iphone.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default_de~iphone.png"
+    "config/ticons/i18n/de/Default@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default_de@2x~iphone.png"
 }, {
-    "config/ios/Resources/it.lproj/InfoPlist.strings": "platforms/ios/Trento - Il Comune in Tasca/Resources/it.lproj/InfoPlist.strings"
-}, {
-    "config/ios/Resources/en.lproj/InfoPlist.strings": "platforms/ios/Trento - Il Comune in Tasca/Resources/en.lproj/InfoPlist.strings"
-}, {
-    "config/ios/Resources/de.lproj/InfoPlist.strings": "platforms/ios/Trento - Il Comune in Tasca/Resources/de.lproj/InfoPlist.strings"
-}, {
-    "config/ios/Resources/it.lproj/Localizable.strings": "platforms/ios/Trento - Il Comune in Tasca/Resources/it.lproj/Localizable.strings"
-}, {
-    "config/ios/Resources/en.lproj/Localizable.strings": "platforms/ios/Trento - Il Comune in Tasca/Resources/en.lproj/Localizable.strings"
-}, {
-    "config/ios/Resources/de.lproj/Localizable.strings": "platforms/ios/Trento - Il Comune in Tasca/Resources/de.lproj/Localizable.strings"
+    "config/ticons/i18n/de/Default-568h@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default_de-568h@2x~iphone.png"
 }, ];
 
 
 // cd config/ticons && gulp android-splashes
-['', 'en-', 'de-'].forEach(function (lang) {
+['', 'it-', 'de-'].forEach(function (lang) {
 	[
 		'long-land-ldpi', 'long-land-mdpi', 'long-land-hdpi', 'long-land-xhdpi', 'long-land-xxhdpi', 'long-land-xxxhdpi', 
 		'long-port-ldpi', 'long-port-mdpi', 'long-port-hdpi', 'long-port-xhdpi', 'long-port-xxhdpi', 'long-port-xxxhdpi', 
@@ -148,9 +152,9 @@ var copyObj=function (obj) {
     }
   });
 };
-path.exists('platforms/android', function(hasAndroid) {
+fs.exists('platforms/android', function(hasAndroid) {
   if (hasAndroid) android_filestocopy.forEach(copyObj);
 });
-path.exists('platforms/ios2', function(hasIOS) {
+fs.exists('platforms/ios', function(hasIOS) {
   if (hasIOS) iphone_filestocopy.forEach(copyObj);
 });

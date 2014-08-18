@@ -39,9 +39,9 @@ and modify file CDVSplashScreen.m around line 130, method updateImage() like thi
 
     if (CDV_IsIPhone5()) {
 
-Then add folders "it.lproj" and  "de.lproj" to xcode project (right click "Resources" folder from xcode file navigator, then "Add files to..." -- check "create groups...") and add also all additional new splashscreens.
+Then add folders "it.lproj" and  "de.lproj" to xcode project (right click "Resources" folder from xcode file navigator, then "Add files to..." -- check "create groups...") and also add all additional new splashscreens (and remove unused localization).
 
-Do not forget to add the following line when applcation is done loading (inside "deviceready" event handler or from $ionicPlatform.ready() function):
+Finally, do not forget to add the following line when applcation is done loading (inside "deviceready" event handler or from $ionicPlatform.ready() function):
 
     setTimeout(function(){ navigator.splashscreen.hide(); },2000);
 

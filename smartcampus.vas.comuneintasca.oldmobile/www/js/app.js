@@ -23,7 +23,9 @@ angular.module('starter', ['ionic', 'localization', 'ngCordova'])
 						//console.log('$rootScope.platform=' + $rootScope.platform);
 						$rootScope.iosPlatform = ($rootScope.platform == 'iOS');
 						$rootScope.androidPlatform = ($rootScope.platform == 'Android');
-					} else {
+
+            setTimeout(function(){ navigator.splashscreen.hide(); },2000);
+          } else {
 						$rootScope.webPlatform = true;
 					}
 				});

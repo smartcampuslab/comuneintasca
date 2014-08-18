@@ -184,7 +184,7 @@ angular.module('ilcomuneintasca.services.db', [])
       syncinprogress=syncronization.promise;
       db.then(function (dbObj) {
         Profiling.start('dbsync');
-        if (ionic.Platform.isWebView() && navigator.connection.type == Connection.NONE) {
+        if (ionic.Platform.isWebView() && navigator.connection.type == Connection.NONE && currentDbVersion!=0) {
           $ionicLoading.hide();
           console.log('no network connection');
           Profiling._do('dbsync');

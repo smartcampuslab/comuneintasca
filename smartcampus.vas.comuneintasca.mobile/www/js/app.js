@@ -41,7 +41,8 @@ angular.module('ilcomuneintasca', [
     GeoLocate.locate();
   }, false);
   $ionicPlatform.ready(function () {
-    /*
+     console.log('IONIC READY!');
+   /*
     if (window.cordova && cordova.plugins && cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       window.addEventListener('native.showkeyboard', function(e){
@@ -64,7 +65,15 @@ angular.module('ilcomuneintasca', [
     }
     //ionic.Platform.showStatusBar(false);
 
-    setTimeout(function(){ navigator.splashscreen.hide(); },2000);
+    if (navigator.connection.type == Connection.NONE) {
+      console.log('CANNOT COMPLETE LOADING: no connection. removing splashscreen in a couple of seconds...');
+      setTimeout(function(){ navigator.splashscreen.hide(); },2000);
+    } else {
+      $(window).load(function(){
+        console.log('DONE LOADING: removing splashscreen...');
+        setTimeout(function(){ navigator.splashscreen.hide(); },0);
+      });
+    }
   });
   GeoLocate.locate().then(function (position) {
     $rootScope.myPosition = position;

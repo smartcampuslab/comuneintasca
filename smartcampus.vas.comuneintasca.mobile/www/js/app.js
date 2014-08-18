@@ -63,7 +63,8 @@ angular.module('ilcomuneintasca', [
       if (device.model.indexOf('iPhone6,2') == 0) StatusBar.hide();
     }
     //ionic.Platform.showStatusBar(false);
-    //setTimeout(function(){ navigator.splashscreen.hide(); },10000);
+
+    setTimeout(function(){ navigator.splashscreen.hide(); },2000);
   });
   GeoLocate.locate().then(function (position) {
     $rootScope.myPosition = position;

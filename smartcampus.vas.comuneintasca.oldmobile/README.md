@@ -1,10 +1,9 @@
-Trento - Il Comune in Tasca
-=====================
+#Trento - Il Comune in Tasca
 
 Osbolete mobile app replacement.
 
-To build
-========
+##To build
+
 From app root foldeer launch
 
     npm install

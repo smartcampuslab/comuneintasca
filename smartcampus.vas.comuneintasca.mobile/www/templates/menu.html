@@ -22,13 +22,13 @@
     <ion-content class="has-header content-calm">
       <ion-list>
         <ion-item nav-clear menu-close class="item-accordion" ng-click="goto('home')">
-          <span ng-bind="'sidemenu_Home' | translate"></span>
+          <span ng-bind="'sidemenu_Home' | translate" class="comunimenu-home"></span>
         </ion-item>
 
         <div ng-if="menu" ng-repeat="(groupIndex, menuGroup) in menu">
           <ion-item class="item-header item-icon-right" ng-click="showGroup(groupIndex)">
-            <b ng-bind="menuGroup.name | translate"></b>
-            <i class="icon" ng-class="{'ion-chevron-down': !isGroupShown(groupIndex), 'ion-chevron-up': isGroupShown(groupIndex)}"></i>
+            <b ng-bind="menuGroup.name | translate" class="comunimenu-{{menuGroup.id}}"></b>
+            <i class="icon comunimenu-{{menuGroup.id}}" ng-class="{'ion-chevron-down': !isGroupShown(groupIndex), 'ion-chevron-up': isGroupShown(groupIndex)}"></i>
           </ion-item>
           <div ng-show="isGroupShown(groupIndex)">
             <ion-item ng-repeat="(itemIndex, menuItem) in menuGroup.items" nav-clear menu-close class="item-accordion" ng-href="#/app/{{getMenuPath(menuGroup,menuItem)}}">
@@ -38,13 +38,13 @@
         </div>
 
         <ion-item nav-clear menu-close class="item-accordion" ng-click="goto('favorites')">
-          <span ng-bind="'sidemenu_Favourites' | translate"></span>
+          <span ng-bind="'sidemenu_Favourites' | translate" class="comunimenu-favorites"></span>
         </ion-item>
         <ion-item nav-clear menu-close class="item-accordion" ng-click="showSettings()">
-          <span ng-bind="'settings_title' | translate"></span>
+          <span ng-bind="'settings_title' | translate" class="comunimenu-settings"></span>
         </ion-item>
         <ion-item nav-clear menu-close class="item-accordion" ng-click="showCredits()">
-          <span ng-bind="'credits_title' | translate"></span>
+          <span ng-bind="'credits_title' | translate" class="comunimenu-credits"></span>
         </ion-item>
       </ion-list>
     </ion-content>

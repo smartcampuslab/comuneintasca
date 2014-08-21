@@ -37,3 +37,6 @@ ion-side-menu .comunimenu-credits { color:#fff; }
 .item-input-inset .item-input-wrapper input {
   color: #000;
 }
+.comuni-item-image {
+  border: 5px solid #2975a7;
+}

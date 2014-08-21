@@ -24,7 +24,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
     $rootScope.lang=localStorage.lang=l;
 /*
     var loading = $ionicLoading.show({
-      content: $filter('translate')(Config.keys()['loading']),
+      template: $filter('translate')(Config.keys()['loading']),
     });
 */
 /*

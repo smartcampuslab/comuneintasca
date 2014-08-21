@@ -205,7 +205,7 @@ angular.module('ilcomuneintasca.services.db', [])
             }
 
             var syncingOverlay = $ionicLoading.show({
-              content: $filter('translate')(Config.keys()['syncing']),
+              template: $filter('translate')(Config.keys()['syncing']),
               duration: Config.syncingOverlayTimeoutMillis()
             });
 
@@ -440,8 +440,8 @@ angular.module('ilcomuneintasca.services.db', [])
       this.sync().then(function (dbVersion) {
         Profiling.start('dball');
         var loading = $ionicLoading.show({
-          content: $filter('translate')(Config.keys()['loading']),
-          showDelay: 2000, // how many milliseconds to delay before showing the indicator
+          template: $filter('translate')(Config.keys()['loading']),
+          delay: 2000, // how many milliseconds to delay before showing the indicator
           duration: Config.loadingOverlayTimeoutMillis()
         });
 
@@ -485,8 +485,8 @@ angular.module('ilcomuneintasca.services.db', [])
       this.sync().then(function (dbVersion) {
         Profiling.start('dbcate');
         var loading = $ionicLoading.show({
-          content: $filter('translate')(Config.keys()['loading']),
-          showDelay: 1000,
+          template: $filter('translate')(Config.keys()['loading']),
+          delay: 1000,
           duration: Config.loadingOverlayTimeoutMillis()
         });
 
@@ -543,8 +543,8 @@ angular.module('ilcomuneintasca.services.db', [])
       this.sync().then(function (dbVersion) {
         Profiling.start('byTimeInterval');
         var loading = $ionicLoading.show({
-          content: $filter('translate')(Config.keys()['loading']),
-          showDelay: 1000,
+          template: $filter('translate')(Config.keys()['loading']),
+          delay: 1000,
           duration: Config.loadingOverlayTimeoutMillis()
         });
 
@@ -598,8 +598,8 @@ angular.module('ilcomuneintasca.services.db', [])
       return this.sync().then(function (dbVersion) {
         Profiling.start('dbsons');
         var loading = $ionicLoading.show({
-          content: $filter('translate')(Config.keys()['loading']),
-          showDelay: 1000,
+          template: $filter('translate')(Config.keys()['loading']),
+          delay: 1000,
           duration: Config.loadingOverlayTimeoutMillis()
         });
 
@@ -658,8 +658,8 @@ angular.module('ilcomuneintasca.services.db', [])
       return this.sync().then(function (dbVersion) {
         Profiling.start('dbget');
         var loading = $ionicLoading.show({
-          content: $filter('translate')(Config.keys()['loading']),
-          showDelay: 1000,
+          template: $filter('translate')(Config.keys()['loading']),
+          delay: 1000,
           duration: Config.loadingOverlayTimeoutMillis()
         });
 
@@ -734,8 +734,8 @@ angular.module('ilcomuneintasca.services.db', [])
       return this.sync().then(function (dbVersion) {
         Profiling.start('dbget');
         var loading = $ionicLoading.show({
-          content: $filter('translate')(Config.keys()['loading']),
-          showDelay: 1000,
+          template: $filter('translate')(Config.keys()['loading']),
+          delay: 1000,
           duration: Config.loadingOverlayTimeoutMillis()
         });
 
@@ -798,8 +798,8 @@ angular.module('ilcomuneintasca.services.db', [])
 
       Profiling.start('dbfavs');
       var loading = $ionicLoading.show({
-        content: $filter('translate')(Config.keys()['loading']),
-        showDelay: 1000,
+        template: $filter('translate')(Config.keys()['loading']),
+        delay: 1000,
         duration: Config.loadingOverlayTimeoutMillis()
       });
 

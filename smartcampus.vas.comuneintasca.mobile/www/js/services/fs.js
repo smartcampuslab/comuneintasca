@@ -163,7 +163,7 @@ angular.module('ilcomuneintasca.services.fs', [])
             localStorage.lastFileCleanup = lastFileCleanup;
 
             var cleaningOverlay = $ionicLoading.show({
-              content: $filter('translate')(Config.keys()['cleaning']),
+              template: $filter('translate')(Config.keys()['cleaning']),
               duration: Config.fileCleanupOverlayTimeoutMillis()
             });
 

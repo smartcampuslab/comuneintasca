@@ -212,7 +212,8 @@ angular.module('ilcomuneintasca.services.db', [])
 
             if (currentDbVersion == 0) {
               currentSyncOptions = localSyncOptions;
-            } else if (!currentSyncOptions || currentSyncOptions.remote) {
+            //} else if (!currentSyncOptions || currentSyncOptions.remote) {
+            } else {
               currentSyncOptions = remoteSyncOptions;
               currentSyncOptions.url = remoteSyncURL + currentDbVersion;
             }
@@ -221,7 +222,8 @@ angular.module('ilcomuneintasca.services.db', [])
             $http.defaults.headers.common.Accept = 'application/json';
             $http.defaults.headers.post = { 'Content-Type': 'application/json' };
             $http(currentSyncOptions).success(function (data, status, headers, config) {
-              nextVersion = data.version;
+//              console.log('successful sync response status: '+status);
+              var nextVersion = data.version;
               console.log('nextVersion: ' + nextVersion);
               if (nextVersion > currentDbVersion) {
                 var itemsToInsert=[];
@@ -419,7 +421,7 @@ angular.module('ilcomuneintasca.services.db', [])
               }
             }).error(function (data, status, headers, config) {
               $ionicLoading.hide();
-              console.log('cannot check for new data: network unavailable?');
+              console.log('cannot check for new data: network unavailable? (HTTP: '+status+')');
               console.log(status);
               Profiling._do('dbsync');
               syncinprogress=null;

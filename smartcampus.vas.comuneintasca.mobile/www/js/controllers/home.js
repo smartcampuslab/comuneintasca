@@ -99,6 +99,8 @@ angular.module('ilcomuneintasca.controllers.home', [])
 
     Files.cleanup().then(function (data) {
       //console.log('files cleaned!');
+    },function(){
+      console.log('files cleaning error!');      
     });
   });
 

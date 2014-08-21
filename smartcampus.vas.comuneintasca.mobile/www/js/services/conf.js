@@ -626,6 +626,9 @@ angular.module('ilcomuneintasca.services.conf', [])
     schemaVersion: function () {
       return SCHEMA_VERSION;
     },
+    syncUrl: function () {
+      return 'https://vas-dev.smartcampuslab.it/comuneintasca/sync';
+    },
     syncTimeoutSeconds: function () {
       //return 60 * 60; /* 60 times 60 seconds = EVERY HOUR */
       return 60 * 60 * 8; /* 60 times 60 seconds = 1 HOUR --> x8 = THREE TIMES A DAY */

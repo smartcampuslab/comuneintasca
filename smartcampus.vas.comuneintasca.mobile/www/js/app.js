@@ -65,15 +65,11 @@ angular.module('ilcomuneintasca', [
     }
     //ionic.Platform.showStatusBar(false);
 
-    if (navigator.connection.type == Connection.NONE) {
-      console.log('CANNOT COMPLETE LOADING: no connection. removing splashscreen in a couple of seconds...');
+    document.addEventListener("deviceready", function () { 
+      //console.log('removing splashscreen...');
+      //giving another couple of seconds to ui to complete css&font elements redraw (on android)
       setTimeout(function(){ navigator.splashscreen.hide(); },2000);
-    } else {
-      $(window).load(function(){
-        console.log('DONE LOADING: removing splashscreen...');
-        setTimeout(function(){ navigator.splashscreen.hide(); },0);
-      });
-    }
+    });
   });
   GeoLocate.locate().then(function (position) {
     $rootScope.myPosition = position;

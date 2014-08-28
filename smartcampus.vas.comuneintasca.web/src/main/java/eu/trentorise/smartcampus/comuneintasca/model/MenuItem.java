@@ -24,7 +24,7 @@ public class MenuItem {
 	private Map<String,String> name;
 	private Map<String,String> description;
 	private Map<String,String> image;
-	private Map<String, List<String>> objectIds;
+	private List<String> objectIds;
 	private List<MenuItem> items;
 	private MenuItemQuery query;
 	private String ref;
@@ -55,10 +55,10 @@ public class MenuItem {
 	public void setImage(Map<String,String> image) {
 		this.image = image;
 	}
-	public Map<String, List<String>> getObjectIds() {
+	public List<String> getObjectIds() {
 		return objectIds;
 	}
-	public void setObjectIds(Map<String, List<String>> objectIds) {
+	public void setObjectIds(List<String> objectIds) {
 		this.objectIds = objectIds;
 	}
 	public List<MenuItem> getItems() {

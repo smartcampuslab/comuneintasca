@@ -39,7 +39,7 @@ public class POIObject extends GeoCITObject {
 	public String getContactFullName() {
 		return contactFullName;
 	}
-	public void setContactFullName(String contackFullName) {
-		this.contactFullName = contackFullName;
+	public void setContactFullName(String contactFullName) {
+		this.contactFullName = contactFullName;
 	}
 }

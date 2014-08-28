@@ -16,16 +16,11 @@
 package eu.trentorise.smartcampus.service.opendata.scripts;
 
 import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
-
-import org.codehaus.jackson.map.ObjectMapper;
 
 import com.google.protobuf.Message;
 
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nCultura;
-import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nHotel;
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString;
 
 public class CulturaScript extends OpenContentScript {
@@ -79,6 +74,11 @@ public class CulturaScript extends OpenContentScript {
 		if (email != null && email instanceof String) {
 			builder.setEmail((String)email);
 		}
+		
+		Object fullName = getRecValue(getMap(i18n,DEFAULT_LANGUAGE), FIELDS, "contactFullName", VALUE);
+		if (fullName != null && image instanceof String) {
+			builder.setContactFullName((String)fullName);
+		}		
 		
 		return builder.build();
 	}

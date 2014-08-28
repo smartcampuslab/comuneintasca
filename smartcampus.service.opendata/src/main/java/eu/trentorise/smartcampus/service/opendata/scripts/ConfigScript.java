@@ -26,6 +26,7 @@ public class ConfigScript extends OpenContentScript {
 		ConfigData.Builder builder = ConfigData.newBuilder();
 		builder.setName(link.getName());
 		builder.setData(json);
+		builder.setDateModified(link.getDateModified());
 		
 		return builder.build();
 	}

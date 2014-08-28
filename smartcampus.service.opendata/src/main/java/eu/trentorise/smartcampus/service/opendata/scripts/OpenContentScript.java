@@ -75,9 +75,11 @@ public class OpenContentScript {
 		for (Map m : configs) {
 			String name = m.get("name").toString();
 			String uri = m.get("uri").toString();
+			Long modified = Long.parseLong(m.get("dateModified").toString()) * 1000;
 			ConfigLink.Builder builder = ConfigLink.newBuilder();
 			builder.setName(name);
 			builder.setUri(uri);
+			builder.setDateModified(modified);
 			result.add(builder.build());
 		}
 		return result;

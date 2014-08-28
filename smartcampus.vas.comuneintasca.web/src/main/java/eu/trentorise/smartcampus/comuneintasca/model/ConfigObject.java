@@ -63,7 +63,7 @@ public class ConfigObject extends BasicObject {
 		this.menu = menu;
 	}
 
-/	public static long getSerialversionuid() {
+	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 

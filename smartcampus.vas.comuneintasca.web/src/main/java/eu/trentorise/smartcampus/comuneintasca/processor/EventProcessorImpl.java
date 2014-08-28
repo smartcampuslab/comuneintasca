@@ -146,17 +146,18 @@ public class EventProcessorImpl implements ServiceBusListener {
 		ObjectMapper mapper = new ObjectMapper();
 
 		ConfigObject config = mapper.readValue(d, ConfigObject.class);
-		config.setSourceHash(hash);
 
 		List<ConfigObject> oldList = storage.getObjectsByType(ConfigObject.class);
 		ConfigObject old = null;
 		if (oldList != null && !oldList.isEmpty()) {
 			old = oldList.get(0);
-			if (old.getSourceHash() != hash) {
+			if (old.getLastModified() < cd.getDateModified()) {
 				config.setId(old.getId());
+				config.setLastModified(cd.getDateModified());
 				storage.storeObject(config);
 			}
 		} else {
+			config.setLastModified(cd.getDateModified());
 			storage.storeObject(config);
 		}
 
@@ -345,6 +346,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 				no.setTitle(toMap(bt.getTitle()));
 				no.setUpdateTime(System.currentTimeMillis());
 				no.setUrl(bt.getUrl());
+				no.setContactFullName(bt.getContactFullName());
 
 				storage.storeObject(no);
 			}
@@ -430,6 +432,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 				no.setTitle(toMap(bt.getTitle()));
 				no.setUpdateTime(System.currentTimeMillis());
 				no.setUrl(bt.getUrl());
+				no.setAddress(toMap(bt.getAddress()));
 				
 				storage.storeObject(no);
 			}

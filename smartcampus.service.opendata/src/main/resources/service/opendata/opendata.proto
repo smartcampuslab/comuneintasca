@@ -53,6 +53,7 @@ message I18nRestaurant {
  optional string phone = 18;
  optional string fax = 19;
  optional string email = 20;
+ required int64 objectId = 21;
  }
  
 message I18nHotel {
@@ -71,6 +72,7 @@ message I18nHotel {
  optional string phone2 = 13;
  optional string fax = 14;
  optional string email = 15; 
+ required int64 objectId = 16;
  } 
  
 message I18nCultura {
@@ -88,6 +90,7 @@ message I18nCultura {
  optional string phone = 12;
  optional string email = 13;
  optional string contactFullName = 14;  
+ required int64 objectId = 15;
 }
 
 message I18nMainEvent {
@@ -107,6 +110,7 @@ message I18nMainEvent {
  optional int64 fromDate = 14;
  optional int64 toDate = 15;
  optional I18nString dateDescription = 16; 
+ required int64 objectId = 17;
 }
 
 message I18nTesto {
@@ -119,6 +123,7 @@ message I18nTesto {
  optional string url = 7;
  optional string image = 8;
  optional int64 lastModified = 9;
+ required int64 objectId = 10;
 }
 
 message I18nItinerario {
@@ -135,6 +140,7 @@ message I18nItinerario {
  optional int32 duration = 11;
  optional I18nString difficulty = 12;
  optional I18nString info = 13;
+ required int64 objectId = 14;
 }
  
 message ConfigLink {

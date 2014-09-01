@@ -7,6 +7,8 @@ xsi:schemaLocation="http://www.example.org/mml-schema mml-schema.xsd ">
     <input name="url" type="String" />
     
 	<variable name="testi" type="String"/>
+	<variable name="testien" type="String"/>
+	<variable name="testide" type="String"/>
 	<variable name="links" type="List"/>
 	
 	<httpConnector name="connector" method="GET" encoding="UTF-8"/>
@@ -35,14 +37,28 @@ xsi:schemaLocation="http://www.example.org/mml-schema mml-schema.xsd ">
 					<value>link</value>
 				</property>
 			</properties>
+		</connect>				
+	    <connect name="c2" connector="connector" outputVar="testien" transformer="string">
+			<properties>
+				<property name="url">
+					<value>link + "?Translation=eng-GB"</value>
+				</property>
+			</properties>
 		</connect>		
+	    <connect name="c3" connector="connector" outputVar="testide" transformer="string">
+			<properties>
+				<property name="url">
+					<value>link + "?Translation=ger-DE"</value>
+				</property>
+			</properties>
+		</connect>				
 		<script outputVar="list" writeAction="append" onError="continue">
 			<className>eu.trentorise.smartcampus.service.opendata.scripts.TestiScript</className>
 			<method>extractData</method>
 			<variables>
 				<value>testi</value>
-				<value>testi</value>
-				<value>testi</value>
+				<value>testien</value>
+				<value>testide</value>
 			</variables>		
 		</script>		
 		    			    		    

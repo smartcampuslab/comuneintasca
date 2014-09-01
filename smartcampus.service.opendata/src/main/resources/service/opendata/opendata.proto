@@ -86,7 +86,8 @@ message I18nCultura {
  optional I18nString address = 10;
  optional int64 lastModified = 11;
  optional string phone = 12;
- optional string email = 13; 
+ optional string email = 13;
+ optional string contactFullName = 14;  
 }
 
 message I18nMainEvent {
@@ -114,9 +115,10 @@ message I18nTesto {
  optional I18nString subtitle = 3;
  optional I18nString description = 4;
  optional I18nString classification = 5;
- optional string url = 6;
- optional string image = 7;
- optional int64 lastModified = 8;
+ optional I18nString address = 6;
+ optional string url = 7;
+ optional string image = 8;
+ optional int64 lastModified = 9;
 }
 
 message I18nItinerario {
@@ -138,11 +140,13 @@ message I18nItinerario {
 message ConfigLink {
  required string name = 1;
  required string uri = 2;
+ required int64 dateModified = 3;
 }
 
 message ConfigData {
  required string name = 1;
  required string data = 2;
+ required int64 dateModified = 3;
 }
  
 message I18nString {

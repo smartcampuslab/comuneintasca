@@ -25,7 +25,16 @@ public class ConfigObject extends BasicObject {
 	private List<MenuItem> highlights;
 	private List<MenuItem> navigationItems;
 	private List<MenuItem> menu;
-	private int sourceHash;
+
+	private Long lastModified = null;
+
+	public Long getLastModified() {
+		return lastModified;
+	}
+
+	public void setLastModified(Long lastModified) {
+		this.lastModified = lastModified;
+	}
 
 	public ConfigObject() {
 	}
@@ -52,14 +61,6 @@ public class ConfigObject extends BasicObject {
 
 	public void setMenu(List<MenuItem> menu) {
 		this.menu = menu;
-	}
-
-	public int getSourceHash() {
-		return sourceHash;
-	}
-
-	public void setSourceHash(int sourceHash) {
-		this.sourceHash = sourceHash;
 	}
 
 	public static long getSerialversionuid() {

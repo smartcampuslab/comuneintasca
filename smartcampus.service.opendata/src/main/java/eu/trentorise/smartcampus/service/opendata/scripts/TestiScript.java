@@ -16,17 +16,10 @@
 package eu.trentorise.smartcampus.service.opendata.scripts;
 
 import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
-
-import org.codehaus.jackson.map.ObjectMapper;
 
 import com.google.protobuf.Message;
 
-import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nCultura;
-import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nHotel;
-import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString;
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nTesto;
 
 public class TestiScript extends OpenContentScript {
@@ -46,9 +39,13 @@ public class TestiScript extends OpenContentScript {
 		
 		builder.setTitle(getI18NStringValue(i18n, FIELDS, "title", VALUE));
 		
+		builder.setClassification(getI18NStringValue(i18n, FIELDS, "classifications", VALUE));
+		
 		builder.setDescription(getI18NStringValue(i18n, FIELDS, "description", VALUE));
 
 		builder.setSubtitle(getI18NStringValue(i18n, FIELDS, "abstract", VALUE));
+		
+		builder.setAddress(getI18NStringValue(i18n, FIELDS, "address", VALUE));
 
 		Object image = getRecValue(getMap(i18n,DEFAULT_LANGUAGE), FIELDS, "image", STRING_VALUE);
 		if (image != null && image instanceof String) {

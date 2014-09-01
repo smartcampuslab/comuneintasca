@@ -16,11 +16,7 @@
 package eu.trentorise.smartcampus.service.opendata.scripts;
 
 import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
-
-import org.codehaus.jackson.map.ObjectMapper;
 
 import com.google.protobuf.Message;
 
@@ -84,22 +80,12 @@ public class RestaurantsScript extends OpenContentScript {
 		
 		builder.setTimetable(getI18NStringValue(i18n, FIELDS, "orario", VALUE));
 		
-		I18nString name = getI18NStringValue(i18n, FIELDS, "riposo", "name");
 		I18nString value = getI18NStringValue(i18n, FIELDS, "riposo", "value");
-		I18nString closing = concatI18nString(": ", name, value);		
-		builder.setClosing(closing);
+		builder.setClosing(value);
 		
-		name = getI18NStringValue(i18n, FIELDS, "prezzo_medio_in_euro", "name");
 		value = getI18NStringValue(i18n, FIELDS, "prezzo_medio_in_euro", "value");
-		I18nString price1 = concatI18nString(": ", name, value);
 		
-		name = getI18NStringValue(i18n, FIELDS, "prezzo_medio_in_euro_bambini", "name");
-		value = getI18NStringValue(i18n, FIELDS, "prezzo_medio_in_euro_bambini", "value");
-		I18nString price2 = concatI18nString(": ", name, value);			
-		
-		I18nString prices = concatI18nString("\n", price1, price2);
-
-		builder.setPrices(prices);
+		builder.setPrices(value);
 		
 		I18nString equip = getI18NStringValue(i18n, FIELDS, "servizi_offerti", VALUE, OBJECT_NAME);
 		builder.setEquipment(equip);

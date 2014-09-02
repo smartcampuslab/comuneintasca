@@ -32,18 +32,13 @@ angular.module('ilcomuneintasca.directives', [])
       console.log('no image for content');
       element.addClass('missing');
     }
-
-    if (content.sonscount) {
-      //console.log('content.parentid='+content.parentid);
-      var sonscount = Number(content.sonscount);
-      if (sonscount > 0) {
-//        element.append('<div class="dida">' + $filter('translate_plur')('complex_events', sonscount) + '</div>');
-        element.append('<div class="dida"><span>' + sonscount + '</span> <i class="icon ion-ios7-flag-outline"></i>&nbsp;</div>');
-      }
-    }
-    if (content.parentid) {
-      console.log('content.parentid='+content.parentid);
-      element.append('<div class="dida"><i class="icon ion-ios7-flag-outline"></i>&nbsp;</div>');
+      
+    if (attrs.sonscount && content.sonscount && Number(content.sonscount)>0) {
+//      element.append('<div class="dida">' + $filter('translate_plur')('complex_events', sonscount) + '</div>');
+      element.append('<div class="dida"><span>' + content.sonscount + '</span><i class="icon ion-ios7-flag-outline"></i>&nbsp;</div>');
+    } else if (attrs.dida) {
+//      element.append('<div class="dida"><i class="icon ion-ios7-flag-outline"></i>&nbsp;</div>');
+      element.append('<div class="dida">'+attrs.dida+'</div>');
     }
   };
   return {

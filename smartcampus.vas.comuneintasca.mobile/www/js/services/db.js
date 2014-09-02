@@ -256,26 +256,19 @@ angular.module('ilcomuneintasca.services.db', [])
                       var classified=$q.defer();
                       if (contentTypeKey == 'event') {
 
+                        //??? 
                         // per identificare questi eventi potrei usare invece l'attributo 
                         // "eventForm": "Manifestazione"
 												if (item.parentEventId) {
-													var parentFound=false;
-
-													var parent_attributes=item.parentEventId.split(',');
-													for (pattr_idx in parent_attributes) {
-														var pattribute=parent_attributes[pattr_idx].split('=');
-														if (pattribute[0].trim()=='objectRemoteId') {
-															parentid=pattribute[1].trim();
-														}
-													}
-
-													if (parentFound) {
-														console.log('parentid: '+parentid);
-													} else {
-														//console.log('parent not found: '+item.parentEventId);
-													}
+                          var parentEvent=item.parentEventId;
+                          if (typeof parentEvent == "string") {
+                            parentEvent=JSON.parse(parentEvent);
+                          }
+                          if (parentEvent.objectRemoteId) {
+                            parentid=parentEvent.objectRemoteId;
+                          }
 												}
-                        //console.log('event cate: ' + category);
+                        //console.log('event parent id: ' + parentid);
 
 												category = item.category;
                         //console.log('event cate: ' + category);

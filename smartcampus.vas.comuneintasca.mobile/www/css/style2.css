@@ -13,7 +13,7 @@
 #home-buttons button.comuneicon-preferiti { color:#c4c6c6; }
 
 ion-side-menu.menu { background-color:#2f2d2d; }
-ion-side-menu .list .item { color:#fff;border-color:#fff; }
+ion-side-menu .list .item { color:#fff;border-color:rgba(41,117,167,.2); }
 ion-side-menu .comunimenu-home { }
 ion-side-menu .comunimenu-info { color:#6ab8ea; }
 ion-side-menu .comunimenu-events { color:#b35596; }
@@ -26,9 +26,9 @@ ion-side-menu .comunimenu-settings { color:#fff; }
 ion-side-menu .comunimenu-credits { color:#fff; }
 
 .tabs {
-  border-color: #2f2d2d;
-  background-color: #2f2d2d;
-  color: #c5c5c4;
+  border-color: #999;
+  background-color: #cccccc;
+  color: #2f2d2d;
 }
 .item-input-inset { background-color: #2f2d2d; }
 .item-input-inset .button.button-clear { color: #c5c5c4; }
@@ -40,3 +40,5 @@ ion-side-menu .comunimenu-credits { color:#fff; }
 .comuni-item-image {
   border: 5px solid #2975a7;
 }
+
+.dida { color:#fff; background-color: #2975a7; }

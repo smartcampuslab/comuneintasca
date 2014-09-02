@@ -6,19 +6,10 @@
     <ion-item collection-repeat="obj in results | extOrderBy:ordering" 
               collection-item-width="'100%'" collection-item-height="getListItemHeight(obj, $index)" 
               ng-click="gotoSubpath(obj.id)" class="item-thumbnail-left coll-item">
-      <comuni-img class="item-image comuni-item-image" gotdata="gotdata"></comuni-img>
+      <comuni-img class="item-image comuni-item-image" gotdata="gotdata" dida="{{obj.distance | number:1}} {{'entry_km' | translate}}"></comuni-img>
       <h2>{{obj.title | translate}}</h2>
-      <p>
-        <i class="icon ion-ios7-star" ng-if="!! obj.stars" ng-repeat="n in _.range(0, obj.stars)"></i>
-      </p>
-      <div class="row comuni-item-bottom">
-        <div class="col-75 comuni-item-bottom-text">
-          <span>{{obj.address | translate}}</span>
-        </div>
-        <div class="col-25 comuni-item-bottom-distance">
-          <span ng-if="!! obj.distance">{{obj.distance | number:1}} {{'entry_km' | translate}}</span>
-        </div>
-      </div>
+      <p>{{obj.classification | translate}} <i class="icon ion-ios7-star" ng-if="!! obj.stars" ng-repeat="n in _.range(0, obj.stars)"></i></p>
+      <div class="comuni-item-bottom">{{obj.address | translate | addrclean}}</div>
     </ion-item>
   </ion-list>
 </ion-content>

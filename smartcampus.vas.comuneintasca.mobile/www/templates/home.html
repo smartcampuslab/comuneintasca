@@ -1,4 +1,4 @@
-<ion-view title="{{'app_title' | translate | nl2br}}">
+<ion-view ng-attr-title="{{'app_title' | translate | nl2br}}">
   <ion-content class="has-header content-stable" scroll="false" id="content-home">
     <div class="home-container">
       <div class="home-box-top">
@@ -6,7 +6,7 @@
         </div>
         <ion-slide-box ng-if="highlights" does-continue="true" slide-interval="5000" id="slide-box-home">
           <ion-slide ng-repeat="obj in highlights">
-            <div class="hp-box" style="background-image: url({{obj.image}})" ng-click="goto(obj.abslink)">
+            <div class="hp-box" style="background-image: url({{obj.image|translate}})" ng-click="goto(obj.abslink)">
               <h3 class="title">{{obj.title|translate}}</h3>
             </div>
           </ion-slide>

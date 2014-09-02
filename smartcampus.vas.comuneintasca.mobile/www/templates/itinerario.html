@@ -10,7 +10,7 @@
   </ion-tab>
   <ion-tab  icon="icon ion-ios7-navigate-outline" ng-click="bringmethere(location)">
   </ion-tab>
-  <ion-tab  icon="icon ion-ios7-redo-outline" ng-click="share($filter('translate')( itinerario.title),itinerario.url,itinerario.image)">
+  <ion-tab  icon="icon ion-ios7-redo-outline" ng-click="share($filter('translate')(itinerario.title),itinerario.url,$filter('translate')(itinerario.image))">
   </ion-tab>
   <ion-tab ng-if="!isFavorite(itinerario)" icon="icon ion-ios7-star-outline" ng-click="toggleFavorite(itinerario)">
   </ion-tab>

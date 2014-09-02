@@ -18,18 +18,23 @@ angular.module('ilcomuneintasca.directives', [])
       image: ''
     };
     //console.log('content.id: ' + (content ? content.id : 'NULL'));
-
-    if (content && content.image && content.image != '' && content.image != 'false') {
+    if (content) {
       //console.log('content.image: ' + content.image);
-      Files.get(content.image).then(function (fileUrl) {
-        element.css({
-          'background-image': 'url(' + fileUrl + ')'
+      var imageUrl=$filter('translate')(content.image);
+      if (imageUrl && imageUrl != '' && imageUrl != 'false') {
+        Files.get(imageUrl).then(function (fileUrl) {
+          element.css({
+            'background-image': 'url(' + fileUrl + ')'
+          });
+        }, function () {
+          element.addClass('unavailable');
         });
-      }, function () {
-        element.addClass('unavailable');
-      });
+      } else {
+        console.log('no image for content');
+        element.addClass('missing');
+      }
     } else {
-      console.log('no image for content');
+      console.log('missing content');
       element.addClass('missing');
     }
       

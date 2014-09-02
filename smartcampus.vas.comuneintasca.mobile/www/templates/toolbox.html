@@ -3,6 +3,6 @@
 		<a ng-if="obj.contacts.email" class="tab-item" ng-click="email(obj.contacts.email)"><i class="icon ion-ios7-email-outline"></i></a>
 		<a ng-if="obj.contacts.phone" class="tab-item" href="tel:{{obj.contacts.phone}}"><i class="icon ion-ios7-telephone-outline "></i></a>
 		<a ng-if="hasNav(obj.location)" class="tab-item" ng-click="bringmethere(obj.location)"><i class="icon ion-ios7-navigate-outline "></i></a>
-		<a class="tab-item" ng-click="share($filter('translate')( obj.title),obj.url,obj.image)"><i class="icon ion-ios7-redo-outline" ></i></a>
+		<a class="tab-item" ng-click="share($filter('translate')( obj.title),obj.url,$filter('translate')(obj.image))"><i class="icon ion-ios7-redo-outline" ></i></a>
 		<a class="tab-item" ng-click="toggleFavorite(obj)"><i ng-if="isFavorite(obj)" class="icon ion-ios7-star"></i><i ng-if="!isFavorite(obj)" class="icon ion-ios7-star-outline"></i></a>
 </div>

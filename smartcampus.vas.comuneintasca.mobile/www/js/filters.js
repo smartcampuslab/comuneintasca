@@ -16,6 +16,18 @@ angular.module('ilcomuneintasca.filters', [])
   };
 })
 
+.filter('addrclean', function ($filter) {
+  return function (input) {
+    addr=$filter('translate')(input);
+    if (!addr) {
+      return '';
+    } else {
+      addr=addr.replace(/38\d\d\d/i,'');
+      return addr;
+    }
+  }
+})
+
 .filter('translate', function ($rootScope, Config) {
   return function (input, debug) {
     lang = $rootScope.lang;

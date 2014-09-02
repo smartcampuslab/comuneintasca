@@ -1,7 +1,8 @@
 angular.module('ilcomuneintasca.services.conf', [])
 
 .factory('Config', function ($q, $http, $window) {
-  var SCHEMA_VERSION=81;
+  var SCHEMA_VERSION=82;
+  var SYNC_HOST="tn";
   
   var profile = $q.defer();
   $http.get('data/profile.json').success(function(data, status, headers, config){
@@ -627,7 +628,7 @@ angular.module('ilcomuneintasca.services.conf', [])
       return SCHEMA_VERSION;
     },
     syncUrl: function () {
-      return 'https://vas-dev.smartcampuslab.it/comuneintasca/sync';
+      return 'https://'+SYNC_HOST+'.smartcampuslab.it/comuneintasca/sync';
     },
     syncTimeoutSeconds: function () {
       //return 60 * 60; /* 60 times 60 seconds = EVERY HOUR */

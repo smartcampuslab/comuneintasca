@@ -128,6 +128,7 @@ ion-side-menu .item {
 .item-complex .item-content,
 .item-radio .item-content {
   background-color: transparent;
+  padding-top:11px;padding-bottom:11px;
 }
 .comuni-item-image,
 .content-image-main {
@@ -177,6 +178,22 @@ ion-side-menu .item {
 .comuni-item-bottom .comuni-item-bottom-distance {
   text-align: right;
 }
+/*
+.comuni-item-bottom2-out {
+  position: absolute;
+  bottom: 10px;
+  padding: 0;
+  padding-right: 120px;
+  height:2em;
+}
+.comuni-item-bottom2-in { position:relative; }
+.comuni-item-bottom2 { position:absolute;bottom:0;}
+*/
+.comuni-item-bottom2.row { padding:0;height:38px;font-size:14px; }
+.comuni-item-bottom2.col { padding:0;white-space:normal;line-height:1.2em;max-height:2.4em;overflow:hidden;text-overflow:ellipsis; }
+
+.item-thumbnail-left.itinerari h2 { line-height:1.2em;max-height:2.4em;height:2.4em;white-space:normal; }
+
 .content-image-main {
   height: 160px;
   line-height: 160px;

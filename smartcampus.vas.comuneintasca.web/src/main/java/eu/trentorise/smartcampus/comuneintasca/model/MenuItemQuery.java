@@ -24,6 +24,8 @@ public class MenuItemQuery {
 
 	private List<Map<String,String>> classifications;
 	
+	private String classification;
+	
 	public List<Map<String, String>> getClassifications() {
 		return classifications;
 	}
@@ -35,6 +37,12 @@ public class MenuItemQuery {
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public String getClassification() {
+		return classification;
+	}
+	public void setClassification(String classification) {
+		this.classification = classification;
 	}
 	
 }

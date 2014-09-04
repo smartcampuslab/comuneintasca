@@ -30,6 +30,7 @@ public class CulturaScript extends OpenContentScript {
 		I18nCultura.Builder builder = I18nCultura.newBuilder();
 
 		builder.setId(((String)getRecValue(getMap(i18n,DEFAULT_LANGUAGE), "metadata", "objectRemoteId")));
+		builder.setObjectId(getRecValue(getMap(i18n,DEFAULT_LANGUAGE), "metadata", "objectId").toString());
 
 		builder.setLastModified(((BigInteger)getRecValue(getMap(i18n,DEFAULT_LANGUAGE), "metadata", "dateModified")).longValue() * 1000);
 

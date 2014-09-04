@@ -16,6 +16,17 @@ angular.module('ilcomuneintasca.filters', [])
   };
 })
 
+.filter('cleanMenuID', function ($filter) {
+  return function (input) {
+    if (!input) return '';
+    if (input.indexOf('csvimport_')==0) {
+      return input.replace(/[^_]+_([^_]+)_.*/gi,'$1').toLowerCase().replace(/\s+/gi,'_');
+    } else {
+      return input;
+    }
+  }
+})
+
 .filter('addrclean', function ($filter) {
   return function (input) {
     addr=$filter('translate')(input);

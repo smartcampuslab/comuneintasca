@@ -15,7 +15,7 @@
       <div class="home-box-bottom">
         <div id="home-buttons" class="lang_{{lang}}">
 		  		<div class="row" ng-if="buttonsRows" ng-repeat="buttonsRow in buttonsRows">
-            <div class="col" ng-repeat="button in buttonsRow"><button class="button button-full button-comuni icon-left comuneicon comuneicon-{{button.id}} {{button.extraClasses}}" ng-click="gotoButton(button)"><b ng-bind-html="button.name|translate"></b></button></div>
+            <div class="col" ng-repeat="button in buttonsRow"><button class="button button-full button-comuni icon-left comuneicon comuneicon-{{button.id|cleanMenuID}} {{button.extraClasses}}" ng-click="gotoButton(button)"><b ng-bind-html="button.name|translate"></b></button></div>
 					</div>
         </div>
       </div>

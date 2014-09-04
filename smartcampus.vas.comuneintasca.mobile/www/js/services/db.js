@@ -27,13 +27,13 @@ angular.module('ilcomuneintasca.services.db', [])
       //NO-OP
 
     } else if (dbtype == 'poi') {
-      Config.menuGroupSubgroup('places',item.dbClassification).then(function(sg){
+      Config.menuGroupSubgroup('visitare',item.dbClassification).then(function(sg){
         item['dbClass']=sg;
         item.dbClassification=sg.name;
       });
 
     } else if (dbtype == 'event') {
-      Config.menuGroupSubgroup('events',item.dbClassification).then(function(sg){
+      Config.menuGroupSubgroup('eventi',item.dbClassification).then(function(sg){
         item['dbClass']=sg;
         item.dbClassification=sg.name;
       });
@@ -281,7 +281,7 @@ angular.module('ilcomuneintasca.services.db', [])
                           if (item.toTime > 0) toTime = item.toTime;
                           else toTime = fromTime;
 
-                          Config.menuGroupSubgroupByLocaleName('events','it',classification).then(function(sg){
+                          Config.menuGroupSubgroupByLocaleName('eventi','it',classification).then(function(sg){
                             if (sg) {
                               //console.log('content db sg classification: '+sg.id);
                               classified.resolve([sg.id,'','']);
@@ -295,7 +295,7 @@ angular.module('ilcomuneintasca.services.db', [])
                           classified.resolve(['misc','','']);
                         }
                       } else if (contentTypeKey == 'poi') {
-                        Config.menuGroupSubgroupByLocaleName('places','it',item.classification.it).then(function(sg){
+                        Config.menuGroupSubgroupByLocaleName('visitare','it',item.classification.it).then(function(sg){
                           if (sg) {
                             //console.log('content db sg classification: '+sg.id);
                             classified.resolve([sg.id,'','']);

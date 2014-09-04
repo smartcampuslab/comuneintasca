@@ -116,11 +116,3 @@ angular.module('ilcomuneintasca.directives', [])
       }
     };
 }]);
-/*
-    console.log('asking for file...');
-        console.log('file got: '+fileUrl);
-        $scope.fileurl=fileUrl;
-    },function(error){
-        $scope.fileurl=error;
-    });
-*/

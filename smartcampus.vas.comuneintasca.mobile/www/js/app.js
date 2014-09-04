@@ -93,10 +93,12 @@ angular.module('ilcomuneintasca', [
     $location.path(link);
   };
   $rootScope.getMenuPath = function (group,menu) {
-    if (group.id=='itins' && menu.id=='itineraries') {
+    var group_id=$filter('cleanMenuID')(group.id);
+    var menu_id=$filter('cleanMenuID')(menu.id);
+    if (group_id=='percorsi' && menu_id=='itineraries') {
       return 'itineraries';
     } else {
-      return 'page/'+group.id+'/'+menu.id+'/';
+      return 'page/'+group_id+'/'+menu_id+'/';
     }
   }
   $rootScope.gotoSubpath = function (subpath) {

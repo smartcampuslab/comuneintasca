@@ -3,27 +3,27 @@
 #home-buttons button.comuneicon-conoscere  { color:#6ab8ea; }
 #home-buttons button.comuneicon-eventi { color:#b35596; }
 
-#home-buttons button.comuneicon-scoprire  { color:#d77f2a; }
+#home-buttons button.comuneicon-visitare  { color:#d77f2a; }
 #home-buttons button.comuneicon-percorsi { color:#b7cb3a; }
 
-#home-buttons button.comuneicon-mangiaredormire { color:#74a5b1; }
-#home-buttons button.comuneicon-infoutili  { color:#f2cb30; }
+#home-buttons button.comuneicon-mangiare_e_dormire { color:#74a5b1; }
+#home-buttons button.comuneicon-info_utili  { color:#f2cb30; }
 
-#home-buttons button.comuneicon-viaggiatrento  { color:#ccb471; }
+#home-buttons button.comuneicon-viaggia_trento  { color:#ccb471; }
 #home-buttons button.comuneicon-preferiti { color:#c4c6c6; }
 
 ion-side-menu.menu { background-color:#2f2d2d; }
 ion-side-menu .list .item { color:#fff;border-color:rgba(41,117,167,.2); }
-ion-side-menu .comunimenu-home { }
-ion-side-menu .comunimenu-info { color:#6ab8ea; }
-ion-side-menu .comunimenu-events { color:#b35596; }
-ion-side-menu .comunimenu-places { color:#d77f2a; }
-ion-side-menu .comunimenu-itins { color:#b7cb3a; }
-ion-side-menu .comunimenu-hospitality { color:#74a5b1; }
-ion-side-menu .comunimenu-useful { color:#f2cb30; }
-ion-side-menu .comunimenu-favorites { color:#c4c6c6; }
-ion-side-menu .comunimenu-settings { color:#fff; }
-ion-side-menu .comunimenu-credits { color:#fff; }
+ion-side-menu .list .comunimenu-home .item { }
+ion-side-menu .list .comunimenu-conoscere .item { color:#6ab8ea; }
+ion-side-menu .list .comunimenu-eventi .item { color:#b35596; }
+ion-side-menu .list .comunimenu-visitare .item { color:#d77f2a; }
+ion-side-menu .list .comunimenu-percorsi .item { color:#b7cb3a; }
+ion-side-menu .list .comunimenu-mangiare_e_dormire .item { color:#74a5b1; }
+ion-side-menu .list .comunimenu-info_utili .item { color:#f2cb30; }
+ion-side-menu .list .comunimenu-favorites .item { color:#c4c6c6; }
+ion-side-menu .list .comunimenu-settings .item { }
+ion-side-menu .list .comunimenu-credits .item { }
 
 .tabs {
   border-color: #999;

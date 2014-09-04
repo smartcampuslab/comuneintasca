@@ -12,27 +12,27 @@
     {
       "id":"conoscere",
       "name":{ "it":"CONOSCERE", "en":"DISCOVER", "de":"KENNEN" },
-      "ref":"info"
+      "ref":"conoscere"
     }, {
       "id":"eventi",
       "name":{ "it":"EVENTI", "en":"EVENTS", "de":"VERANSTALTUNGEN" },
-      "ref":"events"
+      "ref":"eventi"
     }, {
       "id":"scoprire",
       "name":{ "it":"VISITARE", "en":"HIGHLIGHTS", "de":"WAS SU  BESICHTIGEN" },
-      "ref":"places"
+      "ref":"visitare"
     }, {
       "id":"percorsi",
       "name":{ "it":"PERCORSI", "en":"TOURISTIC  ITINERARIES", "de":"TOUREN  UND ROUTEN" },
-      "ref":"itineraries"
+      "ref":"percorsi"
     }, {
       "id":"mangiaredormire",
       "name":{ "it":"MANGIARE  E DORMIRE", "en":"HOTELS &  RESTAURANTS", "de":"ÜBERNACHTUNG  UND GASTRONOMIE" },
-      "ref":"hospitality"
+      "ref":"mangiar_e_dormire"
     }, {
       "id":"infoutili",
       "name":{ "it":"INFO UTILI", "en":"USEFUL  INFORMATIONS", "de":"WEITERE  INFORMATIONEN" },
-      "ref":"useful"
+      "ref":"info_utili"
     }, {
       "id":"viaggiatrento",
       "name":{ "it":"VIAGGIA  TRENTO", "en":"VIAGGIA  TRENTO", "de":"VIAGGIA  TRENTO" },
@@ -48,7 +48,7 @@
   ],
   "menu":[
     {
-      "id":"info",
+      "id":"conoscere",
       "name":{ "it":"CONOSCERE", "en":"DISCOVER", "de":"KENNEN" },
       "items":[
         { 
@@ -77,7 +77,7 @@
         }
       ]
     }, {
-      "id":"events",
+      "id":"eventi",
       "name":{ "it":"EVENTI", "en":"EVENTS", "de":"VERANSTALTUNGEN" },
       "items":[
         {
@@ -119,7 +119,7 @@
         }
       ]
     }, {
-      "id":"places",
+      "id":"visitare",
       "name":{ "it":"VISITARE", "en":"HIGHLIGHTS", "de":"WAS SU  BESICHTIGEN" },
       "items":[
         { 
@@ -149,7 +149,7 @@
         }
       ]
     }, {
-      "id":"itins",
+      "id":"percorsi",
       "name":{ "it":"PERCORSI", "en":"TOURISTIC  ITINERARIES", "de":"TOUREN  UND ROUTEN" },
       "items":[
         { 
@@ -159,7 +159,7 @@
         }
       ]
     }, {
-      "id":"hospitality",
+      "id":"mangiare_e_dormire",
       "name":{ "it":"MANGIARE  E DORMIRE", "en":"HOTELS &  RESTAURANTS", "de":"ÜBERNACHTUNG  UND GASTRONOMIE" },
       "items":[
         { 
@@ -173,7 +173,7 @@
         }
       ]
     }, {
-      "id":"useful",
+      "id":"info_utili",
       "name":{ "it":"INFO UTILI", "en":"USEFUL  INFORMATIONS", "de":"WEITERE  INFORMATIONEN" },
       "items":[
         { 

@@ -25,9 +25,9 @@
           <span ng-bind="'sidemenu_Home' | translate" class="comunimenu-home"></span>
         </ion-item>
 
-        <div ng-if="menu" ng-repeat="(groupIndex, menuGroup) in menu">
+        <div ng-if="menu" ng-repeat="(groupIndex, menuGroup) in menu" class="comunimenu-{{menuGroup.id|cleanMenuID}}">
           <ion-item class="item-header item-icon-right" ng-click="showGroup(groupIndex)">
-            <b ng-bind="menuGroup.name | translate" class="comunimenu-{{menuGroup.id}}"></b>
+            <b ng-bind="menuGroup.name | translate"></b>
             <i class="icon comunimenu-{{menuGroup.id}}" ng-class="{'ion-chevron-down': !isGroupShown(groupIndex), 'ion-chevron-up': isGroupShown(groupIndex)}"></i>
           </ion-item>
           <div ng-show="isGroupShown(groupIndex)">

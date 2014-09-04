@@ -566,7 +566,7 @@ angular.module('ilcomuneintasca.services.conf', [])
     menuGroup: function (label) {
       return this.menu().then(function(menu) {
         for (gi=0; gi<menu.length; gi++) {
-          if (menu[gi].id==label) return menu[gi];
+          if (menu[gi].id==label || $filter('cleanMenuID')(menu[gi].id)==label) return menu[gi];
         }
         return null;
       });
@@ -575,7 +575,7 @@ angular.module('ilcomuneintasca.services.conf', [])
       return this.menuGroup(label1).then(function(group) {
         if (group) {
           for (sgi=0; sgi<group.items.length; sgi++) {
-            if (group.items[sgi].id==label2) {
+            if (group.items[sgi].id==label2 || $filter('cleanMenuID')(group.items[sgi].id)==label2) {
               group.items[sgi]._parent=group;
               return group.items[sgi];
             }

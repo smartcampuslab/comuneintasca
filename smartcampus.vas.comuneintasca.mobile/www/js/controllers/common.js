@@ -361,9 +361,12 @@ angular.module('ilcomuneintasca.controllers.common', [])
         }
       }
     } else if (sg.objectIds) {
-      console.log(sg.objectIds.join(','));
-      $scope.template = 'templates/page/' + (sg.view || sg.type || sg._parent.view || sg._parent.type || 'content') + '.html';
-      $scope.gotdata = DatiDB.get(sg.type||sg._parent.type||'content', sg.objectIds.join(',')).then(function (data) {
+      console.log('objectIds: '+sg.objectIds.join(','));
+      var sg_type=sg.type || sg._parent.type || 'content';
+      if (sg_type=='text') sg_type='content';
+      $scope.template = 'templates/page/' + (sg.view || sg_type || sg._parent.view || 'content') + '.html';
+      console.log('$scope.template: '+$scope.template);
+      $scope.gotdata = DatiDB.get(sg_type, sg.objectIds.join(',')).then(function (data) {
         //console.log('objectIds gotdata!');
         data = (data.hasOwnProperty('length') ? data : [data]);
         $scope.results = data;

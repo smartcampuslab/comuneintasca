@@ -16,18 +16,12 @@
 package eu.trentorise.smartcampus.service.opendata.scripts;
 
 import java.math.BigInteger;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.codehaus.jackson.map.ObjectMapper;
-
 import com.google.protobuf.Message;
 
-import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nCultura;
-import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nHotel;
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nItinerario;
-import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString;
 
 public class ItineraryScript extends OpenContentScript {
 
@@ -36,7 +30,8 @@ public class ItineraryScript extends OpenContentScript {
 		I18nItinerario.Builder builder = I18nItinerario.newBuilder();
 
 		builder.setId(((String)getRecValue(getMap(i18n,DEFAULT_LANGUAGE), "metadata", "objectRemoteId")));
-
+		builder.setObjectId(getRecValue(getMap(i18n,DEFAULT_LANGUAGE), "metadata", "objectId").toString());
+		
 		builder.setLastModified(((BigInteger)getRecValue(getMap(i18n,DEFAULT_LANGUAGE), "metadata", "dateModified")).longValue() * 1000);
 
 		Object url = getRecValue(getMap(i18n,DEFAULT_LANGUAGE), FIELDS, "url", STRING_VALUE);

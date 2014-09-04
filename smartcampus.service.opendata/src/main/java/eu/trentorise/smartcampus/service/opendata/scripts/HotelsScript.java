@@ -16,11 +16,7 @@
 package eu.trentorise.smartcampus.service.opendata.scripts;
 
 import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
-
-import org.codehaus.jackson.map.ObjectMapper;
 
 import com.google.protobuf.Message;
 
@@ -34,6 +30,7 @@ public class HotelsScript extends OpenContentScript {
 		I18nHotel.Builder builder = I18nHotel.newBuilder();
 
 		builder.setId(((String)getRecValue(getMap(i18n,DEFAULT_LANGUAGE), "metadata", "objectRemoteId")));
+		builder.setObjectId(getRecValue(getMap(i18n,DEFAULT_LANGUAGE), "metadata", "objectId").toString());
 
 		builder.setLastModified(((BigInteger)getRecValue(getMap(i18n,DEFAULT_LANGUAGE), "metadata", "dateModified")).longValue() * 1000);
 

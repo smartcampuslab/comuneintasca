@@ -42,8 +42,9 @@ public class Subscriber {
 
 	public Subscriber(ServiceBusClient client) {
 		try {
-			System.out.println("SUBSCRIBE");
+			logger.info("SUBSCRIBE");
 			Map<String, Object> params = new TreeMap<String, Object>();
+			params.put("url", "http://www.comune.trento.it/api/opendata/v1/content/class/event/offset/0/limit/1000");
 			client.subscribeService(SERVICE_OD, METHOD_EVENTS, params);
 
 			params.put("url", "http://trento.opencontent.it/comuneintasca/data");

@@ -1,10 +1,10 @@
 angular.module('ilcomuneintasca.services.conf', [])
 
 .factory('Config', function ($q, $http, $window, $filter) {
-  var SCHEMA_VERSION=85;
+  var SCHEMA_VERSION=86;
   var SYNC_HOST="tn";
-  //var PROFILE="opencontent";
   var PROFILE="profile";
+  PROFILE="opencontent";
   
   var profile = $q.defer();
   $http.get('data/'+PROFILE+'.json').success(function(data, status, headers, config){

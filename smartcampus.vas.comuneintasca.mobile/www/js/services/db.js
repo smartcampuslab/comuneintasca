@@ -127,8 +127,9 @@ angular.module('ilcomuneintasca.services.db', [])
       console.log('initializing database...');
       dbObj.transaction(function (tx) {
         tx.executeSql('DROP TABLE IF EXISTS ContentObjects');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS ContentObjects (id text primary key, parentid text, version integer, type text, category text, classification text, classification2 text, classification3 text, data text, lat real, lon real, fromTime integer, toTime integer)');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS ContentObjects (id text primary key, objid integer, parentid text, version integer, type text, category text, classification text, classification2 text, classification3 text, data text, lat real, lon real, fromTime integer, toTime integer)');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_id ON ContentObjects( id )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_objid ON ContentObjects( objid )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_parentid ON ContentObjects( parentid )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_idparentid ON ContentObjects( id, parentid )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_type ON ContentObjects( type )');
@@ -330,7 +331,7 @@ angular.module('ilcomuneintasca.services.db', [])
                         classified.resolve([classification,classification2,classification3]);
                       }
                       objsReady.push(classified.promise.then(function(clfs){
-                        values = [item.id, parentid, item.version, contentTypeClassName, item.category, clfs[0], clfs[1], clfs[2], JSON.stringify(item), ((item.location && item.location.length == 2) ? item.location[0] : -1), ((item.location && item.location.length == 2) ? item.location[1] : -1), fromTime, toTime];
+                        values = [item.id, item.objectId, parentid, item.version, contentTypeClassName, item.category, clfs[0], clfs[1], clfs[2], JSON.stringify(item), ((item.location && item.location.length == 2) ? item.location[0] : -1), ((item.location && item.location.length == 2) ? item.location[1] : -1), fromTime, toTime];
                         itemsToInsert.push(values)
                       }));
 
@@ -346,7 +347,7 @@ angular.module('ilcomuneintasca.services.db', [])
                   dbObj.transaction(function (tx) {
                     angular.forEach(itemsToInsert, function (rowData, rowIdx) {
                       tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [rowData[0]], function (tx, res) { //success callback
-                        tx.executeSql('INSERT INTO ContentObjects (id, parentid, version, type, category, classification, classification2, classification3, data, lat, lon, fromTime, toTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', rowData, function (tx, res) { //success callback
+                        tx.executeSql('INSERT INTO ContentObjects (id, objid, parentid, version, type, category, classification, classification2, classification3, data, lat, lon, fromTime, toTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', rowData, function (tx, res) { //success callback
                           //console.log('inserted obj with id: ' + rowData[0]);
                         }, function (e) { //error callback
                           console.log('unable to insert obj with id ' + rowData[0] + ': ' + e.message);
@@ -649,6 +650,81 @@ angular.module('ilcomuneintasca.services.db', [])
         return dbsons.promise;
       });
     },
+    getObj: function (dbname, objId) {
+      console.log('DatiDB.getObj("' + dbname + '","' + objId + '")');
+      return this.sync().then(function (dbVersion) {
+        Profiling.start('dbgetobj');
+        var loading = $ionicLoading.show({
+          template: $filter('translate')(Config.keys()['loading']),
+          delay: 1000,
+          duration: Config.loadingOverlayTimeoutMillis()
+        });
+
+        var dbitem = $q.defer();
+        var lista = [];
+        dbObj.transaction(function (tx) {
+          //console.log('DatiDB.getObj(); objId: ' + objId);
+          if (objId.indexOf(',') == -1) {
+            idCond = 'c.objid=?';
+          } else {
+            qmarks = objId.split(',');
+            for (i = 0; i < qmarks.length; i++) qmarks[i] = '?';
+            idCond = 'c.objid IN (' + qmarks.join() + ')';
+          }
+          var qParams = objId.split(',');
+          qParams.unshift(types[dbname]);
+
+          var fromTime = new Date().getTime();
+					var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount'+
+						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id'+
+            ' WHERE c.type=?' +
+            ' AND ' + idCond + 
+            ' AND (s.id IS NULL OR s.toTime > ' + fromTime + ')' +
+            ' GROUP BY c.id';
+          //console.log('dbQuery: ' + dbQuery);
+          //console.log('qParams: ' + qParams);
+          //console.log('DatiDB.getObj("' + dbname + '", "' + objId + '"); dbQuery launched...');
+          tx.executeSql(dbQuery, qParams, function (tx2, results) {
+            //console.log('DatiDB.getObj("' + dbname + '", "' + objId + '"); dbQuery completed');
+            var resultslen = results.rows.length;
+            if (resultslen > 0) {
+              if (objId.indexOf(',') == -1) {
+                var item = results.rows.item(0);
+                var result = parseDbRow(item);
+                Profiling._do('dbgetobj', 'single');
+                dbitem.resolve(result);
+              } else {
+                for (var i = 0; i < resultslen; i++) {
+                  var item = results.rows.item(i);
+                  lista.push(parseDbRow(item));
+                }
+                Profiling._do('dbgetobj', 'list');
+                dbitem.resolve(lista);
+              }
+            } else {
+              console.log('not found!');
+              Profiling._do('dbgetobj', 'sql empty');
+              dbitem.reject('not found!');
+            }
+          }, function (tx2, err) {
+            $ionicLoading.hide();
+            console.log('error: ' + err);
+            Profiling._do('dbgetobj', 'sql error');
+            dbitem.reject(err);
+          });
+        }, function (error) { //error callback
+          $ionicLoading.hide();
+          console.log('db.getObj() ERROR: ' + error);
+          Profiling._do('dbgetobj', 'tx error');
+          dbitem.reject(error);
+        }, function () { //success callback
+          $ionicLoading.hide();
+          Profiling._do('dbgetobj', 'tx success');
+        });
+
+        return dbitem.promise;
+      });
+   },
     get: function (dbname, itemId) {
       //console.log('DatiDB.get("' + dbname + '","' + itemId + '")');
       return this.sync().then(function (dbVersion) {

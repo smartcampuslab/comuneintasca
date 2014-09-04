@@ -24,7 +24,7 @@
     }, {
       "id":"percorsi",
       "name":{ "it":"PERCORSI", "en":"TOURISTIC  ITINERARIES", "de":"TOUREN  UND ROUTEN" },
-      "ref":"percorsi"
+      "ref":"itineraries"
     }, {
       "id":"mangiare_e_dormire",
       "name":{ "it":"MANGIARE  E DORMIRE", "en":"HOTELS &  RESTAURANTS", "de":"ÜBERNACHTUNG  UND GASTRONOMIE" },

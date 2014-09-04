@@ -3,16 +3,22 @@
   <div class="padding">
     <h1>{{obj.title | translate}}</h1>
     <h4>{{obj.classification | translate}}</h4>
-    <h5>{{obj.address | translate}}</h5>
     <div class="htmldesc">
       <p>
         <ul>
           <li ng-if="!! obj.timetable[lang]"><strong>{{'restaurant_opening' | translate}}: </strong> {{obj.timetable | translate}}</li>
           <li ng-if="!! obj.closing[lang]"><strong>{{'restaurant_closing' | translate}}: </strong> {{obj.closing | translate}}</li>
-          <li ng-if="!! obj.prices[lang]"><strong>{{'restaurant_price' | translate}}: </strong> {{obj.prices | translate}} &euro;</li>
-          <li ng-if="!! obj.equipment[lang]"><strong>{{'restaurant_services' | translate}}: </strong> {{obj.equipment | translate}}</li>
         </ul>
       </p>
+    </div>
+    <div class="list card sinottico">
+      <div ng-if="!!(obj.address | translate)" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-location-outline"></i>{{obj.address | translate}}</div>
+      <div ng-if="!!(obj.distance)" class="item item-text-wrap item-icon-left"><i class="icon ion-arrow-resize"></i>{{obj.distance | number:1}} {{'entry_km' | translate}}</div>
+      <div ng-if="!!(obj.contacts.phone)" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-telephone-outline"></i><a href="tel:{{obj.contacts.phone}}">{{obj.contacts.phone}}</a></div>
+      <div ng-if="!!(obj.contacts.email)" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-email-outline"></i><a ng-click="email(obj.contacts.email)">{{obj.contacts.email}}</a></div>
+      <div ng-if="!!(obj.url)" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-world-outline"></i><a ng-click="extLink(obj.url)">{{obj.url}}</a></div>
+      <div ng-if="!! obj.prices[lang]" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-pricetag-outline"></i>&euro; {{obj.prices | translate}}</div>
+      <div ng-if="!! obj.equipment[lang]" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-checkmark-outline"></i>{{obj.equipment | translate}}</div>
     </div>
   </div>
 </ion-content>

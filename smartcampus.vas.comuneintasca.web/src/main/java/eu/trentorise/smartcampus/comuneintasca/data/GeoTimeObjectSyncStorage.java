@@ -29,5 +29,5 @@ public interface GeoTimeObjectSyncStorage extends BasicObjectSyncStorage {
 	
 	public <T extends BaseCITObject> List<T> searchObjects(Class<T> cls, Circle circle, String text, Long from, Long to, Map<String, Object> criteria, SortedMap<String,Integer> sort) throws DataException; 
 	public <T extends BaseCITObject> List<T> searchObjects(Class<T> cls, Circle circle, String text, Long from, Long to, Map<String, Object> criteria, SortedMap<String,Integer> sort, int limit, int skip) throws DataException; 
-	
+	public List<GeoTimeSyncObjectBean> genericSearch(Map<String, Object> inCriteria);
 }

@@ -37,9 +37,11 @@
           </div>
         </div>
 
-        <ion-item nav-clear menu-close class="item-accordion" ng-click="goto('favorites')">
-          <span ng-bind="'sidemenu_Favourites' | translate" class="comunimenu-favorites"></span>
-        </ion-item>
+        <div class="comunimenu-favorites">
+          <ion-item nav-clear menu-close class="item-accordion" ng-click="goto('favorites')">
+            <b ng-bind="'sidemenu_Favourites' | translate"></b>
+          </ion-item>
+        </div>
         <ion-item nav-clear menu-close class="item-accordion" ng-click="showSettings()">
           <span ng-bind="'settings_title' | translate" class="comunimenu-settings"></span>
         </ion-item>

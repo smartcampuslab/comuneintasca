@@ -1,15 +1,17 @@
 angular.module('ilcomuneintasca.services.conf', [])
 
-.factory('Config', function ($q, $http, $window) {
-  var SCHEMA_VERSION=82;
+.factory('Config', function ($q, $http, $window, $filter) {
+  var SCHEMA_VERSION=85;
   var SYNC_HOST="tn";
+  //var PROFILE="opencontent";
+  var PROFILE="profile";
   
   var profile = $q.defer();
-  $http.get('data/profile.json').success(function(data, status, headers, config){
+  $http.get('data/'+PROFILE+'.json').success(function(data, status, headers, config){
     for (ngi=0; ngi<data.navigationItems.length; ngi++) {
       var item=data.navigationItems[ngi];
       angular.forEach(item.name, function (txt, loc) {
-        item.name[loc]=txt.replace("  ","<br/>");
+        if (item.name[loc]) item.name[loc]=txt.replace("  ","<br/>");
       });
       if (item.hasOwnProperty("app")) {
         item.extraClasses="variant";
@@ -262,9 +264,9 @@ angular.module('ilcomuneintasca.services.conf', [])
       de: 'Home'
     },
     'sidemenu_Favourites': {
-      it: 'Preferiti',
-      en: 'Favorites',
-      de: 'Lieblingsseiten'
+      it: 'PREFERITI',
+      en: 'FAVORITES',
+      de: 'LIEBLINGSSEITEN'
     },
     'list_no-favorites': {
       it: 'Nessun preferito salvato',

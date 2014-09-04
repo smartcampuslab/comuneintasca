@@ -18,7 +18,7 @@
       "name":{ "it":"EVENTI", "en":"EVENTS", "de":"VERANSTALTUNGEN" },
       "ref":"eventi"
     }, {
-      "id":"scoprire",
+      "id":"visitare",
       "name":{ "it":"VISITARE", "en":"HIGHLIGHTS", "de":"WAS SU  BESICHTIGEN" },
       "ref":"visitare"
     }, {
@@ -26,15 +26,15 @@
       "name":{ "it":"PERCORSI", "en":"TOURISTIC  ITINERARIES", "de":"TOUREN  UND ROUTEN" },
       "ref":"percorsi"
     }, {
-      "id":"mangiaredormire",
+      "id":"mangiare_e_dormire",
       "name":{ "it":"MANGIARE  E DORMIRE", "en":"HOTELS &  RESTAURANTS", "de":"ÜBERNACHTUNG  UND GASTRONOMIE" },
-      "ref":"mangiar_e_dormire"
+      "ref":"mangiare_e_dormire"
     }, {
-      "id":"infoutili",
+      "id":"info_utili",
       "name":{ "it":"INFO UTILI", "en":"USEFUL  INFORMATIONS", "de":"WEITERE  INFORMATIONEN" },
       "ref":"info_utili"
     }, {
-      "id":"viaggiatrento",
+      "id":"viaggia_trento",
       "name":{ "it":"VIAGGIA  TRENTO", "en":"VIAGGIA  TRENTO", "de":"VIAGGIA  TRENTO" },
       "app":{
         "android":"eu.trentorise.smartcampus.viaggiatrento", 

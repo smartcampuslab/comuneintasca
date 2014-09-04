@@ -44,10 +44,10 @@
 .comuneicon-map:before {
 	content: "\e025";
 }
-.comuneicon-viaggiatrento:before {
+.comuneicon-viaggia_trento:before {
 	content: "\e602";
 }
-.comuneicon-scoprire:before {
+.comuneicon-visitare:before {
 	content: "\e603";
 }
 .comuneicon-preferiti:before {
@@ -56,10 +56,10 @@
 .comuneicon-percorsi:before {
 	content: "\e605";
 }
-.comuneicon-mangiaredormire:before {
+.comuneicon-mangiare_e_dormire:before {
 	content: "\e606";
 }
-.comuneicon-infoutili:before {
+.comuneicon-info_utili:before {
 	content: "\e607";
 }
 .comuneicon-eventi:before {

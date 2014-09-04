@@ -1,7 +1,7 @@
 {
 	"metadata": {
 		"name": "il comune in tasca 2.1.2",
-		"lastOpened": 1409580868827,
+		"lastOpened": 1409831566702,
 		"created": 1381083457739
 	},
 	"iconSets": [
@@ -285,7 +285,7 @@
 					"id": 6,
 					"prevSize": 32,
 					"code": 58883,
-					"name": "scoprire",
+					"name": "visitare",
 					"tempChar": "",
 					"ligatures": ""
 				},
@@ -312,7 +312,7 @@
 					"id": 3,
 					"prevSize": 32,
 					"code": 58886,
-					"name": "mangiaredormire",
+					"name": "mangiare_e_dormire",
 					"tempChar": "",
 					"ligatures": ""
 				},
@@ -321,7 +321,7 @@
 					"id": 2,
 					"prevSize": 32,
 					"code": 58887,
-					"name": "infoutili",
+					"name": "info_utili",
 					"tempChar": "",
 					"ligatures": ""
 				},
@@ -373,7 +373,7 @@
 					],
 					"grid": 24,
 					"tags": [
-						"scoprire"
+						"visitare"
 					]
 				},
 				{
@@ -403,7 +403,7 @@
 					],
 					"grid": 24,
 					"tags": [
-						"mangiare_dormire"
+						"mangiare_e_dormire"
 					]
 				},
 				{

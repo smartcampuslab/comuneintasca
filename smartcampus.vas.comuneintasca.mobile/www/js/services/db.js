@@ -18,7 +18,9 @@ angular.module('ilcomuneintasca.services.db', [])
     //console.log('dbtype: '+dbtype);
     //console.log('dbrow.classification: '+dbrow.classification);
     item['abslinkgot']=Config.menuGroupSubgroupByTypeAndClassification(dbtype,dbrow.classification).then(function(sg){
-      if (sg) item['abslink'] = '#/app/page/'+sg._parent.id+'/'+sg.id+'/' + item.id;
+      item['abslink'] = '#/app/page/'+sg._parent.id+'/'+sg.id+'/' + item.id;
+    },function(){
+      console.log('sg NOT FOUND!');
     });
 
     item['dbClassification'] = dbrow.classification || '';

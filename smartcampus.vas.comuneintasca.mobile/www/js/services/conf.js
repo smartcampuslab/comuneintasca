@@ -46,27 +46,27 @@ angular.module('ilcomuneintasca.services.conf', [])
     'settings_data_clean': {
       it: 'Elimina file temporenei',
       en: 'Delete temporary files',
-      de: 'Delete temporary files'
+      de: 'Temporäre Dateien löschen'
     },
     'settings_data_sync': {
       it: 'Aggiorna dati',
       en: 'Update data',
-      de: 'Update data'
+      de: 'Dateien ändern'
     },
     'settings_data': {
       it: 'Gestione dati e immagini',
       en: 'Manage data and images',
-      de: 'Manage data and images'
+      de: 'Dateien und Bilder verwalten'
     },
     'settings_language': {
       it: 'Lingua',
       en: 'Language',
-      de: '[language]'
+      de: 'Sprache'
     },
     'settings_title': {
       it: 'Impostazioni',
       en: 'Settings',
-      de: 'Settings'
+      de: 'Einstellungen'
     },
     'itinerari_title_accessibilita': {
       it: 'Accessibilità',

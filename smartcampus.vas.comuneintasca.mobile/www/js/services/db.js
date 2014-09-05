@@ -6,6 +6,9 @@ angular.module('ilcomuneintasca.services.db', [])
 
   var parseDbRow = function (dbrow) {
     var item = JSON.parse(dbrow.data);
+    
+    if (item.image && typeof item.image=='string' && item.image.indexOf('http')==-1 && item.image.charAt(item.image.length-1)=='|') item.image='http://trento.opencontent.it/'+item.image.substring(0,item.image.length-1);
+    
 		if (dbrow.parentid) {
 			item['parentid']=dbrow.parentid;
 			item['parent']=JSON.parse(dbrow.parent);

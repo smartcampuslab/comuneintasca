@@ -129,6 +129,7 @@ angular.module('ilcomuneintasca.services.list', [])
         };
       }
       if (conf.doFilter) {
+        //console.log('conf.doFilter...');
         $scope.hasFilter = true;
         $scope.filterOptions = conf.filterOptions;
         $scope.filter = $scope.$navDirection != 'back' ? conf.defaultFilter : state.filter;

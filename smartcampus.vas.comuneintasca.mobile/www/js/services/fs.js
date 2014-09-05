@@ -277,12 +277,13 @@ angular.module('ilcomuneintasca.services.fs', [])
     get: function (fileurl) {
       var filegot = $q.defer();
       this.cleanup().then(function (mainDir) {
-        //console.log('fileurl: '+fileurl);
-        //var filename = fileurl.substring(fileurl.lastIndexOf('/') + 1);
-        var filename = CryptoJS.SHA1(fileurl).toString(CryptoJS.enc.Hex) + '.jpg';
-        //console.log('filename: '+filename);
+        console.log('fileurl: '+fileurl);
         if (ionic.Platform.isWebView()) {
           Profiling.start('fileget');
+          //var filename = fileurl.substring(fileurl.lastIndexOf('/') + 1);
+          var filename = CryptoJS.SHA1(fileurl).toString(CryptoJS.enc.Hex) + '.jpg';
+          Profiling._do('fileget', 'sha1');
+          //console.log('filename: '+filename);
           //console.log('rootDir: ' + mainDir.fullPath);
           mainDir.getFile(filename, {}, function (fileEntry) {
             /*
@@ -325,6 +326,7 @@ angular.module('ilcomuneintasca.services.fs', [])
             }
           });
         } else {
+          //console.log('from browser...');
           filegot.resolve(fileurl);
         }
     });

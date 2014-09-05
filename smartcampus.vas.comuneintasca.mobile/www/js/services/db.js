@@ -15,6 +15,8 @@ angular.module('ilcomuneintasca.services.db', [])
     var dbtype = Config.contentKeyFromDbType(dbrow.type);
     item['dbType']=dbtype;
 
+    //console.log('dbtype: '+dbtype);
+    //console.log('dbrow.classification: '+dbrow.classification);
     item['abslinkgot']=Config.menuGroupSubgroupByTypeAndClassification(dbtype,dbrow.classification).then(function(sg){
       if (sg) item['abslink'] = '#/app/page/'+sg._parent.id+'/'+sg.id+'/' + item.id;
     });
@@ -30,12 +32,16 @@ angular.module('ilcomuneintasca.services.db', [])
       Config.menuGroupSubgroup('visitare',item.dbClassification).then(function(sg){
         item['dbClass']=sg;
         item.dbClassification=sg.name;
+      },function(){
+        console.log('sg "visitare" NOT FOUND!');
       });
 
     } else if (dbtype == 'event') {
       Config.menuGroupSubgroup('eventi',item.dbClassification).then(function(sg){
         item['dbClass']=sg;
         item.dbClassification=sg.name;
+      },function(){
+        console.log('sg "eventi" NOT FOUND!');
       });
 
     } else if (dbtype == 'restaurant') {
@@ -724,7 +730,7 @@ angular.module('ilcomuneintasca.services.db', [])
 
         return dbitem.promise;
       });
-   },
+    },
     get: function (dbname, itemId) {
       //console.log('DatiDB.get("' + dbname + '","' + itemId + '")');
       return this.sync().then(function (dbVersion) {

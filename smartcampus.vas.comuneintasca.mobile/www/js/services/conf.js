@@ -520,12 +520,12 @@ angular.module('ilcomuneintasca.services.conf', [])
       //console.log('getProfile()');
       if (OPENCONTENT) {
         var profile = $q.defer();
+        //console.log('localStorage.cachedProfile: '+localStorage.cachedProfile);
         if (localStorage.cachedProfile && localStorage.cachedProfile!='undefined' && localStorage.cachedProfile!='null') {
           //console.log('using locally cached profile');
-          //console.log('localStorage.cachedProfile: '+localStorage.cachedProfile);
           profile.resolve(parseConfig(JSON.parse(localStorage.cachedProfile)));
         } else {
-          console.log('getting predefined profile');
+          //console.log('getting predefined profile');
           $http.get('data/'+PROFILE+'.json').success(function(data, status, headers, config){
             localStorage.cachedProfile=JSON.stringify(data);
             profile.resolve(parseConfig(data));

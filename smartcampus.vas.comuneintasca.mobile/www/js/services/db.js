@@ -253,10 +253,7 @@ angular.module('ilcomuneintasca.services.db', [])
                     updates = data.updated[contentTypeClassName];
 
                     if (contentTypeKey == 'config') {
-                      //console.log('****** CONFIG OBJECT ******');
-                      //console.log(JSON.stringify(updates[0]));
-                      //localStorage.cachedProfile = JSON.stringify(updates[0]);
-                      console.log('CONFIG object already parsed');
+                      //console.log('CONFIG object already parsed');
                       return;
                     }
                     /*
@@ -460,7 +457,7 @@ angular.module('ilcomuneintasca.services.db', [])
             }).error(function (data, status, headers, config) {
               $ionicLoading.hide();
               console.log('cannot check for new data: network unavailable? (HTTP: '+status+')');
-              console.log(status);
+              //console.log(status);
               Profiling._do('dbsync');
               syncinprogress=null;
               syncronization.resolve(currentDbVersion);

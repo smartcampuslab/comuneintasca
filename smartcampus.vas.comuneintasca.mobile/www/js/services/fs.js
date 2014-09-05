@@ -275,9 +275,9 @@ angular.module('ilcomuneintasca.services.fs', [])
       return cleaned.promise;
     },
     get: function (fileurl) {
+      //console.log('FS.get() - fileurl: '+fileurl);
       var filegot = $q.defer();
       this.cleanup().then(function (mainDir) {
-        console.log('fileurl: '+fileurl);
         if (ionic.Platform.isWebView()) {
           Profiling.start('fileget');
           //var filename = fileurl.substring(fileurl.lastIndexOf('/') + 1);

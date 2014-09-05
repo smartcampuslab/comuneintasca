@@ -41,7 +41,7 @@ angular.module('ilcomuneintasca', [
     GeoLocate.locate();
   }, false);
   $ionicPlatform.ready(function () {
-     console.log('IONIC READY!');
+   //console.log('IONIC READY!');
    /*
     if (window.cordova && cordova.plugins && cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);

@@ -37,6 +37,8 @@ public class BaseCITObject extends BasicObject {
 
 	private Long lastModified = null;
 	
+	private String objectId;
+	
 	public String getSource() {
 		return source;
 	}
@@ -124,4 +126,13 @@ public class BaseCITObject extends BasicObject {
 	public void setLastModified(Long lastModified) {
 		this.lastModified = lastModified;
 	}
+	
+	public String getObjectId() {
+		return objectId;
+	}
+
+	public void setObjectId(String objectId) {
+		this.objectId = objectId;
+	}	
+	
 }

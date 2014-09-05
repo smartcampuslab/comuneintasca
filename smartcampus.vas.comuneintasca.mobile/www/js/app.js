@@ -273,6 +273,15 @@ angular.module('ilcomuneintasca', [
         }
       }
     })
+    .state('app.itempage', {
+      url: "/page/:groupId/:itemId",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/page.html",
+          controller: "PageCtrl"
+        }
+      }
+    })
     .state('app.sons', {
       url: "/page/:groupId/:menuId/:itemId/sons",
       views: {

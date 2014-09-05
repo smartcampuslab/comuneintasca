@@ -68,16 +68,40 @@ angular.module('ilcomuneintasca.controllers.home', [])
         highlightsData = [];
         for (hli=0; hli<items.length; hli++) {
           var item=items[hli];
-          var type=(item.query&&item.query.type?item.query.type:item.type)
-          highlightsData.push(DatiDB.get(type,item.objectIds.join(',')).then(function(data){
-            highlights.push(data);
-          }));
+          if (item.objectIds) {
+            if (Config.opencontent()) {
+              item.title=item.name;
+              item.abslink='/app/page/highlights/'+item.objectIds.join(',');
+              highlights.push(item);
+            } else {
+              var type=(item.query&&item.query.type?item.query.type:item.type)||'content';
+              if (type.indexOf('eu.trentorise.smartcampus.comuneintasca.model.')==0) type=Config.contentKeyFromDbType(type);
+              highlightsData.push(DatiDB.get(type,item.objectIds.join(',')).then(function(data){
+                console.log('pushing higlight:');
+                console.log(data);
+                highlights.push(data);
+              }));
+            }
+          } else {
+            console.log('unknown highlight type for "'+(item.id||item)+'"');
+          }
         }
-        $q.all(highlightsData).then(function(){
+        if (highlightsData.length>0) {
+          $q.all(highlightsData).then(function(){
+            $scope.highlights=highlights;
+          })
+        } else {
           $scope.highlights=highlights;
-        })
+        }
+/*        
+        highlightsData = [];
+        for (hli=0; hli<items.length; hli++) {
+          var item=items[hli];
+        }
+*/
       }
     },function(menu) {
+      console.log('error getting highligts from profile');
       $scope.highlights = [ defaultHighlight ];
     });
 

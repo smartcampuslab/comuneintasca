@@ -461,7 +461,7 @@ angular.module('ilcomuneintasca.services.conf', [])
     'hotel': 'eu.trentorise.smartcampus.comuneintasca.model.HotelObject',
     'itinerary': 'eu.trentorise.smartcampus.comuneintasca.model.ItineraryObject',
     'mainevent': 'eu.trentorise.smartcampus.comuneintasca.model.MainEventObject',
-    'home': 'eu.trentorise.smartcampus.comuneintasca.model.HomeObject'
+    //'home': 'eu.trentorise.smartcampus.comuneintasca.model.HomeObject',
     'config': 'eu.trentorise.smartcampus.comuneintasca.model.ConfigObject'
   };
 
@@ -577,6 +577,7 @@ angular.module('ilcomuneintasca.services.conf', [])
     },
     highlights: function () {
       return this.getProfile().then(function(data) {
+        //console.log(data.highlights[0].image);
         return data.highlights;
       });
     },
@@ -607,6 +608,7 @@ angular.module('ilcomuneintasca.services.conf', [])
       });
     },
     menuGroupSubgroup: function (label1, label2) {
+      if (label1=='highlights') return this.highlights();
       return this.menuGroup(label1).then(function(group) {
         if (group) {
           for (sgi=0; sgi<group.items.length; sgi++) {

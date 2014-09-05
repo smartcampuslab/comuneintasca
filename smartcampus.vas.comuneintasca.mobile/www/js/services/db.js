@@ -241,8 +241,7 @@ angular.module('ilcomuneintasca.services.db', [])
                 var configTypeClassName=types['config'];
                 if (!angular.isUndefined(data.updated[configTypeClassName])) {
                   config = data.updated[configTypeClassName][0];
-                  console.log('config object parsed:');
-                  console.log(config);
+                  //console.log('CONFIG object parsed:');console.log(config);
                   localStorage.cachedProfile = JSON.stringify(config);
                 }
 
@@ -256,7 +255,7 @@ angular.module('ilcomuneintasca.services.db', [])
                       //console.log('****** CONFIG OBJECT ******');
                       //console.log(JSON.stringify(updates[0]));
                       //localStorage.cachedProfile = JSON.stringify(updates[0]);
-                      console.log('config object already parsed');
+                      console.log('CONFIG object already parsed');
                       return;
                     }
                     /*
@@ -298,10 +297,7 @@ angular.module('ilcomuneintasca.services.db', [])
 												category = item.category;
                         //console.log('event cate: ' + category);
                         if (category) {
-                          // "category": "{objectName=Feste, mercati e fiere, classIdentifier=tipo_eventi, datePublished=1395152152, dateModified=1395152182, objectRemoteId=a15d79dc9794d829ed43364863a8225a, objectId=835351, link=http://www.comune.trento.it/api/opendata/v1/content/object/835351}"
-                          //startMrkr = "{objectName=";
-                          //endMrkr = ", classIdentifier=";
-                          classification = category; //category.substring(startMrkr.length, category.indexOf(endMrkr)) || '';
+                          classification = category;
                           fromTime = item.fromTime;
                           if (item.toTime > 0) toTime = item.toTime;
                           else toTime = fromTime;
@@ -341,7 +337,11 @@ angular.module('ilcomuneintasca.services.db', [])
                           classification = Config.hotelTypeFromCate(item.classification.it);
 
                         } else if (contentTypeKey == 'restaurant') {
-                          classifications = item.classification.it.split(';');
+                          if (item.classification.it.indexOf(',')!=-1) {
+                            classifications = item.classification.it.split(',');
+                          } else {
+                            classifications = item.classification.it.split(';');
+                          }
                           classification = Config.restaurantTypeFromCate(classifications[0].trim());
                           if (classifications.length > 1) {
                             classification2 = Config.restaurantTypeFromCate(classifications[1].trim());

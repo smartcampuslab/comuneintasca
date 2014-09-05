@@ -88,9 +88,13 @@ angular.module('ilcomuneintasca', [
   $rootScope.lang=localStorage.lang=lang;
 
   $rootScope.goto = function (link) {
-    if (link.indexOf('#/app/')==0) link=link.substring(1);
-    if (link.indexOf('/app/')!=0) link='/app/'+link;
-    $location.path(link);
+    if (link) {
+      if (link.indexOf('#/app/')==0) link=link.substring(1);
+      if (link.indexOf('/app/')!=0) link='/app/'+link;
+      $location.path(link);
+    } else {
+      console.log('goto() link is null!');
+    }
   };
   $rootScope.getMenuPath = function (group,menu) {
     var group_id=$filter('cleanMenuID')(group.id);

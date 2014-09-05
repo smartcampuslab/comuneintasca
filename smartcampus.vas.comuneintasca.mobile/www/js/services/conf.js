@@ -462,6 +462,7 @@ angular.module('ilcomuneintasca.services.conf', [])
     'itinerary': 'eu.trentorise.smartcampus.comuneintasca.model.ItineraryObject',
     'mainevent': 'eu.trentorise.smartcampus.comuneintasca.model.MainEventObject',
     'home': 'eu.trentorise.smartcampus.comuneintasca.model.HomeObject'
+    'config': 'eu.trentorise.smartcampus.comuneintasca.model.ConfigObject'
   };
 
   return {

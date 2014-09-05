@@ -769,12 +769,12 @@ angular.module('ilcomuneintasca.services.db', [])
             idCond = 'c.id IN (' + itemsIds.join() + ')';
           }
           var qParams = itemId.split(',');
-          qParams.unshift(types[dbname]);
+          if (dbname) qParams.unshift(types[dbname]);
 
           var fromTime = new Date().getTime();
 					var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount'+
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id'+
-            ' WHERE c.type=?' +
+            (dbname?' WHERE c.type=?':'') +
             ' AND ' + idCond + 
             ' AND (s.id IS NULL OR s.toTime > ' + fromTime + ')' +
             ' GROUP BY c.id';

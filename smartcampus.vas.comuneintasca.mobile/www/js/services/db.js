@@ -235,12 +235,28 @@ angular.module('ilcomuneintasca.services.db', [])
               if (nextVersion > currentDbVersion) {
                 var itemsToInsert=[];
                 var objsReady=[];
+
+                var configTypeClassName=types['config'];
+                if (!angular.isUndefined(data.updated[configTypeClassName])) {
+                  config = data.updated[configTypeClassName][0];
+                  console.log('config object parsed:');
+                  console.log(config);
+                  localStorage.cachedProfile = JSON.stringify(config);
+                }
+
                 angular.forEach(types, function (contentTypeClassName, contentTypeKey) {
                   console.log('[INSERTS] type (' + contentTypeKey + '): ' + contentTypeClassName);
 
                   if (!angular.isUndefined(data.updated[contentTypeClassName])) {
                     updates = data.updated[contentTypeClassName];
 
+                    if (contentTypeKey == 'config') {
+                      //console.log('****** CONFIG OBJECT ******');
+                      //console.log(JSON.stringify(updates[0]));
+                      //localStorage.cachedProfile = JSON.stringify(updates[0]);
+                      console.log('config object already parsed');
+                      return;
+                    }
                     /*
                     if (contentTypeKey == 'home') {
                       localStorage.homeObject = JSON.stringify(updates[0]);

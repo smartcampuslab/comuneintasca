@@ -18,7 +18,7 @@ angular.module('ilcomuneintasca.services.db', [])
     //console.log('dbtype: '+dbtype);
     //console.log('dbrow.classification: '+dbrow.classification);
     item['abslinkgot']=Config.menuGroupSubgroupByTypeAndClassification(dbtype,dbrow.classification).then(function(sg){
-      item['abslink'] = '#/app/page/'+sg._parent.id+'/'+sg.id+'/' + item.id;
+      if (sg) item['abslink'] = '#/app/page/'+sg._parent.id+'/'+sg.id+'/' + item.id;
     },function(){
       console.log('sg NOT FOUND!');
     });
@@ -316,6 +316,22 @@ angular.module('ilcomuneintasca.services.db', [])
                           classified.resolve(['misc','','']);
                         }
                       } else if (contentTypeKey == 'poi') {
+                        //category fix for opencontent data
+                        switch (item.classification.it) {
+                          case 'Edificio storico':
+                            item.classification.it='Edifici storici';
+                            break;
+                          case 'Chiesa':
+                            item.classification.it='Chiese';
+                            break;
+                          case 'Museo':
+                            item.classification.it='Musei';
+                            break;
+                          case 'Area archeologica':
+                          case 'Aree archeologiche':
+                            item.classification.it='Aree Archeologiche';
+                            break;
+                        }
                         Config.menuGroupSubgroupByLocaleName('visitare','it',item.classification.it).then(function(sg){
                           if (sg) {
                             //console.log('content db sg classification: '+sg.id);

@@ -27,972 +27,184 @@
       "app": null
     }
   ],
-  "navigationItems": [
+  "navigationItems":[
     {
-      "id": "csvimport_Preferiti_item_comuneintasca",
-      "name": {
-        "it": "Preferiti",
-        "en": null,
-        "de": null
-      },
-      "description": null,
-      "image": null,
-      "objectIds": [],
-      "items": null,
-      "query": null,
-      "ref": null,
-      "type": null,
-      "app": null
-    },
-    {
-      "id": "csvimport_Viaggia Trento_item_comuneintasca",
-      "name": {
-        "it": "Viaggia Trento",
-        "en": null,
-        "de": null
-      },
-      "description": null,
-      "image": null,
-      "objectIds": [],
-      "items": null,
-      "query": null,
-      "ref": null,
-      "type": null,
-      "app": null
-    },
-    {
-      "id": "csvimport_Spettacoli_item_comuneintasca",
-      "name": {
-        "it": "Spettacoli",
-        "en": null,
-        "de": null
-      },
-      "description": null,
-      "image": null,
-      "objectIds": null,
-      "items": null,
-      "query": {
-        "type": "event",
-        "classifications": [
-          {
-            "tipo_evento": "Spettacoli"
-          }
-        ],
-        "classification": null
-      },
-      "ref": null,
-      "type": null,
-      "app": null
+      "id":"conoscere",
+      "name":{ "it":"CONOSCERE", "en":"DISCOVER", "de":"KENNEN" },
+      "ref":"conoscere"
+    }, {
+      "id":"eventi",
+      "name":{ "it":"EVENTI", "en":"EVENTS", "de":"VERANSTALTUNGEN" },
+      "ref":"eventi"
+    }, {
+      "id":"visitare",
+      "name":{ "it":"VISITARE", "en":"HIGHLIGHTS", "de":"WAS SU  BESICHTIGEN" },
+      "ref":"visitare"
+    }, {
+      "id":"percorsi",
+      "name":{ "it":"PERCORSI", "en":"TOURISTIC  ITINERARIES", "de":"TOUREN  UND ROUTEN" },
+      "ref":"itineraries"
+    }, {
+      "id":"mangiare_e_dormire",
+      "name":{ "it":"MANGIARE  E DORMIRE", "en":"HOTELS &  RESTAURANTS", "de":"ÜBERNACHTUNG  UND GASTRONOMIE" },
+      "ref":"mangiare_e_dormire"
+    }, {
+      "id":"info_utili",
+      "name":{ "it":"INFO UTILI", "en":"USEFUL  INFORMATIONS", "de":"WEITERE  INFORMATIONEN" },
+      "ref":"info_utili"
+    }, {
+      "id":"viaggia_trento",
+      "name":{ "it":"VIAGGIA  TRENTO", "en":"VIAGGIA  TRENTO", "de":"VIAGGIA  TRENTO" },
+      "app":{
+        "android":"eu.trentorise.smartcampus.viaggiatrento", 
+        "ios":null
+      }
+    }, {
+      "id":"preferiti",
+      "name":{ "it":"PREFERITI", "en":"FAVORITES", "de":"LIEBLINGSSEITEN" },
+      "ref":"favorites"
     }
   ],
-  "menu": [
+  "menu":[
     {
-      "id": "csvimport_Conoscere_item_comuneintasca",
-      "name": {
-        "it": "Conoscere",
-        "en": null,
-        "de": null
-      },
-      "description": null,
-      "image": null,
-      "objectIds": null,
-      "items": [
-        {
-          "id": "text.3002",
-          "name": {
-            "it": "La storia",
-            "en": "The history",
-            "de": "Geschichte"
-          },
-          "description": null,
-          "image": {
-            "it": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655533/3-ita-IT/La-storia1.jpg",
-            "en": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655680/3-eng-GB/The-history1.jpg",
-            "de": "http://trento.opencontent.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/conoscere/la-storia/7656542-3-ger-DE/Geschichte.jpg"
-          },
-          "objectIds": [
-            "text.3002"
-          ],
-          "items": null,
-          "query": null,
-          "ref": null,
-          "type": "text",
-          "app": null
-        },
-        {
-          "id": "text.3003",
-          "name": {
-            "it": "Il concilio",
-            "en": "\nThe Council",
-            "de": "Das Konzil"
-          },
-          "description": null,
-          "image": {
-            "it": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655540/2-ita-IT/Il-concilio1.jpg",
-            "en": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655687/2-eng-GB/The-Council1.jpg",
-            "de": "http://trento.opencontent.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/conoscere/il-concilio/7656554-2-ger-DE/Das-Konzil.jpg"
-          },
-          "objectIds": [
-            "text.3003"
-          ],
-          "items": null,
-          "query": null,
-          "ref": null,
-          "type": "text",
-          "app": null
-        },
-        {
-          "id": "csvimport_Informazioni_item_comuneintasca",
-          "name": {
-            "it": "Informazioni",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": [
-            "text.3001",
-            "text.3004"
-          ],
-          "items": null,
-          "query": null,
-          "ref": null,
-          "type": "text",
-          "app": null
-        },
-        {
-          "id": "csvimport_Eventi principali_item_comuneintasca",
-          "name": {
-            "it": "Eventi principali",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": null,
-          "items": null,
-          "query": {
-            "type": "eu.trentorise.smartcampus.comuneintasca.model.MainEventObject",
-            "classifications": null,
-            "classification": null
-          },
-          "ref": null,
-          "type": null,
-          "app": null
-        },
-        {
-          "id": "csvimport_Monte Bondone_item_comuneintasca",
-          "name": {
-            "it": "Monte Bondone",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": [],
-          "items": null,
-          "query": null,
-          "ref": null,
-          "type": null,
-          "app": null
+      "id":"conoscere",
+      "name":{ "it":"CONOSCERE", "en":"DISCOVER", "de":"KENNEN" },
+      "items":[
+        { 
+          "id":"data",
+          "name":{ "it":"Informazioni", "en":"Info", "de":"Info" },
+          "objectIds":[ "text.3001", "text.3004" ],
+          "type": "content"
+        }, {
+          "id":"storia",
+          "name":{ "it":"Storia", "en":"History", "de":"Geschichte" },
+          "objectIds":[ "text.3002" ],
+          "type": "content"
+        }, {
+          "id":"concilio",
+          "name":{ "it":"Concilio", "en":"Concilio", "de":"Concilio" },
+          "objectIds":[ "text.3003" ],
+          "type": "content"
+        }, { 
+          "id":"mainevents",
+          "name":{ "it":"Eventi Principali", "en":"Main Events", "de":"Hauptereignisse" },
+          "query":{ "type":"mainevent" }
+        }, { 
+          "id":"bondone",
+          "name":{ "it":"Monte Bondone", "en":"Mount Bondone", "de":"Mont Bondone" },
+          "query":{ "type":"content", "classification":"bondone" }
         }
-      ],
-      "query": null,
-      "ref": null,
-      "type": null,
-      "app": null
-    },
-    {
-      "id": "csvimport_Eventi_item_comuneintasca",
-      "name": {
-        "it": "Eventi",
-        "en": null,
-        "de": null
-      },
-      "description": null,
-      "image": null,
-      "objectIds": null,
-      "items": [
+      ]
+    }, {
+      "id":"eventi",
+      "name":{ "it":"EVENTI", "en":"EVENTS", "de":"VERANSTALTUNGEN" },
+      "items":[
         {
-          "id": "csvimport_Tutti gli eventi_item_comuneintasca",
-          "name": {
-            "it": "Tutti gli eventi",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": null,
-          "items": null,
-          "query": {
-            "type": "eu.trentorise.smartcampus.comuneintasca.model.EventObject",
-            "classifications": null,
-            "classification": null
-          },
-          "ref": null,
-          "type": null,
-          "app": null
-        },
-        {
-          "id": "csvimport_Competizioni e gare_item_comuneintasca",
-          "name": {
-            "it": "Competizioni e gare",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": null,
-          "items": null,
-          "query": {
-            "type": "eu.trentorise.smartcampus.comuneintasca.model.EventObject",
-            "classifications": [
-              {
-                "tipo_evento": "Competizioni e gare"
-              }
-            ],
-            "classification": "Competizioni e gare"
-          },
-          "ref": null,
-          "type": null,
-          "app": null
-        },
-        {
-          "id": "csvimport_Incontri, convegni e conferenze_item_comuneintasca",
-          "name": {
-            "it": "Incontri, convegni e conferenze",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": null,
-          "items": null,
-          "query": {
-            "type": "eu.trentorise.smartcampus.comuneintasca.model.EventObject",
-            "classifications": [
-              {
-                "tipo_evento": "Incontri, convegni e conferenze"
-              }
-            ],
-            "classification": "Incontri, convegni e conferenze"
-          },
-          "ref": null,
-          "type": null,
-          "app": null
-        },
-        {
-          "id": "csvimport_Mostre_item_comuneintasca",
-          "name": {
-            "it": "Mostre",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": null,
-          "items": null,
-          "query": {
-            "type": "eu.trentorise.smartcampus.comuneintasca.model.EventObject",
-            "classifications": [
-              {
-                "tipo_evento": "Mostre"
-              }
-            ],
-            "classification": "Mostre"
-          },
-          "ref": null,
-          "type": null,
-          "app": null
-        },
-        {
-          "id": "csvimport_Feste, mercati e fiere_item_comuneintasca",
-          "name": {
-            "it": "Feste, mercati e fiere",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": null,
-          "items": null,
-          "query": {
-            "type": "eu.trentorise.smartcampus.comuneintasca.model.EventObject",
-            "classifications": [
-              {
-                "tipo_evento": "Feste, mercati e fiere"
-              }
-            ],
-            "classification": "Feste, mercati e fiere"
-          },
-          "ref": null,
-          "type": null,
-          "app": null
-        },
-        {
-          "id": "csvimport_Corsi e laboratori_item_comuneintasca",
-          "name": {
-            "it": "Corsi e laboratori",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": null,
-          "items": null,
-          "query": {
-            "type": "eu.trentorise.smartcampus.comuneintasca.model.EventObject",
-            "classifications": [
-              {
-                "tipo_evento": "Corsi e laboratori"
-              }
-            ],
-            "classification": "Corsi e laboratori"
-          },
-          "ref": null,
-          "type": null,
-          "app": null
-        },
-        {
-          "id": "csvimport_Iniziative varie_item_comuneintasca",
-          "name": {
-            "it": "Iniziative varie",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": null,
-          "items": null,
-          "query": {
-            "type": "eu.trentorise.smartcampus.comuneintasca.model.EventObject",
-            "classifications": [
-              {
-                "tipo_evento": "Iniziative varie"
-              }
-            ],
-            "classification": "Iniziative varie"
-          },
-          "ref": null,
-          "type": null,
-          "app": null
-        },
-        {
-          "id": "csvimport_Spettacoli_item_comuneintasca",
-          "name": {
-            "it": "Spettacoli",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": null,
-          "items": null,
-          "query": {
-            "type": "eu.trentorise.smartcampus.comuneintasca.model.EventObject",
-            "classifications": [
-              {
-                "tipo_evento": "Spettacoli"
-              }
-            ],
-            "classification": "Spettacoli"
-          },
-          "ref": null,
-          "type": null,
-          "app": null
+          "id":"all",
+          "name":{ "it": "Tutti gli eventi", "en": "All events", "de": "Alle Veranstaltungen" },
+          "query":{ "type":"event" }
+        }, { 
+          "id":"fairs",
+          "name":{ "it": "Feste, mercati e fiere", "en": "Festivals, markets and fairs", "de": "Festivals, Märkte und Messen" },
+          "query":{ "type":"event", "classification":"fairs" }
+        }, { 
+          "id":"conferences",
+          "name":{ "it": "Incontri, convegni e conferenze", "en": "Meetings, seminars and conferences", "de": "Tagungen, Seminare und Konferenzen" },
+          "query":{ "type":"event", "classification":"conferences" }
+        }, { 
+          "id":"shows",
+          "name":{ "it": "Spettacoli", "en": "Shows", "de": "Shows" },
+          "query":{ "type":"event", "classification":"shows" }
+        }, { 
+          "id":"exhibitions",
+          "name":{ "it": "Mostre", "en": "Exhibitions", "de": "Ausstellungen" },
+          "query":{ "type":"event", "classification":"exhibitions" }
+        }, { 
+          "id":"labs",
+          "name":{ "it": "Corsi e laboratori", "en": "Courses and workshops", "de": "Kurse und Workshops" },
+          "query":{ "type":"event", "classification":"labs" }
+        }, { 
+          "id":"competitions",
+          "name":{ "it": "Competizioni e gare", "en": "Competitions and contests", "de": "Wettbewerbe und Gewinnspiele" },
+          "query":{ "type":"event", "classification":"competitions" }
+        }, { 
+          "id":"misc",
+          "name":{ "it": "Iniziative varie", "en": "Various initiatives", "de": "Verschiedene Initiativen" },
+          "query":{ "type":"event", "classification":"misc" }
+        }, {
+          "id":"complex",
+          "name":{ "it": "Manifestazioni annuali", "en": "Annual events", "de": "[ANNUAL-EVENTS]" },
+          "query":{ "type":"event", "classification":"_complex" }
         }
-      ],
-      "query": null,
-      "ref": null,
-      "type": null,
-      "app": null
-    },
-    {
-      "id": "csvimport_Visitare_item_comuneintasca",
-      "name": {
-        "it": "Visitare",
-        "en": null,
-        "de": null
-      },
-      "description": null,
-      "image": null,
-      "objectIds": null,
-      "items": [
-        {
-          "id": "csvimport_Aree archeologiche_item_comuneintasca",
-          "name": {
-            "it": "Aree archeologiche",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": [
-            "cultura.61",
-            "cultura.60"
-          ],
-          "items": null,
-          "query": null,
-          "ref": null,
-          "type": "cultura",
-          "app": null
-        },
-        {
-          "id": "csvimport_Edifici storici_item_comuneintasca",
-          "name": {
-            "it": "Edifici storici",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": [
-            "cultura.57",
-            "cultura.58",
-            "cultura.59",
-            "cultura.55",
-            "cultura.56",
-            "cultura.51",
-            "cultura.52",
-            "cultura.49",
-            "cultura.45",
-            "cultura.36",
-            "cultura.39",
-            "cultura.33",
-            "cultura.34",
-            "cultura.31",
-            "cultura.27",
-            "cultura.23",
-            "cultura.24"
-          ],
-          "items": null,
-          "query": null,
-          "ref": null,
-          "type": "cultura",
-          "app": null
-        },
-        {
-          "id": "csvimport_Chiese_item_comuneintasca",
-          "name": {
-            "it": "Chiese",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": [
-            "cultura.19",
-            "cultura.20",
-            "cultura.18",
-            "cultura.15",
-            "cultura.16",
-            "cultura.17",
-            "cultura.14",
-            "cultura.13"
-          ],
-          "items": null,
-          "query": null,
-          "ref": null,
-          "type": "cultura",
-          "app": null
-        },
-        {
-          "id": "csvimport_Altri siti di interesse artistico_item_comuneintasca",
-          "name": {
-            "it": "Altri siti di interesse artistico",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": [
-            "cultura.71",
-            "cultura.67",
-            "cultura.68",
-            "cultura.69",
-            "cultura.70",
-            "cultura.64",
-            "cultura.65",
-            "cultura.66",
-            "cultura.62",
-            "cultura.63"
-          ],
-          "items": null,
-          "query": null,
-          "ref": null,
-          "type": "cultura",
-          "app": null
-        },
-        {
-          "id": "csvimport_Musei_item_comuneintasca",
-          "name": {
-            "it": "Musei",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": [
-            "cultura.77",
-            "cultura.72",
-            "cultura.12",
-            "cultura.9",
-            "cultura.10",
-            "cultura.11",
-            "cultura.8",
-            "cultura.6",
-            "cultura.7",
-            "cultura.4",
-            "cultura.3",
-            "cultura.5",
-            "cultura.1",
-            "cultura.2"
-          ],
-          "items": null,
-          "query": null,
-          "ref": null,
-          "type": "cultura",
-          "app": null
-        },
-        {
-          "id": "csvimport_Natura_item_comuneintasca",
-          "name": {
-            "it": "Natura",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": [
-            "cultura.74",
-            "cultura.75",
-            "cultura.73"
-          ],
-          "items": null,
-          "query": null,
-          "ref": null,
-          "type": "cultura",
-          "app": null
+      ]
+    }, {
+      "id":"visitare",
+      "name":{ "it":"VISITARE", "en":"HIGHLIGHTS", "de":"WAS SU  BESICHTIGEN" },
+      "items":[
+        { 
+          "id":"museums",
+          "name":{ "it": "Musei", "en": "Museums", "de": "Museen" },
+          "query":{ "type":"poi", "classification":"museums" }
+        }, { 
+          "id":"buildings",
+          "name":{ "it": "Edifici storici", "en": "Historic Buildings", "de": "Historische Gebäude" },
+          "query":{ "type":"poi", "classification":"buildings" }
+        }, { 
+          "id":"churches",
+          "name":{ "it": "Chiese", "en": "Churches", "de": "Kirchen" },
+          "query":{ "type":"poi", "classification":"churches" }
+        }, { 
+          "id":"archeo",
+          "name":{ "it": "Aree Archeologiche", "en": "Archaeological Areas", "de": "Archäologische Areas" },
+          "query":{ "type":"poi", "classification":"archeo" }
+        }, { 
+          "id":"parks",
+          "name":{ "it": "Natura", "en": "Nature", "de": "Natur" },
+          "query":{ "type":"poi", "classification":"parks" }
+        }, { 
+          "id":"misc",
+          "name":{ "it": "Altri siti di interesse storico artistico", "en": "Other sites of historical and artistic interest", "de": "Andere Seiten von historischem und künstlerischem Interesse" },
+          "query":{ "type":"poi", "classification":"misc" }
         }
-      ],
-      "query": null,
-      "ref": null,
-      "type": null,
-      "app": null
-    },
-    {
-      "id": "csvimport_Percorsi_item_comuneintasca",
-      "name": {
-        "it": "Percorsi",
-        "en": null,
-        "de": null
-      },
-      "description": null,
-      "image": null,
-      "objectIds": [
-        "Itinerary4",
-        "Itinerary1",
-        "Itinerary2",
-        "Itinerary3"
-      ],
-      "items": null,
-      "query": null,
-      "ref": null,
-      "type": null,
-      "app": null
-    },
-    {
-      "id": "csvimport_Mangiare e dormire_item_comuneintasca",
-      "name": {
-        "it": "Mangiare e dormire",
-        "en": null,
-        "de": null
-      },
-      "description": null,
-      "image": null,
-      "objectIds": null,
-      "items": [
-        {
-          "id": "csvimport_Mangiare_item_comuneintasca",
-          "name": {
-            "it": "Mangiare",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": null,
-          "items": null,
-          "query": {
-            "type": "eu.trentorise.smartcampus.comuneintasca.model.RestaurantObject",
-            "classifications": null,
-            "classification": null
-          },
-          "ref": null,
-          "type": null,
-          "app": null
-        },
-        {
-          "id": "csvimport_Dormire_item_comuneintasca",
-          "name": {
-            "it": "Dormire",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": null,
-          "items": null,
-          "query": {
-            "type": "eu.trentorise.smartcampus.comuneintasca.model.HotelObject",
-            "classifications": null,
-            "classification": null
-          },
-          "ref": null,
-          "type": null,
-          "app": null
+      ]
+    }, {
+      "id":"percorsi",
+      "name":{ "it":"PERCORSI", "en":"TOURISTIC  ITINERARIES", "de":"TOUREN  UND ROUTEN" },
+      "items":[
+        { 
+          "id":"itineraries",
+          "name":{ "it":"Percorsi Turistici", "en":"Touristic Itineraries", "de":"Touren und Routen" },
+          "query":{ "type":"itineraries" }
         }
-      ],
-      "query": null,
-      "ref": null,
-      "type": null,
-      "app": null
-    },
-    {
-      "id": "csvimport_Info utili_item_comuneintasca",
-      "name": {
-        "it": "Info utili",
-        "en": null,
-        "de": null
-      },
-      "description": null,
-      "image": null,
-      "objectIds": null,
-      "items": [
-        {
-          "id": "csvimport_Servizi_item_comuneintasca",
-          "name": {
-            "it": "Servizi",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": null,
-          "items": [
-            {
-              "id": "text.3005",
-              "name": {
-                "it": "La Card “TrentoRovereto città di culture”",
-                "en": "The 'TrentoRovereto Città di culture' card",
-                "de": "Die „TrentoRovereto Città di culture“-Karte\n"
-              },
-              "description": null,
-              "image": {
-                "it": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655554/2-ita-IT/La-Card-TrentoRovereto-citta-di-culture1.jpg",
-                "en": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655701/2-eng-GB/The-TrentoRovereto-Citta-di-culture-card1.jpg",
-                "de": "http://trento.opencontent.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/info-utili/servizi/la-card-trentorovereto-citta-di-culture/7656578-2-ger-DE/Die-TrentoRovereto-Citta-di-culture-Karte.jpg"
-              },
-              "objectIds": [
-                "text.3005"
-              ],
-              "items": null,
-              "query": null,
-              "ref": null,
-              "type": "text",
-              "app": null
-            },
-            {
-              "id": "text.3006",
-              "name": {
-                "it": "Dimmi",
-                "en": "Dimmi",
-                "de": "Dimmi"
-              },
-              "description": null,
-              "image": {
-                "it": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655561/2-ita-IT/Dimmi1.",
-                "en": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655708/2-eng-GB/Dimmi1.",
-                "de": "http://trento.opencontent.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/info-utili/servizi/dimmi/7656590-2-ger-DE/Dimmi."
-              },
-              "objectIds": [
-                "text.3006"
-              ],
-              "items": null,
-              "query": null,
-              "ref": null,
-              "type": "text",
-              "app": null
-            },
-            {
-              "id": "text.3007",
-              "name": {
-                "it": "Trento per tutti",
-                "en": "Trento for everyone",
-                "de": "Trient für alle "
-              },
-              "description": null,
-              "image": {
-                "it": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655568/2-ita-IT/Trento-per-tutti1.",
-                "en": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655715/2-eng-GB/Trento-for-everyone1.",
-                "de": "http://trento.opencontent.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/info-utili/servizi/trento-per-tutti/7656602-2-ger-DE/Trient-fuer-alle."
-              },
-              "objectIds": [
-                "text.3007"
-              ],
-              "items": null,
-              "query": null,
-              "ref": null,
-              "type": "text",
-              "app": null
-            },
-            {
-              "id": "text.3013",
-              "name": {
-                "it": "Wilma",
-                "en": "Wilma",
-                "de": "Wilma"
-              },
-              "description": null,
-              "image": {
-                "it": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655603/2-ita-IT/Wilma1.",
-                "en": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655750/2-eng-GB/Wilma1.",
-                "de": "http://trento.opencontent.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/info-utili/servizi/wilma/7656662-2-ger-DE/Wilma."
-              },
-              "objectIds": [
-                "text.3013"
-              ],
-              "items": null,
-              "query": null,
-              "ref": null,
-              "type": "text",
-              "app": null
-            },
-            {
-              "id": "text.3014",
-              "name": {
-                "it": "Trasporti",
-                "en": "Transport facilities",
-                "de": "Transportmöglichkeiten"
-              },
-              "description": null,
-              "image": {
-                "it": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655610/2-ita-IT/Trasporti1.",
-                "en": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655757/2-eng-GB/Transport-facilities1.",
-                "de": "http://trento.opencontent.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/info-utili/servizi/trasporti/7656674-2-ger-DE/Transportmoeglichkeiten."
-              },
-              "objectIds": [
-                "text.3014"
-              ],
-              "items": null,
-              "query": null,
-              "ref": null,
-              "type": "text",
-              "app": null
-            },
-            {
-              "id": "text.3015",
-              "name": {
-                "it": "Bagni pubblici",
-                "en": "Public toilets\n",
-                "de": "Öffentliche Bäder"
-              },
-              "description": {
-                "it": "Vai Belezani 54, 38122 Trento",
-                "en": "Vai Belezani 54, 38122 Trento",
-                "de": "Vai Belezani 54, 38122 Trento"
-              },
-              "image": {
-                "it": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655617/2-ita-IT/Bagni-pubblici1.",
-                "en": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655764/2-eng-GB/Public-toilets1.",
-                "de": "http://trento.opencontent.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/info-utili/servizi/bagni-pubblici/7656686-2-ger-DE/Oeffentliche-Baeder."
-              },
-              "objectIds": [
-                "text.3015"
-              ],
-              "items": null,
-              "query": null,
-              "ref": null,
-              "type": "text",
-              "app": null
-            },
-            {
-              "id": "text.3016",
-              "name": {
-                "it": "Farmacie",
-                "en": "Pharmacies\n",
-                "de": "Apotheken"
-              },
-              "description": null,
-              "image": {
-                "it": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655624/2-ita-IT/Farmacie1.",
-                "en": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655771/2-eng-GB/Pharmacies1.",
-                "de": "http://trento.opencontent.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/info-utili/servizi/farmacie/7656698-2-ger-DE/Apotheken."
-              },
-              "objectIds": [
-                "text.3016"
-              ],
-              "items": null,
-              "query": null,
-              "ref": null,
-              "type": "text",
-              "app": null
-            }
-          ],
-          "query": null,
-          "ref": null,
-          "type": null,
-          "app": null
-        },
-        {
-          "id": "csvimport_Contatti_item_comuneintasca",
-          "name": {
-            "it": "Contatti",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": null,
-          "items": [
-            {
-              "id": "text.3008",
-              "name": {
-                "it": "Azienda per il turismo Trento, Monte Bondone e Valle dei Laghi",
-                "en": "Azienda per il turismo Trento, Monte Bondone e Valle dei Laghi",
-                "de": "Azienda per il turismo Trento, Monte Bondone e Valle dei Laghi"
-              },
-              "description": {
-                "it": "Via Manci 2, 38122 Trento",
-                "en": "Via Manci 2, 38122 Trento",
-                "de": "Via Manci 2, 38122 Trento"
-              },
-              "image": {
-                "it": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655575/2-ita-IT/Azienda-per-il-turismo-Trento-Monte-Bondone-e-Valle-dei-Laghi1.",
-                "en": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655722/2-eng-GB/Azienda-per-il-turismo-Trento-Monte-Bondone-e-Valle-dei-Laghi1.",
-                "de": "http://trento.opencontent.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/info-utili/contatti/azienda-per-il-turismo-trento-monte-bondone-e-valle-dei-laghi/7656614-2-ger-DE/Azienda-per-il-turismo-Trento-Monte-Bondone-e-Valle-dei-Laghi."
-              },
-              "objectIds": [
-                "text.3008"
-              ],
-              "items": null,
-              "query": null,
-              "ref": null,
-              "type": "text",
-              "app": null
-            },
-            {
-              "id": "text.3009",
-              "name": {
-                "it": "Ufficio Turismo",
-                "en": "Ufficio Turismo",
-                "de": "Ufficio Turismo"
-              },
-              "description": {
-                "it": "Via Belenzani 19, 38122 Trento",
-                "en": "Via Belenzani 19, 38122 Trento",
-                "de": "Via Belenzani 19, 38122 Trento"
-              },
-              "image": {
-                "it": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655582/2-ita-IT/Ufficio-Turismo1.",
-                "en": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655729/2-eng-GB/Ufficio-Turismo1.",
-                "de": "http://trento.opencontent.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/info-utili/contatti/ufficio-turismo/7656626-2-ger-DE/Ufficio-Turismo."
-              },
-              "objectIds": [
-                "text.3009"
-              ],
-              "items": null,
-              "query": null,
-              "ref": null,
-              "type": "text",
-              "app": null
-            },
-            {
-              "id": "text.3010",
-              "name": {
-                "it": "URP – Ufficio Relazioni con il Pubblico",
-                "en": "URP – Ufficio Relazioni con il Pubblico",
-                "de": "URP – Ufficio Relazioni con il Pubblico"
-              },
-              "description": {
-                "it": "Via Manci 2, 38122 Trento",
-                "en": "Via Manci 2, 38122 Trento",
-                "de": "Via Manci 2, 38122 Trento"
-              },
-              "image": {
-                "it": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655589/2-ita-IT/URP-Ufficio-Relazioni-con-il-Pubblico1.",
-                "en": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655736/2-eng-GB/URP-Ufficio-Relazioni-con-il-Pubblico1.",
-                "de": "http://trento.opencontent.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/info-utili/contatti/urp-ufficio-relazioni-con-il-pubblico/7656638-2-ger-DE/URP-Ufficio-Relazioni-con-il-Pubblico."
-              },
-              "objectIds": [
-                "text.3010"
-              ],
-              "items": null,
-              "query": null,
-              "ref": null,
-              "type": "text",
-              "app": null
-            },
-            {
-              "id": "text.3011",
-              "name": {
-                "it": "Cooperativa HandiCREA - Sportello Handicap ",
-                "en": "Cooperativa HandiCREA - Disability services office",
-                "de": "Cooperativa HandiCREA – Schalter „Handicap“"
-              },
-              "description": {
-                "it": "Via San Martino 46, 38122 Trento",
-                "en": "Via San Martino 46, 38122 Trento",
-                "de": "Via San Martino 46, 38122 Trento"
-              },
-              "image": {
-                "it": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655596/2-ita-IT/Cooperativa-HandiCREA-Sportello-Handicap1.",
-                "en": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655743/2-eng-GB/Cooperativa-HandiCREA-Disability-services-office1.",
-                "de": "http://trento.opencontent.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/info-utili/contatti/cooperativa-handicrea-sportello-handicap/7656650-2-ger-DE/Cooperativa-HandiCREA-Schalter-Handicap."
-              },
-              "objectIds": [
-                "text.3011"
-              ],
-              "items": null,
-              "query": null,
-              "ref": null,
-              "type": "text",
-              "app": null
-            },
-            {
-              "id": "Text.3022",
-              "name": {
-                "it": "Emergenze",
-                "en": "Emergencies\n",
-                "de": "Notfall"
-              },
-              "description": null,
-              "image": {
-                "it": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655666/2-ita-IT/Emergenze1.",
-                "en": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655813/2-eng-GB/Emergencies1.",
-                "de": "http://trento.opencontent.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/info-utili/contatti/emergenze/7656770-2-ger-DE/Notfall."
-              },
-              "objectIds": [
-                "Text.3022"
-              ],
-              "items": null,
-              "query": null,
-              "ref": null,
-              "type": "text",
-              "app": null
-            }
-          ],
-          "query": null,
-          "ref": null,
-          "type": null,
-          "app": null
+      ]
+    }, {
+      "id":"mangiare_e_dormire",
+      "name":{ "it":"MANGIARE  E DORMIRE", "en":"HOTELS &  RESTAURANTS", "de":"ÜBERNACHTUNG  UND GASTRONOMIE" },
+      "items":[
+        { 
+          "id":"hotels",
+          "name":{ "it":"Dormire", "en":"Hotels", "de":"Übernachtung" },
+          "query":{ "type":"hotel" }
+        }, { 
+          "id":"restaurants",
+          "name":{ "it":"Mangiare", "en":"Restaurants", "de":"Gastronomie" },
+          "query":{ "type":"restaurant" }
         }
-      ],
-      "query": null,
-      "ref": null,
-      "type": null,
-      "app": null
+      ]
+    }, {
+      "id":"info_utili",
+      "name":{ "it":"INFO UTILI", "en":"USEFUL  INFORMATIONS", "de":"WEITERE  INFORMATIONEN" },
+      "items":[
+        { 
+          "id":"servizi",
+          "name":{ "it":"Servizi", "en":"Services", "de":"Dienstleistungen" },
+          "query":{ "type":"content", "classification":"Servizi" }
+        }, { 
+          "id":"contatti",
+          "name":{ "it":"Contatti", "en":"Contacts", "de":"Kontakten" },
+          "query":{ "type":"content", "classification":"Contatti" }
+        }
+      ]
     }
-  ],
-  "lastModified": 1409840592000
+  ]
 }

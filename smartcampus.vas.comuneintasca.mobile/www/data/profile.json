@@ -1,11 +1,30 @@
 {
-  "highlights":[
+  "id": "54088b79975a10f95cae0266",
+  "updateTime": 1409846137041,
+  "version": 3836,
+  "user": null,
+  "highlights": [
     {
-      "id":"h1", "type":"poi", "objectIds":[ "cultura.73" ]
-    }, {
-      "id":"h2", "type":"poi", "objectIds":[ "cultura.72" ]
-    }, {
-      "id":"h3", "type":"event", "objectIds":[ "c5f878d50c9271ae3dbabdbf282bc6bb" ]
+      "id": "text.3001",
+      "name": {
+        "it": "Introduzione",
+        "en": "Introduction",
+        "de": "Einführung"
+      },
+      "description": null,
+      "image": {
+        "it": "http://trento.opencontent.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/introduzione/7655526-3-ita-IT/Introduzione.jpg",
+        "en": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655673/3-eng-GB/Introduction1.jpg",
+        "de": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7656115/3-ger-DE/Einfuehrung1.jpg"
+      },
+      "objectIds": [
+        "text.3001"
+      ],
+      "items": null,
+      "query": null,
+      "ref": null,
+      "type": null,
+      "app": null
     }
   ],
   "navigationItems":[

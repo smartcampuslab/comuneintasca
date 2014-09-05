@@ -179,6 +179,7 @@ angular.module('ilcomuneintasca.services.db', [])
 
   return {
 		reset: function () { 
+      localStorage.cachedProfile=null;
       localStorage.lastSynced=lastSynced=-1;
 			localStorage.currentDbVersion=currentDbVersion=0;
 			return this.sync().then(function(){
@@ -318,6 +319,9 @@ angular.module('ilcomuneintasca.services.db', [])
                       } else if (contentTypeKey == 'poi') {
                         //category fix for opencontent data
                         switch (item.classification.it) {
+                          //case 'Altri siti di interesse storico artistico':
+                          //  item.classification.it='Edifici storici';
+                          //  break;
                           case 'Edificio storico':
                             item.classification.it='Edifici storici';
                             break;

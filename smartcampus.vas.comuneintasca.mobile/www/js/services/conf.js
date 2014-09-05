@@ -1,53 +1,67 @@
 angular.module('ilcomuneintasca.services.conf', [])
 
 .factory('Config', function ($q, $http, $window, $filter, $rootScope) {
-  var OPENCONTENT=false;
+  var OPENCONTENT=true;
   var DEVELOPMENT=true;
 
-  var SCHEMA_VERSION=88;
+  var SCHEMA_VERSION=89;
   var SYNC_HOST="tn";
   if (DEVELOPMENT) SYNC_HOST="vas-dev";
   var PROFILE="profile";
   if (OPENCONTENT) PROFILE="opencontent";
 
   function parseConfig(config) {
-    for (mgi=0; mgi<config.menu.length; mgi++) {
-      var group=config.menu[mgi];
-      for (ii=0; ii<group.items.length; ii++) {
-        var item=group.items[ii];
-        if (item.objectIds) {
-          item.path="/app/"+(item.view||"page")+"/"+item.type+"/"+item.objectIds.join(',');
-        } else if (item.query) {
-          item.path="/app/"+(item.view||"list")+"/"+item.query.type+(item.query.classification?"/"+item.query.classification:"");
-        } else {
-          item.path="/menu/"+group.id+"/"+ii;
-          console.log('unkown menu item: '+item.path);
+    if (config) {
+      if (config.menu) {
+        for (mgi=0; mgi<config.menu.length; mgi++) {
+          var group=config.menu[mgi];
+          if (group.items) {
+            for (ii=0; ii<group.items.length; ii++) {
+              var item=group.items[ii];
+              if (item.objectIds) {
+                item.path="/app/"+(item.view||"page")+"/"+item.type+"/"+item.objectIds.join(',');
+              } else if (item.query) {
+                item.path="/app/"+(item.view||"list")+"/"+item.query.type+(item.query.classification?"/"+item.query.classification:"");
+              } else {
+                item.path="/menu/"+$filter('cleanMenuID')(group.id)+"/"+ii;
+                console.log('unkown menu item: '+item.path);
+              }
+              //console.log('item['+group.id+']['+item.id+'].path="'+item.path+'"');
+            }
+          } else {
+            console.log('CONFIG.group["'+(group.id||group)+'"] has no items!');
+          }
         }
-        //console.log('item['+group.id+']['+item.id+'].path="'+item.path+'"');
+      } else {
+        console.log('CONFIG.menu is NULL!');
       }
-      for (ngi=0; ngi<config.navigationItems.length; ngi++) {
-        var item=config.navigationItems[ngi];
-        if (item.name) {
-          angular.forEach(item.name, function (txt, loc) {
-            if (item.name[loc]) item.name[loc]=txt.replace("  ","<br/>");
-          });
-        } else {
-          console.log('no name for button "'+(item.id||item)+'"');
+      if (config.menu) {
+       for (ngi=0; ngi<config.navigationItems.length; ngi++) {
+          var item=config.navigationItems[ngi];
+          if (item.name) {
+            angular.forEach(item.name, function (txt, loc) {
+              if (item.name[loc]) item.name[loc]=txt.replace("  ","<br/>");
+            });
+          } else {
+            console.log('no name for button "'+(item.id||item)+'"');
+          }
+          if (item.hasOwnProperty("app")) {
+            item.extraClasses="variant";
+          } else if (item.hasOwnProperty("ref")) {
+            item.path="/menu/"+item.ref;
+          }
         }
-        if (item.hasOwnProperty("app")) {
-          item.extraClasses="variant";
-        } else if (item.hasOwnProperty("ref")) {
-          item.path="/menu/"+item.ref;
-        }
+      } else {
+        console.log('CONFIG.navigationItems is NULL!');
       }
+    } else {
+      console.log('CONFIG is NULL!');
     }
     return config;
   }
   
   var globalProfile = $q.defer();
   if (!OPENCONTENT) {
-    localStorage.cachedProfile=null;
-
     $http.get('data/'+PROFILE+'.json').success(function(data, status, headers, config){
       globalProfile.resolve(parseConfig(data));
     }).error(function(data, status, headers, config){
@@ -506,12 +520,12 @@ angular.module('ilcomuneintasca.services.conf', [])
       //console.log('getProfile()');
       if (OPENCONTENT) {
         var profile = $q.defer();
-        if (localStorage.cachedProfile && localStorage.cachedProfile!='undefined') {
+        if (localStorage.cachedProfile && localStorage.cachedProfile!='undefined' && localStorage.cachedProfile!='null') {
           //console.log('using locally cached profile');
           //console.log('localStorage.cachedProfile: '+localStorage.cachedProfile);
-          return parseConfig(JSON.parse(localStorage.cachedProfile));
+          profile.resolve(parseConfig(JSON.parse(localStorage.cachedProfile)));
         } else {
-          //console.log('getting predefined profile');
+          console.log('getting predefined profile');
           $http.get('data/'+PROFILE+'.json').success(function(data, status, headers, config){
             localStorage.cachedProfile=JSON.stringify(data);
             profile.resolve(parseConfig(data));

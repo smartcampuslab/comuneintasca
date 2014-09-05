@@ -1,47 +1,41 @@
 angular.module('ilcomuneintasca.services.conf', [])
 
-.factory('Config', function ($q, $http, $window, $filter) {
-  var SCHEMA_VERSION=86;
+.factory('Config', function ($q, $http, $window, $filter, $rootScope) {
+  var OPENCONTENT=true;
+  var DEVELOPMENT=true;
+
+  var SCHEMA_VERSION=88;
   var SYNC_HOST="tn";
+  if (DEVELOPMENT) SYNC_HOST="vas-dev";
   var PROFILE="profile";
-  PROFILE="opencontent";
-  
-  var profile = $q.defer();
-  $http.get('data/'+PROFILE+'.json').success(function(data, status, headers, config){
-    for (ngi=0; ngi<data.navigationItems.length; ngi++) {
-      var item=data.navigationItems[ngi];
-      angular.forEach(item.name, function (txt, loc) {
-        if (item.name[loc]) item.name[loc]=txt.replace("  ","<br/>");
-      });
-      if (item.hasOwnProperty("app")) {
-        item.extraClasses="variant";
-      } else if (item.hasOwnProperty("ref")) {
-        item.path="/menu/"+item.ref;
-      }
-    }
-    /*
-    for (mgi=0; mgi<data.menu.length; mgi++) {
-      var group=data.menu[mgi];
-      for (ii=0; ii<group.items.length; ii++) {
-        var item=group.items[ii];
-        if (item.objectIds) {
-          item.path="/app/"+(item.view||"page")+"/"+item.type+"/"+item.objectIds.join(',');
-        } else if (item.query) {
-          item.path="/app/"+(item.view||"list")+"/"+item.query.type+(item.query.classification?"/"+item.query.classification:"");
-        } else {
-          item.path="/menu/"+group.id+"/"+ii;
-          console.log('unkown menu item: '+item.path);
+  if (OPENCONTENT) PROFILE="opencontent";
+
+  var globalProfile = $q.defer();
+  if (!OPENCONTENT) {
+    localStorage.cachedProfile=null;
+
+    $http.get('data/'+PROFILE+'.json').success(function(data, status, headers, config){
+      for (mgi=0; mgi<data.menu.length; mgi++) {
+        var group=data.menu[mgi];
+        for (ii=0; ii<group.items.length; ii++) {
+          var item=group.items[ii];
+          if (item.objectIds) {
+            item.path="/app/"+(item.view||"page")+"/"+item.type+"/"+item.objectIds.join(',');
+          } else if (item.query) {
+            item.path="/app/"+(item.view||"list")+"/"+item.query.type+(item.query.classification?"/"+item.query.classification:"");
+          } else {
+            item.path="/menu/"+group.id+"/"+ii;
+            console.log('unkown menu item: '+item.path);
+          }
+          //console.log('item['+group.id+']['+item.id+'].path="'+item.path+'"');
         }
-        //console.log('item['+group.id+']['+item.id+'].path="'+item.path+'"');
       }
-    }
-    */
-    profile.resolve(data);
-  }).error(function(data, status, headers, config){
-    console.log('error getting config json!');
-    profile.reject();
-  });
-  
+      globalProfile.resolve(data);
+    }).error(function(data, status, headers, config){
+      console.log('error getting config json!');
+      globalProfile.reject();
+    });
+  }
   var keys = {
     'settings_data_clean': {
       it: 'Elimina file temporenei',
@@ -471,6 +465,9 @@ angular.module('ilcomuneintasca.services.conf', [])
   };
 
   return {
+    opencontent: function () {
+      return OPENCONTENT;
+    },
     getLang: function () {
       var browserLanguage = '';
       // works for earlier version of Android (2.3.x)
@@ -486,7 +483,42 @@ angular.module('ilcomuneintasca.services.conf', [])
       return lang;
     },
     getProfile: function () {
-      return profile.promise;
+      //console.log('getProfile()');
+      if (OPENCONTENT) {
+        var profile = $q.defer();
+        if (localStorage.cachedProfile && localStorage.cachedProfile!='undefined') {
+          //console.log('using locally cached profile');
+          //console.log('localStorage.cachedProfile: '+localStorage.cachedProfile);
+          profile.resolve(JSON.parse(localStorage.cachedProfile));
+        } else {
+          //console.log('getting predefined profile');
+          $http.get('data/'+PROFILE+'.json').success(function(data, status, headers, config){
+            for (ngi=0; ngi<data.navigationItems.length; ngi++) {
+              var item=data.navigationItems[ngi];
+              if (item.name) {
+                angular.forEach(item.name, function (txt, loc) {
+                  if (item.name[loc]) item.name[loc]=txt.replace("  ","<br/>");
+                });
+              } else {
+                console.log('no name for button "'+(item.id||item)+'"');
+              }
+              if (item.hasOwnProperty("app")) {
+                item.extraClasses="variant";
+              } else if (item.hasOwnProperty("ref")) {
+                item.path="/menu/"+item.ref;
+              }
+            }
+            localStorage.cachedProfile=JSON.stringify(data);
+            profile.resolve(data);
+          }).error(function(data, status, headers, config){
+            console.log('error getting config json!');
+            profile.reject();
+          });
+        }
+        return profile.promise;
+      } else {
+        return globalProfile.promise;
+      }
     },
     getProfileExtensions: function() {
       return {
@@ -603,15 +635,20 @@ angular.module('ilcomuneintasca.services.conf', [])
       return this.menu().then(function(menu) {
         for (gi=0; gi<menu.length; gi++) {
           var group=menu[gi];
-          for (sgi=0; sgi<group.items.length; sgi++) {
-            var sg=group.items[sgi];
-            if ( sg.query && sg.query.type==type && ( (!sg.query.classification) || (classification&&classification==sg.query.classification) ) ) {
-              sg._parent=group;
-              return sg;
-            } else if (sg.type && sg.type==type && classification==null) {
-              sg._parent=group;
-              return sg;
+          if (group.items) {
+            for (sgi=0; sgi<group.items.length; sgi++) {
+              var sg=group.items[sgi];
+              if ( sg.query && sg.query.type==type && ( (!sg.query.classification) || (classification&&classification==sg.query.classification) ) ) {
+                sg._parent=group;
+                return sg;
+              } else if (sg.type && sg.type==type && classification==null) {
+                sg._parent=group;
+                return sg;
+              }
             }
+          //} else if (group.objectIds) {
+          } else {
+            throw "no items for group: "+group.id;
           }
         }
         return null;

@@ -49,15 +49,17 @@ public class RestaurantsScript extends OpenContentScript {
 			builder.setClassification(cat);
 		}
 
-		builder.setSubtitle(getI18NStringValue(i18n, FIELDS, "abstract", VALUE));
+		builder.setDescription(getI18NStringValue(i18n, FIELDS, "abstract", VALUE));
 
 		builder.setAddress(getI18NStringValue(i18n, FIELDS, "indirizzo", VALUE));
 		
 		Object gps = getRecValue(getMap(i18n,DEFAULT_LANGUAGE), FIELDS, "gps", STRING_VALUE);
 		if (gps != null && gps instanceof String) {
-			double latlon[] = extractGPS((String)gps);
-			builder.setLat(latlon[0]);
-			builder.setLon(latlon[1]);
+			Double latlon[] = extractGPS((String)gps);
+			if (latlon != null) {
+				builder.setLat(latlon[0]);
+				builder.setLon(latlon[1]);
+			}
 		}
 		
 

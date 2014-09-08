@@ -215,16 +215,19 @@ public class OpenContentScript {
 		return res;
 	}
 
-	protected double[] extractGPS(String gps) {
-		double latlon[] = new double[2];
+	protected Double[] extractGPS(String gps) {
+		Double latlon[] = new Double[2];
 		String coords[] = gps.replace("#", "").split("\\|");
 		try {
-
 			latlon[0] = Double.parseDouble(coords[1]);
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			return null;
+		}
 		try {
 			latlon[1] = Double.parseDouble(coords[2]);
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			return null;
+		}
 		return latlon;
 	}
 

@@ -25,9 +25,9 @@ angular.module('ilcomuneintasca.controllers.home', [])
     }
   };
   $scope.gotoButton = function (btn) {
-    if (btn.hasOwnProperty('app')) {
+    if (btn.app) {
       $scope.openApp(btn.name,btn.app);
-    } else if (btn.hasOwnProperty('ref')) {
+    } else if (btn.ref) {
       if (btn.ref=='itineraries' || btn.ref=='favorites') {
         $rootScope.goto(btn.ref);
       } else {

@@ -347,7 +347,8 @@ angular.module('ilcomuneintasca.services.db', [])
                         });
                       } else {
                         if (contentTypeKey == 'content') {
-                          classification = item.classification;
+                          if (typeof item.classification === 'object') classification = item.classification.it;
+                          else classification = item.classification.it;
 
                         } else if (contentTypeKey == 'mainevent') {
                           classification = item.classification.it;

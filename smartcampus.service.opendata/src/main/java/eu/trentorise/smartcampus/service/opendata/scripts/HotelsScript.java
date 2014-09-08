@@ -54,9 +54,11 @@ public class HotelsScript extends OpenContentScript {
 		
 		Object gps = getRecValue(getMap(i18n,DEFAULT_LANGUAGE), FIELDS, "gps", STRING_VALUE);
 		if (gps != null && gps instanceof String) {
-			double latlon[] = extractGPS((String)gps);
-			builder.setLat(latlon[0]);
-			builder.setLon(latlon[1]);
+			Double latlon[] = extractGPS((String)gps);
+			if (latlon != null) {
+				builder.setLat(latlon[0]);
+				builder.setLon(latlon[1]);
+			}
 		}
 		
 		Object image = getRecValue(getMap(i18n,DEFAULT_LANGUAGE), FIELDS, "image", STRING_VALUE);

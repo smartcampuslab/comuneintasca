@@ -41,9 +41,9 @@ public class CulturaScript extends OpenContentScript {
 		
 		builder.setTitle(getI18NStringValue(i18n, FIELDS, "titolo", VALUE));
 		
-		builder.setDescription(getI18NStringValue(i18n, FIELDS, "descrizione", VALUE));
+		builder.setDescription(getI18NStringValue(i18n, FIELDS, "abstract", VALUE));
 
-		builder.setSubtitle(getI18NStringValue(i18n, FIELDS, "abstract", VALUE));
+//		builder.setSubtitle(getI18NStringValue(i18n, FIELDS, "abstract", VALUE));
 
 		builder.setAddress(getI18NStringValue(i18n, FIELDS, "indirizzo", VALUE));
 		
@@ -57,9 +57,11 @@ public class CulturaScript extends OpenContentScript {
 		
 		Object gps = getRecValue(getMap(i18n,DEFAULT_LANGUAGE), FIELDS, "gps", STRING_VALUE);
 		if (gps != null && gps instanceof String) {
-			double latlon[] = extractGPS((String)gps);
-			builder.setLat(latlon[0]);
-			builder.setLon(latlon[1]);
+			Double latlon[] = extractGPS((String)gps);
+			if (latlon != null) {
+				builder.setLat(latlon[0]);
+				builder.setLon(latlon[1]);
+			}
 		}
 
 		Object image = getRecValue(getMap(i18n,DEFAULT_LANGUAGE), FIELDS, "image", STRING_VALUE);
@@ -76,7 +78,7 @@ public class CulturaScript extends OpenContentScript {
 			builder.setEmail((String)email);
 		}
 		
-		Object fullName = getRecValue(getMap(i18n,DEFAULT_LANGUAGE), FIELDS, "contactFullName", VALUE);
+		Object fullName = getRecValue(getMap(i18n,DEFAULT_LANGUAGE), FIELDS, "contact_full_name", VALUE);
 		if (fullName != null && image instanceof String) {
 			builder.setContactFullName((String)fullName);
 		}		

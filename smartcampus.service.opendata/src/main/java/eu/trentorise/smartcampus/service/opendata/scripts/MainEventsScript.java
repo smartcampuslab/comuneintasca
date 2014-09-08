@@ -21,7 +21,6 @@ import java.util.Map;
 import com.google.protobuf.Message;
 
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nMainEvent;
-import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString;
 
 public class MainEventsScript extends OpenContentScript {
 
@@ -41,25 +40,19 @@ public class MainEventsScript extends OpenContentScript {
 		
 		builder.setTitle(getI18NStringValue(i18n, FIELDS, "titolo", VALUE));
 		
-		builder.setDescription(getI18NStringValue(i18n, FIELDS, "descrizione", VALUE));
+		builder.setDescription(getI18NStringValue(i18n, FIELDS, "abstract", VALUE));
 
-		builder.setSubtitle(getI18NStringValue(i18n, FIELDS, "abstract", VALUE));
+//		builder.setSubtitle(getI18NStringValue(i18n, FIELDS, "abstract", VALUE));
 
 		builder.setAddress(getI18NStringValue(i18n, FIELDS, "indirizzo", VALUE));
 		
-		I18nString cat = getI18NStringValue(i18n, FIELDS, "tipologia_servizio", STRING_VALUE);
-		if (!cat.hasIt()) {
-			cat = getI18NStringValue(i18n, FIELDS, "tipo_luogo", STRING_VALUE);
-		}
-		if (cat.hasIt()) {
-			builder.setClassification(cat);
-		}
-		
 		Object gps = getRecValue(getMap(i18n,DEFAULT_LANGUAGE), FIELDS, "gps", STRING_VALUE);
 		if (gps != null && gps instanceof String) {
-			double latlon[] = extractGPS((String)gps);
-			builder.setLat(latlon[0]);
-			builder.setLon(latlon[1]);
+			Double latlon[] = extractGPS((String)gps);
+			if (latlon != null) {
+				builder.setLat(latlon[0]);
+				builder.setLon(latlon[1]);
+			}
 		}
 
 		Object image = getRecValue(getMap(i18n,DEFAULT_LANGUAGE), FIELDS, "image", STRING_VALUE);

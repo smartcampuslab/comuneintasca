@@ -47,7 +47,7 @@ public class ItineraryScript extends OpenContentScript {
 		
 		builder.setInfo(getI18NStringValue(i18n, FIELDS, "info", VALUE));
 		
-		List<String> steps = (List<String>)getRecValue(getMap(i18n,DEFAULT_LANGUAGE), FIELDS, "steps", VALUE, OBJECT_NAME);
+		List<String> steps = (List<String>)getRecValue(getMap(i18n,DEFAULT_LANGUAGE), FIELDS, "steps", VALUE, "objectRemoteId");
 		builder.addAllSteps(steps);
 
 		Object image = getRecValue(getMap(i18n,DEFAULT_LANGUAGE), FIELDS, "image", STRING_VALUE);

@@ -184,7 +184,7 @@ angular.module('ilcomuneintasca.services.db', [])
 		reset: function () { 
       localStorage.cachedProfile=null;
       localStorage.lastSynced=lastSynced=-1;
-			localStorage.currentDbVersion=currentDbVersion=0;
+			localStorage.currentDbVersion=currentDbVersion=1;
 			return this.sync().then(function(){
         console.log('DB reset completed.');
       });
@@ -230,7 +230,7 @@ angular.module('ilcomuneintasca.services.db', [])
               currentSyncOptions = remoteSyncOptions;
               currentSyncOptions.url = remoteSyncURL + currentDbVersion;
             }
-            //console.log('currentSyncOptions: ' + JSON.stringify(currentSyncOptions));
+            console.log('currentSyncOptions: ' + JSON.stringify(currentSyncOptions));
 
             $http.defaults.headers.common.Accept = 'application/json';
             $http.defaults.headers.post = { 'Content-Type': 'application/json' };

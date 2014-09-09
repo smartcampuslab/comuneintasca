@@ -25,7 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import eu.trentorise.smartcampus.comuneintasca.model.ConfigObject;
@@ -39,12 +39,12 @@ public class ConfigProcessor {
 	private BasicObjectSyncStorage storage;
 
 	@Value("${configobject.file}")
-	private Resource configFile;
+	private ClassPathResource configFile;
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Scheduled(fixedRate = 60000)
 	public void updateMessages() {
-		if (configFile == null) return;
+		if (configFile == null || true) return;
 
 		try {
 			Long lastModified = configFile.lastModified();

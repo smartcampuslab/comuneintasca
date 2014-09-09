@@ -152,15 +152,25 @@ angular.module('ilcomuneintasca.controllers.common', [])
       if ($stateParams.itemId != '') {
         for (idx in items) {
           var item=items[idx];
+          if (item.type == 'text') item.type = 'content';
+          // temporary fix
           var type=item.type||'content';
+          
           console.log('item('+type+'): '+JSON.stringify(item));
-          if (item.id==$stateParams.itemId) {
+          if (item.objectIds.join(',')==$stateParams.itemId) {
             console.log('QUELO! '+item.objectIds.join(','));
+            $scope.title = $filter('translate')(item.name);
             $scope.gotdata = DatiDB.get(type, item.objectIds.join(',')).then(function (data) {
-              console.log('highlight ('+data.dbType+') gotdata!');
-              $scope.template = 'templates/page/' + data.dbType + '.html';
-              $scope.obj = data;
-              $scope.title = $filter('translate')(data.title);
+              var dbType = null;
+              if (data.hasOwnProperty('length')) {
+                dbType =  data[0].dbType;
+              } else {
+                dbType =  data.dbType;
+                data = [data];
+              }
+              $scope.results = data;
+              console.log('highlight ('+dbType+') gotdata!');
+              $scope.template = 'templates/page/' + dbType + '.html';
             });
           }
         }

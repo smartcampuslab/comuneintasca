@@ -98,13 +98,13 @@
 										<parameters />
 									</defaultParameters>
 									<statusParameters>
-										<storable>true</storable>
+										<storable>false</storable>
 										<automaticRefresh>true</automaticRefresh>
-										<delay>#{1000L*15}</delay>
+										<delay>#{1000L*10}</delay>
 										<period>#{1000L*60*5}</period>
 										<periodOnDefault>#{1000L*60*5}</periodOnDefault>
-										<periodOnFailure>#{1000L*60*5}</periodOnFailure>
-										<cacheValidityPeriod>#{1000L*60*1}</cacheValidityPeriod>
+										<periodOnFailure>#{11000L*60*10}</periodOnFailure>
+										<cacheValidityPeriod>#{1000L*60}</cacheValidityPeriod>
 										<validityPeriod>#{1000L*60*60*24*30}</validityPeriod>
 										<serviceBlocked>false</serviceBlocked>
 										<dataFlowInvokable>true</dataFlowInvokable>

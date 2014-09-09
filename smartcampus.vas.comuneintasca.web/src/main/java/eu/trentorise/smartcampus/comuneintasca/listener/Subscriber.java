@@ -68,7 +68,7 @@ public class Subscriber {
 			params.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754330/list/limit/1000");
 			client.subscribeService(SERVICE_OD, METHOD_ITINERARI, params);
 
-			client.subscribeService(SERVICE_YMIR, METHOD_EVENTS, params);
+//			client.subscribeService(SERVICE_YMIR, METHOD_EVENTS, params);
 		} catch (InvocationException e) {
 			logger.error("Failed to subscribe for service events: " + e.getMessage());
 		}

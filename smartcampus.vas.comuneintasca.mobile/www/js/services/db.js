@@ -127,7 +127,7 @@ angular.module('ilcomuneintasca.services.db', [])
   } else {
     //console.log('web db...');
     dbObj = window.openDatabase('Trento', '1.0', 'Trento - Il Comune in Tasca', 5 * 1024 * 1024);
-    remoteSyncOptions = localSyncOptions;
+//    remoteSyncOptions = localSyncOptions;
     dbopenDeferred.resolve(dbObj);
   }
   dbopen = dbopenDeferred.promise;
@@ -184,7 +184,7 @@ angular.module('ilcomuneintasca.services.db', [])
 		reset: function () { 
       localStorage.cachedProfile=null;
       localStorage.lastSynced=lastSynced=-1;
-			localStorage.currentDbVersion=currentDbVersion=0;
+			localStorage.currentDbVersion=currentDbVersion=1;
 			return this.sync().then(function(){
         console.log('DB reset completed.');
       });
@@ -230,7 +230,7 @@ angular.module('ilcomuneintasca.services.db', [])
               currentSyncOptions = remoteSyncOptions;
               currentSyncOptions.url = remoteSyncURL + currentDbVersion;
             }
-            //console.log('currentSyncOptions: ' + JSON.stringify(currentSyncOptions));
+            console.log('currentSyncOptions: ' + JSON.stringify(currentSyncOptions));
 
             $http.defaults.headers.common.Accept = 'application/json';
             $http.defaults.headers.post = { 'Content-Type': 'application/json' };
@@ -347,7 +347,8 @@ angular.module('ilcomuneintasca.services.db', [])
                         });
                       } else {
                         if (contentTypeKey == 'content') {
-                          classification = item.classification;
+                          if (typeof item.classification === 'object') classification = item.classification.it;
+                          else classification = item.classification.it;
 
                         } else if (contentTypeKey == 'mainevent') {
                           classification = item.classification.it;

@@ -4,7 +4,7 @@ angular.module('ilcomuneintasca.services.conf', [])
   var OPENCONTENT=true;
   var DEVELOPMENT=true;
 
-  var SCHEMA_VERSION=89;
+  var SCHEMA_VERSION=90;
   var SYNC_HOST="tn";
   if (DEVELOPMENT) SYNC_HOST="vas-dev";
   var PROFILE="profile";

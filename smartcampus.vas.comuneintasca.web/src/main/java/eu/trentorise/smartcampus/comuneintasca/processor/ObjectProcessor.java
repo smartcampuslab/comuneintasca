@@ -64,12 +64,12 @@ public class ObjectProcessor {
 	@PostConstruct
 	public void init() {
 		try {
-			updatePOIs();
-			updateContents();
-			updateRestaurants();
-			updateHotels();
-			updateItineraries();
-			updateMainEvents();
+//			updatePOIs();
+			//updateContents();
+//			updateRestaurants();
+//			updateHotels();
+			//updateItineraries();
+//			updateMainEvents();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -377,7 +377,8 @@ public class ObjectProcessor {
 		ContentObject p = new ContentObject();
 		p.setId(row.get(0));
 		p.setCategory(row.get(2));
-		p.setClassification(row.get(3));
+		// changed
+//		p.setClassification(row.get(3));
 		
 		Map<String,String> titles = new HashMap<String, String>();
 		titles.put("it", row.get(4));
@@ -494,7 +495,8 @@ public class ObjectProcessor {
 			p.setDuration(Integer.parseInt(row.get(12)));
 		}
 		if (!StringUtils.isEmpty(row.get(13))) {
-			p.setDifficulty(row.get(13));
+			// changed
+//			p.setDifficulty(row.get(13));
 		}
 
 		Map<String,String> infos = new HashMap<String, String>();

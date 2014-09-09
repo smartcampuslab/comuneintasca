@@ -69,8 +69,10 @@
 	</bean>
 	<bean id="homeProcessor" class="eu.trentorise.smartcampus.comuneintasca.processor.HomeProcessor">
 	</bean>
+	<!-- 
 	<bean id="configProcessor" class="eu.trentorise.smartcampus.comuneintasca.processor.ConfigProcessor">
 	</bean>
+		 -->
 	
 	<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
 		<property name="brokerURL" value="${smartcampus.vas.web.activeMQ.brokerURL}" />
@@ -84,9 +86,14 @@
 		</constructor-arg>
 		<property name="clientId" value="vas_comuneintasca_subscriber" />
 		<property name="listener" ref="eventProcessor" />
-		
-		
 	</bean>
+	
+	<bean id="serviceBusAdminClient" class="it.sayservice.platform.client.jms.JMSServiceBusAdminClient" scope="singleton" destroy-method="destroy">
+		<constructor-arg>
+			<ref bean="connectionFactory" />
+		</constructor-arg>
+	</bean>	
+	
 	<bean id="serviceUpdateSubscriber" class="eu.trentorise.smartcampus.comuneintasca.listener.Subscriber">
 		<constructor-arg ref="serviceBusClient" />
 	</bean>

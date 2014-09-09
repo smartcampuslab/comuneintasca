@@ -15,13 +15,16 @@
  ******************************************************************************/
 package eu.trentorise.smartcampus.comuneintasca.processor;
 
+import it.sayservice.platform.client.ServiceBusAdminClient;
 import it.sayservice.platform.client.ServiceBusClient;
 import it.sayservice.platform.client.ServiceBusListener;
+import it.sayservice.platform.core.message.Core.ActionInvokeParameters;
 
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -29,13 +32,21 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.FileCopyUtils;
 
 import com.google.protobuf.ByteString;
 
+import eu.trentorise.smartcampus.comuneintasca.data.BadDataException;
+import eu.trentorise.smartcampus.comuneintasca.data.GeoTimeObjectSyncStorage;
+import eu.trentorise.smartcampus.comuneintasca.data.GeoTimeSyncObjectBean;
+import eu.trentorise.smartcampus.comuneintasca.data.MissingDataException;
 import eu.trentorise.smartcampus.comuneintasca.listener.Subscriber;
 import eu.trentorise.smartcampus.comuneintasca.model.ConfigObject;
 import eu.trentorise.smartcampus.comuneintasca.model.ContentObject;
@@ -43,12 +54,13 @@ import eu.trentorise.smartcampus.comuneintasca.model.EventObject;
 import eu.trentorise.smartcampus.comuneintasca.model.HotelObject;
 import eu.trentorise.smartcampus.comuneintasca.model.ItineraryObject;
 import eu.trentorise.smartcampus.comuneintasca.model.MainEventObject;
+import eu.trentorise.smartcampus.comuneintasca.model.MenuItem;
+import eu.trentorise.smartcampus.comuneintasca.model.MenuItemQuery;
 import eu.trentorise.smartcampus.comuneintasca.model.Organization;
 import eu.trentorise.smartcampus.comuneintasca.model.POIObject;
 import eu.trentorise.smartcampus.comuneintasca.model.RestaurantObject;
 import eu.trentorise.smartcampus.presentation.common.exception.DataException;
 import eu.trentorise.smartcampus.presentation.data.BasicObject;
-import eu.trentorise.smartcampus.presentation.storage.sync.BasicObjectSyncStorage;
 import eu.trentorise.smartcampus.service.festivaleconomia.data.message.Festivaleconomia.Trans;
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.ConfigData;
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.Evento;
@@ -63,21 +75,53 @@ import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nTest
 public class EventProcessorImpl implements ServiceBusListener {
 
 	@Autowired
-	private BasicObjectSyncStorage storage;
+	private GeoTimeObjectSyncStorage storage;
 
 	@Autowired
 	ServiceBusClient client;
+	
+	@Autowired
+	ServiceBusAdminClient adminClient;	
 
-	private static List<String> langs = Arrays.asList(new String[] { "it", "en", "de"});
+	private static List<String> langs = Arrays.asList(new String[] { "it", "en", "de" });
+	private static List<String> typeValue = Arrays.asList(new String[] { "event", "ristorante", "accomodation", "mainevent" });
+	private static List<String> classificationValue = Arrays.asList(new String[] { "tipo_evento", "tipo_locale", "tipologia_hotel", "" });
+	private static String typePrefix = "eu.trentorise.smartcampus.comuneintasca.model.";
+	private static List<String> toTypeValue = Arrays.asList(new String[] { "EventObject", "RestaurantObject", "HotelObject", "MainEventObject" });	
 
 	private static Log logger = LogFactory.getLog(EventProcessorImpl.class);
+	
+	private boolean updating = false;
 
-	public EventProcessorImpl() {
+	@Autowired
+	@Value("${imageBaseURL}")
+	private String imagePrefix;
+	
+	public EventProcessorImpl() throws Exception {
 	}
 
+	@PostConstruct
+	private void initConfig() throws Exception {
+		logger.info("Initializating config.");
+		List<ConfigObject> oldList = storage.getObjectsByType(ConfigObject.class);
+		ConfigObject old = null;
+		if (oldList == null || oldList.isEmpty()) {
+			logger.info("Config non found, reading from file.");
+			InputStreamReader isr = new InputStreamReader(getClass().getResourceAsStream("/profile.json"), Charset.forName("UTF-8"));
+			String json = FileCopyUtils.copyToString(isr);
+			ConfigObject configObj = new ObjectMapper().readValue(json, ConfigObject.class);
+			configObj.setLastModified(0L);
+			storage.storeObject(configObj);			
+		}
+	}
+	
 	@Override
 	public void onServiceEvents(String serviceId, String methodName, String subscriptionId, List<ByteString> data) {
-		System.out.println(new Date() + " -> " + methodName + "@" + serviceId);
+		logger.info(methodName + "@" + serviceId);
+		if (updating) {
+			logger.info("skipping while updating");
+			return;
+		}
 		try {
 			if (Subscriber.SERVICE_OD.equals(serviceId)) {
 				if (Subscriber.METHOD_EVENTS.equals(methodName)) {
@@ -97,13 +141,13 @@ public class EventProcessorImpl implements ServiceBusListener {
 				}
 				if (Subscriber.METHOD_MAINEVENTS.equals(methodName)) {
 					updateMainEvents(data);
-				}		
+				}
 				if (Subscriber.METHOD_TESTI.equals(methodName)) {
 					updateTesti(data);
-				}		
+				}
 				if (Subscriber.METHOD_ITINERARI.equals(methodName)) {
 					updateItinerari(data);
-				}					
+				}
 
 			}
 			if (Subscriber.SERVICE_YMIR.equals(serviceId)) {
@@ -147,14 +191,20 @@ public class EventProcessorImpl implements ServiceBusListener {
 
 		ConfigObject config = mapper.readValue(d, ConfigObject.class);
 
+		completeConfig(config, true);
+//		buildQueryClassification(config);
+		replaceObjectIds(config);
+
 		List<ConfigObject> oldList = storage.getObjectsByType(ConfigObject.class);
 		ConfigObject old = null;
 		if (oldList != null && !oldList.isEmpty()) {
 			old = oldList.get(0);
 			if (old.getLastModified() < cd.getDateModified()) {
-				config.setId(old.getId());
-				config.setLastModified(cd.getDateModified());
-				storage.storeObject(config);
+//				config.setId(old.getId());
+//				config.setLastModified(cd.getDateModified());
+				old.setLastModified(cd.getDateModified());
+				old.setHighlights(config.getHighlights());
+				storage.storeObject(old);
 			}
 		} else {
 			config.setLastModified(cd.getDateModified());
@@ -162,6 +212,10 @@ public class EventProcessorImpl implements ServiceBusListener {
 		}
 
 	}
+	
+//	private void mergeConfig(ConfigObject oldConf, ConfigObject newConf) {
+//		oldConf.setHighlights(newConf.getHighlights());
+//	}
 
 	private void updateEvents(List<ByteString> data) throws Exception {
 		Set<String> oldIds = getOldIds("opendata.trento");
@@ -186,7 +240,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 				no.setEventTiming(Collections.singletonMap("it", bt.getEventTiming()));
 				no.setEventType(bt.getCategory());
 				no.setFromTime(bt.getFromTime());
-				no.setImage(bt.getImage());
+				no.setImage(getImageURL(bt.getImage()));
 				no.setInfo(Collections.singletonMap("it", bt.getInfo()));
 				no.setLastModified(bt.getLastModified());
 				List<Organization> orgs = new ArrayList<Organization>();
@@ -247,10 +301,12 @@ public class EventProcessorImpl implements ServiceBusListener {
 
 				no.setDescription(toMap(bt.getDescription()));
 				no.setEquipment(toMap(bt.getEquipment()));
-				no.setImage(bt.getImage());
+				no.setImage(getImageURL(bt.getImage()));
 				no.setInfo(toMap(bt.getInfo()));
 				no.setLastModified(bt.getLastModified());
-				no.setLocation(new double[] { bt.getLat(), bt.getLon() });
+				if (bt.hasLat() && bt.hasLon()) {
+					no.setLocation(new double[] { bt.getLat(), bt.getLon() });
+				}
 				no.setPrices(toMap(bt.getPrices()));
 				no.setShortTitle(toMap(bt.getShortTitle()));
 				no.setSubtitle(toMap(bt.getSubtitle()));
@@ -258,6 +314,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 				no.setTitle(toMap(bt.getTitle()));
 				no.setUpdateTime(System.currentTimeMillis());
 				no.setUrl(bt.getUrl());
+				no.setObjectId(bt.getObjectId());
 
 				storage.storeObject(no);
 			}
@@ -294,14 +351,17 @@ public class EventProcessorImpl implements ServiceBusListener {
 				contacts.put("fax", bt.getFax());
 				no.setContacts(contacts);
 
-				no.setImage(bt.getImage());
+				no.setImage(getImageURL(bt.getImage()));
 				no.setLastModified(bt.getLastModified());
-				no.setLocation(new double[] { bt.getLat(), bt.getLon() });
+				if (bt.hasLat() && bt.hasLon()) {
+					no.setLocation(new double[] { bt.getLat(), bt.getLon() });
+				}
 				no.setStars(bt.getStars());
-				no.setSubtitle(toMap(bt.getSubtitle()));
+				no.setDescription(toMap(bt.getSubtitle()));
 				no.setTitle(toMap(bt.getTitle()));
 				no.setUpdateTime(System.currentTimeMillis());
 				no.setUrl(bt.getUrl());
+				no.setObjectId(bt.getObjectId());
 
 				storage.storeObject(no);
 			}
@@ -338,15 +398,18 @@ public class EventProcessorImpl implements ServiceBusListener {
 				no.setContacts(contacts);
 
 				no.setDescription(toMap(bt.getDescription()));
-				no.setImage(bt.getImage());
+				no.setImage(getImageURL(bt.getImage()));
 				no.setLastModified(bt.getLastModified());
-				no.setLocation(new double[] { bt.getLat(), bt.getLon() });
+				if (bt.hasLat() && bt.hasLon()) {
+					no.setLocation(new double[] { bt.getLat(), bt.getLon() });
+				}
 
 				no.setSubtitle(toMap(bt.getSubtitle()));
 				no.setTitle(toMap(bt.getTitle()));
 				no.setUpdateTime(System.currentTimeMillis());
 				no.setUrl(bt.getUrl());
 				no.setContactFullName(bt.getContactFullName());
+				no.setObjectId(bt.getObjectId());
 
 				storage.storeObject(no);
 			}
@@ -357,7 +420,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 		}
 
 	}
-	
+
 	private void updateMainEvents(List<ByteString> data) throws Exception {
 		Set<String> oldIds = getOldIds(MainEventObject.class);
 
@@ -383,18 +446,21 @@ public class EventProcessorImpl implements ServiceBusListener {
 				no.setContacts(contacts);
 
 				no.setDescription(toMap(bt.getDescription()));
-				no.setImage(bt.getImage());
+				no.setImage(getImageURL(bt.getImage()));
 				no.setLastModified(bt.getLastModified());
-				no.setLocation(new double[] { bt.getLat(), bt.getLon() });
+					if (bt.hasLat() && bt.hasLon()) {
+						no.setLocation(new double[] { bt.getLat(), bt.getLon() });
+					}
 
 				no.setSubtitle(toMap(bt.getSubtitle()));
 				no.setTitle(toMap(bt.getTitle()));
 				no.setUpdateTime(System.currentTimeMillis());
 				no.setUrl(bt.getUrl());
-				
+
 				no.setFromDate(bt.getFromDate());
 				no.setToDate(bt.getToDate());
 				no.setEventDateDescription(toMap(bt.getDateDescription()));
+				no.setObjectId(bt.getObjectId());
 
 				storage.storeObject(no);
 			}
@@ -404,8 +470,8 @@ public class EventProcessorImpl implements ServiceBusListener {
 			storage.deleteObjectById(s);
 		}
 
-	}	
-	
+	}
+
 	private void updateTesti(List<ByteString> data) throws Exception {
 		Set<String> oldIds = getOldIds(ContentObject.class);
 
@@ -421,11 +487,10 @@ public class EventProcessorImpl implements ServiceBusListener {
 				ContentObject no = new ContentObject();
 				no.setId(bt.getId());
 				no.setCategory("text");
-				// TODO: classification
 				no.setClassification(toMap(bt.getClassification()));
 
 				no.setDescription(toMap(bt.getDescription()));
-				no.setImage(bt.getImage());
+				no.setImage(getImageURL(bt.getImage()));
 				no.setLastModified(bt.getLastModified());
 
 				no.setSubtitle(toMap(bt.getSubtitle()));
@@ -433,7 +498,8 @@ public class EventProcessorImpl implements ServiceBusListener {
 				no.setUpdateTime(System.currentTimeMillis());
 				no.setUrl(bt.getUrl());
 				no.setAddress(toMap(bt.getAddress()));
-				
+				no.setObjectId(bt.getObjectId());
+
 				storage.storeObject(no);
 			}
 		}
@@ -442,8 +508,8 @@ public class EventProcessorImpl implements ServiceBusListener {
 			storage.deleteObjectById(s);
 		}
 
-	}		
-	
+	}
+
 	private void updateItinerari(List<ByteString> data) throws Exception {
 		Set<String> oldIds = getOldIds(ItineraryObject.class);
 
@@ -458,23 +524,23 @@ public class EventProcessorImpl implements ServiceBusListener {
 			if (old == null || old.getLastModified() < bt.getLastModified()) {
 				ItineraryObject no = new ItineraryObject();
 				no.setId(bt.getId());
-				no.setCategory("text");
-				// TODO: classification
-
+				no.setCategory("itinerari");
 				no.setDescription(toMap(bt.getDescription()));
-				no.setImage(bt.getImage());
+				no.setImage(getImageURL(bt.getImage()));
 				no.setLastModified(bt.getLastModified());
 
 				no.setSubtitle(toMap(bt.getSubtitle()));
 				no.setTitle(toMap(bt.getTitle()));
+				no.setInfo(toMap(bt.getInfo()));
 				no.setUpdateTime(System.currentTimeMillis());
 				no.setUrl(bt.getUrl());
-				
+
 				no.setSteps(bt.getStepsList());
 				no.setDifficulty(toMap(bt.getDifficulty()));
 				no.setDuration(bt.getDuration());
 				no.setLength(bt.getLength());
-				
+				no.setObjectId(bt.getObjectId());
+
 				storage.storeObject(no);
 			}
 		}
@@ -483,8 +549,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 			storage.deleteObjectById(s);
 		}
 
-	}		
-	
+	}
 
 	private void updateEventsYmir(List<ByteString> data) throws Exception {
 		Set<String> oldIds = getOldIds("festivaleconomia");
@@ -506,7 +571,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 				no.setDescription(convertTranslated(bt.getDescriptionList()));
 				no.setFromTime(bt.getFromTime());
 				no.setToTime(bt.getToTime());
-				no.setImage(bt.getImage());
+				no.setImage(getImageURL(bt.getImage()));
 				no.setLastModified(bt.getLastModified());
 				no.setSource("festivaleconomia");
 				no.setTitle(convertTranslated(bt.getTitleList()));
@@ -547,11 +612,250 @@ public class EventProcessorImpl implements ServiceBusListener {
 		return map;
 	}
 
-	public BasicObjectSyncStorage getStorage() {
+	private void completeConfig(ConfigObject config, boolean retry) throws Exception {
+		boolean ok = true;
+//		for (MenuItem menu : config.getMenu()) {
+//			if ("csvimport_Preferiti_item_comuneintasca".equals(menu.getId()) || "csvimport_Viaggia Trento_item_comuneintasca".equals(menu.getId())) {
+//				continue;
+//			}
+//			if (menu.getItems() != null) {
+//				try {
+//					setType(menu.getItems());
+//				} catch (MissingDataException e) {
+//					System.out.println(e.getMessage());
+//					ok = false;
+//				}
+//			}
+//		}
+
+		setType(config.getHighlights());
+		
+//		if (!ok) {
+//			if (retry) {
+////				retrieveMissingData();
+//				logger.info("Getting missing objects.");
+//				completeConfig(config, false);
+//			} else {
+//				// throw new
+//				// MissingDataException("Cannot complete config, some objects are missing.");
+//				logger.error("Cannot complete config, some objects are missing.");
+//			}
+//		}
+	}
+
+	private void setType(List<MenuItem> items) throws MissingDataException {
+		for (MenuItem item : items) {
+			if (item.getType() == null && item.getQuery() == null) {
+				String type = findType(item);
+				item.setType(type);
+				if (type != null) {
+					logger.info("Set type to " + type + " for " + ((item.getName() != null) ? item.getName().get("it") : item.getId()));
+				} else if (item.getItems() == null || item.getItems().isEmpty()) {
+					logger.error("Missing type for " + ((item.getName() != null) ? item.getName().get("it") : item.getId()));
+				}
+			}
+			if (item.getItems() != null) {
+				setType(item.getItems());
+			}
+		}
+	}
+
+	private String findType(MenuItem item) throws MissingDataException {
+		String res = null;
+		if (item.getType() != null) {
+			res = item.getType();
+		} else if (item.getObjectIds() != null && !item.getObjectIds().isEmpty()) {
+			String objectId = item.getObjectIds().get(0);
+			List<GeoTimeSyncObjectBean> objs = storage.genericSearch(Collections.<String, Object> singletonMap("objectId", objectId));
+			if (objs != null && !objs.isEmpty()) {
+				res = (String) objs.get(0).getContent().get("category");
+			} else {
+				throw new MissingDataException("Missing type for " + objectId + " = " + item.getName());
+			}
+		}
+
+		return res;
+	}
+	
+	private void replaceObjectIds(ConfigObject config) throws MissingDataException {
+//		for (MenuItem menu : config.getMenu()) {
+//			replaceObjectIds(menu);
+//		}
+		for (MenuItem menu : config.getHighlights()) {
+			replaceObjectIds(menu);
+		}		
+//		for (MenuItem menu : config.getNavigationItems()) {
+//			replaceObjectIds(menu);
+//		}
+	}
+
+	private void replaceObjectIds(MenuItem item) throws MissingDataException {
+		List<String> newObjectId = new ArrayList<String>();
+		if (item.getObjectIds() != null) {
+			for (String objectId : item.getObjectIds()) {
+				List<GeoTimeSyncObjectBean> objs = storage.genericSearch(Collections.<String, Object> singletonMap("objectId", objectId));
+				if (objs != null && !objs.isEmpty()) {
+				String res = (String) objs.get(0).getContent().get("id");
+				newObjectId.add(res);
+				} else {
+					throw new MissingDataException("Object with id " + objectId + " not found");
+				}
+			}
+			item.setObjectIds(newObjectId);
+		}
+		if (item.getItems() != null) {
+			for (MenuItem item2: item.getItems()) {
+				replaceObjectIds(item2);
+			}
+		}
+	}	
+
+	private void buildQueryClassification(ConfigObject config) throws BadDataException {
+		for (MenuItem menu : config.getMenu()) {
+			if (menu.getItems() != null) {
+				buildQueryClassification(menu.getItems());
+			}
+		}
+	}
+
+	private void buildQueryClassification(List<MenuItem> items) throws BadDataException {
+
+		for (MenuItem item : items) {
+			MenuItemQuery query = item.getQuery();
+			if (query != null) {
+				List<Map<String, String>> classifications = query.getClassifications();
+				String classification = "";
+				String type = query.getType();
+
+				// ex: index = -1
+				int index = typeValue.indexOf(type);
+				if (index == -1) {
+					throw new BadDataException("Cannot map " + type + " to internal type");
+				}
+				String classKey = classificationValue.get(index);
+				String newType = typePrefix + toTypeValue.get(index);
+				query.setType(newType);
+				if (classifications != null) {
+					for (Map<String, String> classifics : classifications) {
+						String val = classifics.get(classKey);
+						if (val != null) {
+							classification += val + ";";
+						}
+					}
+					if (classification.endsWith(";")) {
+						classification = classification.substring(0, classification.length() - 1);
+					}
+					query.setClassification(classification);
+				}
+			}
+			if (item.getItems() != null) {
+				buildQueryClassification(item.getItems());
+			}
+		}
+	}
+
+	public void retrieveConfig() throws Exception {
+		logger.info("Retrieving config.");
+		
+		updating = true;
+		
+		Map<String, Object> params = new TreeMap<String, Object>();
+
+		try {
+			ActionInvokeParameters resp;
+			List<ByteString> bsl;
+
+			params.put("url", "http://trento.opencontent.it/comuneintasca/data");
+			resp = (ActionInvokeParameters) client.invokeService(Subscriber.SERVICE_OD, Subscriber.METHOD_CONFIG, params);
+			bsl = resp.getDataList();
+			updateConfig(bsl);
+			
+			updating = false;
+			
+			logger.info("Retrieved config.");
+		} catch (Exception e) {
+			logger.error("Failed to update config: " + e.getMessage());
+			throw e;
+		}			
+	}
+	
+	public void retrieveMissingData() throws Exception {
+		logger.info("Retrieving missing data.");
+		Map<String, Object> params = new TreeMap<String, Object>();
+
+		try {
+			ActionInvokeParameters resp;
+			List<ByteString> bsl;
+
+			params.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754329/list/limit/1000");
+			logger.info(Subscriber.METHOD_RESTAURANTS);
+			resp = (ActionInvokeParameters) client.invokeService(Subscriber.SERVICE_OD, Subscriber.METHOD_RESTAURANTS, params);
+			bsl = resp.getDataList();
+			logger.info("update");
+			updateRestaurants(bsl);
+
+			params.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754211/list/limit/1000");
+			logger.info(Subscriber.METHOD_HOTELS);
+			resp = (ActionInvokeParameters) client.invokeService(Subscriber.SERVICE_OD, Subscriber.METHOD_HOTELS, params);
+			bsl = resp.getDataList();
+			logger.info("update");
+			updateHotels(bsl);
+
+			params.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754058/list/limit/1000");
+			logger.info(Subscriber.METHOD_CULTURA);
+			resp = (ActionInvokeParameters) client.invokeService(Subscriber.SERVICE_OD, Subscriber.METHOD_CULTURA, params);
+			bsl = resp.getDataList();
+			logger.info("update");
+			updateCultura(bsl);
+
+			params.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754317/list/limit/1000");
+			logger.info(Subscriber.METHOD_MAINEVENTS);
+			resp = (ActionInvokeParameters) client.invokeService(Subscriber.SERVICE_OD, Subscriber.METHOD_MAINEVENTS, params);
+			bsl = resp.getDataList();
+			logger.info("update");
+			updateMainEvents(bsl);
+
+			params.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754330/list/limit/1000");
+			logger.info(Subscriber.METHOD_ITINERARI);
+			resp = (ActionInvokeParameters) client.invokeService(Subscriber.SERVICE_OD, Subscriber.METHOD_ITINERARI, params);
+			bsl = resp.getDataList();
+			logger.info("update");
+			updateItinerari(bsl);
+
+			params.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754015/list/limit/1000");
+			logger.info(Subscriber.METHOD_TESTI);
+			resp = (ActionInvokeParameters) client.invokeService(Subscriber.SERVICE_OD, Subscriber.METHOD_TESTI, params);
+			bsl = resp.getDataList();
+			logger.info("update");
+			updateTesti(bsl);
+
+			params.put("url", "http://www.comune.trento.it/api/opendata/v1/content/class/event/offset/0/limit/1000");
+			logger.info(Subscriber.METHOD_EVENTS);
+			resp = (ActionInvokeParameters) client.invokeService(Subscriber.SERVICE_OD, Subscriber.METHOD_EVENTS, params);
+			bsl = resp.getDataList();
+			logger.info("update");
+			updateEvents(bsl);			
+			
+			logger.info("Retrieved missing data.");
+			
+		} catch (Exception e) {
+			logger.error("Failed to update data: " + e.getMessage());
+			throw e;
+		}
+	}
+	
+	public String getImageURL(String image) {
+		if (image != null && !image.startsWith("http")) {
+			return imagePrefix + image.replace("|", "");
+		}
+		return image;
+	}
+
+	public GeoTimeObjectSyncStorage getStorage() {
 		return storage;
 	}
 
-	public void setStorage(BasicObjectSyncStorage storage) {
+	public void setStorage(GeoTimeObjectSyncStorage storage) {
 		this.storage = storage;
 	}
 

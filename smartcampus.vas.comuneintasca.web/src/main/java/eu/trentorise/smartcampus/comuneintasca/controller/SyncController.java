@@ -15,28 +15,24 @@
  ******************************************************************************/
 package eu.trentorise.smartcampus.comuneintasca.controller;
 
-import java.io.InputStreamReader;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import eu.trentorise.smartcampus.comuneintasca.model.ConfigObject;
 import eu.trentorise.smartcampus.comuneintasca.model.EventObject;
+import eu.trentorise.smartcampus.comuneintasca.processor.EventProcessorImpl;
 import eu.trentorise.smartcampus.presentation.common.util.Util;
 import eu.trentorise.smartcampus.presentation.data.BasicObject;
 import eu.trentorise.smartcampus.presentation.data.SyncData;
@@ -45,21 +41,26 @@ import eu.trentorise.smartcampus.presentation.data.SyncDataRequest;
 @Controller
 public class SyncController extends AbstractObjectController {
 
+	@Autowired
+	private EventProcessorImpl eventProcessor;	
+	
 	@RequestMapping(method = RequestMethod.POST, value = "/sync")
 	public ResponseEntity<SyncData> synchronize(HttpServletRequest request, @RequestParam long since, @RequestBody Map<String,Object> obj) throws Exception{
 		try {
+			eventProcessor.retrieveConfig();
+			
 			SyncDataRequest syncReq = Util.convertRequest(obj, since);
 			storage.cleanSyncData(syncReq.getSyncData(), null);
 			SyncData result = storage.getSyncData(syncReq.getSince(), null, syncReq.getSyncData().getInclude(), syncReq.getSyncData().getExclude());
 			cleanResult(result);
 			
 			//trick for config object
-			String json = FileCopyUtils.copyToString(new InputStreamReader(getClass().getResourceAsStream("/profile.json")));
-			ConfigObject configObj = new ObjectMapper().readValue(json, ConfigObject.class);
-			if (result.getUpdated() == null) {
-				result.setUpdated(new HashMap<String, List<BasicObject>>());
-			}
-			result.getUpdated().put(ConfigObject.class.getName(), Collections.<BasicObject>singletonList(configObj));
+//			String json = FileCopyUtils.copyToString(new InputStreamReader(getClass().getResourceAsStream("/profile.json")));
+//			ConfigObject configObj = new ObjectMapper().readValue(json, ConfigObject.class);
+//			if (result.getUpdated() == null) {
+//				result.setUpdated(new HashMap<String, List<BasicObject>>());
+//			}
+//			result.getUpdated().put(ConfigObject.class.getName(), Collections.<BasicObject>singletonList(configObj));
 			
 			return new ResponseEntity<SyncData>(result,HttpStatus.OK);
 		} catch (Exception e) {

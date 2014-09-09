@@ -127,7 +127,7 @@ angular.module('ilcomuneintasca.services.db', [])
   } else {
     //console.log('web db...');
     dbObj = window.openDatabase('Trento', '1.0', 'Trento - Il Comune in Tasca', 5 * 1024 * 1024);
-    remoteSyncOptions = localSyncOptions;
+//    remoteSyncOptions = localSyncOptions;
     dbopenDeferred.resolve(dbObj);
   }
   dbopen = dbopenDeferred.promise;

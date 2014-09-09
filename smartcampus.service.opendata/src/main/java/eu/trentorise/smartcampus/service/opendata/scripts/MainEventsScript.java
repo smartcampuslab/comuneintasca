@@ -21,6 +21,7 @@ import java.util.Map;
 import com.google.protobuf.Message;
 
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nMainEvent;
+import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString;
 
 public class MainEventsScript extends OpenContentScript {
 
@@ -54,6 +55,14 @@ public class MainEventsScript extends OpenContentScript {
 				builder.setLon(latlon[1]);
 			}
 		}
+		
+		I18nString cat = getI18NStringValue(i18n, FIELDS, "tipo_evento", VALUE, OBJECT_NAME);
+		if (!cat.hasIt()) {
+			cat = getI18NStringValue(i18n, FIELDS, "tipo_luogo", VALUE, OBJECT_NAME);
+		}
+		if (cat.hasIt()) {
+			builder.setClassification(cat);
+		}		
 
 		Object image = getRecValue(getMap(i18n,DEFAULT_LANGUAGE), FIELDS, "image", STRING_VALUE);
 		if (image != null && image instanceof String) {

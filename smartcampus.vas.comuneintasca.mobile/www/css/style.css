@@ -445,6 +445,7 @@ comuni-img.item-image {
 .card.sinottico, .card.sinottico .item { border-color: #666 !important; color:#666 !important; }
 .card.sinottico .item { font-size:.9em !important;line-height:1.1em !important; }
 .card.sinottico .icon { font-size:2.3em !important; }
+.card.sinottico .sinottico-button { background-color:#ccc; color:#2975a7 !important; font-weight:bold;
 .list:last-child.card.sinottico { margin-bottom:0; }
 
 .bar-subheader { height:32px; }

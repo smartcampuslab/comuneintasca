@@ -71,7 +71,7 @@ angular.module('ilcomuneintasca.services.conf', [])
   }
   var keys = {
     'settings_data_clean': {
-      it: 'Elimina file temporenei',
+      it: 'Elimina file temporanei',
       en: 'Delete temporary files',
       de: 'Temporäre Dateien löschen'
     },

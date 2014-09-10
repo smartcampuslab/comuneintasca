@@ -20,11 +20,21 @@ angular.module('ilcomuneintasca.services.db', [])
 
     //console.log('dbtype: '+dbtype);
     //console.log('dbrow.classification: '+dbrow.classification);
-    item['abslinkgot']=Config.menuGroupSubgroupByTypeAndClassification(dbtype,dbrow.classification).then(function(sg){
-      if (sg) item['abslink'] = '#/app/page/'+sg._parent.id+'/'+sg.id+'/' + item.id;
-    },function(){
-      console.log('sg NOT FOUND!');
-    });
+    if (dbtype == 'itinerary') {
+      item['abslink'] = '#/app/itinerary/' + item.id + '/info';
+      Config.menuGroupSubgroup('percorsi','itineraries').then(function(sg){
+        item['menu']=sg;
+      });
+    } else {
+      item['abslinkgot']=Config.menuGroupSubgroupByTypeAndClassification(dbtype,dbrow.classification).then(function(sg){
+        if (sg) {
+          item['abslink'] = '#/app/page/'+sg._parent.id+'/'+sg.id+'/' + item.id;
+          item['menu'] = sg;
+        }
+      },function(){
+        console.log('sg NOT FOUND!');
+      });
+    }
 
     item['dbClassification'] = dbrow.classification || '';
     item['dbClassification2'] = dbrow.classification2 || '';
@@ -58,7 +68,7 @@ angular.module('ilcomuneintasca.services.db', [])
       //NO-OP
 
     } else if (dbtype == 'itinerary') {
-      item['abslink'] = '#/app/itinerary/' + item.id + '/info';
+      //NO-OP
 
     } else if (dbtype == 'mainevent') {
       //NO-OP

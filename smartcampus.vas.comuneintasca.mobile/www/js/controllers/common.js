@@ -168,7 +168,11 @@ angular.module('ilcomuneintasca.controllers.common', [])
                 dbType =  data.dbType;
                 data = [data];
               }
-              $scope.results = data;
+              if (data.length==1) {
+                $scope.obj = data[0];
+              } else {
+                $scope.results = data;
+              }
               console.log('highlight ('+dbType+') gotdata!');
               $scope.template = 'templates/page/' + dbType + '.html';
             });

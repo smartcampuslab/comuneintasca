@@ -7,9 +7,9 @@
     {
       "id": "text.3001",
       "name": {
-        "it": "Informazioni",
-        "en": "Info",
-        "de": "Info"
+        "it": "Trento",
+        "en": "Trento",
+        "de": "Trento"
       },
       "description": null,
       "image": {
@@ -85,6 +85,28 @@
       },
       "objectIds": [
         "02338f998ee34d6df111cab5b9fb763c"
+      ],
+      "items": null,
+      "query": null,
+      "ref": null,
+      "type": "event",
+      "app": null
+    },
+    {
+      "id": "3f90abb49a32772627440e0ce98e25eb",
+      "name": {
+        "it": "Arte e persuasione",
+        "en": "Arte e persuasione",
+        "de": "Arte e persuasione"
+      },
+      "description": null,
+      "image": {
+        "it": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/arte-e-persuasione11/8096383-15-ita-IT/Arte-e-persuasione.png",
+        "en": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/arte-e-persuasione11/8096383-15-ita-IT/Arte-e-persuasione.png",
+        "de": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/arte-e-persuasione11/8096383-15-ita-IT/Arte-e-persuasione.png"
+      },
+      "objectIds": [
+        "3f90abb49a32772627440e0ce98e25eb"
       ],
       "items": null,
       "query": null,

@@ -89,8 +89,9 @@ message I18nCultura {
  optional int64 lastModified = 11;
  optional string phone = 12;
  optional string email = 13;
- optional string contactFullName = 14;  
- required string objectId = 15;
+ optional string contactFullName = 14;
+ optional I18nString info = 15;    
+ required string objectId = 16;
 }
 
 message I18nMainEvent {
@@ -123,7 +124,8 @@ message I18nTesto {
  optional string url = 7;
  optional string image = 8;
  optional int64 lastModified = 9;
- required string objectId = 10;
+ optional I18nString info = 10;   
+ required string objectId = 11;
 }
 
 message I18nItinerario {

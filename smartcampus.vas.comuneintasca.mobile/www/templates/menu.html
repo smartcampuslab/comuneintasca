@@ -31,21 +31,21 @@
             <i class="icon comunimenu-{{menuGroup.id}}" ng-class="{'ion-chevron-down': !isGroupShown(groupIndex), 'ion-chevron-up': isGroupShown(groupIndex)}"></i>
           </ion-item>
           <div ng-show="isGroupShown(groupIndex)">
-            <ion-item ng-repeat="(itemIndex, menuItem) in menuGroup.items" nav-clear menu-close class="item-accordion" ng-href="#/app/{{getMenuPath(menuGroup,menuItem)}}">
-              <span ng-bind="menuItem.name | translate"></span>
+            <ion-item ng-repeat="(itemIndex, menuItem) in menuGroup.items" menu-close class="item-accordion" ng-href="#/app/{{getMenuPath(menuGroup,menuItem)}}">
+              <span class="comunisubmenu-{{menuItem.id|cleanMenuID}}" ng-bind="menuItem.name | translate"></span>
             </ion-item>
           </div>
         </div>
 
         <div class="comunimenu-favorites">
-          <ion-item nav-clear menu-close class="item-accordion" ng-click="goto('favorites')">
+          <ion-item menu-close class="item-accordion" ng-click="goto('favorites')">
             <b ng-bind="'sidemenu_Favourites' | translate"></b>
           </ion-item>
         </div>
-        <ion-item nav-clear menu-close class="item-accordion" ng-click="showSettings()">
+        <ion-item menu-close class="item-accordion" ng-click="showSettings()">
           <span ng-bind="'settings_title' | translate" class="comunimenu-settings"></span>
         </ion-item>
-        <ion-item nav-clear menu-close class="item-accordion" ng-click="showCredits()">
+        <ion-item menu-close class="item-accordion" ng-click="showCredits()">
           <span ng-bind="'credits_title' | translate" class="comunimenu-credits"></span>
         </ion-item>
       </ion-list>

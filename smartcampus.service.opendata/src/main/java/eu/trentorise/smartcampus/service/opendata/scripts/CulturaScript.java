@@ -84,7 +84,7 @@ public class CulturaScript extends OpenContentScript {
 		}		
 		
 		I18nString info = getI18NStringValue(i18n, FIELDS, "info", VALUE);
-		if (cat.hasIt()) {
+		if (info.hasIt()) {
 			builder.setInfo(info);
 		}		
 		

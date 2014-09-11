@@ -44,6 +44,9 @@ blu: #2975a7;
 blu scuro: #1b4d6e;
 */
 
+.padding.notop { padding-top:0; }
+.padding.nobottom { padding-bottom:0; }
+
 h1,
 h2 {
   color: #1b4d6e;
@@ -430,7 +433,7 @@ p.phone-button {
 }
 
 
-comuni-img.item-image {
+comuni-img, .comuni-item-image {
 	position: relative;
 }
 .dida {
@@ -441,12 +444,32 @@ comuni-img.item-image {
 .dida span { margin-right:.5em; }
 .dida i { font-size:1.4em;position:absolute;right:0;bottom:-1px; }
 
+/* stretched img css trick
+.comuni-img img {
+  zoom: 2;  //increase if you have very small images
+
+  display: block;
+  margin: auto;
+
+  height: auto;
+  max-height: 100%;
+
+  width: auto;
+  max-width: 100%;
+}
+*/
 
 .card.sinottico, .card.sinottico .item { border-color: #666 !important; color:#666 !important; }
 .card.sinottico .item { font-size:.9em !important;line-height:1.1em !important; }
 .card.sinottico .icon { font-size:2.3em !important; }
+.card.sinottico .sinottico-button { background-color:#ccc; color:#2975a7 !important; font-weight:bold; }
 .list:last-child.card.sinottico { margin-bottom:0; }
 
 .bar-subheader { height:32px; }
 .button.bar-subheader { height:32px; }
 .has-subheader { top:76px; }
+
+.eventscount { height:1em; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.eventPeriod { height:1em; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+
+.comunisubmenu-all { font-weight: bold; text-decoration: underline; }

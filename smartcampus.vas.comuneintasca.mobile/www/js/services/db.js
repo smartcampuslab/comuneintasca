@@ -1,6 +1,6 @@
 angular.module('ilcomuneintasca.services.db', [])
 
-.factory('DatiDB', function ($q, $http, $rootScope, $filter, $timeout, Config, Profiling, GeoLocate, $ionicLoading) {
+.factory('DatiDB', function ($q, $http, $rootScope, $filter, $timeout, Config, Files, Profiling, GeoLocate, $ionicLoading) {
   var SCHEMA_VERSION = Config.schemaVersion();
   var types = Config.contentTypesList();
 
@@ -15,16 +15,36 @@ angular.module('ilcomuneintasca.services.db', [])
 		}
 		item['sonscount']=dbrow.sonscount;
 
+    item['parsedimageurl']='svg/placeholder.svg';
+    if (item.image) {
+      var imageUrl=$filter('translate')(item.image);
+      if (imageUrl && imageUrl != '' && imageUrl != 'false') {
+        Files.get(imageUrl).then(function (fileUrl) {
+          item['parsedimageurl']=fileUrl;
+        });
+      }
+    }
+
     var dbtype = Config.contentKeyFromDbType(dbrow.type);
     item['dbType']=dbtype;
 
     //console.log('dbtype: '+dbtype);
     //console.log('dbrow.classification: '+dbrow.classification);
-    item['abslinkgot']=Config.menuGroupSubgroupByTypeAndClassification(dbtype,dbrow.classification).then(function(sg){
-      if (sg) item['abslink'] = '#/app/page/'+sg._parent.id+'/'+sg.id+'/' + item.id;
-    },function(){
-      console.log('sg NOT FOUND!');
-    });
+    if (dbtype == 'itinerary') {
+      item['abslink'] = '#/app/itinerary/' + item.id + '/info';
+      Config.menuGroupSubgroup('percorsi','itineraries').then(function(sg){
+        item['menu']=sg;
+      });
+    } else {
+      item['abslinkgot']=Config.menuGroupSubgroupByTypeAndClassification(dbtype,dbrow.classification).then(function(sg){
+        if (sg) {
+          item['abslink'] = '#/app/page/'+sg._parent.id+'/'+sg.id+'/' + item.id;
+          item['menu'] = sg;
+        }
+      },function(){
+        console.log('sg NOT FOUND!');
+      });
+    }
 
     item['dbClassification'] = dbrow.classification || '';
     item['dbClassification2'] = dbrow.classification2 || '';
@@ -34,6 +54,7 @@ angular.module('ilcomuneintasca.services.db', [])
       //NO-OP
 
     } else if (dbtype == 'poi') {
+      //console.log(JSON.stringify(item.info));
       Config.menuGroupSubgroup('visitare',item.dbClassification).then(function(sg){
         item['dbClass']=sg;
         item.dbClassification=sg.name;
@@ -58,7 +79,7 @@ angular.module('ilcomuneintasca.services.db', [])
       //NO-OP
 
     } else if (dbtype == 'itinerary') {
-      item['abslink'] = '#/app/itinerary/' + item.id + '/info';
+      //NO-OP
 
     } else if (dbtype == 'mainevent') {
       //NO-OP

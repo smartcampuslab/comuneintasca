@@ -8,6 +8,7 @@
       <ion-item class="item-thumbnail-left" ng-repeat="obj in favorites" collection-item-width="'100%'" collection-item-height="'80px'" ng-click="goto(obj.abslink)">
         <comuni-img class="item-image comuni-item-image" gotdata="gotdata"></comuni-img>
         <h2>{{obj.title | translate}}</h2>
+        <p data-ng-if="obj.menu">{{obj.menu.name | translate}}</p>
       </ion-item>
     </ion-list>
   </ion-content>

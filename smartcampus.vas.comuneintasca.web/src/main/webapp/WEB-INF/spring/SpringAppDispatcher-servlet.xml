@@ -88,12 +88,6 @@
 		<property name="listener" ref="eventProcessor" />
 	</bean>
 	
-	<bean id="serviceBusAdminClient" class="it.sayservice.platform.client.jms.JMSServiceBusAdminClient" scope="singleton" destroy-method="destroy">
-		<constructor-arg>
-			<ref bean="connectionFactory" />
-		</constructor-arg>
-	</bean>	
-	
 	<bean id="serviceUpdateSubscriber" class="eu.trentorise.smartcampus.comuneintasca.listener.Subscriber">
 		<constructor-arg ref="serviceBusClient" />
 	</bean>

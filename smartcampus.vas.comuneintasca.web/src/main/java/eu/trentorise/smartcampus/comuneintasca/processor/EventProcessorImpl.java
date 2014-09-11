@@ -15,7 +15,6 @@
  ******************************************************************************/
 package eu.trentorise.smartcampus.comuneintasca.processor;
 
-import it.sayservice.platform.client.ServiceBusAdminClient;
 import it.sayservice.platform.client.ServiceBusClient;
 import it.sayservice.platform.client.ServiceBusListener;
 import it.sayservice.platform.core.message.Core.ActionInvokeParameters;
@@ -80,9 +79,6 @@ public class EventProcessorImpl implements ServiceBusListener {
 	@Autowired
 	ServiceBusClient client;
 	
-	@Autowired
-	ServiceBusAdminClient adminClient;	
-
 	private static List<String> langs = Arrays.asList(new String[] { "it", "en", "de" });
 	private static List<String> typeValue = Arrays.asList(new String[] { "event", "ristorante", "accomodation", "mainevent" });
 	private static List<String> classificationValue = Arrays.asList(new String[] { "tipo_evento", "tipo_locale", "tipologia_hotel", "" });
@@ -205,6 +201,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 				old.setLastModified(cd.getDateModified());
 				old.setHighlights(config.getHighlights());
 				storage.storeObject(old);
+				logger.info("Stored updated config.");
 			}
 		} else {
 			config.setLastModified(cd.getDateModified());
@@ -213,10 +210,6 @@ public class EventProcessorImpl implements ServiceBusListener {
 
 	}
 	
-//	private void mergeConfig(ConfigObject oldConf, ConfigObject newConf) {
-//		oldConf.setHighlights(newConf.getHighlights());
-//	}
-
 	private void updateEvents(List<ByteString> data) throws Exception {
 		Set<String> oldIds = getOldIds("opendata.trento");
 
@@ -406,6 +399,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 
 				no.setSubtitle(toMap(bt.getSubtitle()));
 				no.setTitle(toMap(bt.getTitle()));
+				no.setInfo(toMap(bt.getInfo()));
 				no.setUpdateTime(System.currentTimeMillis());
 				no.setUrl(bt.getUrl());
 				no.setContactFullName(bt.getContactFullName());
@@ -495,6 +489,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 
 				no.setSubtitle(toMap(bt.getSubtitle()));
 				no.setTitle(toMap(bt.getTitle()));
+				no.setInfo(toMap(bt.getInfo()));
 				no.setUpdateTime(System.currentTimeMillis());
 				no.setUrl(bt.getUrl());
 				no.setAddress(toMap(bt.getAddress()));

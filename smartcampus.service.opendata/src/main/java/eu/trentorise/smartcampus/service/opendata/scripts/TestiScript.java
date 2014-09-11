@@ -20,6 +20,7 @@ import java.util.Map;
 
 import com.google.protobuf.Message;
 
+import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString;
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nTesto;
 
 public class TestiScript extends OpenContentScript {
@@ -52,6 +53,11 @@ public class TestiScript extends OpenContentScript {
 		if (image != null && image instanceof String) {
 			builder.setImage((String)image);
 		}
+		
+		I18nString info = getI18NStringValue(i18n, FIELDS, "info", VALUE);
+		if (info.hasIt()) {
+			builder.setInfo(info);
+		}			
 
 		return builder.build();
 	}

@@ -7734,7 +7734,12 @@ public final class Opendata {
     boolean hasContactFullName();
     String getContactFullName();
     
-    // required string objectId = 15;
+    // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString info = 15;
+    boolean hasInfo();
+    eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getInfo();
+    eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder getInfoOrBuilder();
+    
+    // required string objectId = 16;
     boolean hasObjectId();
     String getObjectId();
   }
@@ -8054,11 +8059,24 @@ public final class Opendata {
       }
     }
     
-    // required string objectId = 15;
-    public static final int OBJECTID_FIELD_NUMBER = 15;
+    // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString info = 15;
+    public static final int INFO_FIELD_NUMBER = 15;
+    private eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString info_;
+    public boolean hasInfo() {
+      return ((bitField0_ & 0x00004000) == 0x00004000);
+    }
+    public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getInfo() {
+      return info_;
+    }
+    public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder getInfoOrBuilder() {
+      return info_;
+    }
+    
+    // required string objectId = 16;
+    public static final int OBJECTID_FIELD_NUMBER = 16;
     private java.lang.Object objectId_;
     public boolean hasObjectId() {
-      return ((bitField0_ & 0x00004000) == 0x00004000);
+      return ((bitField0_ & 0x00008000) == 0x00008000);
     }
     public String getObjectId() {
       java.lang.Object ref = objectId_;
@@ -8101,6 +8119,7 @@ public final class Opendata {
       phone_ = "";
       email_ = "";
       contactFullName_ = "";
+      info_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
       objectId_ = "";
     }
     private byte memoizedIsInitialized = -1;
@@ -8170,7 +8189,10 @@ public final class Opendata {
         output.writeBytes(14, getContactFullNameBytes());
       }
       if (((bitField0_ & 0x00004000) == 0x00004000)) {
-        output.writeBytes(15, getObjectIdBytes());
+        output.writeMessage(15, info_);
+      }
+      if (((bitField0_ & 0x00008000) == 0x00008000)) {
+        output.writeBytes(16, getObjectIdBytes());
       }
       getUnknownFields().writeTo(output);
     }
@@ -8239,7 +8261,11 @@ public final class Opendata {
       }
       if (((bitField0_ & 0x00004000) == 0x00004000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(15, getObjectIdBytes());
+          .computeMessageSize(15, info_);
+      }
+      if (((bitField0_ & 0x00008000) == 0x00008000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(16, getObjectIdBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -8362,6 +8388,7 @@ public final class Opendata {
           getDescriptionFieldBuilder();
           getClassificationFieldBuilder();
           getAddressFieldBuilder();
+          getInfoFieldBuilder();
         }
       }
       private static Builder create() {
@@ -8418,8 +8445,14 @@ public final class Opendata {
         bitField0_ = (bitField0_ & ~0x00001000);
         contactFullName_ = "";
         bitField0_ = (bitField0_ & ~0x00002000);
-        objectId_ = "";
+        if (infoBuilder_ == null) {
+          info_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
+        } else {
+          infoBuilder_.clear();
+        }
         bitField0_ = (bitField0_ & ~0x00004000);
+        objectId_ = "";
+        bitField0_ = (bitField0_ & ~0x00008000);
         return this;
       }
       
@@ -8537,6 +8570,14 @@ public final class Opendata {
         if (((from_bitField0_ & 0x00004000) == 0x00004000)) {
           to_bitField0_ |= 0x00004000;
         }
+        if (infoBuilder_ == null) {
+          result.info_ = info_;
+        } else {
+          result.info_ = infoBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00008000) == 0x00008000)) {
+          to_bitField0_ |= 0x00008000;
+        }
         result.objectId_ = objectId_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -8595,6 +8636,9 @@ public final class Opendata {
         }
         if (other.hasContactFullName()) {
           setContactFullName(other.getContactFullName());
+        }
+        if (other.hasInfo()) {
+          mergeInfo(other.getInfo());
         }
         if (other.hasObjectId()) {
           setObjectId(other.getObjectId());
@@ -8733,7 +8777,16 @@ public final class Opendata {
               break;
             }
             case 122: {
-              bitField0_ |= 0x00004000;
+              eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder subBuilder = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.newBuilder();
+              if (hasInfo()) {
+                subBuilder.mergeFrom(getInfo());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setInfo(subBuilder.buildPartial());
+              break;
+            }
+            case 130: {
+              bitField0_ |= 0x00008000;
               objectId_ = input.readBytes();
               break;
             }
@@ -9472,10 +9525,100 @@ public final class Opendata {
         onChanged();
       }
       
-      // required string objectId = 15;
+      // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString info = 15;
+      private eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString info_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder> infoBuilder_;
+      public boolean hasInfo() {
+        return ((bitField0_ & 0x00004000) == 0x00004000);
+      }
+      public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getInfo() {
+        if (infoBuilder_ == null) {
+          return info_;
+        } else {
+          return infoBuilder_.getMessage();
+        }
+      }
+      public Builder setInfo(eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString value) {
+        if (infoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          info_ = value;
+          onChanged();
+        } else {
+          infoBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00004000;
+        return this;
+      }
+      public Builder setInfo(
+          eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder builderForValue) {
+        if (infoBuilder_ == null) {
+          info_ = builderForValue.build();
+          onChanged();
+        } else {
+          infoBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00004000;
+        return this;
+      }
+      public Builder mergeInfo(eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString value) {
+        if (infoBuilder_ == null) {
+          if (((bitField0_ & 0x00004000) == 0x00004000) &&
+              info_ != eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance()) {
+            info_ =
+              eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.newBuilder(info_).mergeFrom(value).buildPartial();
+          } else {
+            info_ = value;
+          }
+          onChanged();
+        } else {
+          infoBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00004000;
+        return this;
+      }
+      public Builder clearInfo() {
+        if (infoBuilder_ == null) {
+          info_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
+          onChanged();
+        } else {
+          infoBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00004000);
+        return this;
+      }
+      public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder getInfoBuilder() {
+        bitField0_ |= 0x00004000;
+        onChanged();
+        return getInfoFieldBuilder().getBuilder();
+      }
+      public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder getInfoOrBuilder() {
+        if (infoBuilder_ != null) {
+          return infoBuilder_.getMessageOrBuilder();
+        } else {
+          return info_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder> 
+          getInfoFieldBuilder() {
+        if (infoBuilder_ == null) {
+          infoBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder>(
+                  info_,
+                  getParentForChildren(),
+                  isClean());
+          info_ = null;
+        }
+        return infoBuilder_;
+      }
+      
+      // required string objectId = 16;
       private java.lang.Object objectId_ = "";
       public boolean hasObjectId() {
-        return ((bitField0_ & 0x00004000) == 0x00004000);
+        return ((bitField0_ & 0x00008000) == 0x00008000);
       }
       public String getObjectId() {
         java.lang.Object ref = objectId_;
@@ -9491,19 +9634,19 @@ public final class Opendata {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00004000;
+  bitField0_ |= 0x00008000;
         objectId_ = value;
         onChanged();
         return this;
       }
       public Builder clearObjectId() {
-        bitField0_ = (bitField0_ & ~0x00004000);
+        bitField0_ = (bitField0_ & ~0x00008000);
         objectId_ = getDefaultInstance().getObjectId();
         onChanged();
         return this;
       }
       void setObjectId(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00004000;
+        bitField0_ |= 0x00008000;
         objectId_ = value;
         onChanged();
       }
@@ -11575,7 +11718,12 @@ public final class Opendata {
     boolean hasLastModified();
     long getLastModified();
     
-    // required string objectId = 10;
+    // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString info = 10;
+    boolean hasInfo();
+    eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getInfo();
+    eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder getInfoOrBuilder();
+    
+    // required string objectId = 11;
     boolean hasObjectId();
     String getObjectId();
   }
@@ -11779,11 +11927,24 @@ public final class Opendata {
       return lastModified_;
     }
     
-    // required string objectId = 10;
-    public static final int OBJECTID_FIELD_NUMBER = 10;
+    // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString info = 10;
+    public static final int INFO_FIELD_NUMBER = 10;
+    private eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString info_;
+    public boolean hasInfo() {
+      return ((bitField0_ & 0x00000200) == 0x00000200);
+    }
+    public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getInfo() {
+      return info_;
+    }
+    public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder getInfoOrBuilder() {
+      return info_;
+    }
+    
+    // required string objectId = 11;
+    public static final int OBJECTID_FIELD_NUMBER = 11;
     private java.lang.Object objectId_;
     public boolean hasObjectId() {
-      return ((bitField0_ & 0x00000200) == 0x00000200);
+      return ((bitField0_ & 0x00000400) == 0x00000400);
     }
     public String getObjectId() {
       java.lang.Object ref = objectId_;
@@ -11821,6 +11982,7 @@ public final class Opendata {
       url_ = "";
       image_ = "";
       lastModified_ = 0L;
+      info_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
       objectId_ = "";
     }
     private byte memoizedIsInitialized = -1;
@@ -11875,7 +12037,10 @@ public final class Opendata {
         output.writeInt64(9, lastModified_);
       }
       if (((bitField0_ & 0x00000200) == 0x00000200)) {
-        output.writeBytes(10, getObjectIdBytes());
+        output.writeMessage(10, info_);
+      }
+      if (((bitField0_ & 0x00000400) == 0x00000400)) {
+        output.writeBytes(11, getObjectIdBytes());
       }
       getUnknownFields().writeTo(output);
     }
@@ -11924,7 +12089,11 @@ public final class Opendata {
       }
       if (((bitField0_ & 0x00000200) == 0x00000200)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(10, getObjectIdBytes());
+          .computeMessageSize(10, info_);
+      }
+      if (((bitField0_ & 0x00000400) == 0x00000400)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(11, getObjectIdBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -12047,6 +12216,7 @@ public final class Opendata {
           getDescriptionFieldBuilder();
           getClassificationFieldBuilder();
           getAddressFieldBuilder();
+          getInfoFieldBuilder();
         }
       }
       private static Builder create() {
@@ -12093,8 +12263,14 @@ public final class Opendata {
         bitField0_ = (bitField0_ & ~0x00000080);
         lastModified_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000100);
-        objectId_ = "";
+        if (infoBuilder_ == null) {
+          info_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
+        } else {
+          infoBuilder_.clear();
+        }
         bitField0_ = (bitField0_ & ~0x00000200);
+        objectId_ = "";
+        bitField0_ = (bitField0_ & ~0x00000400);
         return this;
       }
       
@@ -12192,6 +12368,14 @@ public final class Opendata {
         if (((from_bitField0_ & 0x00000200) == 0x00000200)) {
           to_bitField0_ |= 0x00000200;
         }
+        if (infoBuilder_ == null) {
+          result.info_ = info_;
+        } else {
+          result.info_ = infoBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000400) == 0x00000400)) {
+          to_bitField0_ |= 0x00000400;
+        }
         result.objectId_ = objectId_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -12235,6 +12419,9 @@ public final class Opendata {
         }
         if (other.hasLastModified()) {
           setLastModified(other.getLastModified());
+        }
+        if (other.hasInfo()) {
+          mergeInfo(other.getInfo());
         }
         if (other.hasObjectId()) {
           setObjectId(other.getObjectId());
@@ -12348,7 +12535,16 @@ public final class Opendata {
               break;
             }
             case 82: {
-              bitField0_ |= 0x00000200;
+              eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder subBuilder = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.newBuilder();
+              if (hasInfo()) {
+                subBuilder.mergeFrom(getInfo());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setInfo(subBuilder.buildPartial());
+              break;
+            }
+            case 90: {
+              bitField0_ |= 0x00000400;
               objectId_ = input.readBytes();
               break;
             }
@@ -12937,10 +13133,100 @@ public final class Opendata {
         return this;
       }
       
-      // required string objectId = 10;
+      // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString info = 10;
+      private eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString info_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder> infoBuilder_;
+      public boolean hasInfo() {
+        return ((bitField0_ & 0x00000200) == 0x00000200);
+      }
+      public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getInfo() {
+        if (infoBuilder_ == null) {
+          return info_;
+        } else {
+          return infoBuilder_.getMessage();
+        }
+      }
+      public Builder setInfo(eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString value) {
+        if (infoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          info_ = value;
+          onChanged();
+        } else {
+          infoBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000200;
+        return this;
+      }
+      public Builder setInfo(
+          eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder builderForValue) {
+        if (infoBuilder_ == null) {
+          info_ = builderForValue.build();
+          onChanged();
+        } else {
+          infoBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000200;
+        return this;
+      }
+      public Builder mergeInfo(eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString value) {
+        if (infoBuilder_ == null) {
+          if (((bitField0_ & 0x00000200) == 0x00000200) &&
+              info_ != eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance()) {
+            info_ =
+              eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.newBuilder(info_).mergeFrom(value).buildPartial();
+          } else {
+            info_ = value;
+          }
+          onChanged();
+        } else {
+          infoBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000200;
+        return this;
+      }
+      public Builder clearInfo() {
+        if (infoBuilder_ == null) {
+          info_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
+          onChanged();
+        } else {
+          infoBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000200);
+        return this;
+      }
+      public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder getInfoBuilder() {
+        bitField0_ |= 0x00000200;
+        onChanged();
+        return getInfoFieldBuilder().getBuilder();
+      }
+      public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder getInfoOrBuilder() {
+        if (infoBuilder_ != null) {
+          return infoBuilder_.getMessageOrBuilder();
+        } else {
+          return info_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder> 
+          getInfoFieldBuilder() {
+        if (infoBuilder_ == null) {
+          infoBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder>(
+                  info_,
+                  getParentForChildren(),
+                  isClean());
+          info_ = null;
+        }
+        return infoBuilder_;
+      }
+      
+      // required string objectId = 11;
       private java.lang.Object objectId_ = "";
       public boolean hasObjectId() {
-        return ((bitField0_ & 0x00000200) == 0x00000200);
+        return ((bitField0_ & 0x00000400) == 0x00000400);
       }
       public String getObjectId() {
         java.lang.Object ref = objectId_;
@@ -12956,19 +13242,19 @@ public final class Opendata {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000200;
+  bitField0_ |= 0x00000400;
         objectId_ = value;
         onChanged();
         return this;
       }
       public Builder clearObjectId() {
-        bitField0_ = (bitField0_ & ~0x00000200);
+        bitField0_ = (bitField0_ & ~0x00000400);
         objectId_ = getDefaultInstance().getObjectId();
         onChanged();
         return this;
       }
       void setObjectId(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000200;
+        bitField0_ |= 0x00000400;
         objectId_ = value;
         onChanged();
       }
@@ -17503,7 +17789,7 @@ public final class Opendata {
       "sage.I18nString\022\024\n\014lastModified\030\n \001(\003\022\r\n" +
       "\005stars\030\013 \001(\005\022\r\n\005phone\030\014 \001(\t\022\016\n\006phone2\030\r " +
       "\001(\t\022\013\n\003fax\030\016 \001(\t\022\r\n\005email\030\017 \001(\t\022\020\n\010objec" +
-      "tId\030\020 \002(\t\"\346\004\n\013I18nCultura\022\n\n\002id\030\001 \002(\t\022R\n" +
+      "tId\030\020 \002(\t\"\271\005\n\013I18nCultura\022\n\n\002id\030\001 \002(\t\022R\n" +
       "\005title\030\002 \002(\0132C.eu.trentorise.smartcampus" +
       ".service.opendata.data.message.I18nStrin",
       "g\022U\n\010subtitle\030\003 \001(\0132C.eu.trentorise.smar" +
@@ -17518,62 +17804,66 @@ public final class Opendata {
       "martcampus.service.opendata.data.message",
       ".I18nString\022\024\n\014lastModified\030\013 \001(\003\022\r\n\005pho" +
       "ne\030\014 \001(\t\022\r\n\005email\030\r \001(\t\022\027\n\017contactFullNa" +
-      "me\030\016 \001(\t\022\020\n\010objectId\030\017 \002(\t\"\317\005\n\rI18nMainE" +
-      "vent\022\n\n\002id\030\001 \002(\t\022R\n\005title\030\002 \002(\0132C.eu.tre" +
-      "ntorise.smartcampus.service.opendata.dat" +
-      "a.message.I18nString\022U\n\010subtitle\030\003 \001(\0132C" +
-      ".eu.trentorise.smartcampus.service.opend" +
-      "ata.data.message.I18nString\022X\n\013descripti" +
-      "on\030\004 \001(\0132C.eu.trentorise.smartcampus.ser" +
-      "vice.opendata.data.message.I18nString\022[\n",
-      "\016classification\030\005 \001(\0132C.eu.trentorise.sm" +
-      "artcampus.service.opendata.data.message." +
-      "I18nString\022\013\n\003url\030\006 \001(\t\022\r\n\005image\030\007 \001(\t\022\013" +
-      "\n\003lat\030\010 \001(\001\022\013\n\003lon\030\t \001(\001\022T\n\007address\030\n \001(" +
+      "me\030\016 \001(\t\022Q\n\004info\030\017 \001(\0132C.eu.trentorise.s" +
+      "martcampus.service.opendata.data.message" +
+      ".I18nString\022\020\n\010objectId\030\020 \002(\t\"\317\005\n\rI18nMa" +
+      "inEvent\022\n\n\002id\030\001 \002(\t\022R\n\005title\030\002 \002(\0132C.eu." +
+      "trentorise.smartcampus.service.opendata." +
+      "data.message.I18nString\022U\n\010subtitle\030\003 \001(" +
       "\0132C.eu.trentorise.smartcampus.service.op" +
-      "endata.data.message.I18nString\022\024\n\014lastMo" +
-      "dified\030\013 \001(\003\022\r\n\005phone\030\014 \001(\t\022\r\n\005email\030\r \001" +
-      "(\t\022\020\n\010fromDate\030\016 \001(\003\022\016\n\006toDate\030\017 \001(\003\022\\\n\017" +
-      "dateDescription\030\020 \001(\0132C.eu.trentorise.sm" +
-      "artcampus.service.opendata.data.message.",
-      "I18nString\022\020\n\010objectId\030\021 \002(\t\"\223\004\n\tI18nTes" +
-      "to\022\n\n\002id\030\001 \002(\t\022R\n\005title\030\002 \002(\0132C.eu.trent" +
-      "orise.smartcampus.service.opendata.data." +
-      "message.I18nString\022U\n\010subtitle\030\003 \001(\0132C.e" +
-      "u.trentorise.smartcampus.service.opendat" +
-      "a.data.message.I18nString\022X\n\013description" +
-      "\030\004 \001(\0132C.eu.trentorise.smartcampus.servi" +
-      "ce.opendata.data.message.I18nString\022[\n\016c" +
-      "lassification\030\005 \001(\0132C.eu.trentorise.smar" +
-      "tcampus.service.opendata.data.message.I1",
-      "8nString\022T\n\007address\030\006 \001(\0132C.eu.trentoris" +
-      "e.smartcampus.service.opendata.data.mess" +
-      "age.I18nString\022\013\n\003url\030\007 \001(\t\022\r\n\005image\030\010 \001" +
-      "(\t\022\024\n\014lastModified\030\t \001(\003\022\020\n\010objectId\030\n \002" +
-      "(\t\"\237\005\n\016I18nItinerario\022\n\n\002id\030\001 \002(\t\022R\n\005tit" +
-      "le\030\002 \002(\0132C.eu.trentorise.smartcampus.ser" +
-      "vice.opendata.data.message.I18nString\022U\n" +
-      "\010subtitle\030\003 \001(\0132C.eu.trentorise.smartcam" +
-      "pus.service.opendata.data.message.I18nSt" +
-      "ring\022X\n\013description\030\004 \001(\0132C.eu.trentoris",
-      "e.smartcampus.service.opendata.data.mess" +
-      "age.I18nString\022[\n\016classification\030\005 \001(\0132C" +
-      ".eu.trentorise.smartcampus.service.opend" +
-      "ata.data.message.I18nString\022\013\n\003url\030\006 \001(\t" +
-      "\022\r\n\005image\030\007 \001(\t\022\024\n\014lastModified\030\010 \001(\003\022\r\n" +
-      "\005steps\030\t \003(\t\022\016\n\006length\030\n \001(\005\022\020\n\010duration" +
-      "\030\013 \001(\005\022W\n\ndifficulty\030\014 \001(\0132C.eu.trentori" +
-      "se.smartcampus.service.opendata.data.mes" +
-      "sage.I18nString\022Q\n\004info\030\r \001(\0132C.eu.trent" +
-      "orise.smartcampus.service.opendata.data.",
-      "message.I18nString\022\020\n\010objectId\030\016 \002(\t\"=\n\n" +
-      "ConfigLink\022\014\n\004name\030\001 \002(\t\022\013\n\003uri\030\002 \002(\t\022\024\n" +
-      "\014dateModified\030\003 \002(\003\">\n\nConfigData\022\014\n\004nam" +
-      "e\030\001 \002(\t\022\014\n\004data\030\002 \002(\t\022\024\n\014dateModified\030\003 " +
-      "\002(\003\"0\n\nI18nString\022\n\n\002it\030\001 \001(\t\022\n\n\002en\030\002 \001(" +
-      "\t\022\n\n\002de\030\003 \001(\t\".\n\010I18nLong\022\n\n\002it\030\001 \001(\003\022\n\n" +
-      "\002en\030\002 \001(\003\022\n\n\002de\030\003 \001(\003\"0\n\nI18nDouble\022\n\n\002i" +
-      "t\030\001 \001(\001\022\n\n\002en\030\002 \001(\001\022\n\n\002de\030\003 \001(\001"
+      "endata.data.message.I18nString\022X\n\013descri",
+      "ption\030\004 \001(\0132C.eu.trentorise.smartcampus." +
+      "service.opendata.data.message.I18nString" +
+      "\022[\n\016classification\030\005 \001(\0132C.eu.trentorise" +
+      ".smartcampus.service.opendata.data.messa" +
+      "ge.I18nString\022\013\n\003url\030\006 \001(\t\022\r\n\005image\030\007 \001(" +
+      "\t\022\013\n\003lat\030\010 \001(\001\022\013\n\003lon\030\t \001(\001\022T\n\007address\030\n" +
+      " \001(\0132C.eu.trentorise.smartcampus.service" +
+      ".opendata.data.message.I18nString\022\024\n\014las" +
+      "tModified\030\013 \001(\003\022\r\n\005phone\030\014 \001(\t\022\r\n\005email\030" +
+      "\r \001(\t\022\020\n\010fromDate\030\016 \001(\003\022\016\n\006toDate\030\017 \001(\003\022",
+      "\\\n\017dateDescription\030\020 \001(\0132C.eu.trentorise" +
+      ".smartcampus.service.opendata.data.messa" +
+      "ge.I18nString\022\020\n\010objectId\030\021 \002(\t\"\346\004\n\tI18n" +
+      "Testo\022\n\n\002id\030\001 \002(\t\022R\n\005title\030\002 \002(\0132C.eu.tr" +
+      "entorise.smartcampus.service.opendata.da" +
+      "ta.message.I18nString\022U\n\010subtitle\030\003 \001(\0132" +
+      "C.eu.trentorise.smartcampus.service.open" +
+      "data.data.message.I18nString\022X\n\013descript" +
+      "ion\030\004 \001(\0132C.eu.trentorise.smartcampus.se" +
+      "rvice.opendata.data.message.I18nString\022[",
+      "\n\016classification\030\005 \001(\0132C.eu.trentorise.s" +
+      "martcampus.service.opendata.data.message" +
+      ".I18nString\022T\n\007address\030\006 \001(\0132C.eu.trento" +
+      "rise.smartcampus.service.opendata.data.m" +
+      "essage.I18nString\022\013\n\003url\030\007 \001(\t\022\r\n\005image\030" +
+      "\010 \001(\t\022\024\n\014lastModified\030\t \001(\003\022Q\n\004info\030\n \001(" +
+      "\0132C.eu.trentorise.smartcampus.service.op" +
+      "endata.data.message.I18nString\022\020\n\010object" +
+      "Id\030\013 \002(\t\"\237\005\n\016I18nItinerario\022\n\n\002id\030\001 \002(\t\022" +
+      "R\n\005title\030\002 \002(\0132C.eu.trentorise.smartcamp",
+      "us.service.opendata.data.message.I18nStr" +
+      "ing\022U\n\010subtitle\030\003 \001(\0132C.eu.trentorise.sm" +
+      "artcampus.service.opendata.data.message." +
+      "I18nString\022X\n\013description\030\004 \001(\0132C.eu.tre" +
+      "ntorise.smartcampus.service.opendata.dat" +
+      "a.message.I18nString\022[\n\016classification\030\005" +
+      " \001(\0132C.eu.trentorise.smartcampus.service" +
+      ".opendata.data.message.I18nString\022\013\n\003url" +
+      "\030\006 \001(\t\022\r\n\005image\030\007 \001(\t\022\024\n\014lastModified\030\010 " +
+      "\001(\003\022\r\n\005steps\030\t \003(\t\022\016\n\006length\030\n \001(\005\022\020\n\010du",
+      "ration\030\013 \001(\005\022W\n\ndifficulty\030\014 \001(\0132C.eu.tr" +
+      "entorise.smartcampus.service.opendata.da" +
+      "ta.message.I18nString\022Q\n\004info\030\r \001(\0132C.eu" +
+      ".trentorise.smartcampus.service.opendata" +
+      ".data.message.I18nString\022\020\n\010objectId\030\016 \002" +
+      "(\t\"=\n\nConfigLink\022\014\n\004name\030\001 \002(\t\022\013\n\003uri\030\002 " +
+      "\002(\t\022\024\n\014dateModified\030\003 \002(\003\">\n\nConfigData\022" +
+      "\014\n\004name\030\001 \002(\t\022\014\n\004data\030\002 \002(\t\022\024\n\014dateModif" +
+      "ied\030\003 \002(\003\"0\n\nI18nString\022\n\n\002it\030\001 \001(\t\022\n\n\002e" +
+      "n\030\002 \001(\t\022\n\n\002de\030\003 \001(\t\".\n\010I18nLong\022\n\n\002it\030\001 ",
+      "\001(\003\022\n\n\002en\030\002 \001(\003\022\n\n\002de\030\003 \001(\003\"0\n\nI18nDoubl" +
+      "e\022\n\n\002it\030\001 \001(\001\022\n\n\002en\030\002 \001(\001\022\n\n\002de\030\003 \001(\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -17617,7 +17907,7 @@ public final class Opendata {
           internal_static_eu_trentorise_smartcampus_service_opendata_data_message_I18nCultura_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_eu_trentorise_smartcampus_service_opendata_data_message_I18nCultura_descriptor,
-              new java.lang.String[] { "Id", "Title", "Subtitle", "Description", "Classification", "Url", "Image", "Lat", "Lon", "Address", "LastModified", "Phone", "Email", "ContactFullName", "ObjectId", },
+              new java.lang.String[] { "Id", "Title", "Subtitle", "Description", "Classification", "Url", "Image", "Lat", "Lon", "Address", "LastModified", "Phone", "Email", "ContactFullName", "Info", "ObjectId", },
               eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nCultura.class,
               eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nCultura.Builder.class);
           internal_static_eu_trentorise_smartcampus_service_opendata_data_message_I18nMainEvent_descriptor =
@@ -17633,7 +17923,7 @@ public final class Opendata {
           internal_static_eu_trentorise_smartcampus_service_opendata_data_message_I18nTesto_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_eu_trentorise_smartcampus_service_opendata_data_message_I18nTesto_descriptor,
-              new java.lang.String[] { "Id", "Title", "Subtitle", "Description", "Classification", "Address", "Url", "Image", "LastModified", "ObjectId", },
+              new java.lang.String[] { "Id", "Title", "Subtitle", "Description", "Classification", "Address", "Url", "Image", "LastModified", "Info", "ObjectId", },
               eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nTesto.class,
               eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nTesto.Builder.class);
           internal_static_eu_trentorise_smartcampus_service_opendata_data_message_I18nItinerario_descriptor =

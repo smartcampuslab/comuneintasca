@@ -383,7 +383,7 @@ angular.module('ilcomuneintasca.services.db', [])
                       } else {
                         if (contentTypeKey == 'content') {
                           if (typeof item.classification === 'object') classification = item.classification.it;
-                          else classification = item.classification.it;
+                          else classification = item.classification;
 
                         } else if (contentTypeKey == 'mainevent') {
                           classification = item.classification.it;

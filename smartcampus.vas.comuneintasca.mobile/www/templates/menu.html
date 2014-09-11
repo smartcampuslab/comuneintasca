@@ -31,8 +31,8 @@
             <i class="icon comunimenu-{{menuGroup.id}}" ng-class="{'ion-chevron-down': !isGroupShown(groupIndex), 'ion-chevron-up': isGroupShown(groupIndex)}"></i>
           </ion-item>
           <div ng-show="isGroupShown(groupIndex)">
-              <span ng-bind="menuItem.name | translate"></span>
             <ion-item ng-repeat="(itemIndex, menuItem) in menuGroup.items" menu-close class="item-accordion" ng-href="#/app/{{getMenuPath(menuGroup,menuItem)}}">
+              <span class="comunisubmenu-{{menuItem.id|cleanMenuID}}" ng-bind="menuItem.name | translate"></span>
             </ion-item>
           </div>
         </div>

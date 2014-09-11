@@ -470,3 +470,4 @@ comuni-img, .comuni-item-image {
 .has-subheader { top:76px; }
 
 .eventscount { height:1em; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.eventPeriod { height:1em; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }

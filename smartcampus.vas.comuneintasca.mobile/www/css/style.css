@@ -44,6 +44,9 @@ blu: #2975a7;
 blu scuro: #1b4d6e;
 */
 
+.padding.notop { padding-top:0; }
+.padding.nobottom { padding-bottom:0; }
+
 h1,
 h2 {
   color: #1b4d6e;
@@ -459,7 +462,7 @@ comuni-img, .comuni-item-image {
 .card.sinottico, .card.sinottico .item { border-color: #666 !important; color:#666 !important; }
 .card.sinottico .item { font-size:.9em !important;line-height:1.1em !important; }
 .card.sinottico .icon { font-size:2.3em !important; }
-.card.sinottico .sinottico-button { background-color:#ccc; color:#2975a7 !important; font-weight:bold;
+.card.sinottico .sinottico-button { background-color:#ccc; color:#2975a7 !important; font-weight:bold; }
 .list:last-child.card.sinottico { margin-bottom:0; }
 
 .bar-subheader { height:32px; }

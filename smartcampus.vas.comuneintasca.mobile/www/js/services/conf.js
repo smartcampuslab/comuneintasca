@@ -1,14 +1,12 @@
 angular.module('ilcomuneintasca.services.conf', [])
 
 .factory('Config', function ($q, $http, $window, $filter, $rootScope) {
-  var OPENCONTENT=true;
   var DEVELOPMENT=true;
 
   var SCHEMA_VERSION=90;
   var SYNC_HOST="tn";
   if (DEVELOPMENT) SYNC_HOST="vas-dev";
-  var PROFILE="profile";
-  if (OPENCONTENT) PROFILE="opencontent";
+  var LOCAL_PROFILE="opencontent";
 
   function parseConfig(config) {
     if (config) {
@@ -60,15 +58,6 @@ angular.module('ilcomuneintasca.services.conf', [])
     return config;
   }
   
-  var globalProfile = $q.defer();
-  if (!OPENCONTENT) {
-    $http.get('data/'+PROFILE+'.json').success(function(data, status, headers, config){
-      globalProfile.resolve(parseConfig(data));
-    }).error(function(data, status, headers, config){
-      console.log('error getting config json!');
-      globalProfile.reject();
-    });
-  }
   var keys = {
     'settings_data_clean': {
       it: 'Elimina file temporanei',
@@ -510,9 +499,6 @@ angular.module('ilcomuneintasca.services.conf', [])
   }
   
   return {
-    opencontent: function () {
-      return OPENCONTENT;
-    },
     getLang: function () {
       var browserLanguage = '';
       // works for earlier version of Android (2.3.x)
@@ -529,26 +515,22 @@ angular.module('ilcomuneintasca.services.conf', [])
     },
     getProfile: function () {
       //console.log('getProfile()');
-      if (OPENCONTENT) {
-        var profile = $q.defer();
-        //console.log('localStorage.cachedProfile: '+localStorage.cachedProfile);
-        if (localStorage.cachedProfile && localStorage.cachedProfile!='undefined' && localStorage.cachedProfile!='null') {
-          //console.log('using locally cached profile');
-          profile.resolve(parseConfig(JSON.parse(localStorage.cachedProfile)));
-        } else {
-          //console.log('getting predefined profile');
-          $http.get('data/'+PROFILE+'.json').success(function(data, status, headers, config){
-            localStorage.cachedProfile=JSON.stringify(data);
-            profile.resolve(parseConfig(data));
-          }).error(function(data, status, headers, config){
-            console.log('error getting config json!');
-            profile.reject();
-          });
-        }
-        return profile.promise;
+      var profileLoaded = $q.defer();
+      //console.log('localStorage.cachedProfile: '+localStorage.cachedProfile);
+      if (localStorage.cachedProfile && localStorage.cachedProfile!='undefined' && localStorage.cachedProfile!='null') {
+        //console.log('using locally cached profile');
+        profileLoaded.resolve(parseConfig(JSON.parse(localStorage.cachedProfile)));
       } else {
-        return globalProfile.promise;
+        //console.log('getting predefined profile');
+        $http.get('data/'+LOCAL_PROFILE+'.json').success(function(data, status, headers, config){
+          localStorage.cachedProfile=JSON.stringify(data);
+          profileLoaded.resolve(parseConfig(data));
+        }).error(function(data, status, headers, config){
+          console.log('error getting config json!');
+          profileLoaded.reject();
+        });
       }
+      return profileLoaded.promise;
     },
     getProfileExtensions: function() {
       return {
@@ -806,7 +788,7 @@ angular.module('ilcomuneintasca.services.conf', [])
     _do: function (label, details) {
       if (Config.doProfiling()) {
         var startTime = startTimes[label] || -1;
-        if (startTime != -1) console.log('PROFILE: ' + label + (details ? '(' + details + ')' : '') + '=' + ((new Date).getTime() - startTime));
+        if (startTime != -1) console.log('PROFILING: ' + label + (details ? '(' + details + ')' : '') + '=' + ((new Date).getTime() - startTime));
       }
     }
   };

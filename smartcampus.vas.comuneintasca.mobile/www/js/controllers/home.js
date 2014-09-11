@@ -69,10 +69,11 @@ angular.module('ilcomuneintasca.controllers.home', [])
         for (hli=0; hli<items.length; hli++) {
           var item=items[hli];
           if (item.objectIds) {
-            if (Config.opencontent()) {
+//          if (Config.opencontent()) {
               item.title=item.name;
               item.abslink='/app/page/highlights/'+item.objectIds.join(',');
               highlights.push(item);
+/*
             } else {
               var type=(item.query&&item.query.type?item.query.type:item.type)||'content';
               if (type.indexOf('eu.trentorise.smartcampus.comuneintasca.model.')==0) type=Config.contentKeyFromDbType(type);
@@ -82,6 +83,7 @@ angular.module('ilcomuneintasca.controllers.home', [])
                 highlights.push(data);
               }));
             }
+*/
           } else {
             console.log('unknown highlight type for "'+(item.id||item)+'"');
           }

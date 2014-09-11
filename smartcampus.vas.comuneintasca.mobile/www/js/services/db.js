@@ -52,6 +52,7 @@ angular.module('ilcomuneintasca.services.db', [])
       //NO-OP
 
     } else if (dbtype == 'poi') {
+      //console.log(JSON.stringify(item.info));
       Config.menuGroupSubgroup('visitare',item.dbClassification).then(function(sg){
         item['dbClass']=sg;
         item.dbClassification=sg.name;

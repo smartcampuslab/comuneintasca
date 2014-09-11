@@ -498,6 +498,17 @@ angular.module('ilcomuneintasca.services.conf', [])
     'config': 'eu.trentorise.smartcampus.comuneintasca.model.ConfigObject'
   };
 
+  function cloneParentGroup(group) {
+    return _.map(group,function(value,key){ 
+      if (key=='items') {
+        return false; 
+      } else {
+        //console.log('key: '+key);
+        _.clone(value);
+      }
+    });
+  }
+  
   return {
     opencontent: function () {
       return OPENCONTENT;
@@ -632,7 +643,7 @@ angular.module('ilcomuneintasca.services.conf', [])
         if (group) {
           for (sgi=0; sgi<group.items.length; sgi++) {
             if (group.items[sgi].id==label2 || $filter('cleanMenuID')(group.items[sgi].id)==label2) {
-              group.items[sgi]._parent=group;
+              group.items[sgi]._parent=cloneParentGroup(group);
               return group.items[sgi];
             }
           }
@@ -645,7 +656,7 @@ angular.module('ilcomuneintasca.services.conf', [])
         if (group) {
           for (sgi=0; sgi<group.items.length; sgi++) {
             if (group.items[sgi].name[lcl]==label2) {
-              group.items[sgi]._parent=group;
+              group.items[sgi]._parent=cloneParentGroup(group);
               return group.items[sgi];
             }
           }
@@ -661,10 +672,10 @@ angular.module('ilcomuneintasca.services.conf', [])
             for (sgi=0; sgi<group.items.length; sgi++) {
               var sg=group.items[sgi];
               if ( sg.query && sg.query.type==type && ( (!sg.query.classification) || (classification&&classification==sg.query.classification) ) ) {
-                sg._parent=group;
+                sg._parent=cloneParentGroup(group);
                 return sg;
               } else if (sg.type && sg.type==type && classification==null) {
-                sg._parent=group;
+                sg._parent=cloneParentGroup(group);
                 return sg;
               }
             }

@@ -16,11 +16,13 @@ angular.module('ilcomuneintasca.services.db', [])
 		item['sonscount']=dbrow.sonscount;
 
     item['parsedimageurl']='svg/placeholder.svg';
-    var imageUrl=$filter('translate')(item.image);
-    if (imageUrl && imageUrl != '' && imageUrl != 'false') {
-      Files.get(imageUrl).then(function (fileUrl) {
-        item['parsedimageurl']=fileUrl;
-      });
+    if (item.image) {
+      var imageUrl=$filter('translate')(item.image);
+      if (imageUrl && imageUrl != '' && imageUrl != 'false') {
+        Files.get(imageUrl).then(function (fileUrl) {
+          item['parsedimageurl']=fileUrl;
+        });
+      }
     }
 
     var dbtype = Config.contentKeyFromDbType(dbrow.type);

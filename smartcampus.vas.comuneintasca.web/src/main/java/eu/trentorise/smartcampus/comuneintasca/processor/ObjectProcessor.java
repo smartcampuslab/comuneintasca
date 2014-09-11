@@ -200,7 +200,7 @@ public class ObjectProcessor {
 
 	private List<POIObject> parsePOIObjects() throws Exception {
 		List<POIObject> pois = new ArrayList<POIObject>();
-		List<List<String>> rows = ODFParser.parseTable("/cultura/cultura.ods", 27);
+		List<List<String>> rows = ODFParser.parseTable("/cultura/cultura.ods", 31);
 		for (List<String> row : rows) {
 			pois.add(convertPOIObject(row));
 		}
@@ -209,7 +209,7 @@ public class ObjectProcessor {
 
 	private List<ContentObject> parseContentObjects() throws Exception {
 		List<ContentObject> contents = new ArrayList<ContentObject>();
-		List<List<String>> rows = ODFParser.parseTable("/content/testi.ods", 20);
+		List<List<String>> rows = ODFParser.parseTable("/content/testi.ods", 24);
 		for (List<String> row : rows) {
 			contents.add(convertContentObject(row));
 		}
@@ -380,17 +380,25 @@ public class ObjectProcessor {
 			p.setImage(imagePrefix+"/"+row.get(12));
 		}
 		
-		Map<String,String> shortDesc = new HashMap<String, String>();
-		shortDesc.put("it", row.get(13));
-		shortDesc.put("de", row.get(14));
-		shortDesc.put("en", row.get(15));
-		p.setDescription(shortDesc);
+// old		
+//		Map<String,String> shortDesc = new HashMap<String, String>();
+//		shortDesc.put("it", row.get(13));
+//		shortDesc.put("de", row.get(14));
+//		shortDesc.put("en", row.get(15));
+//		p.setDescription(shortDesc);
 		
 		Map<String,String> htmlDesc = new HashMap<String, String>();
 		htmlDesc.put("it", row.get(17));
 		htmlDesc.put("de", row.get(18));
 		htmlDesc.put("en", row.get(19));
-		p.setInfo(htmlDesc);
+		p.setDescription(htmlDesc);
+		
+		Map<String,String> info = new HashMap<String, String>();
+		info.put("it", row.get(20));
+		info.put("de", row.get(21));
+		info.put("en", row.get(22));
+		p.setInfo(info);		
+		
 		p.setLastModified(lastModifiedFormat.parse(row.get(16)).getTime());
 		return p;
 	}
@@ -421,22 +429,31 @@ public class ObjectProcessor {
 		if (!StringUtils.isEmpty(row.get(14))) {
 			p.setImage(imagePrefix+"/"+row.get(14));
 		}
-		
+
+
 		Map<String,String> shortDesc = new HashMap<String, String>();
 		shortDesc.put("it", row.get(15));
 		shortDesc.put("de", row.get(16));
 		shortDesc.put("en", row.get(17));
 		p.setDescription(shortDesc);
-		
-		Map<String,String> htmlDesc = new HashMap<String, String>();
-		htmlDesc.put("it", row.get(18));
-		htmlDesc.put("de", row.get(19));
-		htmlDesc.put("en", row.get(20));
-		p.setInfo(htmlDesc);
+
+// old
+//		Map<String,String> htmlDesc = new HashMap<String, String>();
+//		htmlDesc.put("it", row.get(18));
+//		htmlDesc.put("de", row.get(19));
+//		htmlDesc.put("en", row.get(20));
+//		p.setDescription(htmlDesc);
 		if (!StringUtils.isEmpty(row.get(22)) && !StringUtils.isEmpty(row.get(23))) {
 			p.setLocation(new double[]{Double.parseDouble(row.get(22)),Double.parseDouble(row.get(23))});
 		}
 		p.setContactFullName(row.get(24));
+		
+		Map<String,String> info = new HashMap<String, String>();
+		info.put("it", row.get(27));
+		info.put("de", row.get(28));
+		info.put("en", row.get(29));
+		p.setInfo(info);		
+		
 		p.setLastModified(lastModifiedFormat.parse(row.get(25)).getTime());
 		return p;
 	}

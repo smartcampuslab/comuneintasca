@@ -471,3 +471,5 @@ comuni-img, .comuni-item-image {
 
 .eventscount { height:1em; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .eventPeriod { height:1em; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+
+.comunisubmenu-all { font-weight: bold; text-decoration: underline; }

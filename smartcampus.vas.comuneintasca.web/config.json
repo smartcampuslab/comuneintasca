@@ -1,11 +1,15 @@
 {
+  "id": "54088b79975a10f95cae0266",
+  "updateTime": 1409846137041,
+  "version": 3836,
+  "user": null,
   "highlights": [
     {
       "id": "text.3001",
       "name": {
-        "it": "Introduzione",
-        "en": "Introduction",
-        "de": "Einführung"
+        "it": "Informazioni",
+        "en": "Info",
+        "de": "Info"
       },
       "description": null,
       "image": {
@@ -14,7 +18,73 @@
         "de": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7656115/3-ger-DE/Einfuehrung1.jpg"
       },
       "objectIds": [
-        "text.3001"
+        "text.3001", "text.3004"
+      ],
+      "items": null,
+      "query": null,
+      "ref": null,
+      "type": null,
+      "app": null
+    },
+    {
+      "id": "cultura.73",
+      "name": {
+        "it": "Il Monte Bondone",
+        "en": "Il Monte Bondone",
+        "de": "Il Monte Bondone"
+      },
+      "description": null,
+      "image": {
+        "it": "http://tn.smartcampuslab.it/comuneintasca/images/bondone_visintainer.jpg",
+        "en": "http://tn.smartcampuslab.it/comuneintasca/images/bondone_visintainer.jpg",
+        "de": "http://tn.smartcampuslab.it/comuneintasca/images/bondone_visintainer.jpg"
+      },
+      "objectIds": [
+        "cultura.73"
+      ],
+      "items": null,
+      "query": null,
+      "ref": null,
+      "type": null,
+      "app": null
+    },
+    {
+      "id": "cultura.72",
+      "name": {
+        "it": "Muse",
+        "en": "Muse",
+        "de": "Muse"
+      },
+      "description": null,
+      "image": {
+        "it": "http://tn.smartcampuslab.it/comuneintasca/images/muse.jpg",
+        "en": "http://tn.smartcampuslab.it/comuneintasca/images/muse.jpg",
+        "de": "http://tn.smartcampuslab.it/comuneintasca/images/muse.jpg"
+      },
+      "objectIds": [
+        "cultura.72"
+      ],
+      "items": null,
+      "query": null,
+      "ref": null,
+      "type": null,
+      "app": null
+    },
+    {
+      "id": "02338f998ee34d6df111cab5b9fb763c",
+      "name": {
+        "it": "Autunno Trentino 2014",
+        "en": "Autunno Trentino 2014",
+        "de": "Autunno Trentino 2014"
+      },
+      "description": null,
+      "image": {
+        "it": "http://tn.smartcampuslab.it/comuneintasca/images/autunnotrentino_711x800.jpg",
+        "en": "http://tn.smartcampuslab.it/comuneintasca/images/autunnotrentino_711x800.jpg",
+        "de": "http://tn.smartcampuslab.it/comuneintasca/images/autunnotrentino_711x800.jpg"
+      },
+      "objectIds": [
+        "02338f998ee34d6df111cab5b9fb763c"
       ],
       "items": null,
       "query": null,
@@ -22,6 +92,7 @@
       "type": null,
       "app": null
     }
+    
   ],
   "navigationItems":[
     {
@@ -29,25 +100,13 @@
       "name":{ "it":"CONOSCERE", "en":"DISCOVER", "de":"KENNEN" },
       "ref":"conoscere"
     }, {
-      "id":"eventi",
-      "name":{ "it":"EVENTI", "en":"EVENTS", "de":"VERANSTALTUNGEN" },
-      "ref":"eventi"
-    }, {
       "id":"visitare",
       "name":{ "it":"VISITARE", "en":"HIGHLIGHTS", "de":"WAS SU  BESICHTIGEN" },
       "ref":"visitare"
     }, {
-      "id":"percorsi",
-      "name":{ "it":"PERCORSI", "en":"TOURISTIC  ITINERARIES", "de":"TOUREN  UND ROUTEN" },
-      "ref":"itineraries"
-    }, {
       "id":"mangiare_e_dormire",
-      "name":{ "it":"MANGIARE  E DORMIRE", "en":"HOTELS &  RESTAURANTS", "de":"ÜBERNACHTUNG  UND GASTRONOMIE" },
+      "name":{ "it":"MANGIARE  E DORMIRE", "en":"RESTAURANTS  & HOTELS", "de":"GASTRONOMIE  UND ÜBERNACHTUNG" },
       "ref":"mangiare_e_dormire"
-    }, {
-      "id":"info_utili",
-      "name":{ "it":"INFO UTILI", "en":"USEFUL  INFORMATIONS", "de":"WEITERE  INFORMATIONEN" },
-      "ref":"info_utili"
     }, {
       "id":"viaggia_trento",
       "name":{ "it":"VIAGGIA  TRENTO", "en":"VIAGGIA  TRENTO", "de":"VIAGGIA  TRENTO" },
@@ -55,6 +114,18 @@
         "android":"eu.trentorise.smartcampus.viaggiatrento", 
         "ios":null
       }
+    }, {
+      "id":"eventi",
+      "name":{ "it":"EVENTI", "en":"EVENTS", "de":"VERANSTALTUNGEN" },
+      "ref":"eventi"
+    }, {
+      "id":"percorsi",
+      "name":{ "it":"PERCORSI", "en":"TOURISTIC  ITINERARIES", "de":"TOUREN  UND ROUTEN" },
+      "ref":"itineraries"
+    }, {
+      "id":"info_utili",
+      "name":{ "it":"INFO UTILI", "en":"USEFUL  INFORMATIONS", "de":"WEITERE  INFORMATIONEN" },
+      "ref":"info_utili"
     }, {
       "id":"preferiti",
       "name":{ "it":"PREFERITI", "en":"FAVORITES", "de":"LIEBLINGSSEITEN" },
@@ -92,48 +163,6 @@
         }
       ]
     }, {
-      "id":"eventi",
-      "name":{ "it":"EVENTI", "en":"EVENTS", "de":"VERANSTALTUNGEN" },
-      "items":[
-        {
-          "id":"all",
-          "name":{ "it": "Tutti gli eventi", "en": "All events", "de": "Alle Veranstaltungen" },
-          "query":{ "type":"event" }
-        }, { 
-          "id":"fairs",
-          "name":{ "it": "Feste, mercati e fiere", "en": "Festivals, markets and fairs", "de": "Festivals, Märkte und Messen" },
-          "query":{ "type":"event", "classification":"fairs" }
-        }, { 
-          "id":"conferences",
-          "name":{ "it": "Incontri, convegni e conferenze", "en": "Meetings, seminars and conferences", "de": "Tagungen, Seminare und Konferenzen" },
-          "query":{ "type":"event", "classification":"conferences" }
-        }, { 
-          "id":"shows",
-          "name":{ "it": "Spettacoli", "en": "Shows", "de": "Shows" },
-          "query":{ "type":"event", "classification":"shows" }
-        }, { 
-          "id":"exhibitions",
-          "name":{ "it": "Mostre", "en": "Exhibitions", "de": "Ausstellungen" },
-          "query":{ "type":"event", "classification":"exhibitions" }
-        }, { 
-          "id":"labs",
-          "name":{ "it": "Corsi e laboratori", "en": "Courses and workshops", "de": "Kurse und Workshops" },
-          "query":{ "type":"event", "classification":"labs" }
-        }, { 
-          "id":"competitions",
-          "name":{ "it": "Competizioni e gare", "en": "Competitions and contests", "de": "Wettbewerbe und Gewinnspiele" },
-          "query":{ "type":"event", "classification":"competitions" }
-        }, { 
-          "id":"misc",
-          "name":{ "it": "Iniziative varie", "en": "Various initiatives", "de": "Verschiedene Initiativen" },
-          "query":{ "type":"event", "classification":"misc" }
-        }, {
-          "id":"complex",
-          "name":{ "it": "Manifestazioni annuali", "en": "Annual events", "de": "[ANNUAL-EVENTS]" },
-          "query":{ "type":"event", "classification":"_complex" }
-        }
-      ]
-    }, {
       "id":"visitare",
       "name":{ "it":"VISITARE", "en":"HIGHLIGHTS", "de":"WAS SU  BESICHTIGEN" },
       "items":[
@@ -164,6 +193,62 @@
         }
       ]
     }, {
+      "id":"mangiare_e_dormire",
+      "name":{ "it":"MANGIARE  E DORMIRE", "en":"RESTAURANTS  & HOTELS", "de":"GASTRONOMIE  UND ÜBERNACHTUNG" },
+      "items":[
+        { 
+          "id":"restaurants",
+          "name":{ "it":"Mangiare", "en":"Restaurants", "de":"Gastronomie" },
+          "query":{ "type":"restaurant" }
+        }, { 
+          "id":"hotels",
+          "name":{ "it":"Dormire", "en":"Hotels", "de":"Übernachtung" },
+          "query":{ "type":"hotel" }
+        }
+      ]
+    }, {
+      "id":"eventi",
+      "name":{ "it":"EVENTI", "en":"EVENTS", "de":"VERANSTALTUNGEN" },
+      "items":[
+        {
+          "id":"all",
+          "name":{ "it": "Tutti gli eventi", "en": "All events", "de": "Alle Veranstaltungen" },
+          "query":{ "type":"event" }
+        }, { 
+          "id":"exhibitions",
+          "name":{ "it": "Mostre", "en": "Exhibitions", "de": "Ausstellungen" },
+          "query":{ "type":"event", "classification":"exhibitions" }
+        }, { 
+          "id":"misc",
+          "name":{ "it": "Iniziative varie", "en": "Various initiatives", "de": "Verschiedene Initiativen" },
+          "query":{ "type":"event", "classification":"misc" }
+        }, { 
+          "id":"shows",
+          "name":{ "it": "Spettacoli", "en": "Shows", "de": "Shows" },
+          "query":{ "type":"event", "classification":"shows" }
+        }, { 
+          "id":"fairs",
+          "name":{ "it": "Feste, mercati e fiere", "en": "Festivals, markets and fairs", "de": "Festivals, Märkte und Messen" },
+          "query":{ "type":"event", "classification":"fairs" }
+        }, { 
+          "id":"conferences",
+          "name":{ "it": "Incontri, convegni e conferenze", "en": "Meetings, seminars and conferences", "de": "Tagungen, Seminare und Konferenzen" },
+          "query":{ "type":"event", "classification":"conferences" }
+        }, { 
+          "id":"competitions",
+          "name":{ "it": "Competizioni e gare", "en": "Competitions and contests", "de": "Wettbewerbe und Gewinnspiele" },
+          "query":{ "type":"event", "classification":"competitions" }
+        }, { 
+          "id":"labs",
+          "name":{ "it": "Corsi e laboratori", "en": "Courses and workshops", "de": "Kurse und Workshops" },
+          "query":{ "type":"event", "classification":"labs" }
+        }, {
+          "id":"complex",
+          "name":{ "it": "Manifestazioni", "en": "Annual events", "de": "[ANNUAL-EVENTS]" },
+          "query":{ "type":"event", "classification":"_complex" }
+        }
+      ]
+    }, {
       "id":"percorsi",
       "name":{ "it":"PERCORSI", "en":"TOURISTIC  ITINERARIES", "de":"TOUREN  UND ROUTEN" },
       "items":[
@@ -171,20 +256,6 @@
           "id":"itineraries",
           "name":{ "it":"Percorsi Turistici", "en":"Touristic Itineraries", "de":"Touren und Routen" },
           "query":{ "type":"itineraries" }
-        }
-      ]
-    }, {
-      "id":"mangiare_e_dormire",
-      "name":{ "it":"MANGIARE  E DORMIRE", "en":"HOTELS &  RESTAURANTS", "de":"ÜBERNACHTUNG  UND GASTRONOMIE" },
-      "items":[
-        { 
-          "id":"hotels",
-          "name":{ "it":"Dormire", "en":"Hotels", "de":"Übernachtung" },
-          "query":{ "type":"hotel" }
-        }, { 
-          "id":"restaurants",
-          "name":{ "it":"Mangiare", "en":"Restaurants", "de":"Gastronomie" },
-          "query":{ "type":"restaurant" }
         }
       ]
     }, {

@@ -203,11 +203,22 @@ angular.module('ilcomuneintasca.services.db', [])
 
   return {
 		reset: function () { 
-      localStorage.cachedProfile=null;
-      localStorage.lastSynced=lastSynced=-1;
-			localStorage.currentDbVersion=currentDbVersion=1;
-			return this.sync().then(function(){
+      if (!ionic.Platform.isWebView() || navigator.connection.type != Connection.NONE) {
+        localStorage.cachedProfile=null;
+        localStorage.lastSynced=lastSynced=-1;
+      } else {
+        console.log('cannot reset db: offline!');
+      }
+      return this.sync().then(function(){
         console.log('DB reset completed.');
+      },function(){
+        console.log('DB not resetted.');
+      });
+		},
+		fullreset: function () { 
+			localStorage.currentDbVersion=currentDbVersion=0;
+			return this.reset().then(function(){
+        console.log('DB FULL-RESET completed.');
       });
 		},
     sync: function () {

@@ -16,7 +16,7 @@
 // on each developer's box.
 var dirstocreate = [
 	'platforms/android/res/values-en', 'platforms/android/res/values-de', 
-	'platforms/ios/Trento - Il Comune in Tasca/Resources/de.lproj', 'platforms/ios/Trento - Il Comune in Tasca/Resources/it.lproj'
+//	'platforms/ios/Trento - Il Comune in Tasca/Resources/de.lproj', 'platforms/ios/Trento - Il Comune in Tasca/Resources/it.lproj'
 ];
  
 var filestocopy = [{

@@ -177,6 +177,7 @@ angular.module('ilcomuneintasca', [
     //console.log('input.length: '+input.length);
 
     var order = params.order;
+    console.log('$rootScope.extOrderBySorter.order: '+order);
     var filter = params.searchText;
 
     var arr = [];

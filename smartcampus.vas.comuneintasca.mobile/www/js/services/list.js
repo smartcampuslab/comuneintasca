@@ -97,7 +97,7 @@ angular.module('ilcomuneintasca.services.list', [])
         $location.path($location.path()+path);
       }
 */
-      if (conf.orderingTypes) {
+      if (conf.orderingTypes && conf.doSort) {
         $scope.hasSort = true;
         $scope.orderingTypes = conf.orderingTypes;
         $scope.ordering = $scope.$navDirection != 'back' ? {
@@ -114,6 +114,8 @@ angular.module('ilcomuneintasca.services.list', [])
           openSortPopup($scope, $scope.orderingTypes, odef, function (res) {
             if (res && $scope.ordering.order != res) {
               state.order = $scope.ordering.order = res;
+              if (conf.doSort) conf.doSort();
+              //$scope.results = $rootScope.extOrderBySorter($scope.results, $scope.ordering);
             }
           });
         };

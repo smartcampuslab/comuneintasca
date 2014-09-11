@@ -3,7 +3,7 @@
 </ion-header-bar>
 <ion-content class="has-header" delegate-handle="listScroll">
   <ion-list>
-    <ion-item collection-repeat="obj in results | extOrderBy:ordering" 
+    <ion-item collection-repeat="obj in results" 
               collection-item-width="'100%'" collection-item-height="getListItemHeight(obj, $index)" 
               ng-click="gotoSubpath(obj.id)" class="item-thumbnail-left coll-item">
       <!-- comuni-img class="item-image comuni-item-image" gotdata="gotdata" dida="{{obj.distance | number:1}} {{'entry_km' | translate}}"></comuni-img -->

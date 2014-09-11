@@ -39,7 +39,10 @@ angular.module('ilcomuneintasca.services.db', [])
       item['abslinkgot']=Config.menuGroupSubgroupByTypeAndClassification(dbtype,dbrow.classification).then(function(sg){
         if (sg) {
           item['abslink'] = '#/app/page/'+sg._parent.id+'/'+sg.id+'/' + item.id;
+          //console.log('abslink: '+item['abslink']);
           item['menu'] = sg;
+        } else {
+          console.log('sg NULL!');
         }
       },function(){
         console.log('sg NOT FOUND!');

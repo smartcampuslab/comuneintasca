@@ -488,7 +488,7 @@ angular.module('ilcomuneintasca.services.conf', [])
   };
 
   function cloneParentGroup(group) {
-    return _.map(group,function(value,key){ 
+    var r=_.map(group,function(value,key){ 
       if (key=='items') {
         return false; 
       } else {
@@ -496,6 +496,8 @@ angular.module('ilcomuneintasca.services.conf', [])
         _.clone(value);
       }
     });
+    if (group.id) r['id']=group.id;
+    return r;
   }
   
   return {

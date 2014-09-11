@@ -233,7 +233,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
                 }
               }
             } else if (data.sonscount > 0) {
-              console.log('sons');
+              //console.log('sons');
 
               $scope.toggleSons = function () {
                 if ($scope.sonsVisible) {

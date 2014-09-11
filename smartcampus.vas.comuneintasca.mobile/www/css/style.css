@@ -468,3 +468,5 @@ comuni-img, .comuni-item-image {
 .bar-subheader { height:32px; }
 .button.bar-subheader { height:32px; }
 .has-subheader { top:76px; }
+
+.eventscount { height:1em; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }

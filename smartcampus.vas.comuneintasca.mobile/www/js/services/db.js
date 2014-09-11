@@ -1,6 +1,6 @@
 angular.module('ilcomuneintasca.services.db', [])
 
-.factory('DatiDB', function ($q, $http, $rootScope, $filter, $timeout, Config, Profiling, GeoLocate, $ionicLoading) {
+.factory('DatiDB', function ($q, $http, $rootScope, $filter, $timeout, Config, Files, Profiling, GeoLocate, $ionicLoading) {
   var SCHEMA_VERSION = Config.schemaVersion();
   var types = Config.contentTypesList();
 
@@ -14,6 +14,14 @@ angular.module('ilcomuneintasca.services.db', [])
 			item['parent']=JSON.parse(dbrow.parent);
 		}
 		item['sonscount']=dbrow.sonscount;
+
+    item['parsedimageurl']='svg/placeholder.svg';
+    var imageUrl=$filter('translate')(item.image);
+    if (imageUrl && imageUrl != '' && imageUrl != 'false') {
+      Files.get(imageUrl).then(function (fileUrl) {
+        item['parsedimageurl']=fileUrl;
+      });
+    }
 
     var dbtype = Config.contentKeyFromDbType(dbrow.type);
     item['dbType']=dbtype;

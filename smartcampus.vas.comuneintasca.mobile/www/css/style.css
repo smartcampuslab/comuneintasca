@@ -430,7 +430,7 @@ p.phone-button {
 }
 
 
-comuni-img.item-image {
+comuni-img, .comuni-item-image {
 	position: relative;
 }
 .dida {
@@ -441,6 +441,20 @@ comuni-img.item-image {
 .dida span { margin-right:.5em; }
 .dida i { font-size:1.4em;position:absolute;right:0;bottom:-1px; }
 
+/* stretched img css trick
+.comuni-img img {
+  zoom: 2;  //increase if you have very small images
+
+  display: block;
+  margin: auto;
+
+  height: auto;
+  max-height: 100%;
+
+  width: auto;
+  max-width: 100%;
+}
+*/
 
 .card.sinottico, .card.sinottico .item { border-color: #666 !important; color:#666 !important; }
 .card.sinottico .item { font-size:.9em !important;line-height:1.1em !important; }

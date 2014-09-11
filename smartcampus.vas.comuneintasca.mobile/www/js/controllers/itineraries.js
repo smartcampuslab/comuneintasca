@@ -56,9 +56,9 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
     DatiDB.get('poi', data.steps.join()).then(function (luoghi) {
       var tappe = [];
       angular.forEach(luoghi, function (luogo, idx) {
+        tappe[idx] = luogo;
         luogo.abslinkgot.then(function(){
-          luogo['abslink']='#/app/itinerarystep/'+$scope.itinerario.id+'/poi/'+luogo.id;
-          tappe[data.steps.indexOf(luogo.id)] = luogo;
+          luogo['abslink']='#/app/itinstep/'+$scope.itinerario.id+'/poi/'+luogo.id;
         })
       });
       $scope.tappe = tappe;
@@ -68,7 +68,14 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
 })
 
 .controller('ItinerarioInfoCtrl', function ($scope, DatiDB, $stateParams) {})
-.controller('ItinerarioTappeCtrl', function ($scope, DatiDB, $stateParams) {})
+.controller('ItinerarioTappeCtrl', function ($scope, DatiDB, $stateParams) {
+  if ($stateParams.poiId) {
+    $scope.gotdata = DatiDB.get('poi', $stateParams.poiId).then(function (data) {
+      $scope.obj=data;
+      $scope.template='templates/page/poi_content.html';
+    });
+  }
+})
 .controller('ItinerarioPoiCtrl', function ($scope, $state, $timeout, $window, DatiDB, $stateParams) {
   $scope.backActive = false;
   $timeout(function(){$scope.backActive = true;},200);
@@ -80,8 +87,8 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
     $window.history.back();
   };
 
-  //console.log('itin id: '+$stateParams.itinerarioId);
-  //console.log('poi id: '+$stateParams.poiId);
+  console.log('itin id: '+$stateParams.itinerarioId);
+  console.log('poi id: '+$stateParams.poiId);
   $scope.gotdata = DatiDB.get('poi', $stateParams.poiId).then(function (data) {
     $scope.obj=data;
   });
@@ -166,7 +173,7 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
         text: $filter('translate')(Config.keys()['Details']),
         type: 'button-positive',
         onTap: function (e) {
-          var itemUrl = '/app/itinerarystep/'+$scope.itinerario.id+'/poi/'+$scope.activeMarker.id;
+          var itemUrl = '/app/itinerary/'+$scope.itinerario.id+'/steps/'+$scope.activeMarker.id;
           $location.path(itemUrl);
         }
         }]

@@ -346,7 +346,7 @@ angular.module('ilcomuneintasca', [
       }
     })
     .state('app.itinerary.steps', {
-      url: "/steps",
+      url: "/steps/:poiId",
       views: {
         'itinerary-steps': {
           templateUrl: "templates/itinerario-tappe.html",
@@ -354,9 +354,9 @@ angular.module('ilcomuneintasca', [
         }
       }
     })
-    .state('app.itinerarypoi', {
-      url: "/itinerarystep/:itinerarioId/poi/:poiId",
-//      url: "/poi/:poiId",
+    .state('app.itinerary.poi', {
+      //url: "/itinstep/:itinerarioId/poi/:poiId",
+      url: "/poi/:poiId",
       views: {
         'menuContent': {
           templateUrl: "templates/itinerario-poi.html",

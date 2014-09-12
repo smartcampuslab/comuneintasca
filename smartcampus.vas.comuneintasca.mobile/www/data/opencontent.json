@@ -265,7 +265,7 @@
           "query":{ "type":"event", "classification":"labs" }
         }, {
           "id":"complex",
-          "name":{ "it": "Manifestazioni", "en": "Annual events", "de": "[ANNUAL-EVENTS]" },
+          "name":{ "it": "Manifestazioni", "en": "Event series", "de": "Veranstaltungsreihe" },
           "query":{ "type":"event", "classification":"_complex" }
         }
       ]

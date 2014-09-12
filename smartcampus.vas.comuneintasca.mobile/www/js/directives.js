@@ -106,7 +106,7 @@ angular.module('ilcomuneintasca.directives', [])
             //if (protocol && url.indexOf(protocol) == 0) {
 
             // do not open broken/relative links
-            if (url.indexOf('http://') == 00 || url.indexOf('https://') == 0 || url.indexOf('mailto:') == 0 || url.indexOf('tel:') == 0) {
+            if (url.indexOf('http://') == 00 || url.indexOf('https://') == 0 || url.indexOf('mailto:') == 0 || url.indexOf('tel:') == 0 || url.indexOf('sms:') == 0) {
               window.open(url, '_system');
             } else {
               console.log("blocking broken link: " + url);

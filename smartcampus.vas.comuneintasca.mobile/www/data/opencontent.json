@@ -126,7 +126,7 @@
       "ref":"visitare"
     }, {
       "id":"mangiare_e_dormire",
-      "name":{ "it":"MANGIARE  E DORMIRE", "en":"RESTAURANTS  & HOTELS", "de":"GASTRONOMIE  UND ÜBERNACHTUNG" },
+      "name":{ "it":"MANGIARE  E DORMIRE", "en":"RESTAURANTS  & HOTELS", "de":"GASTRONOMIE UND  ÜBERNACHTUNG" },
       "ref":"mangiare_e_dormire"
     }, {
       "id":"viaggia_trento",
@@ -215,7 +215,7 @@
       ]
     }, {
       "id":"mangiare_e_dormire",
-      "name":{ "it":"MANGIARE  E DORMIRE", "en":"RESTAURANTS  & HOTELS", "de":"GASTRONOMIE  UND ÜBERNACHTUNG" },
+      "name":{ "it":"MANGIARE  E DORMIRE", "en":"RESTAURANTS  & HOTELS", "de":"GASTRONOMIE UND  ÜBERNACHTUNG" },
       "items":[
         { 
           "id":"restaurants",

@@ -25,9 +25,9 @@ ion-side-menu .list .comunimenu-favorites .item { color:#c4c6c6; }
 ion-side-menu .list .comunimenu-settings .item { }
 ion-side-menu .list .comunimenu-credits .item { }
 
-.tabs {
+ion-tabs, .tabs {
   border-color: #999;
-  background-color: #cccccc;
+  background-color: #CCC !important;
   color: #2f2d2d;
 }
 .item-input-inset { background-color: #2f2d2d; }

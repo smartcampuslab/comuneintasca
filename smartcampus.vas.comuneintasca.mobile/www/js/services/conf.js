@@ -59,6 +59,11 @@ angular.module('ilcomuneintasca.services.conf', [])
   }
   
   var keys = {
+    'settings_done': {
+      it: 'operazione completata',
+      en: 'operation completed',
+      de: 'operation beendet'
+    },
     'settings_data_clean': {
       it: 'Elimina file temporanei',
       en: 'Delete temporary files',

@@ -1,6 +1,6 @@
 angular.module('ilcomuneintasca.controllers.common', [])
 
-.controller('MenuCtrl', function ($scope, $rootScope, $location, $ionicModal, $ionicLoading, $filter, $window, Config, Files, DatiDB) {
+.controller('MenuCtrl', function ($scope, $rootScope, $location, $ionicModal, $ionicLoading, $ionicPopup, $filter, $window, Config, Files, DatiDB) {
   $scope.shownGroup = null;
 
   $scope.isGroupShown = function (groupId) {
@@ -34,18 +34,32 @@ angular.module('ilcomuneintasca.controllers.common', [])
 		*/
   };
   $scope.fsCleanup = function () {
+    console.log('clean!');
     localStorage.lastFileCleanup = -1;
     Files.cleanup().then(function () {
       console.log('fs cleanup completed!');
-      $location.path('#/app/home');
-      $scope.settings.hide();
+      $ionicPopup.alert({
+        title: $filter('translate')('settings_data_clean'),
+        template: $filter('translate')('settings_done')
+      }).then(function(res) {
+        console.log('fs cleanup acknowledged!');
+        $scope.settings.hide();
+        //$location.path('#/app/home');
+      });
     });
   };
   $scope.dbReset = function () {
-    console.log('sync!');
+    console.log('reset!');
     DatiDB.reset().then(function () {
-      console.log('reloading page...');
-      $window.location.reload();
+      console.log('db reset completed!');
+      $ionicPopup.alert({
+        title: $filter('translate')('settings_data_sync'),
+        template: $filter('translate')('settings_done')
+      }).then(function(res) {
+        console.log('db reset acknowledged!');
+        $scope.settings.hide();
+        $window.location.reload();
+      });
     });
   };
 

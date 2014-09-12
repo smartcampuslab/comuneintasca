@@ -178,7 +178,7 @@ angular.module('ilcomuneintasca.services.fs', [])
             var readAllEntries = function() {
               dirReader.readEntries(function(results) {
                 if (!results.length) {
-                  console.log('data dir reading done: waiting for all files ('+allTotalSizesPromises.length+') metadata...');
+                  console.log('data dir reading done: waiting for all files (tot: '+allTotalSizesPromises.length+') metadata...');
                   //console.log('allTotalSizesPromises.length: '+allTotalSizesPromises.length);
                   $q.all(allTotalSizesPromises).then(function(){
                     var totalSizeMB=totalSize/1000000;
@@ -219,6 +219,11 @@ angular.module('ilcomuneintasca.services.fs', [])
                     $ionicLoading.hide();
                     Profiling._do('filecleanup');
                     cleaned.resolve(mainDir);
+                  },function(){
+                    console.log('Files.clenup(): error waiting readEntries!');
+                    $ionicLoading.hide();
+                    Profiling._do('filecleanup');
+                    cleaned.reject(mainDir);
                   });
                 } else {
                   console.log('reading data dir: '+results.length+' entries');
@@ -243,6 +248,9 @@ angular.module('ilcomuneintasca.services.fs', [])
                 }
               }, function() {
                 console.log('error reading data dir');
+                $ionicLoading.hide();
+                Profiling._do('filecleanup');
+                cleaned.reject(mainDir);
               });
             };
             readAllEntries();
@@ -271,6 +279,7 @@ angular.module('ilcomuneintasca.services.fs', [])
         }
       },function(err){
         //console.log('fs cleanup error!');
+        cleaned.reject(mainDir);
       });
       return cleaned.promise;
     },

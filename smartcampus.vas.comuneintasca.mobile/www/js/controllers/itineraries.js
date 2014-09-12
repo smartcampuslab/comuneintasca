@@ -48,10 +48,13 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
 */
   $scope.backActive = false;
   $timeout(function(){$scope.backActive = true;},200);
-    
+  $scope.explicitBack = function () {
+    return $state.current && $state.current.data && $state.current.data.explicitBack;
+  };
   $scope.bk = function () {
     $window.history.back();
   };
+
   $scope.clr = function () {
     $location.replace();
   };
@@ -77,23 +80,25 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
 .controller('ItinerarioInfoCtrl', function ($scope, DatiDB, $stateParams) {})
 .controller('ItinerarioTappeCtrl', function ($scope, DatiDB, $stateParams) {
   if ($stateParams.poiId) {
+    console.log('ItinerarioTappeCtrl: poi');
     $scope.gotdata = DatiDB.get('poi', $stateParams.poiId).then(function (data) {
       $scope.obj=data;
       $scope.template='templates/page/poi_content.html';
     });
+  } else {
+    console.log('ItinerarioTappeCtrl: lista');
   }
 })
 .controller('ItinerarioPoiCtrl', function ($scope, $state, $timeout, $window, DatiDB, $stateParams) {
   $scope.backActive = false;
   $timeout(function(){$scope.backActive = true;},200);
-    
   $scope.explicitBack = function () {
     return $state.current && $state.current.data && $state.current.data.explicitBack;
   };
   $scope.bk = function () {
     $window.history.back();
   };
-
+    
   console.log('itin id: '+$stateParams.itinerarioId);
   console.log('poi id: '+$stateParams.poiId);
   $scope.gotdata = DatiDB.get('poi', $stateParams.poiId).then(function (data) {
@@ -171,18 +176,19 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
       subTitle: !!$scope.activeMarker.distance ? $filter('number')($scope.activeMarker.distance, 1) + ' Km' : '',
       scope: $scope,
       buttons: [{
-        text: $filter('translate')(Config.keys()['Close']),
-        type: 'button-default',
-        onTap: function (e) {
-          $scope.activeMarker = null;
-        }
-            }, {
-        text: $filter('translate')(Config.keys()['Details']),
-        type: 'button-positive',
-        onTap: function (e) {
-          var itemUrl = '/app/itinerary/'+$scope.itinerario.id+'/steps/'+$scope.activeMarker.id;
-          $location.path(itemUrl);
-        }
+          text: $filter('translate')(Config.keys()['Close']),
+          type: 'button-default',
+          onTap: function (e) {
+            $scope.activeMarker = null;
+          }
+        }, {
+          text: $filter('translate')(Config.keys()['Details']),
+          type: 'button-positive',
+          onTap: function (e) {
+            //var itemUrl = '/app/itinerary/'+$scope.itinerario.id+'/steps/'+$scope.activeMarker.id;
+            var itemUrl = '/app/itinstep/'+$scope.itinerario.id+'/step/'+$scope.activeMarker.id;
+            $location.path(itemUrl);
+          }
         }]
     });
     $scope.show = myPopup;

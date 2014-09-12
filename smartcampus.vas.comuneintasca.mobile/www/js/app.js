@@ -68,7 +68,7 @@ angular.module('ilcomuneintasca', [
     document.addEventListener("deviceready", function () { 
       //console.log('removing splashscreen...');
       //giving another couple of seconds to ui to complete css&font elements redraw (on android)
-      setTimeout(function(){ navigator.splashscreen.hide(); },1000);
+      setTimeout(function(){ navigator.splashscreen.hide(); },1500);
     });
   });
   GeoLocate.locate().then(function (position) {
@@ -318,63 +318,62 @@ angular.module('ilcomuneintasca', [
     }
   })
 
-    .state('app.itineraries', {
-      url: "/itineraries",
-      views: {
-        'menuContent': {
-          templateUrl: "templates/itinerari.html",
-          controller: 'ItinerariCtrl'
-        }
+  .state('app.itineraries', {
+    url: "/itineraries",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/itinerari.html",
+        controller: 'ItinerariCtrl'
       }
-    })
-    .state('app.itinerary', {
-      url: "/itinerary/:itinerarioId",
-      views: {
-        'menuContent': {
-          templateUrl: "templates/itinerario.html",
-          controller: 'ItinerarioCtrl'
-        }
+    }
+  })
+  .state('app.itinerary', {
+    url: "/itinerary/:itinerarioId",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/itinerario.html",
+        controller: 'ItinerarioCtrl'
       }
-    })
-    .state('app.itinerary.info', {
-      url: "/info",
-      views: {
-        'itinerary-info': {
-          templateUrl: "templates/itinerario-info.html",
-          controller: 'ItinerarioInfoCtrl'
-        }
+    }
+  })
+  .state('app.itinerary.info', {
+    url: "/info",
+    views: {
+      'itinerary-info': {
+        templateUrl: "templates/itinerario-info.html",
+        controller: 'ItinerarioInfoCtrl'
       }
-    })
-    .state('app.itinerary.steps', {
-      url: "/steps/:poiId",
-      views: {
-        'itinerary-steps': {
-          templateUrl: "templates/itinerario-tappe.html",
-          controller: 'ItinerarioTappeCtrl'
-        }
+    }
+    ,data: { explicitBack: true }
+  })
+  .state('app.itinerary.steps', {
+    url: "/steps/:poiId",
+    views: {
+      'itinerary-steps': {
+        templateUrl: "templates/itinerario-tappe.html",
+        controller: 'ItinerarioTappeCtrl'
       }
-    })
-    .state('app.itinerary.poi', {
-      //url: "/itinstep/:itinerarioId/poi/:poiId",
-      url: "/poi/:poiId",
-      views: {
-        'menuContent': {
-          templateUrl: "templates/itinerario-poi.html",
-          controller: 'ItinerarioPoiCtrl'
-        }
-      },
-      data: {
-        explicitBack: true
+    }
+    ,data: { explicitBack: true }
+  })
+  .state('app.itinerary.map', {
+    url: "/map",
+    views: {
+      'itinerary-map': {
+        templateUrl: "templates/itinerario-mappa.html",
+        controller: 'ItinerarioMappaCtrl'
       }
-    })
-    .state('app.itinerary.map', {
-      url: "/map",
-      views: {
-        'itinerary-map': {
-          templateUrl: "templates/itinerario-mappa.html",
-          controller: 'ItinerarioMappaCtrl'
-        }
+    }
+  })
+  .state('app.itinstep', {
+    url: "/itinstep/:itinerarioId/step/:poiId",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/itinerario-poi.html",
+        controller: 'ItinerarioPoiCtrl'
       }
-    });
+    }
+    ,data: { explicitBack: true }
+  });
   $urlRouterProvider.otherwise('/app/home'); // if none of the above states are matched, use this as the fallback
 });

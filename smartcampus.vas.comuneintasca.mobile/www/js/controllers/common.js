@@ -279,6 +279,12 @@ angular.module('ilcomuneintasca.controllers.common', [])
         } else {
           $scope.template = 'templates/page/' + (sg.view || dbtypeClassCustomisations.view || sg_query_type + '_list') + '.html';
 
+          var dosort = function() {
+              if (tboptions.hasSort) {  
+                $scope.results = $filter('extOrderBy')($scope.results,$scope.ordering);
+              }  
+          };    
+
           var tboptions = {
             hasSort: false,
             hasSearch: (sg.query.search || true),
@@ -297,6 +303,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
                   $scope.gotdata = $scope.gotdbdata.then(function (data) {
                     //console.log('tboptions gotdata!');
                     $scope.results = data;
+                    dosort();
                     $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false);
                   });
                 }
@@ -337,6 +344,9 @@ angular.module('ilcomuneintasca.controllers.common', [])
           } else if (dbtypeCustomisations.hasOwnProperty('map')) {
             tboptions.hasMap = true;
           }
+
+          
+          tboptions.doSort = dosort;
 
           $scope.filterDef = '';
           if (sg.query.hasOwnProperty('filter') || sg._parent.hasOwnProperty('filter') || dbtypeCustomisations.hasOwnProperty('filter')) {
@@ -385,6 +395,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
                 if (data) {
                   //$scope.results = $filter('extOrderBy')(data,$scope.ordering);
                   $scope.results = data;
+                  dosort();
                 } else {
                   $scope.results = [];
                 }
@@ -430,6 +441,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
             $scope.gotdata = $scope.gotdbdata.then(function (data) {
               //console.log('list gotdata!');
               $scope.results = data;
+              dosort();
             });
           }
         }

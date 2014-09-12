@@ -36,7 +36,7 @@
   </div>
   <ion-content class="has-subheader">
     <ion-list ng-if="gotsonsdata">
-      <ion-item collection-repeat="son in sons|extOrderBy:{ordering:'DateFrom'} track by son.id" 
+      <ion-item collection-repeat="son in sons track by son.id" 
                 collection-item-width="'100%'" collection-item-height="getListItemHeight(son, $index)"
                 href="{{son.abslink}}" class="coll-item item-thumbnail-left">
         <!-- comuni-img class="item-image comuni-item-image" gotdata="gotsonsdata"></comuni-img -->

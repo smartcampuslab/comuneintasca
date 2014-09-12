@@ -1,10 +1,14 @@
 angular.module('ilcomuneintasca.controllers.itineraries', [])
 
-.controller('ItinerariCtrl', function ($scope, $location, Config, DatiDB, ListToolbox) {
+.controller('ItinerariCtrl', function ($scope, $location, $filter, Config, DatiDB, ListToolbox) {
   Config.menuGroupSubgroup('percorsi','itineraries').then(function(sg){
     $scope.title = sg.name;
   });
 
+  var dosort = function() {
+    $scope.itinerari = $filter('extOrderBy')($scope.itinerari,$scope.ordering);
+  };
+  
   ListToolbox.prepare($scope, {
     load: function (cache) {
       if (cache) {
@@ -12,9 +16,11 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
       } else {
         $scope.gotdata = DatiDB.all('itinerary').then(function (data) {
           $scope.itinerari = data;
+          dosort();
         });
       }
     },
+    doSort: dosort,
     getData: function () {
       return $scope.itinerari;
     },
@@ -24,6 +30,7 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
   });
   $scope.gotdata = DatiDB.all('itinerary').then(function (data) {
     $scope.itinerari = data;
+    dosort();
   });
 })
 

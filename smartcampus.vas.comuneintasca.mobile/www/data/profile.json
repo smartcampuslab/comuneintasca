@@ -126,7 +126,7 @@
       "ref":"visitare"
     }, {
       "id":"mangiare_e_dormire",
-      "name":{ "it":"MANGIARE  E DORMIRE", "en":"RESTAURANTS  & HOTELS", "de":"GASTRONOMIE  UND ГњBERNACHTUNG" },
+      "name":{ "it":"MANGIARE  E DORMIRE", "en":"RESTAURANTS  & HOTELS", "de":"GASTRONOMIE UND  ÜBERNACHTUNG" },
       "ref":"mangiare_e_dormire"
     }, {
       "id":"viaggia_trento",
@@ -141,7 +141,7 @@
       "ref":"eventi"
     }, {
       "id":"percorsi",
-      "name":{ "it":"PERCORSI", "en":"TOURISTIC  ITINERARIES", "de":"TOUREN  UND ROUTEN" },
+      "name":{ "it":"PERCORSI", "en":"TOURISTIC  ITINERARIES", "de":"TOUREN UND  ROUTEN" },
       "ref":"itineraries"
     }, {
       "id":"info_utili",
@@ -193,7 +193,7 @@
           "query":{ "type":"poi", "classification":"museums" }
         }, { 
           "id":"buildings",
-          "name":{ "it": "Edifici storici", "en": "Historic Buildings", "de": "Historische GebГ¤ude" },
+          "name":{ "it": "Edifici storici", "en": "Historic Buildings", "de": "Historische Gebäude" },
           "query":{ "type":"poi", "classification":"buildings" }
         }, { 
           "id":"churches",
@@ -201,7 +201,7 @@
           "query":{ "type":"poi", "classification":"churches" }
         }, { 
           "id":"archeo",
-          "name":{ "it": "Aree Archeologiche", "en": "Archaeological Areas", "de": "ArchГ¤ologische Areas" },
+          "name":{ "it": "Aree Archeologiche", "en": "Archaeological Areas", "de": "Archäologische Areas" },
           "query":{ "type":"poi", "classification":"archeo" }
         }, { 
           "id":"parks",
@@ -209,13 +209,13 @@
           "query":{ "type":"poi", "classification":"parks" }
         }, { 
           "id":"misc",
-          "name":{ "it": "Altri siti di interesse storico artistico", "en": "Other sites of historical and artistic interest", "de": "Andere Seiten von historischem und kГјnstlerischem Interesse" },
+          "name":{ "it": "Altri siti di interesse storico artistico", "en": "Other sites of historical and artistic interest", "de": "Andere Seiten von historischem und künstlerischem Interesse" },
           "query":{ "type":"poi", "classification":"misc" }
         }
       ]
     }, {
       "id":"mangiare_e_dormire",
-      "name":{ "it":"MANGIARE  E DORMIRE", "en":"RESTAURANTS  & HOTELS", "de":"GASTRONOMIE  UND ГњBERNACHTUNG" },
+      "name":{ "it":"MANGIARE  E DORMIRE", "en":"RESTAURANTS  & HOTELS", "de":"GASTRONOMIE  UND ÜBERNACHTUNG" },
       "items":[
         { 
           "id":"restaurants",
@@ -223,7 +223,7 @@
           "query":{ "type":"restaurant" }
         }, { 
           "id":"hotels",
-          "name":{ "it":"Dormire", "en":"Hotels", "de":"Гњbernachtung" },
+          "name":{ "it":"Dormire", "en":"Hotels", "de":"Übernachtung" },
           "query":{ "type":"hotel" }
         }
       ]
@@ -249,7 +249,7 @@
           "query":{ "type":"event", "classification":"shows" }
         }, { 
           "id":"fairs",
-          "name":{ "it": "Feste, mercati e fiere", "en": "Festivals, markets and fairs", "de": "Festivals, MГ¤rkte und Messen" },
+          "name":{ "it": "Feste, mercati e fiere", "en": "Festivals, markets and fairs", "de": "Festivals, Märkte und Messen" },
           "query":{ "type":"event", "classification":"fairs" }
         }, { 
           "id":"conferences",
@@ -265,7 +265,7 @@
           "query":{ "type":"event", "classification":"labs" }
         }, {
           "id":"complex",
-          "name":{ "it": "Manifestazioni", "en": "Annual events", "de": "[ANNUAL-EVENTS]" },
+          "name":{ "it": "Manifestazioni", "en": "Event series", "de": "Veranstaltungsreihe" },
           "query":{ "type":"event", "classification":"_complex" }
         }
       ]

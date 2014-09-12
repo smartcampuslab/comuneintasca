@@ -3,7 +3,7 @@ angular.module('ilcomuneintasca.services.conf', [])
 .factory('Config', function ($q, $http, $window, $filter, $rootScope) {
   var DEVELOPMENT=false;
 
-  var SCHEMA_VERSION=91;
+  var SCHEMA_VERSION=92;
   var SYNC_HOST="tn";
   if (DEVELOPMENT) SYNC_HOST="vas-dev";
   var LOCAL_PROFILE="opencontent";

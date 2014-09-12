@@ -280,8 +280,8 @@ angular.module('ilcomuneintasca.controllers.common', [])
           $scope.template = 'templates/page/' + (sg.view || dbtypeClassCustomisations.view || sg_query_type + '_list') + '.html';
 
           var dosort = function() {
-              if (tboptions.hasSort) {  
-                $scope.results = $filter('extOrderBy')($scope.results,$scope.ordering);
+              if (tboptions.hasSort || tboptions.hasSearch) {  
+                $scope.results = $filter('extOrderBy')(tboptions.getData(),$scope.ordering);
               }  
           };    
 
@@ -303,6 +303,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
                   $scope.gotdata = $scope.gotdbdata.then(function (data) {
                     //console.log('tboptions gotdata!');
                     $scope.results = data;
+                    $scope.resultsAll = data;
                     dosort();
                     $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false);
                   });
@@ -310,7 +311,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
               }
             },
             getData: function () {
-              return $scope.results;
+              return $scope.resultsAll||$scope.results;
             },
             getTitle: function () {
               return $scope.title;
@@ -395,6 +396,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
                 if (data) {
                   //$scope.results = $filter('extOrderBy')(data,$scope.ordering);
                   $scope.results = data;
+                  $scope.resultsAll = data;
                   dosort();
                 } else {
                   $scope.results = [];
@@ -431,6 +433,10 @@ angular.module('ilcomuneintasca.controllers.common', [])
           if (tboptions.hasMap || tboptions.hasFilter || tboptions.hasSort || tboptions.hasSearch) {
             //console.log('ListToolbox.prepare()...');
             ListToolbox.prepare($scope, tboptions);
+            $scope.$watch('ordering.searchText', function(newValue, oldValue) {
+              console.log('search for: '+newValue);
+              dosort();
+            });
           } else {
             //console.log('sg.query.classification: '+sg.query.classification);
             if (sg.query.classification) {

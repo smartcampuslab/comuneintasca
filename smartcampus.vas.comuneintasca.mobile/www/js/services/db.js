@@ -615,7 +615,7 @@ angular.module('ilcomuneintasca.services.db', [])
       });
       return data.promise;
     },
-    byTimeInterval: function (dbname, fromTime, toTime, cateId) {
+    byTimeInterval: function (dbname, fromTime, toTime, cateId, objContext) {
       var data = $q.defer();
       this.sync().then(function (dbVersion) {
         Profiling.start('byTimeInterval');
@@ -647,7 +647,9 @@ angular.module('ilcomuneintasca.services.db', [])
               i;
             for (i = 0; i < len; i++) {
               var item = cateResults.rows.item(i);
-              lista.push(parseDbRow(item));
+              var dbItem=parseDbRow(item);
+              dbItem.ctx=objContext;
+              lista.push(dbItem);
             }
             data.resolve(lista);
           }, function (tx2, err) {

@@ -146,7 +146,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
   });
 })
 
-.controller('PageCtrl', function ($scope, $state, $stateParams, $filter, $location, $window, Config, DatiDB, ListToolbox, DateUtility, GeoLocate, MapHelper, $ionicScrollDelegate) {
+.controller('PageCtrl', function ($scope, $rootScope, $state, $stateParams, $filter, $location, $window, Config, DatiDB, ListToolbox, DateUtility, GeoLocate, MapHelper, $ionicScrollDelegate) {
   $scope._ = _;
   $scope.getLocaleDateString = function (time) {
     return DateUtility.getLocaleDateString($rootScope.lang, time);
@@ -395,9 +395,13 @@ angular.module('ilcomuneintasca.controllers.common', [])
                 //console.log('do filter gotdata!');
                 if (data) {
                   //$scope.results = $filter('extOrderBy')(data,$scope.ordering);
-                  $scope.results = data;
                   $scope.resultsAll = data;
-                  dosort();
+                  $scope.results = data;
+                  if (sg_query_type=='event') {
+                    DateUtility.regroup($scope,sg_query_type,d,t,sg.query.classification);
+                  } else {
+                    dosort();
+                  }
                 } else {
                   $scope.results = [];
                 }
@@ -434,7 +438,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
             //console.log('ListToolbox.prepare()...');
             ListToolbox.prepare($scope, tboptions);
             $scope.$watch('ordering.searchText', function(newValue, oldValue) {
-              console.log('search for: '+newValue);
+              //console.log('search for: '+newValue);
               dosort();
             });
           } else {

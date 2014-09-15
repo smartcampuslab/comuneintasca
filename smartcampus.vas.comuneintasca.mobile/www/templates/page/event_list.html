@@ -1,24 +1,27 @@
 <ion-header-bar class="bar-subheader item item-divider" align="center">
-  <span ng-if="filterDef">{{filterDef | translate | ellipsis:20}}: </span>{{'list_results' | translate_plur:results.length:ordering}}
+  <span ng-if="filterDef">{{filterDef | translate | ellipsis:20}}<span ng-if="filterDetail">{{filterDetail}}</span>: </span>{{'list_results' | translate_plur:results.length:ordering}}
 </ion-header-bar>
 <ion-content class="has-header" delegate-handle="listScroll">
   <ion-list>
-    <ion-item collection-repeat="obj in results track by obj.id"
-              collection-item-width="'100%'" collection-item-height="getListItemHeight(obj, $index)"
-              ng-click="gotoSubpath(obj.id)" class="coll-item item-thumbnail-left">
-      <!-- comuni-img class="item-image comuni-item-image" gotdata="gotdata" sonscount="true"></comuni-img -->
-      <div class="item-image comuni-item-image comuni-img" style="background-image:url({{obj.parsedimageurl|translate}})">
-        <div ng-if="obj.sonscount>0" class="dida"><span>{{obj.sonscount}}</span><i class="icon ion-ios7-flag-outline"></i>&nbsp;</div>
-      </div>
-      <h2>{{obj.title | translate}}</h2>
-      <!-- p ng-if="(obj.dbType!='event' || obj.dbClass.id!='shows') && obj.fromTime">{{obj.fromTime | date:'dd/MM/yyyy'}}<span ng-if="obj.fromTime !== obj.toTime"> - {{obj.toTime | date:'dd/MM/yyyy'}}</span></p -->
-      <p ng-if="obj.eventPeriod">{{obj.eventPeriod | translate}}</p>
-      <div class="row comuni-item-bottom">
-        <div class="col comuni-item-bottom-text">
-          <span>{{obj.address | translate}}</span>
+    <div class="listgroup" ng-repeat="group in resultsGroups track by $index">
+      <ion-item-divider ng-if="group.label" class="item item-divider">{{group.label}}</ion-item-divider>
+      <ion-item ng-repeat="obj in group.results track by $index"
+                collection-item-width="'100%'" collection-item-height="getListItemHeight(obj, $index)"
+                ng-click="gotoSubpath(obj.id)" class="coll-item item-thumbnail-left">
+        <!-- comuni-img class="item-image comuni-item-image" gotdata="gotdata" sonscount="true"></comuni-img -->
+        <div class="item-image comuni-item-image comuni-img" style="background-image:url({{obj.parsedimageurl|translate}})">
+          <div ng-if="obj.sonscount>0" class="dida"><span>{{obj.sonscount}}</span><i class="icon ion-ios7-flag-outline"></i>&nbsp;</div>
         </div>
-      </div>
-    </ion-item>
+        <h2>{{obj.title | translate}}</h2>
+        <!-- p ng-if="(obj.dbType!='event' || obj.dbClass.id!='shows') && obj.fromTime">{{obj.fromTime | date:'dd/MM/yyyy'}}<span ng-if="obj.fromTime !== obj.toTime"> - {{obj.toTime | date:'dd/MM/yyyy'}}</span></p -->
+        <p ng-if="filter!='today' && obj.eventPeriod">{{obj.eventPeriod | translate}}</p>
+        <div class="row comuni-item-bottom">
+          <div class="col comuni-item-bottom-text">
+            <span>{{obj.address | translate}}</span>
+          </div>
+        </div>
+      </ion-item>
+    </div>
   </ion-list>
 </ion-content>
 <ion-footer-bar>

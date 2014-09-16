@@ -67,8 +67,10 @@ angular.module('ilcomuneintasca.services.db', [])
 
     } else if (dbtype == 'event') {
       Config.menuGroupSubgroup('eventi',item.dbClassification).then(function(sg){
-        item['dbClass']=sg;
-        item.dbClassification=sg.name;
+        if (sg) {
+          item['dbClass']=sg;
+          item.dbClassification=sg.name;
+        }
       },function(){
         console.log('sg "eventi" NOT FOUND!');
       });

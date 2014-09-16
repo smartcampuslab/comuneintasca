@@ -1,0 +1,14 @@
+<ion-view title="TEST">
+  <ion-content class="has-header">
+    <comuni-img ng-if="obj.image" class="content-image-main" gotdata="gotdata" detail="true"></comuni-img>
+    <div class="padding">
+      <h1>TEST</h1>
+      <p>{{test}}</p>
+      <ion-list>
+        <ion-item ng-repeat="obj in results track by $index">
+          <h2>{{obj.title | translate}}</h2>
+        </ion-item>
+      </ion-list>
+    </div>
+  </ion-content>
+</ion-view>

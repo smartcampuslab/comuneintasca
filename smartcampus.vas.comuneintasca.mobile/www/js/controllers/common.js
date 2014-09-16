@@ -62,6 +62,20 @@ angular.module('ilcomuneintasca.controllers.common', [])
       });
     });
   };
+  $scope.dbFullReset = function () {
+    console.log('reset!');
+    DatiDB.fullreset().then(function () {
+      console.log('full db reset completed!');
+      $ionicPopup.alert({
+        title: 'RESET',
+        template: 'done'
+      }).then(function(res) {
+        console.log('full db reset acknowledged!');
+        $scope.settings.hide();
+        $window.location.reload();
+      });
+    });
+  };
 
 
   $ionicModal.fromTemplateUrl('templates/credits.html', {
@@ -373,8 +387,8 @@ angular.module('ilcomuneintasca.controllers.common', [])
               //console.log('f: '+f);
               //console.log('t: '+t);
               if (t > 0) {
-                console.log('sg.query.classification: '+sg.query.classification);
-                console.log('sg_query_type: '+sg_query_type);
+                //console.log('sg.query.classification: '+sg.query.classification);
+                //console.log('sg_query_type: '+sg_query_type);
                 if (sg.query.classification) {
                   $scope.gotdbdata = DatiDB.byTimeInterval(sg_query_type, f, t, sg.query.classification);
                 } else {
@@ -482,5 +496,13 @@ angular.module('ilcomuneintasca.controllers.common', [])
     var mapHeight = 10; // or any other calculated value
     mapHeight = angular.element(document.querySelector('#map-container'))[0].offsetHeight;
     angular.element(document.querySelector('.angular-google-map-container'))[0].style.height = mapHeight + 'px';
+  });
+})
+
+
+.controller('TestCtrl', function ($scope, DatiDB) {
+  $scope.test='test page...';
+  $scope.gotdata = DatiDB.all('itinerary').then(function (data) {
+    $scope.results=data;
   });
 })

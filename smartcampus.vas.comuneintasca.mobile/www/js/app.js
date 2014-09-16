@@ -249,6 +249,15 @@ angular.module('ilcomuneintasca', [
       controller: 'MenuCtrl'
 
     })
+    .state('app.test', {
+      url: "/test",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/test.html",
+          controller: "TestCtrl"
+        }
+      }
+    })
     .state('app.menulist', {
       url: "/menu/:groupId/",
       views: {

@@ -30,6 +30,8 @@ ion-tabs, .tabs {
   background-color: #CCC !important;
   color: #2f2d2d;
 }
+.tab-item.activated, .tab-item.active, .tab-item.tab-item-active { color:#2975a7;font-weight:bold;border-bottom:5px solid #2975a7; }
+
 .item-input-inset { background-color: #2f2d2d; }
 .item-input-inset .button.button-clear { color: #c5c5c4; }
 .item-input-inset .item-input-wrapper { background-color: #c5c5c4; }

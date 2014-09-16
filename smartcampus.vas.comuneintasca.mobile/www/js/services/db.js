@@ -318,40 +318,42 @@ angular.module('ilcomuneintasca.services.db', [])
                       var classified=$q.defer();
                       if (contentTypeKey == 'event') {
 
-                        //??? 
-                        // per identificare questi eventi potrei usare invece l'attributo 
-                        // "eventForm": "Manifestazione"
-												if (item.parentEventId) {
-                          var parentEvent=item.parentEventId;
-                          if (typeof parentEvent == "string") {
-                            parentEvent=JSON.parse(parentEvent);
-                          }
-                          if (parentEvent.objectRemoteId) {
-                            parentid=parentEvent.objectRemoteId;
-                          }
-												}
-                        //console.log('event parent id: ' + parentid);
-
-												category = item.category;
-                        //console.log('event cate: ' + category);
-                        if (category) {
-                          classification = category;
-                          fromTime = item.fromTime;
-                          if (item.toTime > 0) toTime = item.toTime;
-                          else toTime = fromTime;
-
-                          Config.menuGroupSubgroupByLocaleName('eventi','it',classification).then(function(sg){
-                            if (sg) {
-                              //console.log('content db sg classification: '+sg.id);
-                              classified.resolve([sg.id,'','']);
-                            } else {
-                              console.log('content db sg classification is NULL for event cate: '+classification);
-                              classified.resolve(['misc','','']);
-                            }
-                          });
+                        if (item.eventForm=='Manifestazione') {
+                          console.log(item.title.it);
+                          classified.resolve(['_complex','','']);
                         } else {
-                          console.log('content db category is NULL for item: '+item.id);
-                          classified.resolve(['misc','','']);
+                          if (item.parentEventId) {
+                            var parentEvent=item.parentEventId;
+                            if (typeof parentEvent == "string") {
+                              parentEvent=JSON.parse(parentEvent);
+                            }
+                            if (parentEvent.objectRemoteId) {
+                              parentid=parentEvent.objectRemoteId;
+                            }
+                          }
+                          //console.log('event parent id: ' + parentid);
+
+                          category = item.category;
+                          //console.log('event cate: ' + category);
+                          if (category) {
+                            classification = category;
+                            fromTime = item.fromTime;
+                            if (item.toTime > 0) toTime = item.toTime;
+                            else toTime = fromTime;
+
+                            Config.menuGroupSubgroupByLocaleName('eventi','it',classification).then(function(sg){
+                              if (sg) {
+                                //console.log('content db sg classification: '+sg.id);
+                                classified.resolve([sg.id,'','']);
+                              } else {
+                                console.log('content db sg classification is NULL for event cate: '+classification);
+                                classified.resolve(['misc','','']);
+                              }
+                            });
+                          } else {
+                            console.log('content db category is NULL for item: '+item.id);
+                            classified.resolve(['misc','','']);
+                          }
                         }
                       } else if (contentTypeKey == 'poi') {
                         //category fix for opencontent data
@@ -526,15 +528,21 @@ angular.module('ilcomuneintasca.services.db', [])
 
         var lista = []
         dbObj.transaction(function (tx) {
-          //console.log('type: '+types[dbname]);
-					_complex=false;
+          console.log('dbname: '+dbname);
+          console.log('type: '+types[dbname]);
+					var _complex=undefined;
+          //_complex=false;
           var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount' +
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id' +
             ' WHERE c.type=? ' +
-						' GROUP BY c.id HAVING count(s.id)' + (_complex?'>':'=') + '0';
+            (dbname=='event'&&_complex==undefined ? ' AND c.classification=\'_complex\'' : '');
+						' GROUP BY c.id' +
+            (_complex==undefined ? '' : ' HAVING count(s.id)' + (_complex?'>':'=') + '0');
+          console.log('sql: '+sql);
           tx.executeSql(sql, [types[dbname]], function (tx, results) {
             var len = results.rows.length,
               i;
+            console.log('results.rows.length='+results.rows.length);
             for (i = 0; i < len; i++) {
               var item = results.rows.item(i);
               lista.push(parseDbRow(item));
@@ -574,12 +582,15 @@ angular.module('ilcomuneintasca.services.db', [])
           //console.log('type: '+types[dbname]);
           //console.log('category: ' + cateId);
 
-          var fromTime = new Date().getTime();
-					var _complex=false;
+					var _complex=undefined;
+          /*
 					if (cateId && cateId=='_complex') {
 						_complex=true;
 						cateId=undefined;
+          } else {
+						_complex=false;
 					}
+          */
 					
           var fromTime = new Date().getTime();
           var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount ' +
@@ -587,7 +598,8 @@ angular.module('ilcomuneintasca.services.db', [])
             ' WHERE c.type=? ' +
 						(cateId ? ' AND (c.classification=? OR c.classification2=? OR c.classification3=?)' : '') + 
             ' AND (s.id IS NULL OR s.toTime > ' + fromTime + ')' +
-						' GROUP BY c.id HAVING count(s.id)' + (_complex?'>':'=') + '0';
+						' GROUP BY c.id' + 
+            (_complex==undefined ? '' : ' HAVING count(s.id)' + (_complex?'>':'=') + '0' );
           var params = cateId ? [types[dbname], cateId, cateId, cateId] : [types[dbname]];
           tx.executeSql(sql, params, function (tx2, cateResults) {
             var len = cateResults.rows.length,
@@ -631,18 +643,23 @@ angular.module('ilcomuneintasca.services.db', [])
         dbObj.transaction(function (tx) {
           //console.log('type: '+types[dbname]);
 
-					var _complex=false;
+					var _complex=undefined;
+          /*
 					if (cateId && cateId=='_complex') {
 						_complex=true;
 						cateId=undefined;
+          } else {
+						_complex=false;
 					}
+          */
 
           var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount'+
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id' +
             ' WHERE c.type=?' +
             ' AND c.fromTime > 0 AND c.fromTime <' + toTime + ' AND c.toTime > ' + fromTime + 
 						(cateId ? ' AND (c.classification=? OR c.classification2=? OR c.classification3=?)' : '') + 
-						' GROUP BY c.id HAVING count(s.id)' + (_complex?'>':'=') + '0';
+						' GROUP BY c.id' + 
+            (_complex==undefined ? '' : ' HAVING count(s.id)' + (_complex?'>':'=') + '0' );
           var params = cateId ? [types[dbname], cateId, cateId, cateId] : [types[dbname]];
           tx.executeSql(sql, params, function (tx2, cateResults) {
             var len = cateResults.rows.length,

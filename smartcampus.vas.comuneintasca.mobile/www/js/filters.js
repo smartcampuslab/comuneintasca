@@ -64,6 +64,14 @@ angular.module('ilcomuneintasca.filters', [])
 
 .filter('translate_plur', function ($filter) {
   return function (input, count) {
+    if (typeof count=='object') {
+      var countAll=0;
+      for (g in count) {
+        //console.log('count[g].results.length: '+ (count[g].results?count[g].results.length:'NULL'));
+        if (count[g].results) countAll+=count[g].results.length;
+      }
+      count=countAll;
+    }
     if (typeof input=='string' && typeof count=='number') {
       if (count == 0) {
         return $filter('translate')(input+'_none');

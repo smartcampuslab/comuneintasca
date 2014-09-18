@@ -333,15 +333,15 @@ angular.module('ilcomuneintasca.services.db', [])
                           }
                           //console.log('event parent id: ' + parentid);
 
-                          category = item.category;
-                          //console.log('event cate: ' + category);
-                          if (category) {
-                            classification = category;
-                            fromTime = item.fromTime;
-                            if (item.toTime > 0) toTime = item.toTime;
-                            else toTime = fromTime;
-
-                            Config.menuGroupSubgroupByLocaleName('eventi','it',classification).then(function(sg){
+                          fromTime = item.fromTime;
+                          if (item.toTime > 0) toTime = item.toTime;
+                          else toTime = fromTime;
+                          
+                          //console.log('event cate: ' + item.category);
+                          if (item.category) {
+                            classified.resolve([item.category,'','']);
+                            /*
+                            Config.menuGroupSubgroupByLocaleName('eventi','it',item.category).then(function(sg){
                               if (sg) {
                                 //console.log('content db sg classification: '+sg.id);
                                 classified.resolve([sg.id,'','']);
@@ -350,6 +350,7 @@ angular.module('ilcomuneintasca.services.db', [])
                                 classified.resolve(['misc','','']);
                               }
                             });
+                            */
                           } else {
                             console.log('content db category is NULL for item: '+item.id);
                             classified.resolve(['misc','','']);
@@ -357,6 +358,7 @@ angular.module('ilcomuneintasca.services.db', [])
                         }
                       } else if (contentTypeKey == 'poi') {
                         //category fix for opencontent data
+                        /*
                         switch (item.classification.it) {
                           //case 'Altri siti di interesse storico artistico':
                           //  item.classification.it='Edifici storici';
@@ -375,6 +377,9 @@ angular.module('ilcomuneintasca.services.db', [])
                             item.classification.it='Aree Archeologiche';
                             break;
                         }
+                        */
+                        classified.resolve([item.classification.it,'','']);
+                        /*
                         Config.menuGroupSubgroupByLocaleName('visitare','it',item.classification.it).then(function(sg){
                           if (sg) {
                             //console.log('content db sg classification: '+sg.id);
@@ -384,6 +389,7 @@ angular.module('ilcomuneintasca.services.db', [])
                             classified.resolve(['unknown','','']);
                           }
                         });
+                        */
                       } else {
                         if (contentTypeKey == 'content') {
                           if (typeof item.classification === 'object') classification = item.classification.it;

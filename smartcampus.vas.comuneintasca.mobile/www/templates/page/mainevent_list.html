@@ -7,7 +7,7 @@
               collection-item-width="'100%'" collection-item-height="getListItemHeight(obj, $index)"
               ng-click="gotoSubpath(obj.id)" class="item-thumbnail-left coll-item">
       <!-- comuni-img class="item-image comuni-item-image" gotdata="gotdata"></comuni-img -->
-      <div class="item-image comuni-item-image comuni-img" style="background-image:url({{obj.parsedimageurl|translate}})"></div>
+      <div class="item-image comuni-item-image comuni-img" ng-attr-style="background-image:url({{obj.parsedimageurl|translate}})"></div>
       <h2>{{obj.title | translate}}</h2>
       <p class="comuni-item-bottomdetail">{{obj.eventDateDescription | translate}}</p>
     </ion-item>

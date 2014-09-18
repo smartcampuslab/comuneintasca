@@ -553,14 +553,13 @@ angular.module('ilcomuneintasca.services.db', [])
           var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount' +
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id' +
             ' WHERE c.type=? ' +
-            (dbname=='event'&&_complex==undefined ? ' AND c.classification=\'_complex\'' : '');
+            (dbname=='event'&&_complex==undefined ? ' AND c.classification=\'_complex\'' : '') + 
 						' GROUP BY c.id' +
             (_complex==undefined ? '' : ' HAVING count(s.id)' + (_complex?'>':'=') + '0');
           //console.log('sql: '+sql);
           tx.executeSql(sql, [types[dbname]], function (tx, results) {
             var len = results.rows.length,
               i;
-            console.log('results.rows.length='+results.rows.length);
             for (i = 0; i < len; i++) {
               var item = results.rows.item(i);
               lista.push(parseDbRow(item));

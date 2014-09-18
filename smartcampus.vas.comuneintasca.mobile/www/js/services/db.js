@@ -5,10 +5,9 @@ angular.module('ilcomuneintasca.services.db', [])
   var types = Config.contentTypesList();
 
   var parseDbRow = function (dbrow) {
+    //console.log('dbrow.id: '+dbrow.id);
     var item = JSON.parse(dbrow.data);
-    
-    if (item.image && typeof item.image=='string' && item.image.indexOf('http')==-1 && item.image.charAt(item.image.length-1)=='|') item.image='http://trento.opencontent.it/'+item.image.substring(0,item.image.length-1);
-    
+
 		if (dbrow.parentid) {
 			item['parentid']=dbrow.parentid;
 			item['parent']=JSON.parse(dbrow.parent);
@@ -17,6 +16,10 @@ angular.module('ilcomuneintasca.services.db', [])
 
     item['parsedimageurl']='svg/placeholder.svg';
     if (item.image) {
+      // fix for broken opencontent data
+      // ??? can it be removed ???
+      if (typeof item.image=='string' && item.image.indexOf('http')==-1 && item.image.charAt(item.image.length-1)=='|') item.image='http://trento.opencontent.it/'+item.image.substring(0,item.image.length-1);
+
       var imageUrl=$filter('translate')(item.image);
       if (imageUrl && imageUrl != '' && imageUrl != 'false') {
         Files.get(imageUrl).then(function (fileUrl) {
@@ -59,8 +62,10 @@ angular.module('ilcomuneintasca.services.db', [])
     } else if (dbtype == 'poi') {
       //console.log(JSON.stringify(item.info));
       Config.menuGroupSubgroup('visitare',item.dbClassification).then(function(sg){
-        item['dbClass']=sg;
-        item.dbClassification=sg.name;
+        if (sg) {
+          item['dbClass']=sg;
+          item.dbClassification=sg.name;
+        }
       },function(){
         console.log('sg "visitare" NOT FOUND!');
       });
@@ -305,7 +310,6 @@ angular.module('ilcomuneintasca.services.db', [])
 
                     console.log('updates: ' + updates.length);
                     angular.forEach(updates, function (item, idx) {
-                      //console.log('item.category: ' + item.category);
 											var parentid=null;
 
                       var fromTime = 0;
@@ -319,7 +323,7 @@ angular.module('ilcomuneintasca.services.db', [])
                       if (contentTypeKey == 'event') {
 
                         if (item.eventForm=='Manifestazione') {
-                          console.log(item.title.it);
+                          //console.log('*** Manifestazione ***: '+item.title.it);
                           classified.resolve(['_complex','','']);
                         } else {
                           if (item.parentEventId) {
@@ -418,6 +422,9 @@ angular.module('ilcomuneintasca.services.db', [])
                           item.category = 'ristorazione';
                         }
 
+                        //console.log('classification: ' + classification);
+                        //console.log('classification2: ' + classification2);
+                        //console.log('classification3: ' + classification3);
                         classified.resolve([classification,classification2,classification3]);
                       }
                       objsReady.push(classified.promise.then(function(clfs){
@@ -438,7 +445,12 @@ angular.module('ilcomuneintasca.services.db', [])
                     angular.forEach(itemsToInsert, function (rowData, rowIdx) {
                       tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [rowData[0]], function (tx, res) { //success callback
                         tx.executeSql('INSERT INTO ContentObjects (id, objid, parentid, version, type, category, classification, classification2, classification3, data, lat, lon, fromTime, toTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', rowData, function (tx, res) { //success callback
-                          //console.log('inserted obj with id: ' + rowData[0]);
+                          //if (rowData[4].indexOf('.ItineraryObject')!=-1) {
+
+                          //console.log('inserted obj ('+rowData[4]+') with id: ' + rowData[0]);
+                          //console.log('inserted obj: ' + JSON.stringify(rowData));
+
+                          //}
                         }, function (e) { //error callback
                           console.log('unable to insert obj with id ' + rowData[0] + ': ' + e.message);
                         });
@@ -544,7 +556,7 @@ angular.module('ilcomuneintasca.services.db', [])
             (dbname=='event'&&_complex==undefined ? ' AND c.classification=\'_complex\'' : '');
 						' GROUP BY c.id' +
             (_complex==undefined ? '' : ' HAVING count(s.id)' + (_complex?'>':'=') + '0');
-          console.log('sql: '+sql);
+          //console.log('sql: '+sql);
           tx.executeSql(sql, [types[dbname]], function (tx, results) {
             var len = results.rows.length,
               i;

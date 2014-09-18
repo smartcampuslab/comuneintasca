@@ -617,7 +617,9 @@ angular.module('ilcomuneintasca.services.db', [])
             ' AND (s.id IS NULL OR s.toTime > ' + fromTime + ')' +
 						' GROUP BY c.id' + 
             (_complex==undefined ? '' : ' HAVING count(s.id)' + (_complex?'>':'=') + '0' );
-          var params = cateId ? [types[dbname], cateId, cateId, cateId] : [types[dbname]];
+          //console.log('sql: '+sql);
+          var params = (cateId ? [types[dbname], cateId, cateId, cateId] : [types[dbname]]);
+          //console.log('params: '+params);
           tx.executeSql(sql, params, function (tx2, cateResults) {
             var len = cateResults.rows.length,
               i;

@@ -38,13 +38,14 @@ angular.module('ilcomuneintasca.services.date', [])
         for (i=0; i<days; i++) {
           var d = new Date(from.getFullYear(), from.getMonth(), from.getDate() + i);
           var t = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1);
-          var group={ label:scope.getLocaleDateString(d), results:[] };
-          //console.log('group.label: '+group.label);
+          var group={ labelHidden:scope.getLocaleDateString(d), results:[] };
+          //console.log('group.labelHidden: '+group.labelHidden);
           DatiDB.byTimeInterval(type,d.getTime(),t.getTime(),classification,{ group:group }).then(function(data){
+            //console.log('data.length: '+data.length);
             if (data.length>0) {
               var group=data[0].ctx.group;
+              group['label']=group.labelHidden;
               //console.log('group.label: '+group.label);
-              //console.log('data.length: '+data.length);
               for (ei=0; ei<data.length; ei++) {
                 data[ei].id2=''+(cc++);
                 //console.log('data['+ei+'].id2: '+data[ei].id2);

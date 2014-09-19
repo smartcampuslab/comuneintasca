@@ -7,9 +7,9 @@ console.log('version: '+trento.version);
 Object.keys(trento.updated).forEach(function(k) {
 	if (k=='eu.trentorise.smartcampus.comuneintasca.model.ConfigObject') {
 		var config=trento.updated[k];
-    //console.log(JSON.stringify(config));
+//    console.log(JSON.stringify(config, null, '  '));
 		console.log(JSON.stringify(config[0].menu.filter(function(obj){ 
-      return obj.id.indexOf('_Visitare_')!=-1;
+      return obj.id.indexOf('isitare')!=-1;
     })[0].items, null, '  '));
 	} else if (k=='eu.trentorise.smartcampus.comuneintasca.model.EventObject_OFF') {
 		var events=trento.updated[k];

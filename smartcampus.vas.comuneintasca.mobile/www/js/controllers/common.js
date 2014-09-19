@@ -299,7 +299,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
                 if ($scope.resultsGroups) {
                   for (idx in $scope.resultsGroups) {
                     var group=$scope.resultsGroups[idx];
-                    console.log('group.labelHidden: '+group.labelHidden);
+                    //console.log('group.labelHidden: '+group.labelHidden);
                     if (group.results.length>0) {
                       group.results=$filter('extOrderBy')(group.results,$scope.ordering)
                     }

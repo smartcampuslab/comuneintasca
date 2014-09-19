@@ -19,7 +19,10 @@ angular.module('ilcomuneintasca.services.list', [])
     });
     $scope.orderingPopup = orderingPopup;
     $scope.$on('$destroy', function () {
-      $scope.orderingPopup.remove();
+      //console.log('$scope.orderingPopup: '+(typeof $scope.orderingPopup.remove));
+      if ('function'==typeof $scope.orderingPopup.remove) {
+        $scope.orderingPopup.remove();
+      }
     });
     orderingPopup.then(function (res) {
       //console.log('sort popup res: ' + res);

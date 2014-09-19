@@ -1,5 +1,5 @@
 {
-  "version": 7009,
+  "version": 7033,
   "updated": {
     "eu.trentorise.smartcampus.comuneintasca.model.RestaurantObject": [
       {
@@ -9049,6 +9049,114 @@
         "organizations": []
       },
       {
+        "id": "cdca1419629fa918d9a6ab9eed858813",
+        "updateTime": 1411044803929,
+        "version": 7015,
+        "user": null,
+        "source": "opendata.trento",
+        "title": {
+          "it": "Incontriamoci al cinema"
+        },
+        "shortTitle": {
+          "it": "false"
+        },
+        "subtitle": {
+          "it": "<p>8^ Rassegna cinematografica a carattere sociale per ragazzi e genitori</p>"
+        },
+        "description": {
+          "it": "<p>Proiezione del film &quot;Water&quot; di Deepa Mehta&nbsp;</p>"
+        },
+        "info": {
+          "it": "<p>Circoscrizione San Giuseppe - Santa Chiara, telefono 0461/889900</p>"
+        },
+        "category": "Spettacoli",
+        "contacts": null,
+        "url": "http://www.comune.trento.it/Citta/Vivi-la-citta/Eventi-in-citta/Incontriamoci-al-cinema9",
+        "image": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/incontriamoci-al-cinema9/8457139-1-ita-IT/Incontriamoci-al-cinema.png",
+        "lastModified": 1411025646000,
+        "objectId": null,
+        "location": null,
+        "address": {
+          "it": "Sala Auditorium, Centro civico, via Giusti 35"
+        },
+        "special": false,
+        "fromTime": 1414742760000,
+        "toTime": 1414742760000,
+        "eventPeriod": {
+          "it": "venerdì 31 ottobre 2014"
+        },
+        "eventTiming": {
+          "it": "alle ore 20.30"
+        },
+        "duration": {
+          "it": "false"
+        },
+        "cost": {
+          "it": "Ingresso libero"
+        },
+        "eventForm": "Evento singolo",
+        "parentEventId": null,
+        "eventType": "Spettacoli",
+        "topics": [
+          "Cinema"
+        ],
+        "organizations": []
+      },
+      {
+        "id": "07e668afd33522341ae78bed04eedcd8",
+        "updateTime": 1411044804003,
+        "version": 7027,
+        "user": null,
+        "source": "opendata.trento",
+        "title": {
+          "it": "STREET mARTignano"
+        },
+        "shortTitle": {
+          "it": "false"
+        },
+        "subtitle": {
+          "it": "<p>Graffiti contest</p>"
+        },
+        "description": {
+          "it": "<p>\nSelezionati gli 11 artisti che sabato 20 settembre dalle 8.00 alle 18.00 trasformeranno il muro del nuovo centro sportivo di Martignano. <br />\nA fare da contorno alla giornata d'arte, a partire dalle 17.00 al parco di Martignano esibizioni e performance di BMX, BIKE TRIAL, CAPOEIRA, GINNASTICA ACROBATICA. <br />Dalle 20.00 alle 22.30 DJ SET a cura di Buffa's events!</p>"
+        },
+        "info": {
+          "it": "<p>\t\t\t\t\t\t\n\t\t\t\t\t            <a href=\"http://www.trentogiovani.it\" title=\"link a sito esterno\" >www.trentogiovani.it</a>\n    \n</p>"
+        },
+        "category": "Iniziative varie",
+        "contacts": null,
+        "url": "http://www.comune.trento.it/Citta/Vivi-la-citta/Eventi-in-citta/STREET-mARTignano",
+        "image": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/street-martignano/8459858-1-ita-IT/STREET-mARTignano.png",
+        "lastModified": 1411043067000,
+        "objectId": null,
+        "location": null,
+        "address": {
+          "it": "Martignano, centro sportivo, Trento"
+        },
+        "special": true,
+        "fromTime": 1411215360000,
+        "toTime": 1411215360000,
+        "eventPeriod": {
+          "it": "sabato 20 settembre"
+        },
+        "eventTiming": {
+          "it": "dalle 8.00 alle 18.00"
+        },
+        "duration": {
+          "it": "false"
+        },
+        "cost": {
+          "it": "false"
+        },
+        "eventForm": "Evento singolo",
+        "parentEventId": null,
+        "eventType": "Iniziative varie",
+        "topics": [
+          "Arte"
+        ],
+        "organizations": []
+      },
+      {
         "id": "6c27204917c15f1cfba8b17ac40baa5a",
         "updateTime": 1410353508539,
         "version": 6350,
@@ -9915,8 +10023,8 @@
       },
       {
         "id": "edc646026606d1237f282d2b723b7746",
-        "updateTime": 1410353508561,
-        "version": 6367,
+        "updateTime": 1411044803924,
+        "version": 7014,
         "user": null,
         "source": "opendata.trento",
         "title": {
@@ -9938,7 +10046,7 @@
         "contacts": null,
         "url": "http://www.comune.trento.it/Citta/Vivi-la-citta/Eventi-in-citta/Festival-internazionale-dell-Armonica-a-bocca4",
         "image": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/festival-internazionale-dell-armonica-a-bocca4/8383095-2-ita-IT/Festival-internazionale-dell-Armonica-a-bocca.png",
-        "lastModified": 1407142644000,
+        "lastModified": 1410959250000,
         "objectId": null,
         "location": null,
         "address": {
@@ -10943,8 +11051,8 @@
       },
       {
         "id": "26377abec86c81b5ceea93c808dc238d",
-        "updateTime": 1410353508587,
-        "version": 6388,
+        "updateTime": 1411044803949,
+        "version": 7017,
         "user": null,
         "source": "opendata.trento",
         "title": {
@@ -10966,7 +11074,7 @@
         "contacts": null,
         "url": "http://www.comune.trento.it/Citta/Vivi-la-citta/Eventi-in-citta/Festival-internazionale-dell-Armonica-a-bocca3",
         "image": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/festival-internazionale-dell-armonica-a-bocca3/8383067-1-ita-IT/Festival-internazionale-dell-Armonica-a-bocca.png",
-        "lastModified": 1407142600000,
+        "lastModified": 1410959194000,
         "objectId": null,
         "location": null,
         "address": {
@@ -12846,8 +12954,8 @@
       },
       {
         "id": "89c2cbded973c2ac3bc93f3734c4845b",
-        "updateTime": 1410353508650,
-        "version": 6444,
+        "updateTime": 1410958390423,
+        "version": 7009,
         "user": null,
         "source": "opendata.trento",
         "title": {
@@ -12869,7 +12977,7 @@
         "contacts": null,
         "url": "http://www.comune.trento.it/Citta/Vivi-la-citta/Eventi-in-citta/Festival-internazionale-dell-Armonica-a-bocca",
         "image": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/festival-internazionale-dell-armonica-a-bocca/8382985-2-ita-IT/Festival-internazionale-dell-Armonica-a-bocca.png",
-        "lastModified": 1407142473000,
+        "lastModified": 1410942496000,
         "objectId": null,
         "location": null,
         "address": {
@@ -13773,8 +13881,8 @@
       },
       {
         "id": "603f0a3c208107401435e9b57a403419",
-        "updateTime": 1410353508674,
-        "version": 6465,
+        "updateTime": 1411044804007,
+        "version": 7028,
         "user": null,
         "source": "opendata.trento",
         "title": {
@@ -13796,7 +13904,7 @@
         "contacts": null,
         "url": "http://www.comune.trento.it/Citta/Vivi-la-citta/Eventi-in-citta/Festa-di-Via-Veneto4",
         "image": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/festa-di-via-veneto4/8402559-2-ita-IT/Festa-di-Via-Veneto.png",
-        "lastModified": 1409813040000,
+        "lastModified": 1411029412000,
         "objectId": null,
         "location": null,
         "address": {
@@ -14208,500 +14316,6 @@
         "organizations": []
       },
       {
-        "id": "b1fe3958a75ad85214b37d4d75611017",
-        "updateTime": 1410353508683,
-        "version": 6473,
-        "user": null,
-        "source": "opendata.trento",
-        "title": {
-          "it": "Mercato dell'artigianato artistico"
-        },
-        "shortTitle": {
-          "it": "false"
-        },
-        "subtitle": {
-          "it": "<p>Ogni giovedì e sabato (\t\t\t\t\t\t\n\t\t\t\t\t                <a href=\"/Citta/Vivi-la-citta/Eventi-in-citta/Mercati/Mercato-dell-artigianato-artistico\" title=\"Link a vedi dettagli\" ><strong>vedi dettagli</strong></a>\n    \n)</p>"
-        },
-        "description": {
-          "it": ""
-        },
-        "info": {
-          "it": ""
-        },
-        "category": "Feste, mercati e fiere",
-        "contacts": null,
-        "url": "http://www.comune.trento.it/Aree-tematiche/Turismo/Calendario-eventi/Mercato-dell-artigianato-artistico37",
-        "image": "http://www.comune.trento.it/var/comunetn/storage/images/aree-tematiche/turismo/calendario-eventi/mercato-dell-artigianato-artistico37/8199621-9-ita-IT/Mercato-dell-artigianato-artistico.png",
-        "lastModified": 1400060672000,
-        "objectId": null,
-        "location": null,
-        "address": {
-          "it": "Piazza Adamo d'Arogno "
-        },
-        "special": false,
-        "fromTime": 1411046040000,
-        "toTime": 1411046040000,
-        "eventPeriod": {
-          "it": "Giovedì 18 settembre 2014"
-        },
-        "eventTiming": {
-          "it": "Dalle ore 9.00 alle 19.00"
-        },
-        "duration": {
-          "it": "false"
-        },
-        "cost": {
-          "it": "false"
-        },
-        "eventForm": "Evento singolo",
-        "parentEventId": null,
-        "eventType": "Feste, mercati e fiere",
-        "topics": [
-          "Intrattenimento - tempo libero"
-        ],
-        "organizations": []
-      },
-      {
-        "id": "b17af5e5f3302be8f61513f0f397385b",
-        "updateTime": 1410353508684,
-        "version": 6474,
-        "user": null,
-        "source": "opendata.trento",
-        "title": {
-          "it": "Mercato settimanale del giovedì"
-        },
-        "shortTitle": {
-          "it": "false"
-        },
-        "subtitle": {
-          "it": "<p>Tutti giovedì nel centro storico di Trento (\t\t\t\t\t\t\n\t\t\t\t\t                <a href=\"/Citta/Vivi-la-citta/Eventi-in-citta/Mercati/Mercato-settimanale-del-giovedi\" title=\"Link a vedi dettagli\" ><strong>vedi dettagli</strong></a>\n    \n)</p>"
-        },
-        "description": {
-          "it": ""
-        },
-        "info": {
-          "it": ""
-        },
-        "category": "Feste, mercati e fiere",
-        "contacts": null,
-        "url": "http://www.comune.trento.it/Aree-tematiche/Turismo/Calendario-eventi/Mercato-settimanale-del-giovedi20",
-        "image": "http://www.comune.trento.it/var/comunetn/storage/images/aree-tematiche/turismo/calendario-eventi/mercato-settimanale-del-giovedi20/8220852-29-ita-IT/Mercato-settimanale-del-giovedi.jpg",
-        "lastModified": 1409664668000,
-        "objectId": null,
-        "location": null,
-        "address": {
-          "it": "Centro storico"
-        },
-        "special": false,
-        "fromTime": 1411046040000,
-        "toTime": 1411046040000,
-        "eventPeriod": {
-          "it": "Giovedì 18 settembre 2014"
-        },
-        "eventTiming": {
-          "it": "Dalle ore 7.15 alle 14.00"
-        },
-        "duration": {
-          "it": "false"
-        },
-        "cost": {
-          "it": "false"
-        },
-        "eventForm": "Evento singolo",
-        "parentEventId": null,
-        "eventType": "Feste, mercati e fiere",
-        "topics": [
-          "Intrattenimento - tempo libero"
-        ],
-        "organizations": []
-      },
-      {
-        "id": "fae87aca6bb0fbe8d55d549dd1d8d9f7",
-        "updateTime": 1410353508685,
-        "version": 6475,
-        "user": null,
-        "source": "opendata.trento",
-        "title": {
-          "it": "Il mercatino dell'usato"
-        },
-        "shortTitle": {
-          "it": "false"
-        },
-        "subtitle": {
-          "it": "<p>L'iniziativa è finalizzata a sostenere Liberlamente, la rivista del Fareassieme realizzata da utenti, operatori e volontari del Servizio di salute mentale di Trento.</p>"
-        },
-        "description": {
-          "it": ""
-        },
-        "info": {
-          "it": "<p>Area del Fareassieme , telefono 0461/902881-84, \t\t\t\t\t\t\n\t\t\t\t\t                <a href=\"mailto:liberalamente@apss.tn.it\" title=\"Link a liberalamente@apss.tn.it\" >liberalamente@apss.tn.it</a>\n    \n</p>"
-        },
-        "category": "Feste, mercati e fiere",
-        "contacts": null,
-        "url": "http://www.comune.trento.it/Citta/Vivi-la-citta/Eventi-in-citta/Il-mercatino-dell-usato",
-        "image": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/il-mercatino-dell-usato/8443808-2-ita-IT/Il-mercatino-dell-usato.jpg",
-        "lastModified": 1410345192000,
-        "objectId": null,
-        "location": null,
-        "address": {
-          "it": "Servizio di salute mentale, via San Giovanni Bosco, 10"
-        },
-        "special": false,
-        "fromTime": 1411035960000,
-        "toTime": 1411035960000,
-        "eventPeriod": {
-          "it": "giovedì 18 settembre 2014"
-        },
-        "eventTiming": {
-          "it": "dalle 10 alle 18"
-        },
-        "duration": {
-          "it": "false"
-        },
-        "cost": {
-          "it": "false"
-        },
-        "eventForm": "Evento singolo",
-        "parentEventId": null,
-        "eventType": "Feste, mercati e fiere",
-        "topics": [
-          "Volontariato e solidarietà"
-        ],
-        "organizations": []
-      },
-      {
-        "id": "6813297e1548d1a60c186542e36a964f",
-        "updateTime": 1410353508686,
-        "version": 6476,
-        "user": null,
-        "source": "opendata.trento",
-        "title": {
-          "it": "Qwan Ki Do per adulti"
-        },
-        "shortTitle": {
-          "it": "false"
-        },
-        "subtitle": {
-          "it": "<p>\nIniziativa nell'ambito del progetto <em>Sport nel verde - Ben...essere in movimento</em><br /><em>&nbsp;</em>(attività sportive rivolte agli adulti 18 - 35 anni)</p>"
-        },
-        "description": {
-          "it": "<p>\nIl Qwan Ki Do è un'arte marziale cino-vietnamita, che si basa sulla conoscenza di diverse tecniche di difesa dirette a neutralizzare gli attacchi dell'avversario attraverso l'uso di sequenze di colpi e prese. È una disciplina per tutti poiché migliora la conoscenza del proprio corpo.<br />\nDestinatari: adulti dai 18 ai 35 anni<br />Attrezzatura necessaria: normale e comodo abbigliamento ginnico/sportivo</p>"
-        },
-        "info": {
-          "it": "<p>\nL'attività è realizzata con la collaborazione dell'associazione Rén<br />\nReferente attività: Pier Giorgio Cailotto, tel. 329/8355365<br />\t\t\t\t\t\t\n\t\t\t\t\t                <a href=\"http://www.apdren.it\" title=\"Link a www.apdren.it\" >www.apdren.it</a>\n    \n - e-mail: \t\t\t\t\t\t\n\t\t\t\t\t                <a href=\"mailto:segreteria@apdren.it\" title=\"Link a segreteria@apdren.it\" >segreteria@apdren.it</a>\n    \n</p>"
-        },
-        "category": "Iniziative varie",
-        "contacts": null,
-        "url": "http://www.comune.trento.it/Aree-tematiche/Sport/Calendario-eventi-sportivi/Qwan-Ki-Do-per-adulti5",
-        "image": "http://www.comune.trento.it/var/comunetn/storage/images/aree-tematiche/sport/calendario-eventi-sportivi/qwan-ki-do-per-adulti5/8186114-17-ita-IT/Qwan-Ki-Do-per-adulti.png",
-        "lastModified": 1409554596000,
-        "objectId": null,
-        "location": null,
-        "address": {
-          "it": "giardino di Martignano"
-        },
-        "special": false,
-        "fromTime": 1411034400000,
-        "toTime": 1411034400000,
-        "eventPeriod": {
-          "it": "giovedì 18 settembre 2014"
-        },
-        "eventTiming": {
-          "it": "18.30 - 19.15"
-        },
-        "duration": {
-          "it": "false"
-        },
-        "cost": {
-          "it": "La partecipazione è gratuita."
-        },
-        "eventForm": "Evento singolo",
-        "parentEventId": "{\"objectName\":\"Sport nel verde 2014\",\"classIdentifier\":\"event\",\"datePublished\":1398256320,\"dateModified\":1399534614,\"objectRemoteId\":\"7a5a2856ed22ff46f50c88748393ba69\",\"objectId\":846485,\"link\":\"http://www.comune.trento.it/api/opendata/v1/content/object/846485\"}",
-        "eventType": "Iniziative varie",
-        "topics": [
-          "Sport",
-          "Arti marziali"
-        ],
-        "organizations": []
-      },
-      {
-        "id": "5561b9e3a9d9968c77de234fa7a7a007",
-        "updateTime": 1410353508687,
-        "version": 6477,
-        "user": null,
-        "source": "opendata.trento",
-        "title": {
-          "it": "Scherma storica medievale"
-        },
-        "shortTitle": {
-          "it": "false"
-        },
-        "subtitle": {
-          "it": "<p>\nIniziativa nell'ambito del progetto <em>Sport nel verde - Ben...essere in movimento</em><br /><em>&nbsp;</em>(attività sportive rivolte agli adulti dai 26 anni in su)</p>"
-        },
-        "description": {
-          "it": "<p>\nLa scherma è l'arte dell'offendere e del difendersi con armi bianche. Un'arte marziale di antichissima origine, che comprende l'uso di armi come lance, pugnali e alabarde.<br />\nDestinatari: adulti di età superiore ai 26 anni<br />Attrezzatura necessaria: abbigliamento comodo e scarpe da ginnastica.</p>"
-        },
-        "info": {
-          "it": "<p>\nL'attività è realizzata con la collaborazione dell'associazione La Gualdana del Malconsiglio<br />\nReferente attività: Andrea Rossini , tel. 339/3436102<br />\t\t\t\t\t\t\n\t\t\t\t\t                <a href=\"http://www.lagualdana.com\" title=\"Link a www.lagualdana.com\" >www.lagualdana.com</a>\n    \n - e-mail: \t\t\t\t\t\t\n\t\t\t\t\t                <a href=\"mailto:lagualdana@gmail.com\" title=\"Link a lagualdana@gmail.com\" >lagualdana@gmail.com</a>\n    \n</p>"
-        },
-        "category": "Iniziative varie",
-        "contacts": null,
-        "url": "http://www.comune.trento.it/Aree-tematiche/Sport/Calendario-eventi-sportivi/Scherma-storica-medievale3",
-        "image": "http://www.comune.trento.it/var/comunetn/storage/images/aree-tematiche/sport/calendario-eventi-sportivi/scherma-storica-medievale3/8186834-40-ita-IT/Scherma-storica-medievale.png",
-        "lastModified": 1398870641000,
-        "objectId": null,
-        "location": null,
-        "address": {
-          "it": "giardino Santa Chiara"
-        },
-        "special": false,
-        "fromTime": 1411034400000,
-        "toTime": 1411034400000,
-        "eventPeriod": {
-          "it": "giovedì 18 settembre 2014"
-        },
-        "eventTiming": {
-          "it": "16.00 - 18.00"
-        },
-        "duration": {
-          "it": "false"
-        },
-        "cost": {
-          "it": "La partecipazione è gratuita."
-        },
-        "eventForm": "Evento singolo",
-        "parentEventId": "{\"objectName\":\"Sport nel verde 2014\",\"classIdentifier\":\"event\",\"datePublished\":1398256320,\"dateModified\":1399534614,\"objectRemoteId\":\"7a5a2856ed22ff46f50c88748393ba69\",\"objectId\":846485,\"link\":\"http://www.comune.trento.it/api/opendata/v1/content/object/846485\"}",
-        "eventType": "Iniziative varie",
-        "topics": [
-          "Sport",
-          "Scherma"
-        ],
-        "organizations": []
-      },
-      {
-        "id": "8f721290dcbeb9d74bd546cd5f4c6414",
-        "updateTime": 1410353508688,
-        "version": 6478,
-        "user": null,
-        "source": "opendata.trento",
-        "title": {
-          "it": "Baseball"
-        },
-        "shortTitle": {
-          "it": "false"
-        },
-        "subtitle": {
-          "it": "<p>Iniziativa nell'ambito del progetto&nbsp;<em>Sport nel verde - Alla scoperta dei parchi della città</em> (animazione sportiva al parco per ragazzi e bambini)</p>"
-        },
-        "description": {
-          "it": "<p>\nIl baseball è un'attività motoria che favorisce lo sviluppo in modo armonico della struttura e dell' organismo del bambino.<br />\n<strong>Destinatari</strong>: bambini e ragazzi 6 -14 anni<br />\n<strong>Attrezzatura necessaria</strong>: abbigliamento comodo<br />Con la collaborazione dell'associazione Cus Trento Baseball</p>"
-        },
-        "info": {
-          "it": "<p>\nReferente attività: Tiziano Fiorio, tel. 320/3452285<br />e-mail: \t\t\t\t\t\t\n\t\t\t\t\t                <a href=\"mailto:baseballcustn@unisport.tn.it\" title=\"Link a baseballcustn@unisport.tn.it\" >baseballcustn@unisport.tn.it</a>\n    \n</p>"
-        },
-        "category": "Iniziative varie",
-        "contacts": null,
-        "url": "http://www.comune.trento.it/Aree-tematiche/Sport/Calendario-eventi-sportivi/Baseball4",
-        "image": "http://www.comune.trento.it/var/comunetn/storage/images/aree-tematiche/sport/calendario-eventi-sportivi/baseball4/8182919-16-ita-IT/Baseball.png",
-        "lastModified": 1399469399000,
-        "objectId": null,
-        "location": null,
-        "address": {
-          "it": "giardino Mattarello"
-        },
-        "special": false,
-        "fromTime": 1411033560000,
-        "toTime": 1411033560000,
-        "eventPeriod": {
-          "it": "giovedì 18 settembre"
-        },
-        "eventTiming": {
-          "it": "dalle ore 17.00 alle 18.00"
-        },
-        "duration": {
-          "it": "false"
-        },
-        "cost": {
-          "it": "Partecipazione gratuita"
-        },
-        "eventForm": "Evento singolo",
-        "parentEventId": "{\"objectName\":\"Sport nel verde 2014\",\"classIdentifier\":\"event\",\"datePublished\":1398256320,\"dateModified\":1399534614,\"objectRemoteId\":\"7a5a2856ed22ff46f50c88748393ba69\",\"objectId\":846485,\"link\":\"http://www.comune.trento.it/api/opendata/v1/content/object/846485\"}",
-        "eventType": "Iniziative varie",
-        "topics": [
-          "Sport",
-          "Baseball e softball"
-        ],
-        "organizations": []
-      },
-      {
-        "id": "0e368c5102cea37f67daf09fe57b05e1",
-        "updateTime": 1410353508689,
-        "version": 6479,
-        "user": null,
-        "source": "opendata.trento",
-        "title": {
-          "it": "Qwan Ki Do per ragazzi e bambini"
-        },
-        "shortTitle": {
-          "it": "false"
-        },
-        "subtitle": {
-          "it": "<p>Iniziativa nell'ambito del progetto&nbsp;<em>Sport nel verde - Alla scoperta dei parchi della città</em> (animazione sportiva al parco per ragazzi e bambini)</p>"
-        },
-        "description": {
-          "it": "<p>\nIl Qwan Ki Do è un'arte marziale cino-vietnamita adatta anche ai bambini poiché sviluppa in modo armonico la muscolatura.<br />\nDestinatari: bambini e ragazzi dai 7 ai 17 anni<br />Attrezzatura necessaria: normale e comodo abbigliamento ginnico-sportivo</p>"
-        },
-        "info": {
-          "it": "<p>\nCon la collaborazione dell'associazione Rén<br />\nReferente attività: Pier Giorgio Cailotto, tel. 329/8355365<br />\t\t\t\t\t\t\n\t\t\t\t\t                <a href=\"http://www.apdren.it\" title=\"Link a www.apdren.it\" >www.apdren.it</a>\n    \n - e-mail: \t\t\t\t\t\t\n\t\t\t\t\t                <a href=\"mailto:segreteria@apdren.it\" title=\"Link a segreteria@apdren.it\" >segreteria@apdren.it</a>\n    \n</p>"
-        },
-        "category": "Iniziative varie",
-        "contacts": null,
-        "url": "http://www.comune.trento.it/Aree-tematiche/Sport/Calendario-eventi-sportivi/Qwan-Ki-Do-per-ragazzi-e-bambini6",
-        "image": "http://www.comune.trento.it/var/comunetn/storage/images/aree-tematiche/sport/calendario-eventi-sportivi/qwan-ki-do-per-ragazzi-e-bambini6/8198397-23-ita-IT/Qwan-Ki-Do-per-ragazzi-e-bambini.png",
-        "lastModified": 1409554316000,
-        "objectId": null,
-        "location": null,
-        "address": {
-          "it": "giardino di Martignano"
-        },
-        "special": false,
-        "fromTime": 1411033560000,
-        "toTime": 1411033560000,
-        "eventPeriod": {
-          "it": "giovedì 18 settembre"
-        },
-        "eventTiming": {
-          "it": "dalle ore 18.00 alle 18.45"
-        },
-        "duration": {
-          "it": "false"
-        },
-        "cost": {
-          "it": "Partecipazione gratuita"
-        },
-        "eventForm": "Evento singolo",
-        "parentEventId": "{\"objectName\":\"Sport nel verde 2014\",\"classIdentifier\":\"event\",\"datePublished\":1398256320,\"dateModified\":1399534614,\"objectRemoteId\":\"7a5a2856ed22ff46f50c88748393ba69\",\"objectId\":846485,\"link\":\"http://www.comune.trento.it/api/opendata/v1/content/object/846485\"}",
-        "eventType": "Iniziative varie",
-        "topics": [
-          "Sport",
-          "Arti marziali"
-        ],
-        "organizations": []
-      },
-      {
-        "id": "ee02ee70bc5c51b942d6b15fbe0b6cfe",
-        "updateTime": 1410353508690,
-        "version": 6480,
-        "user": null,
-        "source": "opendata.trento",
-        "title": {
-          "it": "Viet Vo Dao"
-        },
-        "shortTitle": {
-          "it": "false"
-        },
-        "subtitle": {
-          "it": "<p>Iniziativa nell'ambito del progetto&nbsp;<em>Sport nel verde - Alla scoperta dei parchi della città</em> (animazione sportiva al parco per ragazzi e bambini)</p>"
-        },
-        "description": {
-          "it": "<p>\nIl Viet Vo Dao è un'arte marziale di origine vietnamita che permette di conoscere il proprio corpo tramite una ginnastica completa che coinvolge non solo il fisico ma anche la mente.<br />\nDestinatari: giovani e ragazzi dai 15 ai 26 anni<br />Attrezzatura necessaria: abbigliamento comodo</p>"
-        },
-        "info": {
-          "it": "<p>\nCon la collaborazione dell'associazione Le Tre Distanze<br />\nReferente attività: Ines Campo, tel. 329/0733203<br />\t\t\t\t\t\t\n\t\t\t\t\t                <a href=\"http://www.letredistanze.it\" title=\"Link a www.letredistanze.it\" >www.letredistanze.it</a>\n    \n - e-mail: \t\t\t\t\t\t\n\t\t\t\t\t                <a href=\"mailto:ines@letredistanze.it\" title=\"Link a ines@letredistanze.it\" >ines@letredistanze.it</a>\n    \n</p>"
-        },
-        "category": "Iniziative varie",
-        "contacts": null,
-        "url": "http://www.comune.trento.it/Aree-tematiche/Sport/Calendario-eventi-sportivi/Viet-Vo-Dao3",
-        "image": "http://www.comune.trento.it/var/comunetn/storage/images/aree-tematiche/sport/calendario-eventi-sportivi/viet-vo-dao3/8201143-65-ita-IT/Viet-Vo-Dao.png",
-        "lastModified": 1399447235000,
-        "objectId": null,
-        "location": null,
-        "address": {
-          "it": "giardino Santa Chiara"
-        },
-        "special": false,
-        "fromTime": 1411033560000,
-        "toTime": 1411033560000,
-        "eventPeriod": {
-          "it": "giovedì 18 settembre"
-        },
-        "eventTiming": {
-          "it": "dalle ore 18.30 alle 20.00"
-        },
-        "duration": {
-          "it": "false"
-        },
-        "cost": {
-          "it": "Partecipazione gratuita"
-        },
-        "eventForm": "Evento singolo",
-        "parentEventId": "{\"objectName\":\"Sport nel verde 2014\",\"classIdentifier\":\"event\",\"datePublished\":1398256320,\"dateModified\":1399534614,\"objectRemoteId\":\"7a5a2856ed22ff46f50c88748393ba69\",\"objectId\":846485,\"link\":\"http://www.comune.trento.it/api/opendata/v1/content/object/846485\"}",
-        "eventType": "Iniziative varie",
-        "topics": [
-          "Sport",
-          "Arti marziali"
-        ],
-        "organizations": []
-      },
-      {
-        "id": "09f9534278592ead5c334b99ffe2fdae",
-        "updateTime": 1410353508691,
-        "version": 6481,
-        "user": null,
-        "source": "opendata.trento",
-        "title": {
-          "it": "Proiezione del film \"I colori della Passione\""
-        },
-        "shortTitle": {
-          "it": "false"
-        },
-        "subtitle": {
-          "it": "<p>Dialoghi sulle immagini e sull'arte sacra 2014</p>"
-        },
-        "description": {
-          "it": "<p>\nI colori della Passione<br />\ndi Lech Majewski, Svezia-Polonia 2011, 97 minuti<br />Partendo dai disegni preparatori del celebre pittore fiammingo Pieter Bruegel il Vecchio, il film invita lo spettatore a ricostruire il significato più profondo della Salita al Calvario, capolavoro epico dell'artista: una grande storia di coraggio, ribellione e sacrificio. Una meditazione sull'arte e sulla religione come processi continui di narrazione e di reinterpretazione collettiva; un tour de force cinematografico sulla libertà di culto e i diritti umani. Iniziativa in collaborazione con Religion Today Film Festival.</p>"
-        },
-        "info": {
-          "it": "<p>\t\t\t\t\t\t\n\t\t\t\t\t            <a href=\"http://www.museodiocesanotridentino.it\" title=\"link a sito esterno\" >www.museodiocesanotridentino.it</a>\n    \n</p>"
-        },
-        "category": "Incontri, convegni e conferenze",
-        "contacts": null,
-        "url": "http://www.comune.trento.it/Citta/Vivi-la-citta/Eventi-in-citta/Proiezione-del-film-I-colori-della-Passione",
-        "image": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/proiezione-del-film-i-colori-della-passione/8432570-1-ita-IT/Proiezione-del-film-I-colori-della-Passione.jpg",
-        "lastModified": 1409814462000,
-        "objectId": null,
-        "location": null,
-        "address": {
-          "it": "Museo Diocesano Tridentino, piazza Duomo 18, Trento"
-        },
-        "special": false,
-        "fromTime": 1411023840000,
-        "toTime": 1411023840000,
-        "eventPeriod": {
-          "it": "Giovedì 18 settembre"
-        },
-        "eventTiming": {
-          "it": "20.45"
-        },
-        "duration": {
-          "it": "false"
-        },
-        "cost": {
-          "it": " Ingresso gratuito fino ad esaurimento posti"
-        },
-        "eventForm": "Evento singolo",
-        "parentEventId": "{\"objectName\":\"Dialoghi sulle immagini e sull'arte sacra 2014\",\"classIdentifier\":\"event\",\"datePublished\":1410418140,\"dateModified\":1409813996,\"objectRemoteId\":\"6da448a1caeb005d7f33685a144caba5\",\"objectId\":879365,\"link\":\"http://www.comune.trento.it/api/opendata/v1/content/object/879365\"}",
-        "eventType": "Incontri, convegni e conferenze",
-        "topics": [
-          "Arte",
-          "Cinema",
-          "Scienze sociali",
-          "Storia, filosofia, religione"
-        ],
-        "organizations": []
-      },
-      {
         "id": "e5c2cdc6c998a601331d820c413e8503",
         "updateTime": 1410353508692,
         "version": 6482,
@@ -14757,8 +14371,8 @@
       },
       {
         "id": "5df6de57c7fe09f58887d3f4b970a04d",
-        "updateTime": 1410353508693,
-        "version": 6483,
+        "updateTime": 1410958390443,
+        "version": 7011,
         "user": null,
         "source": "opendata.trento",
         "title": {
@@ -14780,13 +14394,13 @@
         "contacts": null,
         "url": "http://www.comune.trento.it/Aree-tematiche/Turismo/Calendario-eventi/La-Pieta-di-Davide-Foschi",
         "image": "http://www.comune.trento.it/var/comunetn/storage/images/aree-tematiche/turismo/calendario-eventi/la-pieta-di-davide-foschi/8425734-5-ita-IT/La-Pieta-di-Davide-Foschi.png",
-        "lastModified": 1409903831000,
+        "lastModified": 1410935095000,
         "objectId": null,
         "location": null,
         "address": {
           "it": "Cappella Sant'Adalberto, parco di Gocciadoro, via Gmeiner, Trento"
         },
-        "special": true,
+        "special": false,
         "fromTime": 1410949800000,
         "toTime": 1411295400000,
         "eventPeriod": {
@@ -14807,115 +14421,6 @@
         "topics": [
           "Arte",
           "Pittura"
-        ],
-        "organizations": []
-      },
-      {
-        "id": "4d08175fcf89e02eaa644c897504b3ce",
-        "updateTime": 1410353508694,
-        "version": 6484,
-        "user": null,
-        "source": "opendata.trento",
-        "title": {
-          "it": "Inizia a correre da 0"
-        },
-        "shortTitle": {
-          "it": "false"
-        },
-        "subtitle": {
-          "it": "<p>\nIniziativa nell'ambito del progetto <em>Sport nel verde - Ben...essere in movimento</em><br /><em>&nbsp;</em>(attività sportive rivolte agli adulti e alle famiglie)</p>"
-        },
-        "description": {
-          "it": "<p>\nLa corsa è un'attività semplice e divertente, adatta a tutti.<br />\nDestinatari: adatto a tutte le età<br />Attrezzatura necessaria: abbigliamento sportivo comodo e scarpe da ginnastica.</p>"
-        },
-        "info": {
-          "it": "<p>\nL'escursione è realizzata con la collaborazione dell'Associazione Marathon Club Trento<br />\nReferente attività: Patrizia Zeni, tel. 346/8800763<br />\t\t\t\t\t\t\n\t\t\t\t\t                <a href=\"http://www.marathonclubtrento.com/public/index.php\" title=\"Link a www.marathonclubtrento.com\" >www.marathonclubtrento.com</a>\n    \n - e-mail: \t\t\t\t\t\t\n\t\t\t\t\t                <a href=\"mailto:marathonclubtrento@gmail.com\" title=\"Link a marathonclubtrento@gmail.com\" >marathonclubtrento@gmail.com</a>\n    \n</p>"
-        },
-        "category": "Iniziative varie",
-        "contacts": null,
-        "url": "http://www.comune.trento.it/Aree-tematiche/Sport/Calendario-eventi-sportivi/Inizia-a-correre-da-018",
-        "image": "http://www.comune.trento.it/var/comunetn/storage/images/aree-tematiche/sport/calendario-eventi-sportivi/inizia-a-correre-da-018/8182451-7-ita-IT/Inizia-a-correre-da-0.png",
-        "lastModified": 1398873067000,
-        "objectId": null,
-        "location": null,
-        "address": {
-          "it": "Ritrovo parcheggio ex Sit di fronte funivia Sardagna "
-        },
-        "special": false,
-        "fromTime": 1410948000000,
-        "toTime": 1410948000000,
-        "eventPeriod": {
-          "it": "mercoledì 17 settembre 2014"
-        },
-        "eventTiming": {
-          "it": "18.45 - 19.15"
-        },
-        "duration": {
-          "it": "false"
-        },
-        "cost": {
-          "it": "La partecipazione alla corsa è gratuita."
-        },
-        "eventForm": "Evento singolo",
-        "parentEventId": "{\"objectName\":\"Sport nel verde 2014\",\"classIdentifier\":\"event\",\"datePublished\":1398256320,\"dateModified\":1399534614,\"objectRemoteId\":\"7a5a2856ed22ff46f50c88748393ba69\",\"objectId\":846485,\"link\":\"http://www.comune.trento.it/api/opendata/v1/content/object/846485\"}",
-        "eventType": "Iniziative varie",
-        "topics": [
-          "Sport"
-        ],
-        "organizations": []
-      },
-      {
-        "id": "2d2f8545c9bcb6fe085591ff21bcc012",
-        "updateTime": 1410353508695,
-        "version": 6485,
-        "user": null,
-        "source": "opendata.trento",
-        "title": {
-          "it": "Scacchi"
-        },
-        "shortTitle": {
-          "it": "false"
-        },
-        "subtitle": {
-          "it": "<p>Iniziativa nell'ambito del progetto&nbsp;<em>Sport nel verde - Alla scoperta dei parchi della città</em> (animazione sportiva al parco per ragazzi e bambini)</p>"
-        },
-        "description": {
-          "it": "<p>\nGli scacchi sono un gioco da tavolo di strategia che ha l'obiettivo di dare scacco matto, ovvero attaccare il re avversario senza che esso abbia la possibilità di sfuggirvi.<br />\nDestinatari: bambini e ragazzi dai 6 anni<br />Attrezzatura necessaria: abbigliamento comodo</p>"
-        },
-        "info": {
-          "it": "<p>\nCon la collaborazione dell'associazione Unione Scacchistica Trentina<br />\nReferente attività: Roberta De Nisi, tel. 328/4480649<br />e-mail: \t\t\t\t\t\t\n\t\t\t\t\t                <a href=\"mailto:trentino.scacchi@gmail.com\" title=\"Link a trentino.scacchi@gmail.com\" >trentino.scacchi@gmail.com</a>\n    \n</p>"
-        },
-        "category": "Iniziative varie",
-        "contacts": null,
-        "url": "http://www.comune.trento.it/Aree-tematiche/Sport/Calendario-eventi-sportivi/Scacchi4",
-        "image": "http://www.comune.trento.it/var/comunetn/storage/images/aree-tematiche/sport/calendario-eventi-sportivi/scacchi4/8214824-36-ita-IT/Scacchi.png",
-        "lastModified": 1399884929000,
-        "objectId": null,
-        "location": null,
-        "address": {
-          "it": "giardino Lungo Fersina - scacchiera gigante"
-        },
-        "special": false,
-        "fromTime": 1410947160000,
-        "toTime": 1410947160000,
-        "eventPeriod": {
-          "it": "mercoledì 17 settembre"
-        },
-        "eventTiming": {
-          "it": "dalle ore 17.30 alle 18.30"
-        },
-        "duration": {
-          "it": "false"
-        },
-        "cost": {
-          "it": "Partecipazione gratuita"
-        },
-        "eventForm": "Evento singolo",
-        "parentEventId": "{\"objectName\":\"Sport nel verde 2014\",\"classIdentifier\":\"event\",\"datePublished\":1398256320,\"dateModified\":1399534614,\"objectRemoteId\":\"7a5a2856ed22ff46f50c88748393ba69\",\"objectId\":846485,\"link\":\"http://www.comune.trento.it/api/opendata/v1/content/object/846485\"}",
-        "eventType": "Iniziative varie",
-        "topics": [
-          "Sport",
-          "Scacchi e dama"
         ],
         "organizations": []
       },
@@ -15252,64 +14757,9 @@
         "organizations": []
       },
       {
-        "id": "79011854b169912f3cc847e8fceae50a",
-        "updateTime": 1410353508703,
-        "version": 6492,
-        "user": null,
-        "source": "opendata.trento",
-        "title": {
-          "it": "Baseball"
-        },
-        "shortTitle": {
-          "it": "false"
-        },
-        "subtitle": {
-          "it": "<p>Iniziativa nell'ambito del progetto&nbsp;<em>Sport nel verde - Alla scoperta dei parchi della città</em> (animazione sportiva al parco per ragazzi e bambini)</p>"
-        },
-        "description": {
-          "it": "<p>\nIl baseball è un'attività motoria che favorisce lo sviluppo in modo armonico della struttura e dell' organismo del bambino.<br />\n<strong>Destinatari</strong>: bambini e ragazzi 6 -14 anni<br />\n<strong>Attrezzatura necessaria</strong>: abbigliamento comodo<br />Con la collaborazione dell'associazione Cus Trento Baseball</p>"
-        },
-        "info": {
-          "it": "<p>\nReferente attività: Tiziano Fiorio, tel. 320/3452285<br />e-mail: \t\t\t\t\t\t\n\t\t\t\t\t                <a href=\"mailto:baseballcustn@unisport.tn.it\" title=\"Link a baseballcustn@unisport.tn.it\" >baseballcustn@unisport.tn.it</a>\n    \n</p>"
-        },
-        "category": "Iniziative varie",
-        "contacts": null,
-        "url": "http://www.comune.trento.it/Aree-tematiche/Sport/Calendario-eventi-sportivi/Baseball9",
-        "image": "http://www.comune.trento.it/var/comunetn/storage/images/aree-tematiche/sport/calendario-eventi-sportivi/baseball9/8182919-16-ita-IT/Baseball.png",
-        "lastModified": 1399469971000,
-        "objectId": null,
-        "location": null,
-        "address": {
-          "it": "giardino Clarina"
-        },
-        "special": false,
-        "fromTime": 1410860760000,
-        "toTime": 1410860760000,
-        "eventPeriod": {
-          "it": "martedì 16 settembre"
-        },
-        "eventTiming": {
-          "it": "dalle ore 16.00 alle 17.00"
-        },
-        "duration": {
-          "it": "false"
-        },
-        "cost": {
-          "it": "Partecipazione gratuita"
-        },
-        "eventForm": "Evento singolo",
-        "parentEventId": "{\"objectName\":\"Sport nel verde 2014\",\"classIdentifier\":\"event\",\"datePublished\":1398256320,\"dateModified\":1399534614,\"objectRemoteId\":\"7a5a2856ed22ff46f50c88748393ba69\",\"objectId\":846485,\"link\":\"http://www.comune.trento.it/api/opendata/v1/content/object/846485\"}",
-        "eventType": "Iniziative varie",
-        "topics": [
-          "Sport",
-          "Baseball e softball"
-        ],
-        "organizations": []
-      },
-      {
         "id": "3289232d8274a0b1e15fe90e4d10276a",
-        "updateTime": 1410353508704,
-        "version": 6493,
+        "updateTime": 1410958390448,
+        "version": 7012,
         "user": null,
         "source": "opendata.trento",
         "title": {
@@ -15331,13 +14781,13 @@
         "contacts": null,
         "url": "http://www.comune.trento.it/Aree-tematiche/Turismo/Calendario-eventi/Linguaggi-plastici-del-XX-secolo18",
         "image": "http://www.comune.trento.it/var/comunetn/storage/images/aree-tematiche/turismo/calendario-eventi/linguaggi-plastici-del-xx-secolo18/8237833-1-ita-IT/Linguaggi-plastici-del-XX-secolo.jpg",
-        "lastModified": 1400594708000,
+        "lastModified": 1410934929000,
         "objectId": null,
         "location": null,
         "address": {
           "it": "Galleria Civica, via Belenzani 44, Trento"
         },
-        "special": true,
+        "special": false,
         "fromTime": 1410855780000,
         "toTime": 1411287780000,
         "eventPeriod": {
@@ -16017,6 +15467,439 @@
         "eventType": "Iniziative varie",
         "topics": [
           "Ambiente e territorio"
+        ],
+        "organizations": []
+      },
+      {
+        "id": "9d1d5c5a0d41e3bc1126dc21dc9e3dc6",
+        "updateTime": 1411044803943,
+        "version": 7016,
+        "user": null,
+        "source": "opendata.trento",
+        "title": {
+          "it": "Incontriamoci al cinema"
+        },
+        "shortTitle": {
+          "it": "false"
+        },
+        "subtitle": {
+          "it": "<p>8^ Rassegna cinematografica a carattere sociale per ragazzi e genitori</p>"
+        },
+        "description": {
+          "it": "<p>Proiezione del film &quot;Il ragazzo con la bicicletta&quot; di Jean Pierre e Luc Dardenne</p>"
+        },
+        "info": {
+          "it": "<p>Circoscrizione San Giuseppe - Santa Chiara, telefono 0461/889900</p>"
+        },
+        "category": "Spettacoli",
+        "contacts": null,
+        "url": "http://www.comune.trento.it/Citta/Vivi-la-citta/Eventi-in-citta/Incontriamoci-al-cinema8",
+        "image": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/incontriamoci-al-cinema8/8457139-1-ita-IT/Incontriamoci-al-cinema.png",
+        "lastModified": 1411025559000,
+        "objectId": null,
+        "location": null,
+        "address": {
+          "it": "Sala Auditorium, Centro civico, via Giusti 35"
+        },
+        "special": false,
+        "fromTime": 1414134360000,
+        "toTime": 1414134360000,
+        "eventPeriod": {
+          "it": "venerdì 24 ottobre 2014"
+        },
+        "eventTiming": {
+          "it": "alle ore 20.30"
+        },
+        "duration": {
+          "it": "false"
+        },
+        "cost": {
+          "it": "Ingresso libero"
+        },
+        "eventForm": "Evento singolo",
+        "parentEventId": null,
+        "eventType": "Spettacoli",
+        "topics": [
+          "Cinema"
+        ],
+        "organizations": []
+      },
+      {
+        "id": "34aea329035bc6699aa07c66c10f6c87",
+        "updateTime": 1411044803953,
+        "version": 7018,
+        "user": null,
+        "source": "opendata.trento",
+        "title": {
+          "it": "Incontriamoci al cinema"
+        },
+        "shortTitle": {
+          "it": "false"
+        },
+        "subtitle": {
+          "it": "<p>8^ Rassegna cinematografica a carattere sociale per ragazzi e genitori</p>"
+        },
+        "description": {
+          "it": "<p>Proiezione del film &quot;L'albero&quot;&nbsp;di Julie Bertuccelli</p>"
+        },
+        "info": {
+          "it": "<p>Circoscrizione San Giuseppe - Santa Chiara, telefono 0461/889900</p>"
+        },
+        "category": "Spettacoli",
+        "contacts": null,
+        "url": "http://www.comune.trento.it/Citta/Vivi-la-citta/Eventi-in-citta/Incontriamoci-al-cinema10",
+        "image": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/incontriamoci-al-cinema10/8457139-1-ita-IT/Incontriamoci-al-cinema.png",
+        "lastModified": 1411025932000,
+        "objectId": null,
+        "location": null,
+        "address": {
+          "it": "Sala Auditorium, Centro civico, via Giusti 35"
+        },
+        "special": false,
+        "fromTime": 1413529560000,
+        "toTime": 1413529560000,
+        "eventPeriod": {
+          "it": "venerdì 17 ottobre 2014"
+        },
+        "eventTiming": {
+          "it": "alle ore 20.30"
+        },
+        "duration": {
+          "it": "false"
+        },
+        "cost": {
+          "it": "Ingresso libero"
+        },
+        "eventForm": "Evento singolo",
+        "parentEventId": null,
+        "eventType": "Spettacoli",
+        "topics": [
+          "Cinema"
+        ],
+        "organizations": []
+      },
+      {
+        "id": "d2f15ba7819533ddc823a8fad7026867",
+        "updateTime": 1411044803961,
+        "version": 7020,
+        "user": null,
+        "source": "opendata.trento",
+        "title": {
+          "it": "Incontriamoci al cinema"
+        },
+        "shortTitle": {
+          "it": "false"
+        },
+        "subtitle": {
+          "it": "<p>8^ Rassegna cinematografica a carattere sociale per ragazzi e genitori</p>"
+        },
+        "description": {
+          "it": "<p>Proiezione del film &quot;Vento di primavera&quot; di Roselyne Bosch</p>"
+        },
+        "info": {
+          "it": "<p>Circoscrizione San Giuseppe - Santa Chiara, telefono 0461/889900</p>"
+        },
+        "category": "Spettacoli",
+        "contacts": null,
+        "url": "http://www.comune.trento.it/Citta/Vivi-la-citta/Eventi-in-citta/Incontriamoci-al-cinema7",
+        "image": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/incontriamoci-al-cinema7/8457139-1-ita-IT/Incontriamoci-al-cinema.png",
+        "lastModified": 1411024937000,
+        "objectId": null,
+        "location": null,
+        "address": {
+          "it": "Sala Auditorium, Centro civico, via Giusti 35"
+        },
+        "special": false,
+        "fromTime": 1412924760000,
+        "toTime": 1412924760000,
+        "eventPeriod": {
+          "it": "venerdì 10 ottobre 2014"
+        },
+        "eventTiming": {
+          "it": "alle ore 20.30"
+        },
+        "duration": {
+          "it": "false"
+        },
+        "cost": {
+          "it": "Ingresso libero"
+        },
+        "eventForm": "Evento singolo",
+        "parentEventId": null,
+        "eventType": "Spettacoli",
+        "topics": [
+          "Cinema"
+        ],
+        "organizations": []
+      },
+      {
+        "id": "ee7110d04ea39a0fcd0a715a55576146",
+        "updateTime": 1411044803967,
+        "version": 7021,
+        "user": null,
+        "source": "opendata.trento",
+        "title": {
+          "it": "Incontriamoci al cinema"
+        },
+        "shortTitle": {
+          "it": "false"
+        },
+        "subtitle": {
+          "it": "<p>8^ Rassegna cinematografica a carattere sociale per ragazzi e genitori</p>"
+        },
+        "description": {
+          "it": "<p>Proiezione del film &quot;La generazione rubata&quot; di Philip Noyce</p>"
+        },
+        "info": {
+          "it": "<p>Circoscrizione San Giuseppe - Santa Chiara, telefono 0461/889900</p>"
+        },
+        "category": "Spettacoli",
+        "contacts": null,
+        "url": "http://www.comune.trento.it/Citta/Vivi-la-citta/Eventi-in-citta/Incontriamoci-al-cinema6",
+        "image": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/incontriamoci-al-cinema6/8457139-1-ita-IT/Incontriamoci-al-cinema.png",
+        "lastModified": 1411024820000,
+        "objectId": null,
+        "location": null,
+        "address": {
+          "it": "Sala Auditorium, Centro civico, via Giusti 35"
+        },
+        "special": false,
+        "fromTime": 1412319960000,
+        "toTime": 1412319960000,
+        "eventPeriod": {
+          "it": "venerdì 3 ottobre 2014"
+        },
+        "eventTiming": {
+          "it": "alle ore 20.30"
+        },
+        "duration": {
+          "it": "false"
+        },
+        "cost": {
+          "it": "Ingresso libero"
+        },
+        "eventForm": "Evento singolo",
+        "parentEventId": null,
+        "eventType": "Spettacoli",
+        "topics": [
+          "Cinema"
+        ],
+        "organizations": []
+      },
+      {
+        "id": "aebc7010bc7d391b6c83f313fc2bbe7e",
+        "updateTime": 1411044803979,
+        "version": 7023,
+        "user": null,
+        "source": "opendata.trento",
+        "title": {
+          "it": "Quartetto \"ConCordia\" in concerto"
+        },
+        "shortTitle": {
+          "it": "false"
+        },
+        "subtitle": {
+          "it": ""
+        },
+        "description": {
+          "it": "<p>\nNell'ambito della rassegna musicale &quot;Il Terzo Suono&quot;, l'associazione Lucilla May presenta al Museo Diocesano Tridentino un concerto del Quartetto di Violoncelli ConCordia. In programma musiche di G.F. Telemann (1681-1767), B. Marcello (1686-1739), L. Boccherini ( 1743-1805), G.B. Cervetto (1682-1728), M. Corrette (1709-1795). Esecuzione con strumenti copia di originali e accordatura storica. Ingresso libero fino ad esaurimento posti.<br />Il quartetto &quot;ConCordia&quot; è un ensemble che nasce dal desiderio di quattro colleghi violoncellisti di riunire l'amore per il proprio strumento e la gioia di suonare insieme con il gusto per la particolare sonorità del suono dato dalle corde in budello. Il quartetto, musicalmente guidato dal violoncellista Stefano Veggetti, maestro di concerto dell'ensemble Cordia di Brunico, è composto da Barbara Bertoldi, Giordano Pegoraro, Franziska Romaner, Stefano Veggetti.</p>"
+        },
+        "info": {
+          "it": ""
+        },
+        "category": "Spettacoli",
+        "contacts": null,
+        "url": "http://www.comune.trento.it/Citta/Vivi-la-citta/Eventi-in-citta/Quartetto-ConCordia-in-concerto",
+        "image": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/quartetto-concordia-in-concerto/8459926-1-ita-IT/Quartetto-ConCordia-in-concerto.jpg",
+        "lastModified": 1411044185000,
+        "objectId": null,
+        "location": null,
+        "address": {
+          "it": "Museo Diocesano Tridentino, piazza Duomo, Trento"
+        },
+        "special": false,
+        "fromTime": 1411821540000,
+        "toTime": 1411821540000,
+        "eventPeriod": {
+          "it": "sabato 27 settembre"
+        },
+        "eventTiming": {
+          "it": "18.00"
+        },
+        "duration": {
+          "it": "false"
+        },
+        "cost": {
+          "it": "Ingresso libero fino ad esaurimento posti"
+        },
+        "eventForm": "Evento singolo",
+        "parentEventId": null,
+        "eventType": "Spettacoli",
+        "topics": [
+          "Musica"
+        ],
+        "organizations": []
+      },
+      {
+        "id": "a956d9f609482f0f0c374dd0de53310b",
+        "updateTime": 1411044803988,
+        "version": 7024,
+        "user": null,
+        "source": "opendata.trento",
+        "title": {
+          "it": "Festa di inizio anno scolastico"
+        },
+        "shortTitle": {
+          "it": "false"
+        },
+        "subtitle": {
+          "it": "<p>Attenzione. Non perdere questa occasione. Vieni, che tanti animali troverai, lo zucchero filato mangerai e altro ancora ammirerai</p>"
+        },
+        "description": {
+          "it": "<p>Partecipa la COLDIRETTI con i suoi laboratori</p>"
+        },
+        "info": {
+          "it": ""
+        },
+        "category": "Iniziative varie",
+        "contacts": null,
+        "url": "http://www.comune.trento.it/Citta/Vivi-la-citta/Eventi-in-citta/Festa-di-inizio-anno-scolastico6",
+        "image": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/festa-di-inizio-anno-scolastico6/8457033-2-ita-IT/Festa-di-inizio-anno-scolastico.png",
+        "lastModified": 1411022730000,
+        "objectId": null,
+        "location": null,
+        "address": {
+          "it": "Parco di Maso Ginocchio, via Giusti, Trento"
+        },
+        "special": false,
+        "fromTime": 1411713480000,
+        "toTime": 1411713480000,
+        "eventPeriod": {
+          "it": "venerdì 26 settembre 2014"
+        },
+        "eventTiming": {
+          "it": "dalle ore 15"
+        },
+        "duration": {
+          "it": "false"
+        },
+        "cost": {
+          "it": "false"
+        },
+        "eventForm": "Evento singolo",
+        "parentEventId": null,
+        "eventType": "Iniziative varie",
+        "topics": [
+          "Intrattenimento - tempo libero"
+        ],
+        "organizations": []
+      },
+      {
+        "id": "67edd4194e58675bd882fa48163f97b5",
+        "updateTime": 1411044803993,
+        "version": 7025,
+        "user": null,
+        "source": "opendata.trento",
+        "title": {
+          "it": "I codici del vuoto"
+        },
+        "shortTitle": {
+          "it": "false"
+        },
+        "subtitle": {
+          "it": "<p>Ricerca interiore e arte marziale</p>"
+        },
+        "description": {
+          "it": "<p>La Scuola è lieta di invitare tutti al primo <strong>evento gratuito</strong> della stagione autunnale, mercoledì 24 settembre alle ore 20.15 presso il <span style=\"text-decoration:underline;\">\t\t\t\t\t\t\n\t\t\t\t\t                <a href=\"http://www.laviadelfuoco.it/#%21cartina/c1wun\" title=\"Link a Dojo di Trento\" >Dojo di Trento</a>\n    \n</span>. Sarà possibile sperimentare alcuni aspetti del metodo di insegnamento dei Codici del Vuoto. E' gradita la prenotazione tramite mail.</p><p>La locandina è scaricabile sulla <span style=\"text-decoration:underline;\">\t\t\t\t\t\t\n\t\t\t\t\t                <a href=\"http://www.facebook.com/laviadelfuoco/events\" title=\"Link a pagina facebook della Scuola\" >pagina facebook della Scuola</a>\n    \n</span>.</p>"
+        },
+        "info": {
+          "it": "<p>&nbsp;Per informazioni e iscrizioni rivolgersi alla Segreteria:&nbsp;\t\t\t\t\t\t\n\t\t\t\t\t                <a href=\"mailto:laviadelfuoco@gmail.com%20\" title=\"Link a laviadelfuoco@gmail.com \" >laviadelfuoco@gmail.com </a>\n    \n</p>"
+        },
+        "category": "Iniziative varie",
+        "contacts": null,
+        "url": "http://www.comune.trento.it/Aree-tematiche/Sport/Calendario-eventi-sportivi/I-codici-del-vuoto2",
+        "image": "http://www.comune.trento.it/var/comunetn/storage/images/aree-tematiche/sport/calendario-eventi-sportivi/i-codici-del-vuoto2/8456319-1-ita-IT/I-codici-del-vuoto.png",
+        "lastModified": 1410965481000,
+        "objectId": null,
+        "location": null,
+        "address": {
+          "it": " c/o Palestra Scuola Media A.Vittoria - Via degli Olmi 26,  Clarina"
+        },
+        "special": false,
+        "fromTime": 1411569960000,
+        "toTime": 1411569960000,
+        "eventPeriod": {
+          "it": "mercoledì 24 settembre"
+        },
+        "eventTiming": {
+          "it": "20.15"
+        },
+        "duration": {
+          "it": "false"
+        },
+        "cost": {
+          "it": "false"
+        },
+        "eventForm": "Evento singolo",
+        "parentEventId": null,
+        "eventType": "Iniziative varie",
+        "topics": [
+          "Sport",
+          "Arti marziali"
+        ],
+        "organizations": []
+      },
+      {
+        "id": "53ca123ac9043746d42c0dde998624a9",
+        "updateTime": 1411044804000,
+        "version": 7026,
+        "user": null,
+        "source": "opendata.trento",
+        "title": {
+          "it": "Il viaggio della “Caracca Zoppa”"
+        },
+        "shortTitle": {
+          "it": "false"
+        },
+        "subtitle": {
+          "it": "<p>Apre la stagione del Portland</p>"
+        },
+        "description": {
+          "it": "<p>\nIl viaggio della “Caracca Zoppa”<br />\nCon Andrea Maule e Paolo Vicentini e con la danzatrice Nadia Mattarei.<br />\n“Provate a chiedere! Si! Provate a chiedere a qualsiasi marinaio della Caracca Zoppa Come fù quel Viaggio?<br />\nSapete cosa vi risponderà? Che mi venga un colpo secco se quello non è stato davvero un viaggio strano.” Alla Salute!!<br />\nLa storia di come la Caracca Zoppa, grande nave trivele, si è persa, di come ha perso il suo carico e di come si è salvata.<br />\nSpettacolo che sa di mare, dove si raccontano e si interpretano storie di velieri, di navi abitate da fantasmi, di mari in tempesta, di mostri marini come il Calagranchio e delle sabbie mobili del mare.<br />\nSi racconta anche di come Grattuccio carpentiere della nave, la più grande nave che abbia mai solcato i mari, riesce a salvare la sua pellaccia e quella di tutto l’equipaggio.<br />Destinatari: bambini dai 3 anni</p>"
+        },
+        "info": {
+          "it": "<p>\t\t\t\t\t\t\n\t\t\t\t\t            <a href=\"http://www.teatroportland.it\" title=\"link a sito esterno\" >www.teatroportland.it</a>\n    \n</p>"
+        },
+        "category": "Spettacoli",
+        "contacts": null,
+        "url": "http://www.comune.trento.it/Citta/Vivi-la-citta/Eventi-in-citta/Il-viaggio-della-Caracca-Zoppa",
+        "image": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/il-viaggio-della-caracca-zoppa/8459965-1-ita-IT/Il-viaggio-della-Caracca-Zoppa.jpg",
+        "lastModified": 1411044582000,
+        "objectId": null,
+        "location": null,
+        "address": {
+          "it": "Portland, Scuola di Teatro, via Papiria 8, Trento"
+        },
+        "special": false,
+        "fromTime": 1411303560000,
+        "toTime": 1411303560000,
+        "eventPeriod": {
+          "it": "Domenica 21 settembre"
+        },
+        "eventTiming": {
+          "it": "17.30"
+        },
+        "duration": {
+          "it": "false"
+        },
+        "cost": {
+          "it": "6 euro intero, 4 euro ridotto, gratuito bambini under 3"
+        },
+        "eventForm": "Evento singolo",
+        "parentEventId": null,
+        "eventType": "Spettacoli",
+        "topics": [
+          "Teatro"
         ],
         "organizations": []
       },
@@ -17109,8 +16992,8 @@
       },
       {
         "id": "e4ac913bd3f6146db62e3e1dc4e37292",
-        "updateTime": 1410353508605,
-        "version": 6404,
+        "updateTime": 1411044803960,
+        "version": 7019,
         "user": null,
         "source": "opendata.trento",
         "title": {
@@ -17132,7 +17015,7 @@
         "contacts": null,
         "url": "http://www.comune.trento.it/Citta/Vivi-la-citta/Eventi-in-citta/Festival-internazionale-dell-Armonica-a-bocca2",
         "image": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/festival-internazionale-dell-armonica-a-bocca2/8383025-1-ita-IT/Festival-internazionale-dell-Armonica-a-bocca.png",
-        "lastModified": 1407142552000,
+        "lastModified": 1410959140000,
         "objectId": null,
         "location": null,
         "address": {
@@ -17771,8 +17654,8 @@
       },
       {
         "id": "bd0d656151ba220c5531d87b7a702b1d",
-        "updateTime": 1410353508635,
-        "version": 6430,
+        "updateTime": 1411044803977,
+        "version": 7022,
         "user": null,
         "source": "opendata.trento",
         "title": {
@@ -17785,7 +17668,7 @@
           "it": "<p><em>Iniziativa nell'ambito del progetto&nbsp;<em>Sport nel verde - Ben...essere in movimento</em> </em>(attività sportive rivolte agli adulti e alle famiglie)</p>"
         },
         "description": {
-          "it": "<p>Le escursioni sono un'occasione per conoscere le montagne che circondano la città di Trento e per favorire lo stare assieme a tutte le età.</p><p>Gli itinerari proposti non sono adatti ad essere percorsi con il passeggino.</p><p>Il ritrovo è alle ore 9.00 con rientro previsto alle ore 17.00 circa.</p><p>E' necessario abbigliamento sportivo con scarponcino o scarpa comoda.</p>"
+          "it": "<p>Le escursioni sono un'occasione per conoscere le montagne che circondano la città di Trento e per favorire lo stare assieme a tutte le età.</p><p>Gli itinerari proposti non sono adatti ad essere percorsi con il passeggino.</p><p><strong>Difficoltà:</strong> facile</p><p><strong>Punto di ritrovo:</strong> autostazione corriere Trento, in tempo per prendere&nbsp; l'autobus di linea delle ore 8.00 per Viote</p><p><strong>Rientro:</strong> da Sopramonte con autobus numero 6 (una corsa ogni 60 minuti)</p><p>E' necessario abbigliamento sportivo con scarponcino o scarpa comoda.</p>"
         },
         "info": {
           "it": "<p>L'escursione è realizzata con la collaborazione dell'APPM Associazione Provinciale per i Minori Onlus.</p><p>Referente: Annamaria Betta, tel. 348/3937889</p><p>\t\t\t\t\t\t\n\t\t\t\t\t                <a href=\"http://www.appm.it\" title=\"Link a www.appm.it\" >www.appm.it</a>\n    \n - e-mail: \t\t\t\t\t\t\n\t\t\t\t\t                <a href=\"mailto:larea.point@appm.it\" title=\"Link a larea.point@appm.it\" >larea.point@appm.it</a>\n    \n</p>"
@@ -17794,11 +17677,11 @@
         "contacts": null,
         "url": "http://www.comune.trento.it/Aree-tematiche/Sport/Calendario-eventi-sportivi/Escursione-Monte-Bondone",
         "image": "http://www.comune.trento.it/var/comunetn/storage/images/aree-tematiche/sport/calendario-eventi-sportivi/escursione-monte-bondone/8172353-1-ita-IT/Escursione-Monte-Bondone.jpg",
-        "lastModified": 1399370311000,
+        "lastModified": 1411030038000,
         "objectId": null,
         "location": null,
         "address": {
-          "it": "Itinerario: Sopramonte - Sant'Anna - Malga Brigolina - Candriai. Ritrovo fermata autobus Sopramonte"
+          "it": "Itinerario: Viote del Bondone - Malga Brigolina - Sopramonte"
         },
         "special": false,
         "fromTime": 1411858800000,
@@ -17807,7 +17690,7 @@
           "it": "domenica 28 settembre 2014"
         },
         "eventTiming": {
-          "it": "9.00 - 17.00"
+          "it": "8.00 - 17.00"
         },
         "duration": {
           "it": "false"
@@ -19412,7 +19295,7 @@
       {
         "id": "54088b79975a10f95cae0266",
         "updateTime": 1409846137041,
-        "version": 6955,
+        "version": 7032,
         "user": null,
         "highlights": [
           {
@@ -19435,7 +19318,7 @@
             "items": null,
             "query": null,
             "ref": null,
-            "type": "text",
+            "type": "content",
             "app": null
           },
           {
@@ -19457,7 +19340,7 @@
             "items": null,
             "query": null,
             "ref": null,
-            "type": "text",
+            "type": "content",
             "app": null
           },
           {
@@ -19479,7 +19362,7 @@
             "items": null,
             "query": null,
             "ref": null,
-            "type": "event",
+            "type": "mainevent",
             "app": null
           }
         ],
@@ -19955,7 +19838,7 @@
                 "app": null
               },
               {
-                "id": "exhibitions",
+                "id": "Mostre",
                 "name": {
                   "it": "Mostre",
                   "en": "Exhibitions",
@@ -19968,14 +19851,14 @@
                 "query": {
                   "type": "event",
                   "classifications": null,
-                  "classification": "exhibitions"
+                  "classification": "Mostre"
                 },
                 "ref": null,
                 "type": null,
                 "app": null
               },
               {
-                "id": "misc",
+                "id": "Iniziative varie",
                 "name": {
                   "it": "Iniziative varie",
                   "en": "Various initiatives",
@@ -19988,14 +19871,14 @@
                 "query": {
                   "type": "event",
                   "classifications": null,
-                  "classification": "misc"
+                  "classification": "Iniziative varie"
                 },
                 "ref": null,
                 "type": null,
                 "app": null
               },
               {
-                "id": "shows",
+                "id": "Spettacoli",
                 "name": {
                   "it": "Spettacoli",
                   "en": "Shows",
@@ -20008,14 +19891,14 @@
                 "query": {
                   "type": "event",
                   "classifications": null,
-                  "classification": "shows"
+                  "classification": "Spettacoli"
                 },
                 "ref": null,
                 "type": null,
                 "app": null
               },
               {
-                "id": "fairs",
+                "id": "Feste, mercati e fiere",
                 "name": {
                   "it": "Feste, mercati e fiere",
                   "en": "Festivals, markets and fairs",
@@ -20028,14 +19911,14 @@
                 "query": {
                   "type": "event",
                   "classifications": null,
-                  "classification": "fairs"
+                  "classification": "Feste, mercati e fiere"
                 },
                 "ref": null,
                 "type": null,
                 "app": null
               },
               {
-                "id": "conferences",
+                "id": "Incontri, convegni e conferenze",
                 "name": {
                   "it": "Incontri, convegni e conferenze",
                   "en": "Meetings, seminars and conferences",
@@ -20048,14 +19931,14 @@
                 "query": {
                   "type": "event",
                   "classifications": null,
-                  "classification": "conferences"
+                  "classification": "Incontri, convegni e conferenze"
                 },
                 "ref": null,
                 "type": null,
                 "app": null
               },
               {
-                "id": "competitions",
+                "id": "Competizioni e gare",
                 "name": {
                   "it": "Competizioni e gare",
                   "en": "Competitions and contests",
@@ -20068,14 +19951,14 @@
                 "query": {
                   "type": "event",
                   "classifications": null,
-                  "classification": "competitions"
+                  "classification": "Competizioni e gare"
                 },
                 "ref": null,
                 "type": null,
                 "app": null
               },
               {
-                "id": "labs",
+                "id": "Corsi e laboratori",
                 "name": {
                   "it": "Corsi e laboratori",
                   "en": "Courses and workshops",
@@ -20088,7 +19971,7 @@
                 "query": {
                   "type": "event",
                   "classifications": null,
-                  "classification": "labs"
+                  "classification": "Corsi e laboratori"
                 },
                 "ref": null,
                 "type": null,
@@ -20215,7 +20098,7 @@
             "app": null
           }
         ],
-        "lastModified": 1410349766000
+        "lastModified": 1411112833000
       }
     ],
     "eu.trentorise.smartcampus.comuneintasca.model.ItineraryObject": [
@@ -28999,6 +28882,9 @@
     "eu.trentorise.smartcampus.comuneintasca.model.EventObject": [
       "3695e4eb1fb986f9871a7db2640b9da5",
       "0e2b3bb99ef086f75eacc501f6fbdf03",
+      "4d08175fcf89e02eaa644c897504b3ce",
+      "2d2f8545c9bcb6fe085591ff21bcc012",
+      "79011854b169912f3cc847e8fceae50a",
       "264c51f629211157369f084d5fedebf7",
       "42209dc8789e5f5902a943eb0f7d7d4c",
       "d35663b8e011d8acb12c1529a2e68347",

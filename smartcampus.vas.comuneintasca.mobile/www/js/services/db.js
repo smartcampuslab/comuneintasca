@@ -544,8 +544,8 @@ angular.module('ilcomuneintasca.services.db', [])
 
         var lista = []
         dbObj.transaction(function (tx) {
-          console.log('dbname: '+dbname);
-          console.log('type: '+types[dbname]);
+          //console.log('dbname: '+dbname);
+          //console.log('type: '+types[dbname]);
 					var _complex=undefined;
           //_complex=false;
           var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount' +

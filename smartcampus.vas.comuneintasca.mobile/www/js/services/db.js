@@ -362,6 +362,7 @@ angular.module('ilcomuneintasca.services.db', [])
                         }
                       } else if (contentTypeKey == 'poi') {
                         //category fix for opencontent data
+                        /*
                         switch (item.classification.it) {
                           //case 'Altri siti di interesse storico artistico':
                           //  item.classification.it='Edifici storici';
@@ -380,6 +381,7 @@ angular.module('ilcomuneintasca.services.db', [])
                             item.classification.it='Aree Archeologiche';
                             break;
                         }
+                        */
                         classified.resolve([item.classification.it,'','']);
                         /*
                         Config.menuGroupSubgroupByLocaleName('visitare','it',item.classification.it).then(function(sg){

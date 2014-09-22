@@ -24,7 +24,7 @@ angular.module('starter', ['ionic', 'localization', 'ngCordova'])
 						$rootScope.iosPlatform = ($rootScope.platform == 'iOS');
 						$rootScope.androidPlatform = ($rootScope.platform == 'Android');
 
-            setTimeout(function(){ navigator.splashscreen.hide(); },2000);
+            setTimeout(function(){ navigator.splashscreen.hide(); },1000);
           } else {
 						$rootScope.webPlatform = true;
 					}

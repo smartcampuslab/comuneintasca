@@ -294,8 +294,17 @@ angular.module('ilcomuneintasca.controllers.common', [])
           $scope.template = 'templates/page/' + (sg.view || dbtypeClassCustomisations.view || sg_query_type + '_list') + '.html';
 
           var dosort = function() {
-              if (tboptions.hasSort || tboptions.hasSearch) {  
+              if (tboptions.hasSort || tboptions.hasSearch) {
                 $scope.results = $filter('extOrderBy')(tboptions.getData(),$scope.ordering);
+                if ($scope.resultsGroups) {
+                  for (idx in $scope.resultsGroups) {
+                    var group=$scope.resultsGroups[idx];
+                    //console.log('group.labelHidden: '+group.labelHidden);
+                    if (group.results.length>0) {
+                      group.results=$filter('extOrderBy')(group.results,$scope.ordering)
+                    }
+                  }
+                }
               }  
           };    
 

@@ -546,8 +546,8 @@ angular.module('ilcomuneintasca.services.db', [])
 
         var lista = []
         dbObj.transaction(function (tx) {
-          console.log('dbname: '+dbname);
-          console.log('type: '+types[dbname]);
+          //console.log('dbname: '+dbname);
+          //console.log('type: '+types[dbname]);
 					var _complex=undefined;
           //_complex=false;
           var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount' +
@@ -920,70 +920,47 @@ angular.module('ilcomuneintasca.services.db', [])
         return dbitem.promise;
       });
     },
-    getAny: function (itemIds) {
-      //console.log('DatiDB.getAny(""' + itemIds + '")');
+    checkIDs: function (itemIds) {
+      //console.log('DatiDB.checkIDs(); itemIds: ' + itemIds);
+      Profiling.start('dbcheck');
+      var dbitem = $q.defer();
+ 
+      dbObj.transaction(function (tx) {
+        var conds = [];
+        for (var i = 0; i < itemIds.length; i++) conds[i] = '?';
+        var idCond = 'id IN (' + conds.join() + ')';
 
-      return this.sync().then(function (dbVersion) {
-        Profiling.start('dbget');
-        var loading = $ionicLoading.show({
-          template: $filter('translate')(Config.keys()['loading']),
-          delay: 1000,
-          duration: Config.loadingOverlayTimeoutMillis()
-        });
-
-        var dbitem = $q.defer();
-        dbObj.transaction(function (tx) {
-          //console.log('DatiDB.getAny(); itemIds: ' + itemIds);
-          var conds = [];
-          for (var i = 0; i < itemIds.length; i++) conds[i] = '?';
-          var idCond = 'id IN (' + conds.join() + ')';
-          var qParams = itemIds;
-          var dbQuery = 'SELECT id, type, classification, classification2, classification3, data, lat, lon FROM ContentObjects WHERE ' + idCond;
-          //console.log('dbQuery: ' + dbQuery);
-          //console.log('DatiDB.getAny("' + itemIds + '"); dbQuery launched...');
-          tx.executeSql(dbQuery, qParams, function (tx2, results) {
-            //console.log('DatiDB.get("' + itemIds + '"); dbQuery completed');
-            var resultslen = results.rows.length;
-            var res = {};
-            var lista = [];
-            if (resultslen > 0) {
-              for (var i = 0; i < resultslen; i++) {
-                var item = results.rows.item(i);
-                var row = parseDbRow(item);
-                res[row.id] = row;
-              }
-              for (var i = 0; i < itemIds.length; i++) {
-                if (res[itemIds[i]] != null) {
-                  lista.push(res[itemIds[i]]);
-                }
-              }
-
-              lista.push();
-              Profiling._do('dbget', 'list');
-              dbitem.resolve(lista);
-            } else {
-              console.log('not found!');
-              Profiling._do('dbgetany', 'sql empty');
-              dbitem.reject('not found!');
-            }
-          }, function (tx2, err) {
-            $ionicLoading.hide();
-            console.log('error: ' + err);
-            Profiling._do('dbgetany', 'sql error');
-            dbitem.reject(err);
-          });
-        }, function (error) { //error callback
+        var qParams = itemIds;
+        var dbQuery = 'SELECT id FROM ContentObjects WHERE ' + idCond;
+        //console.log('DatiDB.getAny(); dbQuery: ' + dbQuery);
+        tx.executeSql(dbQuery, qParams, function (tx2, results) {
+          //console.log('DB.checkIDs(); qParams: '+qParams);
+          var resultslen = results.rows.length;
+          if (resultslen > 0) {
+            Profiling._do('dbcheck', 'list');
+            dbitem.resolve(qParams);
+          } else {
+            //console.log('DB.checkIDs('+itemIds+'): not found!');
+            Profiling._do('dbcheck', 'sql empty');
+            dbitem.reject('not found!');
+          }
+        }, function (tx2, err) {
           $ionicLoading.hide();
-          console.log('db.getAny() ERROR: ' + error);
-          Profiling._do('dbgetany', 'tx error');
-          dbitem.reject(error);
-        }, function () { //success callback
-          $ionicLoading.hide();
-          Profiling._do('dbgetany', 'tx success');
+          console.log('error: ' + err);
+          Profiling._do('dbcheck', 'sql error');
+          dbitem.reject(err);
         });
-
-        return dbitem.promise;
+      }, function (error) { //error callback
+        $ionicLoading.hide();
+        console.log('DB.checkIDs() ERROR: ' + error);
+        Profiling._do('dbcheck', 'tx error');
+        dbitem.reject(error);
+      }, function () { //success callback
+        $ionicLoading.hide();
+        Profiling._do('dbcheck', 'tx success');
       });
+
+      return dbitem.promise;
     },
     getFavorites: function () {
       //console.log('DatiDB.getFavorites()');

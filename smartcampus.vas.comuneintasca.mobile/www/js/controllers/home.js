@@ -64,43 +64,49 @@ angular.module('ilcomuneintasca.controllers.home', [])
 */
     Config.highlights().then(function(items) {
       if (items && items.length) {
-        highlights = [];
-        highlightsData = [];
+        //console.log('highlights.length: '+items.length);
+        var highlights = [];
+
+        var hlVerifiedObjects = [];
+        var hlVerificationsPromises = [];
         for (hli=0; hli<items.length; hli++) {
           var item=items[hli];
           if (item.objectIds) {
-//          if (Config.opencontent()) {
-              item.title=item.name;
-              item.abslink='/app/page/highlights/'+item.objectIds.join(',');
-              highlights.push(item);
-/*
-            } else {
-              var type=(item.query&&item.query.type?item.query.type:item.type)||'content';
-              if (type.indexOf('eu.trentorise.smartcampus.comuneintasca.model.')==0) type=Config.contentKeyFromDbType(type);
-              highlightsData.push(DatiDB.get(type,item.objectIds.join(',')).then(function(data){
-                console.log('pushing higlight:');
-                console.log(data);
-                highlights.push(data);
-              }));
-            }
-*/
+            //console.log('adding items "'+item.objectIds+'"...');
+            hlVerificationsPromises.push(DatiDB.checkIDs(item.objectIds).then(function(ids){
+              hlVerifiedObjects.push(ids);
+              //console.log('verified items "'+ids+'"');
+            },function(){
+              console.log('missing objectIds "'+item.objectIds+'" for highlight item "'+item.id+'"');
+            }));
           } else {
             console.log('unknown highlight type for "'+(item.id||item)+'"');
           }
         }
-        if (highlightsData.length>0) {
-          $q.all(highlightsData).then(function(){
-            $scope.highlights=highlights;
+        if (hlVerificationsPromises.length>0) {
+          $q.all(hlVerificationsPromises).then(function(){
+            if (hlVerifiedObjects.length>0) {
+              var highlightsVerified = [];
+              for (hli=0; hli<items.length; hli++) {
+                var item=items[hli];
+                //console.log('highlight.objectIds: '+item.objectIds);
+                for (vi=0; vi<hlVerifiedObjects.length; vi++) {
+                  if (item.objectIds==hlVerifiedObjects[vi]) {
+                    item.title=item.name;
+                    item.abslink='/app/page/highlights/'+item.objectIds.join(',');
+                    highlightsVerified.push(item);
+                    break;
+                  }
+                }
+              }
+              $scope.highlights=highlightsVerified;
+            }
           })
-        } else {
+        } else if (highlights.length>0) {
           $scope.highlights=highlights;
+        } else {
+          $scope.highlights = [ defaultHighlight ];
         }
-/*        
-        highlightsData = [];
-        for (hli=0; hli<items.length; hli++) {
-          var item=items[hli];
-        }
-*/
       }
     },function(menu) {
       console.log('error getting highligts from profile');

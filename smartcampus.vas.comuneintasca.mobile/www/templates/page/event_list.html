@@ -5,7 +5,7 @@
 <ion-content class="has-header" delegate-handle="listScroll">
   <ion-list>
     <div class="listgroup" ng-repeat="group in resultsGroups track by $index">
-      <ion-item-divider ng-if="group.label && group.results" class="item item-divider">{{group.label}}</ion-item-divider>
+      <ion-item-divider ng-if="group.label" class="item item-divider">{{group.label}}</ion-item-divider>
       <ion-item ng-repeat="obj in group.results track by $index"
                 collection-item-width="'100%'" collection-item-height="getListItemHeight(obj, $index)"
                 ng-click="gotoSubpath(obj.id)" class="coll-item item-thumbnail-left">

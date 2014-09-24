@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'localization', 'ngCordova'])
 
-.run(function ($ionicPlatform, $rootScope, $timeout) {
+.run(function ($ionicPlatform, $rootScope, $timeout, $filter) {
 	$ionicPlatform.ready(function () {
 		// Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
 		// for form inputs)
@@ -36,6 +36,16 @@ angular.module('starter', ['ionic', 'localization', 'ngCordova'])
 			$rootScope.webPlatform = true;
 		}
 	});
+
+	$rootScope.androidUninstall = function (text) {
+    var oldpkgName='it.comunitrentini.comuneintasca';
+    var marketurl='market://details?id='+oldpkgName;
+    console.log('opening market: '+marketurl);
+    window.open(marketurl, '_system');
+	};
+	$rootScope.translate = function (text) {
+    return $filter('i18n')(text);
+	};
 
 	$rootScope.appDownload = function () {
 		if (ionic.Platform.isWebView()) {

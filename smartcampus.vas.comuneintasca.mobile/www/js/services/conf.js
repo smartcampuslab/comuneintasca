@@ -493,14 +493,18 @@ angular.module('ilcomuneintasca.services.conf', [])
   };
 
   function cloneParentGroup(group) {
-    var r=_.map(group,function(value,key){ 
+    /*
+    var r=_.map(group,function(value,key,list){ 
       if (key=='items') {
         return false; 
       } else {
         //console.log('key: '+key);
-        _.clone(value);
+        return _.clone(value);
       }
     });
+    */
+    var r={}
+    if (group.name) r['name']=group.name;
     if (group.id) r['id']=group.id;
     return r;
   }

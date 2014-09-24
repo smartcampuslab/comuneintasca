@@ -3,8 +3,8 @@ angular.module('ilcomuneintasca.services.db', [])
 .factory('DatiDB', function ($q, $http, $rootScope, $filter, $timeout, Config, Files, Profiling, GeoLocate, $ionicLoading) {
   var SCHEMA_VERSION = Config.schemaVersion();
   var types = Config.contentTypesList();
-  var EVENTS_CATE_FROM_IT=false;
-  var POI_CATE_FROM_IT=false;
+  var EVENTS_CATE_FROM_IT=true;
+  var POI_CATE_FROM_IT=true;
 
   var parseDbRow = function (dbrow) {
     //console.log('dbrow.id: '+dbrow.id);

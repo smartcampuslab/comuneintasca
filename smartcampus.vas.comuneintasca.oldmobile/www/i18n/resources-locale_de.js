@@ -4,9 +4,10 @@
   { "key": "appname2", "value": "The city on your pocket", "description": "" },
   { "key": "obsolete", "value": "Alte Version", "description": "" },
   { "key": "txt1", "value": "Diese Version der APP wird nicht mehr aktualisiert.", "description": "" },
-  { "key": "txt2_web", "value": "Besser: die APP löschen und die neue Version downloaden:", "description": "" },
-  { "key": "txt2_ios", "value": "Besser: die APP löschen und die neue Version von AppStore downloaden:", "description": "" },
-  { "key": "txt2_android", "value": "Besser: die APP löschen und die neue Version von Google Play downloaden:", "description": "" },
+  { "key": "txt2_web", "value": "Besser: die APP löschen,", "description": "" },
+  { "key": "txt2_ios", "value": "Besser: die APP löschen,", "description": "" },
+  { "key": "txt2_android", "value": "Besser: die APP löschen,", "description": "" },
+  { "key": "txt3", "value": "und die neue Version downloaden:", "description": "" },
   { "key": "new_app", "value": "NEUE APP!", "description": "" },
   { "key": "download", "value": "DOWNLOADEN", "description": "" }
 ]

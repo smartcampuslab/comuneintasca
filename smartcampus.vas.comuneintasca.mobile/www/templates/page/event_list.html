@@ -15,7 +15,7 @@
         </div>
         <h2>{{obj.title | translate}}</h2>
         <!-- p ng-if="(obj.dbType!='event' || obj.dbClass.id!='shows') && obj.fromTime">{{obj.fromTime | date:'dd/MM/yyyy'}}<span ng-if="obj.fromTime !== obj.toTime"> - {{obj.toTime | date:'dd/MM/yyyy'}}</span></p -->
-        <p ng-if="filter!='today' && obj.eventPeriod">{{obj.eventPeriod | translate}}</p>
+        <p ng-if="filter!='today' && obj.eventPeriod && obj.dbClassification!='Mostre'">{{obj.eventPeriod | translate}}</p>
         <div class="row comuni-item-bottom">
           <div class="col comuni-item-bottom-text">
             <span>{{obj.address | translate}}</span>

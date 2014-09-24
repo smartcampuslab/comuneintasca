@@ -50,9 +50,10 @@ ion-content { text-align: center; }
 .scroll {	height:100%; }
 
 .platform { display:none; }
-#box { margin-bottom:5em; }
+#box { margin-bottom:2em; }
 .text { font-size:1.2em; padding:.5em 0; }
 .color { color:#2975a7; }
+.color-alert { color:#a70d0d; }
 
 .image img {width:75%; border-radius:10px; box-shadow: -1px 1px 6px black;}
 

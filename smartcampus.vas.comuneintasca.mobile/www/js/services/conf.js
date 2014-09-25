@@ -539,7 +539,7 @@ angular.module('ilcomuneintasca.services.conf', [])
           localStorage.cachedProfile=JSON.stringify(data);
           profileLoaded.resolve(parseConfig(data));
         }).error(function(data, status, headers, config){
-          console.log('error getting config json!');
+          console.log('error getting predefined config "data/'+LOCAL_PROFILE+'.json"!');
           profileLoaded.reject();
         });
       }

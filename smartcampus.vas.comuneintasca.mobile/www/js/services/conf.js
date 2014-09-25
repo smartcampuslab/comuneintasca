@@ -2,6 +2,7 @@ angular.module('ilcomuneintasca.services.conf', [])
 
 .factory('Config', function ($q, $http, $window, $filter, $rootScope) {
   var DEVELOPMENT=false;
+  $rootScope.DEV=DEVELOPMENT;
 
   var SCHEMA_VERSION=98;
   var SYNC_HOST="tn";

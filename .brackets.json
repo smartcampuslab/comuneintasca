@@ -1,0 +1,7 @@
+{
+    "jscodehints.detectedExclusions": [
+        "/Users/enrico/Desktop/fbk/dev/comuneintasca/smartcampus.vas.comuneintasca.mobile/platforms/_backups/ios/build/device/Trento - Il Comune in Tasca.app/www/js/libs/crypto-js/sha1-min.js",
+        "/Users/enrico/Desktop/fbk/dev/comuneintasca/smartcampus.vas.comuneintasca.mobile/platforms/_backups/ios/build/device/Trento - Il Comune in Tasca.app/www/js/libs/localize.js",
+        "/Users/enrico/Desktop/fbk/dev/comuneintasca/smartcampus.vas.comuneintasca.mobile/platforms/_backups/android/assets/www/js/libs/localize.js"
+    ]
+}

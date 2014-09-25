@@ -78,26 +78,42 @@ public class EventProcessorImpl implements ServiceBusListener {
 
 	@Autowired
 	ServiceBusClient client;
-	
+
 	private static List<String> langs = Arrays.asList(new String[] { "it", "en", "de" });
-	private static List<String> typeValue = Arrays.asList(new String[] { "event", "ristorante", "accomodation", "mainevent" });
-	private static List<String> classificationValue = Arrays.asList(new String[] { "tipo_evento", "tipo_locale", "tipologia_hotel", "" });
+	// private static List<String> typeValue = Arrays.asList(new String[] {
+	// "event", "ristorante", "accomodation", "mainevent", "itineraries",
+	// "content", "poi" });
+	// private static List<String> classificationValue = Arrays.asList(new
+	// String[] { "tipo_evento", "tipo_locale", "tipologia_hotel", "", "" });
+	// private static String typePrefix =
+	// "eu.trentorise.smartcampus.comuneintasca.model.";
+	// private static List<String> toTypeValue = Arrays.asList(new String[] {
+	// "EventObject", "RestaurantObject", "HotelObject", "MainEventObject",
+	// "ItineraryObject", "ContentObject", "POIObject" });
+
+	// content
 	private static String typePrefix = "eu.trentorise.smartcampus.comuneintasca.model.";
-	private static List<String> toTypeValue = Arrays.asList(new String[] { "EventObject", "RestaurantObject", "HotelObject", "MainEventObject" });	
+	private static List<String> typeValue = Arrays.asList(new String[] { "event", "ristorante", "accomodation", "iniziativa", "itinerario", "luogo", "testo_generico" });
+	private static List<String> classificationValue = Arrays.asList(new String[] { "tipo_evento", "", "", "tipo_evento", "", "tipo_luogo", "classifications" });
+	private static List<String> toTypeValue = Arrays.asList(new String[] { "event", "restaurant", "hotel", "mainevent", "itineraries", "poi", "content" });
+	private static List<String> objectType = Arrays.asList(new String[] { "EventObject", "RestaurantObject", "HotelObject", "MainEventObject", "ItineraryObject", "ContentObject", "POIObject" });
+	private static List<String> objectValue = Arrays.asList(new String[] { "event", "restaurant", "hotel", "mainevent", "itinerary", "content", "poi" });
 
 	private static Log logger = LogFactory.getLog(EventProcessorImpl.class);
-	
-	private boolean updating = false;
+
+	private boolean updating = true;
 
 	@Autowired
 	@Value("${imageBaseURL}")
 	private String imagePrefix;
-	
+
 	public EventProcessorImpl() throws Exception {
 	}
 
 	@PostConstruct
 	private void initConfig() throws Exception {
+		updating = true;
+		try {
 		logger.info("Initializating config.");
 		List<ConfigObject> oldList = storage.getObjectsByType(ConfigObject.class);
 		ConfigObject old = null;
@@ -107,10 +123,15 @@ public class EventProcessorImpl implements ServiceBusListener {
 			String json = FileCopyUtils.copyToString(isr);
 			ConfigObject configObj = new ObjectMapper().readValue(json, ConfigObject.class);
 			configObj.setLastModified(0L);
-			storage.storeObject(configObj);			
+			storage.storeObject(configObj);
+			logger.info("Saved config.");
+		}
+		} catch (Exception e) {
+		} finally {
+			updating = false;
 		}
 	}
-	
+
 	@Override
 	public void onServiceEvents(String serviceId, String methodName, String subscriptionId, List<ByteString> data) {
 		logger.info(methodName + "@" + serviceId);
@@ -176,40 +197,6 @@ public class EventProcessorImpl implements ServiceBusListener {
 		return oldIds;
 	}
 
-	private void updateConfig(List<ByteString> data) throws Exception {
-		// TODO many?
-
-		ConfigData cd = ConfigData.parseFrom(data.get(0));
-		int hash = cd.getData().hashCode();
-		String d = cd.getData().replace("\\\"", "");
-
-		ObjectMapper mapper = new ObjectMapper();
-
-		ConfigObject config = mapper.readValue(d, ConfigObject.class);
-
-		completeConfig(config, true);
-//		buildQueryClassification(config);
-		replaceObjectIds(config);
-
-		List<ConfigObject> oldList = storage.getObjectsByType(ConfigObject.class);
-		ConfigObject old = null;
-		if (oldList != null && !oldList.isEmpty()) {
-			old = oldList.get(0);
-			if (old.getLastModified() < cd.getDateModified()) {
-//				config.setId(old.getId());
-//				config.setLastModified(cd.getDateModified());
-				old.setLastModified(cd.getDateModified());
-				old.setHighlights(config.getHighlights());
-				storage.storeObject(old);
-				logger.info("Stored updated config.");
-			}
-		} else {
-			config.setLastModified(cd.getDateModified());
-			storage.storeObject(config);
-		}
-
-	}
-	
 	private void updateEvents(List<ByteString> data) throws Exception {
 		Set<String> oldIds = getOldIds("opendata.trento");
 
@@ -442,9 +429,9 @@ public class EventProcessorImpl implements ServiceBusListener {
 				no.setDescription(toMap(bt.getDescription()));
 				no.setImage(getImageURL(bt.getImage()));
 				no.setLastModified(bt.getLastModified());
-					if (bt.hasLat() && bt.hasLon()) {
-						no.setLocation(new double[] { bt.getLat(), bt.getLon() });
-					}
+				if (bt.hasLat() && bt.hasLon()) {
+					no.setLocation(new double[] { bt.getLat(), bt.getLon() });
+				}
 
 				no.setSubtitle(toMap(bt.getSubtitle()));
 				no.setTitle(toMap(bt.getTitle()));
@@ -607,47 +594,140 @@ public class EventProcessorImpl implements ServiceBusListener {
 		return map;
 	}
 
-	private void completeConfig(ConfigObject config, boolean retry) throws Exception {
-		boolean ok = true;
-//		for (MenuItem menu : config.getMenu()) {
-//			if ("csvimport_Preferiti_item_comuneintasca".equals(menu.getId()) || "csvimport_Viaggia Trento_item_comuneintasca".equals(menu.getId())) {
-//				continue;
-//			}
-//			if (menu.getItems() != null) {
-//				try {
-//					setType(menu.getItems());
-//				} catch (MissingDataException e) {
-//					System.out.println(e.getMessage());
-//					ok = false;
-//				}
-//			}
-//		}
+	private void updateConfig(List<ByteString> data) throws Exception {
+		ConfigData cd = ConfigData.parseFrom(data.get(0));
+		int hash = cd.getData().hashCode();
+		String d = cd.getData().replace("\\\"", "");
 
-		setType(config.getHighlights());
-		
-//		if (!ok) {
-//			if (retry) {
-////				retrieveMissingData();
-//				logger.info("Getting missing objects.");
-//				completeConfig(config, false);
-//			} else {
-//				// throw new
-//				// MissingDataException("Cannot complete config, some objects are missing.");
-//				logger.error("Cannot complete config, some objects are missing.");
-//			}
-//		}
+		ObjectMapper mapper = new ObjectMapper();
+
+		ConfigObject config = mapper.readValue(d, ConfigObject.class);
+
+		try {
+		completeConfig(config, true);
+		Map<String, String> idMapping = buildQueryClassification(config);
+		fillRef(config, idMapping);
+		} catch (Exception e) {
+			logger.error("Error processing configuration, not saving");
+			return;
+		}
+
+		List<ConfigObject> oldList = storage.getObjectsByType(ConfigObject.class);
+		ConfigObject old = null;
+		if (oldList != null && !oldList.isEmpty()) {
+			old = oldList.get(0);
+			if (old.getLastModified() < cd.getDateModified()) {
+				config.setId(old.getId());
+				config.setLastModified(cd.getDateModified());
+				storage.storeObject(config);
+
+				// old.setLastModified(cd.getDateModified());
+				// old.setHighlights(config.getHighlights());
+				// storage.storeObject(old);
+				logger.info("Stored updated config.");
+			}
+		} else {
+			config.setLastModified(cd.getDateModified());
+			storage.storeObject(config);
+			logger.info("Stored new config.");
+		}
+
+//		mapper.configure(org.codehaus.jackson.map.SerializationConfig.Feature.WRITE_NULL_PROPERTIES, false);
+//		mapper.configure(org.codehaus.jackson.map.SerializationConfig.Feature.WRITE_NULL_MAP_VALUES, false);
+//		mapper.configure(org.codehaus.jackson.map.SerializationConfig.Feature.INDENT_OUTPUT, true);
+//		String s = mapper.writeValueAsString(config);
+//		FileWriter fw = new FileWriter("C:/tmp/configgen.txt");
+//		fw.write(s);
+//		fw.close();
+
+	}	
+	
+	private void completeConfig(ConfigObject config, boolean retry) throws Exception {
+		try {
+			setType(config.getHighlights());
+			setType(config.getMenu());
+			setType(config.getNavigationItems());
+		} catch (MissingDataException e) {
+			logger.error("Cannot complete config, some objects are missing.");
+			throw e;
+		}
+	}
+	
+	private void fillRef(ConfigObject config, Map<String, String> idMapping) throws MissingDataException {
+		try {
+		fillRef(config, config.getHighlights(), idMapping);
+		fillRef(config, config.getMenu(), idMapping);
+		fillRef(config, config.getNavigationItems(), idMapping);		
+	} catch (MissingDataException e) {
+		logger.error("Cannot complete references.");
+		throw e;
+	}		
+	}
+
+	private void fillRef(ConfigObject config, List<MenuItem> items, Map<String, String> idMapping) throws MissingDataException {
+		for (MenuItem item : items) {
+			if (item.getRef() != null && !item.getRef().isEmpty()) {
+				MenuItem referred = findReferredItem(config, item.getRef());
+				if (referred != null) {
+					item.setName(referred.getName());
+					item.setRef(referred.getId());
+					if (item.getId() == null) {
+						item.setId(referred.getId());
+					}					
+				} else {
+					referred = findReferredItem(config, idMapping.get(item.getRef()));
+					if (referred != null) {
+						item.setName(referred.getName());
+						item.setRef(referred.getId());
+						if (item.getId() == null) {
+							item.setId(referred.getId());
+						}
+					}					
+				}
+			}
+		}
+	}
+
+	private MenuItem findReferredItem(ConfigObject config, String ref) {
+		MenuItem referred = null;
+		referred = findReferredItem(config.getHighlights(), ref);
+		if (referred == null) {
+			referred = findReferredItem(config.getMenu(), ref);
+		}
+		if (referred == null) {
+			referred = findReferredItem(config.getNavigationItems(), ref);
+		}
+		return referred;
+	}
+
+	private MenuItem findReferredItem(List<MenuItem> items, String ref) {
+		for (MenuItem item : items) {
+			if (ref.equals(item.getId())) {
+				return item;
+			}
+			if (item.getItems() != null) {
+				MenuItem ref2 = findReferredItem(item.getItems(), ref);
+				if (ref2 != null) {
+					return ref2;
+				}
+			}
+		}
+		return null;
 	}
 
 	private void setType(List<MenuItem> items) throws MissingDataException {
 		for (MenuItem item : items) {
-			if (item.getType() == null && item.getQuery() == null) {
+			if (item.getType() == null && item.getQuery() == null && item.getRef() == null && item.getApp() == null) {
 				String type = findType(item);
 				item.setType(type);
 				if (type != null) {
 					logger.info("Set type to " + type + " for " + ((item.getName() != null) ? item.getName().get("it") : item.getId()));
-				} else if (item.getItems() == null || item.getItems().isEmpty()) {
-					logger.error("Missing type for " + ((item.getName() != null) ? item.getName().get("it") : item.getId()));
-				}
+				} else if (item.getItems() == null || item.getItems().isEmpty())  {
+					if (item.getObjectIds() == null || item.getObjectIds().size() != 1 || !item.getObjectIds().contains(item.getId())) {
+						logger.error("Missing type for " + ((item.getName() != null) ? item.getName().get("it") : item.getId()));
+						throw new MissingDataException("Missing type for " + ((item.getName() != null) ? item.getName().get("it") : item.getId()));
+					}
+				} 
 			}
 			if (item.getItems() != null) {
 				setType(item.getItems());
@@ -661,60 +741,56 @@ public class EventProcessorImpl implements ServiceBusListener {
 			res = item.getType();
 		} else if (item.getObjectIds() != null && !item.getObjectIds().isEmpty()) {
 			String objectId = item.getObjectIds().get(0);
-			List<GeoTimeSyncObjectBean> objs = storage.genericSearch(Collections.<String, Object> singletonMap("objectId", objectId));
-			if (objs != null && !objs.isEmpty()) {
-				res = (String) objs.get(0).getContent().get("category");
-			} else {
-				throw new MissingDataException("Missing type for " + objectId + " = " + item.getName());
+				List<GeoTimeSyncObjectBean> objs = storage.genericSearch(Collections.<String, Object> singletonMap("id", objectId));
+				if (objs != null && !objs.isEmpty()) {
+					String type = (String) objs.get(0).getType().replace(typePrefix, "");
+					int index = objectType.indexOf(type);
+					if (index != -1) {
+						res = objectValue.get(index);
+					} else {
+						if (item.getId().equals(objectId)) {
+							logger.warn("Object contains its id in objectIds: " + objectId);
+						} else {						
+						throw new MissingDataException("Missing type for " + objectId + " = " + item.getName());
+						}
+					}
+				} else {
+					if (item.getId().equals(objectId)) {
+						logger.warn("Object contains its id in objectIds: " + objectId);
+					} else {
+						throw new MissingDataException("Missing type for " + objectId + " = " + item.getName());
+					}
 			}
+				
+//				if (item.getId() != null) {
+//					item.getObjectIds().remove(item.getId());
+//				}
 		}
 
+		
 		return res;
 	}
-	
-	private void replaceObjectIds(ConfigObject config) throws MissingDataException {
-//		for (MenuItem menu : config.getMenu()) {
-//			replaceObjectIds(menu);
-//		}
-		for (MenuItem menu : config.getHighlights()) {
-			replaceObjectIds(menu);
-		}		
-//		for (MenuItem menu : config.getNavigationItems()) {
-//			replaceObjectIds(menu);
-//		}
-	}
 
-	private void replaceObjectIds(MenuItem item) throws MissingDataException {
-		List<String> newObjectId = new ArrayList<String>();
-		if (item.getObjectIds() != null) {
-			for (String objectId : item.getObjectIds()) {
-				List<GeoTimeSyncObjectBean> objs = storage.genericSearch(Collections.<String, Object> singletonMap("objectId", objectId));
-				if (objs != null && !objs.isEmpty()) {
-				String res = (String) objs.get(0).getContent().get("id");
-				newObjectId.add(res);
-				} else {
-					throw new MissingDataException("Object with id " + objectId + " not found");
-				}
-			}
-			item.setObjectIds(newObjectId);
-		}
-		if (item.getItems() != null) {
-			for (MenuItem item2: item.getItems()) {
-				replaceObjectIds(item2);
-			}
-		}
-	}	
-
-	private void buildQueryClassification(ConfigObject config) throws BadDataException {
+	private Map<String, String> buildQueryClassification(ConfigObject config) throws BadDataException {
+		try {
+		Map<String, String> idMapping = new TreeMap<String, String>();
+		
 		for (MenuItem menu : config.getMenu()) {
 			if (menu.getItems() != null) {
-				buildQueryClassification(menu.getItems());
+				idMapping.putAll(buildQueryClassification(menu.getItems()));
 			}
+		}
+		
+		return idMapping;
+		} catch (BadDataException e) {
+			logger.error("Cannot build query classifications.");
+			throw e;
 		}
 	}
 
-	private void buildQueryClassification(List<MenuItem> items) throws BadDataException {
-
+	private Map<String, String> buildQueryClassification(List<MenuItem> items) throws BadDataException {
+		Map<String, String> idMapping = new TreeMap<String, String>();
+		
 		for (MenuItem item : items) {
 			MenuItemQuery query = item.getQuery();
 			if (query != null) {
@@ -728,7 +804,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 					throw new BadDataException("Cannot map " + type + " to internal type");
 				}
 				String classKey = classificationValue.get(index);
-				String newType = typePrefix + toTypeValue.get(index);
+				String newType = "" + toTypeValue.get(index);
 				query.setType(newType);
 				if (classifications != null) {
 					for (Map<String, String> classifics : classifications) {
@@ -741,19 +817,24 @@ public class EventProcessorImpl implements ServiceBusListener {
 						classification = classification.substring(0, classification.length() - 1);
 					}
 					query.setClassification(classification);
+					query.setClassifications(null);
+					idMapping.put(item.getId(), classification);
+					item.setId(classification);
 				}
 			}
 			if (item.getItems() != null) {
 				buildQueryClassification(item.getItems());
 			}
 		}
+		
+		return idMapping;
 	}
 
 	public void retrieveConfig() throws Exception {
 		logger.info("Retrieving config.");
-		
+
 		updating = true;
-		
+
 		Map<String, Object> params = new TreeMap<String, Object>();
 
 		try {
@@ -764,16 +845,16 @@ public class EventProcessorImpl implements ServiceBusListener {
 			resp = (ActionInvokeParameters) client.invokeService(Subscriber.SERVICE_OD, Subscriber.METHOD_CONFIG, params);
 			bsl = resp.getDataList();
 			updateConfig(bsl);
-			
+
 			updating = false;
-			
+
 			logger.info("Retrieved config.");
 		} catch (Exception e) {
 			logger.error("Failed to update config: " + e.getMessage());
 			throw e;
-		}			
+		}
 	}
-	
+
 	public void retrieveMissingData() throws Exception {
 		logger.info("Retrieving missing data.");
 		Map<String, Object> params = new TreeMap<String, Object>();
@@ -829,16 +910,16 @@ public class EventProcessorImpl implements ServiceBusListener {
 			resp = (ActionInvokeParameters) client.invokeService(Subscriber.SERVICE_OD, Subscriber.METHOD_EVENTS, params);
 			bsl = resp.getDataList();
 			logger.info("update");
-			updateEvents(bsl);			
-			
+			updateEvents(bsl);
+
 			logger.info("Retrieved missing data.");
-			
+
 		} catch (Exception e) {
 			logger.error("Failed to update data: " + e.getMessage());
 			throw e;
 		}
 	}
-	
+
 	public String getImageURL(String image) {
 		if (image != null && !image.startsWith("http")) {
 			return imagePrefix + image.replace("|", "");

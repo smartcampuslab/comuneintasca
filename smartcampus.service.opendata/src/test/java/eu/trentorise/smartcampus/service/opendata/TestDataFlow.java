@@ -12,7 +12,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.google.protobuf.Message;
 
-import eu.trentorise.smartcampus.service.opendata.impl.GetCulturaDataFlow;
+import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.ConfigData;
+import eu.trentorise.smartcampus.service.opendata.impl.GetConfigDataFlow;
 
 public class TestDataFlow extends TestCase {
 
@@ -45,8 +46,8 @@ public class TestDataFlow extends TestCase {
 		
 
 
-//		parameters.put("url", "http://trento.opencontent.it/comuneintasca/data");  // rest
-//		Map<String, Object> out1 = helper.executeDataFlow("smartcampus.service.opendata", "GetConfig", new GetConfigDataFlow(), parameters);		
+		parameters.put("url", "http://trento.opencontent.it/comuneintasca/data");  // rest
+		Map<String, Object> out1 = helper.executeDataFlow("smartcampus.service.opendata", "GetConfig", new GetConfigDataFlow(), parameters);		
 		
 //		parameters.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754329/list/limit/1000");
 //		Map<String, Object> out1 = helper.executeDataFlow("smartcampus.service.opendata", "GetRestaurants", new GetRestaurantsDataFlow(), parameters);
@@ -54,8 +55,8 @@ public class TestDataFlow extends TestCase {
 //		parameters.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754211/list/limit/1000");
 //		Map<String, Object> out1 = helper.executeDataFlow("smartcampus.service.opendata", "GetHotels", new GetHotelsDataFlow(), parameters);
 		
-		parameters.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754058/list/limit/1000");  // cultura
-		Map<String, Object> out1 = helper.executeDataFlow("smartcampus.service.opendata", "GetCultura", new GetCulturaDataFlow(), parameters);		
+//		parameters.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754058/list/limit/1000");  // cultura
+//		Map<String, Object> out1 = helper.executeDataFlow("smartcampus.service.opendata", "GetCultura", new GetCulturaDataFlow(), parameters);		
 		
 //		parameters.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754317/list/limit/1000");
 //		Map<String, Object> out1 = helper.executeDataFlow("smartcampus.service.opendata", "GetMainEvents", new GetMainEventsDataFlow(), parameters);		
@@ -70,9 +71,9 @@ public class TestDataFlow extends TestCase {
 		List<Message> data1 = (List<Message>)out1.get("data");
 		System.out.println(data1.size());
 		for (Message msg: data1) {
-			System.err.println(msg);
+//			System.err.println(msg);
 //			System.err.println(((I18nTesto)msg).getTitle().getIt());
-//			System.err.println(((ConfigData)msg).getData());
+			System.err.println(((ConfigData)msg).getData());
 			
 //			ConfigData cd = (ConfigData)msg;
 //			System.out.println(cd.getData());

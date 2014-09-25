@@ -188,29 +188,29 @@
       "name":{ "it":"VISITARE", "en":"HIGHLIGHTS", "de":"WAS SU  BESICHTIGEN" },
       "items":[
         { 
-          "id":"museums",
+          "id":"Museo",
           "name":{ "it": "Musei", "en": "Museums", "de": "Museen" },
-          "query":{ "type":"poi", "classification":"museums" }
+          "query":{ "type":"poi", "classification":"Museo" }
         }, { 
-          "id":"buildings",
+          "id":"Edificio storico",
           "name":{ "it": "Edifici storici", "en": "Historic Buildings", "de": "Historische Gebäude" },
-          "query":{ "type":"poi", "classification":"buildings" }
+          "query":{ "type":"poi", "classification":"Edificio storico" }
         }, { 
-          "id":"churches",
+          "id":"Chiesa",
           "name":{ "it": "Chiese", "en": "Churches", "de": "Kirchen" },
-          "query":{ "type":"poi", "classification":"churches" }
+          "query":{ "type":"poi", "classification":"Chiesa" }
         }, { 
-          "id":"archeo",
+          "id":"Area archeologica",
           "name":{ "it": "Aree Archeologiche", "en": "Archaeological Areas", "de": "Archäologische Areas" },
-          "query":{ "type":"poi", "classification":"archeo" }
+          "query":{ "type":"poi", "classification":"Area archeologica" }
         }, { 
-          "id":"parks",
+          "id":"Natura",
           "name":{ "it": "Natura", "en": "Nature", "de": "Natur" },
-          "query":{ "type":"poi", "classification":"parks" }
+          "query":{ "type":"poi", "classification":"Natura" }
         }, { 
-          "id":"misc",
+          "id":"Altri siti di interesse storico artistico",
           "name":{ "it": "Altri siti di interesse storico artistico", "en": "Other sites of historical and artistic interest", "de": "Andere Seiten von historischem und künstlerischem Interesse" },
-          "query":{ "type":"poi", "classification":"misc" }
+          "query":{ "type":"poi", "classification":"Altri siti di interesse storico artistico" }
         }
       ]
     }, {
@@ -236,33 +236,33 @@
           "name":{ "it": "Tutti gli eventi", "en": "All events", "de": "Alle Veranstaltungen" },
           "query":{ "type":"event" }
         }, { 
-          "id":"exhibitions",
+          "id":"Mostre",
           "name":{ "it": "Mostre", "en": "Exhibitions", "de": "Ausstellungen" },
-          "query":{ "type":"event", "classification":"exhibitions" }
+          "query":{ "type":"event", "classification":"Mostre" }
         }, { 
-          "id":"misc",
+          "id":"Iniziative varie",
           "name":{ "it": "Iniziative varie", "en": "Various initiatives", "de": "Verschiedene Initiativen" },
-          "query":{ "type":"event", "classification":"misc" }
+          "query":{ "type":"event", "classification":"Iniziative varie" }
         }, { 
-          "id":"shows",
+          "id":"Spettacoli",
           "name":{ "it": "Spettacoli", "en": "Shows", "de": "Shows" },
-          "query":{ "type":"event", "classification":"shows" }
+          "query":{ "type":"event", "classification":"Spettacoli" }
         }, { 
-          "id":"fairs",
+          "id":"Feste, mercati e fiere",
           "name":{ "it": "Feste, mercati e fiere", "en": "Festivals, markets and fairs", "de": "Festivals, Märkte und Messen" },
-          "query":{ "type":"event", "classification":"fairs" }
+          "query":{ "type":"event", "classification":"Feste, mercati e fiere" }
         }, { 
-          "id":"conferences",
+          "id":"Incontri, convegni e conferenze",
           "name":{ "it": "Incontri, convegni e conferenze", "en": "Meetings, seminars and conferences", "de": "Tagungen, Seminare und Konferenzen" },
-          "query":{ "type":"event", "classification":"conferences" }
+          "query":{ "type":"event", "classification":"Incontri, convegni e conferenze" }
         }, { 
-          "id":"competitions",
+          "id":"Competizioni e gare",
           "name":{ "it": "Competizioni e gare", "en": "Competitions and contests", "de": "Wettbewerbe und Gewinnspiele" },
-          "query":{ "type":"event", "classification":"competitions" }
+          "query":{ "type":"event", "classification":"Competizioni e gare" }
         }, { 
-          "id":"labs",
+          "id":"Corsi e laboratori",
           "name":{ "it": "Corsi e laboratori", "en": "Courses and workshops", "de": "Kurse und Workshops" },
-          "query":{ "type":"event", "classification":"labs" }
+          "query":{ "type":"event", "classification":"Corsi e laboratori" }
         }, {
           "id":"complex",
           "name":{ "it": "Manifestazioni", "en": "Annual events", "de": "[ANNUAL-EVENTS]" },

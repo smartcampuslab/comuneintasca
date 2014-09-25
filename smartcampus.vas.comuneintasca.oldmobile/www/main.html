@@ -38,10 +38,10 @@
 						<div class="row row-center" id="box" ng-click="appDownload()">
 							<div class="col image"><img src="img/icon.png" /></div>
 							<div class="col new" ng-show="platform">
-								<!-- h4 class="color">{{'new_app' | i18n}}</h4 -->
 								<div class="button-download">
-									<img ng-attr-src="img/appstore{{ '_suffix' | i18n}}.svg" ng-show="platform == 'iOS'" />
-									<img ng-attr-src="img/play{{ '_suffix' | i18n}}.png" ng-show="platform == 'Android'" />
+									<img ng-show="platform == 'iOS'" ng-attr-src="img/appstore{{ '_suffix' | i18n}}.svg" />
+									<img ng-show="platform == 'Android'" ng-attr-src="img/play{{ '_suffix' | i18n}}.png" />
+                  <h4 ng-show="platform == 'web'" class="color">{{'new_app' | i18n}}</h4>
 								</div>
 							</div>
 						</div>

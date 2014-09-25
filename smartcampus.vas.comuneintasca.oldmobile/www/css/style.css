@@ -50,12 +50,13 @@ ion-content { text-align: center; }
 .scroll {	height:100%; }
 
 .platform { display:none; }
-#box { margin-bottom:2em; }
-.text { font-size:1.2em; padding:.5em 0; }
+#box { margin-top:2em; }
+.text { font-size:1.2em; padding:.5em 0; width:16em; margin:0 auto; }
 .color { color:#2975a7; }
 .color-alert { color:#a70d0d; }
 
-.image img {width:75%; border-radius:10px; box-shadow: -1px 1px 6px black;}
+.image img {width:80%; border-radius:10px; box-shadow: -1px 1px 6px black;}
+.button-download img {width:100%;}
 
 #download { 
 	padding:0 1em; 

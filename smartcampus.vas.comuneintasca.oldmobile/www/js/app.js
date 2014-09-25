@@ -31,8 +31,7 @@ angular.module('starter', ['ionic', 'localization', 'ngCordova'])
 				});
 			});
 		} else {
-			//$rootScope.platform = 'iOS';
-			//$rootScope.iosPlatform = true;
+			$rootScope.platform = 'web';
 			$rootScope.webPlatform = true;
 		}
 	});

@@ -98,7 +98,7 @@
 										<parameters />
 									</defaultParameters>
 									<statusParameters>
-										<storable>false</storable>
+										<storable>true</storable>
 										<automaticRefresh>true</automaticRefresh>
 										<delay>#{1000L*10}</delay>
 										<period>#{1000L*60*5}</period>

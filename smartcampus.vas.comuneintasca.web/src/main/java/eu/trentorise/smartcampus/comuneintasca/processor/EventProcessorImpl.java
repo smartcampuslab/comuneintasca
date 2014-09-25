@@ -670,11 +670,18 @@ public class EventProcessorImpl implements ServiceBusListener {
 				MenuItem referred = findReferredItem(config, item.getRef());
 				if (referred != null) {
 					item.setName(referred.getName());
+					item.setRef(referred.getId());
+					if (item.getId() == null) {
+						item.setId(referred.getId());
+					}					
 				} else {
 					referred = findReferredItem(config, idMapping.get(item.getRef()));
 					if (referred != null) {
 						item.setName(referred.getName());
 						item.setRef(referred.getId());
+						if (item.getId() == null) {
+							item.setId(referred.getId());
+						}
 					}					
 				}
 			}

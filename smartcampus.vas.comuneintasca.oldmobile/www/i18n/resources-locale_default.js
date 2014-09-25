@@ -2,11 +2,12 @@
   { "key": "_suffix", "value": "_en", "description": "" },
   { "key": "appname1", "value": "Trento", "description": "" },
   { "key": "appname2", "value": "The city in your pocket", "description": "" },
-  { "key": "obsolete", "value": "obsolete", "description": "" },
+  { "key": "obsolete", "value": "OBSOLETE", "description": "" },
   { "key": "txt1", "value": "This app version won't be updated anymore.", "description": "" },
-  { "key": "txt2_web", "value": "We kindly invite you to uninstall this app and download the new one:", "description": "" },
-  { "key": "txt2_ios", "value": "We kindly invite you to uninstall this app and download the new one from the App Store:", "description": "" },
-  { "key": "txt2_android", "value": "We kindly invite you to uninstall this app and download the new one from Google Play:", "description": "" },
+  { "key": "txt2_web", "value": "You can uninstall it,", "description": "" },
+  { "key": "txt2_ios", "value": "You can uninstall it,", "description": "" },
+  { "key": "txt2_android", "value": "You can uninstall it from <span class=\"color\">HERE</span>,", "description": "" },
+  { "key": "txt3", "value": "and download the new version below:", "description": "" },
   { "key": "new_app", "value": "NEW APP!", "description": "" },
   { "key": "download", "value": "DOWNLOAD", "description": "" }
 ]

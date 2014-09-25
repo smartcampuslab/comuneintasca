@@ -3,6 +3,8 @@ angular.module('ilcomuneintasca.services.db', [])
 .factory('DatiDB', function ($q, $http, $rootScope, $filter, $timeout, Config, Files, Profiling, GeoLocate, $ionicLoading) {
   var SCHEMA_VERSION = Config.schemaVersion();
   var types = Config.contentTypesList();
+  var EVENTS_CATE_FROM_IT=true;
+  var POI_CATE_FROM_IT=true;
 
   var parseDbRow = function (dbrow) {
     //console.log('dbrow.id: '+dbrow.id);
@@ -145,19 +147,20 @@ angular.module('ilcomuneintasca.services.db', [])
   var dbObj;
 
   var dbopenDeferred = $q.defer();
+  var dbName="Trento";
   if (ionic.Platform.isWebView()) {
     //console.log('cordova db...');
     document.addEventListener("deviceready", function () {
       //console.log('cordova db inited...');
       dbObj = window.sqlitePlugin.openDatabase({
-        name: "Trento",
-        bgType: 0
+        name: dbName,
+        bgType: 0, skipBackup: true
       });
       dbopenDeferred.resolve(dbObj);
     }, false);
   } else {
     //console.log('web db...');
-    dbObj = window.openDatabase('Trento', '1.0', 'Trento - Il Comune in Tasca', 5 * 1024 * 1024);
+    dbObj = window.openDatabase(dbName, '1.0', 'Trento - Il Comune in Tasca', 5 * 1024 * 1024);
 //    remoteSyncOptions = localSyncOptions;
     dbopenDeferred.resolve(dbObj);
   }
@@ -343,57 +346,57 @@ angular.module('ilcomuneintasca.services.db', [])
                           
                           //console.log('event cate: ' + item.category);
                           if (item.category) {
-                            classified.resolve([item.category,'','']);
-                            /*
-                            Config.menuGroupSubgroupByLocaleName('eventi','it',item.category).then(function(sg){
-                              if (sg) {
-                                //console.log('content db sg classification: '+sg.id);
-                                classified.resolve([sg.id,'','']);
-                              } else {
-                                console.log('content db sg classification is NULL for event cate: '+classification);
-                                classified.resolve(['misc','','']);
-                              }
-                            });
-                            */
+                            if (EVENTS_CATE_FROM_IT) {
+                              classified.resolve([item.category,'','']);
+                            } else {
+                              Config.menuGroupSubgroupByLocaleName('eventi','it',item.category).then(function(sg){
+                                if (sg) {
+                                  //console.log('content db sg classification: '+sg.id);
+                                  classified.resolve([sg.id,'','']);
+                                } else {
+                                  console.log('content db sg classification is NULL for event cate: '+classification);
+                                  classified.resolve(['misc','','']);
+                                }
+                              });
+                            }
                           } else {
                             console.log('content db category is NULL for item: '+item.id);
                             classified.resolve(['misc','','']);
                           }
                         }
                       } else if (contentTypeKey == 'poi') {
-                        //category fix for opencontent data
-                        /*
-                        switch (item.classification.it) {
-                          //case 'Altri siti di interesse storico artistico':
-                          //  item.classification.it='Edifici storici';
-                          //  break;
-                          case 'Edificio storico':
-                            item.classification.it='Edifici storici';
-                            break;
-                          case 'Chiesa':
-                            item.classification.it='Chiese';
-                            break;
-                          case 'Museo':
-                            item.classification.it='Musei';
-                            break;
-                          case 'Area archeologica':
-                          case 'Aree archeologiche':
-                            item.classification.it='Aree Archeologiche';
-                            break;
-                        }
-                        */
-                        classified.resolve([item.classification.it,'','']);
-                        /*
-                        Config.menuGroupSubgroupByLocaleName('visitare','it',item.classification.it).then(function(sg){
-                          if (sg) {
-                            //console.log('content db sg classification: '+sg.id);
-                            classified.resolve([sg.id,'','']);
-                          } else {
-                            console.log('content db sg classification is NULL for place cate: '+item.classification.it);
-                            classified.resolve(['unknown','','']);
+                        if (POI_CATE_FROM_IT) {
+                          classified.resolve([item.classification.it,'','']);
+                        } else {
+                          //category fix for opencontent data
+                          switch (item.classification.it) {
+                            //case 'Altri siti di interesse storico artistico':
+                            //  item.classification.it='Edifici storici';
+                            //  break;
+                            case 'Edificio storico':
+                              item.classification.it='Edifici storici';
+                              break;
+                            case 'Chiesa':
+                              item.classification.it='Chiese';
+                              break;
+                            case 'Museo':
+                              item.classification.it='Musei';
+                              break;
+                            case 'Area archeologica':
+                            case 'Aree archeologiche':
+                              item.classification.it='Aree Archeologiche';
+                              break;
                           }
-                        });
-                        */
+                          Config.menuGroupSubgroupByLocaleName('visitare','it',item.classification.it).then(function(sg){
+                            if (sg) {
+                              //console.log('content db sg classification: '+sg.id);
+                              classified.resolve([sg.id,'','']);
+                            } else {
+                              console.log('content db sg classification is NULL for place cate: '+item.classification.it);
+                              classified.resolve(['unknown','','']);
+                            }
+                          });
+                        }
                       } else {
                         if (contentTypeKey == 'content') {
                           if (typeof item.classification === 'object') classification = item.classification.it;

@@ -1,7 +1,7 @@
 angular.module('ilcomuneintasca.services.conf', [])
 
 .factory('Config', function ($q, $http, $window, $filter, $rootScope) {
-  var DEVELOPMENT=true;
+  var DEVELOPMENT=false;
 
   var SCHEMA_VERSION=98;
   var SYNC_HOST="tn";
@@ -489,18 +489,23 @@ angular.module('ilcomuneintasca.services.conf', [])
     'itinerary': 'eu.trentorise.smartcampus.comuneintasca.model.ItineraryObject',
     'mainevent': 'eu.trentorise.smartcampus.comuneintasca.model.MainEventObject',
     //'home': 'eu.trentorise.smartcampus.comuneintasca.model.HomeObject',
-    'config': 'eu.trentorise.smartcampus.comuneintasca.model.ConfigObject'
+    'oldconfig': 'eu.trentorise.smartcampus.comuneintasca.model.ConfigObject',
+    'config': 'eu.trentorise.smartcampus.comuneintasca.model.DynamicConfigObject'
   };
 
   function cloneParentGroup(group) {
-    var r=_.map(group,function(value,key){ 
+    /*
+    var r=_.map(group,function(value,key,list){ 
       if (key=='items') {
         return false; 
       } else {
         //console.log('key: '+key);
-        _.clone(value);
+        return _.clone(value);
       }
     });
+    */
+    var r={}
+    if (group.name) r['name']=group.name;
     if (group.id) r['id']=group.id;
     return r;
   }

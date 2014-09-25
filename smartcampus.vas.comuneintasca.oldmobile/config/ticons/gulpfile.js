@@ -63,7 +63,6 @@ gulp.task('android-splashes', function(done) {
           }
         });
       }
-      done();
     }
   });
 });

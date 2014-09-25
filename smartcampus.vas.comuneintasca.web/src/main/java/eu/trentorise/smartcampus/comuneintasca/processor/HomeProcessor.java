@@ -14,6 +14,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import eu.trentorise.smartcampus.comuneintasca.model.ConfigObject;
+import eu.trentorise.smartcampus.comuneintasca.model.DynamicConfigObject;
 import eu.trentorise.smartcampus.comuneintasca.model.HomeObject;
 import eu.trentorise.smartcampus.network.JsonUtils;
 import eu.trentorise.smartcampus.presentation.common.exception.DataException;
@@ -30,6 +31,9 @@ public class HomeProcessor {
 
 	@Value("${configobject.file}")
 	private Resource configFile;
+
+	@Value("${dynconfigobject.file}")
+	private Resource dynconfigFile;
 
 	@Scheduled(fixedRate = 60000)
 	public void updateMessages() {
@@ -55,6 +59,17 @@ public class HomeProcessor {
 				Long lastModified = configFile.lastModified();
 				String json = readJson(configFile.getInputStream());
 				ConfigObject home = JsonUtils.toObject(json, ConfigObject.class);
+				processConfig(home, lastModified);
+			} catch (Exception e) {
+				e.printStackTrace();
+				logger .error("Problem reading file: "+ e.getMessage());
+			}
+		}
+		if (dynconfigFile != null) {
+			try {
+				Long lastModified = dynconfigFile.lastModified();
+				String json = readJson(dynconfigFile.getInputStream());
+				DynamicConfigObject home = JsonUtils.toObject(json, DynamicConfigObject.class);
 				processConfig(home, lastModified);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -95,7 +110,7 @@ public class HomeProcessor {
 	}
 	
 	private void processConfig(ConfigObject home, Long lastModified) throws DataException {
-		List<ConfigObject> oldList = storage.getObjectsByType(ConfigObject.class);
+		List<ConfigObject> oldList = (List<ConfigObject>) storage.getObjectsByType(home.getClass());
 		ConfigObject old = null;
 		home.setUpdateTime(lastModified);
 		if (oldList != null && !oldList.isEmpty()) {

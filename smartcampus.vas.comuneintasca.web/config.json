@@ -71,28 +71,6 @@
       "app": null
     },
     {
-      "id": "02338f998ee34d6df111cab5b9fb763c",
-      "name": {
-        "it": "Autunno Trentino 2014",
-        "en": "Autunno Trentino 2014",
-        "de": "Autunno Trentino 2014"
-      },
-      "description": null,
-      "image": {
-        "it": "http://tn.smartcampuslab.it/comuneintasca/images/autunnotrentino_711x800.jpg",
-        "en": "http://tn.smartcampuslab.it/comuneintasca/images/autunnotrentino_711x800.jpg",
-        "de": "http://tn.smartcampuslab.it/comuneintasca/images/autunnotrentino_711x800.jpg"
-      },
-      "objectIds": [
-        "02338f998ee34d6df111cab5b9fb763c"
-      ],
-      "items": null,
-      "query": null,
-      "ref": null,
-      "type": "event",
-      "app": null
-    },
-    {
       "id": "3f90abb49a32772627440e0ce98e25eb",
       "name": {
         "it": "Arte e persuasione",
@@ -126,7 +104,7 @@
       "ref":"visitare"
     }, {
       "id":"mangiare_e_dormire",
-      "name":{ "it":"MANGIARE  E DORMIRE", "en":"RESTAURANTS  & HOTELS", "de":"GASTRONOMIE  UND ÜBERNACHTUNG" },
+      "name":{ "it":"MANGIARE  E DORMIRE", "en":"RESTAURANTS  & HOTELS", "de":"GASTRONOMIE UND  ÜBERNACHTUNG" },
       "ref":"mangiare_e_dormire"
     }, {
       "id":"viaggia_trento",
@@ -141,7 +119,7 @@
       "ref":"eventi"
     }, {
       "id":"percorsi",
-      "name":{ "it":"PERCORSI", "en":"TOURISTIC  ITINERARIES", "de":"TOUREN  UND ROUTEN" },
+      "name":{ "it":"PERCORSI", "en":"TOURISTIC  ITINERARIES", "de":"TOUREN UND  ROUTEN" },
       "ref":"itineraries"
     }, {
       "id":"info_utili",
@@ -160,7 +138,7 @@
       "items":[
         { 
           "id":"data",
-          "name":{ "it":"Informazioni", "en":"Info", "de":"Info" },
+          "name":{ "it":"Introduzione", "en":"Introduction", "de":"Einführung" },
           "objectIds":[ "text.3001", "text.3004" ],
           "type": "content"
         }, {
@@ -170,12 +148,12 @@
           "type": "content"
         }, {
           "id":"concilio",
-          "name":{ "it":"Concilio", "en":"Concilio", "de":"Concilio" },
+          "name":{ "it":"Il Concilio di Trento", "en":"The Council of Trento", "de":"Das Konzil von Trient" },
           "objectIds":[ "text.3003" ],
           "type": "content"
         }, { 
           "id":"mainevents",
-          "name":{ "it":"Eventi Principali", "en":"Main Events", "de":"Hauptereignisse" },
+          "name":{ "it":"Eventi principali", "en":"Main Events", "de":"Hauptereignisse" },
           "query":{ "type":"mainevent" }
         }, { 
           "id":"bondone",
@@ -265,7 +243,7 @@
           "query":{ "type":"event", "classification":"labs" }
         }, {
           "id":"complex",
-          "name":{ "it": "Manifestazioni", "en": "Annual events", "de": "[ANNUAL-EVENTS]" },
+          "name":{ "it": "Manifestazioni", "en": "Event series", "de": "Veranstaltungsreihe" },
           "query":{ "type":"event", "classification":"_complex" }
         }
       ]

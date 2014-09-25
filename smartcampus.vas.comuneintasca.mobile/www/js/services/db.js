@@ -927,40 +927,41 @@ angular.module('ilcomuneintasca.services.db', [])
       //console.log('DatiDB.checkIDs(); itemIds: ' + itemIds);
       Profiling.start('dbcheck');
       var dbitem = $q.defer();
- 
-      dbObj.transaction(function (tx) {
-        var conds = [];
-        for (var i = 0; i < itemIds.length; i++) conds[i] = '?';
-        var idCond = 'id IN (' + conds.join() + ')';
+      db.then(function (dbObj) {
+        dbObj.transaction(function (tx) {
+          var conds = [];
+          for (var i = 0; i < itemIds.length; i++) conds[i] = '?';
+          var idCond = 'id IN (' + conds.join() + ')';
 
-        var qParams = itemIds;
-        var dbQuery = 'SELECT id FROM ContentObjects WHERE ' + idCond;
-        //console.log('DatiDB.getAny(); dbQuery: ' + dbQuery);
-        tx.executeSql(dbQuery, qParams, function (tx2, results) {
-          //console.log('DB.checkIDs(); qParams: '+qParams);
-          var resultslen = results.rows.length;
-          if (resultslen > 0) {
-            Profiling._do('dbcheck', 'list');
-            dbitem.resolve(qParams);
-          } else {
-            //console.log('DB.checkIDs('+itemIds+'): not found!');
-            Profiling._do('dbcheck', 'sql empty');
-            dbitem.reject('not found!');
-          }
-        }, function (tx2, err) {
+          var qParams = itemIds;
+          var dbQuery = 'SELECT id FROM ContentObjects WHERE ' + idCond;
+          //console.log('DatiDB.getAny(); dbQuery: ' + dbQuery);
+          tx.executeSql(dbQuery, qParams, function (tx2, results) {
+            //console.log('DB.checkIDs(); qParams: '+qParams);
+            var resultslen = results.rows.length;
+            if (resultslen > 0) {
+              Profiling._do('dbcheck', 'list');
+              dbitem.resolve(qParams);
+            } else {
+              //console.log('DB.checkIDs('+itemIds+'): not found!');
+              Profiling._do('dbcheck', 'sql empty');
+              dbitem.reject('not found!');
+            }
+          }, function (tx2, err) {
+            $ionicLoading.hide();
+            console.log('error: ' + err);
+            Profiling._do('dbcheck', 'sql error');
+            dbitem.reject(err);
+          });
+        }, function (error) { //error callback
           $ionicLoading.hide();
-          console.log('error: ' + err);
-          Profiling._do('dbcheck', 'sql error');
-          dbitem.reject(err);
+          console.log('DB.checkIDs() ERROR: ' + error);
+          Profiling._do('dbcheck', 'tx error');
+          dbitem.reject(error);
+        }, function () { //success callback
+          $ionicLoading.hide();
+          Profiling._do('dbcheck', 'tx success');
         });
-      }, function (error) { //error callback
-        $ionicLoading.hide();
-        console.log('DB.checkIDs() ERROR: ' + error);
-        Profiling._do('dbcheck', 'tx error');
-        dbitem.reject(error);
-      }, function () { //success callback
-        $ionicLoading.hide();
-        Profiling._do('dbcheck', 'tx success');
       });
 
       return dbitem.promise;
@@ -976,105 +977,109 @@ angular.module('ilcomuneintasca.services.db', [])
       });
 
       var dbitem = $q.defer();
-      var lista = [];
-      dbObj.transaction(function (tx) {
-        //console.log('type: '+types[dbname]);
-        var dbQuery = 'SELECT co.id, co.type, co.classification, co.classification2, co.classification3, co.data, co.category FROM ContentObjects co, Favorites f WHERE f.id=co.id';
-        //console.log('dbQuery: ' + dbQuery);
-        tx.executeSql(dbQuery, null, function (tx, results) {
-          var resultslen = results.rows.length;
-          if (resultslen > 0) {
-            for (var i = 0; i < resultslen; i++) {
-              var item = results.rows.item(i);
-              lista.push(parseDbRow(item));
+      db.then(function (dbObj) {
+        dbObj.transaction(function (tx) {
+          //console.log('type: '+types[dbname]);
+          var dbQuery = 'SELECT co.id, co.type, co.classification, co.classification2, co.classification3, co.data, co.category FROM ContentObjects co, Favorites f WHERE f.id=co.id';
+          //console.log('dbQuery: ' + dbQuery);
+          tx.executeSql(dbQuery, null, function (tx, results) {
+            var resultslen = results.rows.length;
+            if (resultslen > 0) {
+              var lista = [];
+              for (var i = 0; i < resultslen; i++) {
+                var item = results.rows.item(i);
+                lista.push(parseDbRow(item));
+              }
+              Profiling._do('dbfavs', 'list');
+              dbitem.resolve(lista);
+            } else {
+              //console.log('not found!');
+              Profiling._do('dbfavs', 'sql empty');
+              dbitem.reject('not found!');
             }
-            Profiling._do('dbfavs', 'list');
-            dbitem.resolve(lista);
-          } else {
-            //console.log('not found!');
-            Profiling._do('dbfavs', 'sql empty');
-            dbitem.reject('not found!');
-          }
-        }, function (tx, err) {
+          }, function (tx, err) {
+            $ionicLoading.hide();
+            console.log('error: ' + err);
+            Profiling._do('dbfavs', 'sql error');
+            dbitem.reject(err);
+          });
+        }, function (error) { //error callback
           $ionicLoading.hide();
-          console.log('error: ' + err);
-          Profiling._do('dbfavs', 'sql error');
-          dbitem.reject(err);
+          console.log('db.get() ERROR: ' + error);
+          Profiling._do('dbfavs', 'tx error');
+          dbitem.reject(error);
+        }, function () { //success callback
+          $ionicLoading.hide();
+          Profiling._do('dbfavs', 'tx success');
         });
-      }, function (error) { //error callback
-        $ionicLoading.hide();
-        console.log('db.get() ERROR: ' + error);
-        Profiling._do('dbfavs', 'tx error');
-        dbitem.reject(error);
-      }, function () { //success callback
-        $ionicLoading.hide();
-        Profiling._do('dbfavs', 'tx success');
       });
       return dbitem.promise;
     },
     isFavorite: function (itemId) {
       //console.log('DatiDB.isFavorite()');
-
       var dbitem = $q.defer();
-      dbObj.transaction(function (tx) {
-        Profiling.start('dbfav');
+      db.then(function (dbObj) {
+        dbObj.transaction(function (tx) {
+          Profiling.start('dbfav');
 
-        //console.log('type: '+types[dbname]);
-        var dbQuery = 'SELECT id FROM Favorites f WHERE f.id=?';
-        //console.log('dbQuery: ' + dbQuery);
-        tx.executeSql(dbQuery, [itemId], function (tx, results) {
-          if (results.rows.length > 0) {
-            Profiling._do('dbfav', 'found');
-            dbitem.resolve(true);
-          } else {
-            //console.log('not found!');
-            Profiling._do('dbfav', 'not found');
+          //console.log('type: '+types[dbname]);
+          var dbQuery = 'SELECT id FROM Favorites f WHERE f.id=?';
+          //console.log('dbQuery: ' + dbQuery);
+          tx.executeSql(dbQuery, [itemId], function (tx, results) {
+            if (results.rows.length > 0) {
+              Profiling._do('dbfav', 'found');
+              dbitem.resolve(true);
+            } else {
+              //console.log('not found!');
+              Profiling._do('dbfav', 'not found');
+              dbitem.resolve(false);
+            }
+          }, function (tx, err) {
+            console.log('error: ' + err);
+            Profiling._do('dbfav', 'sql error');
             dbitem.resolve(false);
-          }
-        }, function (tx, err) {
-          console.log('error: ' + err);
-          Profiling._do('dbfav', 'sql error');
+          });
+        }, function (error) { //error callback
+          console.log('db.isFavorite() ERROR: ' + error);
+          Profiling._do('dbfav', 'tx error');
           dbitem.resolve(false);
+        }, function () { //success callback
+          //console.log('db.isFavorite() DONE!');
+          Profiling._do('dbfav', 'tx success');
         });
-      }, function (error) { //error callback
-        console.log('db.isFavorite() ERROR: ' + error);
-        Profiling._do('dbfav', 'tx error');
-        dbitem.resolve(false);
-      }, function () { //success callback
-        //console.log('db.isFavorite() DONE!');
-        Profiling._do('dbfav', 'tx success');
       });
       return dbitem.promise;
     },
     setFavorite: function (itemId, val) {
       //console.log('DatiDB.setFavorite(' + itemId + ',' + val + ')');
-
       var dbitem = $q.defer();
-      dbObj.transaction(function (tx) {
-        Profiling.start('dbfavsave');
-        //console.log('type: '+types[dbname]);
-        var dbQuery = null;
-        if (val) {
-          dbQuery = 'INSERT INTO Favorites (id) VALUES (?)';
-        } else {
-          dbQuery = 'DELETE FROM Favorites WHERE id = ?';
-        }
-        //console.log('dbQuery: ' + dbQuery);
-        tx.executeSql(dbQuery, [itemId], function (tx, results) {
-          dbitem.resolve(val);
-          Profiling._do('dbfavsave', 'done');
-        }, function (tx, err) {
-          console.log('error: ' + err);
-          Profiling._do('dbfavsave', 'sql error');
+      db.then(function (dbObj) {
+        dbObj.transaction(function (tx) {
+          Profiling.start('dbfavsave');
+          //console.log('type: '+types[dbname]);
+          var dbQuery = null;
+          if (val) {
+            dbQuery = 'INSERT INTO Favorites (id) VALUES (?)';
+          } else {
+            dbQuery = 'DELETE FROM Favorites WHERE id = ?';
+          }
+          //console.log('dbQuery: ' + dbQuery);
+          tx.executeSql(dbQuery, [itemId], function (tx, results) {
+            dbitem.resolve(val);
+            Profiling._do('dbfavsave', 'done');
+          }, function (tx, err) {
+            console.log('error: ' + err);
+            Profiling._do('dbfavsave', 'sql error');
+            dbitem.resolve(!val);
+          });
+        }, function (error) { //error callback
+          console.log('db.setFavorite() ERROR: ' + error);
+          Profiling._do('dbfavsave', 'tx error');
           dbitem.resolve(!val);
+        }, function () { //success callback
+          //console.log('db.setFavorite() DONE!');
+          Profiling._do('dbfavsave', 'tx success');
         });
-      }, function (error) { //error callback
-        console.log('db.setFavorite() ERROR: ' + error);
-        Profiling._do('dbfavsave', 'tx error');
-        dbitem.resolve(!val);
-      }, function () { //success callback
-        //console.log('db.setFavorite() DONE!');
-        Profiling._do('dbfavsave', 'tx success');
       });
       return dbitem.promise;
     }

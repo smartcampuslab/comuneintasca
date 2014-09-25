@@ -7,3 +7,8 @@ else
 fi
 echo "host: $DATA_HOST_NAME"
 curl -H "Content-Type: application/json" -d '{"updated":{}}' "https://$DATA_HOST_NAME.smartcampuslab.it/comuneintasca/sync?since=0" -o trento.json
+if [ $? == 0 ]; then
+  PROFILE="opencontent.json"
+  echo "profile: $PROFILE"
+  node opencontent.js >$PROFILE
+fi

@@ -4,15 +4,25 @@ var jsonPath = require('JSONPath');
 var trento = require('./trento.json');
 console.log('version: '+trento.version);
 
+var DO_CONFIG=true;
+var DO_OLDCONFIG=false;
+var DO_EVENTS=false;
+
+
 Object.keys(trento.updated).forEach(function(k) {
-	if (k=='eu.trentorise.smartcampus.comuneintasca.model.DynamicConfigObject') {
+	if (DO_CONFIG && k=='eu.trentorise.smartcampus.comuneintasca.model.DynamicConfigObject') {
 		var config=trento.updated[k];
     console.log(JSON.stringify(config, null, '  '));
     //console.log(JSON.stringify(config[0].highlights, null, '  '));
     //console.log(JSON.stringify(config[0].navigationItems, null, '  '));
 		//console.log(JSON.stringify(config[0].menu.filter(function(obj){ return obj.id.indexOf('isitare')!=-1; })[0].items, null, '  '));
     //console.log(JSON.stringify(config[0].menu.filter(function(obj){ return obj.id.indexOf('venti')!=-1; })[0].items, null, '  '));
-  } else if (k=='eu.trentorise.smartcampus.comuneintasca.model.EventObject_OFF') {
+  }
+  if (DO_OLDCONFIG && k=='eu.trentorise.smartcampus.comuneintasca.model.DynamicConfigObject') {
+		var oldconfig=trento.updated[k];
+    console.log(JSON.stringify(oldconfig, null, '  '));
+  }
+  if (DO_EVENTS && k=='eu.trentorise.smartcampus.comuneintasca.model.EventObject') {
 		var events=trento.updated[k];
 		var eventsByID=[];
 		for (idx in events) {

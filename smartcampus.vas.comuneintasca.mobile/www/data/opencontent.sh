@@ -1,2 +1,2 @@
 #!/bin/sh
-node opencontent.js >opencontent.js
+node opencontent.js >opencontent.json

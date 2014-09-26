@@ -1,6 +1,6 @@
 angular.module('ilcomuneintasca.services.map', [])
 
-.factory('MapHelper', function ($location, $filter, $ionicPopup, Config, $ionicScrollDelegate) {
+.factory('MapHelper', function ($rootScope, $location, $filter, $ionicPopup, Config, $ionicScrollDelegate) {
   var map = {
     control: {},
     draggable: 'true',
@@ -62,7 +62,13 @@ angular.module('ilcomuneintasca.services.map', [])
           markers.models.push(luogo)
         }
       });
-
+/*
+      if ($rootScope.myPosition) {
+        p={ 'id':'myMapPos', latitude:$rootScope.myPosition[0], longitude:$rootScope.myPosition[1] };
+        console.log('geolocation (lat,lon): ' + JSON.stringify(p));
+        markers.models[markers.models.length]=p;
+      }
+*/
       $location.path('/app/mappa');
     },
     start: function ($scope) {
@@ -73,6 +79,10 @@ angular.module('ilcomuneintasca.services.map', [])
       console.log('[cordova] map started!!!');
 
       $scope.openMarkerPopup = function ($markerModel) {
+        if ($markerModel.id=='myMapPos') {
+          //console.log('no actions on click my position marker');
+          return;
+        }
         $scope.activeMarker = $markerModel;
 
         var title = $filter('translate')($markerModel.title);

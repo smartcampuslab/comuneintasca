@@ -76,7 +76,7 @@ angular.module('ilcomuneintasca.services.map', [])
       $scope.map = map;
       $scope.markers = markers;
 
-      console.log('[cordova] map started!!!');
+      //console.log('[cordova] map started!!!');
 
       $scope.openMarkerPopup = function ($markerModel) {
         if ($markerModel.id=='myMapPos') {

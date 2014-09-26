@@ -73,7 +73,7 @@ angular.module('ilcomuneintasca', [
   });
   GeoLocate.locate().then(function (position) {
     $rootScope.myPosition = position;
-    //console.log('first geolocation: ' + $rootScope.myPosition);
+    //console.log('first geolocation: ' + position);
   }, function () {
     console.log('CANNOT LOCATE!');
   });

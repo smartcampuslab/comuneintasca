@@ -253,7 +253,7 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
           luogo.longitude = luogo.location[1];
           luogo.icon = 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=' + (data.steps.indexOf(luogo.id) + 1) + '|2975A7|FFFFFF';
 
-          console.log('data.steps.indexOf(luogo.id): '+data.steps.indexOf(luogo.id));
+          //console.log('data.steps.indexOf(luogo.id): '+data.steps.indexOf(luogo.id));
           $scope.markers.models[data.steps.indexOf(luogo.id)] = luogo;
         } else {
           console.log('WARNING: no location for "' + luogo.title.it + '"');
@@ -265,7 +265,7 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
       if ($rootScope.myPosition) {
         p={ 'id':'myPos', latitude:$rootScope.myPosition[0], longitude:$rootScope.myPosition[1] };
         //console.log('geolocation (lat,lon): ' + JSON.stringify(p));
-        $scope.markers.models[$scope.markers.models.length] = p;
+        $scope.markers.models.push(p);
       }
       
       

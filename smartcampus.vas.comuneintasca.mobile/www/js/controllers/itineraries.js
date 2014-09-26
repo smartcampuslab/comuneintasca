@@ -106,7 +106,7 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
   });
 })
 
-.controller('ItinerarioMappaCtrl', function ($scope, DatiDB, $stateParams, $filter, $ionicPopup, $location, Config) {
+.controller('ItinerarioMappaCtrl', function ($rootScope, $scope, DatiDB, $stateParams, $filter, $ionicPopup, $location, Config) {
   $scope.$on('$viewContentLoaded', function () {
     var mapHeight = 10; // or any other calculated value
     mapHeight = angular.element(document.querySelector('#map-container-itineraries'))[0].offsetHeight;
@@ -160,6 +160,10 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
   };
 
   $scope.openMarkerPopup = function ($markerModel) {
+    if ($markerModel.id=='myPos') {
+      //console.log('no actions on click my position marker');
+      return;
+    }
     $scope.activeMarker = $markerModel;
 
     var title = $filter('translate')($markerModel.title);
@@ -256,6 +260,13 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
         $scope.markers.models[data.steps.indexOf(luogo.id)] = luogo;
       });
 
+      if ($rootScope.myPosition) {
+        p={ 'id':'myPos', latitude:$rootScope.myPosition[0], longitude:$rootScope.myPosition[1] };
+        //console.log('geolocation (lat,lon): ' + JSON.stringify(p));
+        $scope.markers.models[$scope.markers.models.length] = p;
+      }
+      
+      
       // drawDirections($scope.map.control, $scope.markers.models);
 
       /*setTimeout(function () {

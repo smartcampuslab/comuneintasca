@@ -609,6 +609,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 		fillRef(config, idMapping);
 		} catch (Exception e) {
 			logger.error("Error processing configuration, not saving");
+			e.printStackTrace();
 			return;
 		}
 
@@ -701,6 +702,9 @@ public class EventProcessorImpl implements ServiceBusListener {
 	}
 
 	private MenuItem findReferredItem(List<MenuItem> items, String ref) {
+		if (ref == null) {
+			return null;
+		}
 		for (MenuItem item : items) {
 			if (ref.equals(item.getId())) {
 				return item;

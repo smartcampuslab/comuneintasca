@@ -106,7 +106,7 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
   });
 })
 
-.controller('ItinerarioMappaCtrl', function ($scope, DatiDB, $stateParams, $filter, $ionicPopup, $location, Config) {
+.controller('ItinerarioMappaCtrl', function ($rootScope, $scope, DatiDB, $stateParams, $filter, $ionicPopup, $location, Config) {
   $scope.$on('$viewContentLoaded', function () {
     var mapHeight = 10; // or any other calculated value
     mapHeight = angular.element(document.querySelector('#map-container-itineraries'))[0].offsetHeight;
@@ -160,6 +160,10 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
   };
 
   $scope.openMarkerPopup = function ($markerModel) {
+    if ($markerModel.id=='myPos') {
+      //console.log('no actions on click my position marker');
+      return;
+    }
     $scope.activeMarker = $markerModel;
 
     var title = $filter('translate')($markerModel.title);
@@ -248,14 +252,23 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
           luogo.latitude = luogo.location[0];
           luogo.longitude = luogo.location[1];
           luogo.icon = 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=' + (data.steps.indexOf(luogo.id) + 1) + '|2975A7|FFFFFF';
+
+          //console.log('data.steps.indexOf(luogo.id): '+data.steps.indexOf(luogo.id));
+          $scope.markers.models[data.steps.indexOf(luogo.id)] = luogo;
         } else {
           console.log('WARNING: no location for "' + luogo.title.it + '"');
-          luogo.latitude = 0;
-          luogo.longitude = 0;
+          //luogo.latitude = 0;
+          //luogo.longitude = 0;
         }
-        $scope.markers.models[data.steps.indexOf(luogo.id)] = luogo;
       });
 
+      if ($rootScope.myPosition) {
+        p={ 'id':'myPos', latitude:$rootScope.myPosition[0], longitude:$rootScope.myPosition[1] };
+        //console.log('geolocation (lat,lon): ' + JSON.stringify(p));
+        $scope.markers.models.push(p);
+      }
+      
+      
       // drawDirections($scope.map.control, $scope.markers.models);
 
       /*setTimeout(function () {

@@ -73,7 +73,7 @@ angular.module('ilcomuneintasca', [
   });
   GeoLocate.locate().then(function (position) {
     $rootScope.myPosition = position;
-    //console.log('first geolocation: ' + $rootScope.myPosition);
+    //console.log('first geolocation: ' + position);
   }, function () {
     console.log('CANNOT LOCATE!');
   });
@@ -97,8 +97,10 @@ angular.module('ilcomuneintasca', [
     }
   };
   $rootScope.getMenuPath = function (group,menu) {
-    var group_id=$filter('cleanMenuID')(group.id);
-    var menu_id=$filter('cleanMenuID')(menu.id);
+    var group_id=group.id;
+    var menu_id=menu.id;
+    //group_id=$filter('cleanMenuID')(group.id);
+    //menu_id=$filter('cleanMenuID')(menu.id);
     if (group_id=='percorsi' && menu_id=='itineraries') {
       return 'itineraries';
     } else {

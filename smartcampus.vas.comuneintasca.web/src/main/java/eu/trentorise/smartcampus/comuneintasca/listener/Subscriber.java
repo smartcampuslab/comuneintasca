@@ -21,8 +21,12 @@ import it.sayservice.platform.client.ServiceBusClient;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 public class Subscriber {
 
@@ -38,34 +42,73 @@ public class Subscriber {
 	public static final String METHOD_TESTI = "GetTesti";
 	public static final String METHOD_ITINERARI = "GetItinerari";
 
+	@Autowired
+	@Value("${url.config}")
+	private String configURL;
+	
+	@Autowired
+	@Value("${url.events}")
+	private String eventsURL;	
+	
+	@Autowired
+	@Value("${url.cultura}")
+	private String culturaURL;	
+	
+	@Autowired
+	@Value("${url.hotel}")
+	private String hotelURL;	
+	
+	@Autowired
+	@Value("${url.itinerari}")
+	private String itinerariURL;	
+	
+	@Autowired
+	@Value("${url.mainevents}")
+	private String maineventsURL;	
+	
+	@Autowired
+	@Value("${url.ristoranti}")
+	private String ristorantiURL;	
+	
+	@Autowired
+	@Value("${url.testi}")
+	private String testiURL;		
+	
+	private ServiceBusClient client;
+	
 	private Log logger = LogFactory.getLog(getClass());
 
 	public Subscriber(ServiceBusClient client) {
+		this.client = client;
+	}	
+	
+	@PostConstruct
+	public void subscribe() {
 		try {
 			logger.info("SUBSCRIBE");
 			Map<String, Object> params = new TreeMap<String, Object>();
-			params.put("url", "http://www.comune.trento.it/api/opendata/v1/content/class/event/offset/0/limit/1000");
+			params.put("url", eventsURL);
 			client.subscribeService(SERVICE_OD, METHOD_EVENTS, params);
 
-			params.put("url", "http://trento.opencontent.it/comuneintasca/data");
+			params.put("url", configURL);
 			client.subscribeService(SERVICE_OD, METHOD_CONFIG, params);
 
-			params.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754329/list/limit/1000");
+			params.put("url", ristorantiURL);
 			client.subscribeService(SERVICE_OD, METHOD_RESTAURANTS, params);
 
-			params.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754211/list/limit/1000");
+			params.put("url", hotelURL);
 			client.subscribeService(SERVICE_OD, METHOD_HOTELS, params);
 
-			params.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754058/list/limit/1000");
+			params.put("url", culturaURL);
 			client.subscribeService(SERVICE_OD, METHOD_CULTURA, params);
 
-			params.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754317/list/limit/1000");
+			params.put("url", maineventsURL);
 			client.subscribeService(SERVICE_OD, METHOD_MAINEVENTS, params);
 
-			params.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754015/list/limit/1000");
+			params.put("url", testiURL);
 			client.subscribeService(SERVICE_OD, METHOD_TESTI, params);
 
-			params.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754330/list/limit/1000");
+			params.put("url", itinerariURL);
 			client.subscribeService(SERVICE_OD, METHOD_ITINERARI, params);
 
 //			client.subscribeService(SERVICE_YMIR, METHOD_EVENTS, params);

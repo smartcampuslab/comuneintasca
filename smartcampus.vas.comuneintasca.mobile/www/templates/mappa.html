@@ -2,6 +2,7 @@
   <ion-content class="has-header" scroll="false" id="map-container">
     <div id="map1">
       <google-map data-tap-disabled="true" center="map.center" zoom="map.zoom" pan="map.pan" options="map.options" draggable="{{map.draggable}}" refresh="map.refresh">
+        <marker coords="{latitude:myPosition[0],longitude:myPosition[1]}" idkey="myLatLon" ></marker>
         <markers models="markers.models" coords="markers.coords" fit="markers.fit" icon="markers.icon" doCluster="markers.doCluster" click="openMarkerPopup">
         </markers>
       </google-map>

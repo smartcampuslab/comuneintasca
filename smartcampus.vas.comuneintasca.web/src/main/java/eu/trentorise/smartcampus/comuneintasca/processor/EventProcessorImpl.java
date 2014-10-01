@@ -596,7 +596,6 @@ public class EventProcessorImpl implements ServiceBusListener {
 
 	private void updateConfig(List<ByteString> data) throws Exception {
 		ConfigData cd = ConfigData.parseFrom(data.get(0));
-		int hash = cd.getData().hashCode();
 		String d = cd.getData().replace("\\\"", "");
 
 		ObjectMapper mapper = new ObjectMapper();

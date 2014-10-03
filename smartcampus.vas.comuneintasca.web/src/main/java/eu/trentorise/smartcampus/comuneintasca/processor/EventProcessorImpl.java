@@ -93,9 +93,9 @@ public class EventProcessorImpl implements ServiceBusListener {
 
 	// content
 	private static String typePrefix = "eu.trentorise.smartcampus.comuneintasca.model.";
-	private static List<String> typeValue = Arrays.asList(new String[] { "event", "ristorante", "accomodation", "iniziativa", "itinerario", "luogo", "testo_generico" });
-	private static List<String> classificationValue = Arrays.asList(new String[] { "tipo_evento", "", "", "tipo_evento", "", "tipo_luogo", "classifications" });
-	private static List<String> toTypeValue = Arrays.asList(new String[] { "event", "restaurant", "hotel", "mainevent", "itineraries", "poi", "content" });
+	private static List<String> typeValue = Arrays.asList(new String[] { "event", "ristorante", "accomodation", "iniziativa", "itinerario", "luogo", "testo_generico","folder" });
+	private static List<String> classificationValue = Arrays.asList(new String[] { "tipo_evento", "", "", "tipo_evento", "", "tipo_luogo", "classifications", "classifications" });
+	private static List<String> toTypeValue = Arrays.asList(new String[] { "event", "restaurant", "hotel", "mainevent", "itineraries", "poi", "content", "content" });
 	private static List<String> objectType = Arrays.asList(new String[] { "EventObject", "RestaurantObject", "HotelObject", "MainEventObject", "ItineraryObject", "ContentObject", "POIObject" });
 	private static List<String> objectValue = Arrays.asList(new String[] { "event", "restaurant", "hotel", "mainevent", "itinerary", "content", "poi" });
 
@@ -658,10 +658,24 @@ public class EventProcessorImpl implements ServiceBusListener {
 		fillRef(config, config.getHighlights(), idMapping);
 		fillRef(config, config.getMenu(), idMapping);
 		fillRef(config, config.getNavigationItems(), idMapping);		
+		
+		removeHighlightRef(config);
 	} catch (MissingDataException e) {
 		logger.error("Cannot complete references.");
 		throw e;
 	}		
+	}
+
+	private void removeHighlightRef(DynamicConfigObject config) {
+		for (MenuItem item : config.getHighlights()) {
+			if ((item.getObjectIds() == null || item.getObjectIds().isEmpty()) && item.getRef() != null) {
+				MenuItem refItem = findReferredItem(config, item.getRef());
+				if (refItem != item) {
+					item.setObjectIds(refItem.getObjectIds());
+					item.setQuery(refItem.getQuery());
+				}
+			}
+		}
 	}
 
 	private void fillRef(DynamicConfigObject config, List<MenuItem> items, Map<String, String> idMapping) throws MissingDataException {
@@ -720,6 +734,13 @@ public class EventProcessorImpl implements ServiceBusListener {
 
 	private void setType(List<MenuItem> items) throws MissingDataException {
 		for (MenuItem item : items) {
+			if (item.getId() != null) {
+				item.setId(item.getId().replace(" ", "_"));
+			}
+			if (item.getRef() != null) {
+				item.setRef(item.getRef().replace(" ", "_"));
+			}
+			
 			if (item.getType() == null && item.getQuery() == null && item.getRef() == null && item.getApp() == null) {
 				String type = findType(item);
 				item.setType(type);

@@ -669,7 +669,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 	private void removeHighlightRef(DynamicConfigObject config) {
 		for (MenuItem item : config.getHighlights()) {
 			if ((item.getObjectIds() == null || item.getObjectIds().isEmpty()) && item.getRef() != null) {
-				MenuItem refItem = findReferredItem(config, item.getRef());
+				MenuItem refItem = findReferredItem(config, item.getRef(), false);
 				if (refItem != item) {
 					item.setObjectIds(refItem.getObjectIds());
 					item.setQuery(refItem.getQuery());
@@ -681,7 +681,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 	private void fillRef(DynamicConfigObject config, List<MenuItem> items, Map<String, String> idMapping) throws MissingDataException {
 		for (MenuItem item : items) {
 			if (item.getRef() != null && !item.getRef().isEmpty()) {
-				MenuItem referred = findReferredItem(config, item.getRef());
+				MenuItem referred = findReferredItem(config, item.getRef(), true);
 				if (referred != null) {
 					item.setName(referred.getName());
 					item.setRef(referred.getId());
@@ -689,7 +689,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 						item.setId(referred.getId());
 					}					
 				} else {
-					referred = findReferredItem(config, idMapping.get(item.getRef()));
+					referred = findReferredItem(config, idMapping.get(item.getRef()), true);
 					if (referred != null) {
 						item.setName(referred.getName());
 						item.setRef(referred.getId());
@@ -702,9 +702,11 @@ public class EventProcessorImpl implements ServiceBusListener {
 		}
 	}
 
-	private MenuItem findReferredItem(DynamicConfigObject config, String ref) {
+	private MenuItem findReferredItem(DynamicConfigObject config, String ref, boolean highlights) {
 		MenuItem referred = null;
+		if (highlights) {
 		referred = findReferredItem(config.getHighlights(), ref);
+		}
 		if (referred == null) {
 			referred = findReferredItem(config.getMenu(), ref);
 		}

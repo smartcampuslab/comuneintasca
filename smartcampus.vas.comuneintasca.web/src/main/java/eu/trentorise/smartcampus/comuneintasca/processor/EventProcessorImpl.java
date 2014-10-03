@@ -47,8 +47,8 @@ import eu.trentorise.smartcampus.comuneintasca.data.GeoTimeObjectSyncStorage;
 import eu.trentorise.smartcampus.comuneintasca.data.GeoTimeSyncObjectBean;
 import eu.trentorise.smartcampus.comuneintasca.data.MissingDataException;
 import eu.trentorise.smartcampus.comuneintasca.listener.Subscriber;
-import eu.trentorise.smartcampus.comuneintasca.model.ConfigObject;
 import eu.trentorise.smartcampus.comuneintasca.model.ContentObject;
+import eu.trentorise.smartcampus.comuneintasca.model.DynamicConfigObject;
 import eu.trentorise.smartcampus.comuneintasca.model.EventObject;
 import eu.trentorise.smartcampus.comuneintasca.model.HotelObject;
 import eu.trentorise.smartcampus.comuneintasca.model.ItineraryObject;
@@ -115,13 +115,13 @@ public class EventProcessorImpl implements ServiceBusListener {
 		updating = true;
 		try {
 		logger.info("Initializating config.");
-		List<ConfigObject> oldList = storage.getObjectsByType(ConfigObject.class);
-		ConfigObject old = null;
+		List<DynamicConfigObject> oldList = storage.getObjectsByType(DynamicConfigObject.class);
+		DynamicConfigObject old = null;
 		if (oldList == null || oldList.isEmpty()) {
 			logger.info("Config non found, reading from file.");
 			InputStreamReader isr = new InputStreamReader(getClass().getResourceAsStream("/profile.json"), Charset.forName("UTF-8"));
 			String json = FileCopyUtils.copyToString(isr);
-			ConfigObject configObj = new ObjectMapper().readValue(json, ConfigObject.class);
+			DynamicConfigObject configObj = new ObjectMapper().readValue(json, DynamicConfigObject.class);
 			configObj.setLastModified(0L);
 			storage.storeObject(configObj);
 			logger.info("Saved config.");
@@ -600,7 +600,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 
 		ObjectMapper mapper = new ObjectMapper();
 
-		ConfigObject config = mapper.readValue(d, ConfigObject.class);
+		DynamicConfigObject config = mapper.readValue(d, DynamicConfigObject.class);
 
 		try {
 		completeConfig(config, true);
@@ -612,8 +612,8 @@ public class EventProcessorImpl implements ServiceBusListener {
 			return;
 		}
 
-		List<ConfigObject> oldList = storage.getObjectsByType(ConfigObject.class);
-		ConfigObject old = null;
+		List<DynamicConfigObject> oldList = storage.getObjectsByType(DynamicConfigObject.class);
+		DynamicConfigObject old = null;
 		if (oldList != null && !oldList.isEmpty()) {
 			old = oldList.get(0);
 			if (old.getLastModified() < cd.getDateModified()) {
@@ -642,7 +642,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 
 	}	
 	
-	private void completeConfig(ConfigObject config, boolean retry) throws Exception {
+	private void completeConfig(DynamicConfigObject config, boolean retry) throws Exception {
 		try {
 			setType(config.getHighlights());
 			setType(config.getMenu());
@@ -653,7 +653,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 		}
 	}
 	
-	private void fillRef(ConfigObject config, Map<String, String> idMapping) throws MissingDataException {
+	private void fillRef(DynamicConfigObject config, Map<String, String> idMapping) throws MissingDataException {
 		try {
 		fillRef(config, config.getHighlights(), idMapping);
 		fillRef(config, config.getMenu(), idMapping);
@@ -664,7 +664,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 	}		
 	}
 
-	private void fillRef(ConfigObject config, List<MenuItem> items, Map<String, String> idMapping) throws MissingDataException {
+	private void fillRef(DynamicConfigObject config, List<MenuItem> items, Map<String, String> idMapping) throws MissingDataException {
 		for (MenuItem item : items) {
 			if (item.getRef() != null && !item.getRef().isEmpty()) {
 				MenuItem referred = findReferredItem(config, item.getRef());
@@ -688,7 +688,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 		}
 	}
 
-	private MenuItem findReferredItem(ConfigObject config, String ref) {
+	private MenuItem findReferredItem(DynamicConfigObject config, String ref) {
 		MenuItem referred = null;
 		referred = findReferredItem(config.getHighlights(), ref);
 		if (referred == null) {
@@ -774,7 +774,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 		return res;
 	}
 
-	private Map<String, String> buildQueryClassification(ConfigObject config) throws BadDataException {
+	private Map<String, String> buildQueryClassification(DynamicConfigObject config) throws BadDataException {
 		try {
 		Map<String, String> idMapping = new TreeMap<String, String>();
 		

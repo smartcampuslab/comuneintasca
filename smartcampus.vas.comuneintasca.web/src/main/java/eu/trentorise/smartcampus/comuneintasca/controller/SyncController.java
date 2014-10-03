@@ -47,7 +47,7 @@ public class SyncController extends AbstractObjectController {
 	@RequestMapping(method = RequestMethod.POST, value = "/sync")
 	public ResponseEntity<SyncData> synchronize(HttpServletRequest request, @RequestParam long since, @RequestBody Map<String,Object> obj) throws Exception{
 		try {
-			eventProcessor.retrieveConfig();
+			//eventProcessor.retrieveConfig();
 			
 			SyncDataRequest syncReq = Util.convertRequest(obj, since);
 			storage.cleanSyncData(syncReq.getSyncData(), null);

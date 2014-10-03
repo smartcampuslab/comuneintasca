@@ -28,7 +28,10 @@ angular.module('ilcomuneintasca.controllers.home', [])
     if (btn.app) {
       $scope.openApp(btn.name,btn.app);
     } else if (btn.ref) {
-      if (btn.ref=='itineraries' || btn.ref=='favorites') {
+      if (btn.ref == 'profile_cit_csvimport_Percorsi_item_comuneintasca') {
+        $rootScope.goto('itineraries');
+      }
+      if (btn.ref=='itineraries' || btn.ref=='favorites') {      
         $rootScope.goto(btn.ref);
       } else {
         $rootScope.goto('menu/'+btn.ref+'/');
@@ -99,6 +102,13 @@ angular.module('ilcomuneintasca.controllers.home', [])
                   }
                 }
               }
+              /*  
+              for (var i = 0 ; i < items.length; i++) {
+                if (items[i].ref && !items[i].objectIds) {
+                  highlightsVerified.push(items[i]);
+                }  
+              }
+              */
               $scope.highlights=highlightsVerified;
             }
           })
@@ -115,6 +125,23 @@ angular.module('ilcomuneintasca.controllers.home', [])
 
     Config.navigationItems().then(function(items) {
       if (items) {
+        // hardcoded favourites
+        items.push({
+          "id": "preferiti",
+          "name": {
+            "it": "PREFERITI",
+            "en": "FAVORITES",
+            "de": "LIEBLINGSSEITEN"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": null,
+          "ref": "favorites",
+          "type": null,
+          "app": null
+        });
         var rows=[], row=-1;
         for (ii=0; ii<items.length; ii++) {
           if ((ii%2)==0) {

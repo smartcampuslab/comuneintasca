@@ -71,3 +71,28 @@
 .comuneicon-banknote:before {
 	content: "\e60b";
 }
+
+.comuneicon-profile_cit_csvimport_Viaggia_Trento_item_comuneintasca:before {
+	content: "\e602";
+}
+.comuneicon-profile_cit_csvimport_Visitare_item_comuneintasca:before {
+	content: "\e603";
+}
+.comuneicon-preferiti:before {
+	content: "\e604";
+}
+.comuneicon-profile_cit_csvimport_Percorsi_item_comuneintasca:before {
+	content: "\e605";
+}
+.comuneicon-profile_cit_csvimport_Mangiare_e_dormire_item_comuneintasca:before {
+	content: "\e606";
+}
+.comuneicon-profile_cit_csvimport_Info_utili_item_comuneintasca:before {
+	content: "\e607";
+}
+.comuneicon-profile_cit_csvimport_Eventi_item_comuneintasca:before {
+	content: "\e60a";
+}
+.comuneicon-profile_cit_2cc4db1674d9e8994658eac954355d31:before {
+	content: "\e60c";
+}

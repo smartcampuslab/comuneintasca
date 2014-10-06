@@ -92,13 +92,26 @@ public class EventProcessorImpl implements ServiceBusListener {
 	// "ItineraryObject", "ContentObject", "POIObject" });
 
 	// content
-	private static String typePrefix = "eu.trentorise.smartcampus.comuneintasca.model.";
-	private static List<String> typeValue = Arrays.asList(new String[] { "event", "ristorante", "accomodation", "iniziativa", "itinerario", "luogo", "testo_generico","folder" });
-	private static List<String> classificationValue = Arrays.asList(new String[] { "tipo_evento", "", "", "tipo_evento", "", "tipo_luogo", "classifications", "classifications" });
-	private static List<String> toTypeValue = Arrays.asList(new String[] { "event", "restaurant", "hotel", "mainevent", "itineraries", "poi", "content", "content" });
-	private static List<String> objectType = Arrays.asList(new String[] { "EventObject", "RestaurantObject", "HotelObject", "MainEventObject", "ItineraryObject", "ContentObject", "POIObject" });
-	private static List<String> objectValue = Arrays.asList(new String[] { "event", "restaurant", "hotel", "mainevent", "itinerary", "content", "poi" });
+//	private static String typePrefix = "eu.trentorise.smartcampus.comuneintasca.model.";
+//	private static List<String> typeValue = Arrays.asList(new String[] { "event", "ristorante", "accomodation", "iniziativa", "itinerario", "luogo", "testo_generico","folder" });
+//	private static List<String> classificationValue = Arrays.asList(new String[] { "tipo_evento", "", "", "tipo_evento", "", "tipo_luogo", "classifications", "classifications" });
+//	private static List<String> toTypeValue = Arrays.asList(new String[] { "event", "restaurant", "hotel", "mainevent", "itineraries", "poi", "content", "content" });
+//	private static List<String> objectType = Arrays.asList(new String[] { "EventObject", "RestaurantObject", "HotelObject", "MainEventObject", "ItineraryObject", "ContentObject", "POIObject" });
+//	private static List<String> objectValue = Arrays.asList(new String[] { "event", "restaurant", "hotel", "mainevent", "itinerary", "content", "poi" });
 
+	private static Map<String, MappingDescriptor> descriptors = new HashMap<String, MappingDescriptor>();
+	static {
+		descriptors.put("event", new EventMappingDescriptor());
+		descriptors.put("ristorante",new MappingDescriptor("ristorante", "restaurant", RestaurantObject.class)); 
+		descriptors.put("accomodation",new MappingDescriptor("accomodation", "hotel", HotelObject.class)); 
+		descriptors.put("iniziativa",new MappingDescriptor("iniziativa", "mainevent", MainEventObject.class, "tipo_evento")); 
+		descriptors.put("itinerario",new MappingDescriptor("itinerario", "itineraries", ItineraryObject.class));
+		descriptors.put("luogo",new MappingDescriptor("luogo", "poi", POIObject.class, "tipo_luogo")); 
+		descriptors.put("testo_generico",new MappingDescriptor("testo_generico", "content", ContentObject.class, "classifications")); 
+		descriptors.put("folder",new MappingDescriptor("folder", "content", ContentObject.class, "classifications")); 
+	}
+	
+	
 	private static Log logger = LogFactory.getLog(EventProcessorImpl.class);
 
 	private boolean updating = true;
@@ -769,15 +782,19 @@ public class EventProcessorImpl implements ServiceBusListener {
 			String objectId = item.getObjectIds().get(0);
 				List<GeoTimeSyncObjectBean> objs = storage.genericSearch(Collections.<String, Object> singletonMap("id", objectId));
 				if (objs != null && !objs.isEmpty()) {
-					String type = (String) objs.get(0).getType().replace(typePrefix, "");
-					int index = objectType.indexOf(type);
-					if (index != -1) {
-						res = objectValue.get(index);
+					MappingDescriptor md;
+					try {
+						md = findDescriptor(Thread.currentThread().getContextClassLoader().loadClass(objs.get(0).getType()));
+					} catch (ClassNotFoundException e) {
+						throw new MissingDataException("Missing type for " + objectId + " = " + objs.get(0).getType());
+					}
+					if (md != null) {
+						res = md.getLocalType();
 					} else {
 						if (item.getId().equals(objectId)) {
 							logger.warn("Object contains its id in objectIds: " + objectId);
 						} else {						
-						throw new MissingDataException("Missing type for " + objectId + " = " + item.getName());
+							throw new MissingDataException("Missing type for " + objectId + " = " + item.getName());
 						}
 					}
 				} else {
@@ -823,29 +840,27 @@ public class EventProcessorImpl implements ServiceBusListener {
 				List<Map<String, String>> classifications = query.getClassifications();
 				String classification = "";
 				String type = query.getType();
-
-				// ex: index = -1
-				int index = typeValue.indexOf(type);
-				if (index == -1) {
+				MappingDescriptor md = findDescriptor(type);
+				if (md == null) {
 					throw new BadDataException("Cannot map " + type + " to internal type");
 				}
-				String classKey = classificationValue.get(index);
-				String newType = "" + toTypeValue.get(index);
+				String newType = md.getLocalType();
 				query.setType(newType);
 				if (classifications != null) {
-					for (Map<String, String> classifics : classifications) {
-						String val = classifics.get(classKey);
-						if (val != null) {
-							classification += val + ";";
-						}
-					}
-					if (classification.endsWith(";")) {
-						classification = classification.substring(0, classification.length() - 1);
-					}
-					query.setClassification(classification);
+//					for (Map<String, String> classifics : classifications) {
+//						String val = classifics.get(classKey);
+//						if (val != null) {
+//							classification += val + ";";
+//						}
+//					}
+//					if (classification.endsWith(";")) {
+//						classification = classification.substring(0, classification.length() - 1);
+//					}
+//					query.setClassification(classification);
+					query.setClassification(md.extractClassification(classifications));
 					query.setClassifications(null);
 					idMapping.put(item.getId(), classification);
-					item.setId(classification);
+					//item.setId(classification);
 				}
 			}
 			if (item.getItems() != null) {
@@ -968,4 +983,16 @@ public class EventProcessorImpl implements ServiceBusListener {
 	public void setClient(ServiceBusClient client) {
 		this.client = client;
 	}
+	
+	private static MappingDescriptor findDescriptor(String type) {
+		return descriptors.get(type);
+	}
+	
+	private static MappingDescriptor findDescriptor(Class cls) {
+		for (MappingDescriptor md : descriptors.values()) {
+			if (cls.equals(md.getLocalClass())) return md;
+		}
+		return null;
+	}
 }
+

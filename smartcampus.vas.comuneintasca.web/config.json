@@ -71,20 +71,20 @@
       "app": null
     },
     {
-      "id": "3f90abb49a32772627440e0ce98e25eb",
+      "id": "c1d05bbcae81cdf5f8f8ccb6ba0d7ae5",
       "name": {
-        "it": "Arte e persuasione",
-        "en": "Arte e persuasione",
-        "de": "Arte e persuasione"
+        "it": "La Piazza dei Sapori 2014",
+        "en": "La Piazza dei Sapori 2014",
+        "de": "La Piazza dei Sapori 2014"
       },
       "description": null,
       "image": {
-        "it": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/arte-e-persuasione11/8096383-15-ita-IT/Arte-e-persuasione.png",
-        "en": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/arte-e-persuasione11/8096383-15-ita-IT/Arte-e-persuasione.png",
-        "de": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/arte-e-persuasione11/8096383-15-ita-IT/Arte-e-persuasione.png"
+        "it": "http://www.comune.trento.it/var/comunetn/storage/images/aree-tematiche/turismo/calendario-eventi/la-piazza-dei-sapori-2014/8523326-1-ita-IT/La-Piazza-dei-Sapori-2014.jpg",
+        "en": "http://www.comune.trento.it/var/comunetn/storage/images/aree-tematiche/turismo/calendario-eventi/la-piazza-dei-sapori-2014/8523326-1-ita-IT/La-Piazza-dei-Sapori-2014.jpg",
+        "de": "http://www.comune.trento.it/var/comunetn/storage/images/aree-tematiche/turismo/calendario-eventi/la-piazza-dei-sapori-2014/8523326-1-ita-IT/La-Piazza-dei-Sapori-2014.jpg"
       },
       "objectIds": [
-        "3f90abb49a32772627440e0ce98e25eb"
+        "c1d05bbcae81cdf5f8f8ccb6ba0d7ae5"
       ],
       "items": null,
       "query": null,
@@ -92,6 +92,7 @@
       "type": "event",
       "app": null
     }
+
   ],
    "navigationItems":[
     {

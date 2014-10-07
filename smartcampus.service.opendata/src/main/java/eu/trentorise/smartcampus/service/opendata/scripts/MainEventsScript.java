@@ -83,7 +83,12 @@ public class MainEventsScript extends OpenContentScript {
 		builder.setDateDescription(getI18NStringValue(i18n, FIELDS, "periodo_svolgimento", STRING_VALUE));
 		
 		String from = (String)getRecValue(getMap(i18n,DEFAULT_LANGUAGE), FIELDS, "data", STRING_VALUE);
-		builder.setFromDate(Long.parseLong(from) * 1000);
+		if (from != null) {
+			try {
+				builder.setFromDate(Long.parseLong(from) * 1000);
+			} catch (Exception e) {
+			}
+		}
 		
 		return builder.build();
 	}

@@ -3,7 +3,8 @@
 </ion-nav-buttons>
 <ion-view title="{{'leaf_Itinerario' | translate}}"  hide-back-button="true">
   <ion-content class="has-header">
-    <comuni-img ng-if="itinerario.image" class="content-image-main" gotdata="gotdata"></comuni-img>
+    <!-- comuni-img ng-if="itinerario.image" class="content-image-main" gotdata="gotdata"></comuni-img -->
+    <div class="content-image-main comuni-img" ng-attr-style="background-image:url({{itinerario.image|translate}})"></div>
     <div class="padding">
       <h2>{{itinerario.title | translate}}</h2>
       <h4 ng-if="itinerario.subtitle.it" >{{itinerario.subtitle | translate}}</h4>

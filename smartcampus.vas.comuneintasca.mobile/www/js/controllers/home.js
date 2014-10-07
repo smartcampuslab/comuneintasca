@@ -125,23 +125,25 @@ angular.module('ilcomuneintasca.controllers.home', [])
 
     Config.navigationItems().then(function(items) {
       if (items) {
-        // hardcoded favourites
-        items.push({
-          "id": "preferiti",
-          "name": {
-            "it": "PREFERITI",
-            "en": "FAVORITES",
-            "de": "LIEBLINGSSEITEN"
-          },
-          "description": null,
-          "image": null,
-          "objectIds": null,
-          "items": null,
-          "query": null,
-          "ref": "favorites",
-          "type": null,
-          "app": null
-        });
+        if (items[items.length-1] && items[items.length-1].id != 'preferiti'){
+          // hardcoded favourites
+          items.push({
+            "id": "preferiti",
+            "name": {
+              "it": "PREFERITI",
+              "en": "FAVORITES",
+              "de": "LIEBLINGSSEITEN"
+            },
+            "description": null,
+            "image": null,
+            "objectIds": null,
+            "items": null,
+            "query": null,
+            "ref": "favorites",
+            "type": null,
+            "app": null
+          });
+        }
         var rows=[], row=-1;
         for (ii=0; ii<items.length; ii++) {
           if ((ii%2)==0) {

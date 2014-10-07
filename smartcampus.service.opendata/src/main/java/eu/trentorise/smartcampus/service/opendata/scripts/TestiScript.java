@@ -39,15 +39,15 @@ public class TestiScript extends OpenContentScript {
 			builder.setUrl((String)url);
 		}
 		
-		builder.setTitle(getI18NStringValue(i18n, FIELDS, "title", VALUE));
+		builder.setTitle(getI18NStringValue(i18n, FIELDS, "name", VALUE));
 		
 		builder.setClassification(getI18NStringValue(i18n, FIELDS, "classifications", VALUE));
 		
-		builder.setDescription(getI18NStringValue(i18n, FIELDS, "descrizione", VALUE));
+		builder.setDescription(getI18NStringValue(i18n, FIELDS, "description", VALUE));
 
 		builder.setSubtitle(getI18NStringValue(i18n, FIELDS, "abstract", VALUE));
 		
-		builder.setAddress(getI18NStringValue(i18n, FIELDS, "address", VALUE));
+		builder.setAddress(getI18NStringValue(i18n, FIELDS, "indirizzo", VALUE));
 
 		Object image = getRecValue(getMap(i18n,DEFAULT_LANGUAGE), FIELDS, "image", STRING_VALUE);
 		if (image != null && image instanceof String) {

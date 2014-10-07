@@ -126,21 +126,24 @@ public class OpenDataScript {
 		}
 		List<Organization> orgs = new ArrayList<Organization>();
 		e = (Map<String, Object>) map.get("circoscrizione");
-		if (!(e.get("value") instanceof Boolean) || (Boolean)e.get("value")) {
-			orgs.add(Organization.newBuilder().setType("circoscrizione").setTitle(e.get("value").toString()).build());
-		}
+		if (e != null)
+			if (!(e.get("value") instanceof Boolean) || (Boolean)e.get("value")) {
+				orgs.add(Organization.newBuilder().setType("circoscrizione").setTitle(e.get("value").toString()).build());
+			}
 		e = (Map<String, Object>) map.get("servizio_sul_territorio");
-		if (!(e.get("value") instanceof Boolean) || (Boolean)e.get("value")) {
-			orgs.add(Organization.newBuilder().setType("servizio_sul_territorio").setTitle(e.get("value").toString()).build());
-		}
+		if (e != null)
+			if (!(e.get("value") instanceof Boolean) || (Boolean)e.get("value")) {
+				orgs.add(Organization.newBuilder().setType("servizio_sul_territorio").setTitle(e.get("value").toString()).build());
+			}
 		e = (Map<String, Object>) map.get("associazione");
-		if (!(e.get("value") instanceof Boolean) || (Boolean)e.get("value")) {
-			orgs.add(Organization.newBuilder().setType("associazione").setTitle(e.get("value").toString()).build());
-		}
+		if (e != null)
+			if (!(e.get("value") instanceof Boolean) || (Boolean)e.get("value")) {
+				orgs.add(Organization.newBuilder().setType("associazione").setTitle(e.get("value").toString()).build());
+			}
 		e = (Map<String, Object>) map.get("ente");
-		if (!(e.get("value") instanceof Boolean) || (Boolean)e.get("value")) {
-			orgs.add(Organization.newBuilder().setType("ente").setTitle(e.get("value").toString()).build());
-		}
+			if (!(e.get("value") instanceof Boolean) || (Boolean)e.get("value")) {
+				orgs.add(Organization.newBuilder().setType("ente").setTitle(e.get("value").toString()).build());
+			}
 		builder.addAllOrganizations(orgs);
 		
 		return builder.build();

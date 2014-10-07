@@ -332,7 +332,12 @@ angular.module('ilcomuneintasca.services.db', [])
                           if (item.parentEventId) {
                             var parentEvent=item.parentEventId;
                             if (typeof parentEvent == "string") {
-                              parentEvent=JSON.parse(parentEvent);
+                              try {
+                                parentEvent=JSON.parse(parentEvent);
+                              } catch(err) {
+                                console.log(err);
+                                parentEvent = {};
+                              }  
                             }
                             if (parentEvent.objectRemoteId) {
                               parentid=parentEvent.objectRemoteId;

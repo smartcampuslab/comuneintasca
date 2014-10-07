@@ -143,7 +143,6 @@ public class OpenDataScript {
 		}
 		builder.addAllOrganizations(orgs);
 		
-		
 		return builder.build();
 	}
 

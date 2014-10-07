@@ -184,6 +184,10 @@ angular.module('ilcomuneintasca.controllers.common', [])
           var type=item.type||'content';
           
           console.log('item('+type+'): '+JSON.stringify(item));
+/*          if (item.ref) {
+            var res = Config.menuById(item.ref);
+            alert(res);
+          }*/
           if (item.objectIds.join(',')==$stateParams.itemId) {
             console.log('QUELO! '+item.objectIds.join(','));
             $scope.title = $filter('translate')(item.name);

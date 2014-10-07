@@ -13,11 +13,28 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.google.protobuf.Message;
 
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.ConfigData;
+import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.Evento;
 import eu.trentorise.smartcampus.service.opendata.impl.GetConfigDataFlow;
+import eu.trentorise.smartcampus.service.opendata.impl.GetEventiDataFlow;
 
 public class TestDataFlow extends TestCase {
 
-	public void testRun() throws Exception {
+	public void _testEvents() throws Exception {
+		DataFlowTestHelper helper = new DataFlowTestHelper();
+		Map<String, Object> parameters = new HashMap<String, Object>();		
+		
+		parameters.put("url", "http://www.comune.trento.it/api/opendata/v1/content/class/event/offset/0/limit/1000");
+
+		Map<String, Object> out0 = helper.executeDataFlow("smartcampus.service.opendata", "GetEventi", new GetEventiDataFlow(), parameters);
+		List<Message> data0 = (List<Message>)out0.get("data");
+		for (Message msg: data0) {
+			System.err.println(((Evento)msg).getLastModified()+" : "+((Evento)msg).getTitle());
+			System.err.println("-----------");
+		}
+	}
+	
+	
+	public void testData() throws Exception {
 		DataFlowTestHelper helper = new DataFlowTestHelper();
 		Map<String, Object> parameters = new HashMap<String, Object>();		
 		
@@ -46,25 +63,32 @@ public class TestDataFlow extends TestCase {
 		
 
 
-		parameters.put("url", "http://trento.opencontent.it/comuneintasca/data");  // rest
+//		parameters.put("url", "http://trento.opencontent.it/comuneintasca/data");
+		parameters.put("url", "http://www.comune.trento.it/comuneintasca/data"); 
 		Map<String, Object> out1 = helper.executeDataFlow("smartcampus.service.opendata", "GetConfig", new GetConfigDataFlow(), parameters);		
 		
 //		parameters.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754329/list/limit/1000");
+//		parameters.put("url", "http://www.comune.trento.it/api/opendata/v1/content/node/870375/list/limit/1000"); // prod
 //		Map<String, Object> out1 = helper.executeDataFlow("smartcampus.service.opendata", "GetRestaurants", new GetRestaurantsDataFlow(), parameters);
 
 //		parameters.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754211/list/limit/1000");
+//		parameters.put("url", "http://www.comune.trento.it/api/opendata/v1/content/node/870377/list/limit/1000"); // prod
 //		Map<String, Object> out1 = helper.executeDataFlow("smartcampus.service.opendata", "GetHotels", new GetHotelsDataFlow(), parameters);
 		
 //		parameters.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754058/list/limit/1000");  // cultura
+//		parameters.put("url", "http://www.comune.trento.it/api/opendata/v1/content/node/870378/list/limit/1000"); // prod
 //		Map<String, Object> out1 = helper.executeDataFlow("smartcampus.service.opendata", "GetCultura", new GetCulturaDataFlow(), parameters);		
 		
 //		parameters.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754317/list/limit/1000");
+//		parameters.put("url", "http://www.comune.trento.it/api/opendata/v1/content/node/870376/list/limit/1000"); // prod
 //		Map<String, Object> out1 = helper.executeDataFlow("smartcampus.service.opendata", "GetMainEvents", new GetMainEventsDataFlow(), parameters);		
 		
 //		parameters.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754015/list/limit/1000"); // ok
+//		parameters.put("url", "http://www.comune.trento.it/api/opendata/v1/content/node/870379/list/limit/1000"); // prod
 //		Map<String, Object> out1 = helper.executeDataFlow("smartcampus.service.opendata", "GetTesti", new GetTestiDataFlow(), parameters);			
 		
 //		parameters.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754330/list/limit/1000");
+//		parameters.put("url", "http://www.comune.trento.it/api/opendata/v1/content/node/870374/list/limit/1000"); // prod
 //		Map<String, Object> out1 = helper.executeDataFlow("smartcampus.service.opendata", "GetItinerari", new GetItinerariDataFlow(), parameters);		
 		
 		ObjectMapper mapper = new ObjectMapper();		

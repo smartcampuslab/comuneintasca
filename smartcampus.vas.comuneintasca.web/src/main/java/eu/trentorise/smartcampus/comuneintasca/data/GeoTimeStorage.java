@@ -191,7 +191,7 @@ public class GeoTimeStorage extends GenericObjectSyncMongoStorage<GeoTimeSyncObj
 				String type = findType(item);
 				item.setType(type);
 				if (type != null) {
-					logger.info("Set type to " + type + " for " + ((item.getName() != null) ? item.getName().get("it") : item.getId()));
+					logger.debug("Set type to " + type + " for " + ((item.getName() != null) ? item.getName().get("it") : item.getId()));
 				} else if (item.getItems() == null || item.getItems().isEmpty()) {
 					logger.error("Missing type for " + ((item.getName() != null) ? item.getName().get("it") : item.getId()));
 				}
@@ -227,9 +227,9 @@ public class GeoTimeStorage extends GenericObjectSyncMongoStorage<GeoTimeSyncObj
 
 	private void buildQueryClassification(List<MenuItem> items) throws BadDataException {
 		List<String> keys = Arrays.asList(new String[] { "event", "ristorante", "accomodation" });
-		List<String> values = Arrays.asList(new String[] { "tipo_evento", "tipo_locale", "tipologia_hotel" });
+		List<String> values = Arrays.asList(new String[] { "tipo_evento", "tipo_locale", "tipologia_hotel", "tipo_luogo"});
 		String typePrefix = "eu.trentorise.smartcampus.comuneintasca.model.";
-		List<String> toType = Arrays.asList(new String[] { "EventObject", "RestaurantObject", "HotelObject" });
+		List<String> toType = Arrays.asList(new String[] { "EventObject", "RestaurantObject", "HotelObject",  "POIObject"});
 
 		for (MenuItem item : items) {
 			MenuItemQuery query = item.getQuery();

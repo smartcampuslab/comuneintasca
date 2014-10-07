@@ -47,8 +47,8 @@ import eu.trentorise.smartcampus.comuneintasca.data.GeoTimeObjectSyncStorage;
 import eu.trentorise.smartcampus.comuneintasca.data.GeoTimeSyncObjectBean;
 import eu.trentorise.smartcampus.comuneintasca.data.MissingDataException;
 import eu.trentorise.smartcampus.comuneintasca.listener.Subscriber;
-import eu.trentorise.smartcampus.comuneintasca.model.ConfigObject;
 import eu.trentorise.smartcampus.comuneintasca.model.ContentObject;
+import eu.trentorise.smartcampus.comuneintasca.model.DynamicConfigObject;
 import eu.trentorise.smartcampus.comuneintasca.model.EventObject;
 import eu.trentorise.smartcampus.comuneintasca.model.HotelObject;
 import eu.trentorise.smartcampus.comuneintasca.model.ItineraryObject;
@@ -92,13 +92,26 @@ public class EventProcessorImpl implements ServiceBusListener {
 	// "ItineraryObject", "ContentObject", "POIObject" });
 
 	// content
-	private static String typePrefix = "eu.trentorise.smartcampus.comuneintasca.model.";
-	private static List<String> typeValue = Arrays.asList(new String[] { "event", "ristorante", "accomodation", "iniziativa", "itinerario", "luogo", "testo_generico" });
-	private static List<String> classificationValue = Arrays.asList(new String[] { "tipo_evento", "", "", "tipo_evento", "", "tipo_luogo", "classifications" });
-	private static List<String> toTypeValue = Arrays.asList(new String[] { "event", "restaurant", "hotel", "mainevent", "itineraries", "poi", "content" });
-	private static List<String> objectType = Arrays.asList(new String[] { "EventObject", "RestaurantObject", "HotelObject", "MainEventObject", "ItineraryObject", "ContentObject", "POIObject" });
-	private static List<String> objectValue = Arrays.asList(new String[] { "event", "restaurant", "hotel", "mainevent", "itinerary", "content", "poi" });
+//	private static String typePrefix = "eu.trentorise.smartcampus.comuneintasca.model.";
+//	private static List<String> typeValue = Arrays.asList(new String[] { "event", "ristorante", "accomodation", "iniziativa", "itinerario", "luogo", "testo_generico","folder" });
+//	private static List<String> classificationValue = Arrays.asList(new String[] { "tipo_evento", "", "", "tipo_evento", "", "tipo_luogo", "classifications", "classifications" });
+//	private static List<String> toTypeValue = Arrays.asList(new String[] { "event", "restaurant", "hotel", "mainevent", "itineraries", "poi", "content", "content" });
+//	private static List<String> objectType = Arrays.asList(new String[] { "EventObject", "RestaurantObject", "HotelObject", "MainEventObject", "ItineraryObject", "ContentObject", "POIObject" });
+//	private static List<String> objectValue = Arrays.asList(new String[] { "event", "restaurant", "hotel", "mainevent", "itinerary", "content", "poi" });
 
+	private static Map<String, MappingDescriptor> descriptors = new HashMap<String, MappingDescriptor>();
+	static {
+		descriptors.put("event", new EventMappingDescriptor());
+		descriptors.put("ristorante",new MappingDescriptor("ristorante", "restaurant", RestaurantObject.class)); 
+		descriptors.put("accomodation",new MappingDescriptor("accomodation", "hotel", HotelObject.class)); 
+		descriptors.put("iniziativa",new MappingDescriptor("iniziativa", "mainevent", MainEventObject.class, "tipo_evento")); 
+		descriptors.put("itinerario",new MappingDescriptor("itinerario", "itineraries", ItineraryObject.class));
+		descriptors.put("luogo",new MappingDescriptor("luogo", "poi", POIObject.class, "tipo_luogo")); 
+		descriptors.put("testo_generico",new MappingDescriptor("testo_generico", "content", ContentObject.class, "classifications")); 
+		descriptors.put("folder",new MappingDescriptor("folder", "content", ContentObject.class, "classifications")); 
+	}
+	
+	
 	private static Log logger = LogFactory.getLog(EventProcessorImpl.class);
 
 	private boolean updating = true;
@@ -115,13 +128,13 @@ public class EventProcessorImpl implements ServiceBusListener {
 		updating = true;
 		try {
 		logger.info("Initializating config.");
-		List<ConfigObject> oldList = storage.getObjectsByType(ConfigObject.class);
-		ConfigObject old = null;
+		List<DynamicConfigObject> oldList = storage.getObjectsByType(DynamicConfigObject.class);
+		DynamicConfigObject old = null;
 		if (oldList == null || oldList.isEmpty()) {
 			logger.info("Config non found, reading from file.");
 			InputStreamReader isr = new InputStreamReader(getClass().getResourceAsStream("/profile.json"), Charset.forName("UTF-8"));
 			String json = FileCopyUtils.copyToString(isr);
-			ConfigObject configObj = new ObjectMapper().readValue(json, ConfigObject.class);
+			DynamicConfigObject configObj = new ObjectMapper().readValue(json, DynamicConfigObject.class);
 			configObj.setLastModified(0L);
 			storage.storeObject(configObj);
 			logger.info("Saved config.");
@@ -596,12 +609,11 @@ public class EventProcessorImpl implements ServiceBusListener {
 
 	private void updateConfig(List<ByteString> data) throws Exception {
 		ConfigData cd = ConfigData.parseFrom(data.get(0));
-		int hash = cd.getData().hashCode();
 		String d = cd.getData().replace("\\\"", "");
 
 		ObjectMapper mapper = new ObjectMapper();
 
-		ConfigObject config = mapper.readValue(d, ConfigObject.class);
+		DynamicConfigObject config = mapper.readValue(d, DynamicConfigObject.class);
 
 		try {
 		completeConfig(config, true);
@@ -609,11 +621,12 @@ public class EventProcessorImpl implements ServiceBusListener {
 		fillRef(config, idMapping);
 		} catch (Exception e) {
 			logger.error("Error processing configuration, not saving");
+			e.printStackTrace();
 			return;
 		}
 
-		List<ConfigObject> oldList = storage.getObjectsByType(ConfigObject.class);
-		ConfigObject old = null;
+		List<DynamicConfigObject> oldList = storage.getObjectsByType(DynamicConfigObject.class);
+		DynamicConfigObject old = null;
 		if (oldList != null && !oldList.isEmpty()) {
 			old = oldList.get(0);
 			if (old.getLastModified() < cd.getDateModified()) {
@@ -642,7 +655,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 
 	}	
 	
-	private void completeConfig(ConfigObject config, boolean retry) throws Exception {
+	private void completeConfig(DynamicConfigObject config, boolean retry) throws Exception {
 		try {
 			setType(config.getHighlights());
 			setType(config.getMenu());
@@ -653,21 +666,35 @@ public class EventProcessorImpl implements ServiceBusListener {
 		}
 	}
 	
-	private void fillRef(ConfigObject config, Map<String, String> idMapping) throws MissingDataException {
+	private void fillRef(DynamicConfigObject config, Map<String, String> idMapping) throws MissingDataException {
 		try {
 		fillRef(config, config.getHighlights(), idMapping);
 		fillRef(config, config.getMenu(), idMapping);
 		fillRef(config, config.getNavigationItems(), idMapping);		
+		
+		removeHighlightRef(config);
 	} catch (MissingDataException e) {
 		logger.error("Cannot complete references.");
 		throw e;
 	}		
 	}
 
-	private void fillRef(ConfigObject config, List<MenuItem> items, Map<String, String> idMapping) throws MissingDataException {
+	private void removeHighlightRef(DynamicConfigObject config) {
+		for (MenuItem item : config.getHighlights()) {
+			if ((item.getObjectIds() == null || item.getObjectIds().isEmpty()) && item.getRef() != null) {
+				MenuItem refItem = findReferredItem(config, item.getRef(), false);
+				if (refItem != item) {
+					item.setObjectIds(refItem.getObjectIds());
+					item.setQuery(refItem.getQuery());
+				}
+			}
+		}
+	}
+
+	private void fillRef(DynamicConfigObject config, List<MenuItem> items, Map<String, String> idMapping) throws MissingDataException {
 		for (MenuItem item : items) {
 			if (item.getRef() != null && !item.getRef().isEmpty()) {
-				MenuItem referred = findReferredItem(config, item.getRef());
+				MenuItem referred = findReferredItem(config, item.getRef(), true);
 				if (referred != null) {
 					item.setName(referred.getName());
 					item.setRef(referred.getId());
@@ -675,7 +702,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 						item.setId(referred.getId());
 					}					
 				} else {
-					referred = findReferredItem(config, idMapping.get(item.getRef()));
+					referred = findReferredItem(config, idMapping.get(item.getRef()), true);
 					if (referred != null) {
 						item.setName(referred.getName());
 						item.setRef(referred.getId());
@@ -688,9 +715,11 @@ public class EventProcessorImpl implements ServiceBusListener {
 		}
 	}
 
-	private MenuItem findReferredItem(ConfigObject config, String ref) {
+	private MenuItem findReferredItem(DynamicConfigObject config, String ref, boolean highlights) {
 		MenuItem referred = null;
+		if (highlights) {
 		referred = findReferredItem(config.getHighlights(), ref);
+		}
 		if (referred == null) {
 			referred = findReferredItem(config.getMenu(), ref);
 		}
@@ -701,6 +730,9 @@ public class EventProcessorImpl implements ServiceBusListener {
 	}
 
 	private MenuItem findReferredItem(List<MenuItem> items, String ref) {
+		if (ref == null) {
+			return null;
+		}
 		for (MenuItem item : items) {
 			if (ref.equals(item.getId())) {
 				return item;
@@ -717,6 +749,20 @@ public class EventProcessorImpl implements ServiceBusListener {
 
 	private void setType(List<MenuItem> items) throws MissingDataException {
 		for (MenuItem item : items) {
+			if (item.getId() != null) {
+				item.setId(item.getId().replace(" ", "_"));
+			}
+			if (item.getRef() != null) {
+				item.setRef(item.getRef().replace(" ", "_"));
+			}
+			if (item.getApp() != null) {
+				for (String key : item.getApp().keySet()) {
+					if (item.getApp().get(key) != null) {
+						item.getApp().put(key, item.getApp().get(key).trim());
+					}
+				}
+			}
+			
 			if (item.getType() == null && item.getQuery() == null && item.getRef() == null && item.getApp() == null) {
 				String type = findType(item);
 				item.setType(type);
@@ -743,15 +789,19 @@ public class EventProcessorImpl implements ServiceBusListener {
 			String objectId = item.getObjectIds().get(0);
 				List<GeoTimeSyncObjectBean> objs = storage.genericSearch(Collections.<String, Object> singletonMap("id", objectId));
 				if (objs != null && !objs.isEmpty()) {
-					String type = (String) objs.get(0).getType().replace(typePrefix, "");
-					int index = objectType.indexOf(type);
-					if (index != -1) {
-						res = objectValue.get(index);
+					MappingDescriptor md;
+					try {
+						md = findDescriptor(Thread.currentThread().getContextClassLoader().loadClass(objs.get(0).getType()));
+					} catch (ClassNotFoundException e) {
+						throw new MissingDataException("Missing type for " + objectId + " = " + objs.get(0).getType());
+					}
+					if (md != null) {
+						res = md.getLocalType();
 					} else {
 						if (item.getId().equals(objectId)) {
 							logger.warn("Object contains its id in objectIds: " + objectId);
 						} else {						
-						throw new MissingDataException("Missing type for " + objectId + " = " + item.getName());
+							throw new MissingDataException("Missing type for " + objectId + " = " + item.getName());
 						}
 					}
 				} else {
@@ -771,7 +821,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 		return res;
 	}
 
-	private Map<String, String> buildQueryClassification(ConfigObject config) throws BadDataException {
+	private Map<String, String> buildQueryClassification(DynamicConfigObject config) throws BadDataException {
 		try {
 		Map<String, String> idMapping = new TreeMap<String, String>();
 		
@@ -797,29 +847,27 @@ public class EventProcessorImpl implements ServiceBusListener {
 				List<Map<String, String>> classifications = query.getClassifications();
 				String classification = "";
 				String type = query.getType();
-
-				// ex: index = -1
-				int index = typeValue.indexOf(type);
-				if (index == -1) {
+				MappingDescriptor md = findDescriptor(type);
+				if (md == null) {
 					throw new BadDataException("Cannot map " + type + " to internal type");
 				}
-				String classKey = classificationValue.get(index);
-				String newType = "" + toTypeValue.get(index);
+				String newType = md.getLocalType();
 				query.setType(newType);
 				if (classifications != null) {
-					for (Map<String, String> classifics : classifications) {
-						String val = classifics.get(classKey);
-						if (val != null) {
-							classification += val + ";";
-						}
-					}
-					if (classification.endsWith(";")) {
-						classification = classification.substring(0, classification.length() - 1);
-					}
-					query.setClassification(classification);
+//					for (Map<String, String> classifics : classifications) {
+//						String val = classifics.get(classKey);
+//						if (val != null) {
+//							classification += val + ";";
+//						}
+//					}
+//					if (classification.endsWith(";")) {
+//						classification = classification.substring(0, classification.length() - 1);
+//					}
+//					query.setClassification(classification);
+					query.setClassification(md.extractClassification(classifications));
 					query.setClassifications(null);
 					idMapping.put(item.getId(), classification);
-					item.setId(classification);
+					//item.setId(classification);
 				}
 			}
 			if (item.getItems() != null) {
@@ -942,4 +990,16 @@ public class EventProcessorImpl implements ServiceBusListener {
 	public void setClient(ServiceBusClient client) {
 		this.client = client;
 	}
+	
+	private static MappingDescriptor findDescriptor(String type) {
+		return descriptors.get(type);
+	}
+	
+	private static MappingDescriptor findDescriptor(Class cls) {
+		for (MappingDescriptor md : descriptors.values()) {
+			if (cls.equals(md.getLocalClass())) return md;
+		}
+		return null;
+	}
 }
+

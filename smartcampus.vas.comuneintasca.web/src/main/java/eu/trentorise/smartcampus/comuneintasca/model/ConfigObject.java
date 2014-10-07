@@ -26,6 +26,8 @@ public class ConfigObject extends BasicObject {
 	private List<MenuItem> navigationItems;
 	private List<MenuItem> menu;
 
+	private Boolean visible = false;
+	
 	private Long lastModified = null;
 
 	public Long getLastModified() {
@@ -67,4 +69,11 @@ public class ConfigObject extends BasicObject {
 		return serialVersionUID;
 	}
 
+	public Boolean getVisible() {
+		return visible;
+	}
+
+	public void setVisible(Boolean visible) {
+		this.visible = visible;
+	}
 }

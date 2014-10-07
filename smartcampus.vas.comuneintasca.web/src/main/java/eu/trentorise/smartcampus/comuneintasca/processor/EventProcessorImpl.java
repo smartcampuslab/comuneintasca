@@ -33,6 +33,7 @@ import java.util.TreeMap;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -47,6 +48,7 @@ import eu.trentorise.smartcampus.comuneintasca.data.GeoTimeObjectSyncStorage;
 import eu.trentorise.smartcampus.comuneintasca.data.GeoTimeSyncObjectBean;
 import eu.trentorise.smartcampus.comuneintasca.data.MissingDataException;
 import eu.trentorise.smartcampus.comuneintasca.listener.Subscriber;
+import eu.trentorise.smartcampus.comuneintasca.model.BaseCITObject;
 import eu.trentorise.smartcampus.comuneintasca.model.ContentObject;
 import eu.trentorise.smartcampus.comuneintasca.model.DynamicConfigObject;
 import eu.trentorise.smartcampus.comuneintasca.model.EventObject;
@@ -213,6 +215,9 @@ public class EventProcessorImpl implements ServiceBusListener {
 	private void updateEvents(List<ByteString> data) throws Exception {
 		Set<String> oldIds = getOldIds("opendata.trento");
 
+		
+		ObjectFilters filters = getFilters("event"); 
+		
 		for (ByteString bs : data) {
 			Evento bt = Evento.parseFrom(bs);
 			oldIds.remove(bt.getId());
@@ -258,6 +263,8 @@ public class EventProcessorImpl implements ServiceBusListener {
 				no.setToTime(bt.getToTime());
 				no.setUrl(bt.getUrl());
 
+				no.setVisible(applies(no, filters));
+				
 				storage.storeObject(no);
 			}
 		}
@@ -270,6 +277,8 @@ public class EventProcessorImpl implements ServiceBusListener {
 
 	private void updateRestaurants(List<ByteString> data) throws Exception {
 		Set<String> oldIds = getOldIds(RestaurantObject.class);
+
+		ObjectFilters filters = getFilters("restaurant"); 
 
 		for (ByteString bs : data) {
 			I18nRestaurant bt = I18nRestaurant.parseFrom(bs);
@@ -309,6 +318,8 @@ public class EventProcessorImpl implements ServiceBusListener {
 				no.setUrl(bt.getUrl());
 				no.setObjectId(bt.getObjectId());
 
+				no.setVisible(applies(no, filters));
+
 				storage.storeObject(no);
 			}
 		}
@@ -321,6 +332,8 @@ public class EventProcessorImpl implements ServiceBusListener {
 
 	private void updateHotels(List<ByteString> data) throws Exception {
 		Set<String> oldIds = getOldIds(HotelObject.class);
+
+		ObjectFilters filters = getFilters("hotels"); 
 
 		for (ByteString bs : data) {
 			I18nHotel bt = I18nHotel.parseFrom(bs);
@@ -356,6 +369,8 @@ public class EventProcessorImpl implements ServiceBusListener {
 				no.setUrl(bt.getUrl());
 				no.setObjectId(bt.getObjectId());
 
+				no.setVisible(applies(no, filters));
+
 				storage.storeObject(no);
 			}
 		}
@@ -368,6 +383,8 @@ public class EventProcessorImpl implements ServiceBusListener {
 
 	private void updateCultura(List<ByteString> data) throws Exception {
 		Set<String> oldIds = getOldIds(POIObject.class);
+
+		ObjectFilters filters = getFilters("poi"); 
 
 		for (ByteString bs : data) {
 			I18nCultura bt = I18nCultura.parseFrom(bs);
@@ -405,6 +422,8 @@ public class EventProcessorImpl implements ServiceBusListener {
 				no.setContactFullName(bt.getContactFullName());
 				no.setObjectId(bt.getObjectId());
 
+				no.setVisible(applies(no, filters));
+
 				storage.storeObject(no);
 			}
 		}
@@ -417,6 +436,8 @@ public class EventProcessorImpl implements ServiceBusListener {
 
 	private void updateMainEvents(List<ByteString> data) throws Exception {
 		Set<String> oldIds = getOldIds(MainEventObject.class);
+
+		ObjectFilters filters = getFilters("mainevent"); 
 
 		for (ByteString bs : data) {
 			I18nMainEvent bt = I18nMainEvent.parseFrom(bs);
@@ -456,6 +477,8 @@ public class EventProcessorImpl implements ServiceBusListener {
 				no.setEventDateDescription(toMap(bt.getDateDescription()));
 				no.setObjectId(bt.getObjectId());
 
+				no.setVisible(applies(no, filters));
+
 				storage.storeObject(no);
 			}
 		}
@@ -468,6 +491,8 @@ public class EventProcessorImpl implements ServiceBusListener {
 
 	private void updateTesti(List<ByteString> data) throws Exception {
 		Set<String> oldIds = getOldIds(ContentObject.class);
+
+		ObjectFilters filters = getFilters("content"); 
 
 		for (ByteString bs : data) {
 			I18nTesto bt = I18nTesto.parseFrom(bs);
@@ -495,6 +520,8 @@ public class EventProcessorImpl implements ServiceBusListener {
 				no.setAddress(toMap(bt.getAddress()));
 				no.setObjectId(bt.getObjectId());
 
+				no.setVisible(applies(no, filters));
+
 				storage.storeObject(no);
 			}
 		}
@@ -507,6 +534,8 @@ public class EventProcessorImpl implements ServiceBusListener {
 
 	private void updateItinerari(List<ByteString> data) throws Exception {
 		Set<String> oldIds = getOldIds(ItineraryObject.class);
+
+		ObjectFilters filters = getFilters("itineraries"); 
 
 		for (ByteString bs : data) {
 			I18nItinerario bt = I18nItinerario.parseFrom(bs);
@@ -536,6 +565,8 @@ public class EventProcessorImpl implements ServiceBusListener {
 				no.setLength(bt.getLength());
 				no.setObjectId(bt.getObjectId());
 
+				no.setVisible(applies(no, filters));
+
 				storage.storeObject(no);
 			}
 		}
@@ -548,6 +579,8 @@ public class EventProcessorImpl implements ServiceBusListener {
 
 	private void updateEventsYmir(List<ByteString> data) throws Exception {
 		Set<String> oldIds = getOldIds("festivaleconomia");
+
+		ObjectFilters filters = getFilters("event"); 
 
 		for (ByteString bs : data) {
 			eu.trentorise.smartcampus.service.festivaleconomia.data.message.Festivaleconomia.Evento bt = eu.trentorise.smartcampus.service.festivaleconomia.data.message.Festivaleconomia.Evento.parseFrom(bs);
@@ -572,6 +605,9 @@ public class EventProcessorImpl implements ServiceBusListener {
 				no.setTitle(convertTranslated(bt.getTitleList()));
 				no.setToTime(bt.getToTime());
 				no.setUrl(bt.getUrl());
+
+				no.setVisible(applies(no, filters));
+
 				storage.storeObject(no);
 			}
 		}
@@ -632,19 +668,23 @@ public class EventProcessorImpl implements ServiceBusListener {
 			if (old.getLastModified() < cd.getDateModified()) {
 				config.setId(old.getId());
 				config.setLastModified(cd.getDateModified());
+				config.setVisible(true);
 				storage.storeObject(config);
-
 				// old.setLastModified(cd.getDateModified());
 				// old.setHighlights(config.getHighlights());
 				// storage.storeObject(old);
 				logger.info("Stored updated config.");
+				updateAll(config);
 			}
 		} else {
 			config.setLastModified(cd.getDateModified());
+			config.setVisible(true);
 			storage.storeObject(config);
 			logger.info("Stored new config.");
+			updateAll(config);
 		}
 
+		
 //		mapper.configure(org.codehaus.jackson.map.SerializationConfig.Feature.WRITE_NULL_PROPERTIES, false);
 //		mapper.configure(org.codehaus.jackson.map.SerializationConfig.Feature.WRITE_NULL_MAP_VALUES, false);
 //		mapper.configure(org.codehaus.jackson.map.SerializationConfig.Feature.INDENT_OUTPUT, true);
@@ -653,6 +693,29 @@ public class EventProcessorImpl implements ServiceBusListener {
 //		fw.write(s);
 //		fw.close();
 
+	}
+
+	private void updateAll(DynamicConfigObject config) throws DataException {
+		Map<String,ObjectFilters> map = constructFilters(config);
+		Map<Class, ObjectFilters> classMap = new HashMap<Class, EventProcessorImpl.ObjectFilters>();
+		List<? extends BasicObject> allObjects = storage.getAllObjects();
+		for (BasicObject o : allObjects) {
+			if (o instanceof BaseCITObject) {
+				if (!classMap.containsKey(o.getClass())) {
+					ObjectFilters filters = null;
+					MappingDescriptor md = findDescriptor(o.getClass());
+					if (md != null) {
+						filters = map.get(md.getLocalType());
+					}
+					classMap.put(o.getClass(), filters);
+				}
+				Boolean applies = applies((BaseCITObject)o, classMap.get(o.getClass()));
+				if (((BaseCITObject) o).getVisible() != null && !applies.equals(((BaseCITObject) o).getVisible())) {
+					((BaseCITObject) o).setVisible(applies);
+					storage.storeObject(o);
+				}
+			}
+		}
 	}	
 	
 	private void completeConfig(DynamicConfigObject config, boolean retry) throws Exception {
@@ -969,7 +1032,8 @@ public class EventProcessorImpl implements ServiceBusListener {
 	}
 
 	public String getImageURL(String image) {
-		if (image != null && !image.startsWith("http")) {
+		if (image == null || image.isEmpty()) return null;
+		if (!image.startsWith("http")) {
 			return imagePrefix + image.replace("|", "");
 		}
 		return image;
@@ -1000,6 +1064,98 @@ public class EventProcessorImpl implements ServiceBusListener {
 			if (cls.equals(md.getLocalClass())) return md;
 		}
 		return null;
+	}
+
+	private boolean applies(BaseCITObject o, ObjectFilters filters) {
+		if (filters == null) return true;
+		return filters.applies(o);
+	}
+	
+	private static class ObjectFilters {
+		Set<String> ids = new HashSet<String>();
+		Set<String> classifications = new HashSet<String>();
+		boolean all = false;
+		
+		boolean applies(BaseCITObject o) {
+			if (all) return true;
+			if (ids.contains(o.getId())) return true;
+
+			if (o instanceof EventObject) {
+				if (classifications.contains(o.getCategory())) return true;
+			}
+			if (o instanceof POIObject) {
+				if (classifications.contains(((POIObject)o).getClassification().get("it"))) return true;
+			}
+			if (o instanceof ContentObject) {
+				if (classifications.contains(((ContentObject)o).getClassification().get("it"))) return true;
+			}
+			if (o instanceof MainEventObject) {
+				if (classifications.contains(((MainEventObject)o).getClassification().get("it"))) return true;
+			}
+			if (o instanceof RestaurantObject) {
+				if (classifications.contains(((RestaurantObject)o).getClassification().get("it"))) return true;
+			}
+			if (o instanceof HotelObject) {
+				if (classifications.contains(((HotelObject)o).getClassification().get("it"))) return true;
+			}
+
+			return false;
+		}
+	}
+	
+	private ObjectFilters getFilters(String key) throws DataException {
+		List<DynamicConfigObject> oldList = storage.getObjectsByType(DynamicConfigObject.class);
+		if (oldList != null && oldList.size() > 0) {
+			DynamicConfigObject old = oldList.get(0);
+			Map<String, ObjectFilters> constructFilters = constructFilters(old);
+			return constructFilters.get(key);
+		}
+
+		return null;
+	}
+	
+	private Map<String, ObjectFilters> constructFilters(DynamicConfigObject object) {
+		Map<String,ObjectFilters> res = new HashMap<String, EventProcessorImpl.ObjectFilters>();
+		
+		constructFilters(object.getHighlights(), res);
+		constructFilters(object.getNavigationItems(), res);
+		constructFilters(object.getMenu(), res);
+
+		return res;
+	}
+
+	private void constructFilters(List<MenuItem> menu, Map<String,ObjectFilters> res) {
+		for (MenuItem item : menu) {
+			if (item.getObjectIds() != null && !item.getObjectIds().isEmpty()) {
+				String type = item.getType();
+				if (type != null) {
+					ObjectFilters filters = res.get(type);
+					if (filters == null) {
+						filters = new ObjectFilters();
+						res.put(type, filters);
+					}
+					filters.ids.addAll(item.getObjectIds());
+				}
+			}
+			if (item.getQuery() != null) {
+				String type = item.getQuery().getType();
+				if (type != null) {
+					ObjectFilters filters = res.get(type);
+					if (filters == null) {
+						filters = new ObjectFilters();
+						res.put(type, filters);
+					}
+					if (StringUtils.isEmpty(item.getQuery().getClassification())) {
+						filters.all = true;
+					} else {
+						filters.classifications.addAll(Arrays.asList(item.getQuery().getClassification().split(";")));
+					}
+				}
+			}
+			if (item.getItems() != null) {
+				constructFilters(item.getItems(), res);
+			}
+		}
 	}
 }
 

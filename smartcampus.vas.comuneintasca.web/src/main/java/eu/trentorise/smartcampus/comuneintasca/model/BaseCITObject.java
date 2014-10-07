@@ -30,6 +30,8 @@ public class BaseCITObject extends BasicObject {
 	private Map<String,String> info = null;
 	private String category = null;
 
+	private Boolean visible = false;
+	
 	private Map<String,String> contacts = null;
 	private String url = null;
 	
@@ -133,6 +135,13 @@ public class BaseCITObject extends BasicObject {
 
 	public void setObjectId(String objectId) {
 		this.objectId = objectId;
+	}
+
+	public Boolean getVisible() {
+		return visible;
+	}
+
+	public void setVisible(Boolean visible) {
+		this.visible = visible;
 	}	
-	
 }

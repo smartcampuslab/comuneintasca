@@ -16,6 +16,7 @@
 package eu.trentorise.smartcampus.comuneintasca.controller;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +52,14 @@ public class SyncController extends AbstractObjectController {
 			
 			SyncDataRequest syncReq = Util.convertRequest(obj, since);
 			storage.cleanSyncData(syncReq.getSyncData(), null);
-			SyncData result = storage.getSyncData(syncReq.getSince(), null, syncReq.getSyncData().getInclude(), syncReq.getSyncData().getExclude());
+			
+			Map<String,Object> inc = new HashMap<String, Object>();
+			if (syncReq.getSyncData().getInclude() != null) {
+				inc.putAll(syncReq.getSyncData().getInclude());
+			}
+			inc.put("visible", true);
+			
+			SyncData result = storage.getSyncData(syncReq.getSince(), null, inc, syncReq.getSyncData().getExclude());
 			cleanResult(result);
 			
 			//trick for config object

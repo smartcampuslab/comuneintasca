@@ -159,8 +159,8 @@ angular.module('ilcomuneintasca.controllers.common', [])
     $scope.group = g;
   });
 })
+.controller('PageCtrl', function ($scope, $rootScope, $state, $stateParams, $filter, $location, $window, $timeout, Config, DatiDB, ListToolbox, DateUtility, GeoLocate, MapHelper, $ionicScrollDelegate) {
 
-.controller('PageCtrl', function ($scope, $rootScope, $state, $stateParams, $filter, $location, $window, Config, DatiDB, ListToolbox, DateUtility, GeoLocate, MapHelper, $ionicScrollDelegate) {
   $scope._ = _;
   $scope.getLocaleDateString = function (time) {
     return DateUtility.getLocaleDateString($rootScope.lang, time);
@@ -328,7 +328,9 @@ angular.module('ilcomuneintasca.controllers.common', [])
                     $scope.results = data;
                     $scope.resultsAll = data;
                     dosort();
-                    $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false);
+                    if (!!$ionicScrollDelegate.$getByHandle('listScroll')) {
+                      $timeout(function(){ $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false); });
+                    }
                   });
                 }
               }
@@ -428,7 +430,9 @@ angular.module('ilcomuneintasca.controllers.common', [])
                 } else {
                   $scope.results = [];
                 }
-                $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false);
+                if (!!$ionicScrollDelegate.$getByHandle('listScroll')) {
+                  $timeout(function(){ $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false); });
+                }
 
                 if (filter) {
                   $scope.filterDef = $scope.filterOptions[filter];

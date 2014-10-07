@@ -140,7 +140,7 @@ angular.module('ilcomuneintasca.services.list', [])
         $scope.filter = $scope.$navDirection != 'back' ? conf.defaultFilter : state.filter;
         $scope.showFilterPopup = function () {
           if (!!$ionicScrollDelegate.$getByHandle('listScroll')) {
-            $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false);
+            $timeout(function(){ $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false); });
           }  
           openFilterPopup($scope, $scope.filterOptions, $scope.filter, function (res) {
             $scope.filter = res;
@@ -156,7 +156,7 @@ angular.module('ilcomuneintasca.services.list', [])
           $scope.searching = true;
           var footer = e.target.parentNode.parentNode.parentNode;
           if (!!$ionicScrollDelegate.$getByHandle('listScroll')) {
-            $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false);
+            $timeout(function(){ $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false); });
           }  
           //console.log(footer);
           $timeout(function () {

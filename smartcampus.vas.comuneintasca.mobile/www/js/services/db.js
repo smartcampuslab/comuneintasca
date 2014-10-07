@@ -335,6 +335,7 @@ angular.module('ilcomuneintasca.services.db', [])
                               try {
                                 parentEvent=JSON.parse(parentEvent);
                               } catch(err) {
+                                console.log('unparsable parentEvent string for item '+item.id+'/'+item.objectId+': '+parentEvent);
                                 console.log(err);
                                 parentEvent = {};
                               }  

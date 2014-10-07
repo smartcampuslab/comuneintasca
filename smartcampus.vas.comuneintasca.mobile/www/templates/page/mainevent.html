@@ -1,5 +1,6 @@
 <ion-content class="has-header">
-  <comuni-img ng-if="obj.image" class="content-image-main" gotdata="gotdata" detail="true"></comuni-img>
+  <!-- comuni-img ng-if="obj.image" class="content-image-main" gotdata="gotdata" detail="true"></comuni-img -->
+  <div class="content-image-main comuni-img" ng-attr-style="background-image:url({{obj.parsedimageurl|translate}})"></div>
   <div class="padding">
     <h1>{{obj.title | translate}}</h1>
     <h4>{{obj.eventDateDescription | translate}}</h4>

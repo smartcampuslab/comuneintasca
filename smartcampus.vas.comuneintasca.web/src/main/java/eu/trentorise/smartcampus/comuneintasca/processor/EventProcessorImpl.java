@@ -755,6 +755,13 @@ public class EventProcessorImpl implements ServiceBusListener {
 			if (item.getRef() != null) {
 				item.setRef(item.getRef().replace(" ", "_"));
 			}
+			if (item.getApp() != null) {
+				for (String key : item.getApp().keySet()) {
+					if (item.getApp().get(key) != null) {
+						item.getApp().put(key, item.getApp().get(key).trim());
+					}
+				}
+			}
 			
 			if (item.getType() == null && item.getQuery() == null && item.getRef() == null && item.getApp() == null) {
 				String type = findType(item);

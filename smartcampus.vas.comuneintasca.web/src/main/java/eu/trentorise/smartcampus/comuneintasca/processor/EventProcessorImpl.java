@@ -749,6 +749,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 				if (refItem != item) {
 					item.setObjectIds(refItem.getObjectIds());
 					item.setQuery(refItem.getQuery());
+					item.setImage(refItem.getImage());
 				}
 			}
 		}

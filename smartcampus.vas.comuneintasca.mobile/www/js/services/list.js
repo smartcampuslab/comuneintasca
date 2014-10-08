@@ -79,19 +79,21 @@ angular.module('ilcomuneintasca.services.list', [])
   };
 
   return {
+    getState: function () {
+      return state;
+    },
     // expect conf with load, orderingTypes, defaultOrdering, getData, title, filterOptions, defaultFilter, doFilter
     prepare: function ($scope, conf) {
       var d = $q.defer();
-      $scope.gotdata = d.promise;
+      //$scope.gotdata = d.promise;
       if ($scope.$navDirection == 'back') {
-        d.resolve(state.data);
-        conf.load(state.data);
+        //d.resolve(state.data);
       } else {
         state.order = null;
         state.filter = null;
         state.data = null;
-        conf.load(null);
       }
+      conf.load(state.data);
 /*
       $scope.goToItem = function (path) {
         //state.data = conf.getData();
@@ -134,7 +136,7 @@ angular.module('ilcomuneintasca.services.list', [])
         };
       }
       if (conf.doFilter) {
-        //console.log('conf.doFilter...');
+        //console.log('conf.doFilter... ($scope.$navDirection='+$scope.$navDirection+')');
         $scope.hasFilter = true;
         $scope.filterOptions = conf.filterOptions;
         $scope.filter = $scope.$navDirection != 'back' ? conf.defaultFilter : state.filter;

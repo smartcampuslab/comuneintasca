@@ -387,8 +387,9 @@ angular.module('ilcomuneintasca.controllers.common', [])
               tboptions.filterOptions = Config.restaurantTypesList();
             }
 
-            tboptions.doFilter = function (filter) {
-              //console.log('doFilter()...');
+            tboptions.doFilter = function (filter_default) {
+              filter=ListToolbox.getState().filter||filter_default;
+              console.log('doFilter("'+filter+'")...');
               var t = 0;
               var d = new Date();
               var f = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime() - 1;

@@ -20,6 +20,7 @@ angular.module('ilcomuneintasca.services.date', [])
       return dateString;
     },
     regroup: function (scope,type,from,to,classification) {
+      //console.log('scope.filter: '+scope.filter);
       if (scope.filter=='today' || to==0) {
         var label=(scope.filter=='today'?scope.getLocaleDateString((new Date()).getTime()):null);
         label=null;

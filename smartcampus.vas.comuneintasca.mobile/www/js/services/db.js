@@ -187,9 +187,12 @@ angular.module('ilcomuneintasca.services.db', [])
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_typeclass ON ContentObjects( type, classification )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_typeid ON ContentObjects( type, id )');
 
-        tx.executeSql('DROP TABLE IF EXISTS Favorites');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS Favorites (id text primary key)');
-        tx.executeSql('CREATE INDEX IF NOT EXISTS fav_id ON Favorites( id )');
+        // if favs schema changes, we need to specify some special changes to perform to upgrade it
+        if (currentSchemaVersion==0) {
+          tx.executeSql('DROP TABLE IF EXISTS Favorites');
+          tx.executeSql('CREATE TABLE IF NOT EXISTS Favorites (id text primary key)');
+          tx.executeSql('CREATE INDEX IF NOT EXISTS fav_id ON Favorites( id )');
+        }
       }, function (error) { //error callback
         console.log('cannot initialize db! ')
         console.log(error);

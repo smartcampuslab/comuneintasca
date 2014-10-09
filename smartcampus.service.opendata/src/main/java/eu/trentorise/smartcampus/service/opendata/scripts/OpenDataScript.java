@@ -100,9 +100,9 @@ public class OpenDataScript {
 		if (e.get("value") instanceof Map) {
 			builder.setParentEventId(mapper.writeValueAsString(e.get("value")));
 		}
-		else if (!(e.get("value") instanceof Boolean) || (Boolean)e.get("value")) {
-			builder.setParentEventId(e.get("value").toString().trim());
-		}
+//		else if (!(e.get("value") instanceof Boolean) || (Boolean)e.get("value")) {
+//			builder.setParentEventId(e.get("value").toString().trim());
+//		}
 		e = (Map<String, Object>) map.get("tipo_evento");
 		if (e.get("value") instanceof String) {
 			builder.setCategory(e.get("value").toString().trim());

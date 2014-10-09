@@ -1,7 +1,7 @@
 {
   "id": "54088b79975a10f95cae0266",
-  "updateTime": 1411572795000,
-  "version": 2998,
+  "updateTime": 1412766322000,
+  "version": 3113,
   "user": null,
   "highlights": [
     {
@@ -72,25 +72,47 @@
       "app": null
     },
     {
-      "id": "3f90abb49a32772627440e0ce98e25eb",
+      "id": "98c07591b6c32e51b3afd2d57503080e",
       "name": {
-        "it": "Arte e persuasione",
-        "en": "Arte e persuasione",
-        "de": "Arte e persuasione"
+        "it": "Rinascimenti eccentrici",
+        "en": "Rinascimenti eccentrici",
+        "de": "Rinascimenti eccentrici"
       },
       "description": null,
       "image": {
-        "it": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/arte-e-persuasione11/8096383-15-ita-IT/Arte-e-persuasione.png",
-        "en": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/arte-e-persuasione11/8096383-15-ita-IT/Arte-e-persuasione.png",
-        "de": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/arte-e-persuasione11/8096383-15-ita-IT/Arte-e-persuasione.png"
+        "it": "http://www.comune.trento.it/var/comunetn/storage/images/aree-tematiche/turismo/calendario-eventi/rinascimenti-eccentrici13/8172301-1-ita-IT/Rinascimenti-eccentrici.jpg",
+        "en": "http://www.comune.trento.it/var/comunetn/storage/images/aree-tematiche/turismo/calendario-eventi/rinascimenti-eccentrici13/8172301-1-ita-IT/Rinascimenti-eccentrici.jpg",
+        "de": "http://www.comune.trento.it/var/comunetn/storage/images/aree-tematiche/turismo/calendario-eventi/rinascimenti-eccentrici13/8172301-1-ita-IT/Rinascimenti-eccentrici.jpg"
       },
       "objectIds": [
-        "3f90abb49a32772627440e0ce98e25eb"
+        "98c07591b6c32e51b3afd2d57503080e"
       ],
       "items": null,
       "query": null,
       "ref": null,
       "type": "event",
+      "app": null
+    },
+    {
+      "id": "text.3005",
+      "name": {
+        "it": "La Card 'TrentoRovereto città di culture'",
+        "en": "The 'TrentoRovereto Città di culture' card",
+        "de": "Die 'TrentoRovereto Città di culture'-Karte"
+      },
+      "description": null,
+      "image": {
+        "it": "http://tn.smartcampuslab.it/comuneintasca/images/card.jpg",
+        "en": "http://tn.smartcampuslab.it/comuneintasca/images/card.jpg",
+        "de": "http://tn.smartcampuslab.it/comuneintasca/images/card.jpg"
+      },
+      "objectIds": [
+        "text.3005"
+      ],
+      "items": null,
+      "query": null,
+      "ref": null,
+      "type": "content",
       "app": null
     }
   ],

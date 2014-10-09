@@ -1,22 +1,40 @@
 angular.module('ilcomuneintasca.services.date', [])
 
-.factory('DateUtility', function (DatiDB) {
+.factory('DateUtility', function ($rootScope, DatiDB) {
+  var USE_GLOBALIZEJS=false;
+  if (USE_GLOBALIZEJS) {
+    var glbz = { 'it':Globalize('it'), 'en':Globalize('en'), 'de':Globalize('de') };
+    console.log('Globalize lib inited!');
+  }
   return {
     getLocaleDateString: function (lang, time) {
-      var locale = 'en-EN';
-      if (lang == 'it') {
-        locale = 'it-IT';
-      } else if (lang == 'de') {
-        locale = 'de-DE';
+      var dateString=null;
+      if (USE_GLOBALIZEJS) {
+        console.log('getLocaleDateString(); lang: '+lang);
+        console.log('getLocaleDateString(); time: '+time);
+        var pat = 'MMMM, d';
+        if (lang != 'en') {
+          pat = 'd MMMM';
+        }
+        dateString = glbz[lang].formatDate(time, {
+          pattern: pat
+        });
+      } else {
+        var locale = 'en-EN';
+        if (lang == 'it') {
+          locale = 'it-IT';
+        } else if (lang == 'de') {
+          locale = 'de-DE';
+        }
+        console.log(locale);
+        var date = new Date(time);
+        dateString = date.toLocaleDateString(locale, {
+          weekday: undefined, //'long',
+          year: undefined, //'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
       }
-      console.log(locale);
-      var date = new Date(time);
-      var dateString = date.toLocaleDateString(locale, {
-        weekday: undefined, //'long',
-        year: undefined, //'numeric',
-        month: 'long',
-        day: 'numeric'
-      });
       return dateString;
     },
     regroup: function (scope,type,from,to,classification) {

@@ -15,6 +15,14 @@
   <script src="js/libs/jquery-v1.min.js"></script>
   <script src="js/libs/underscore-min.js" type="text/javascript"></script>
 
+  <!-- unicode stuff (for globalize js lib) -->
+  <script src="cldrjs/cldr.min.js"></script>
+  <script src="cldrjs/cldr/event.min.js"></script>
+  <script src="cldrjs/cldr/supplemental.min.js"></script>
+  <!-- globalize js lib -->
+  <script src="globalizejs/globalize.min.js"></script>
+  <script src="globalizejs/globalize/date.min.js"></script>
+
   <script src="ionic/ionic.bundle.min.js"></script>
   <!-- script src="js/libs/angular-queue.js"></script -->
 
@@ -47,6 +55,14 @@
 
   <!-- cordova script (this will be a 404 during development) -->
   <script src="cordova.js"></script>
+  <script>
+  $.get( "cldrjs/cldr/main/it/ca-gregorian.json", Globalize.load );
+  $.get( "cldrjs/cldr/main/en/ca-gregorian.json", Globalize.load );
+  $.get( "cldrjs/cldr/main/de/ca-gregorian.json", Globalize.load );
+  $.get( "cldrjs/cldr/supplemental/likelySubtags.json", Globalize.load );
+  $.get( "cldrjs/cldr/supplemental/timeData.json", Globalize.load );
+  $.get( "cldrjs/cldr/supplemental/weekData.json", Globalize.load );
+  </script>
 </body>
 
 </html>

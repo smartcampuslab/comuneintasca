@@ -5,7 +5,7 @@ angular.module('ilcomuneintasca.services.conf', [])
   //$rootScope.DEV=DEVELOPMENT;
   $rootScope.DEV=true;
 
-  var SCHEMA_VERSION=98;
+  var SCHEMA_VERSION=99;
   var SYNC_HOST="tn";
   if (DEVELOPMENT) SYNC_HOST="vas-dev";
   var LOCAL_PROFILE="opencontent";

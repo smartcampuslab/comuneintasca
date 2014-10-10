@@ -329,7 +329,7 @@ angular.module('ilcomuneintasca.services.db', [])
                       if (contentTypeKey == 'event') {
 
                         if (item.eventForm=='Manifestazione') {
-                          //console.log('*** Manifestazione ***: '+item.title.it);
+                          console.log('*** Manifestazione ***: '+item.title.it);
                           classified.resolve(['_complex','','']);
                         } else {
                           if (item.parentEventId) {
@@ -493,11 +493,11 @@ angular.module('ilcomuneintasca.services.db', [])
 
                     // events cleanup
                     var nowTime = (new Date()).getTime();
-                    //console.log('[TODO events cleanup] nowTime=' + new Date(nowTime));
+                    //console.log('[EVENTS CLEANUP] nowTime=' + new Date(nowTime));
                     var yesterdayTime = nowTime - (24 * 60 * 60 * 1000);
-                    console.log('[TODO events cleanup] yesterdayTime=' + new Date(yesterdayTime));
+                    //console.log('[EVENTS CLEANUP] yesterdayTime=' + new Date(yesterdayTime));
                     tx.executeSql('DELETE FROM ContentObjects WHERE type = ? AND toTime < ?', [ types['event'],yesterdayTime ], function (tx, res) { //success callback
-                      //console.log('deleted old events');
+                      console.log('deleted old events');
                     }, function (e) { //error callback
                       console.log('unable to delete old events: ' + e.message);
                     });

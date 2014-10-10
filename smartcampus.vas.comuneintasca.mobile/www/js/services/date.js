@@ -1,22 +1,17 @@
 angular.module('ilcomuneintasca.services.date', [])
 
 .factory('DateUtility', function ($rootScope, DatiDB) {
-  var USE_GLOBALIZEJS=false;
-  if (USE_GLOBALIZEJS) {
-    var glbz = { 'it':Globalize('it'), 'en':Globalize('en'), 'de':Globalize('de') };
-    console.log('Globalize lib inited!');
-  }
   return {
     getLocaleDateString: function (lang, time) {
       var dateString=null;
-      if (USE_GLOBALIZEJS) {
-        console.log('getLocaleDateString(); lang: '+lang);
-        console.log('getLocaleDateString(); time: '+time);
+      if (!!GLBZ) {
+        //console.log('getLocaleDateString(); lang: '+lang);
+        //console.log('getLocaleDateString(); time: '+time);
         var pat = 'MMMM, d';
         if (lang != 'en') {
           pat = 'd MMMM';
         }
-        dateString = glbz[lang].formatDate(time, {
+        dateString = GLBZ[lang].formatDate(time, {
           pattern: pat
         });
       } else {

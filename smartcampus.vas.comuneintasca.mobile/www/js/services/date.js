@@ -3,10 +3,10 @@ angular.module('ilcomuneintasca.services.date', [])
 .factory('DateUtility', function ($rootScope, DatiDB) {
   return {
     getLocaleDateString: function (lang, time) {
+      //console.log('getLocaleDateString(); time: '+time);
       var dateString=null;
       if (!!GLBZ) {
         //console.log('getLocaleDateString(); lang: '+lang);
-        //console.log('getLocaleDateString(); time: '+time);
         var pat = 'MMMM, d';
         if (lang != 'en') {
           pat = 'd MMMM';
@@ -21,7 +21,7 @@ angular.module('ilcomuneintasca.services.date', [])
         } else if (lang == 'de') {
           locale = 'de-DE';
         }
-        console.log(locale);
+        //console.log(locale);
         var date = new Date(time);
         dateString = date.toLocaleDateString(locale, {
           weekday: undefined, //'long',

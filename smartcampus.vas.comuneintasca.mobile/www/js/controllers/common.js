@@ -248,7 +248,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
 
 
             if (data.parentid) {
-              console.log('siblings');
+              //console.log('siblings');
 
               $scope.gotsonsdata = DatiDB.getByParent(sg_query_type, data.parentid).then(function (data) {
                 $scope.sons = data;

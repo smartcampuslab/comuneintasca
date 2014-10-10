@@ -613,7 +613,7 @@ angular.module('ilcomuneintasca.services.db', [])
         var lista = []
         dbObj.transaction(function (tx) {
           //console.log('type: '+types[dbname]);
-          console.log('category: ' + cateId);
+          //console.log('category: ' + cateId);
 
 					var _complex=undefined;
           /*

@@ -183,7 +183,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
           // temporary fix
           var type=item.type||'content';
           
-          console.log('item('+type+'): '+JSON.stringify(item));
+          //console.log('highlight('+type+'): '+JSON.stringify(item));
 /*          if (item.ref) {
             var res = Config.menuById(item.ref);
             alert(res);
@@ -204,7 +204,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
               } else {
                 $scope.results = data;
               }
-              console.log('highlight ('+dbType+') gotdata!');
+              //console.log('highlight ('+dbType+') gotdata!');
               $scope.template = 'templates/page/' + dbType + '.html';
             });
           }
@@ -389,7 +389,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
 
             tboptions.doFilter = function (filter_default) {
               filter=ListToolbox.getState().filter||filter_default;
-              console.log('doFilter("'+filter+'")...');
+              //console.log('doFilter("'+filter+'")...');
               var t = 0;
               var d = new Date();
               var f = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime() - 1;

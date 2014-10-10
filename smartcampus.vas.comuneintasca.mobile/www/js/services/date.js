@@ -11,7 +11,8 @@ angular.module('ilcomuneintasca.services.date', [])
         if (lang != 'en') {
           pat = 'd MMMM';
         }
-        dateString = GLBZ[lang].formatDate(time, {
+        var date = new Date(time);
+        dateString = GLBZ[lang].formatDate(date, {
           pattern: pat
         });
       } else {

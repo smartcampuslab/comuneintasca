@@ -113,7 +113,7 @@ angular.module('ilcomuneintasca.services.fs', [])
         fsRoot.getDirectory(IMAGESDIR_NAME, {
           create: true
         }, function (dirEntry) {
-          console.log('images cache dirEntry nativeURL: ' + dirEntry.nativeURL);
+          //console.log('images cache dirEntry nativeURL: ' + dirEntry.nativeURL);
           fsObj.resolve(dirEntry);
         }, function (err) {
           console.log('cannot find main folder fs');

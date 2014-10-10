@@ -189,7 +189,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
             alert(res);
           }*/
           if (item.objectIds.join(',')==$stateParams.itemId) {
-            console.log('QUELO! '+item.objectIds.join(','));
+            //console.log('QUELO! '+item.objectIds.join(','));
             $scope.title = $filter('translate')(item.name);
             $scope.gotdata = DatiDB.get(type, item.objectIds.join(',')).then(function (data) {
               var dbType = null;

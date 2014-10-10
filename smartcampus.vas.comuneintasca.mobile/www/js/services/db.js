@@ -307,7 +307,7 @@ angular.module('ilcomuneintasca.services.db', [])
                   if (!angular.isUndefined(data.updated[contentTypeClassName])) {
                     updates = data.updated[contentTypeClassName];
 
-                    if (contentTypeKey == 'config') {
+                    if (contentTypeKey == 'config' || contentTypeKey == 'oldconfig') {
                       //console.log('CONFIG object already parsed');
                       return;
                     }

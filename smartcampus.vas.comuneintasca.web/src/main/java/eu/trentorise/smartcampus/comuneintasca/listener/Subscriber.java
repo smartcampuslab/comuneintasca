@@ -32,7 +32,7 @@ public class Subscriber {
 
 	public static final String SERVICE_YMIR = "smartcampus.service.festivaleconomia";
 	public static final String SERVICE_OD = "smartcampus.service.opendata";
-	public static final String METHOD_EVENTS = "GetEventi";
+	public static final String METHOD_EVENTS = "GetEventiParam";
 	public static final String METHOD_CONFIG = "GetConfig";
 	public static final String METHOD_RESTAURANTS = "GetRestaurants";
 	public static final String METHOD_HOTELS = "GetHotels";

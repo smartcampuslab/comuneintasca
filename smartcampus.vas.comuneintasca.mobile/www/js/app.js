@@ -19,7 +19,7 @@ angular.module('ilcomuneintasca', [
 ])
 //  'ngQueue',
 
-.run(function ($rootScope, $filter, $location, Config, DatiDB, GeoLocate, $ionicPlatform) {
+.run(function ($ionicPlatform, $rootScope, $state, $filter, $location, Config, DatiDB, GeoLocate) {
   $rootScope.locationWatchID = undefined;
   //  ionic.Platform.fullScreen(false,true);
   if (typeof (Number.prototype.toRad) === "undefined") {
@@ -41,7 +41,15 @@ angular.module('ilcomuneintasca', [
     GeoLocate.locate();
   }, false);
   $ionicPlatform.ready(function () {
-   //console.log('IONIC READY!');
+    //console.log('IONIC READY!');
+    // Disable BACK button on home
+    $ionicPlatform.registerBackButtonAction(function (event) {
+      if($state.current.name=="app.home"){
+        console.log('not going back anymore!');
+      } else {
+        navigator.app.backHistory();
+      }
+    }, 100);
    /*
     if (window.cordova && cordova.plugins && cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);

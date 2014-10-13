@@ -155,7 +155,9 @@ angular.module('ilcomuneintasca', [
     }
   }
   $rootScope.share = function (text, webUrl, imgUrl) {
-    window.plugins.socialsharing.share(text, null, imgUrl, webUrl);
+    setTimeout(function(){
+      window.plugins.socialsharing.share(text, text, imgUrl, webUrl);
+    },0);
   }
   $rootScope.toggleFavorite = function (obj) {
     DatiDB.setFavorite(obj.id, obj.favorite < 0).then(function (res) {

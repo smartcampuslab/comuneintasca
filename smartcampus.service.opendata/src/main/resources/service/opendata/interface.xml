@@ -2,10 +2,13 @@
 <service-definition xmlns="http://www.example.org/interface-schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/interface-schema ../interface-schema.xsd ">
 	<interface serviceURI="smartcampus.service.opendata">
 		<operation name="GetEventi" storable="true">
+			<output type="eu.trentorise.smartcampus.service.opendata.data.message.Opendata$Evento" repeated="true" />
+		</operation>
+		<operation name="GetEventiParam" storable="true">
 		    <parameter name="url" type="String"/>
 			<output type="eu.trentorise.smartcampus.service.opendata.data.message.Opendata$Evento" repeated="true" />
 		</operation>
-		<operation name="GetConfig" storable="true">
+				<operation name="GetConfig" storable="true">
 		    <parameter name="url" type="String"/>
 			<output type="eu.trentorise.smartcampus.service.opendata.data.message.Opendata$ConfigData" repeated="true" />
 		</operation>			
@@ -38,7 +41,8 @@
 
 	<implementation package="eu.trentorise.smartcampus.service.opendata">
 		<operationImpl name="GetEventi"/>
-		<operationImpl name="GetConfig"/>
+		<operationImpl name="GetEventiParam"/>
+				<operationImpl name="GetConfig"/>
 		<operationImpl name="GetRestaurants"/>
 		<operationImpl name="GetHotels"/>
 		<operationImpl name="GetCultura"/>

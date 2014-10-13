@@ -53,7 +53,7 @@
 
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg ref="mongo" />
-		<constructor-arg name="databaseName" value="comuneintasca" />
+		<constructor-arg name="databaseName" value="comuneintasca-oc" />
 	</bean>
 
     <bean id="syncObjectStorage" class="eu.trentorise.smartcampus.comuneintasca.data.GeoTimeStorage">
@@ -84,7 +84,7 @@
 		<constructor-arg>
 			<ref bean="connectionFactory" />
 		</constructor-arg>
-		<property name="clientId" value="vas_comuneintasca_subscriber" />
+		<property name="clientId" value="vas_comuneintasca_oc_subscriber" />
 		<property name="listener" ref="eventProcessor" />
 	</bean>
 	

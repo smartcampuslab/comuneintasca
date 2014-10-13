@@ -332,6 +332,12 @@ angular.module('ilcomuneintasca.services.db', [])
                       var classified=$q.defer();
                       if (contentTypeKey == 'event') {
 
+                        fromTime = item.fromTime;
+                        if (item.toTime > 0) toTime = item.toTime;
+                        else toTime = fromTime;
+                        //console.log('event fromTime: ' + fromTime);
+                        //console.log('event toTime: ' + toTime);
+
                         if (item.eventForm=='Manifestazione') {
                           console.log('*** Manifestazione ***: '+item.title.it);
                           classified.resolve(['_complex','','']);
@@ -353,10 +359,6 @@ angular.module('ilcomuneintasca.services.db', [])
                           }
                           //console.log('event parent id: ' + parentid);
 
-                          fromTime = item.fromTime;
-                          if (item.toTime > 0) toTime = item.toTime;
-                          else toTime = fromTime;
-                          
                           //console.log('event cate: ' + item.category);
                           if (item.category) {
                             if (EVENTS_CATE_FROM_IT) {

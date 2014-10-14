@@ -109,8 +109,9 @@ angular.module('ilcomuneintasca', [
     var menu_id=menu.id;
     //group_id=$filter('cleanMenuID')(group.id);
     //menu_id=$filter('cleanMenuID')(menu.id);
-    if (group_id=='percorsi'&& menu_id=='itineraries' ||
-        group_id=='profile_cit_csvimport_Percorsi_item_comuneintasca' && menu_id=='profile_cit_992a7ca32e9a335c575a46b6988c46a8') {
+    if (group_id=='percorsi'&& menu_id=='itineraries' || 
+        (group.items.length == 1 && (menu.type == 'itineraries' || (menu.query != null && menu.query.type=='itineraries')))) {
+      $rootScope.itineraryGroup = group;  
       return 'itineraries';
     } else {
       return 'page/'+group_id+'/'+menu_id+'/';

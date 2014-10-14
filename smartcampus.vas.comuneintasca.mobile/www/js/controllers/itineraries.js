@@ -1,9 +1,12 @@
 angular.module('ilcomuneintasca.controllers.itineraries', [])
 
-.controller('ItinerariCtrl', function ($scope, $location, $filter, Config, DatiDB, ListToolbox) {
-  Config.menuGroupSubgroup('percorsi','itineraries').then(function(sg){
-    $scope.title = sg.name;
-  });
+.controller('ItinerariCtrl', function ($scope, $rootScope, $location, $filter, Config, DatiDB, ListToolbox) {
+//  Config.menuGroupSubgroup('percorsi','itineraries').then(function(sg){
+//    $scope.title = sg.name;
+//  });
+  if ($rootScope.itineraryGroup) {
+    $scope.title = $rootScope.itineraryGroup.name;
+  }  
 
   var dosort = function() {
     $scope.itinerari = $filter('extOrderBy')($scope.itinerari,$scope.ordering);

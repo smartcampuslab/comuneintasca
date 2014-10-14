@@ -32,7 +32,7 @@
           </ion-item>
           <div ng-show="isGroupShown(groupIndex)">
             <ion-item ng-repeat="(itemIndex, menuItem) in menuGroup.items" menu-close class="item-accordion" ng-href="#/app/{{getMenuPath(menuGroup,menuItem)}}">
-              <span class="comunisubmenu-{{menuItem.id|cleanMenuID}}" ng-bind="menuItem.name | translate"></span>
+              <span ng-class="{'comunisubmenu-all': (menuItem.query != null && menuItem.query.type=='event' && menuItem.query.classification==null)}" ng-bind="menuItem.name | translate"></span>
             </ion-item>
           </div>
         </div>

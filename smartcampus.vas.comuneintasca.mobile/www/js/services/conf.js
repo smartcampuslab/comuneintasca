@@ -36,11 +36,24 @@ angular.module('ilcomuneintasca.services.conf', [])
         console.log('CONFIG.menu is NULL!');
       }
       if (config.menu) {
+       var prepareNavItemName = function(txt) {
+        if (txt.length <= 10) return txt;
+         var center = Math.floor(txt.length / 2);
+         for (var i = 0; i < center;i++) {
+            if (txt.charAt(center+i) == ' ') {
+              return txt.substr(0,center+i)+'<br/>'+txt.substr(center+i+1, txt.length-1);
+            }
+            if (txt.charAt(center-i) == ' ') {
+              return txt.substr(0,center-i)+'<br/>'+txt.substr(center-i+1, txt.length-1);
+            }
+         }
+         return txt;
+       };
        for (ngi=0; ngi<config.navigationItems.length; ngi++) {
           var item=config.navigationItems[ngi];
           if (item.name) {
             angular.forEach(item.name, function (txt, loc) {
-              if (item.name[loc]) item.name[loc]=txt.replace("  ","<br/>");
+              if (item.name[loc]) item.name[loc]=prepareNavItemName(txt);//txt.replace(/\s+/g,"<br/>");
             });
           } else {
             console.log('no name for button "'+(item.id||item)+'"');

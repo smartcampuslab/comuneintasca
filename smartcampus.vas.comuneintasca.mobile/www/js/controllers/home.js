@@ -31,7 +31,7 @@ angular.module('ilcomuneintasca.controllers.home', [])
       if (btn.ref == 'profile_cit_csvimport_Percorsi_item_comuneintasca') {
         $rootScope.goto('itineraries');
       }
-      if (btn.ref=='itineraries' || btn.ref=='favorites') {      
+      else if (btn.ref=='itineraries' || btn.ref=='favorites') {      
         $rootScope.goto(btn.ref);
       } else {
         $rootScope.goto('menu/'+btn.ref+'/');

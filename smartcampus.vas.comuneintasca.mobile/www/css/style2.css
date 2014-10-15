@@ -26,11 +26,11 @@ ion-side-menu .list .comunimenu-settings .item { }
 ion-side-menu .list .comunimenu-credits .item { }
 
 ion-tabs, .tabs {
-  border-color: #999;
+/*  border-color: #999; */
   background-color: #CCC !important;
-  color: #2f2d2d;
+/*  color: #2f2d2d; */
 }
-.tab-item.activated, .tab-item.active, .tab-item.tab-item-active { color:#2975a7;font-weight:bold;border-bottom:5px solid #2975a7; }
+.tab-item.activated, .tab-item.active, .tab-item.tab-item-active { color:#2975a7 !important;font-weight:bold !important;border-bottom:5px solid #2975a7 !important; border-top-width: 0  !important; margin-top:0 !important; }
 
 .item-input-inset { background-color: #2f2d2d; }
 .item-input-inset .button.button-clear { color: #c5c5c4; }

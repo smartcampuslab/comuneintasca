@@ -79,7 +79,7 @@ h2 {
 .bar.bar-comuni .button {
   color: #fff;
 }
-.tabs {
+ion-tabs, .tabs {
   border-color: #2975a7;
   background-color: #b7d6e8;
   color: #2975a7;

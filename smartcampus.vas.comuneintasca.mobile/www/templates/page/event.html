@@ -24,7 +24,7 @@
       <div ng-if="obj.topics.length > 0" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-bookmarks-outline "></i><span ng-repeat="topic in obj.topics" ng-if="!!topic">{{topic}}<span ng-if="!$last">, </span></span></div>
       <div ng-if="obj.parent" class="item item-text-wrap item-icon-left sinottico-button" ng-click="goto('page/eventi/complex/'+obj.parent.id)"><i class="icon ion-ios7-flag-outline "></i>{{obj.parent.title | translate}}</div>
     </div>
-    <button ng-if="obj.sonscount>0" class="button button-full eventscount icon-right ion-chevron-down" ng-click="toggleSons()" data-off-ng-click="gotoSubpath('/sons')">{{ 'complex_events_found' | translate_plur:obj.sonscount }} "{{obj.title|translate}}"</button>
+    <button ng-if="obj.sonscount>0" class="button button-full eventscount icon-right ion-chevron-down" ng-click="toggleSons()" data-off-ng-click="gotoSubpath('/sons')">{{ 'complex_events_found' | translate_plur:obj.sonscount }}</button>
     <div class="padding notop">
       <div class="htmldesc" compile="obj.description | translate"></div>
       <div class="htmldesc" compile="obj.info | translate"></div>
@@ -33,7 +33,7 @@
 </div>
 <div ng-show="sonsVisible">
   <div class="bar bar-subheader button icon-right ion-chevron-up eventscount" ng-click="toggleSons()">
-    {{ 'complex_events_found' | translate_plur:obj.sonscount }} "{{obj.title|translate}}"
+    {{obj.title|translate}}: {{ 'complex_events_found' | translate_plur:obj.sonscount }}
   </div>
   <ion-content class="has-subheader">
     <ion-list ng-if="gotsonsdata">

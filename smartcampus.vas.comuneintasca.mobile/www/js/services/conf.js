@@ -172,17 +172,17 @@ angular.module('ilcomuneintasca.services.conf', [])
     'complex_events_none': {
       it: 'no eventi',
       en: 'no events',
-      de: 'no events'
+      de: 'kein veranstaltung'
     },
     'complex_events_single': {
       it: 'un evento',
       en: 'one event',
-      de: 'ein event'
+      de: 'ein veranstaltung'
     },
     'complex_events_plural': {
       it: 'eventi',
       en: 'events',
-      de: 'events'
+      de: 'veranstaltungen'
     },
     'complex_events_found_single': {
       it: 'un evento per',

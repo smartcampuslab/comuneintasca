@@ -13,7 +13,15 @@ angular.module('ilcomuneintasca.controllers.common', [])
       $scope.shownGroup = null;
     }
   };
-
+  
+  $rootScope.$on('profileUpdated', function() {
+    Config.menu().then(function (menu) {
+      $scope.menu = menu;
+    }, function (menu) {
+      $scope.menu = null;
+    });
+  });
+  
   Config.menu().then(function (menu) {
     $scope.menu = menu;
   }, function (menu) {
@@ -228,7 +236,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
 
     Config.menuGroupSubgroup($stateParams.groupId, $stateParams.menuId).then(function (sg) {
       if (!sg) {
-        console.log('GROUP ERRROR '+$stateParams.groupId);
+        console.log('GROUP ERRROR '+$stateParams.groupId+'/'+$stateParams.menuId);
       }
 
       $scope.title = sg.name;

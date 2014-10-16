@@ -299,6 +299,7 @@ angular.module('ilcomuneintasca.services.db', [])
                   config = data.updated[configTypeClassName][0];
                   //console.log('CONFIG object parsed:');console.log(config);
                   localStorage.cachedProfile = JSON.stringify(config);
+                  $rootScope.$emit('profileUpdated');
                 }
 
                 angular.forEach(types, function (contentTypeClassName, contentTypeKey) {
@@ -696,7 +697,7 @@ angular.module('ilcomuneintasca.services.db', [])
             ' AND c.fromTime > 0 AND c.fromTime <' + toTime + ' AND c.toTime > ' + fromTime + 
 						(cateId ? ' AND (c.classification=? OR c.classification2=? OR c.classification3=?)' : '') + 
 						' GROUP BY c.id' + 
-            (_complex==undefined ? '' : ' HAVING count(s.id)' + (_complex?'>':'=') + '0' );
+            (/*_complex==undefined ? '' : */' HAVING count(s.id)' + (_complex?'>':'=') + '0' );
           var params = cateId ? [types[dbname], cateId, cateId, cateId] : [types[dbname]];
           tx.executeSql(sql, params, function (tx2, cateResults) {
             var len = cateResults.rows.length,

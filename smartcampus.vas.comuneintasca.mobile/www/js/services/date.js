@@ -1,6 +1,6 @@
 angular.module('ilcomuneintasca.services.date', [])
 
-.factory('DateUtility', function ($rootScope, DatiDB) {
+.factory('DateUtility', function ($rootScope, $filter, DatiDB) {
   return {
     getLocaleDateString: function (lang, time) {
       //console.log('getLocaleDateString(); time: '+time);
@@ -38,8 +38,9 @@ angular.module('ilcomuneintasca.services.date', [])
       if (scope.filter=='today' || to==0) {
         var label=(scope.filter=='today'?scope.getLocaleDateString((new Date()).getTime()):null);
         label=null;
+        var ordered = $filter('extOrderBy')(scope.results,scope.ordering);
         scope.resultsGroups=[
-          { label:label, results:scope.results }
+          { label:label, results:ordered }
         ];
       } else {
         //console.log('from: '+scope.getLocaleDateString(from));
@@ -66,6 +67,7 @@ angular.module('ilcomuneintasca.services.date', [])
                 //console.log('data['+ei+'].id2: '+data[ei].id2);
                 group.results.push(data[ei]);
               }
+              group.results = $filter('extOrderBy')(group.results,scope.ordering);
             }
           });
           groups.push(group);

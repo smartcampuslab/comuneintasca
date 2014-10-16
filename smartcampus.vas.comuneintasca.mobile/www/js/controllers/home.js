@@ -1,6 +1,6 @@
 angular.module('ilcomuneintasca.controllers.home', [])
 
-.controller('HomeCtrl', function ($scope, $rootScope, $q, $location, $filter, $ionicPopup, Config, DatiDB, Files) {
+.controller('HomeCtrl', function ($scope, $rootScope, $ionicSlideBoxDelegate, $q, $location, $filter, $ionicPopup, Config, DatiDB, Files) {
   $rootScope.inHome = true;
   $scope.openApp = function (appname,appdata) {
     if (ionic.Platform.isWebView() && device.platform == 'Android' && appdata.android) {
@@ -110,6 +110,7 @@ angular.module('ilcomuneintasca.controllers.home', [])
               }
               */
               $scope.highlights=highlightsVerified;
+              $ionicSlideBoxDelegate.update();
             }
           })
         } else if (highlights.length>0) {

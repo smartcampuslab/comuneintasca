@@ -13,8 +13,9 @@ angular.module('ilcomuneintasca.controllers.common', [])
       $scope.shownGroup = null;
     }
   };
-  
+
   $rootScope.$on('profileUpdated', function() {
+    console.log('profile updated!');
     Config.menu().then(function (menu) {
       $scope.menu = menu;
     }, function (menu) {

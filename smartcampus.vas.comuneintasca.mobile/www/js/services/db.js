@@ -566,14 +566,17 @@ angular.module('ilcomuneintasca.services.db', [])
         var lista = []
         dbObj.transaction(function (tx) {
           //console.log('[DB.all()] dbname: '+dbname);
+
 					var _complex=undefined;
-          //_complex=false;
+          if (dbname=='event') {
+            _complex=false;
+          }
+
           var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount' +
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id' +
             ' WHERE c.type=? ' +
-            (dbname=='event'&&_complex==undefined ? ' AND c.classification=\'_complex\'' : '') + 
-						' GROUP BY c.id' +
-            (_complex==undefined ? '' : ' HAVING count(s.id)' + (_complex?'>':'=') + '0');
+            (_complex==undefined ? '' : ' AND c.classification' + (_complex?'=':'!=') + "'_complex'" ) + 
+						' GROUP BY c.id';
           //console.log('[DB.all()] sql: '+sql);
           tx.executeSql(sql, [types[dbname]], function (tx, results) {
             var len = results.rows.length,
@@ -618,14 +621,13 @@ angular.module('ilcomuneintasca.services.db', [])
           //console.log('[DB.cate()] cateId: ' + cateId);
 
 					var _complex=undefined;
-          /*
-					if (cateId && cateId=='_complex') {
-						_complex=true;
-						cateId=undefined;
-          } else {
-						_complex=false;
-					}
-          */
+          if (dbname=='event') {
+            if (cateId && cateId=='_complex') {
+              _complex=true;
+            } else {
+              _complex=false;
+            }
+          }
 					
           var fromTime = new Date().getTime();
           var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount ' +
@@ -633,8 +635,8 @@ angular.module('ilcomuneintasca.services.db', [])
             ' WHERE c.type=? ' +
 						(cateId ? ' AND (c.classification=? OR c.classification2=? OR c.classification3=?)' : '') + 
             ' AND (s.id IS NULL OR s.toTime > ' + fromTime + ')' +
-						' GROUP BY c.id' + 
-            (_complex==undefined ? '' : ' HAVING count(s.id)' + (_complex?'>':'=') + '0' );
+            (_complex==undefined ? '' : ' AND c.classification' + (_complex?'=':'!=') + "'_complex'" ) + 
+						' GROUP BY c.id';
           //console.log('[DB.cate()] sql: '+sql);
           var params = (cateId ? [types[dbname], cateId, cateId, cateId] : [types[dbname]]);
           //console.log('[DB.cate()] params: '+params);
@@ -682,22 +684,21 @@ angular.module('ilcomuneintasca.services.db', [])
           //console.log('[DB.byTimeInterval()] cateId: ' + cateId);
 
 					var _complex=undefined;
-          /*
-					if (cateId && cateId=='_complex') {
-						_complex=true;
-						cateId=undefined;
-          } else {
-						_complex=false;
-					}
-          */
+          if (dbname=='event') {
+            if (cateId && cateId=='_complex') {
+              _complex=true;
+            } else {
+              _complex=false;
+            }
+          }
 
           var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount'+
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id' +
             ' WHERE c.type=?' +
             ' AND c.fromTime > 0 AND c.fromTime <' + toTime + ' AND c.toTime > ' + fromTime + 
 						(cateId ? ' AND (c.classification=? OR c.classification2=? OR c.classification3=?)' : '') + 
-						' GROUP BY c.id' + 
-            (/*_complex==undefined ? '' : */' HAVING count(s.id)' + (_complex?'>':'=') + '0' );
+            (_complex==undefined ? '' : ' AND c.classification' + (_complex?'=':'!=') + "'_complex'" ) + 
+						' GROUP BY c.id';
           //console.log('[DB.byTimeInterval()] sql: '+sql);
           var params = cateId ? [types[dbname], cateId, cateId, cateId] : [types[dbname]];
           //console.log('[DB.byTimeInterval()] params: '+params);

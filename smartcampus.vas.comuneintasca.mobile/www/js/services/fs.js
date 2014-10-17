@@ -1,10 +1,11 @@
 angular.module('ilcomuneintasca.services.fs', [])
 
-.factory('Files', function ($q, $http, Config, Profiling, $ionicLoading, $filter) { //, $queue
+.factory('Files', function ($q, $http, Config, Profiling, $ionicLoading, $filter, $queue) {
   var queueFileDownload = function (obj) {
+    console.log('now working on queued download "' + obj.url + '" (len: '+downloadQueues[0].size()+')');
     var fileTransfer = new FileTransfer();
     fileTransfer.download(obj.url, obj.savepath, function (fileEntry) {
-     //console.log("downloaded file: " + obj.url);
+     console.log("downloaded file: " + obj.url);
      //console.log("downloaded to: " + fileEntry.nativeURL);
      Profiling._do('fileget', 'saved');
       //DISABLED 
@@ -52,16 +53,16 @@ angular.module('ilcomuneintasca.services.fs', [])
       obj.promise.reject(error);
     }, true, { /* headers: { "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA==" } */ });
   };
-  /*
+
   var downloadQueues=new Array(3);
   for (var i=0; i<downloadQueues.length; i++) {
     downloadQueues[i]=$queue.queue(queueFileDownload, {
-      delay: 10, // delay 10 millis between processing items
+      delay: 100, // delay 10 millis between processing items
       paused: false, // run immediatly
       complete: function() { console.log('downloadQueues[]: complete!'); }
     });
   }
-  */
+
   var IMAGESDIR_NAME = Config.savedImagesDirName();
   //console.log('savedImagesDirName: ' + IMAGESDIR_NAME);
   var onErrorFS = function (e) {
@@ -331,7 +332,9 @@ angular.module('ilcomuneintasca.services.fs', [])
                 promise: filegot
               };
               //console.log('not found: downloading to "' + fileObj.savepath + '"');
-              queueFileDownload(fileObj);
+              //queueFileDownload(fileObj);
+              downloadQueues[0].add(fileObj);
+              console.log('queued download "' + fileObj.url + '" (len: '+downloadQueues[0].size()+')');
             }
           });
         } else {

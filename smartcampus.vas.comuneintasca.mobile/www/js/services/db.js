@@ -565,8 +565,7 @@ angular.module('ilcomuneintasca.services.db', [])
 
         var lista = []
         dbObj.transaction(function (tx) {
-          //console.log('dbname: '+dbname);
-          //console.log('type: '+types[dbname]);
+          //console.log('[DB.all()] dbname: '+dbname);
 					var _complex=undefined;
           //_complex=false;
           var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount' +
@@ -575,7 +574,7 @@ angular.module('ilcomuneintasca.services.db', [])
             (dbname=='event'&&_complex==undefined ? ' AND c.classification=\'_complex\'' : '') + 
 						' GROUP BY c.id' +
             (_complex==undefined ? '' : ' HAVING count(s.id)' + (_complex?'>':'=') + '0');
-          //console.log('sql: '+sql);
+          //console.log('[DB.all()] sql: '+sql);
           tx.executeSql(sql, [types[dbname]], function (tx, results) {
             var len = results.rows.length,
               i;
@@ -615,8 +614,8 @@ angular.module('ilcomuneintasca.services.db', [])
 
         var lista = []
         dbObj.transaction(function (tx) {
-          //console.log('type: '+types[dbname]);
-          //console.log('category: ' + cateId);
+          //console.log('[DB.cate()] dbname: '+dbname);
+          //console.log('[DB.cate()] cateId: ' + cateId);
 
 					var _complex=undefined;
           /*
@@ -636,9 +635,9 @@ angular.module('ilcomuneintasca.services.db', [])
             ' AND (s.id IS NULL OR s.toTime > ' + fromTime + ')' +
 						' GROUP BY c.id' + 
             (_complex==undefined ? '' : ' HAVING count(s.id)' + (_complex?'>':'=') + '0' );
-          //console.log('sql: '+sql);
+          //console.log('[DB.cate()] sql: '+sql);
           var params = (cateId ? [types[dbname], cateId, cateId, cateId] : [types[dbname]]);
-          //console.log('params: '+params);
+          //console.log('[DB.cate()] params: '+params);
           tx.executeSql(sql, params, function (tx2, cateResults) {
             var len = cateResults.rows.length,
               i;
@@ -679,7 +678,8 @@ angular.module('ilcomuneintasca.services.db', [])
 
         var lista = []
         dbObj.transaction(function (tx) {
-          //console.log('type: '+types[dbname]);
+          //console.log('[DB.byTimeInterval()] dbname: '+dbname);
+          //console.log('[DB.byTimeInterval()] cateId: ' + cateId);
 
 					var _complex=undefined;
           /*
@@ -698,7 +698,9 @@ angular.module('ilcomuneintasca.services.db', [])
 						(cateId ? ' AND (c.classification=? OR c.classification2=? OR c.classification3=?)' : '') + 
 						' GROUP BY c.id' + 
             (/*_complex==undefined ? '' : */' HAVING count(s.id)' + (_complex?'>':'=') + '0' );
+          //console.log('[DB.byTimeInterval()] sql: '+sql);
           var params = cateId ? [types[dbname], cateId, cateId, cateId] : [types[dbname]];
+          //console.log('[DB.byTimeInterval()] params: '+params);
           tx.executeSql(sql, params, function (tx2, cateResults) {
             var len = cateResults.rows.length,
               i;

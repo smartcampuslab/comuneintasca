@@ -548,10 +548,10 @@ angular.module('ilcomuneintasca.services.conf', [])
         //console.log('using locally cached profile');
         profileLoaded.resolve(parseConfig(JSON.parse(localStorage.cachedProfile)));
       } else {
-        $rootScope.$emit('profileUpdated');
         //console.log('getting predefined profile');
         $http.get('data/'+LOCAL_PROFILE+'.json').success(function(data, status, headers, config){
           localStorage.cachedProfile=JSON.stringify(data);
+          $rootScope.$emit('profileUpdated');
           profileLoaded.resolve(parseConfig(data));
         }).error(function(data, status, headers, config){
           console.log('error getting predefined config "data/'+LOCAL_PROFILE+'.json"!');

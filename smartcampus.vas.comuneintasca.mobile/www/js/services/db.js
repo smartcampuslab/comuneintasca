@@ -1035,7 +1035,7 @@ angular.module('ilcomuneintasca.services.db', [])
       return dbitem.promise;
     },
     isFavorite: function (itemId) {
-      console.log('DatiDB.isFavorite('+itemId+')');
+      //console.log('DatiDB.isFavorite('+itemId+')');
       var dbitem = $q.defer();
       db.then(function (dbObj) {
         dbObj.transaction(function (tx) {

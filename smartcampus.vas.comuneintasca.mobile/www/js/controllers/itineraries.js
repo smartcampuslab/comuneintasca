@@ -103,6 +103,17 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
     console.log('ItinerarioTappeCtrl: poi');
     $scope.gotdata = DatiDB.get('poi', $stateParams.poiId).then(function (data) {
       $scope.obj=data;
+
+      $scope.isObjFavorite = false;
+      DatiDB.isFavorite(data.id).then(function (res) {
+        $scope.isObjFavorite=res; 
+      });
+      $scope.toggleFavorite = function (obj) {
+        DatiDB.setFavorite(obj.id, !$scope.isObjFavorite).then(function (res) {
+          $scope.isObjFavorite=res;
+        });
+      };
+      
       $scope.template='templates/page/poi_content.html';
     });
   } else {
@@ -119,10 +130,20 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
     $window.history.back();
   };
     
-  console.log('itin id: '+$stateParams.itinerarioId);
-  console.log('poi id: '+$stateParams.poiId);
+  //console.log('itin id: '+$stateParams.itinerarioId);
+  //console.log('poi id: '+$stateParams.poiId);
   $scope.gotdata = DatiDB.get('poi', $stateParams.poiId).then(function (data) {
     $scope.obj=data;
+
+    $scope.isObjFavorite = false;
+    DatiDB.isFavorite(data.id).then(function (res) {
+      $scope.isObjFavorite=res; 
+    });
+    $scope.toggleFavorite = function (obj) {
+      DatiDB.setFavorite(obj.id, !$scope.isObjFavorite).then(function (res) {
+        $scope.isObjFavorite=res;
+      });
+    };
   });
 })
 

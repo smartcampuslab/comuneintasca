@@ -321,6 +321,71 @@ angular.module('ilcomuneintasca.controllers.common', [])
               }  
           };    
 
+          /** INFINITE LIST SUPPORT FOR NORMAL LISTS */
+          $scope.$watch('results', function(n,o) {
+            // not for the events where objects are grouped
+            if (sg_query_type=='event') return;
+            
+            $scope.scrolldata = null;
+            $scope.loadMore();
+          });
+          $scope.hasMoreDataToLoad = function() {
+            return $scope.scrolldata && $scope.results && $scope.scrolldata.length < $scope.results.length;
+          }
+          $scope.loadMore = function() {
+            if ($scope.results) {
+              if (!$scope.scrolldata) {
+                $scope.scrolldata=$scope.results.slice(0,20);
+              } else {
+                var delta = $scope.results.slice($scope.scrolldata.length,$scope.scrolldata.length+20);
+                $scope.scrolldata = $scope.scrolldata.concat(delta);
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+              }
+            }
+          };
+          /** INFINITE LIST SUPPORT FOR GROUPPED LISTS */
+          $scope.$watch('resultsGroups', function(n,o) {
+            $scope.groupscrolldata = null;
+            //console.log('resultsGroups changed');
+            $scope.loadMoreGroups();
+          });
+          $scope.hasMoreGroupsToLoad = function() {
+            return $scope.groupscrolldata && $scope.resultsGroups && 
+            ($scope.groupscrolldata.length < $scope.resultsGroups.length ||
+             $scope.groupscrolldata[$scope.groupscrolldata.length-1].results.length < $scope.resultsGroups[$scope.resultsGroups.length-1].results.length);
+          }
+          /**
+           * gc corresponds to the length of the current loaded data or 1.
+           * c corresponds to the num of the elements in the last group loaded
+           */
+          var subGroups = function(groups, gc, c) {
+            var d = 20;
+            var res = groups.slice(0,gc - 1);
+            for (var i = gc - 1; i < groups.length; i++) {
+              var group = groups[i].results;
+              if (c + d < group.length) {
+                res.push({label:groups[i].label,results:group.slice(0, c + d)});
+                return res;
+              } else {
+                d = d - (group.length - c);
+                res.push(groups[i]);
+                c = 0;
+              }
+            }
+            return res;
+          };
+          $scope.loadMoreGroups = function() {
+            if ($scope.resultsGroups) {
+              if (!$scope.groupscrolldata) {
+                $scope.groupscrolldata= subGroups($scope.resultsGroups,1,0);
+              } else {
+                $scope.groupscrolldata = subGroups($scope.resultsGroups, $scope.groupscrolldata.length, $scope.groupscrolldata[$scope.groupscrolldata.length-1].results.length);
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+              }
+            }
+          };
+          
+          
           var tboptions = {
             hasSort: false,
             hasSearch: (sg.query.search || true),
@@ -437,7 +502,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
                   $scope.resultsAll = data;
                   $scope.results = data;
                   if (sg_query_type=='event') {
-                    DateUtility.regroup($scope,sg_query_type,d,t,sg.query.classification);
+                    $scope.resultsGroups = DateUtility.regroup($scope,sg_query_type,d,t,sg.query.classification);
                   } else {
                     dosort();
                   }

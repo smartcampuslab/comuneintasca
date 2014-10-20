@@ -35,11 +35,12 @@ angular.module('ilcomuneintasca.services.date', [])
     },
     regroup: function (scope,type,from,to,classification) {
       //console.log('scope.filter: '+scope.filter);
+      var groups = null;
       if (scope.filter=='today' || to==0) {
         var label=(scope.filter=='today'?scope.getLocaleDateString((new Date()).getTime()):null);
         label=null;
         var ordered = $filter('extOrderBy')(scope.results,scope.ordering);
-        scope.resultsGroups=[
+        groups=[
           { label:label, results:ordered }
         ];
       } else {
@@ -50,12 +51,39 @@ angular.module('ilcomuneintasca.services.date', [])
         //console.log('type: '+type);
         //console.log('classification: '+classification);
         var cc=0;
-        var groups=[];
+        groups=[];
+        var map = {};
         for (i=0; i<days; i++) {
           var d = new Date(from.getFullYear(), from.getMonth(), from.getDate() + i);
           var t = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1);
           var group={ labelHidden:scope.getLocaleDateString(d), results:[] };
-          //console.log('group.labelHidden: '+group.labelHidden);
+          map[scope.getLocaleDateString(d)] = group;
+        }  
+        var elems = scope.results;
+        for (var i = 0; i < elems.length; i++) {
+          var dtf = new Date(elems[i].fromTime >= from ? elems[i].fromTime : from);
+          var df = new Date(dtf.getFullYear(), dtf.getMonth(), dtf.getDate());
+          var dtt = elems[i].toTime ? new Date(elems[i].toTime <= to ? elems[i].toTime : to) : dtf;
+          var dt = new Date(dtt.getFullYear(), dtt.getMonth(), dtt.getDate());
+          var curr = df;
+          while (curr.getTime() <= dt.getTime() && curr.getTime() < to) {
+            var str = scope.getLocaleDateString(curr);
+            if (!!map[str]) {
+              map[str].results.push(elems[i]);
+            } 
+            curr.setDate(curr.getDate()+1);
+          }
+        }
+        for (var l in map) {
+          var g = map[l];
+          if (g.results.length > 0) {
+            g.label = g.labelHidden;
+            g.results = $filter('extOrderBy')(g.results,scope.ordering);
+          }
+          groups.push(g);
+        }
+/*        
+        //console.log('group.labelHidden: '+group.labelHidden);
           DatiDB.byTimeInterval(type,d.getTime(),t.getTime(),classification,{ group:group }).then(function(data){
             //console.log('data.length: '+data.length);
             if (data.length>0) {
@@ -72,9 +100,10 @@ angular.module('ilcomuneintasca.services.date', [])
           });
           groups.push(group);
         }
-        scope.resultsGroups=groups;
+        //scope.resultsGroups=groups;
+*/
       }
-      return;
+      return groups;
     }
   }
 })

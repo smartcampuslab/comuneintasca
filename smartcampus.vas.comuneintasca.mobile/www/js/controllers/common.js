@@ -312,7 +312,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
             } else {
               console.log('no known location for place');
             }
-          })
+          });
         } else {
           Profiling._do('page', 'list');
 
@@ -585,11 +585,11 @@ angular.module('ilcomuneintasca.controllers.common', [])
           Profiling._do('page', 'options');
         }
       } else if (sg.objectIds) {
-        console.log('objectIds: '+sg.objectIds.join(','));
+        //console.log('objectIds: '+sg.objectIds.join(','));
         var sg_type=sg.type || sg._parent.type || 'content';
         if (sg_type=='text') sg_type='content';
         $scope.template = 'templates/page/' + (sg.view || sg_type || sg._parent.view || 'content') + '.html';
-        console.log('$scope.template: '+$scope.template);
+        //console.log('$scope.template: '+$scope.template);
         $scope.gotdata = DatiDB.get(sg_type, sg.objectIds.join(',')).then(function (data) {
           //console.log('objectIds gotdata!');
           data = (data.hasOwnProperty('length') ? data : [data]);

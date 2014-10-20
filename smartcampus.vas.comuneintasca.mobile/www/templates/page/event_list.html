@@ -4,10 +4,10 @@
 </ion-header-bar>
 <ion-content class="has-header" delegate-handle="listScroll">
   <ion-list>
-    <div class="listgroup" ng-repeat="group in resultsGroups track by $index">
+    <div class="listgroup" ng-repeat="group in groupscrolldata track by $index">
       <ion-item-divider ng-if="group.label" class="item item-divider">{{group.label}}</ion-item-divider>
       <ion-item ng-repeat="obj in group.results track by $index"
-                collection-item-width="'100%'" collection-item-height="getListItemHeight(obj, $index)"
+                
                 ng-click="gotoSubpath(obj.id)" class="coll-item item-thumbnail-left">
         <!-- comuni-img class="item-image comuni-item-image" gotdata="gotdata" sonscount="true"></comuni-img -->
         <div class="item-image comuni-item-image comuni-img" ng-attr-style="background-image:url({{obj.parsedimageurl|translate}})">
@@ -24,6 +24,8 @@
       </ion-item>
     </div>
   </ion-list>
+  <ion-infinite-scroll on-infinite="loadMoreGroups()" distance="10%" ng-if="hasMoreGroupsToLoad()">
+  </ion-infinite-scroll>
 </ion-content>
 <ion-footer-bar>
   <div ng-include="'templates/list_toolbox.html'"></div>

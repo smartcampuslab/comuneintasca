@@ -357,21 +357,29 @@ angular.module('ilcomuneintasca.controllers.common', [])
           };
 
           if (sg.query.hasOwnProperty('sort')) {
-            tboptions.hasSort = true
-            tboptions.orderingTypes = sg.query.sort.options;
-            tboptions.defaultOrdering = sg.query.sort.default;
+            tboptions.hasSort = true;
+            if (sg.query.sort) {
+              tboptions.orderingTypes = sg.query.sort.options;
+              tboptions.defaultOrdering = sg.query.sort['default'];
+            }
           } else if (sg._parent.hasOwnProperty('sort')) {
-            tboptions.hasSort = true
-            tboptions.orderingTypes = sg._parent.sort.options;
-            tboptions.defaultOrdering = sg._parent.sort.default;
+            tboptions.hasSort = true;
+            if (sg._parent.sort) {
+              tboptions.orderingTypes = sg._parent.sort.options;
+              tboptions.defaultOrdering = sg._parent.sort['default'];
+            }
           } else if (dbtypeClassCustomisations.hasOwnProperty('sort')) {
-            tboptions.hasSort = true
-            tboptions.orderingTypes = dbtypeClassCustomisations.sort.options;
-            tboptions.defaultOrdering = dbtypeClassCustomisations.sort.default;
+            tboptions.hasSort = true;
+            if (dbtypeClassCustomisations.sort) {
+              tboptions.orderingTypes = dbtypeClassCustomisations.sort.options;
+              tboptions.defaultOrdering = dbtypeClassCustomisations.sort['default'];
+            }
           } else if (dbtypeCustomisations.hasOwnProperty('sort')) {
-            tboptions.hasSort = true
-            tboptions.orderingTypes = dbtypeCustomisations.sort.options;
-            tboptions.defaultOrdering = dbtypeCustomisations.sort.default;
+            tboptions.hasSort = true;
+            if (dbtypeCustomisations.sort) {
+              tboptions.orderingTypes = dbtypeCustomisations.sort.options;
+              tboptions.defaultOrdering = dbtypeCustomisations.sort['default'];
+            }
           }
 
           if (sg.query.hasOwnProperty('map')) {
@@ -465,13 +473,13 @@ angular.module('ilcomuneintasca.controllers.common', [])
               tboptions.filterOptions = dbtypeCustomisations.filter.options;
             }
             if (sg.query.hasOwnProperty('filter') && sg.query.filter.hasOwnProperty('default')) {
-              tboptions.defaultFilter = sg.query.filter.default;
+              tboptions.defaultFilter = sg.query.filter['default'];
             } else if (sg._parent.hasOwnProperty('filter') && sg._parent.filter.hasOwnProperty('default')) {
-              tboptions.defaultFilter = sg._parent.filter.default;
+              tboptions.defaultFilter = sg._parent.filter['default'];
             } else if (dbtypeClassCustomisations.hasOwnProperty('filter') && dbtypeClassCustomisations.filter.hasOwnProperty('default')) {
-              tboptions.defaultFilter = dbtypeClassCustomisations.filter.default;
+              tboptions.defaultFilter = dbtypeClassCustomisations.filter['default'];
             } else if (dbtypeCustomisations.hasOwnProperty('filter') && dbtypeCustomisations.filter.hasOwnProperty('default')) {
-              tboptions.defaultFilter = dbtypeCustomisations.filter.default;
+              tboptions.defaultFilter = dbtypeCustomisations.filter['default'];
             }
 
           }

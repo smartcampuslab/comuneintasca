@@ -175,8 +175,15 @@ angular.module('ilcomuneintasca.services.fs', [])
   }
   return {
     queuedFilesCancel: function () {
-      if (queuedFiles.length>0) {
-        console.log('canceling '+queuedFiles.length+' queued[#2] files...');
+      if (queuedFiles.length>1) {
+        //console.log('canceling '+queuedFiles.length+' queued[#2] files...');
+        var fileToCancel=queuedFiles.pop();
+        while (fileToCancel) {
+          //console.log('canceling download of queued[#2] file "' + fileToCancel.url + '" (len: '+queuedFiles.length+')');
+          fileToCancel.promise.reject('download canceled');
+          fileToCancel=queuedFiles.pop();
+        }
+        //console.log('finished canceling downloads (len: '+queuedFiles.length+')');
       } else {
         //console.log('no queued[#2] files to cancel...');
       }

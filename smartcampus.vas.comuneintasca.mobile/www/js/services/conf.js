@@ -701,7 +701,7 @@ angular.module('ilcomuneintasca.services.conf', [])
       return keys;
     },
     doProfiling: function () {
-      return true;
+      return false;
     },
     savedImagesDirName: function () {
       return 'IlComuneInTasca-ImagesCache';

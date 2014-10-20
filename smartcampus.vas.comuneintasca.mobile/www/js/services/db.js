@@ -559,7 +559,7 @@ angular.module('ilcomuneintasca.services.db', [])
         Profiling.start('dball');
         var loading = $ionicLoading.show({
           template: $filter('translate')(Config.keys()['loading']),
-          delay: 2000, // how many milliseconds to delay before showing the indicator
+          delay: 600, // how many milliseconds to delay before showing the indicator
           duration: Config.loadingOverlayTimeoutMillis()
         });
 
@@ -611,7 +611,7 @@ angular.module('ilcomuneintasca.services.db', [])
         Profiling.start('dbcate');
         var loading = $ionicLoading.show({
           template: $filter('translate')(Config.keys()['loading']),
-          delay: 1000,
+          delay: 600,
           duration: Config.loadingOverlayTimeoutMillis()
         });
 
@@ -674,7 +674,7 @@ angular.module('ilcomuneintasca.services.db', [])
         Profiling.start('byTimeInterval');
         var loading = $ionicLoading.show({
           template: $filter('translate')(Config.keys()['loading']),
-          delay: 1000,
+          delay: 600,
           duration: Config.loadingOverlayTimeoutMillis()
         });
 
@@ -738,7 +738,7 @@ angular.module('ilcomuneintasca.services.db', [])
         Profiling.start('dbsons');
         var loading = $ionicLoading.show({
           template: $filter('translate')(Config.keys()['loading']),
-          delay: 1000,
+          delay: 600,
           duration: Config.loadingOverlayTimeoutMillis()
         });
 
@@ -798,7 +798,7 @@ angular.module('ilcomuneintasca.services.db', [])
         Profiling.start('dbgetobj');
         var loading = $ionicLoading.show({
           template: $filter('translate')(Config.keys()['loading']),
-          delay: 1000,
+          delay: 600,
           duration: Config.loadingOverlayTimeoutMillis()
         });
 
@@ -873,7 +873,7 @@ angular.module('ilcomuneintasca.services.db', [])
         Profiling.start('dbget');
         var loading = $ionicLoading.show({
           template: $filter('translate')(Config.keys()['loading']),
-          delay: 1000,
+          delay: 600,
           duration: Config.loadingOverlayTimeoutMillis()
         });
 

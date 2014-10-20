@@ -335,6 +335,7 @@ angular.module('ilcomuneintasca.services.fs', [])
           //console.log('filename: '+filename);
           //console.log('rootDir: ' + mainDir.fullPath);
           mainDir.getFile(filename, {}, function (fileEntry) {
+            Profiling._do('fileget', 'already');
             /*
             console.log('fileEntry.toURL(): ' + fileEntry.toURL());
             console.log('fileEntry.nativeURL: ' + fileEntry.nativeURL);
@@ -351,7 +352,6 @@ angular.module('ilcomuneintasca.services.fs', [])
             });
             */
             var filesavepath = fsRoot.toURL() + IMAGESDIR_NAME + '/' + filename;
-            Profiling._do('fileget', 'already');
             if (device.version.indexOf('2.') == 0) {
               //console.log('already downloaded to "' + fileEntry.nativeURL + '" (Android 2.x)');
               filegot.resolve(fileEntry.nativeURL);

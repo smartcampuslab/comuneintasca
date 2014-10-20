@@ -168,8 +168,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
     $scope.group = g;
   });
 })
-.controller('PageCtrl', function ($scope, $rootScope, $state, $stateParams, $filter, $location, $window, $timeout, Config, DatiDB, Files, ListToolbox, DateUtility, GeoLocate, MapHelper, $ionicScrollDelegate) {
-
+.controller('PageCtrl', function ($scope, $rootScope, $state, $stateParams, $filter, $location, $window, $timeout, Profiling, Config, DatiDB, Files, ListToolbox, DateUtility, GeoLocate, MapHelper, $ionicScrollDelegate) {
   $scope._ = _;
   $scope.getLocaleDateString = function (time) {
     return DateUtility.getLocaleDateString($rootScope.lang, time);
@@ -237,8 +236,10 @@ angular.module('ilcomuneintasca.controllers.common', [])
           $scope.template = 'templates/page/' + (sg.view || sg_query_type) + ($state.current.data && $state.current.data.sons ? '_sons' : '') + '.html';
   */
   } else {
+    Profiling.start('page');
 
     Config.menuGroupSubgroup($stateParams.groupId, $stateParams.menuId).then(function (sg) {
+      Profiling._do('page', 'menuGroupSubgroup found');
       if (!sg) {
         console.log('GROUP ERRROR '+$stateParams.groupId+'/'+$stateParams.menuId);
       }
@@ -253,8 +254,11 @@ angular.module('ilcomuneintasca.controllers.common', [])
         if (dbtypeCustomisations.classifications && dbtypeCustomisations.classifications[dbtypeClass]) dbtypeClassCustomisations = dbtypeCustomisations.classifications[dbtypeClass];
 
         if ($stateParams.itemId != '') {
+          Profiling._do('page', 'item');
+
           $scope.template = 'templates/page/' + (sg.view || sg_query_type) + ($state.current.data && $state.current.data.sons ? '_sons' : '') + '.html';
           $scope.gotdata = DatiDB.get(sg_query_type, $stateParams.itemId).then(function (data) {
+            Profiling._do('page', 'item:gotdata');
             //console.log('itemId gotdata!');
             $scope.obj = data;
 
@@ -307,6 +311,8 @@ angular.module('ilcomuneintasca.controllers.common', [])
             }
           })
         } else {
+          Profiling._do('page', 'list');
+
           $scope.template = 'templates/page/' + (sg.view || dbtypeClassCustomisations.view || sg_query_type + '_list') + '.html';
 
           var dosort = function() {
@@ -566,11 +572,14 @@ angular.module('ilcomuneintasca.controllers.common', [])
               $scope.gotdbdata = DatiDB.all(sg_query_type);
             }
             $scope.gotdata = $scope.gotdbdata.then(function (data) {
+              Profiling._do('page', 'list:gotdata');
               //console.log('list gotdata!');
               $scope.results = data;
               dosort();
             });
           }
+
+          Profiling._do('page', 'options');
         }
       } else if (sg.objectIds) {
         console.log('objectIds: '+sg.objectIds.join(','));

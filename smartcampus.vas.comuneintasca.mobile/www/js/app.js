@@ -168,24 +168,7 @@ angular.module('ilcomuneintasca', [
       window.plugins.socialsharing.share(text, text, imgUrl, webUrl);
     },0);
   }
-  $rootScope.toggleFavorite = function (obj) {
-    DatiDB.setFavorite(obj.id, obj.favorite < 0).then(function (res) {
-      obj['favorite'] = res ? 1 : -1;
-    });
-  }
-
-  $rootScope.isFavorite = function (obj) {
-    if (!obj) return false;
-    if (obj['favorite'] == null || obj['favorite'] == 0) {
-      DatiDB.isFavorite(obj.id).then(function (res) {
-        obj['favorite'] = res ? 1 : -1;
-      });
-      return false;
-    } else {
-      return obj['favorite'] > 0 ? true : false;
-    }
-  }
-  
+    
   $rootScope.extOrderBySorter=function(input, params){
     if (!input || !params || !params.order) return input;
     //console.log('input.length: '+input.length);

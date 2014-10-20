@@ -265,6 +265,15 @@ angular.module('ilcomuneintasca.controllers.common', [])
             //console.log('itemId gotdata!');
             $scope.obj = data;
 
+            $scope.isObjFavorite = false;
+            DatiDB.isFavorite(data.id).then(function (res) {
+              $scope.isObjFavorite=res; 
+            });
+            $scope.toggleFavorite = function (obj) {
+              DatiDB.setFavorite(obj.id, !$scope.isObjFavorite).then(function (res) {
+                $scope.isObjFavorite=res;
+              });
+            };
 
             if (data.parentid) {
               //console.log('siblings');

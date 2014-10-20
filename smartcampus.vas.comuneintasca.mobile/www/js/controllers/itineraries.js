@@ -62,6 +62,23 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
     $location.replace();
   };
 
+  $scope.toggleFavorite = function (obj) {
+    DatiDB.setFavorite(obj.id, obj.favorite < 0).then(function (res) {
+      obj['favorite'] = res ? 1 : -1;
+    });
+  }
+  $scope.isFavorite = function (obj) {
+    if (!obj) return false;
+    if (obj['favorite'] == null || obj['favorite'] == 0) {
+      DatiDB.isFavorite(obj.id).then(function (res) {
+        obj['favorite'] = res ? 1 : -1;
+      });
+      return false;
+    } else {
+      return obj['favorite'] > 0 ? true : false;
+    }
+  }
+
   
   $scope.itinerarioId = $stateParams.itinerarioId;
   $scope.gotdata = DatiDB.get('itinerary', $stateParams.itinerarioId).then(function (data) {

@@ -164,6 +164,16 @@ angular.module('ilcomuneintasca', [
     }
   }
   $rootScope.share = function (text, webUrl, imgUrl) {
+    if (typeof text == 'object') {
+      text = $filter('translate')(text);
+    }
+    if (typeof imgUrl == 'object') {
+      imgUrl = $filter('translate')(imgUrl);
+    }
+    if (typeof webUrl == 'object') {
+      webUrl = $filter('translate')(webUrl);
+    }
+    
     setTimeout(function(){
       window.plugins.socialsharing.share(text, text, imgUrl, webUrl);
     },0);

@@ -1,8 +1,31 @@
 angular.module('ilcomuneintasca.services.fs', [])
 
 .factory('Files', function ($q, $http, Config, Profiling, $ionicLoading, $filter, $queue) {
+  var downloadQueues=null;
+/*
+  var downloadQueues=new Array(3);
+  for (var i=0; i<downloadQueues.length; i++) {
+    downloadQueues[i]=$queue.queue(queueFileDownload, {
+      delay: 10, // delay 10 millis between processing items
+      paused: false, // run immediatly
+      complete: function() { console.log('downloadQueues[]: complete!'); }
+    });
+  }
+*/
+
+//  var queuedFiles=null;
+  var queuedFiles=[];
+
+  
   var queueFileDownload = function (obj) {
-    console.log('now working on queued download "' + obj.url + '" (len: '+downloadQueues[0].size()+')');
+    obj.downloading=true;
+
+    if (downloadQueues) {
+      console.log('now working on queued[#1] download "' + obj.url + '" (len: '+downloadQueues[0].size()+')');
+    } else if (queuedFiles) {
+      console.log('now working on queued[#2] download "' + obj.url + '" (len: '+queuedFiles.length+')');
+    }
+
     var fileTransfer = new FileTransfer();
     fileTransfer.download(obj.url, obj.savepath, function (fileEntry) {
      console.log("downloaded file: " + obj.url);
@@ -40,6 +63,15 @@ angular.module('ilcomuneintasca.services.fs', [])
           });
         }
       });
+
+      if (downloadQueues) {
+        console.log('downloaded queued[#1] file "' + obj.url + '" (len: '+downloadQueues[0].size()+')');
+      } else if (queuedFiles) {
+        var downloadedFile=queuedFiles.shift();
+        console.log('downloaded queued[#2] file "' + downloadedFile.url + '" (len: '+queuedFiles.length+')');
+        if (queuedFiles.length>0) queueFileDownload(queuedFiles[0]);
+      }
+
       if (device.version.indexOf('2.') == 0) {
         //console.log("download complete: " + fileEntry.nativeURL + " (Android 2.x)");
         obj.promise.resolve(fileEntry.nativeURL);
@@ -50,18 +82,18 @@ angular.module('ilcomuneintasca.services.fs', [])
     }, function (error) {
       //console.log("download error source " + error.source);console.log("download error target " + error.target);console.log("donwload error code: " + error.code);
       Profiling._do('fileget', 'save error');
+
+      if (downloadQueues) {
+        console.log('cannot download queued[#1] file "' + obj.url + '" (len: '+downloadQueues[0].size()+')');
+      } else if (queuedFiles) {
+        var downloadedFile=queuedFiles.shift();
+        console.log('cannot download queued[#2] file "' + downloadedFile.url + '" (len: '+queuedFiles.length+')');
+        if (queuedFiles.length>0) queueFileDownload(queuedFiles[0]);
+      }
+      
       obj.promise.reject(error);
     }, true, { /* headers: { "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA==" } */ });
   };
-
-  var downloadQueues=new Array(3);
-  for (var i=0; i<downloadQueues.length; i++) {
-    downloadQueues[i]=$queue.queue(queueFileDownload, {
-      delay: 100, // delay 10 millis between processing items
-      paused: false, // run immediatly
-      complete: function() { console.log('downloadQueues[]: complete!'); }
-    });
-  }
 
   var IMAGESDIR_NAME = Config.savedImagesDirName();
   //console.log('savedImagesDirName: ' + IMAGESDIR_NAME);
@@ -142,6 +174,13 @@ angular.module('ilcomuneintasca.services.fs', [])
     fsObj.resolve();
   }
   return {
+    queuedFilesCancel: function () {
+      if (queuedFiles.length>0) {
+        console.log('canceling '+queuedFiles.length+' queued[#2] files...');
+      } else {
+        console.log('no queued[#2] files to cancel...');
+      }
+    },
     cleanup: function () {
       //console.log('cleanup()...');
       var cleaned = $q.defer();
@@ -329,12 +368,25 @@ angular.module('ilcomuneintasca.services.fs', [])
               var fileObj = {
                 savepath: fsRoot.toURL() + IMAGESDIR_NAME + '/' + filename,
                 url: fileurl,
+                downloading: false,
                 promise: filegot
               };
               //console.log('not found: downloading to "' + fileObj.savepath + '"');
-              //queueFileDownload(fileObj);
-              downloadQueues[0].add(fileObj);
-              console.log('queued download "' + fileObj.url + '" (len: '+downloadQueues[0].size()+')');
+              if (downloadQueues) {
+                downloadQueues[0].add(fileObj);
+                console.log('queued[#1] download "' + fileObj.url + '" (len: '+downloadQueues[0].size()+')');
+              } else if (queuedFiles) {
+                queuedFiles.push(fileObj);
+                if (queuedFiles.length==1) {
+                  console.log('queued[#2] started downloading "' + fileObj.url + '"');
+                  queueFileDownload(fileObj);
+                } else {
+                  console.log('queued[#2] download "' + fileObj.url + '" (len: '+queuedFiles.length+')');
+                }
+              } else {
+                console.log('immediatly downloading "' + fileObj.url + '"');
+                queueFileDownload(fileObj);
+              }
             }
           });
         } else {

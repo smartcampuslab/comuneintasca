@@ -169,6 +169,9 @@ angular.module('ilcomuneintasca.controllers.common', [])
   });
 })
 .controller('PageCtrl', function ($scope, $rootScope, $state, $stateParams, $filter, $location, $window, $timeout, Profiling, Config, DatiDB, Files, ListToolbox, DateUtility, GeoLocate, MapHelper, $ionicScrollDelegate) {
+  $scope.results=[];
+  $scope.resultsGroups=[];
+  
   $scope._ = _;
   $scope.getLocaleDateString = function (time) {
     return DateUtility.getLocaleDateString($rootScope.lang, time);

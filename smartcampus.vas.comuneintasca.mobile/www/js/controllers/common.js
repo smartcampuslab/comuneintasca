@@ -183,6 +183,9 @@ angular.module('ilcomuneintasca.controllers.common', [])
     $window.history.back();
   };
   $scope.$on('$destroy', function () {
+    $scope.results = [];
+    $scope.resultsAll = [];
+    $scope.resultsGroups=[];
     Files.queuedFilesCancel();
   });
 
@@ -552,6 +555,8 @@ angular.module('ilcomuneintasca.controllers.common', [])
                   }
                 } else {
                   $scope.results = [];
+                  $scope.resultsAll = [];
+                  $scope.resultsGroups = [];
                 }
                 if (!!$ionicScrollDelegate.$getByHandle('listScroll')) {
                   $timeout(function(){ $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false); });

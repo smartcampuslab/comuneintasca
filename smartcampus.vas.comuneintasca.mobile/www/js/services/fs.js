@@ -28,9 +28,16 @@ angular.module('ilcomuneintasca.services.fs', [])
 */
     var fileTransfer = new FileTransfer();
     fileTransfer.download(obj.url, obj.savepath, function (fileEntry) {
-     console.log("downloaded file: " + obj.url);
-     //console.log("downloaded to: " + fileEntry.nativeURL);
-     Profiling._do('fileget', 'saved');
+      console.log("downloaded file: " + obj.url);
+      //console.log("downloaded to: " + fileEntry.nativeURL);
+      Profiling._do('fileget', 'saved');
+
+      if (downloadQueues) {
+        console.log('(queue[#1] len: '+downloadQueues[0].size()+')');
+      } else if (queuedFiles) {
+        console.log('(queue[#2] len: '+queuedFiles.length+')');
+      }
+
       //DISABLED 
       /*
       window.FileMetadata.getMetadataForURL(obj.url,function(url_metadata){

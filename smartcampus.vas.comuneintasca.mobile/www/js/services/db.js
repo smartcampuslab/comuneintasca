@@ -340,7 +340,7 @@ angular.module('ilcomuneintasca.services.db', [])
                         //console.log('event toTime: ' + toTime);
 
                         if (item.eventForm=='Manifestazione') {
-                          console.log('*** Manifestazione ***: '+item.title.it);
+                          //console.log('*** Manifestazione ***: '+item.title.it);
                           classified.resolve(['_complex','','']);
                         } else {
                           if (item.parentEventId) {

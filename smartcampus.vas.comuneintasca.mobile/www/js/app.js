@@ -141,13 +141,13 @@ angular.module('ilcomuneintasca', [
     window.open(url, win_target);
   }
   $rootScope.email = function (to) {
-    if (ionic.Platform.isWebView()) {
-      window.plugin.email.open({
-        to: [to]
-      });
-    } else {
+//    if (ionic.Platform.isWebView() && cordova.plugins && cordova.plugins.email) {
+//      cordova.plugins.email.open({
+//        to: [to]
+//      });
+//    } else {
       window.location = "mailto:" + to;
-    }
+//    }
   }
   $rootScope.hasNav = function (loc) {
     return loc != null;

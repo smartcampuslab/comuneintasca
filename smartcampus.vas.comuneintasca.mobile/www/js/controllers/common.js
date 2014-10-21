@@ -327,9 +327,12 @@ angular.module('ilcomuneintasca.controllers.common', [])
 
           $scope.template = 'templates/page/' + (sg.view || dbtypeClassCustomisations.view || sg_query_type + '_list') + '.html';
 
-          var dosort = function() {
+          var dosort = function(data) {
               if (tboptions.hasSort || tboptions.hasSearch) {
-                $scope.results = $filter('extOrderBy')(tboptions.getData(),$scope.ordering);
+                $scope.results = [];
+                Files.queuedFilesCancel();
+
+                $scope.results = $filter('extOrderBy')(tboptions.getData(data),$scope.ordering);
                 if ($scope.resultsGroups) {
                   for (idx in $scope.resultsGroups) {
                     var group=$scope.resultsGroups[idx];
@@ -346,7 +349,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
           $scope.$watch('results', function(n,o) {
             //console.log('******************* $scope.$watch.results: '+($scope.results?$scope.results.length:'NULL'));
             // not for the events where objects are grouped
-            if (sg_query_type=='event') return;
+            if (!$scope.results || sg_query_type=='event') return;
             
             $scope.scrolldata = null;
             $scope.loadMore();
@@ -430,9 +433,9 @@ angular.module('ilcomuneintasca.controllers.common', [])
                   }
                   $scope.gotdata = $scope.gotdbdata.then(function (data) {
                     //console.log('tboptions gotdata!');
-                    $scope.results = data;
                     $scope.resultsAll = data;
-                    dosort();
+//                    $scope.results = data;
+                    dosort(data);
                     if (!!$ionicScrollDelegate.$getByHandle('listScroll')) {
                       $timeout(function(){ $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false); });
                     }
@@ -440,8 +443,9 @@ angular.module('ilcomuneintasca.controllers.common', [])
                 }
               }
             },
-            getData: function () {
-              return $scope.resultsAll||$scope.results;
+            getData: function (data) {
+              //console.log('tboptions.getData()!');
+              return $scope.resultsAll||data;
             },
             getTitle: function () {
               return $scope.title;
@@ -540,11 +544,11 @@ angular.module('ilcomuneintasca.controllers.common', [])
                 if (data) {
                   //$scope.results = $filter('extOrderBy')(data,$scope.ordering);
                   $scope.resultsAll = data;
-                  $scope.results = data;
+//                  $scope.results = data;
                   if (sg_query_type=='event') {
                     $scope.resultsGroups = DateUtility.regroup($scope,sg_query_type,d,t,sg.query.classification);
                   } else {
-                    dosort();
+                    dosort(data);
                   }
                 } else {
                   $scope.results = [];
@@ -584,7 +588,10 @@ angular.module('ilcomuneintasca.controllers.common', [])
             //console.log('ListToolbox.prepare()...');
             ListToolbox.prepare($scope, tboptions);
             $scope.$watch('ordering.searchText', function(newValue, oldValue) {
-              dosort();
+              if (newValue!=oldValue) {
+                console.log('search for: '+newValue+' ('+oldValue+')');
+                dosort();
+              }
             });
             //console.log('ListToolbox prepared!');
           } else {
@@ -597,8 +604,8 @@ angular.module('ilcomuneintasca.controllers.common', [])
             $scope.gotdata = $scope.gotdbdata.then(function (data) {
               Profiling._do('page', 'list:gotdata');
               //console.log('list gotdata!');
-              $scope.results = data;
-              dosort();
+              //$scope.results = data;
+              dosort(data);
             });
           }
 

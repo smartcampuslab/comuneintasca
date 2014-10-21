@@ -1,9 +1,9 @@
 <ion-header-bar class="bar-subheader item item-divider" align="center">
   <span ng-if="filterDef">{{filterDef | translate | ellipsis:20}}<span ng-if="filterDetail">{{filterDetail}}</span>: </span>
-  <span ng-if="!resultsGroups">{{'loading' | translate }}</span><span ng-if="resultsGroups">{{'list_results' | translate_plur:results.length}}</span>
+  <span ng-if="!resultsGroups">{{'loading' | translate }}</span><span ng-if="resultsGroups">{{'list_results' | translate_plur:resultsAll.length}}</span>
 </ion-header-bar>
 <ion-content class="has-header" delegate-handle="listScroll">
-  <ion-list>
+  <ion-list ng-if="resultsGroups">
     <div class="listgroup" ng-repeat="group in groupscrolldata track by $index">
       <ion-item-divider ng-if="group.label" class="item item-divider">{{group.label}}</ion-item-divider>
       <ion-item ng-repeat="obj in group.results track by $index"

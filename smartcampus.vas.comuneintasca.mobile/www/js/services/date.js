@@ -39,7 +39,7 @@ angular.module('ilcomuneintasca.services.date', [])
       if (scope.filter=='today' || to==0) {
         var label=(scope.filter=='today'?scope.getLocaleDateString((new Date()).getTime()):null);
         label=null;
-        var ordered = $filter('extOrderBy')(scope.results,scope.ordering);
+        var ordered = $filter('extOrderBy')(scope.resultsAll,scope.ordering);
         groups=[
           { label:label, results:ordered }
         ];
@@ -59,7 +59,7 @@ angular.module('ilcomuneintasca.services.date', [])
           var group={ labelHidden:scope.getLocaleDateString(d), results:[] };
           map[scope.getLocaleDateString(d)] = group;
         }  
-        var elems = scope.results;
+        var elems = scope.resultsAll;
         for (var i = 0; i < elems.length; i++) {
           var dtf = new Date(elems[i].fromTime >= from ? elems[i].fromTime : from);
           var df = new Date(dtf.getFullYear(), dtf.getMonth(), dtf.getDate());

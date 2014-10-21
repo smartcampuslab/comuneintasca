@@ -18,7 +18,7 @@
         <p ng-if="filter!='today' && obj.eventPeriod && obj.dbClassification!='Mostre'">{{obj.eventPeriod | translate}}</p>
         <div class="row comuni-item-bottom">
           <div class="col comuni-item-bottom-text">
-            <span>{{obj.address | translate}}</span>
+            <span>{{obj.address | translate | addrclean}}</span>
           </div>
         </div>
       </ion-item>

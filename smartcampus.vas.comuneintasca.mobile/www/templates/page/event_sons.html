@@ -5,7 +5,7 @@
               
               href="{{son.abslink}}" class="coll-item item-thumbnail-left">
       <!-- comuni-img class="item-image comuni-item-image" gotdata="gotsonsdata"></comuni-img -->
-      <div class="item-image comuni-item-image comuni-img" ng-attr-style="background-image:url({{son.parsedimageurl|translate}})"></div>
+      <div class="item-image comuni-item-image comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(son)}})"></div>
       <h2>{{son.title | translate}}</h2>
       <p ng-if="son.fromTime">{{son.fromTime | date:'dd/MM/yyyy'}}<span ng-if="son.fromTime !== son.toTime"> - {{son.toTime | date:'dd/MM/yyyy'}}</span></p>
       <div class="row comuni-item-bottom">

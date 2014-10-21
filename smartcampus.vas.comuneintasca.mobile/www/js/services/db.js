@@ -16,19 +16,7 @@ angular.module('ilcomuneintasca.services.db', [])
 		}
 		item['sonscount']=dbrow.sonscount;
 
-    item['parsedimageurl']='svg/placeholder.svg';
-    if (item.image) {
-      // fix for broken opencontent data
-      // ??? can it be removed ???
-      if (typeof item.image=='string' && item.image.indexOf('http')==-1 && item.image.charAt(item.image.length-1)=='|') item.image='http://trento.opencontent.it/'+item.image.substring(0,item.image.length-1);
-
-      var imageUrl=$filter('translate')(item.image);
-      if (imageUrl && imageUrl != '' && imageUrl != 'false') {
-        Files.get(imageUrl).then(function (fileUrl) {
-          item['parsedimageurl']=fileUrl;
-        });
-      }
-    }
+    //item['parsedimageurl']='svg/placeholder.svg';
 
     var dbtype = Config.contentKeyFromDbType(dbrow.type);
     item['dbType']=dbtype;

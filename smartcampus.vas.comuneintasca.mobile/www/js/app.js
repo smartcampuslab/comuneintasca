@@ -19,7 +19,7 @@ angular.module('ilcomuneintasca', [
   'google-maps'
 ])
 
-.run(function ($ionicPlatform, $rootScope, $state, $filter, $location, Config, DatiDB, GeoLocate) {
+.run(function ($ionicPlatform, $rootScope, $state, $filter, $location, Config, DatiDB, Files, GeoLocate) {
   $rootScope.locationWatchID = undefined;
   //  ionic.Platform.fullScreen(false,true);
   if (typeof (Number.prototype.toRad) === "undefined") {
@@ -177,6 +177,31 @@ angular.module('ilcomuneintasca', [
     setTimeout(function(){
       window.plugins.socialsharing.share(text, text, imgUrl, webUrl);
     },0);
+  }
+    
+  $rootScope.getParsedImageURL=function(item){
+    if (!item.parsedimageurl) {
+      item['parsedimageurl']='svg/placeholder.svg';
+      if (item.image) {
+        // fix for broken opencontent data
+        // ??? can it be removed ???
+        if (typeof item.image=='string' && item.image.indexOf('http')==-1 && item.image.charAt(item.image.length-1)=='|') item.image='http://trento.opencontent.it/'+item.image.substring(0,item.image.length-1);
+
+        var imageUrl=$filter('translate')(item.image);
+        if (imageUrl && imageUrl != '' && imageUrl != 'false') {
+          return Files.get(imageUrl).then(function (fileUrl) {
+            //console.log('########### fileUrl: '+fileUrl);
+            item['parsedimageurl']=fileUrl;
+            return item['parsedimageurl'];
+          },function(){
+            return item['parsedimageurl'];
+          });
+        }
+      }
+    } else {
+      //console.log('###########CACHED!!');
+    }
+    return item['parsedimageurl'];
   }
     
   $rootScope.extOrderBySorter=function(input, params){

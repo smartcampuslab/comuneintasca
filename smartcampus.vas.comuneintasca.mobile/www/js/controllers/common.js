@@ -344,6 +344,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
 
           /** INFINITE LIST SUPPORT FOR NORMAL LISTS */
           $scope.$watch('results', function(n,o) {
+            //console.log('******************* $scope.$watch.results: '+($scope.results?$scope.results.length:'NULL'));
             // not for the events where objects are grouped
             if (sg_query_type=='event') return;
             
@@ -366,6 +367,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
           };
           /** INFINITE LIST SUPPORT FOR GROUPPED LISTS */
           $scope.$watch('resultsGroups', function(n,o) {
+            //console.log('******************* $scope.$watch.resultsGroups: '+($scope.resultsGroups?$scope.resultsGroups.length:'NULL'));
             $scope.groupscrolldata = null;
             //console.log('resultsGroups changed');
             $scope.loadMoreGroups();
@@ -412,14 +414,18 @@ angular.module('ilcomuneintasca.controllers.common', [])
             hasSearch: (sg.query.search || true),
             load: function (cache) {
               if (cache) {
+                //console.log('tboptions cache!');
                 $scope.results = cache;
               } else {
                 if (typeof this.doFilter == 'function') {
+                  //console.log('tboptions doFilter!');
                   this.doFilter(this.defaultFilter);
                 } else {
                   if (sg.query.classification) {
+                    //console.log('tboptions cate...');
                     $scope.gotdbdata = DatiDB.cate(sg_query_type, sg.query.classification);
                   } else {
+                    //console.log('tboptions all...');
                     $scope.gotdbdata = DatiDB.all(sg_query_type);
                   }
                   $scope.gotdata = $scope.gotdbdata.then(function (data) {
@@ -509,17 +515,22 @@ angular.module('ilcomuneintasca.controllers.common', [])
                 //console.log('sg.query.classification: '+sg.query.classification);
                 //console.log('sg_query_type: '+sg_query_type);
                 if (sg.query.classification) {
+                  //console.log('doFilter classification...');
                   $scope.gotdbdata = DatiDB.byTimeInterval(sg_query_type, f, t, sg.query.classification);
                 } else {
+                  //console.log('doFilter ALL...');
                   $scope.gotdbdata = DatiDB.byTimeInterval(sg_query_type, f, t, null);
                 }
               } else {
                 if (filter) {
+                  //console.log('doFilter FILTER cate...');
                   $scope.gotdbdata = DatiDB.cate(sg_query_type, filter);
                 } else {
                   if (sg.query.classification) {
+                    //console.log('doFilter NO FILTER classification...');
                     $scope.gotdbdata = DatiDB.cate(sg_query_type, sg.query.classification);
                   } else {
+                    //console.log('doFilter NO FILTER ALL...');
                     $scope.gotdbdata = DatiDB.all(sg_query_type);
                   }
                 }
@@ -573,9 +584,9 @@ angular.module('ilcomuneintasca.controllers.common', [])
             //console.log('ListToolbox.prepare()...');
             ListToolbox.prepare($scope, tboptions);
             $scope.$watch('ordering.searchText', function(newValue, oldValue) {
-              //console.log('search for: '+newValue);
               dosort();
             });
+            //console.log('ListToolbox prepared!');
           } else {
             //console.log('sg.query.classification: '+sg.query.classification);
             if (sg.query.classification) {

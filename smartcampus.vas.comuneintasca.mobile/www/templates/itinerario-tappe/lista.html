@@ -2,9 +2,8 @@
   <ion-list>
     <div class="item item-divider" align="center">{{itinerario.title | translate}}</div>
     <ion-item ng-repeat="obj in tappe track by $index" 
-              collection-item-width="'100%'" collection-item-height="'100px'" 
               href="#/app/itinstep/{{itinerario.id}}/step/{{obj.id}}" 
-              data-off-ng-click="gotoSubpath(obj.id)" class="item-thumbnail-left itinerari"> 
+              class="item-thumbnail-left itinerari"> 
       <!-- comuni-img class="item-image comuni-item-image" gotdata="gotdata"></comuni-img -->
       <div class="item-image comuni-item-image comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj)}})"></div>
       <h2>{{$index + 1}}. {{obj.title | translate}}</h2>

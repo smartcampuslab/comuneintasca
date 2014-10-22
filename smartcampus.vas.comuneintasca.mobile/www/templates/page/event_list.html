@@ -24,8 +24,7 @@
       </ion-item>
     </div>
   </ion-list>
-  <ion-infinite-scroll on-infinite="loadMoreGroups()" distance="10%" ng-if="hasMoreGroupsToLoad()">
-  </ion-infinite-scroll>
+  <ion-infinite-scroll on-infinite="loadMoreGroups()" distance="10%" ng-if="hasMoreGroupsToLoad()"></ion-infinite-scroll>
 </ion-content>
 <ion-footer-bar>
   <div ng-include="'templates/list_toolbox.html'"></div>

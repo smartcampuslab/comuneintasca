@@ -388,11 +388,21 @@ angular.module('ilcomuneintasca', [
     ,data: { explicitBack: true }
   })
   .state('app.itinerary.steps', {
-    url: "/steps/:poiId",
+    url: "/steps/",
     views: {
       'itinerary-steps': {
         templateUrl: "templates/itinerario-tappe.html",
         controller: 'ItinerarioTappeCtrl'
+      }
+    }
+    ,data: { explicitBack: true }
+  })
+  .state('app.itinstep', {
+    url: "/itinstep/:itinerarioId/step/:poiId",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/itinerario-poi.html",
+        controller: 'ItinerarioPoiCtrl'
       }
     }
     ,data: { explicitBack: true }
@@ -405,16 +415,6 @@ angular.module('ilcomuneintasca', [
         controller: 'ItinerarioMappaCtrl'
       }
     }
-  })
-  .state('app.itinstep', {
-    url: "/itinstep/:itinerarioId/step/:poiId",
-    views: {
-      'menuContent': {
-        templateUrl: "templates/itinerario-poi.html",
-        controller: 'ItinerarioPoiCtrl'
-      }
-    }
-    ,data: { explicitBack: true }
   });
   $urlRouterProvider.otherwise('/app/home'); // if none of the above states are matched, use this as the fallback
 });

@@ -180,6 +180,8 @@ angular.module('ilcomuneintasca', [
   }
     
   $rootScope.getParsedImageURL=function(item){
+    if (!item) return 'svg/placeholder.svg';
+
     if (!item.parsedimageurl) {
       item['parsedimageurl']='svg/placeholder.svg';
       if (item.image) {

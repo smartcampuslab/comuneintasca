@@ -49,8 +49,7 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
     $ionicPlatform.offHardwareBackButton(back);
   });
 */
-  $scope.backActive = false;
-  $timeout(function(){$scope.backActive = true;},200);
+  $scope.backActive = true;
   $scope.explicitBack = function () {
     return $state.current && $state.current.data && $state.current.data.explicitBack;
   };
@@ -121,8 +120,7 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
   }
 })
 .controller('ItinerarioPoiCtrl', function ($scope, $state, $timeout, $window, DatiDB, $stateParams) {
-  $scope.backActive = false;
-  $timeout(function(){$scope.backActive = true;},200);
+  $scope.backActive = true;
   $scope.explicitBack = function () {
     return $state.current && $state.current.data && $state.current.data.explicitBack;
   };

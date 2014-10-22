@@ -61,63 +61,72 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
     $location.replace();
   };
 
+  $scope.isObjFavorite = false;
   $scope.toggleFavorite = function (obj) {
-    DatiDB.setFavorite(obj.id, obj.favorite < 0).then(function (res) {
-      obj['favorite'] = res ? 1 : -1;
+    DatiDB.setFavorite(obj.id, !$scope.isObjFavorite).then(function (res) {
+      $scope.isObjFavorite=res;
     });
-  }
-  $scope.isFavorite = function (obj) {
-    if (!obj) return false;
-    if (obj['favorite'] == null || obj['favorite'] == 0) {
-      DatiDB.isFavorite(obj.id).then(function (res) {
-        obj['favorite'] = res ? 1 : -1;
-      });
-      return false;
-    } else {
-      return obj['favorite'] > 0 ? true : false;
-    }
-  }
-
+  };
   
   $scope.itinerarioId = $stateParams.itinerarioId;
-  $scope.gotdata = DatiDB.get('itinerary', $stateParams.itinerarioId).then(function (data) {
+  $scope.gotitindata = DatiDB.get('itinerary', $stateParams.itinerarioId).then(function (data) {
     $scope.itinerario = data;
-    DatiDB.get('poi', data.steps.join()).then(function (luoghi) {
-      var tappe = [];
+
+    DatiDB.isFavorite(data.id).then(function (res) {
+      $scope.isObjFavorite=res; 
+    });
+    
+    $scope.gotstepsdata=DatiDB.get('poi', data.steps.join()).then(function (luoghi) {
+      //console.log('luoghi: '+luoghi);
+      $scope.location = luoghi[0].location;
+      var tappe=[];
       angular.forEach(luoghi, function (luogo, idx) {
+        //console.log('luogo#'+idx+': '+luogo.id);
         tappe[idx] = luogo;
-        luogo.abslinkgot.then(function(){
-          luogo['abslink']='#/app/itinstep/'+$scope.itinerario.id+'/poi/'+luogo.id;
-        })
       });
       $scope.tappe = tappe;
-      $scope.location = luoghi[0].location;
+      return luoghi;
     });
+    return data;
   });
 })
 
-.controller('ItinerarioInfoCtrl', function ($scope, DatiDB, $stateParams) {})
+.controller('ItinerarioInfoCtrl', function ($scope, DatiDB, $stateParams) {
+})
 .controller('ItinerarioTappeCtrl', function ($scope, DatiDB, $stateParams) {
-  if ($stateParams.poiId) {
-    console.log('ItinerarioTappeCtrl: poi');
-    $scope.gotdata = DatiDB.get('poi', $stateParams.poiId).then(function (data) {
-      $scope.obj=data;
-
-      $scope.isObjFavorite = false;
-      DatiDB.isFavorite(data.id).then(function (res) {
-        $scope.isObjFavorite=res; 
+/*
+  console.log('itin id: '+$scope.itinerarioId);
+  $scope.gotitindata.then(function(data){
+    console.log('gotitindata: '+JSON.stringify(data.steps));
+    console.log('$scope.gotstepsdata: '+$scope.gotstepsdata);
+    $scope.gotstepsdata.then(function(luoghi){
+      console.log('luoghi#2: '+luoghi);
+      var tappe=[];
+      angular.forEach(luoghi, function (luogo, idx) {
+        console.log('luogo#'+idx+': '+luogo.id);
+        tappe[idx] = luogo;
       });
-      $scope.toggleFavorite = function (obj) {
-        DatiDB.setFavorite(obj.id, !$scope.isObjFavorite).then(function (res) {
-          $scope.isObjFavorite=res;
-        });
-      };
-      
-      $scope.template='templates/page/poi_content.html';
+      $scope.tappe = tappe;
+      return luoghi;
+    },function(){
+      console.log('errore gotstepsdata');
     });
-  } else {
-    console.log('ItinerarioTappeCtrl: lista');
-  }
+*/
+/*
+    $scope.gotstepsdata=DatiDB.get('poi', data.steps.join()).then(function (luoghi) {
+      var tappe = [];
+      $scope.tappe = tappe;
+      angular.forEach(luoghi, function (luogo, idx) {
+        console.log('luogo#'+idx+': '+luogo.id);
+        tappe[idx] = luogo;
+        luogo.abslinkgot.then(function(){
+          luogo['abslink']='#/app/itinstep/'+$scope.itinerario.id+'/poi/'+luogo.id;
+        });
+      });
+      return tappe;
+    });
+*/
+//  });
 })
 .controller('ItinerarioPoiCtrl', function ($scope, $state, $timeout, $window, DatiDB, $stateParams) {
   $scope.backActive = true;
@@ -125,6 +134,7 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
     return $state.current && $state.current.data && $state.current.data.explicitBack;
   };
   $scope.bk = function () {
+    //console.log('goto steps!');
     $window.history.back();
   };
     

@@ -13,8 +13,8 @@
   </ion-tab>
   <ion-tab  icon="ion-ios7-redo-outline" ng-click="share(itinerario.title,itinerario.url,itinerario.image)">
   </ion-tab>
-  <ion-tab ng-if="!isFavorite(itinerario)" icon="icon ion-ios7-star-outline" ng-click="toggleFavorite(itinerario)">
+  <ion-tab ng-if="!isObjFavorite" icon="icon ion-ios7-star-outline" ng-click="toggleFavorite(itinerario)">
   </ion-tab>
-  <ion-tab ng-if="isFavorite(itinerario)" icon="icon ion-ios7-star" ng-click="toggleFavorite(itinerario)">
+  <ion-tab ng-if="isObjFavorite" icon="icon ion-ios7-star" ng-click="toggleFavorite(itinerario)">
   </ion-tab>
 </ion-tabs>

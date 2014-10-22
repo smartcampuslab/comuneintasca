@@ -404,8 +404,12 @@ angular.module('ilcomuneintasca.services.fs', [])
             }
           });
         } else {
-          //console.log('from browser...');
-          filegot.resolve(fileurl);
+          console.log('from browser... url: '+fileurl);
+          if (fileurl && (fileurl.indexOf('http://')==0 || fileurl.indexOf('https://')==0)) {
+            filegot.resolve(fileurl);
+          } else {
+            filegot.reject('invalid url (not http nor https)');
+          }
         }
     });
       return filegot.promise;

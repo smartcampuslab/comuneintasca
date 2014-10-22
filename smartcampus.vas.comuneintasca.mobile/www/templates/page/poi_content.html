@@ -1,6 +1,6 @@
 <ion-content class="has-header">
   <!-- comuni-img ng-if="obj.image" class="content-image-main" gotdata="gotdata" detail="true"></comuni-img -->
-  <div class="content-image-main comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj)}})"></div>
+  <div ng-if="getParsedImageURL(obj)!='svg/placeholder.svg'" class="content-image-main comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj)}})"></div>
   <div class="padding">
     <h1>{{obj.title | translate}}</h1>
     <div class="list card sinottico">

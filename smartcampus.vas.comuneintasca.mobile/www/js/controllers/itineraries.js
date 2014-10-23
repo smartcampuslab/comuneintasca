@@ -11,6 +11,18 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
   var dosort = function() {
     $scope.itinerari = $filter('extOrderBy')($scope.itinerari,$scope.ordering);
   };
+
+  $scope.$watch('ordering.searchText', function(newValue, oldValue) {
+    if (newValue!=oldValue) {
+      if (oldValue == null) {
+        $scope.allItinerari = $scope.itinerari;
+      } else {
+        $scope.itinerari = $scope.allItinerari;
+      }
+      console.log('search for: '+newValue+' ('+oldValue+')');
+      dosort();
+    }
+  });
   
   ListToolbox.prepare($scope, {
     load: function (cache) {

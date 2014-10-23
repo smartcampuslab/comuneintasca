@@ -16,10 +16,20 @@ angular.module('ilcomuneintasca', [
   'ilcomuneintasca.filters',
   'ilcomuneintasca.directives',
   'ngQueue',
-  'google-maps'
+  'google-maps'.ns()
 ])
 
+.config(['GoogleMapApiProvider'.ns(), function (GoogleMapApi) {
+  GoogleMapApi.configure({
+    //    key: 'your api key',
+    v: '3.17',
+    libraries: 'geometry'
+  });
+}])
+
 .run(function ($ionicPlatform, $rootScope, $state, $filter, $location, Config, DatiDB, Files, GeoLocate) {
+  $rootScope.mapsReady=false;
+  
   $rootScope.locationWatchID = undefined;
   //  ionic.Platform.fullScreen(false,true);
   if (typeof (Number.prototype.toRad) === "undefined") {

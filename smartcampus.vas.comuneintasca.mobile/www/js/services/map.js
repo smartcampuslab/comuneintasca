@@ -55,6 +55,8 @@ angular.module('ilcomuneintasca.services.map', [])
 
       angular.forEach(data, function (luogo, idx) {
         if (!!luogo.location) {
+          //console.log($filter('translate')(luogo.title));
+          luogo.key = luogo.id;
           luogo.latitude = luogo.location[0];
           luogo.longitude = luogo.location[1];
           luogo.icon = 'https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=';
@@ -78,14 +80,14 @@ angular.module('ilcomuneintasca.services.map', [])
 
       //console.log('[cordova] map started!!!');
 
-      $scope.openMarkerPopup = function ($markerModel) {
-        if ($markerModel.id=='myMapPos') {
+      $scope.openMarkerPopup = function ($marker) {
+        if ($marker.key=='myMapPos') {
           //console.log('no actions on click my position marker');
           return;
         }
-        $scope.activeMarker = $markerModel;
+        for (i in $scope.markers.models) if ($scope.markers.models[i].key==$marker.key) $scope.activeMarker=$scope.markers.models[i];
 
-        var title = $filter('translate')($markerModel.title);
+        var title = $filter('translate')($scope.activeMarker.title);
         var template = '<div>';
         template += title;
         template += '</div>';
@@ -98,20 +100,22 @@ angular.module('ilcomuneintasca.services.map', [])
           title: $filter('translate')($scope.activeMarker.title),
           subTitle: !!$scope.activeMarker.distance ? $filter('number')($scope.activeMarker.distance, 1) + ' Km' : '',
           scope: $scope,
-          buttons: [{
-            text: $filter('translate')(Config.keys()['Close']),
-            type: 'button-default',
-            onTap: function (e) {
-              $scope.activeMarker = null;
-            }
+          buttons: [
+            {
+              text: $filter('translate')(Config.keys()['Close']),
+              type: 'button-default',
+              onTap: function (e) {
+                $scope.activeMarker = null;
+              }
             }, {
-            text: $filter('translate')(Config.keys()['Details']),
-            type: 'button-positive',
-            onTap: function (e) {
-              var itemUrl = $scope.activeMarker.abslink.substring(1);
-              $location.path(itemUrl);
+              text: $filter('translate')(Config.keys()['Details']),
+              type: 'button-positive',
+              onTap: function (e) {
+                var itemUrl = $scope.activeMarker.abslink.substring(1);
+                $location.path(itemUrl);
+              }
             }
-        }]
+          ]
         });
         $scope.show = myPopup;
         myPopup.then(function (res) {

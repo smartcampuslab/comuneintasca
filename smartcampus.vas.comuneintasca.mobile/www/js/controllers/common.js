@@ -1,8 +1,12 @@
 angular.module('ilcomuneintasca.controllers.common', [])
 
-.controller('MenuCtrl', function ($scope, $rootScope, $location, $ionicModal, $ionicLoading, $ionicPopup, $filter, $window, Config, Files, DatiDB) {
+.controller('MenuCtrl', ['$scope', '$rootScope', '$location', '$ionicModal', '$ionicLoading', '$ionicPopup', '$filter', '$window', 'Config', 'Files', 'DatiDB', 'GoogleMapApi'.ns(), function ($scope, $rootScope, $location, $ionicModal, $ionicLoading, $ionicPopup, $filter, $window, Config, Files, DatiDB, GoogleMapApi) {
   $scope.shownGroup = null;
 
+  GoogleMapApi.then(function(maps) {
+    //console.log('GoogleMapApi is READY!!!');
+    $rootScope.mapsReady=true;
+  });
   $scope.isGroupShown = function (groupId) {
     return $scope.shownGroup == groupId;
   };
@@ -112,7 +116,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
     $scope.credits.remove();
     $scope.settings.remove();
   });
-})
+}])
 
 .controller('FavouritesListCtrl', function ($scope, DatiDB) {
   $scope.gotdata = DatiDB.getFavorites().then(function (data) {
@@ -637,16 +641,22 @@ angular.module('ilcomuneintasca.controllers.common', [])
 })
 
 
-.controller('MapCtrl', function ($scope, MapHelper, $ionicScrollDelegate, $timeout) {
+.controller('MapCtrl',['$scope', 'MapHelper', '$ionicScrollDelegate', '$timeout', 'GoogleMapApi'.ns(), function ($scope, MapHelper, $ionicScrollDelegate, $timeout, GoogleMapApi) {
   $scope._ = _;
   MapHelper.start($scope);
 
-  $scope.$on('$viewContentLoaded', function () {
-    var mapHeight = 10; // or any other calculated value
-    mapHeight = angular.element(document.querySelector('#map-container'))[0].offsetHeight;
-    angular.element(document.querySelector('.angular-google-map-container'))[0].style.height = mapHeight + 'px';
+  GoogleMapApi.then(function(maps) {
+    //console.log('GoogleMapApi is READY!!!');
+
+    $scope.$on('$viewContentLoaded', function () {
+      var mapHeight = 10; // or any other calculated value
+      mapHeight = angular.element(document.querySelector('#map-container'))[0].offsetHeight;
+      angular.element(document.querySelector('.angular-google-map-container'))[0].style.height = mapHeight + 'px';
+    });
+  },function(err){
+    console.log('GoogleMapApi is NOT AVAILABLE!!!');
   });
-})
+}])
 
 
 .controller('TestCtrl', function ($scope, DatiDB) {

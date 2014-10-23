@@ -387,7 +387,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
           $scope.hasMoreGroupsToLoad = function() {
             return $scope.groupscrolldata && $scope.resultsGroups && 
             ($scope.groupscrolldata.length < $scope.resultsGroups.length ||
-             $scope.groupscrolldata[$scope.groupscrolldata.length-1].results.length < $scope.resultsGroups[$scope.resultsGroups.length-1].results.length);
+             ($scope.groupscrolldata.length>0 && $scope.groupscrolldata[$scope.groupscrolldata.length-1].results.length < $scope.resultsGroups[$scope.resultsGroups.length-1].results.length) );
           }
           /**
            * gc corresponds to the length of the current loaded data or 1.

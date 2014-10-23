@@ -37,7 +37,7 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
   });
 })
 
-.controller('ItinerarioCtrl', function ($scope, DatiDB, $stateParams, $window, $location, $ionicPlatform, $timeout) {
+.controller('ItinerarioCtrl', function ($scope, DatiDB, $stateParams, $window, $location, $ionicPlatform, $ionicViewService, $timeout) {
 /*  
   var back = function(event) {
     event.preventDefault();
@@ -54,7 +54,10 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
     return $state.current && $state.current.data && $state.current.data.explicitBack;
   };
   $scope.bk = function () {
-    $window.history.back();
+    //console.log('back from itin...');
+    var backView = $ionicViewService.getBackView();
+    backView && backView.go();
+//    $window.history.back();
   };
 
   $scope.clr = function () {
@@ -128,14 +131,15 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
 */
 //  });
 })
-.controller('ItinerarioPoiCtrl', function ($scope, $state, $timeout, $window, DatiDB, $stateParams) {
+.controller('ItinerarioPoiCtrl', function ($scope, $state, $timeout, $window, DatiDB, $stateParams, $ionicViewService) {
   $scope.backActive = true;
   $scope.explicitBack = function () {
     return $state.current && $state.current.data && $state.current.data.explicitBack;
   };
   $scope.bk = function () {
-    //console.log('goto steps!');
-    $window.history.back();
+    //console.log('back from inside itin POIs!');
+    var backView = $ionicViewService.getBackView();
+    backView && backView.go();
   };
     
   //console.log('itin id: '+$stateParams.itinerarioId);

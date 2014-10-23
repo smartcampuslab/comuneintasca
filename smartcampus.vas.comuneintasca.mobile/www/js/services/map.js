@@ -52,6 +52,8 @@ angular.module('ilcomuneintasca.services.map', [])
       showInfoWindow = false;
       title = t;
 
+      markers.models = [];
+      
       if ($rootScope.myPosition) {
         p={ 'id':'myPos', 'key':'myMapPos', latitude:$rootScope.myPosition[0], longitude:$rootScope.myPosition[1] };
         //console.log('myMapPos geolocation (lat,lon): ' + JSON.stringify(p));

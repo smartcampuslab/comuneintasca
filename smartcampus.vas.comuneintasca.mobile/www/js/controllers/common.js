@@ -168,7 +168,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
     $scope.group = g;
   });
 })
-.controller('PageCtrl', function ($scope, $rootScope, $state, $stateParams, $filter, $location, $window, $timeout, Profiling, Config, DatiDB, Files, ListToolbox, DateUtility, GeoLocate, MapHelper, $ionicScrollDelegate) {
+.controller('PageCtrl', function ($scope, $rootScope, $state, $stateParams, $filter, $location, $window, $timeout, Profiling, Config, DatiDB, Files, ListToolbox, DateUtility, GeoLocate, MapHelper, $ionicScrollDelegate, $ionicViewService) {
   $scope.results=[];
   $scope.resultsGroups=[];
   
@@ -180,7 +180,9 @@ angular.module('ilcomuneintasca.controllers.common', [])
     return $state.current && $state.current.data && $state.current.data.explicitBack;
   };
   $scope.bk = function () {
-    $window.history.back();
+    var backView = $ionicViewService.getBackView();
+    backView && backView.go();
+    //$window.history.back();
   };
   $scope.$on('$destroy', function () {
     $scope.results = [];

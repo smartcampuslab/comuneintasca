@@ -54,7 +54,7 @@ angular.module('ilcomuneintasca.services.map', [])
 
       if ($rootScope.myPosition) {
         p={ 'id':'myPos', 'key':'myMapPos', latitude:$rootScope.myPosition[0], longitude:$rootScope.myPosition[1] };
-        console.log('myMapPos geolocation (lat,lon): ' + JSON.stringify(p));
+        //console.log('myMapPos geolocation (lat,lon): ' + JSON.stringify(p));
         markers.models.push(p);
       } else {
         console.log('unknown location: not showing myPos marker!');

@@ -150,14 +150,43 @@ angular.module('ilcomuneintasca', [
     }
     window.open(url, win_target);
   }
-  $rootScope.email = function (to) {
-//    if (ionic.Platform.isWebView() && cordova.plugins && cordova.plugins.email) {
-//      cordova.plugins.email.open({
-//        to: [to]
-//      });
-//    } else {
-      window.location = "mailto:" + to;
-//    }
+  $rootScope.email = function (toAddr) {
+// need to update social sharing plugin to use this syntax
+/*
+    if (ionic.Platform.isWebView() && window.plugins.socialsharing) {
+      window.plugins.socialsharing.shareViaEmail(
+        '', // can contain HTML tags, but support on Android is rather limited:  http://stackoverflow.com/questions/15136480/how-to-send-html-content-with-image-through-android-default-email-client
+        '',
+        [toAddr], // TO: must be null or an array
+        null, // CC: must be null or an array
+        null, // BCC: must be null or an array
+        null, // FILES: can be null, a string, or an array
+        function(){ // called when sharing worked, but also when the user cancelled sharing via email (I've found no way to detect the difference)
+          console.log('success for mail to "'+to+'"');
+        }, 
+        function(){ // called when sh*t hits the fan
+          console.log('ERROR for mail to "'+to+'"');
+        }
+      );
+*/
+    var emailPlugin=null;
+    if (ionic.Platform.isWebView()) {
+      //console.log('using native email plugin... ('+toAddr+')');
+      if (window.plugin.email) emailPlugin=window.plugin.email;
+      else if (cordova.plugins.email) emailPlugin=cordova.plugins.email;
+    }
+    if (emailPlugin) {
+      window.plugin.email.open({
+        'to': [toAddr]
+      } 
+/* VALID ONLY FOR DEV VERSION
+      ,function(){  console.log('email view dismissed');  }, this 
+*/
+      );
+    } else {
+      //console.log('using "mailto:" schema in location...');
+      window.location = "mailto:" + toAddr;
+    }
   }
   $rootScope.hasNav = function (loc) {
     return loc != null;

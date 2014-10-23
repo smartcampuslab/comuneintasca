@@ -217,7 +217,7 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
     });
 
     $scope.openMarkerPopup = function ($marker) {
-      if ($marker.id=='myPos') {
+      if ($marker.key=='myPos') {
         //console.log('no actions on click my position marker');
         return;
       }
@@ -295,8 +295,14 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
       });
 
       DatiDB.get('poi', data.steps.join()).then(function (luoghi) {
-        $scope.markers.models = [];
-
+        var models=[];
+        if ($rootScope.myPosition) {
+          var p={ 'id':'myPos', 'key':'myPos', latitude:$rootScope.myPosition[0], longitude:$rootScope.myPosition[1] };
+          //console.log('geolocation (lat,lon): ' + JSON.stringify(p));
+          models.push(p);
+        } else {
+          console.log('unknown location: not showing myPos marker!');
+        }
         angular.forEach(luoghi, function (luogo, idx) {
           // for (var i = 0; i < luoghi.length; i++) {
           //console.log(luogo.title.it);
@@ -312,19 +318,12 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
             luogo.icon = 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=' + (data.steps.indexOf(luogo.id) + 1) + '|2975A7|FFFFFF';
 
             //console.log('data.steps.indexOf(luogo.id): '+data.steps.indexOf(luogo.id));
-            $scope.markers.models[data.steps.indexOf(luogo.id)] = luogo;
+            models.push(luogo);
           } else {
             console.log('WARNING: no location for "' + luogo.title.it + '"');
-            //luogo.latitude = 0;
-            //luogo.longitude = 0;
           }
         });
-
-        if ($rootScope.myPosition) {
-          p={ 'key':'myPos', latitude:$rootScope.myPosition[0], longitude:$rootScope.myPosition[1] };
-          //console.log('geolocation (lat,lon): ' + JSON.stringify(p));
-          $scope.markers.models.push(p);
-        }
+        $scope.markers.models=models;
 
         // drawDirections($scope.map.control, $scope.markers.models);
 

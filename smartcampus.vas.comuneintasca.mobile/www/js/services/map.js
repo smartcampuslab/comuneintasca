@@ -50,9 +50,15 @@ angular.module('ilcomuneintasca.services.map', [])
   return {
     prepare: function (t, data) {
       showInfoWindow = false;
-      markers.models = [];
       title = t;
 
+      if ($rootScope.myPosition) {
+        p={ 'id':'myPos', 'key':'myMapPos', latitude:$rootScope.myPosition[0], longitude:$rootScope.myPosition[1] };
+        console.log('myMapPos geolocation (lat,lon): ' + JSON.stringify(p));
+        markers.models.push(p);
+      } else {
+        console.log('unknown location: not showing myPos marker!');
+      }
       angular.forEach(data, function (luogo, idx) {
         if (!!luogo.location) {
           //console.log($filter('translate')(luogo.title));
@@ -61,24 +67,21 @@ angular.module('ilcomuneintasca.services.map', [])
           luogo.longitude = luogo.location[1];
           luogo.icon = 'https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=';
           luogo.icon += (!!categoriesIcons[luogo.category] ? categoriesIcons[luogo.category] : categoriesIcons['other']) + '|2975A7';
-          markers.models.push(luogo)
+          markers.models.push(luogo);
+        } else {
+          console.log('WARNING: no location for "' + luogo.title.it + '"');
         }
       });
-/*
-      if ($rootScope.myPosition) {
-        p={ 'id':'myMapPos', latitude:$rootScope.myPosition[0], longitude:$rootScope.myPosition[1] };
-        console.log('geolocation (lat,lon): ' + JSON.stringify(p));
-        markers.models[markers.models.length]=p;
-      }
-*/
+
       $location.path('/app/mappa');
     },
     start: function ($scope) {
-      $scope.activeMarker = null;
-      $scope.map = map;
-      $scope.markers = markers;
-
       //console.log('[cordova] map started!!!');
+
+      $scope.map = map;
+      $scope.markers=markers;
+      $scope.activeMarker = null;
+      console.log('scope.markers.models: '+JSON.stringify($scope.markers.models.length));
 
       $scope.openMarkerPopup = function ($marker) {
         if ($marker.key=='myMapPos') {

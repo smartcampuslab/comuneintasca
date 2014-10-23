@@ -6,7 +6,7 @@
         </div>
         <ion-slide-box auto-play="true" ng-if="highlights" does-continue="true" slide-interval="5000" id="slide-box-home">
           <ion-slide ng-repeat="obj in highlights">
-            <div class="hp-box" style="background-image: url({{obj.image|translate}})" ng-click="goto(obj.abslink)">
+            <div class="hp-box" style="background-image: url({{getParsedImageURL(obj)}})" ng-click="goto(obj.abslink)">
               <h3 class="title">{{obj.title|translate}}</h3>
             </div>
           </ion-slide>

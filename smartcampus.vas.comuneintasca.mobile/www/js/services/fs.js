@@ -332,6 +332,7 @@ angular.module('ilcomuneintasca.services.fs', [])
           cleaned.resolve(mainDir);
         }
       },function(err){
+        $ionicLoading.hide();
         //console.log('fs cleanup error!');
         cleaned.reject(mainDir);
       });

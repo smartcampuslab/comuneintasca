@@ -170,8 +170,8 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
     zoom: 8,
     pan: false,
     options: {
-      'streetViewControl': false,
-      'zoomControl': true,
+      streetViewControl: false,
+      zoomControl: true,
       styles:[{
         featureType:"poi",
         elementType:"labels",

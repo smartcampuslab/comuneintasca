@@ -139,7 +139,8 @@ angular.module('ilcomuneintasca.services.list', [])
         //console.log('conf.doFilter... ($scope.$navDirection='+$scope.$navDirection+')');
         $scope.hasFilter = true;
         $scope.filterOptions = conf.filterOptions;
-        $scope.filter = $scope.$navDirection != 'back' ? conf.defaultFilter : state.filter;
+        $scope.filter = $scope.$navDirection != 'back' ? conf.defaultFilter : state.filter||conf.defaultFilter;
+        //console.log('$scope.filter: '+JSON.stringify($scope.filter));
         $scope.showFilterPopup = function () {
           if (!!$ionicScrollDelegate.$getByHandle('listScroll')) {
             $timeout(function(){ $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false); });

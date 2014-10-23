@@ -2,7 +2,7 @@
   <div ng-if="obj">
     <div class="comuni-content">
       <!-- comuni-img ng-if="obj.image" class="content-image-main" gotdata="gotdata" detail="true"></comuni-img -->
-      <div ng-if="getParsedImageURL(obj)!='svg/placeholder.svg'" class="content-image-main comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj)}})"></div>
+      <div ng-if="!emptyParsedImageURL(obj)" class="content-image-main comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj)}})"></div>
       <div class="padding">
           <h2>{{obj.title | translate}}</h2>
           <div class="comuni-html-description" compile="obj.description | translate"></div>
@@ -13,7 +13,7 @@
   <div ng-if="results">
     <div class="comuni-content" ng-repeat="obj in results">
       <!-- comuni-img class="content-image-main" gotdata="gotdata" detail="true"></comuni-img -->
-      <div ng-if="getParsedImageURL(obj)!='svg/placeholder.svg'" class="content-image-main comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj)}})"></div>
+      <div ng-if="!emptyParsedImageURL(obj)" class="content-image-main comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj)}})"></div>
       <div class="padding">
           <h2>{{obj.title | translate}}</h2>
           <div class="comuni-html-description" compile="obj.description | translate"></div>

@@ -205,6 +205,10 @@ angular.module('ilcomuneintasca', [
     }
     return item['parsedimageurl'];
   }
+  $rootScope.emptyParsedImageURL=function(item){
+    var url=$rootScope.getParsedImageURL(item);
+    return (url=='svg/placeholder.svg');
+  }
     
   $rootScope.extOrderBySorter=function(input, params){
     if (!input || !params || !params.order) return input;

@@ -171,7 +171,15 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
   });
 })
 
-.controller('ItinerarioMappaCtrl',['$rootScope', '$scope', 'DatiDB', '$stateParams', '$filter', '$ionicPopup', '$location', 'Config', 'GoogleMapApi'.ns(), function ($rootScope, $scope, DatiDB, $stateParams, $filter, $ionicPopup, $location, Config, GoogleMapApi) {
+.controller('ItinerarioMappaCtrl',['$rootScope', '$scope', '$q', 'DatiDB', '$stateParams', '$filter', '$ionicPopup', '$location', 'Config', 'GoogleMapApi'.ns(), function ($rootScope, $scope, $q, DatiDB, $stateParams, $filter, $ionicPopup, $location, Config, GoogleMapApi) {
+  var gotheight=$q.defer();
+  $scope.$on('$viewContentLoaded', function () {
+    var mapHeight = 600; // or any other calculated value
+    mapHeight = angular.element(document.querySelector('#map2-container'))[0].offsetHeight;
+    console.log('mapheight: '+mapHeight);
+    gotheight.resolve(mapHeight + 40);
+  });
+
   $scope.map = {
     control: {},
     draggable: 'true',
@@ -219,13 +227,10 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
   };
 
   GoogleMapApi.then(function(maps) {
-    //console.log('GoogleMapApi is READY!!!');
+    console.log('GoogleMapApi is READY!!!');
 
-    $scope.$on('$viewContentLoaded', function () {
-      var mapHeight = 10; // or any other calculated value
-      mapHeight = angular.element(document.querySelector('#map-container-itineraries'))[0].offsetHeight;
-      mapHeight = mapHeight - 32 - 44; // header + footer
-      angular.element(document.querySelector('.angular-google-map-container'))[0].style.height = mapHeight + 'px';
+    gotheight.promise.then(function (mapHeight) {
+      angular.element(document.querySelector('#map2 .angular-google-map-container'))[0].style.height = mapHeight + 'px';
     });
 
     $scope.openMarkerPopup = function ($marker) {

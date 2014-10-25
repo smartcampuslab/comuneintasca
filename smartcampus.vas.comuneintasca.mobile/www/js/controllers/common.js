@@ -641,17 +641,22 @@ angular.module('ilcomuneintasca.controllers.common', [])
 })
 
 
-.controller('MapCtrl',['$scope', 'MapHelper', '$ionicScrollDelegate', '$timeout', 'GoogleMapApi'.ns(), function ($scope, MapHelper, $ionicScrollDelegate, $timeout, GoogleMapApi) {
+.controller('MapCtrl',['$scope', '$q', 'MapHelper', '$ionicScrollDelegate', '$timeout', 'GoogleMapApi'.ns(), function ($scope, $q, MapHelper, $ionicScrollDelegate, $timeout, GoogleMapApi) {
   $scope._ = _;
+  
+  var gotheight=$q.defer();
+  $scope.$on('$viewContentLoaded', function () {
+    var mapHeight = 10; // or any other calculated value
+    mapHeight = angular.element(document.querySelector('#map1-container'))[0].offsetHeight;
+    console.log('mapheight: '+mapHeight);
+    gotheight.resolve(mapHeight + 40);
+  });
+
   MapHelper.start($scope);
-
   GoogleMapApi.then(function(maps) {
-    //console.log('GoogleMapApi is READY!!!');
-
-    $scope.$on('$viewContentLoaded', function () {
-      var mapHeight = 10; // or any other calculated value
-      mapHeight = angular.element(document.querySelector('#map-container'))[0].offsetHeight;
-      angular.element(document.querySelector('.angular-google-map-container'))[0].style.height = mapHeight + 'px';
+    console.log('GoogleMapApi is READY!!!');
+    gotheight.promise.then(function(mapHeight){
+      angular.element(document.querySelector('#map1 .angular-google-map-container'))[0].style.height = mapHeight + 'px';
     });
   },function(err){
     console.log('GoogleMapApi is NOT AVAILABLE!!!');

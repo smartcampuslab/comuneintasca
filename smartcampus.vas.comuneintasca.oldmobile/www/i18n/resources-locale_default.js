@@ -7,7 +7,7 @@
   { "key": "txt2_web", "value": "You can uninstall it,", "description": "" },
   { "key": "txt2_ios", "value": "You can uninstall it,", "description": "" },
   { "key": "txt2_android", "value": "You can uninstall it from <span class=\"color\">HERE</span>,", "description": "" },
-  { "key": "txt3", "value": "and download the new version below:", "description": "" },
+  { "key": "txt3", "value": "and download the new version:", "description": "" },
   { "key": "new_app", "value": "NEW APP!", "description": "" },
   { "key": "download", "value": "DOWNLOAD", "description": "" }
 ]

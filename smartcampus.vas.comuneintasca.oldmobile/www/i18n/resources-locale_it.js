@@ -7,7 +7,7 @@
   { "key": "txt2_web", "value": "È consigliabile disinstallarla,", "description": "" },
   { "key": "txt2_ios", "value": "È consigliabile disinstallarla,", "description": "" },
   { "key": "txt2_android", "value": "Puoi disinstallarla <span class=\"color\">QUI</span>,", "description": "" },
-  { "key": "txt3", "value": "e scaricare la nuova toccando uno dei bottoni sottostanti:", "description": "" },
+  { "key": "txt3", "value": "e scaricare la nuova:", "description": "" },
   { "key": "new_app", "value": "NUOVA APP!", "description": "" },
   { "key": "download", "value": "SCARICA", "description": "" }
 ]

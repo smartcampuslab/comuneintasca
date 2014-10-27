@@ -238,7 +238,11 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
         //console.log('no actions on click my position marker');
         return;
       }
-      for (i in $scope.markers.models) if ($scope.markers.models[i].key==$marker.key) $scope.activeMarker=$scope.markers.models[i];
+      for (i in $scope.markers.models) {
+        if ($scope.markers.models[i].key==$marker.key) {
+          $scope.activeMarker=$scope.markers.models[i];
+        }
+      }
 
       var title = $filter('translate')($scope.activeMarker.title);
       var template = '<div>';
@@ -250,7 +254,7 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
       var myPopup = $ionicPopup.show({
         // template: template,
         templateUrl: templateUrl,
-        title: $filter('translate')($scope.activeMarker.title),
+        title: $scope.activeMarker.step+'. '+$filter('translate')($scope.activeMarker.title),
         subTitle: !!$scope.activeMarker.distance ? $filter('number')($scope.activeMarker.distance, 1) + ' Km' : '',
         scope: $scope,
         buttons: [{
@@ -329,10 +333,11 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
             m.setInfoBubble(luogo.title.it);
             map2.addMarker(m);*/
 
+            luogo.step = idx + 1;
             luogo.key = luogo.id;
             luogo.latitude = luogo.location[0];
             luogo.longitude = luogo.location[1];
-            luogo.icon = 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=' + (data.steps.indexOf(luogo.id) + 1) + '|2975A7|FFFFFF';
+            luogo.icon = 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=' + (luogo.step) + '|2975A7|FFFFFF';
 
             //console.log('data.steps.indexOf(luogo.id): '+data.steps.indexOf(luogo.id));
             models.push(luogo);

@@ -31,10 +31,9 @@
 					<div class="appname"><h2>{{'appname1' | i18n}}<br/>{{'appname2' | i18n}}</h2></div>
 					<div id="obsolete"><h4 class="color-alert">-{{'obsolete' | i18n}}-<br/>{{'txt1' | i18n}}</h4></div>
 					<div id="web">
-						<div class="text" ng-hide="platform" ng-bind-html="translate('txt2_web')"></div>
-						<div class="text" ng-show="iosPlatform" ng-bind-html="translate('txt2_ios')"></div>
-						<div class="text" ng-show="androidPlatform" ng-bind-html="translate('txt2_android')" ng-click="androidUninstall()"></div>
-            <div class="text">{{'txt3' | i18n}}</div>
+						<div class="text" ng-hide="platform" ng-bind-html="translate('txt2_web') + '<br/>' + translate('txt3')"></div>
+						<div class="text" ng-show="iosPlatform" ng-bind-html="translate('txt2_ios') + '<br/>' + translate('txt3')"></div>
+						<div class="text" ng-show="androidPlatform" ng-bind-html="translate('txt2_android') + '<br/>' + translate('txt3')" ng-click="androidUninstall()"></div>
 						<div class="row row-center" id="box" ng-click="appDownload()">
 							<div class="col image"><img src="img/icon.png" /></div>
 							<div class="col new" ng-show="platform">

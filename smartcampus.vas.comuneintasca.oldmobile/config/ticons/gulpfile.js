@@ -40,26 +40,28 @@ gulp.task('android-splashes', function(done) {
         ticons.splashes(opts, function (err, output) {
           if (err) {
               throw err;
-          }
-        });
-      }
-      if (fs.existsSync('./splash-en.png')) {
-        console.log('android EN localized images')
-        opts.locale='en';
-        opts.input='splash-en.png';
-        ticons.splashes(opts, function (err, output) {
-          if (err) {
-              throw err;
-          }
-        });
-      }
-      if (fs.existsSync('./splash-de.png')) {
-        console.log('android DE localized images')
-        opts.locale='de';
-        opts.input='splash-de.png';
-        ticons.splashes(opts, function (err, output) {
-          if (err) {
-              throw err;
+          } else {
+						if (fs.existsSync('./splash-en.png')) {
+							console.log('android EN localized images')
+							opts.locale='en';
+							opts.input='splash-en.png';
+							ticons.splashes(opts, function (err, output) {
+								if (err) {
+										throw err;
+								} else {
+									if (fs.existsSync('./splash-de.png')) {
+										console.log('android DE localized images')
+										opts.locale='de';
+										opts.input='splash-de.png';
+										ticons.splashes(opts, function (err, output) {
+											if (err) {
+													throw err;
+											}
+										});
+									}
+								}
+							});
+						}
           }
         });
       }

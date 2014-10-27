@@ -51,7 +51,7 @@ ion-content { text-align: center; }
 
 .platform { display:none; }
 #box { margin-top:2em; }
-.text { font-size:1.2em; padding:.5em 0; width:16em; margin:0 auto; }
+.text { font-size:1.2em; padding:1em 0; width:16em; margin:0 auto; }
 .color { color:#2975a7; }
 .color-alert { color:#a70d0d; }
 

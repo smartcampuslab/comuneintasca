@@ -222,8 +222,19 @@ angular.module('ilcomuneintasca.controllers.common', [])
                 dbType =  data.dbType;
                 data = [data];
               }
+
               if (data.length==1) {
                 $scope.obj = data[0];
+
+                $scope.isObjFavorite = false;
+                DatiDB.isFavorite($scope.obj).then(function (res) {
+                  $scope.isObjFavorite=res; 
+                });
+                $scope.toggleFavorite = function (obj) {
+                  DatiDB.setFavorite(obj.id, !$scope.isObjFavorite).then(function (res) {
+                    $scope.isObjFavorite=res;
+                  });
+                };
               } else {
                 $scope.results = data;
               }

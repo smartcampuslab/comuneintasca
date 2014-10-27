@@ -596,8 +596,12 @@ angular.module('ilcomuneintasca.controllers.common', [])
             ListToolbox.prepare($scope, tboptions);
             $scope.$watch('ordering.searchText', function(newValue, oldValue) {
               if (newValue!=oldValue) {
-                dosort();
                 //console.log('search for: '+newValue+' ('+oldValue+')');
+                if (sg_query_type=='event') {
+                  $scope.resultsGroups = DateUtility.regroup($scope,sg_query_type,0,0,sg.query.classification);
+                } else {
+                  dosort();
+                }
               }
             });
             //console.log('ListToolbox prepared!');

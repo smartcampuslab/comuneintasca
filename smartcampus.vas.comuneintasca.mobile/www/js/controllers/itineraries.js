@@ -19,7 +19,7 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
       } else {
         $scope.itinerari = $scope.allItinerari;
       }
-      console.log('search for: '+newValue+' ('+oldValue+')');
+      //console.log('search for: '+newValue+' ('+oldValue+')');
       dosort();
     }
   });

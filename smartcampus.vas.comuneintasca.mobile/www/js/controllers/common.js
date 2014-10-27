@@ -345,7 +345,6 @@ angular.module('ilcomuneintasca.controllers.common', [])
                 if ($scope.resultsGroups) {
                   for (idx in $scope.resultsGroups) {
                     var group=$scope.resultsGroups[idx];
-                    //console.log('group.labelHidden: '+group.labelHidden);
                     if (group.results.length>0) {
                       group.results=$filter('extOrderBy')(group.results,$scope.ordering)
                     }
@@ -453,7 +452,6 @@ angular.module('ilcomuneintasca.controllers.common', [])
               }
             },
             getData: function (data) {
-              //console.log('tboptions.getData()!');
               return $scope.resultsAll||data;
             },
             getTitle: function () {
@@ -600,8 +598,8 @@ angular.module('ilcomuneintasca.controllers.common', [])
             ListToolbox.prepare($scope, tboptions);
             $scope.$watch('ordering.searchText', function(newValue, oldValue) {
               if (newValue!=oldValue) {
-                console.log('search for: '+newValue+' ('+oldValue+')');
                 dosort();
+                //console.log('search for: '+newValue+' ('+oldValue+')');
               }
             });
             //console.log('ListToolbox prepared!');

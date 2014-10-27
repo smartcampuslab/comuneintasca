@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'localization', 'ngCordova'])
 
-.run(function ($ionicPlatform, $rootScope, $timeout, $filter) {
+.run(function ($ionicPlatform, $rootScope, $timeout, $filter, $window) {
 	$ionicPlatform.ready(function () {
 		// Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
 		// for form inputs)

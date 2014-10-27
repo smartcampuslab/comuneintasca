@@ -648,7 +648,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
   $scope.$on('$viewContentLoaded', function () {
     var mapHeight = 10; // or any other calculated value
     mapHeight = angular.element(document.querySelector('#map1-container'))[0].offsetHeight;
-    console.log('mapheight: '+mapHeight);
+    //console.log('mapheight: '+mapHeight);
     gotheight.resolve(mapHeight + 40);
   });
 

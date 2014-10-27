@@ -91,13 +91,14 @@ var iphone_filestocopy = [
 }, {
     "config/ticons/Resources/iphone/Default@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default@2x~iphone.png"
 }, {
-    "config/ticons/Resources/iphone/Default-568h@2x~iphone.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default-568h@2x~iphone.png"
-//}, {
-//    "config/ticons/i18n/en/Default_en.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default_en~iphone.png"
-//}, {
-//    "config/ticons/i18n/en/Default_en@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default_en@2x~iphone.png"
-//}, {
-//    "config/ticons/i18n/en/Default_en-568h@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default_en-568h@2x~iphone.png"
+    "config/ticons/Resources/iphone/Default-568h@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default-568h@2x~iphone.png"
+/*
+}, {
+    "config/ticons/i18n/en/Default.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default_en~iphone.png"
+}, {
+    "config/ticons/i18n/en/Default@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default_en@2x~iphone.png"
+}, {
+    "config/ticons/i18n/en/Default-568h@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default_en-568h@2x~iphone.png"
 }, {
     "config/ticons/i18n/it/Default.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default_it~iphone.png"
 }, {
@@ -110,16 +111,23 @@ var iphone_filestocopy = [
     "config/ticons/i18n/de/Default@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default_de@2x~iphone.png"
 }, {
     "config/ticons/i18n/de/Default-568h@2x.png": "platforms/ios/Trento - Il Comune in Tasca/Resources/splash/Default_de-568h@2x~iphone.png"
-}, ];
+*/
+} ];
 
 
 // cd config/ticons && gulp android-splashes
-['', 'it-', 'de-'].forEach(function (lang) {
+[
+	//'it-', 'en-', 'de-',
+	'' 
+].forEach(function (lang) {
 	[
+/*
 		'long-land-ldpi', 'long-land-mdpi', 'long-land-hdpi', 'long-land-xhdpi', 'long-land-xxhdpi', 'long-land-xxxhdpi', 
 		'long-port-ldpi', 'long-port-mdpi', 'long-port-hdpi', 'long-port-xhdpi', 'long-port-xxhdpi', 'long-port-xxxhdpi', 
 		'notlong-land-ldpi', 'notlong-land-mdpi', 'notlong-land-hdpi', 'notlong-land-xhdpi', 'notlong-land-xxhdpi', 'notlong-land-xxxhdpi', 
 		'notlong-port-ldpi', 'notlong-port-mdpi', 'notlong-port-hdpi', 'notlong-port-xhdpi', 'notlong-port-xxhdpi', 'notlong-port-xxxhdpi'
+*/
+		'long-port-hdpi', 'long-port-ldpi', 'long-port-xhdpi', 'notlong-port-hdpi', 'notlong-port-ldpi', 'notlong-port-xhdpi', 'notlong-port-mdpi'
 	].forEach(function (d) {
 		var srcdir = path.join(rootdir, 'config/ticons/Resources/android/images/res-' + lang + d);
 		var srcfile = path.join(srcdir, 'default.png');

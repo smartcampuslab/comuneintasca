@@ -455,8 +455,9 @@ angular.module('ilcomuneintasca.controllers.common', [])
                     $scope.resultsAll = data;
 //                    $scope.results = data;
                     dosort(data);
-                    if (!!$ionicScrollDelegate.$getByHandle('listScroll')) {
-                      $timeout(function(){ $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false); });
+                    var listScroll=$ionicScrollDelegate.$getByHandle('listScroll');
+                    if (!!listScroll) {
+                      $timeout(function(){ listScroll.scrollTop(false); });
                     }
                   });
                 }
@@ -571,8 +572,9 @@ angular.module('ilcomuneintasca.controllers.common', [])
                   $scope.resultsAll = [];
                   $scope.resultsGroups = [];
                 }
-                if (!!$ionicScrollDelegate.$getByHandle('listScroll')) {
-                  $timeout(function(){ $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false); });
+                var listScroll=$ionicScrollDelegate.$getByHandle('listScroll');
+                if (!!listScroll) {
+                  $timeout(function(){ listScroll.scrollTop(false); });
                 }
 
                 if (filter) {

@@ -52,7 +52,7 @@ xsi:schemaLocation="http://www.example.org/mml-schema mml-schema.xsd ">
 				</property>
 			</properties>
 		</connect>			
-		<script outputVar="list" writeAction="append" onError="continue">
+		<script outputVar="list" writeAction="append" onError="abort">
 			<className>eu.trentorise.smartcampus.service.opendata.scripts.MainEventsScript</className>
 			<method>extractData</method>
 			<variables>

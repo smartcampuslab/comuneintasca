@@ -81,12 +81,12 @@
 									<statusParameters>
 										<storable>true</storable>
 										<automaticRefresh>true</automaticRefresh>
-										<delay>#{1000L*30}</delay>
-										<period>#{1000L*60*60*24*1}</period>
-										<periodOnDefault>#{1000L*60*60*24*1}</periodOnDefault>
-										<periodOnFailure>#{1000L*60*60*24*2}</periodOnFailure>
-										<cacheValidityPeriod>#{1000L*60*60*24*30}</cacheValidityPeriod>
-										<validityPeriod>#{1000L*60*60*24*30}</validityPeriod>
+										<delay>#{1000L*20}</delay>
+										<period>#{1000L*60*60*4}</period>
+										<periodOnDefault>#{1000L*60*60*4}</periodOnDefault>
+										<periodOnFailure>#{1000L*60*60*8}</periodOnFailure>
+										<cacheValidityPeriod>#{1000L*60*60*24}</cacheValidityPeriod>
+										<validityPeriod>#{1000L*60*60*24}</validityPeriod>
 										<serviceBlocked>false</serviceBlocked>
 										<dataFlowInvokable>true</dataFlowInvokable>
 										<runnableAfterDelay>true</runnableAfterDelay>
@@ -101,11 +101,11 @@
 										<storable>true</storable>
 										<automaticRefresh>true</automaticRefresh>
 										<delay>#{1000L*30}</delay>
-										<period>#{1000L*60*60*24*1}</period>
-										<periodOnDefault>#{1000L*60*60*24*1}</periodOnDefault>
-										<periodOnFailure>#{1000L*60*60*24*2}</periodOnFailure>
-										<cacheValidityPeriod>#{1000L*60*60*24*30}</cacheValidityPeriod>
-										<validityPeriod>#{1000L*60*60*24*30}</validityPeriod>
+										<period>#{1000L*60*60*4}</period>
+										<periodOnDefault>#{1000L*60*60*4}</periodOnDefault>
+										<periodOnFailure>#{1000L*60*60*8}</periodOnFailure>
+										<cacheValidityPeriod>#{1000L*60*60*24}</cacheValidityPeriod>
+										<validityPeriod>#{1000L*60*60*24}</validityPeriod>
 										<serviceBlocked>false</serviceBlocked>
 										<dataFlowInvokable>true</dataFlowInvokable>
 										<runnableAfterDelay>true</runnableAfterDelay>
@@ -139,11 +139,11 @@
 										<storable>true</storable>
 										<automaticRefresh>true</automaticRefresh>
 										<delay>#{1000L*30}</delay>
-										<period>#{1000L*60*60*24*1}</period>
-										<periodOnDefault>#{1000L*60*60*24*1}</periodOnDefault>
-										<periodOnFailure>#{1000L*60*60*24*2}</periodOnFailure>
-										<cacheValidityPeriod>#{1000L*60*60*24*30}</cacheValidityPeriod>
-										<validityPeriod>#{1000L*60*60*24*30}</validityPeriod>
+										<period>#{1000L*60*60*4}</period>
+										<periodOnDefault>#{1000L*60*60*4}</periodOnDefault>
+										<periodOnFailure>#{1000L*60*60*8}</periodOnFailure>
+										<cacheValidityPeriod>#{1000L*60*60*24}</cacheValidityPeriod>
+										<validityPeriod>#{1000L*60*60*24}</validityPeriod>
 										<serviceBlocked>false</serviceBlocked>
 										<dataFlowInvokable>true</dataFlowInvokable>
 										<runnableAfterDelay>true</runnableAfterDelay>
@@ -158,11 +158,11 @@
 										<storable>true</storable>
 										<automaticRefresh>true</automaticRefresh>
 										<delay>#{1000L*30}</delay>
-										<period>#{1000L*60*60*24*1}</period>
-										<periodOnDefault>#{1000L*60*60*24*1}</periodOnDefault>
-										<periodOnFailure>#{1000L*60*60*24*2}</periodOnFailure>
-										<cacheValidityPeriod>#{1000L*60*60*24*30}</cacheValidityPeriod>
-										<validityPeriod>#{1000L*60*60*24*30}</validityPeriod>
+										<period>#{1000L*60*60*4}</period>
+										<periodOnDefault>#{1000L*60*60*4}</periodOnDefault>
+										<periodOnFailure>#{1000L*60*60*8}</periodOnFailure>
+										<cacheValidityPeriod>#{1000L*60*60*24}</cacheValidityPeriod>
+										<validityPeriod>#{1000L*60*60*24}</validityPeriod>
 										<serviceBlocked>false</serviceBlocked>
 										<dataFlowInvokable>true</dataFlowInvokable>
 										<runnableAfterDelay>true</runnableAfterDelay>
@@ -177,11 +177,11 @@
 										<storable>true</storable>
 										<automaticRefresh>true</automaticRefresh>
 										<delay>#{1000L*30}</delay>
-										<period>#{1000L*60*60*24*1}</period>
-										<periodOnDefault>#{1000L*60*60*24*1}</periodOnDefault>
-										<periodOnFailure>#{1000L*60*60*24*2}</periodOnFailure>
-										<cacheValidityPeriod>#{1000L*60*60*24*30}</cacheValidityPeriod>
-										<validityPeriod>#{1000L*60*60*24*30}</validityPeriod>
+										<period>#{1000L*60*60*4}</period>
+										<periodOnDefault>#{1000L*60*60*4}</periodOnDefault>
+										<periodOnFailure>#{1000L*60*60*8}</periodOnFailure>
+										<cacheValidityPeriod>#{1000L*60*60*24}</cacheValidityPeriod>
+										<validityPeriod>#{1000L*60*60*24}</validityPeriod>
 										<serviceBlocked>false</serviceBlocked>
 										<dataFlowInvokable>true</dataFlowInvokable>
 										<runnableAfterDelay>true</runnableAfterDelay>
@@ -196,11 +196,11 @@
 										<storable>true</storable>
 										<automaticRefresh>true</automaticRefresh>
 										<delay>#{1000L*30}</delay>
-										<period>#{1000L*60*60*24*1}</period>
-										<periodOnDefault>#{1000L*60*60*24*1}</periodOnDefault>
-										<periodOnFailure>#{1000L*60*60*24*2}</periodOnFailure>
-										<cacheValidityPeriod>#{1000L*60*60*24*30}</cacheValidityPeriod>
-										<validityPeriod>#{1000L*60*60*24*30}</validityPeriod>
+										<period>#{1000L*60*60*4}</period>
+										<periodOnDefault>#{1000L*60*60*4}</periodOnDefault>
+										<periodOnFailure>#{1000L*60*60*8}</periodOnFailure>
+										<cacheValidityPeriod>#{1000L*60*60*24}</cacheValidityPeriod>
+										<validityPeriod>#{1000L*60*60*24}</validityPeriod>
 										<serviceBlocked>false</serviceBlocked>
 										<dataFlowInvokable>true</dataFlowInvokable>
 										<runnableAfterDelay>true</runnableAfterDelay>
@@ -215,11 +215,11 @@
 										<storable>true</storable>
 										<automaticRefresh>true</automaticRefresh>
 										<delay>#{1000L*30}</delay>
-										<period>#{1000L*60*60*24*1}</period>
-										<periodOnDefault>#{1000L*60*60*24*1}</periodOnDefault>
-										<periodOnFailure>#{1000L*60*60*24*2}</periodOnFailure>
-										<cacheValidityPeriod>#{1000L*60*60*24*30}</cacheValidityPeriod>
-										<validityPeriod>#{1000L*60*60*24*30}</validityPeriod>
+										<period>#{1000L*60*60*4}</period>
+										<periodOnDefault>#{1000L*60*60*4}</periodOnDefault>
+										<periodOnFailure>#{1000L*60*60*8}</periodOnFailure>
+										<cacheValidityPeriod>#{1000L*60*60*24}</cacheValidityPeriod>
+										<validityPeriod>#{1000L*60*60*24}</validityPeriod>
 										<serviceBlocked>false</serviceBlocked>
 										<dataFlowInvokable>true</dataFlowInvokable>
 										<runnableAfterDelay>true</runnableAfterDelay>
@@ -234,11 +234,11 @@
 										<storable>true</storable>
 										<automaticRefresh>true</automaticRefresh>
 										<delay>#{1000L*30}</delay>
-										<period>#{1000L*60*60*24*1}</period>
-										<periodOnDefault>#{1000L*60*60*24*1}</periodOnDefault>
-										<periodOnFailure>#{1000L*60*60*24*2}</periodOnFailure>
-										<cacheValidityPeriod>#{1000L*60*60*24*30}</cacheValidityPeriod>
-										<validityPeriod>#{1000L*60*60*24*30}</validityPeriod>
+										<period>#{1000L*60*60*4}</period>
+										<periodOnDefault>#{1000L*60*60*4}</periodOnDefault>
+										<periodOnFailure>#{1000L*60*60*8}</periodOnFailure>
+										<cacheValidityPeriod>#{1000L*60*60*24}</cacheValidityPeriod>
+										<validityPeriod>#{1000L*60*60*24}</validityPeriod>
 										<serviceBlocked>false</serviceBlocked>
 										<dataFlowInvokable>true</dataFlowInvokable>
 										<runnableAfterDelay>true</runnableAfterDelay>

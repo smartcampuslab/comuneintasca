@@ -22,12 +22,12 @@ import eu.trentorise.smartcampus.presentation.data.BasicObject;
 public class ConfigObject extends BasicObject {
 	private static final long serialVersionUID = 3952436037350859543L;
 
+	private String appId;
+
 	private List<MenuItem> highlights;
 	private List<MenuItem> navigationItems;
 	private List<MenuItem> menu;
 
-	private Boolean visible = false;
-	
 	private Long lastModified = null;
 
 	public Long getLastModified() {
@@ -65,15 +65,12 @@ public class ConfigObject extends BasicObject {
 		this.menu = menu;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public String getAppId() {
+		return appId;
 	}
 
-	public Boolean getVisible() {
-		return visible;
+	public void setAppId(String appId) {
+		this.appId = appId;
 	}
-
-	public void setVisible(Boolean visible) {
-		this.visible = visible;
-	}
+	
 }

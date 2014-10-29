@@ -1,4 +1,4 @@
-package eu.trentorise.smartcampus.comuneintasca.processor;
+package eu.trentorise.smartcampus.comuneintasca.connector.processor;
 
 import java.util.ArrayList;
 import java.util.Arrays;

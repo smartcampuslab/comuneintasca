@@ -22,6 +22,9 @@ import eu.trentorise.smartcampus.presentation.data.BasicObject;
 public class BaseCITObject extends BasicObject {
 	private static final long serialVersionUID = 3589900794339644582L;
 
+	private String appId;
+	private String classifier;
+	
 	private String source = null;
 	private Map<String,String> title = null;
 	private Map<String,String> shortTitle = null;
@@ -30,8 +33,6 @@ public class BaseCITObject extends BasicObject {
 	private Map<String,String> info = null;
 	private String category = null;
 
-	private Boolean visible = false;
-	
 	private Map<String,String> contacts = null;
 	private String url = null;
 	
@@ -137,11 +138,19 @@ public class BaseCITObject extends BasicObject {
 		this.objectId = objectId;
 	}
 
-	public Boolean getVisible() {
-		return visible;
+	public String getAppId() {
+		return appId;
 	}
 
-	public void setVisible(Boolean visible) {
-		this.visible = visible;
-	}	
+	public void setAppId(String appId) {
+		this.appId = appId;
+	}
+
+	public String getClassifier() {
+		return classifier;
+	}
+
+	public void setClassifier(String classifier) {
+		this.classifier = classifier;
+	}
 }

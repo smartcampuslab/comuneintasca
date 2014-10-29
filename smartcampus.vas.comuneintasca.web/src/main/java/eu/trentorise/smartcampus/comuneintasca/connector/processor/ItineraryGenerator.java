@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  ******************************************************************************/
-package eu.trentorise.smartcampus.comuneintasca.processor;
+package eu.trentorise.smartcampus.comuneintasca.connector.processor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,9 +26,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
-import eu.trentorise.smartcampus.comuneintasca.data.GeoTimeStorage;
 import eu.trentorise.smartcampus.comuneintasca.model.GeoCITObject;
 import eu.trentorise.smartcampus.comuneintasca.model.ItineraryObject;
+import eu.trentorise.smartcampus.comuneintasca.service.DataService;
 import eu.trentorise.smartcampus.network.JsonUtils;
 import eu.trentorise.smartcampus.network.RemoteConnector;
 import eu.trentorise.smartcampus.network.RemoteException;
@@ -41,12 +41,12 @@ public class ItineraryGenerator {
 	@Value("${google.directions.key}")
 	private String apiKey;
 	@Autowired
-	private GeoTimeStorage storage;
+	private DataService storage;
 	
 	public List<String> generateSteps(ItineraryObject obj) throws NotFoundException, DataException, SecurityException, RemoteException {
 		List<double[]> points = new ArrayList<double[]>();
 		for (String id : obj.getSteps()) {
-			GeoCITObject ref = (GeoCITObject) storage.getObjectById(id);
+			GeoCITObject ref = (GeoCITObject) storage.findObject(id, obj.getAppId());
 			points.add(ref.getLocation());
 		}
 		return extractLineForItineraryPoints(points);

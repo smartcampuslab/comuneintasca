@@ -22,12 +22,17 @@ import java.util.SortedMap;
 import org.springframework.data.mongodb.core.geo.Circle;
 
 import eu.trentorise.smartcampus.comuneintasca.model.BaseCITObject;
+import eu.trentorise.smartcampus.comuneintasca.model.EventObject;
 import eu.trentorise.smartcampus.presentation.common.exception.DataException;
+import eu.trentorise.smartcampus.presentation.data.BasicObject;
 import eu.trentorise.smartcampus.presentation.storage.sync.BasicObjectSyncStorage;
 
 public interface GeoTimeObjectSyncStorage extends BasicObjectSyncStorage {
 	
-	public <T extends BaseCITObject> List<T> searchObjects(Class<T> cls, Circle circle, String text, Long from, Long to, Map<String, Object> criteria, SortedMap<String,Integer> sort) throws DataException; 
-	public <T extends BaseCITObject> List<T> searchObjects(Class<T> cls, Circle circle, String text, Long from, Long to, Map<String, Object> criteria, SortedMap<String,Integer> sort, int limit, int skip) throws DataException; 
-	public List<GeoTimeSyncObjectBean> genericSearch(Map<String, Object> inCriteria);
+	public <T extends BaseCITObject> List<T> searchObjects(String appId, Class<T> cls, Circle circle, String text, Long from, Long to, Map<String, Object> criteria, SortedMap<String,Integer> sort) throws DataException; 
+	public <T extends BaseCITObject> List<T> searchObjects(String appId, Class<T> cls, Circle circle, String text, Long from, Long to, Map<String, Object> criteria, SortedMap<String,Integer> sort, int limit, int skip) throws DataException; 
+	
+	public List<BaseCITObject> getAllAppObjects(String appId);
+	public BasicObject getObjectById(String id, String appId);
+	public EventObject getObjectById(String id, Class<EventObject> cls, String appId);
 }

@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  ******************************************************************************/
-package eu.trentorise.smartcampus.comuneintasca.processor;
+package eu.trentorise.smartcampus.comuneintasca.connector.processor;
 
 import java.util.ArrayList;
 import java.util.List;

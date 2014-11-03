@@ -284,9 +284,9 @@ angular.module('ilcomuneintasca', [
         var dif = b1.localeCompare(a1);
         return dif;
       } else if ('Date' == order) {
-        var a1 = a.fromTime ? a.fromTime : a.fromDate;
-        var b1 = b.fromTime ? b.fromTime : b.fromDate;
-        var dif = b1 - a1;
+        var a1 = a.date ? a.date : (a.fromTime ? a.fromTime : a.fromDate);
+        var b1 = b.date ? b.date : (b.fromTime ? b.fromTime : b.fromDate);
+        var dif = a1 - b1;
         return dif;
       } else if ('DateFrom' == order) {
         var a1 = a.fromTime ? a.fromTime : a.fromDate;

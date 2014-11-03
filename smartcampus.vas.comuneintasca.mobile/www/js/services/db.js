@@ -86,8 +86,8 @@ angular.module('ilcomuneintasca.services.db', [])
       //NO-OP
 
     } else if (dbtype == 'mainevent') {
-      //NO-OP
-
+      var maineventDate=new Date(item.fromDate);
+      item['date']=maineventDate.getMonth()*100 + maineventDate.getDate();
     }
     //console.log('item.location: ' + JSON.stringify(item.location));
     if (item.hasOwnProperty('location') && item.location) {
@@ -409,6 +409,14 @@ angular.module('ilcomuneintasca.services.db', [])
                         } else if (contentTypeKey == 'mainevent') {
                           classification = item.classification.it;
                           item.category = 'mainevent';
+
+                          /*
+                          fromTime = item.fromDate;
+                          if (item.toDate > 0) toTime = item.toDate;
+                          else toTime = fromTime;
+                          console.log('event fromTime: ' + fromTime);
+                          console.log('event toTime: ' + toTime);
+                          */
 
                         } else if (contentTypeKey == 'hotel') {
                           classification = Config.hotelTypeFromCate(item.classification.it);

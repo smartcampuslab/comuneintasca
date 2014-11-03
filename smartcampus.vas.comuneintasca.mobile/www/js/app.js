@@ -274,27 +274,15 @@ angular.module('ilcomuneintasca', [
 
     arr.sort(function (a, b) {
       if ('A-Z' == order) {
-        if ($filter('translate')(a.title).charAt(0)=='"') {
-          return -1;
-        } else if ($filter('translate')(b.title).charAt(0)=='"') {
-          return 1;
-        } else {
-          var a1 = $filter('translate')(a.title);
-          var b1 = $filter('translate')(b.title);
-          var dif = a1.localeCompare(b1);
-          return dif;
-        }
+        var a1 = $filter('translate')(a.title);
+        var b1 = $filter('translate')(b.title);
+        var dif = a1.localeCompare(b1);
+        return dif;
       } else if ('Z-A' == order) {
-        if ($filter('translate')(a.title).charAt(0)=='"') {
-          return -1;
-        } else if ($filter('translate')(b.title).charAt(0)=='"') {
-          return 1;
-        } else {
-          var a1 = $filter('translate')(a.title);
-          var b1 = $filter('translate')(b.title);
-          var dif = b1.localeCompare(a1);
-          return dif;
-        }
+        var a1 = $filter('translate')(a.title);
+        var b1 = $filter('translate')(b.title);
+        var dif = b1.localeCompare(a1);
+        return dif;
       } else if ('Date' == order) {
         var a1 = a.date ? a.date : (a.fromTime ? a.fromTime : a.fromDate);
         var b1 = b.date ? b.date : (b.fromTime ? b.fromTime : b.fromDate);

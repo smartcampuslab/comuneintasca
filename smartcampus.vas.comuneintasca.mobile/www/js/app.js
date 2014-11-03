@@ -313,11 +313,8 @@ angular.module('ilcomuneintasca', [
     return arr;
   }
 })
-/*
-/mainevents
-/itineraries
-/offices
-*/
+
+
 .config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('app', {

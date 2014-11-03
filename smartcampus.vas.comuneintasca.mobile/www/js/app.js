@@ -260,7 +260,7 @@ angular.module('ilcomuneintasca', [
 
     var arr = [];
     if (filter && filter.length > 0) {
-      //console.log('ordering.1: '+filter);
+      //console.log('ordering w/ filter: '+filter);
       var f = filter.toLowerCase();
       for (var i = 0; i < input.length; i++) {
         if ($filter('translate')(input[i].title).toLowerCase().indexOf(f) >= 0) {
@@ -268,21 +268,33 @@ angular.module('ilcomuneintasca', [
         }
       }
     } else {
-      //console.log('ordering.2');
+      //console.log('ordering w/o filter');
       arr = input.slice(0);
     }
 
     arr.sort(function (a, b) {
       if ('A-Z' == order) {
-        var a1 = $filter('translate')(a.title);
-        var b1 = $filter('translate')(b.title);
-        var dif = a1.localeCompare(b1);
-        return dif;
+        if ($filter('translate')(a.title).charAt(0)=='"') {
+          return -1;
+        } else if ($filter('translate')(b.title).charAt(0)=='"') {
+          return 1;
+        } else {
+          var a1 = $filter('translate')(a.title);
+          var b1 = $filter('translate')(b.title);
+          var dif = a1.localeCompare(b1);
+          return dif;
+        }
       } else if ('Z-A' == order) {
-        var a1 = $filter('translate')(a.title);
-        var b1 = $filter('translate')(b.title);
-        var dif = b1.localeCompare(a1);
-        return dif;
+        if ($filter('translate')(a.title).charAt(0)=='"') {
+          return -1;
+        } else if ($filter('translate')(b.title).charAt(0)=='"') {
+          return 1;
+        } else {
+          var a1 = $filter('translate')(a.title);
+          var b1 = $filter('translate')(b.title);
+          var dif = b1.localeCompare(a1);
+          return dif;
+        }
       } else if ('Date' == order) {
         var a1 = a.date ? a.date : (a.fromTime ? a.fromTime : a.fromDate);
         var b1 = b.date ? b.date : (b.fromTime ? b.fromTime : b.fromDate);

@@ -76,11 +76,11 @@ angular.module('ilcomuneintasca.controllers.home', [])
           var item=items[hli];
           if (item.objectIds) {
             //console.log('adding items "'+item.objectIds+'"...');
-            hlVerificationsPromises.push(DatiDB.checkIDs(item.objectIds).then(function(ids){
+            hlVerificationsPromises.push(DatiDB.checkIDs(item.objectIds,item).then(function(ids){
               hlVerifiedObjects.push(ids);
               //console.log('verified items "'+ids+'"');
-            },function(){
-              console.log('missing objectIds "'+item.objectIds+'" for highlight item "'+item.id+'"');
+            },function(rr){
+              console.log('missing objectIds "'+rr[0]+'" '+(rr[1]&&rr[1].id?'for highlight item "'+rr[1].id+'"':''));
             }));
           } else {
             console.log('unknown highlight type for "'+(item.id||item)+'"');

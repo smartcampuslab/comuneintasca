@@ -938,7 +938,7 @@ angular.module('ilcomuneintasca.services.db', [])
         return dbitem.promise;
       });
     },
-    checkIDs: function (itemIds) {
+    checkIDs: function (itemIds,ref) {
       //console.log('DatiDB.checkIDs(); itemIds: ' + itemIds);
       Profiling.start('dbcheck');
       var dbitem = $q.defer();
@@ -960,19 +960,19 @@ angular.module('ilcomuneintasca.services.db', [])
             } else {
               //console.log('DB.checkIDs('+itemIds+'): not found!');
               Profiling._do('dbcheck', 'sql empty');
-              dbitem.reject('not found!');
+              dbitem.reject([itemIds,ref]);
             }
           }, function (tx2, err) {
             $ionicLoading.hide();
             console.log('error: ' + err);
             Profiling._do('dbcheck', 'sql error');
-            dbitem.reject(err);
+            dbitem.reject([itemIds,ref]);
           });
         }, function (error) { //error callback
           $ionicLoading.hide();
           console.log('DB.checkIDs() ERROR: ' + error);
           Profiling._do('dbcheck', 'tx error');
-          dbitem.reject(error);
+          dbitem.reject([itemIds,ref]);
         }, function () { //success callback
           $ionicLoading.hide();
           Profiling._do('dbcheck', 'tx success');

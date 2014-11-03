@@ -5,6 +5,8 @@ angular.module('ilcomuneintasca.services.conf', [])
   $rootScope.DEV=DEVELOPMENT;
   //$rootScope.DEV=true;
 
+  var SYNC_WEBAPP='comuneintasca-oc';
+  
   var SCHEMA_VERSION=101;
   var SYNC_HOST="tn";
   if (DEVELOPMENT) SYNC_HOST="vas-dev";
@@ -710,7 +712,8 @@ angular.module('ilcomuneintasca.services.conf', [])
       return SCHEMA_VERSION;
     },
     syncUrl: function () {
-      return 'https://'+SYNC_HOST+'.smartcampuslab.it/comuneintasca/sync';
+//      return 'https://'+SYNC_HOST+'.smartcampuslab.it/comuneintasca/sync';
+      return 'https://'+SYNC_HOST+'.smartcampuslab.it/'+SYNC_WEBAPP+'/sync';
     },
     syncTimeoutSeconds: function () {
       //return 60 * 60; /* 60 times 60 seconds = EVERY HOUR */

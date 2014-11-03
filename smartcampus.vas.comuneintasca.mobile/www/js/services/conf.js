@@ -3,10 +3,13 @@ angular.module('ilcomuneintasca.services.conf', [])
 .factory('Config', function ($q, $http, $window, $filter, $rootScope) {
   var DEVELOPMENT=false;
   $rootScope.DEV=DEVELOPMENT;
-  //$rootScope.DEV=true;
+  
+  // when the following is TRUE, we show special buttons 
+  // (actually just the db RESET button in settings)
+  // even if not in development mode
+  // $rootScope.DEV=true;
 
   var SYNC_WEBAPP='comuneintasca-oc';
-  
   var SCHEMA_VERSION=101;
   var SYNC_HOST="tn";
   if (DEVELOPMENT) SYNC_HOST="vas-dev";

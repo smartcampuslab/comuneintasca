@@ -47,21 +47,17 @@ blu scuro: #1b4d6e;
 .padding.notop { padding-top:0; }
 .padding.nobottom { padding-bottom:0; }
 
-h1,
-h2 {
+h1,h2,h3,h4 {
   color: #1b4d6e;
 }
-.htmldesc a,
-.comuni-html-desc a,
-.comuni-htmldesc a,
 .comuni-html-description a,
 .comuni-html-info a {
   color: #2975a7;
   font-weight: bold;
 }
-.htmldesc,
-.comuni-html-desc,
-.comuni-htmldesc {
+.comuni-html-description,
+.comuni-html-info {
+  color:#000;
   margin-bottom:.4em;
 }
 .bar.bar-comuni-home .title,
@@ -475,3 +471,7 @@ comuni-img, .comuni-item-image {
 .comunisubmenu-all { font-weight: bold; text-decoration: underline; }
 
 .item-radio .radio-icon { padding-top:5px; }
+
+
+.comuni-html-description ul, comuni-html-info ul { list-style-type:disc; padding:0 10px;margin-bottom:1em;margin-top:0; }
+.comuni-html-description li, comuni-html-info li { margin-left:10px; }

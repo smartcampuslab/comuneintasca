@@ -105,6 +105,11 @@ angular.module('ilcomuneintasca', [
   }
   $rootScope.lang=localStorage.lang=lang;
 
+  $rootScope.gotoPromise = function (promise) {
+    promise.then(function(link){
+      $rootScope.goto(link);
+    });
+  };
   $rootScope.goto = function (link) {
     if (link) {
       if (link.indexOf('#/app/')==0) link=link.substring(1);

@@ -297,6 +297,10 @@ angular.module('ilcomuneintasca.controllers.common', [])
 
             if (data.parentid) {
               //console.log('siblings');
+              
+              $scope.obj['parentAbsLink']=Config.menuGroupSubgroupByTypeAndClassification(sg_query_type,'_complex').then(function(sg){
+                return 'page/'+sg._parent.id+'/'+sg.id+'/'+data.parentid;
+              });
 
               $scope.gotsonsdata = DatiDB.getByParent(sg_query_type, data.parentid).then(function (data) {
                 $scope.sons = data;

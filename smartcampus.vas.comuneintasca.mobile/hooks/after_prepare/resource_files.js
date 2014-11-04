@@ -15,55 +15,63 @@
 // we don't build for all platforms 
 // on each developer's box.
 var dirstocreate = [
-	'platforms/android/res/values-en', 'platforms/android/res/values-de', 
+	'platforms/android/res/values', 'platforms/android/res/values-it', 'platforms/android/res/values-de', 
+	'platforms/android/res/drawable-mdpi', 'platforms/android/res/drawable-hdpi', 'platforms/android/res/drawable-xhdpi', 'platforms/android/res/drawable-xxhdpi', 
 	'platforms/ios/Trento - Il Comune in Tasca/Resources/de.lproj', 'platforms/ios/Trento - Il Comune in Tasca/Resources/it.lproj'
 ];
  
 var filestocopy = [{
     "config/android/AndroidManifest.xml": 
     "platforms/android/AndroidManifest.xml"
-}, {
-    "config/android/res/drawable/icon.png": 
-    "platforms/android/res/drawable/icon.png"
-}, {
-    "config/android/res/drawable-hdpi/icon.png": 
-    "platforms/android/res/drawable-hdpi/icon.png"
-}, {
-    "config/android/res/drawable-ldpi/icon.png": 
-    "platforms/android/res/drawable-ldpi/icon.png"
-}, {
-    "config/android/res/drawable-mdpi/icon.png": 
-    "platforms/android/res/drawable-mdpi/icon.png"
-}, {
-    "config/android/res/drawable-xhdpi/icon.png": 
-    "platforms/android/res/drawable-xhdpi/icon.png"
-}, {
-    "config/android/res/drawable-xxhdpi/icon.png": 
-    "platforms/android/res/drawable-xxhdpi/icon.png"
-}, {
-    "config/android/res/drawable/splash.png": 
-    "platforms/android/res/drawable/splash.png"
-}, {
-    "config/android/res/drawable-hdpi/splash.png": 
-    "platforms/android/res/drawable-hdpi/splash.png"
-}, {
-    "config/android/res/drawable-ldpi/splash.png": 
-    "platforms/android/res/drawable-ldpi/splash.png"
-}, {
-    "config/android/res/drawable-mdpi/splash.png": 
-    "platforms/android/res/drawable-mdpi/splash.png"
-}, {
-    "config/android/res/drawable-xhdpi/splash.png": 
-    "platforms/android/res/drawable-xhdpi/splash.png"
-}, {
-    "config/android/res/values/strings.xml": 
+}, 
+
+{
+    "config/android/res/values-en/strings.xml": 
     "platforms/android/res/values/strings.xml"
 }, {
-    "config/android/res/values-en/strings.xml": 
-    "platforms/android/res/values-en/strings.xml"
+    "config/android/res/values-it/strings.xml": 
+    "platforms/android/res/values-it/strings.xml"
 }, {
     "config/android/res/values-de/strings.xml": 
     "platforms/android/res/values-de/strings.xml"
+},
+
+{
+    "config/android/res/drawable-mdpi/ic_action_next_item.png": 
+    "platforms/android/res/drawable-mdpi/ic_action_next_item.png"
+}, {
+    "config/android/res/drawable-mdpi/ic_action_previous_item.png": 
+    "platforms/android/res/drawable-mdpi/ic_action_previous_item.png"
+}, {
+    "config/android/res/drawable-mdpi/ic_action_remove.png": 
+    "platforms/android/res/drawable-mdpi/ic_action_remove.png"
+}, {
+    "config/android/res/drawable-hdpi/ic_action_next_item.png": 
+    "platforms/android/res/drawable-hdpi/ic_action_next_item.png"
+}, {
+    "config/android/res/drawable-hdpi/ic_action_previous_item.png": 
+    "platforms/android/res/drawable-hdpi/ic_action_previous_item.png"
+}, {
+    "config/android/res/drawable-hdpi/ic_action_remove.png": 
+    "platforms/android/res/drawable-hdpi/ic_action_remove.png"
+}, {
+    "config/android/res/drawable-xhdpi/ic_action_next_item.png": 
+    "platforms/android/res/drawable-xhdpi/ic_action_next_item.png"
+}, {
+    "config/android/res/drawable-xhdpi/ic_action_previous_item.png": 
+    "platforms/android/res/drawable-xhdpi/ic_action_previous_item.png"
+}, {
+    "config/android/res/drawable-xhdpi/ic_action_remove.png": 
+    "platforms/android/res/drawable-xhdpi/ic_action_remove.png"
+}, {
+    "config/android/res/drawable-xxhdpi/ic_action_next_item.png": 
+    "platforms/android/res/drawable-xxhdpi/ic_action_next_item.png"
+}, {
+    "config/android/res/drawable-xxhdpi/ic_action_previous_item.png": 
+    "platforms/android/res/drawable-xxhdpi/ic_action_previous_item.png"
+}, {
+    "config/android/res/drawable-xxhdpi/ic_action_remove.png": 
+    "platforms/android/res/drawable-xxhdpi/ic_action_remove.png"
 }, 
 
 {
@@ -182,15 +190,19 @@ filestocopy.forEach(function(obj) {
         var val = obj[key];
         var srcfile = path.join(rootdir, key);
         var destfile = path.join(rootdir, val);
-        //console.log("copying "+srcfile+" to "+destfile);
+        console.log("copying "+srcfile+" to "+destfile);
         var destdir = path.dirname(destfile);
         if (fs.existsSync(srcfile) && fs.existsSync(destdir)) {
-            fs.createReadStream(srcfile).pipe(
-               fs.createWriteStream(destfile));
+        	try {
+	          fs.createReadStream(srcfile).pipe( fs.createWriteStream(destfile) );
+					} catch(e) {
+						console.log('ERROR0: '+e);
+					}
         }
     });
 });
 
+/*
 ['','en-','de-']
 .forEach(function(lang) {
     ['long-port-hdpi', 'long-port-ldpi', 'long-port-xhdpi', 'notlong-port-hdpi', 'notlong-port-ldpi', 'notlong-port-xhdpi', 'notlong-port-mdpi']
@@ -207,4 +219,75 @@ filestocopy.forEach(function(obj) {
         }
       }
     }); 
+});
+*/
+
+var defaultLang='en';
+
+['l','m','h','xh','xxh']//,'xxxh'
+.forEach(function(d) {
+	var suffix='-' + d + 'dpi';
+	var srcdir = path.join(rootdir, 'config/ticons/platform/android/res/drawable' + suffix);
+	var destdir = path.join(rootdir, 'platforms/android/res/drawable' + suffix);
+	if (!fs.existsSync(destdir)) {
+		console.log('creating dir: '+destdir);
+		fs.mkdirSync(destdir);
+	}
+	var srcfile = path.join(srcdir,'appicon.png');
+	if (fs.existsSync(srcfile)) {
+		console.log('copying file: '+srcfile);
+		var destfile = path.join(destdir,'icon.png');
+		console.log('to: '+destfile);
+		try {
+			fs.createReadStream(srcfile).pipe( fs.createWriteStream(destfile) );
+		} catch(e) {
+			console.log('ERROR1: '+e);
+		}
+	}
+
+	['en','it','de']
+	.forEach(function(lang) {
+		var suffix='-' + lang + '-' + d + 'dpi';
+		var srcdir = path.join(rootdir, 'config/ticons/platform/android/res/drawable' + suffix);
+		var srcfile = path.join(srcdir,'background.9.png');
+		if (fs.existsSync(srcfile)) {
+			if (lang==defaultLang) suffix='-' + d + 'dpi';
+			var destdir = path.join(rootdir, 'platforms/android/res/drawable' + suffix);
+			if (!fs.existsSync(destdir)) {
+				console.log('creating dir: '+destdir);
+				fs.mkdirSync(destdir);
+			}
+			console.log('copying file: '+srcfile);
+			var destfile = path.join(destdir,'splash.png');
+			console.log('to: '+destfile);
+			fs.createReadStream(srcfile).pipe( fs.createWriteStream(destfile) );
+
+		} else {
+			['','not']
+			.forEach(function(ll) {
+				['land','port']
+				.forEach(function(lp) {
+					suffix='-'+ll+'long' + '-'+lp + '-'+d+'dpi';
+					srcdir = path.join(rootdir, 'config/ticons/Resources/android/images/res-'+lang+suffix);
+					srcfile = path.join(srcdir,'default.png');
+					if (fs.existsSync(srcfile)) {
+						if (lang!=defaultLang) suffix='-'+lang+suffix;
+						var destdir = path.join(rootdir, 'platforms/android/res/drawable' + suffix);
+						if (!fs.existsSync(destdir)) {
+							console.log('creating dir: '+destdir);
+							fs.mkdirSync(destdir);
+						}
+						console.log('copying file: '+srcfile);
+						var destfile = path.join(destdir,'splash.png');
+						console.log('to: '+destfile);
+						try {
+							fs.createReadStream(srcfile).pipe( fs.createWriteStream(destfile) );
+						} catch(e) {
+							console.log('ERROR2: '+e);
+						}
+					}
+				});
+			});
+		}
+	}); 
 });

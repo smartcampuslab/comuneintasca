@@ -324,7 +324,13 @@ angular.module('ilcomuneintasca.controllers.common', [])
                   $scope.sonsVisible = null;
                 } else {
                   $scope.gotsonsdata = DatiDB.getByParent(sg_query_type, data.id).then(function (data) {
-                    if (!$scope.sons) $scope.sons = data;
+                    if (!$scope.sons) {
+                      if (data.length > 0 && data[0].fromTime) {
+                        $scope.sons = $filter('extOrderBy')(data,{order:'DateFrom'});
+                      } else {
+                        $scope.sons = data;
+                      }
+                    }  
                     $scope.sonsVisible = true;
                   });
                 }
@@ -333,7 +339,11 @@ angular.module('ilcomuneintasca.controllers.common', [])
               if ($state.current.data && $state.current.data.sons) {
                 //console.log('sons');
                 $scope.gotsonsdata = DatiDB.getByParent(sg_query_type, data.id).then(function (data) {
-                  $scope.sons = data;
+                  if (data.length > 0 && data[0].fromTime) {
+                    $scope.sons = $filter('extOrderBy')(data,{order:'DateFrom'});
+                  } else {
+                    $scope.sons = data;
+                  }  
                 });
               }
             }

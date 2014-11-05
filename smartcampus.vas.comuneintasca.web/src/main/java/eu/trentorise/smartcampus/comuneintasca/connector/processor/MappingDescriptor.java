@@ -9,7 +9,6 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 
-import eu.trentorise.smartcampus.comuneintasca.data.BadDataException;
 import eu.trentorise.smartcampus.comuneintasca.model.BaseCITObject;
 
 public class MappingDescriptor {

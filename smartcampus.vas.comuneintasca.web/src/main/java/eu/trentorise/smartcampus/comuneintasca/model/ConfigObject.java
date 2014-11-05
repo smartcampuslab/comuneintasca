@@ -17,9 +17,7 @@ package eu.trentorise.smartcampus.comuneintasca.model;
 
 import java.util.List;
 
-import eu.trentorise.smartcampus.presentation.data.BasicObject;
-
-public class ConfigObject extends BasicObject {
+public class ConfigObject extends AppObject {
 	private static final long serialVersionUID = 3952436037350859543L;
 
 	private String appId;

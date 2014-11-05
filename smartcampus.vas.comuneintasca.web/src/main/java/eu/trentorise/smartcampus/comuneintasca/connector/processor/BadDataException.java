@@ -1,4 +1,4 @@
-package eu.trentorise.smartcampus.comuneintasca.data;
+package eu.trentorise.smartcampus.comuneintasca.connector.processor;
 
 import java.util.List;
 import java.util.Map;

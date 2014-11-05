@@ -26,9 +26,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.geo.Circle;
 
-import eu.trentorise.smartcampus.comuneintasca.data.GeoTimeObjectSyncStorage;
+import eu.trentorise.smartcampus.comuneintasca.data.AppSyncStorage;
 import eu.trentorise.smartcampus.comuneintasca.model.BaseCITObject;
 import eu.trentorise.smartcampus.comuneintasca.model.ObjectFilter;
 
@@ -37,11 +36,11 @@ public class AbstractObjectController {
 	private static final String SEARCH_FILTER_PARAM = "filter";
 
 	@Autowired
-	protected GeoTimeObjectSyncStorage storage;
+	protected AppSyncStorage storage;
 
 	protected Log logger = LogFactory.getLog(this.getClass());
 
-	public <T extends BaseCITObject> List<T> getAllObject(HttpServletRequest request, Class<T> cls) throws Exception {
+	public <T extends BaseCITObject> List<T> getAllObject(String appId, HttpServletRequest request, Class<T> cls) throws Exception {
 		try {
 			ObjectFilter filterObj = null;
 			Map<String, Object> criteria = null;
@@ -66,16 +65,10 @@ public class AbstractObjectController {
 				filterObj.setLimit(100);
 			} 
 
-			Circle circle = null;
-			if (filterObj.getCenter() != null && filterObj.getRadius() != null) {
-				circle = new Circle(filterObj.getCenter()[0],
-						filterObj.getCenter()[1], filterObj.getRadius());
-			}
 			List<T> objects = null;
 
-			objects = storage.searchObjects((Class<T>) cls,
-					circle, filterObj.getText(), filterObj.getFromTime(),
-					filterObj.getToTime(), criteria, filterObj.getSort(),
+			objects = storage.searchObjects(appId, (Class<T>) cls,
+					filterObj.getText(), criteria, filterObj.getSort(),
 					filterObj.getLimit(), filterObj.getSkip());
 
 			if (objects != null) {

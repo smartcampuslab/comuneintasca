@@ -31,6 +31,11 @@ import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nRest
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString;
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nTesto;
 
+/**
+ * Convert data to the internal format
+ * @author raman
+ *
+ */
 @Component
 public class DataExtractor {
 

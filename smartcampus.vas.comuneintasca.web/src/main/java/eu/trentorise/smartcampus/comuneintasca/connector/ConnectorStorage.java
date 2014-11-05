@@ -18,6 +18,6 @@ public interface ConnectorStorage {
 	<T> List<T> getObjectsByType(Class<T> cls, String appId);
 	<T> List<T> getObjectsByType(Class<T> cls, String classifier, String appId);
 
-	<T> void deleteObjectById(String s, Class<T> cls, String id);
+	<T> void deleteObjectById(String id, Class<T> cls, String appId);
 
 }

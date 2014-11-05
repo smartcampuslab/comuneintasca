@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
-import eu.trentorise.smartcampus.comuneintasca.data.BadDataException;
 import eu.trentorise.smartcampus.comuneintasca.model.EventObject;
 
 public class EventMappingDescriptor extends MappingDescriptor {

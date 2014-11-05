@@ -21,12 +21,7 @@ import java.util.SortedMap;
 
 public class ObjectFilter {
 
-	private double[] center;
-	private Double radius;
 	private List<String> categories;
-	
-	private Long fromTime;
-	private Long toTime;
 	
 	private Integer limit;
 	private Integer skip;
@@ -40,38 +35,6 @@ public class ObjectFilter {
 
 	public ObjectFilter() {
 		super();
-	}
-
-	public double[] getCenter() {
-		return center;
-	}
-
-	public void setCenter(double[] center) {
-		this.center = center;
-	}
-
-	public Double getRadius() {
-		return radius;
-	}
-
-	public void setRadius(Double  radius) {
-		this.radius = radius;
-	}
-
-	public Long getFromTime() {
-		return fromTime;
-	}
-
-	public void setFromTime(Long fromTime) {
-		this.fromTime = fromTime;
-	}
-
-	public Long getToTime() {
-		return toTime;
-	}
-
-	public void setToTime(Long toTime) {
-		this.toTime = toTime;
 	}
 
 	public Integer getLimit() {

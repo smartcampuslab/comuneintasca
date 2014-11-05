@@ -19,20 +19,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 
-import org.springframework.data.mongodb.core.geo.Circle;
-
-import eu.trentorise.smartcampus.comuneintasca.model.BaseCITObject;
-import eu.trentorise.smartcampus.comuneintasca.model.EventObject;
+import eu.trentorise.smartcampus.comuneintasca.model.AppObject;
 import eu.trentorise.smartcampus.presentation.common.exception.DataException;
-import eu.trentorise.smartcampus.presentation.data.BasicObject;
+import eu.trentorise.smartcampus.presentation.data.SyncData;
 import eu.trentorise.smartcampus.presentation.storage.sync.BasicObjectSyncStorage;
 
-public interface GeoTimeObjectSyncStorage extends BasicObjectSyncStorage {
+public interface AppSyncSubStorage extends BasicObjectSyncStorage {
 	
-	public <T extends BaseCITObject> List<T> searchObjects(String appId, Class<T> cls, Circle circle, String text, Long from, Long to, Map<String, Object> criteria, SortedMap<String,Integer> sort) throws DataException; 
-	public <T extends BaseCITObject> List<T> searchObjects(String appId, Class<T> cls, Circle circle, String text, Long from, Long to, Map<String, Object> criteria, SortedMap<String,Integer> sort, int limit, int skip) throws DataException; 
+	SyncData getSyncAppData(long since, String appId, Map<String,Object> include, Map<String,Object> exclude) throws DataException;
+
+	public <T extends AppObject> List<T> searchObjects(String appId, Class<T> cls, String text, Map<String, Object> criteria, SortedMap<String,Integer> sort, int limit, int skip) throws DataException; 
 	
-	public List<BaseCITObject> getAllAppObjects(String appId);
-	public BasicObject getObjectById(String id, String appId);
-	public EventObject getObjectById(String id, Class<EventObject> cls, String appId);
+	public List<AppObject> getAllAppObjects(String appId);
+	public AppObject getObjectById(String id, String appId);
+	public <T extends AppObject> T getObjectById(String id, Class<T> cls, String appId);
+
 }

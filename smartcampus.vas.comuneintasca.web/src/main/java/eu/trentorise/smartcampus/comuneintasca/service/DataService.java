@@ -1,10 +1,16 @@
 package eu.trentorise.smartcampus.comuneintasca.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import eu.trentorise.smartcampus.comuneintasca.model.GeoCITObject;
+import eu.trentorise.smartcampus.comuneintasca.data.AppSyncStorage;
+import eu.trentorise.smartcampus.comuneintasca.model.AppObject;
+import eu.trentorise.smartcampus.presentation.common.exception.DataException;
+import eu.trentorise.smartcampus.presentation.data.BasicObject;
 
 /**
  * Application data manager. Data is represented 
@@ -17,23 +23,25 @@ import eu.trentorise.smartcampus.comuneintasca.model.GeoCITObject;
 @Service 
 public class DataService {
 
+	@Autowired
+	private AppSyncStorage storage;
+	
 	/**
 	 * Create/Update object draft 
 	 * @param obj
 	 * @param app
 	 * @return update draft object
 	 */
-	public <T> T upsertObject(T obj, String app) {
-		// TODO
-		return obj;
+	public <T extends AppObject> T upsertObject(T obj, String app) {
+		return storage.storeDraftObject(obj, app);
 	}
 	/**
 	 * Delete specified object from draft
 	 * @param obj
 	 * @param app
 	 */
-	public <T> void deleteObject(T obj, String app) {
-		
+	public <T extends AppObject> void deleteObject(T obj, String app) {
+		storage.deleteDraftObject(obj, app);
 	}
 	
 	/**
@@ -42,9 +50,29 @@ public class DataService {
 	 * @param cls
 	 * @param app
 	 * @param classifier
+	 * @throws DataException 
 	 */
-	public <T> void upsertType(List<T> objects, Class<T> cls, String app, String classifier) {
-		// TODO
+	public <T extends AppObject> void upsertType(List<T> objects, Class<T> cls, String app, String classifier) throws DataException {
+		Map<String, Object> criteria = new HashMap<String, Object>();
+		if (classifier != null) {
+			criteria.put("classifier", classifier);
+		}
+		List<T> old = storage.searchDraftObjects(app, cls, null, criteria , null, 0, -1);
+		Map<String, AppObject> oldIds = new HashMap<String, AppObject>();
+		for (AppObject o : old) {
+			oldIds.put(o.getId(), o);
+		}
+		for (AppObject n : objects) {
+			AppObject o = oldIds.get(n.getId());
+			if (o == null || o.getLastModified() < n.getLastModified()) {
+				storage.storeDraftObject(o, app);
+			} 
+			oldIds.remove(n.getId());
+		}
+		
+		for (String id : oldIds.keySet()) {
+			storage.deleteDraftObject(oldIds.get(id), app);
+		}
 	}
 	
 	/**
@@ -52,8 +80,8 @@ public class DataService {
 	 * @param obj
 	 * @param app
 	 */
-	public <T> void publishObject(T obj, String app) {
-		// TODO
+	public <T extends AppObject> void publishObject(T obj, String app) {
+		storage.storeObject(obj, app);
 	}
 
 	/**
@@ -61,8 +89,8 @@ public class DataService {
 	 * @param obj
 	 * @param app
 	 */
-	public <T> void unpublishObject(T obj, String app) {
-		// TODO
+	public <T extends AppObject> void unpublishObject(T obj, String app) {
+		storage.deleteObject(obj, app);
 	}
 	
 	/**
@@ -70,8 +98,22 @@ public class DataService {
 	 * @param cls
 	 * @param app
 	 * @param classifier
+	 * @throws DataException 
 	 */
-	public <T> void publishType(Class<T> cls, String app, String classifier) {
+	public <T extends AppObject> void publishType(Class<T> cls, String app, String classifier) throws DataException {
+		Map<String, Object> criteria = new HashMap<String, Object>();
+		if (classifier != null) {
+			criteria.put("classifier", classifier);
+		}
+		List<T> draftObjects = storage.searchDraftObjects(app, cls, null, criteria, null, 0, -1);
+		// TODO
+	}
+	
+	/**
+	 * Publish all the draft data of the specified app
+	 * @param app
+	 */
+	public void publishApp(String app) {
 		// TODO
 	}
 	
@@ -80,7 +122,7 @@ public class DataService {
 	 * @param app
 	 * @return all the published objects of the specified type
 	 */
-	public <T> List<T> getPublishedObjects(Class<T> cls, String app) {
+	public <T extends BasicObject> List<T> getPublishedObjects(Class<T> cls, String app) {
 		// TODO
 		return null;
 	}
@@ -90,9 +132,12 @@ public class DataService {
 	 * @param app
 	 * @return all the draft objects of the specified type
 	 */
-	public <T> List<T> getDraftObjects(Class<T> cls, String app) {
-		// TODO
-		return null;
+	public <T extends AppObject> List<T> getDraftObjects(Class<T> cls, String app) {
+		try {
+			return storage.searchDraftObjects(app, cls, null, null, null, 0, -1);
+		} catch (DataException e) {
+			return null;
+		}
 	}
 
 	/**
@@ -101,9 +146,8 @@ public class DataService {
 	 * @param app
 	 * @return
 	 */
-	public GeoCITObject findObject(String id, String app) {
-		// TODO Auto-generated method stub
-		return null;
+	public AppObject findObject(String id, String app) {
+		return storage.getObjectDraftById(id, app);
 	}
 
 }

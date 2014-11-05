@@ -17,12 +17,9 @@ package eu.trentorise.smartcampus.comuneintasca.model;
 
 import java.util.Map;
 
-import eu.trentorise.smartcampus.presentation.data.BasicObject;
-
-public class BaseCITObject extends BasicObject {
+public class BaseCITObject extends AppObject {
 	private static final long serialVersionUID = 3589900794339644582L;
 
-	private String appId;
 	private String classifier;
 	
 	private String source = null;
@@ -38,10 +35,6 @@ public class BaseCITObject extends BasicObject {
 	
 	private String image = null;
 
-	private Long lastModified = null;
-	
-	private String objectId;
-	
 	public String getSource() {
 		return source;
 	}
@@ -120,30 +113,6 @@ public class BaseCITObject extends BasicObject {
 
 	public void setContacts(Map<String, String> contacts) {
 		this.contacts = contacts;
-	}
-
-	public Long getLastModified() {
-		return lastModified;
-	}
-
-	public void setLastModified(Long lastModified) {
-		this.lastModified = lastModified;
-	}
-	
-	public String getObjectId() {
-		return objectId;
-	}
-
-	public void setObjectId(String objectId) {
-		this.objectId = objectId;
-	}
-
-	public String getAppId() {
-		return appId;
-	}
-
-	public void setAppId(String appId) {
-		this.appId = appId;
 	}
 
 	public String getClassifier() {

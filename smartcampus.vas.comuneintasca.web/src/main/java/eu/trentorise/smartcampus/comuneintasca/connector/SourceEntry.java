@@ -8,6 +8,7 @@ public class SourceEntry {
 	private String serviceId;
 	private String methodName;
 	private boolean autoPublish;
+	private String imagePath;
 	
 	public String getType() {
 		return type;
@@ -50,5 +51,11 @@ public class SourceEntry {
 	}
 	public void setAutoPublish(boolean autoPublish) {
 		this.autoPublish = autoPublish;
+	}
+	public String getImagePath() {
+		return imagePath;
+	}
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 }

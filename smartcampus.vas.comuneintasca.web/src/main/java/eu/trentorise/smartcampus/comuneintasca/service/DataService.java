@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import eu.trentorise.smartcampus.comuneintasca.data.AppSyncStorage;
 import eu.trentorise.smartcampus.comuneintasca.model.AppObject;
 import eu.trentorise.smartcampus.presentation.common.exception.DataException;
-import eu.trentorise.smartcampus.presentation.data.BasicObject;
 
 /**
  * Application data manager. Data is represented 
@@ -31,16 +30,18 @@ public class DataService {
 	 * @param obj
 	 * @param app
 	 * @return update draft object
+	 * @throws DataException 
 	 */
-	public <T extends AppObject> T upsertObject(T obj, String app) {
+	public <T extends AppObject> T upsertObject(T obj, String app) throws DataException {
 		return storage.storeDraftObject(obj, app);
 	}
 	/**
 	 * Delete specified object from draft
 	 * @param obj
 	 * @param app
+	 * @throws DataException 
 	 */
-	public <T extends AppObject> void deleteObject(T obj, String app) {
+	public <T extends AppObject> void deleteObject(T obj, String app) throws DataException {
 		storage.deleteDraftObject(obj, app);
 	}
 	
@@ -79,8 +80,9 @@ public class DataService {
 	 * Publish a single object if not yet published, and update the data otherwise.
 	 * @param obj
 	 * @param app
+	 * @throws DataException 
 	 */
-	public <T extends AppObject> void publishObject(T obj, String app) {
+	public <T extends AppObject> void publishObject(T obj, String app) throws DataException {
 		storage.storeObject(obj, app);
 	}
 
@@ -88,8 +90,9 @@ public class DataService {
 	 * Remove an object from published ones
 	 * @param obj
 	 * @param app
+	 * @throws DataException 
 	 */
-	public <T extends AppObject> void unpublishObject(T obj, String app) {
+	public <T extends AppObject> void unpublishObject(T obj, String app) throws DataException {
 		storage.deleteObject(obj, app);
 	}
 	
@@ -106,15 +109,38 @@ public class DataService {
 			criteria.put("classifier", classifier);
 		}
 		List<T> draftObjects = storage.searchDraftObjects(app, cls, null, criteria, null, 0, -1);
-		// TODO
+		List<T> publishObjects = storage.searchObjects(app, cls, null, criteria, null, 0, -1);
+
+		updatePublish(app, draftObjects, publishObjects);
+	}
+
+	private <T extends AppObject> void updatePublish(String app, List<T> draftObjects, List<T> publishObjects) throws DataException {
+		Map<String, AppObject> oldIds = new HashMap<String, AppObject>();
+		for (AppObject o : publishObjects) {
+			oldIds.put(o.getId(), o);
+		}
+		for (AppObject n : draftObjects) {
+			AppObject o = oldIds.get(n.getId());
+			if (o == null || o.getLastModified() < n.getLastModified()) {
+				storage.storeObject(o, app);
+			} 
+			oldIds.remove(n.getId());
+		}
+		
+		for (String id : oldIds.keySet()) {
+			storage.deleteObject(oldIds.get(id), app);
+		}
 	}
 	
 	/**
 	 * Publish all the draft data of the specified app
 	 * @param app
+	 * @throws DataException 
 	 */
-	public void publishApp(String app) {
-		// TODO
+	public void publishApp(String app) throws DataException {
+		List<AppObject> draftObjects = storage.getAllAppDtaftObjects(app);
+		List<AppObject> publishObjects = storage.getAllAppObjects(app);
+		updatePublish(app, draftObjects, publishObjects);
 	}
 	
 	/**
@@ -122,9 +148,12 @@ public class DataService {
 	 * @param app
 	 * @return all the published objects of the specified type
 	 */
-	public <T extends BasicObject> List<T> getPublishedObjects(Class<T> cls, String app) {
-		// TODO
-		return null;
+	public <T extends AppObject> List<T> getPublishedObjects(Class<T> cls, String app) {
+		try {
+			return storage.searchObjects(app, cls, null, null, null, 0, -1);
+		} catch (DataException e) {
+			return null;
+		}
 	}
 	
 	/**
@@ -145,8 +174,9 @@ public class DataService {
 	 * @param id
 	 * @param app
 	 * @return
+	 * @throws DataException 
 	 */
-	public AppObject findObject(String id, String app) {
+	public AppObject findObject(String id, String app) throws DataException {
 		return storage.getObjectDraftById(id, app);
 	}
 

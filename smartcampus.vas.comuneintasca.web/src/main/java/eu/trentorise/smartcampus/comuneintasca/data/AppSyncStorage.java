@@ -31,17 +31,17 @@ public interface AppSyncStorage {
 	public <T extends AppObject> List<T> searchObjects(String appId, Class<T> cls, String text, Map<String, Object> criteria, SortedMap<String,Integer> sort, int limit, int skip) throws DataException; 
 	public <T extends AppObject> List<T> searchDraftObjects(String appId, Class<T> cls, String text, Map<String, Object> criteria, SortedMap<String,Integer> sort, int limit, int skip) throws DataException; 
 	
-	public List<AppObject> getAllAppObjects(String appId);
-	public AppObject getObjectById(String id, String appId);
-	public <T extends AppObject> T getObjectById(String id, Class<T> cls, String appId);
+	public List<AppObject> getAllAppObjects(String appId) throws DataException;
+	public AppObject getObjectById(String id, String appId) throws DataException;
+	public <T extends AppObject> T getObjectById(String id, Class<T> cls, String appId) throws DataException;
 
-	public List<AppObject> getAllAppDtaftObjects(String appId);
-	public AppObject getObjectDraftById(String id, String appId);
-	public <T extends AppObject> T getObjectDraftById(String id, Class<T> cls, String appId);
+	public List<AppObject> getAllAppDtaftObjects(String appId) throws DataException;
+	public AppObject getObjectDraftById(String id, String appId) throws DataException;
+	public <T extends AppObject> T getObjectDraftById(String id, Class<T> cls, String appId) throws DataException;
 	
-	public <T extends AppObject> T storeObject(T obj, String appId);
-	public <T extends AppObject> void deleteObject(T obj, String appId);
+	public <T extends AppObject> T storeObject(T obj, String appId) throws DataException;
+	public <T extends AppObject> void deleteObject(T obj, String appId) throws DataException;
 
-	public <T extends AppObject> T storeDraftObject(T obj, String appId);
-	public <T extends AppObject> void deleteDraftObject(T obj, String appId);
+	public <T extends AppObject> T storeDraftObject(T obj, String appId) throws DataException;
+	public <T extends AppObject> void deleteDraftObject(T obj, String appId) throws DataException;
 }

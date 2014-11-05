@@ -229,7 +229,7 @@ public class DataProcessor implements ServiceBusListener {
 				old = connectorStorage.getObjectById(id, targetCls, app.getId());
 			} catch (Exception e) {}
 			if (old == null || extractor.isNewer(bt, old)) {
-				T no = extractor.extractData(bt);
+				T no = extractor.extractData(bt, entry);
 				connectorStorage.storeObject(no, app.getId());
 				boolean applies = applies(no, filters);
 				if (applies) {

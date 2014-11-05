@@ -29,16 +29,12 @@
     http://www.springframework.org/schema/data/mongo
     http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
     http://www.springframework.org/schema/security 
-  	http://www.springframework.org/schema/security/spring-security-3.1.xsd
-  	http://www.springframework.org/schema/task
-  	http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+  	http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
 	<mvc:annotation-driven />
 
 	<!-- MVC Controllers -->
-	<context:component-scan base-package="eu.trentorise.smartcampus.comuneintasca.controller" />
-
-    <context:property-placeholder  location="classpath:comuneintasca.properties" />
+	<context:component-scan base-package="eu.trentorise.smartcampus.comuneintasca" />
 
 	<!-- Resolves view names to protected .jsp resources within the /WEB-INF/views directory -->
 	<bean
@@ -53,48 +49,21 @@
 
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg ref="mongo" />
-		<constructor-arg name="databaseName" value="comuneintasca-oc" />
+		<constructor-arg name="databaseName" value="comuneintasca-multi" />
 	</bean>
-
-    <bean id="syncObjectStorage" class="eu.trentorise.smartcampus.comuneintasca.data.GeoTimeStorage">
-        <constructor-arg ref="mongoTemplate" />
-    </bean>
-	<bean id="eventProcessor" class="eu.trentorise.smartcampus.comuneintasca.processor.EventProcessorImpl">
-		<property name="storage" ref="syncObjectStorage" />
-		<property name="client" ref="serviceBusClient" />
-	</bean>
-	<bean id="objectProcessor" class="eu.trentorise.smartcampus.comuneintasca.processor.ObjectProcessor">
-	</bean>
-	<bean id="itineraryProcessor" class="eu.trentorise.smartcampus.comuneintasca.processor.ItineraryGenerator">
-	</bean>
-	<bean id="homeProcessor" class="eu.trentorise.smartcampus.comuneintasca.processor.HomeProcessor">
-	</bean>
-	<!-- 
-	<bean id="configProcessor" class="eu.trentorise.smartcampus.comuneintasca.processor.ConfigProcessor">
-	</bean>
-		 -->
 	
 	<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
 		<property name="brokerURL" value="${smartcampus.vas.web.activeMQ.brokerURL}" />
-		<!-- tcp://localhost:61616 -->
-		<!-- ${smartcampus.vas.web.activeMQ.brokerURL} -->
 	</bean>
 
+	<bean id="dataProcessor" class="eu.trentorise.smartcampus.comuneintasca.connector.processor.DataProcessor"/>
+	
 	<bean id="serviceBusClient" class="it.sayservice.platform.client.jms.JMSServiceBusClient" scope="singleton" destroy-method="destroy">
 		<constructor-arg>
 			<ref bean="connectionFactory" />
 		</constructor-arg>
-		<property name="clientId" value="vas_comuneintasca_oc_subscriber" />
-		<property name="listener" ref="eventProcessor" />
+		<property name="clientId" value="vas_comuneintasca_multi_subscriber" />
+		<property name="listener" ref="dataProcessor" />
 	</bean>
 	
-	<bean id="serviceUpdateSubscriber" class="eu.trentorise.smartcampus.comuneintasca.listener.Subscriber">
-		<constructor-arg ref="serviceBusClient" />
-	</bean>
-
-	<!-- Scheduler for moderation list -->
-	<task:annotation-driven scheduler="taskScheduler" />
-	<task:scheduler id="taskScheduler" pool-size="1" />
-
-     
 </beans>

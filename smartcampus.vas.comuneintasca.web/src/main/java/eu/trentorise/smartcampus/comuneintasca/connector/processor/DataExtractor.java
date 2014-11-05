@@ -7,12 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.google.protobuf.ByteString;
 
+import eu.trentorise.smartcampus.comuneintasca.connector.SourceEntry;
 import eu.trentorise.smartcampus.comuneintasca.model.ContentObject;
 import eu.trentorise.smartcampus.comuneintasca.model.EventObject;
 import eu.trentorise.smartcampus.comuneintasca.model.HotelObject;
@@ -39,13 +38,9 @@ import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nTest
 @Component
 public class DataExtractor {
 
-	@Autowired
-	@Value("${imageBaseURL}")
-	private String imagePrefix;
-
 	public interface Extractor<S,T> {
 		public S readData(ByteString bs) throws Exception;
-		public T extractData(S bs);
+		public T extractData(S bs, SourceEntry source);
 		public String getId(S obj);
 		public boolean isNewer(S source, T target);
 	}
@@ -58,7 +53,7 @@ public class DataExtractor {
 		}
 
 		@Override
-		public EventObject extractData(Evento bt) {
+		public EventObject extractData(Evento bt, SourceEntry entry) {
 			EventObject no = new EventObject();
 			no.setId(bt.getId());
 			no.setAddress(Collections.singletonMap("it", bt.getAddress()));
@@ -71,7 +66,7 @@ public class DataExtractor {
 			no.setEventTiming(Collections.singletonMap("it", bt.getEventTiming()));
 			no.setEventType(bt.getCategory());
 			no.setFromTime(bt.getFromTime());
-			no.setImage(getImageURL(bt.getImage()));
+			no.setImage(getImageURL(bt.getImage(), entry));
 			no.setInfo(Collections.singletonMap("it", bt.getInfo()));
 			no.setLastModified(bt.getLastModified());
 			List<Organization> orgs = new ArrayList<Organization>();
@@ -116,7 +111,7 @@ public class DataExtractor {
 		}
 
 		@Override
-		public RestaurantObject extractData(I18nRestaurant bt) {
+		public RestaurantObject extractData(I18nRestaurant bt, SourceEntry entry) {
 			RestaurantObject no = new RestaurantObject();
 			no.setId(bt.getId());
 			no.setAddress(toMap(bt.getAddress()));
@@ -131,7 +126,7 @@ public class DataExtractor {
 
 			no.setDescription(toMap(bt.getDescription()));
 			no.setEquipment(toMap(bt.getEquipment()));
-			no.setImage(getImageURL(bt.getImage()));
+			no.setImage(getImageURL(bt.getImage(), entry));
 			no.setInfo(toMap(bt.getInfo()));
 			no.setLastModified(bt.getLastModified());
 			if (bt.hasLat() && bt.hasLon()) {
@@ -166,7 +161,7 @@ public class DataExtractor {
 		}
 
 		@Override
-		public HotelObject extractData(I18nHotel bt) {
+		public HotelObject extractData(I18nHotel bt, SourceEntry entry) {
 			HotelObject no = new HotelObject();
 			no.setId(bt.getId());
 			no.setAddress(toMap(bt.getAddress()));
@@ -180,7 +175,7 @@ public class DataExtractor {
 			contacts.put("fax", bt.getFax());
 			no.setContacts(contacts);
 
-			no.setImage(getImageURL(bt.getImage()));
+			no.setImage(getImageURL(bt.getImage(), entry));
 			no.setLastModified(bt.getLastModified());
 			if (bt.hasLat() && bt.hasLon()) {
 				no.setLocation(new double[] { bt.getLat(), bt.getLon() });
@@ -212,7 +207,7 @@ public class DataExtractor {
 		}
 
 		@Override
-		public POIObject extractData(I18nCultura bt) {
+		public POIObject extractData(I18nCultura bt, SourceEntry entry) {
 			POIObject no = new POIObject();
 			no.setId(bt.getId());
 			no.setAddress(toMap(bt.getAddress()));
@@ -226,7 +221,7 @@ public class DataExtractor {
 			no.setContacts(contacts);
 
 			no.setDescription(toMap(bt.getDescription()));
-			no.setImage(getImageURL(bt.getImage()));
+			no.setImage(getImageURL(bt.getImage(), entry));
 			no.setLastModified(bt.getLastModified());
 			if (bt.hasLat() && bt.hasLon()) {
 				no.setLocation(new double[] { bt.getLat(), bt.getLon() });
@@ -260,7 +255,7 @@ public class DataExtractor {
 		}
 
 		@Override
-		public MainEventObject extractData(I18nMainEvent bt) {
+		public MainEventObject extractData(I18nMainEvent bt, SourceEntry entry) {
 			MainEventObject no = new MainEventObject();
 			no.setId(bt.getId());
 			no.setAddress(toMap(bt.getAddress()));
@@ -274,7 +269,7 @@ public class DataExtractor {
 			no.setContacts(contacts);
 
 			no.setDescription(toMap(bt.getDescription()));
-			no.setImage(getImageURL(bt.getImage()));
+			no.setImage(getImageURL(bt.getImage(), entry));
 			no.setLastModified(bt.getLastModified());
 			if (bt.hasLat() && bt.hasLon()) {
 				no.setLocation(new double[] { bt.getLat(), bt.getLon() });
@@ -310,12 +305,12 @@ public class DataExtractor {
 		}
 
 		@Override
-		public ItineraryObject extractData(I18nItinerario bt) {
+		public ItineraryObject extractData(I18nItinerario bt, SourceEntry entry) {
 			ItineraryObject no = new ItineraryObject();
 			no.setId(bt.getId());
 			no.setCategory("itinerari");
 			no.setDescription(toMap(bt.getDescription()));
-			no.setImage(getImageURL(bt.getImage()));
+			no.setImage(getImageURL(bt.getImage(), entry));
 			no.setLastModified(bt.getLastModified());
 
 			no.setSubtitle(toMap(bt.getSubtitle()));
@@ -350,14 +345,14 @@ public class DataExtractor {
 		}
 
 		@Override
-		public ContentObject extractData(I18nTesto bt) {
+		public ContentObject extractData(I18nTesto bt, SourceEntry entry) {
 			ContentObject no = new ContentObject();
 			no.setId(bt.getId());
 			no.setCategory("text");
 			no.setClassification(toMap(bt.getClassification()));
 
 			no.setDescription(toMap(bt.getDescription()));
-			no.setImage(getImageURL(bt.getImage()));
+			no.setImage(getImageURL(bt.getImage(), entry));
 			no.setLastModified(bt.getLastModified());
 
 			no.setSubtitle(toMap(bt.getSubtitle()));
@@ -382,10 +377,10 @@ public class DataExtractor {
 	};
 	
 
-	public String getImageURL(String image) {
+	public String getImageURL(String image, SourceEntry entry) {
 		if (image == null || image.isEmpty()) return null;
 		if (!image.startsWith("http")) {
-			return imagePrefix + image.replace("|", "");
+			return (entry.getImagePath() == null ? "" : entry.getImagePath()) + image.replace("|", "");
 		}
 		return image;
 	}

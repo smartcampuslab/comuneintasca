@@ -1,27 +1,22 @@
 package eu.trentorise.smartcampus.comuneintasca.connector.processor;
 
-import java.util.List;
-import java.util.Map;
 
 public class MissingDataException extends Exception {
+	private static final long serialVersionUID = 3312527089132198381L;
 
 	public MissingDataException() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public MissingDataException(String message) {
 		super(message);
-		// TODO Auto-generated constructor stub
 	}
 
 	public MissingDataException(Throwable cause) {
 		super(cause);
-		// TODO Auto-generated constructor stub
 	}
 
 	public MissingDataException(String message, Throwable cause) {
 		super(message, cause);
-		// TODO Auto-generated constructor stub
 	}
 
 }

@@ -5,40 +5,48 @@ apps:
           url: http://www.comune.trento.it/api/opendata/v1/content/class/event/offset/0/limit/1000
           serviceId: smartcampus.service.opendata
           methodName: GetEventiParam
+          imagePath: http://www.comune.trento.it/
           autoPublish: true
           
         - type: eu.trentorise.smartcampus.comuneintasca.model.ConfigObject
           url: http://www.comune.trento.it/comuneintasca/data
           serviceId: smartcampus.service.opendata
           methodName: GetConfig
+          imagePath: http://www.comune.trento.it/
           
         - type: eu.trentorise.smartcampus.comuneintasca.model.RestaurantObject
           url: http://www.comune.trento.it/api/opendata/v1/content/class/ristorante/offset/0/limit/1000
           serviceId: smartcampus.service.opendata
           methodName: GetRestaurants
+          imagePath: http://www.comune.trento.it/
           
         - type: eu.trentorise.smartcampus.comuneintasca.model.HotelObject
           url: http://www.comune.trento.it/api/opendata/v1/content/class/accomodation/offset/0/limit/1000
           serviceId: smartcampus.service.opendata
           methodName: GetHotels
+          imagePath: http://www.comune.trento.it/
           
         - type: eu.trentorise.smartcampus.comuneintasca.model.MainEventObject
           url: http://www.comune.trento.it/api/opendata/v1/content/class/iniziativa/offset/0/limit/1000
           serviceId: smartcampus.service.opendata
           methodName: GetMainEvents
+          imagePath: http://www.comune.trento.it/
           
         - type: eu.trentorise.smartcampus.comuneintasca.model.POIObject
           url: http://www.comune.trento.it/api/opendata/v1/content/class/luogo/offset/0/limit/1000
           serviceId: smartcampus.service.opendata
           methodName: GetCultura
+          imagePath: http://www.comune.trento.it/
           
         - type: eu.trentorise.smartcampus.comuneintasca.model.ContentObject
           url: http://www.comune.trento.it/api/opendata/v1/content/class/folder/offset/0/limit/1000
           serviceId: smartcampus.service.opendata
           methodName: GetTesti
+          imagePath: http://www.comune.trento.it/
           
         - type: eu.trentorise.smartcampus.comuneintasca.model.ItineraryObject
           url: http://www.comune.trento.it/api/opendata/v1/content/class/itinerario/offset/0/limit/1000
           serviceId: smartcampus.service.opendata
           methodName: GetItinerari
+          imagePath: http://www.comune.trento.it/
           

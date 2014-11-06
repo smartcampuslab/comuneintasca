@@ -686,7 +686,7 @@ angular.module('ilcomuneintasca.services.conf', [])
           if (group.items) {
             for (sgi=0; sgi<group.items.length; sgi++) {
               var sg=group.items[sgi];
-              if ( sg.query && sg.query.type==type && ( (!sg.query.classification) || (classification&&classification==sg.query.classification) ) ) {
+              if ( sg.query && sg.query.type==type && ( (!classification && !sg.query.classification) || (classification&&classification==sg.query.classification) ) ) {
                 sg._parent=cloneParentGroup(group);
                 return sg;
               } else if (sg.type && sg.type==type && classification==null) {

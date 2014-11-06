@@ -25,7 +25,7 @@ angular.module('ilcomuneintasca.services.db', [])
     //console.log('dbrow.classification: '+dbrow.classification);
     if (dbtype == 'itinerary') {
       item['abslink'] = '#/app/itinerary/' + item.id + '/info';
-      Config.menuGroupSubgroup('percorsi','itineraries').then(function(sg){
+      Config.menuGroupSubgroupByTypeAndClassification('itineraries').then(function(sg){
         item['menu']=sg;
       });
     } else {

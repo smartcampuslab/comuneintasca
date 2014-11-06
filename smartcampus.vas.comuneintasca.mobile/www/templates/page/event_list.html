@@ -14,7 +14,7 @@
           <div ng-if="obj.sonscount>0" class="dida"><span>{{obj.sonscount}}</span><i class="icon ion-ios7-flag-outline"></i>&nbsp;</div>
         </div>
         <h2>{{obj.title | translate}}</h2>
-        <!-- p ng-if="(obj.dbType!='event' || obj.dbClass.id!='shows') && obj.fromTime">{{obj.fromTime | date:'dd/MM/yyyy'}}<span ng-if="obj.fromTime !== obj.toTime"> - {{obj.toTime | date:'dd/MM/yyyy'}}</span></p -->
+        <!-- p ng-if="obj.fromTime">{{obj.fromTime | date:'dd/MM/yyyy HH:mm'}}<span ng-if="obj.fromTime !== obj.toTime"> - {{obj.toTime | date:'dd/MM/yyyy HH:mm'}}</span></p -->
         <p ng-if="filter!='today' && obj.eventPeriod && obj.dbClassification!='Mostre'">{{obj.eventPeriod | translate}}</p>
         <div class="row comuni-item-bottom">
           <div class="col comuni-item-bottom-text">

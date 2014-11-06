@@ -13,7 +13,7 @@
     
     <div class="padding nobottom">
       <h1>{{obj.title | translate}}</h1>
-      <h4 ng-if="obj.dbClassification != '_complex'">{{obj.menu.name | translate}}</h4>
+      <h4 ng-if="obj.menu">{{obj.menu.name | translate}}</h4>
       <!-- <h5><i class="icon ion-ios7-calendar-outline"></i>{{obj.fromTime | date:'dd/MM/yyyy'}}<span ng-if="obj.fromTime !== obj.toTime"> - {{obj.toTime | date:'dd/MM/yyyy'}}</span></h5>-->
     </div>
     <div class="list card sinottico">

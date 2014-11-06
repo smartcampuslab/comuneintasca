@@ -538,15 +538,15 @@ angular.module('ilcomuneintasca.controllers.common', [])
               //console.log('doFilter("'+filter+'")...');
               var t = 0;
               var d = new Date();
-              var f = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime() - 1;
-              if (filter == 'today') {
-                t = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1).getTime();
-              } else if (filter == 'week') {
-                t = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 7).getTime();
-              } else if (filter == 'month') {
-                t = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 30).getTime();
-              }
+              var f = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0).getTime() - 1; //subtracting 1 micro since condition needs just > (not >=)
               //console.log('f: '+f);
+              if (filter == 'today') {
+                t = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 23, 59, 59, 999).getTime() + 1; //adding 1 micro since condition needs just < (not <=)
+              } else if (filter == 'week') {
+                t = new Date(d.getFullYear(), d.getMonth(), d.getDate()+7, 23, 59, 59, 999).getTime() + 1; //adding 1 micro since condition needs just < (not <=)
+              } else if (filter == 'month') {
+                t = new Date(d.getFullYear(), d.getMonth(), d.getDate()+30, 23, 59, 59, 999).getTime() + 1; //adding 1 micro since condition needs just < (not <=)
+              }
               //console.log('t: '+t);
               if (t > 0) {
                 //console.log('sg.query.classification: '+sg.query.classification);

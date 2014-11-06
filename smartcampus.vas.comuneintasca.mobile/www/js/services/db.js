@@ -625,12 +625,13 @@ angular.module('ilcomuneintasca.services.db', [])
             }
           }
 					
-          var fromTime = new Date().getTime();
+          var d = new Date();
+          var min_toTime = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0).getTime() - 1;
           var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount ' +
 						'FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id' +
             ' WHERE c.type=? ' +
 						(cateId ? ' AND (c.classification=? OR c.classification2=? OR c.classification3=?)' : '') + 
-            ' AND (s.id IS NULL OR s.toTime > ' + fromTime + ')' +
+            ' AND (s.id IS NULL OR s.toTime > ' + min_toTime + ')' +
             (_complex==undefined ? '' : ' AND c.classification' + (_complex?'=':'!=') + "'_complex'" ) + 
 						' GROUP BY c.id';
           //console.log('[DB.cate()] sql: '+sql);
@@ -812,12 +813,13 @@ angular.module('ilcomuneintasca.services.db', [])
           var qParams = objId.split(',');
           qParams.unshift(types[dbname]);
 
-          var fromTime = new Date().getTime();
+          var d = new Date();
+          var min_toTime = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0).getTime() - 1;
 					var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount'+
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id'+
             ' WHERE c.type=?' +
             ' AND ' + idCond + 
-            ' AND (s.id IS NULL OR s.toTime > ' + fromTime + ')' +
+            ' AND (s.id IS NULL OR s.toTime > ' + min_toTime + ')' +
             ' GROUP BY c.id';
           //console.log('dbQuery: ' + dbQuery);
           //console.log('qParams: ' + qParams);
@@ -887,12 +889,13 @@ angular.module('ilcomuneintasca.services.db', [])
           var qParams = itemId.split(',');
           if (dbname) qParams.unshift(types[dbname]);
 
-          var fromTime = new Date().getTime();
+          var d = new Date();
+          var min_toTime = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0).getTime() - 1;
 					var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount'+
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id'+
             (dbname?' WHERE c.type=?':'') +
             ' AND ' + idCond + 
-            ' AND (s.id IS NULL OR s.toTime > ' + fromTime + ')' +
+            ' AND (s.id IS NULL OR s.toTime > ' + min_toTime + ')' +
             ' GROUP BY c.id';
           //console.log('dbQuery: ' + dbQuery);
           //console.log('qParams: ' + qParams);

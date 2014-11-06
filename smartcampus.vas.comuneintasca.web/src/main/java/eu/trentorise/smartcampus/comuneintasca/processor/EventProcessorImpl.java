@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -60,6 +61,7 @@ import eu.trentorise.smartcampus.comuneintasca.model.MenuItemQuery;
 import eu.trentorise.smartcampus.comuneintasca.model.Organization;
 import eu.trentorise.smartcampus.comuneintasca.model.POIObject;
 import eu.trentorise.smartcampus.comuneintasca.model.RestaurantObject;
+import eu.trentorise.smartcampus.network.JsonUtils;
 import eu.trentorise.smartcampus.presentation.common.exception.DataException;
 import eu.trentorise.smartcampus.presentation.data.BasicObject;
 import eu.trentorise.smartcampus.service.festivaleconomia.data.message.Festivaleconomia.Trans;
@@ -665,10 +667,13 @@ public class EventProcessorImpl implements ServiceBusListener {
 		DynamicConfigObject old = null;
 		if (oldList != null && !oldList.isEmpty()) {
 			old = oldList.get(0);
-			if (old.getLastModified() < cd.getDateModified()) {
-				config.setId(old.getId());
-				config.setLastModified(cd.getDateModified());
-				config.setVisible(true);
+			long newModified = cd.getDateModified();
+			config.setId(old.getId());
+			config.setLastModified(cd.getDateModified());
+			config.setVisible(true);
+			config.setVersion(old.getVersion());
+//			if (!JsonUtils.toJSON(old).equals(JsonUtils.toJSON(config))) {
+			if (old.getLastModified() < newModified) {
 				storage.storeObject(config);
 				// old.setLastModified(cd.getDateModified());
 				// old.setHighlights(config.getHighlights());
@@ -812,7 +817,8 @@ public class EventProcessorImpl implements ServiceBusListener {
 	}
 
 	private void setType(List<MenuItem> items) throws MissingDataException {
-		for (MenuItem item : items) {
+		for (Iterator<MenuItem> menuIterator = items.iterator(); menuIterator.hasNext();) {
+			MenuItem item = menuIterator.next();
 			if (item.getId() != null) {
 				item.setId(item.getId().replace(" ", "_"));
 			}
@@ -828,6 +834,20 @@ public class EventProcessorImpl implements ServiceBusListener {
 			}
 			
 			if (item.getType() == null && item.getQuery() == null && item.getRef() == null && item.getApp() == null) {
+				if (item.getObjectIds() != null && !item.getObjectIds().isEmpty()) {
+					for (Iterator<String> iterator = item.getObjectIds().iterator(); iterator.hasNext();) {
+						String objectId = iterator.next();
+						List<GeoTimeSyncObjectBean> objs = storage.genericSearch(Collections.<String, Object> singletonMap("id", objectId));
+						if (objs == null || objs.isEmpty()) {
+							iterator.remove();
+						}
+					}
+					if (item.getObjectIds().isEmpty()) {
+						logger.warn("Removing item "+item.getId());
+						menuIterator.remove();
+						continue;
+					}
+				}
 				String type = findType(item);
 				item.setType(type);
 				if (type != null) {
@@ -851,29 +871,29 @@ public class EventProcessorImpl implements ServiceBusListener {
 			res = item.getType();
 		} else if (item.getObjectIds() != null && !item.getObjectIds().isEmpty()) {
 			String objectId = item.getObjectIds().get(0);
-				List<GeoTimeSyncObjectBean> objs = storage.genericSearch(Collections.<String, Object> singletonMap("id", objectId));
-				if (objs != null && !objs.isEmpty()) {
-					MappingDescriptor md;
-					try {
-						md = findDescriptor(Thread.currentThread().getContextClassLoader().loadClass(objs.get(0).getType()));
-					} catch (ClassNotFoundException e) {
-						throw new MissingDataException("Missing type for " + objectId + " = " + objs.get(0).getType());
-					}
-					if (md != null) {
-						res = md.getLocalType();
-					} else {
-						if (item.getId().equals(objectId)) {
-							logger.warn("Object contains its id in objectIds: " + objectId);
-						} else {						
-							throw new MissingDataException("Missing type for " + objectId + " = " + item.getName());
-						}
-					}
+			List<GeoTimeSyncObjectBean> objs = storage.genericSearch(Collections.<String, Object> singletonMap("id", objectId));
+			if (objs != null && !objs.isEmpty()) {
+				MappingDescriptor md;
+				try {
+					md = findDescriptor(Thread.currentThread().getContextClassLoader().loadClass(objs.get(0).getType()));
+				} catch (ClassNotFoundException e) {
+					throw new MissingDataException("Missing type for " + objectId + " = " + objs.get(0).getType());
+				}
+				if (md != null) {
+					res = md.getLocalType();
 				} else {
-					if (item.getId().equals(objectId)) {
-						logger.warn("Object contains its id in objectIds: " + objectId);
-					} else {
+//						if (item.getId().equals(objectId)) {
+//							logger.warn("Object contains its id in objectIds: " + objectId);
+//						} else {						
 						throw new MissingDataException("Missing type for " + objectId + " = " + item.getName());
-					}
+//						}
+				}
+			} else {
+//					if (item.getId().equals(objectId)) {
+//						logger.warn("Object contains its id in objectIds: " + objectId);
+//					} else {
+					throw new MissingDataException("Missing type for " + objectId + " = " + item.getName());
+//					}
 			}
 				
 //				if (item.getId() != null) {

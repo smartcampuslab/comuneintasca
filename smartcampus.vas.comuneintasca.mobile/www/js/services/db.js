@@ -495,9 +495,9 @@ angular.module('ilcomuneintasca.services.db', [])
                     });
 
                     // events cleanup
-                    var nowTime = (new Date()).getTime();
-                    //console.log('[EVENTS CLEANUP] nowTime=' + new Date(nowTime));
-                    var yesterdayTime = nowTime - (24 * 60 * 60 * 1000);
+                    var nowTime = new Date();
+                    //console.log('[EVENTS CLEANUP] nowTime=' + nowTime);
+                    var yesterdayTime = new Date(nowTime.getFullYear(), nowTime.getMonth(), nowTime.getDate(), 0, 0, 0, 0).getTime();
                     //console.log('[EVENTS CLEANUP] yesterdayTime=' + new Date(yesterdayTime));
                     tx.executeSql('DELETE FROM ContentObjects WHERE type = ? AND toTime < ?', [ types['event'],yesterdayTime ], function (tx, res) { //success callback
                       console.log('deleted old events');

@@ -443,7 +443,61 @@ angular.module('ilcomuneintasca.controllers.common', [])
               }
             }
           };
-          
+
+          $scope.groupOffsets=[];
+          $scope.heights_header=32;
+          $scope.heights_item=99;
+          $scope.stickyTopBase=74;
+          $scope.stickyTop=$scope.stickyTopBase;
+          $scope.stickyLabel=null;
+          $scope.checkPosition = function() {
+            var listScroll=$ionicScrollDelegate.$getByHandle('listScroll');
+            if (listScroll && $scope.resultsGroups && $scope.resultsGroups.length>1) {
+              var top=listScroll.getScrollPosition().top;
+              var label='';
+              for (i in $scope.groupOffsets) {
+                i=parseInt(i);
+                //console.log($scope.groupOffsets[i]+' <= '+top+($scope.groupOffsets.length>0&&i<$scope.groupOffsets.length-1?' < '+$scope.groupOffsets[i+1]:''));
+                if (top>=$scope.groupOffsets[i]) {
+                  if (i==$scope.groupOffsets.length-1 || top<$scope.groupOffsets[i+1]) {
+                    label=$scope.groupscrolldata[i].label;
+                    if (i!=$scope.groupOffsets.length-1 && top>($scope.groupOffsets[i+1]-$scope.heights_header)) {
+                      deltaUp=$scope.heights_header - ($scope.groupOffsets[i+1]-top);
+//console.log('deltaUp: '+deltaUp);
+                      $timeout(function(){
+                        $scope.stickyTop=($scope.stickyTopBase - deltaUp) + 'px';
+//console.log('$scope.stickyTop: '+$scope.stickyTop);
+                      });
+                    } else {
+                      if ($scope.stickyTop!=$scope.stickyTopBase) {
+                        $timeout(function(){
+                          $scope.stickyTop=$scope.stickyTopBase;
+                        });
+                      }
+                    }
+                  } 
+                }
+              }
+              if (label!=$scope.stickyLabel) {
+                if (label) $timeout(function(){
+                  $scope.stickyLabel=label;
+                });
+              }
+            }
+          };          
+          $scope.calcGroupOffset = function (index) {
+            offset=0;
+            for (i in $scope.groupscrolldata) {
+              if (i<index) {
+                if ($scope.groupscrolldata[i].results.length>0) {
+                  offset+=$scope.heights_header + $scope.groupscrolldata[i].results.length*$scope.heights_item - 1;
+                }
+              }
+            }
+            $scope.groupOffsets[index]=offset;
+//console.log('$scope.groupOffsets['+index+']='+offset);
+            return offset;
+          }
           
           var tboptions = {
             hasSort: false,

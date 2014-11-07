@@ -2,10 +2,11 @@
   <span ng-if="filterDef">{{filterDef | translate | ellipsis:20}}<span ng-if="filterDetail">{{filterDetail}}</span>: </span>
   <span ng-if="!resultsGroups">{{'loading' | translate }}</span><span ng-if="resultsGroups">{{'list_results' | translate_plur:resultsAll.length}}</span>
 </ion-header-bar>
-<ion-content class="has-header" delegate-handle="listScroll">
+<div ng-if="stickyLabel" id="stickyLabel" class="sticky-label item item-divider has-header" ng-attr-style="top:{{stickyTop}}">{{stickyLabel}}</div>
+<ion-content class="has-header" delegate-handle="listScroll" on-scroll="checkPosition()">
   <ion-list ng-if="resultsGroups">
     <div class="listgroup" ng-repeat="group in groupscrolldata track by $index">
-      <ion-item-divider ng-if="group.label" class="item item-divider">{{group.label}}</ion-item-divider>
+      <ion-item-divider ng-if="group.label" class="item item-divider" ng-attr-data-offset="{{calcGroupOffset($index)}}"> {{group.label}}</ion-item-divider>
       <ion-item ng-repeat="obj in group.results track by $index"
                 
                 ng-click="gotoSubpath(obj.id)" class="coll-item item-thumbnail-left">

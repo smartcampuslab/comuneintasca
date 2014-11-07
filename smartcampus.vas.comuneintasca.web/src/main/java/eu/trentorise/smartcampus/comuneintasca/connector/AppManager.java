@@ -67,10 +67,6 @@ public class AppManager {
 		}
 	}
 
-	public App getApp(String id) {
-		return appMap.get(id);
-	}
-
 	public App getApp(String serviceId, String methodName, String subscriptionId) {
 		App app = appRepository.findBySubscriptionId(subscriptionId);
 		if (app != null) {

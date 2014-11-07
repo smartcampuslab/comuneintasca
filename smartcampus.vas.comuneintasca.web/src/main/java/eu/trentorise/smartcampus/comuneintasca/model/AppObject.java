@@ -7,7 +7,7 @@ public class AppObject extends BasicObject {
 
 	private String appId;
 	private Long lastModified = null;
-	private String objectId;
+	private String localId;
 
 	public String getAppId() {
 		return appId;
@@ -21,10 +21,10 @@ public class AppObject extends BasicObject {
 	public void setLastModified(Long lastModified) {
 		this.lastModified = lastModified;
 	}
-	public String getObjectId() {
-		return objectId;
+	public String getLocalId() {
+		return localId;
 	}
-	public void setObjectId(String objectId) {
-		this.objectId = objectId;
+	public void setLocalId(String localId) {
+		this.localId = localId;
 	}
 }

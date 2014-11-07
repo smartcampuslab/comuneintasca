@@ -8,18 +8,14 @@ import it.sayservice.platform.core.message.Core.ActionInvokeParameters;
 import java.util.List;
 import java.util.Map;
 
-import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.protobuf.ByteString;
 
 public class TestServiceBusClient implements ServiceBusClient {
 
+	@Autowired
 	private ServiceBusListener listener = null;
-
-	public TestServiceBusClient(ServiceBusListener listener) {
-		super();
-		this.listener = listener;
-	}
 
 	public void notifyData(List<ByteString> data, String serviceId, String methodName, String subscriptionId) {
 		listener.onServiceEvents(serviceId, methodName, subscriptionId, data);
@@ -47,7 +43,7 @@ public class TestServiceBusClient implements ServiceBusClient {
 
 	@Override
 	public String subscribeService(String serviceId, String methodName, Map<String, Object> parameters) throws InvocationException {
-		return new ObjectId().toString();
+		return "1";
 	}
 
 	@Override

@@ -9,20 +9,7 @@ public class App {
 	private String id;
 	private List<SourceEntry> sources;
 
-	private Map<TypeClassifier, SourceEntry> entryMap = new HashMap<TypeClassifier, SourceEntry>();
-	
-	public App(String id, List<SourceEntry> sources) {
-		super();
-		this.id = id;
-		this.sources = sources;
-		for (SourceEntry s : sources) {
-			entryMap.put(new TypeClassifier(s.getType(), s.getClassifier()), s);
-		}
-	}
-	
-	public App() {
-		super();
-	}
+	private Map<TypeClassifier, SourceEntry> entryMap = null;
 
 	public String getId() {
 		return id;
@@ -42,6 +29,13 @@ public class App {
 	}
 
 	public SourceEntry findEntry(String type, String classifier) {
+		if (entryMap == null) {
+			entryMap = new HashMap<TypeClassifier, SourceEntry>(); 
+			for (SourceEntry s : sources) {
+				entryMap.put(new TypeClassifier(s.getType(), s.getClassifier()), s);
+			}
+
+		}
 		return entryMap.get(new TypeClassifier(type, classifier));
 	}
 	

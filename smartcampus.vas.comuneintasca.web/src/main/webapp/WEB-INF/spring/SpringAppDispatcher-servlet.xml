@@ -56,8 +56,6 @@
 		<property name="brokerURL" value="${smartcampus.vas.web.activeMQ.brokerURL}" />
 	</bean>
 
-	<bean id="dataProcessor" class="eu.trentorise.smartcampus.comuneintasca.connector.processor.DataProcessor"/>
-	
 	<bean id="serviceBusClient" class="it.sayservice.platform.client.jms.JMSServiceBusClient" scope="singleton" destroy-method="destroy">
 		<constructor-arg>
 			<ref bean="connectionFactory" />

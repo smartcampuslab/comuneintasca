@@ -3,6 +3,7 @@ package eu.trentorise.smartcampus.comuneintasca.connector.processor;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import eu.trentorise.smartcampus.comuneintasca.connector.App;
 import eu.trentorise.smartcampus.comuneintasca.connector.ConnectorStorage;
+import eu.trentorise.smartcampus.comuneintasca.model.AppObject;
 import eu.trentorise.smartcampus.comuneintasca.model.BaseCITObject;
 import eu.trentorise.smartcampus.comuneintasca.model.ConfigObject;
 import eu.trentorise.smartcampus.comuneintasca.model.ContentObject;
@@ -28,7 +30,6 @@ import eu.trentorise.smartcampus.comuneintasca.model.MenuItemQuery;
 import eu.trentorise.smartcampus.comuneintasca.model.POIObject;
 import eu.trentorise.smartcampus.comuneintasca.model.RestaurantObject;
 import eu.trentorise.smartcampus.presentation.common.exception.DataException;
-import eu.trentorise.smartcampus.presentation.data.BasicObject;
 
 /**
  * Process and extract data from the configuration object
@@ -171,7 +172,8 @@ public class ConfigProcessor {
 	}
 
 	private void setType(List<MenuItem> items, App app) throws MissingDataException, DataException {
-		for (MenuItem item : items) {
+		for (Iterator<MenuItem> menuIterator = items.iterator(); menuIterator.hasNext();) {
+			MenuItem item = menuIterator.next();
 			if (item.getId() != null) {
 				item.setId(item.getId().replace(" ", "_"));
 			}
@@ -187,6 +189,21 @@ public class ConfigProcessor {
 			}
 			
 			if (item.getType() == null && item.getQuery() == null && item.getRef() == null && item.getApp() == null) {
+				if (item.getObjectIds() != null && !item.getObjectIds().isEmpty()) {
+					for (Iterator<String> iterator = item.getObjectIds().iterator(); iterator.hasNext();) {
+						String objectId = iterator.next();
+						AppObject objs = connectorStorage.getObjectById(objectId, app.getId());
+						if (objs == null) {
+							iterator.remove();
+						}
+					}
+					if (item.getObjectIds().isEmpty()) {
+						logger.warn("Removing item "+item.getId());
+						menuIterator.remove();
+						continue;
+					}
+				}
+				
 				String type = findType(item, app);
 				item.setType(type);
 				if (type != null) {
@@ -209,26 +226,16 @@ public class ConfigProcessor {
 			return item.getType();
 		} else if (item.getObjectIds() != null && !item.getObjectIds().isEmpty()) {
 			String objectId = item.getObjectIds().get(0);
-			BasicObject obj = connectorStorage.getObjectById(objectId, app.getId());
+			AppObject obj = connectorStorage.getObjectById(objectId, app.getId());
 			if (obj != null) {
 				MappingDescriptor md = findDescriptor(obj.getClass());
 				if (md != null) {
 					return md.getLocalType();
 				} else {
-					if (item.getId().equals(objectId)) {
-						logger.warn("Object contains its id in objectIds: " + objectId);
-						return null;
-					} else {						
-						throw new MissingDataException("Missing type for " + objectId + " = " + item.getName());
-					}
-				}
-			} else {
-				if (item.getId().equals(objectId)) {
-					logger.warn("Object contains its id in objectIds: " + objectId);
-					return null;
-				} else {
 					throw new MissingDataException("Missing type for " + objectId + " = " + item.getName());
 				}
+			} else {
+				throw new MissingDataException("Missing type for " + objectId + " = " + item.getName());
 			}
 		}
 		return null;

@@ -17,7 +17,6 @@ package eu.trentorise.smartcampus.comuneintasca.data;
 
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
 
 import eu.trentorise.smartcampus.comuneintasca.model.AppObject;
 import eu.trentorise.smartcampus.presentation.common.exception.DataException;
@@ -28,7 +27,7 @@ public interface AppSyncSubStorage extends BasicObjectSyncStorage {
 	
 	SyncData getSyncAppData(long since, String appId, Map<String,Object> include, Map<String,Object> exclude) throws DataException;
 
-	public <T extends AppObject> List<T> searchObjects(String appId, Class<T> cls, String text, Map<String, Object> criteria, SortedMap<String,Integer> sort, int limit, int skip) throws DataException; 
+	public <T extends AppObject> List<T> searchObjects(String appId, Class<T> cls, Map<String, Object> criteria, int limit, int skip) throws DataException; 
 	
 	public List<AppObject> getAllAppObjects(String appId) throws DataException;
 	public AppObject getObjectById(String id, String appId) throws DataException;

@@ -32,6 +32,11 @@ import eu.trentorise.smartcampus.presentation.data.SyncData;
 @Component
 public class AppSyncStorageImpl implements AppSyncStorage {
 
+
+	public static final String PUBLISH_COLLECTION = "publishObjects";
+
+	public static final String DRAFT_COLLECTION = "draftObjects";
+
 	protected Log logger = LogFactory.getLog(this.getClass());
 
 	protected AppSyncSubStorageImpl draftStorage;
@@ -39,8 +44,8 @@ public class AppSyncStorageImpl implements AppSyncStorage {
 	
 	@Autowired
 	public AppSyncStorageImpl(MongoOperations mongoTemplate) {
-		draftStorage = new AppSyncSubStorageImpl(mongoTemplate, "draftObjects");
-		publishStorage = new AppSyncSubStorageImpl(mongoTemplate, "publishObjects");
+		draftStorage = new AppSyncSubStorageImpl(mongoTemplate, DRAFT_COLLECTION);
+		publishStorage = new AppSyncSubStorageImpl(mongoTemplate, PUBLISH_COLLECTION);
 	}
 
 	@Override
@@ -59,7 +64,7 @@ public class AppSyncStorageImpl implements AppSyncStorage {
 			Class<T> cls, String text, 
 			Map<String, Object> criteria, SortedMap<String, Integer> sort,
 			int limit, int skip) throws DataException {
-		return publishStorage.searchObjects(appId, cls, text, criteria, sort, limit, skip);
+		return publishStorage.searchObjects(appId, cls, criteria, limit, skip);
 	}
 
 
@@ -69,7 +74,7 @@ public class AppSyncStorageImpl implements AppSyncStorage {
 			Class<T> cls, String text, 
 			Map<String, Object> criteria, SortedMap<String, Integer> sort,
 			int limit, int skip) throws DataException {
-		return draftStorage.searchObjects(appId, cls, text, criteria, sort, limit, skip);
+		return draftStorage.searchObjects(appId, cls, criteria, limit, skip);
 	}
 
 	@Override
@@ -99,7 +104,7 @@ public class AppSyncStorageImpl implements AppSyncStorage {
 
 	@Override
 	public AppObject getObjectDraftById(String id, String appId) throws DataException {
-		return publishStorage.getObjectById(id, appId);
+		return draftStorage.getObjectById(id, appId);
 	}
 
 	@Override

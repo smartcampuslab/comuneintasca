@@ -1,0 +1,16 @@
+apps:
+  - id: test
+    sources: 
+        - type: eu.trentorise.smartcampus.comuneintasca.model.EventObject
+          url: http://url.it
+          serviceId: smartcampus.service.opendata
+          methodName: GetEventiParam
+          imagePath: http://url.it
+          autoPublish: true
+
+        - type: eu.trentorise.smartcampus.comuneintasca.model.ConfigObject
+          url: http://url.it
+          serviceId: smartcampus.service.opendata
+          methodName: GetConfig
+          imagePath: http://url.it
+          

@@ -5,7 +5,7 @@ import eu.trentorise.smartcampus.presentation.storage.sync.mongo.SyncObjectBean;
 public class AppSyncBean extends SyncObjectBean {
 
 	private String appId;
-	private String objectId;
+	private String localId;
 	
 	public String getAppId() {
 		return appId;
@@ -13,10 +13,10 @@ public class AppSyncBean extends SyncObjectBean {
 	public void setAppId(String appId) {
 		this.appId = appId;
 	}
-	public String getObjectId() {
-		return objectId;
+	public String getLocalId() {
+		return localId;
 	}
-	public void setObjectId(String objectId) {
-		this.objectId = objectId;
+	public void setLocalId(String localId) {
+		this.localId = localId;
 	}
 }

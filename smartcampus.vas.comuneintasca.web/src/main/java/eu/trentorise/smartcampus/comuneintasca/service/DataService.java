@@ -66,7 +66,7 @@ public class DataService {
 		for (AppObject n : objects) {
 			AppObject o = oldIds.get(n.getId());
 			if (o == null || o.getLastModified() < n.getLastModified()) {
-				storage.storeDraftObject(o, app);
+				storage.storeDraftObject(n, app);
 			} 
 			oldIds.remove(n.getId());
 		}
@@ -122,7 +122,7 @@ public class DataService {
 		for (AppObject n : draftObjects) {
 			AppObject o = oldIds.get(n.getId());
 			if (o == null || o.getLastModified() < n.getLastModified()) {
-				storage.storeObject(o, app);
+				storage.storeObject(n, app);
 			} 
 			oldIds.remove(n.getId());
 		}
@@ -176,8 +176,7 @@ public class DataService {
 	 * @return
 	 * @throws DataException 
 	 */
-	public AppObject findObject(String id, String app) throws DataException {
+	public AppObject getDraftObject(String id, String app) throws DataException {
 		return storage.getObjectDraftById(id, app);
 	}
-
 }

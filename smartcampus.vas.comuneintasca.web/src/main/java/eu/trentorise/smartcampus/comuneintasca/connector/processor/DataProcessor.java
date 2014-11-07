@@ -13,6 +13,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.google.protobuf.ByteString;
 
@@ -35,7 +36,6 @@ import eu.trentorise.smartcampus.comuneintasca.model.POIObject;
 import eu.trentorise.smartcampus.comuneintasca.model.RestaurantObject;
 import eu.trentorise.smartcampus.comuneintasca.service.DataService;
 import eu.trentorise.smartcampus.presentation.common.exception.DataException;
-import eu.trentorise.smartcampus.presentation.data.BasicObject;
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.ConfigData;
 
 /**
@@ -43,6 +43,7 @@ import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.ConfigDa
  * @author raman
  *
  */
+@Component("dataProcessor")
 public class DataProcessor implements ServiceBusListener {
 
 	@Autowired
@@ -155,7 +156,7 @@ public class DataProcessor implements ServiceBusListener {
 	private void updateAll(ConfigObject config, App app) throws DataException {
 		Map<String,ObjectFilters> map = configProcessor.constructFilters(config);
 		Map<Class, ObjectFilters> classMap = new HashMap<Class, ObjectFilters>();
-		List<BaseCITObject> allObjects = connectorStorage.getAllAppObjects(app.getId());
+		List<AppObject> allObjects = connectorStorage.getAllAppObjects(app.getId());
 		for (AppObject o : allObjects) {
 			if (o instanceof BaseCITObject) {
 				if (!classMap.containsKey(o.getClass())) {
@@ -167,7 +168,7 @@ public class DataProcessor implements ServiceBusListener {
 					classMap.put(o.getClass(), filters);
 				}
 				Boolean applies = applies((BaseCITObject)o, classMap.get(o.getClass()));
-				AppObject draftObject = dataService.findObject(o.getId(), app.getId());
+				AppObject draftObject = dataService.getDraftObject(o.getId(), app.getId());
 				if (draftObject != null && !applies) {
 					dataService.deleteObject(draftObject, app.getId());
 					dataService.unpublishObject(draftObject, app.getId());
@@ -183,7 +184,7 @@ public class DataProcessor implements ServiceBusListener {
 	}	
 
 	private boolean applies(BaseCITObject o, ObjectFilters filters) {
-		if (filters == null) return true;
+		if (filters == null) return false;
 		return filters.applies(o);
 	}
 
@@ -198,7 +199,7 @@ public class DataProcessor implements ServiceBusListener {
 		return null;
 	}
 	
-	private <T extends BasicObject> Set<String> getOldIds(Class<T> cls, String classifier, String appId) throws DataException {
+	private <T extends AppObject> Set<String> getOldIds(Class<T> cls, String classifier, String appId) throws DataException {
 		List<T> oldList = connectorStorage.getObjectsByType(cls, classifier, appId);
 		Set<String> oldIds = new HashSet<String>();
 		for (T o : oldList) {

@@ -6,23 +6,23 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
 import com.mongodb.MongoException;
-
-import eu.trentorise.smartcampus.comuneintasca.connector.processor.DataProcessor;
 
 @Configuration
 @ComponentScan(basePackages = "eu.trentorise.smartcampus.comuneintasca")
+@EnableMongoRepositories(basePackages = "eu.trentorise.smartcampus.comuneintasca.connector")
 public class TestConfig {
 
-	@Bean
+	@Bean(name="mongoTemplate")
 	public MongoTemplate getMongoTemplate() throws UnknownHostException, MongoException {
-		return new MongoTemplate(new Mongo(), "comuneintasca-multi-test");
+		return new MongoTemplate(new MongoClient(), "comuneintasca-multi-test");
 	}
 
 	@Bean
 	public TestServiceBusClient getServiceBusClient() {
-		return new TestServiceBusClient(new DataProcessor());
+		return new TestServiceBusClient();
 	}
 }

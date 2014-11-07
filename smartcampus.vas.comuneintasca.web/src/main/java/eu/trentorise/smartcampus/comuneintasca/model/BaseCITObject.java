@@ -30,6 +30,8 @@ public class BaseCITObject extends AppObject {
 	private Map<String,String> info = null;
 	private String category = null;
 
+	private String objectId;
+	
 	private Map<String,String> contacts = null;
 	private String url = null;
 	
@@ -122,4 +124,14 @@ public class BaseCITObject extends AppObject {
 	public void setClassifier(String classifier) {
 		this.classifier = classifier;
 	}
+
+	public String getObjectId() {
+		return objectId;
+	}
+
+	public void setObjectId(String objectId) {
+		this.objectId = objectId;
+	}
+	
+	
 }

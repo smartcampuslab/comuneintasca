@@ -5,12 +5,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Order;
 import org.springframework.data.mongodb.core.query.Query;
 
 import eu.trentorise.smartcampus.comuneintasca.model.AppObject;
@@ -46,22 +44,16 @@ public class AppSyncSubStorageImpl extends GenericObjectSyncMongoStorage<AppSync
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends AppObject> List<T> searchObjects(String appId,
-			Class<T> inCls, String text, 
-			Map<String, Object> inCriteria, SortedMap<String, Integer> sort,
+			Class<T> inCls, 
+			Map<String, Object> inCriteria, 
 			int limit, int skip) throws DataException 
 	{
-		Criteria criteria = createSearchCriteria(appId, inCls, inCriteria, text);
+		Criteria criteria = createSearchCriteria(appId, inCls, inCriteria);
 		Query query = Query.query(criteria);
 		if (limit > 0)
 			query.limit(limit);
 		if (skip > 0)
 			query.skip(skip);
-		if (sort != null && !sort.isEmpty()) {
-			for (String key : sort.keySet()) {
-				Order order = sort.get(key) > 0 ? Order.ASCENDING : Order.DESCENDING;
-				query.sort().on("content." + key, order);
-			}
-		}
 
 		Class<T> cls = inCls;
 		if (cls == null)
@@ -70,7 +62,7 @@ public class AppSyncSubStorageImpl extends GenericObjectSyncMongoStorage<AppSync
 		return find(query, cls);
 	}
 
-	private <T> Criteria createSearchCriteria(String appId, Class<T> cls, Map<String, Object> inCriteria, String text) {
+	private <T> Criteria createSearchCriteria(String appId, Class<T> cls, Map<String, Object> inCriteria) {
 		Criteria criteria = createBaseCriteria(appId);
 		if (cls != null) {
 			criteria.and("type").is(cls.getCanonicalName());
@@ -81,14 +73,6 @@ public class AppSyncSubStorageImpl extends GenericObjectSyncMongoStorage<AppSync
 				criteria.and("content." + key).is(inCriteria.get(key));
 			}
 		}
-		if (text != null && !text.isEmpty()) {
-			Criteria[] or = new Criteria[3];
-			or[0] = new Criteria("content.title").regex(text.toLowerCase(), "i");
-			or[1] = new Criteria("content.description").regex(text.toLowerCase(), "i");
-			or[2] = new Criteria("content.poi.street").regex(text.toLowerCase(), "i");
-			criteria.orOperator(or);
-		}
-
 		return criteria;
 	}
 
@@ -96,13 +80,14 @@ public class AppSyncSubStorageImpl extends GenericObjectSyncMongoStorage<AppSync
 	@Override
 	public List<AppObject> getAllAppObjects(String appId)  throws DataException{
 		Criteria criteria = createBaseCriteria(appId);
+		criteria.and("deleted").is(false);
 		return find(Query.query(criteria), (Class<AppObject>) AppObject.class);
 	}
 
 	@Override
 	public AppObject getObjectById(String id, String appId) throws DataException {
 		Criteria criteria = createBaseCriteria(appId);
-		criteria.and("objectId").is(id);
+		criteria.and("localId").is(id);
 		List<AppObject> objs = find(Query.query(criteria), (Class<AppObject>) AppObject.class);
 		return objs == null || objs.size() == 0 ? null : objs.get(0);
 	}
@@ -110,7 +95,7 @@ public class AppSyncSubStorageImpl extends GenericObjectSyncMongoStorage<AppSync
 	@Override
 	public <T extends AppObject> T getObjectById(String id, Class<T> cls, String appId)  throws DataException{
 		Criteria criteria = createBaseCriteria(appId);
-		criteria.and("objectId").is(id);
+		criteria.and("localId").is(id);
 		List<T> objs = find(Query.query(criteria), cls);
 		return objs == null || objs.size() == 0 ? null : objs.get(0);
 	}
@@ -137,7 +122,7 @@ public class AppSyncSubStorageImpl extends GenericObjectSyncMongoStorage<AppSync
 						deletedList = new ArrayList<String>();
 						deleted.put(sob.getType(), deletedList);
 					}
-					deletedList.add(sob.getObjectId());
+					deletedList.add(sob.getLocalId());
 				} else {
 					List<BasicObject> updatedList = updated.get(sob.getType());
 					if (updatedList == null) {
@@ -188,7 +173,8 @@ public class AppSyncSubStorageImpl extends GenericObjectSyncMongoStorage<AppSync
 
 	@Override
 	public <T extends AppObject> T storeObject(T obj, String appId) throws DataException {
-		obj.setObjectId(obj.getId());
+		obj.setLocalId(obj.getId());
+		obj.setAppId(appId);
 		
 		AppSyncBean old = getBean(obj, appId);
 
@@ -200,7 +186,7 @@ public class AppSyncSubStorageImpl extends GenericObjectSyncMongoStorage<AppSync
 			} else {
 				newObj.setId(new ObjectId().toString());
 			}
-			mongoTemplate.save(newObj);
+			mongoTemplate.save(newObj, getCollectionName(obj.getClass()));
 			return obj;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -209,10 +195,19 @@ public class AppSyncSubStorageImpl extends GenericObjectSyncMongoStorage<AppSync
 		
 	}
 
+	@Override
+	protected <T extends BasicObject> AppSyncBean convertToObjectBean(T object)
+			throws InstantiationException, IllegalAccessException {
+		AppSyncBean obj = super.convertToObjectBean(object);
+		obj.setAppId(((AppObject)object).getAppId());
+		obj.setLocalId(((AppObject)object).getLocalId());
+		return obj;
+	}
+
 	private <T extends AppObject> AppSyncBean getBean(T obj, String appId) {
 		AppSyncBean old = null;
 		Criteria criteria = createBaseCriteria(appId);
-		criteria.and("objectId").is(obj.getObjectId());
+		criteria.and("localId").is(obj.getLocalId());
 		List<AppSyncBean> result = mongoTemplate.find(Query.query(criteria), getObjectClass(), getCollectionName(getObjectClass())); 
 		if (result != null && !result.isEmpty()) {
 			old = result.get(0);
@@ -233,7 +228,7 @@ public class AppSyncSubStorageImpl extends GenericObjectSyncMongoStorage<AppSync
 				newObj.setId(new ObjectId().toString());
 			}
 			newObj.setDeleted(true);
-			mongoTemplate.save(newObj);
+			mongoTemplate.save(newObj, getCollectionName(obj.getClass()));
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new DataException(e.getMessage());

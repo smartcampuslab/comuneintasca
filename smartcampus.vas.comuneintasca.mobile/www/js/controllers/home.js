@@ -52,7 +52,7 @@ angular.module('ilcomuneintasca.controllers.home', [])
   $scope.highlights = null;
   var defaultHighlight = {
     id: null,
-    name:{ 'it':'Ricadi', 'en':'Ricadi', 'de':'Ricadi' },
+    name: Config.cityName(),
     image: 'img/hp-box/citta.png',
     ref: 'info'
   };

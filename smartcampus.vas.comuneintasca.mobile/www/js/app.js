@@ -239,7 +239,7 @@ angular.module('ilcomuneintasca', [
         var imageUrl=$filter('translate')(item.image);
         if (imageUrl && imageUrl != '' && imageUrl != 'false') {
           if (type=='list') {
-            if (imageUrl.indexOf('http://www.comune.trento.it/var/comunetn')==0) {
+            if (imageUrl.indexOf(Config.imagePath())==0) {
               imageUrl=imageUrl.replace('.jpg','_medium.jpg');
               //console.log('used smaller image...');
             } else {

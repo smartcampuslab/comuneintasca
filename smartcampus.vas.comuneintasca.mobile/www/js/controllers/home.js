@@ -53,7 +53,7 @@ angular.module('ilcomuneintasca.controllers.home', [])
   var defaultHighlight = {
     id: null,
     name: Config.cityName(),
-    image: 'img/hp-box/citta.png',
+    image: 'img/hp-box/city.png',
     ref: 'info'
   };
   DatiDB.sync().then(function (data) {

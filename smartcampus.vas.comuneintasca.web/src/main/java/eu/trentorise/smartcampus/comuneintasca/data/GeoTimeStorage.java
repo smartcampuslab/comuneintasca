@@ -35,7 +35,7 @@ import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.Mongo;
 
 import eu.trentorise.smartcampus.comuneintasca.model.BaseCITObject;
-import eu.trentorise.smartcampus.comuneintasca.model.ConfigObject;
+import eu.trentorise.smartcampus.comuneintasca.model.DynamicConfigObject;
 import eu.trentorise.smartcampus.comuneintasca.model.GeoCITObject;
 import eu.trentorise.smartcampus.comuneintasca.model.MenuItem;
 import eu.trentorise.smartcampus.comuneintasca.model.MenuItemQuery;

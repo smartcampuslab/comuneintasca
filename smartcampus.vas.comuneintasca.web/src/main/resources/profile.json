@@ -1,298 +1,743 @@
 {
-  "id": "54088b79975a10f95cae0266",
-  "updateTime": 1409846137041,
-  "version": 3836,
-  "user": null,
-  "highlights": [
+  "id": "1",
+  "highlights": [],
+  "navigationItems": [
     {
-      "id": "text.3001",
+      "id": "profile_cit_2cc4db1674d9e8994658eac954355d31",
       "name": {
-        "it": "Trento",
-        "en": "Trento",
-        "de": "Trento"
+        "it": "CONOSCERE",
+        "en": "DISCOVER",
+        "de": "KENNEN"
       },
       "description": null,
-      "image": {
-        "it": "http://trento.opencontent.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/introduzione/7655526-3-ita-IT/Introduzione.jpg",
-        "en": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7655673/3-eng-GB/Introduction1.jpg",
-        "de": "http://trento.opencontent.it/var/comunetn/storage/images-versioned/7656115/3-ger-DE/Einfuehrung1.jpg"
-      },
-      "objectIds": [
-        "text.3001", "text.3004"
-      ],
+      "image": null,
+      "objectIds": null,
       "items": null,
       "query": null,
-      "ref": null,
-      "type": "content",
+      "ref": "profile_cit_2cc4db1674d9e8994658eac954355d31",
+      "type": null,
       "app": null
     },
     {
-      "id": "cultura.73",
+      "id": "profile_cit_csvimport_Visitare_item_comuneintasca",
       "name": {
-        "it": "Il Monte Bondone",
-        "en": "Il Monte Bondone",
-        "de": "Il Monte Bondone"
+        "it": "VISITARE",
+        "en": "HIGHLIGHTS",
+        "de": "WAS SU  BESICHTIGEN"
       },
       "description": null,
-      "image": {
-        "it": "http://tn.smartcampuslab.it/comuneintasca/images/bondone_visintainer.jpg",
-        "en": "http://tn.smartcampuslab.it/comuneintasca/images/bondone_visintainer.jpg",
-        "de": "http://tn.smartcampuslab.it/comuneintasca/images/bondone_visintainer.jpg"
-      },
-      "objectIds": [
-        "cultura.73"
-      ],
+      "image": null,
+      "objectIds": null,
       "items": null,
       "query": null,
-      "ref": null,
-      "type": "poi",
+      "ref": "profile_cit_csvimport_Visitare_item_comuneintasca",
+      "type": null,
       "app": null
     },
     {
-      "id": "cultura.72",
+      "id": "profile_cit_csvimport_Mangiare_e_dormire_item_comuneintasca",
       "name": {
-        "it": "Muse",
-        "en": "Muse",
-        "de": "Muse"
+        "it": "MANGIARE E DORMIRE",
+        "en": "RESTAURANTS & HOTELS",
+        "de": "GASTRONOMIE UND ÜBERNACHTUNG"
       },
       "description": null,
-      "image": {
-        "it": "http://tn.smartcampuslab.it/comuneintasca/images/muse.jpg",
-        "en": "http://tn.smartcampuslab.it/comuneintasca/images/muse.jpg",
-        "de": "http://tn.smartcampuslab.it/comuneintasca/images/muse.jpg"
-      },
-      "objectIds": [
-        "cultura.72"
-      ],
+      "image": null,
+      "objectIds": null,
       "items": null,
       "query": null,
-      "ref": null,
-      "type": "poi",
+      "ref": "profile_cit_csvimport_Mangiare_e_dormire_item_comuneintasca",
+      "type": null,
       "app": null
     },
     {
-      "id": "02338f998ee34d6df111cab5b9fb763c",
+      "id": "profile_cit_csvimport_Viaggia_Trento_item_comuneintasca",
       "name": {
-        "it": "Autunno Trentino 2014",
-        "en": "Autunno Trentino 2014",
-        "de": "Autunno Trentino 2014"
+        "it": "VIAGGIA TRENTO",
+        "en": "VIAGGIA TRENTO",
+        "de": "VIAGGIA TRENTO"
       },
       "description": null,
-      "image": {
-        "it": "http://tn.smartcampuslab.it/comuneintasca/images/autunnotrentino_711x800.jpg",
-        "en": "http://tn.smartcampuslab.it/comuneintasca/images/autunnotrentino_711x800.jpg",
-        "de": "http://tn.smartcampuslab.it/comuneintasca/images/autunnotrentino_711x800.jpg"
-      },
-      "objectIds": [
-        "02338f998ee34d6df111cab5b9fb763c"
-      ],
+      "image": null,
+      "objectIds": null,
       "items": null,
       "query": null,
       "ref": null,
-      "type": "event",
-      "app": null
-    },
-    {
-      "id": "3f90abb49a32772627440e0ce98e25eb",
-      "name": {
-        "it": "Arte e persuasione",
-        "en": "Arte e persuasione",
-        "de": "Arte e persuasione"
-      },
-      "description": null,
-      "image": {
-        "it": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/arte-e-persuasione11/8096383-15-ita-IT/Arte-e-persuasione.png",
-        "en": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/arte-e-persuasione11/8096383-15-ita-IT/Arte-e-persuasione.png",
-        "de": "http://www.comune.trento.it/var/comunetn/storage/images/citta/vivi-la-citta/eventi-in-citta/arte-e-persuasione11/8096383-15-ita-IT/Arte-e-persuasione.png"
-      },
-      "objectIds": [
-        "3f90abb49a32772627440e0ce98e25eb"
-      ],
-      "items": null,
-      "query": null,
-      "ref": null,
-      "type": "event",
-      "app": null
-    }
-  ],
-   "navigationItems":[
-    {
-      "id":"conoscere",
-      "name":{ "it":"CONOSCERE", "en":"DISCOVER", "de":"KENNEN" },
-      "ref":"conoscere"
-    }, {
-      "id":"visitare",
-      "name":{ "it":"VISITARE", "en":"HIGHLIGHTS", "de":"WAS SU  BESICHTIGEN" },
-      "ref":"visitare"
-    }, {
-      "id":"mangiare_e_dormire",
-      "name":{ "it":"MANGIARE  E DORMIRE", "en":"RESTAURANTS  & HOTELS", "de":"GASTRONOMIE  UND ÜBERNACHTUNG" },
-      "ref":"mangiare_e_dormire"
-    }, {
-      "id":"viaggia_trento",
-      "name":{ "it":"VIAGGIA  TRENTO", "en":"VIAGGIA  TRENTO", "de":"VIAGGIA  TRENTO" },
-      "app":{
-        "android":"eu.trentorise.smartcampus.viaggiatrento", 
-        "ios":null
+      "type": null,
+      "app": {
+        "ios": null,
+        "android": "eu.trentorise.smartcampus.viaggiatrento"
       }
-    }, {
-      "id":"eventi",
-      "name":{ "it":"EVENTI", "en":"EVENTS", "de":"VERANSTALTUNGEN" },
-      "ref":"eventi"
-    }, {
-      "id":"percorsi",
-      "name":{ "it":"PERCORSI", "en":"TOURISTIC  ITINERARIES", "de":"TOUREN  UND ROUTEN" },
-      "ref":"itineraries"
-    }, {
-      "id":"info_utili",
-      "name":{ "it":"INFO UTILI", "en":"USEFUL  INFORMATIONS", "de":"WEITERE  INFORMATIONEN" },
-      "ref":"info_utili"
-    }, {
-      "id":"preferiti",
-      "name":{ "it":"PREFERITI", "en":"FAVORITES", "de":"LIEBLINGSSEITEN" },
-      "ref":"favorites"
+    },
+    {
+      "id": "profile_cit_csvimport_Eventi_item_comuneintasca",
+      "name": {
+        "it": "EVENTI",
+        "en": "EVENTS",
+        "de": "VERANSTALTUNGEN"
+      },
+      "description": null,
+      "image": null,
+      "objectIds": null,
+      "items": null,
+      "query": null,
+      "ref": "profile_cit_csvimport_Eventi_item_comuneintasca",
+      "type": null,
+      "app": null
+    },
+    {
+      "id": "profile_cit_csvimport_Percorsi_item_comuneintasca",
+      "name": {
+        "it": "PERCORSI",
+        "en": "TOURISTIC ITINERARIES",
+        "de": "TOUREN UND ROUTEN"
+      },
+      "description": null,
+      "image": null,
+      "objectIds": null,
+      "items": null,
+      "query": null,
+      "ref": "profile_cit_csvimport_Percorsi_item_comuneintasca",
+      "type": null,
+      "app": null
+    },
+    {
+      "id": "profile_cit_csvimport_Info_utili_item_comuneintasca",
+      "name": {
+        "it": "INFO UTILI",
+        "en": "USEFUL  INFORMATIONS",
+        "de": "WEITERE INFORMATIONEN"
+      },
+      "description": null,
+      "image": null,
+      "objectIds": null,
+      "items": null,
+      "query": null,
+      "ref": "profile_cit_csvimport_Info_utili_item_comuneintasca",
+      "type": null,
+      "app": null
     }
   ],
-  "menu":[
+  "menu": [
     {
-      "id":"conoscere",
-      "name":{ "it":"CONOSCERE", "en":"DISCOVER", "de":"KENNEN" },
-      "items":[
-        { 
-          "id":"data",
-          "name":{ "it":"Informazioni", "en":"Info", "de":"Info" },
-          "objectIds":[ "text.3001", "text.3004" ],
-          "type": "content"
-        }, {
-          "id":"storia",
-          "name":{ "it":"Storia", "en":"History", "de":"Geschichte" },
-          "objectIds":[ "text.3002" ],
-          "type": "content"
-        }, {
-          "id":"concilio",
-          "name":{ "it":"Concilio", "en":"Concilio", "de":"Concilio" },
-          "objectIds":[ "text.3003" ],
-          "type": "content"
-        }, { 
-          "id":"mainevents",
-          "name":{ "it":"Eventi Principali", "en":"Main Events", "de":"Hauptereignisse" },
-          "query":{ "type":"mainevent" }
-        }, { 
-          "id":"bondone",
-          "name":{ "it":"Monte Bondone", "en":"Mount Bondone", "de":"Mont Bondone" },
-          "query":{ "type":"content", "classification":"bondone" }
-        }
-      ]
-    }, {
-      "id":"visitare",
-      "name":{ "it":"VISITARE", "en":"HIGHLIGHTS", "de":"WAS SU  BESICHTIGEN" },
-      "items":[
-        { 
-          "id":"Museo",
-          "name":{ "it": "Musei", "en": "Museums", "de": "Museen" },
-          "query":{ "type":"poi", "classification":"Museo" }
-        }, { 
-          "id":"Edificio storico",
-          "name":{ "it": "Edifici storici", "en": "Historic Buildings", "de": "Historische Gebäude" },
-          "query":{ "type":"poi", "classification":"Edificio storico" }
-        }, { 
-          "id":"Chiesa",
-          "name":{ "it": "Chiese", "en": "Churches", "de": "Kirchen" },
-          "query":{ "type":"poi", "classification":"Chiesa" }
-        }, { 
-          "id":"Area archeologica",
-          "name":{ "it": "Aree Archeologiche", "en": "Archaeological Areas", "de": "Archäologische Areas" },
-          "query":{ "type":"poi", "classification":"Area archeologica" }
-        }, { 
-          "id":"Natura",
-          "name":{ "it": "Natura", "en": "Nature", "de": "Natur" },
-          "query":{ "type":"poi", "classification":"Natura" }
-        }, { 
-          "id":"Altri siti di interesse storico artistico",
-          "name":{ "it": "Altri siti di interesse storico artistico", "en": "Other sites of historical and artistic interest", "de": "Andere Seiten von historischem und künstlerischem Interesse" },
-          "query":{ "type":"poi", "classification":"Altri siti di interesse storico artistico" }
-        }
-      ]
-    }, {
-      "id":"mangiare_e_dormire",
-      "name":{ "it":"MANGIARE  E DORMIRE", "en":"RESTAURANTS  & HOTELS", "de":"GASTRONOMIE  UND ÜBERNACHTUNG" },
-      "items":[
-        { 
-          "id":"restaurants",
-          "name":{ "it":"Mangiare", "en":"Restaurants", "de":"Gastronomie" },
-          "query":{ "type":"restaurant" }
-        }, { 
-          "id":"hotels",
-          "name":{ "it":"Dormire", "en":"Hotels", "de":"Übernachtung" },
-          "query":{ "type":"hotel" }
-        }
-      ]
-    }, {
-      "id":"eventi",
-      "name":{ "it":"EVENTI", "en":"EVENTS", "de":"VERANSTALTUNGEN" },
-      "items":[
+      "id": "profile_cit_2cc4db1674d9e8994658eac954355d31",
+      "name": {
+        "it": "CONOSCERE",
+        "en": "DISCOVER",
+        "de": "KENNEN"
+      },
+      "description": null,
+      "image": null,
+      "objectIds": null,
+      "items": [
         {
-          "id":"all",
-          "name":{ "it": "Tutti gli eventi", "en": "All events", "de": "Alle Veranstaltungen" },
-          "query":{ "type":"event" }
-        }, { 
-          "id":"Mostre",
-          "name":{ "it": "Mostre", "en": "Exhibitions", "de": "Ausstellungen" },
-          "query":{ "type":"event", "classification":"Mostre" }
-        }, { 
-          "id":"Iniziative varie",
-          "name":{ "it": "Iniziative varie", "en": "Various initiatives", "de": "Verschiedene Initiativen" },
-          "query":{ "type":"event", "classification":"Iniziative varie" }
-        }, { 
-          "id":"Spettacoli",
-          "name":{ "it": "Spettacoli", "en": "Shows", "de": "Shows" },
-          "query":{ "type":"event", "classification":"Spettacoli" }
-        }, { 
-          "id":"Feste, mercati e fiere",
-          "name":{ "it": "Feste, mercati e fiere", "en": "Festivals, markets and fairs", "de": "Festivals, Märkte und Messen" },
-          "query":{ "type":"event", "classification":"Feste, mercati e fiere" }
-        }, { 
-          "id":"Incontri, convegni e conferenze",
-          "name":{ "it": "Incontri, convegni e conferenze", "en": "Meetings, seminars and conferences", "de": "Tagungen, Seminare und Konferenzen" },
-          "query":{ "type":"event", "classification":"Incontri, convegni e conferenze" }
-        }, { 
-          "id":"Competizioni e gare",
-          "name":{ "it": "Competizioni e gare", "en": "Competitions and contests", "de": "Wettbewerbe und Gewinnspiele" },
-          "query":{ "type":"event", "classification":"Competizioni e gare" }
-        }, { 
-          "id":"Corsi e laboratori",
-          "name":{ "it": "Corsi e laboratori", "en": "Courses and workshops", "de": "Kurse und Workshops" },
-          "query":{ "type":"event", "classification":"Corsi e laboratori" }
-        }, {
-          "id":"complex",
-          "name":{ "it": "Manifestazioni", "en": "Annual events", "de": "[ANNUAL-EVENTS]" },
-          "query":{ "type":"event", "classification":"_complex" }
+          "id": "profile_cit_8ea91c65223746d1c1ef32b06459e6ce",
+          "name": {
+            "it": "Introduzione",
+            "en": "Info",
+            "de": "Info"
+          },
+          "description": null,
+          "image": {
+            "it": "http://www.comune.trento.it/var/comunetn/storage/images-versioned/8554796/1-ita-IT/Introduzione1.jpg",
+            "en": "http://www.comune.trento.it/var/comunetn/storage/images-versioned/8554801/1-eng-GB/Info1.jpg",
+            "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/conoscere/introduzione/8554806-1-ger-DE/Info.jpg"
+          },
+          "objectIds": [
+            "text.3001",
+            "text.3004"
+          ],
+          "items": null,
+          "query": null,
+          "ref": null,
+          "type": "content",
+          "app": null
+        },
+        {
+          "id": "profile_cit_ed1faa2dc34d16cc326b42f82b5133da",
+          "name": {
+            "it": "Storia",
+            "en": "History",
+            "de": "Geschichte"
+          },
+          "description": null,
+          "image": {
+            "it": "http://www.comune.trento.it/var/comunetn/storage/images-versioned/8554811/1-ita-IT/Storia1.jpg",
+            "en": "http://www.comune.trento.it/var/comunetn/storage/images-versioned/8554816/1-eng-GB/History1.jpg",
+            "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/conoscere/storia/8554821-1-ger-DE/Geschichte.jpg"
+          },
+          "objectIds": [
+            "text.3002"
+          ],
+          "items": null,
+          "query": null,
+          "ref": null,
+          "type": "content",
+          "app": null
+        },
+        {
+          "id": "profile_cit_0cf4ca2629dd9f5ca239296a23a7525c",
+          "name": {
+            "it": "Il Concilio di Trento",
+            "en": "The Council of Trento",
+            "de": "Das Konzil von Trient"
+          },
+          "description": null,
+          "image": {
+            "it": "http://www.comune.trento.it/var/comunetn/storage/images-versioned/8554826/1-ita-IT/Il-Concilio-di-Trento1.jpg",
+            "en": "http://www.comune.trento.it/var/comunetn/storage/images-versioned/8554831/1-eng-GB/The-Council-of-Trento1.jpg",
+            "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/conoscere/il-concilio-di-trento/8554836-1-ger-DE/Das-Konzil-von-Trient.jpg"
+          },
+          "objectIds": [
+            "text.3003"
+          ],
+          "items": null,
+          "query": null,
+          "ref": null,
+          "type": "content",
+          "app": null
+        },
+        {
+          "id": "profile_cit_915d69563fde959851fe54862df74da3",
+          "name": {
+            "it": "Eventi principali",
+            "en": "Main Events",
+            "de": "Hauptereignisse"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "mainevent",
+            "classifications": null,
+            "classification": "Eventi principali"
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        },
+        {
+          "id": "profile_cit_74d4ff66560754b78e0c72b19069c4d9",
+          "name": {
+            "it": "Il Monte Bondone",
+            "en": "Il Monte Bondone",
+            "de": "Il Monte Bondone"
+          },
+          "description": null,
+          "image": {
+            "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/conoscere/il-monte-bondone/8554856-3-ita-IT/Il-Monte-Bondone.jpg",
+            "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/conoscere/il-monte-bondone/8554861-2-eng-GB/Il-Monte-Bondone.jpg",
+            "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/conoscere/il-monte-bondone/8554866-2-ger-DE/Il-Monte-Bondone.jpg"
+          },
+          "objectIds": [
+            "text.3018",
+            "text.3019",
+            "text.3020",
+            "text.3021"
+          ],
+          "items": null,
+          "query": null,
+          "ref": null,
+          "type": "content",
+          "app": null
         }
-      ]
-    }, {
-      "id":"percorsi",
-      "name":{ "it":"PERCORSI", "en":"TOURISTIC  ITINERARIES", "de":"TOUREN  UND ROUTEN" },
-      "items":[
-        { 
-          "id":"itineraries",
-          "name":{ "it":"Percorsi Turistici", "en":"Touristic Itineraries", "de":"Touren und Routen" },
-          "query":{ "type":"itineraries" }
+      ],
+      "query": null,
+      "ref": null,
+      "type": null,
+      "app": null
+    },
+    {
+      "id": "profile_cit_csvimport_Visitare_item_comuneintasca",
+      "name": {
+        "it": "VISITARE",
+        "en": "HIGHLIGHTS",
+        "de": "WAS SU  BESICHTIGEN"
+      },
+      "description": null,
+      "image": null,
+      "objectIds": null,
+      "items": [
+        {
+          "id": "profile_cit_csvimport_Musei_item_comuneintasca",
+          "name": {
+            "it": "Musei",
+            "en": "Museums",
+            "de": "Museen"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "poi",
+            "classifications": null,
+            "classification": "Musei"
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        },
+        {
+          "id": "profile_cit_csvimport_Edifici_storici_item_comuneintasca",
+          "name": {
+            "it": "Edifici storici",
+            "en": "Historic Buildings",
+            "de": "Historische Gebäude"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "poi",
+            "classifications": null,
+            "classification": "Edificio storico"
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        },
+        {
+          "id": "profile_cit_csvimport_Chiese_item_comuneintasca",
+          "name": {
+            "it": "Chiese",
+            "en": "Churches",
+            "de": "Kirchen"
+          },
+          "description": null,
+          "image": {
+            "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/visitare/chiese/8554901-2-ita-IT/Chiese.jpg",
+            "en": "http://www.comune.trento.it/var/comunetn/storage/images-versioned/8554906/2-eng-GB/Churches1.jpg",
+            "de": "http://www.comune.trento.it/var/comunetn/storage/images-versioned/8554911/2-ger-DE/Kirchen1.jpg"
+          },
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "poi",
+            "classifications": null,
+            "classification": "Chiesa"
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        },
+        {
+          "id": "profile_cit_csvimport_Aree_archeologiche_item_comuneintasca",
+          "name": {
+            "it": "Aree archeologiche",
+            "en": "Archaeological Areas",
+            "de": "Archäologische Areas"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "poi",
+            "classifications": null,
+            "classification": "Area archeologica"
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        },
+        {
+          "id": "profile_cit_csvimport_Natura_item_comuneintasca",
+          "name": {
+            "it": "Natura",
+            "en": "Nature",
+            "de": "Natur"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "poi",
+            "classifications": null,
+            "classification": "Natura"
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        },
+        {
+          "id": "profile_cit_csvimport_Altri_siti_di_interesse_artistico_item_comuneintasca",
+          "name": {
+            "it": "Altri siti di interesse storico artistico",
+            "en": "Other sites of historical and artistic interest",
+            "de": "Andere Seiten von historischem und künstlerischem Interesse"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "poi",
+            "classifications": null,
+            "classification": "Altri siti di interesse storico artistico"
+          },
+          "ref": null,
+          "type": null,
+          "app": null
         }
-      ]
-    }, {
-      "id":"info_utili",
-      "name":{ "it":"INFO UTILI", "en":"USEFUL  INFORMATIONS", "de":"WEITERE  INFORMATIONEN" },
-      "items":[
-        { 
-          "id":"servizi",
-          "name":{ "it":"Servizi", "en":"Services", "de":"Dienstleistungen" },
-          "query":{ "type":"content", "classification":"Servizi" }
-        }, { 
-          "id":"contatti",
-          "name":{ "it":"Contatti", "en":"Contacts", "de":"Kontakten" },
-          "query":{ "type":"content", "classification":"Contatti" }
+      ],
+      "query": null,
+      "ref": null,
+      "type": null,
+      "app": null
+    },
+    {
+      "id": "profile_cit_csvimport_Mangiare_e_dormire_item_comuneintasca",
+      "name": {
+        "it": "MANGIARE E DORMIRE",
+        "en": "RESTAURANTS & HOTELS",
+        "de": "GASTRONOMIE UND ÜBERNACHTUNG"
+      },
+      "description": null,
+      "image": null,
+      "objectIds": null,
+      "items": [
+        {
+          "id": "profile_cit_csvimport_Mangiare_item_comuneintasca",
+          "name": {
+            "it": "Mangiare",
+            "en": "Restaurants",
+            "de": "Gastronomie"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "restaurant",
+            "classifications": null,
+            "classification": null
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        },
+        {
+          "id": "profile_cit_csvimport_Dormire_item_comuneintasca",
+          "name": {
+            "it": "Dormire",
+            "en": "Hotels",
+            "de": "Übernachtung"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "hotel",
+            "classifications": null,
+            "classification": null
+          },
+          "ref": null,
+          "type": null,
+          "app": null
         }
-      ]
+      ],
+      "query": null,
+      "ref": null,
+      "type": null,
+      "app": null
+    },
+    {
+      "id": "profile_cit_csvimport_Eventi_item_comuneintasca",
+      "name": {
+        "it": "EVENTI",
+        "en": "EVENTS",
+        "de": "VERANSTALTUNGEN"
+      },
+      "description": null,
+      "image": null,
+      "objectIds": null,
+      "items": [
+        {
+          "id": "profile_cit_csvimport_Tutti_gli_eventi_item_comuneintasca",
+          "name": {
+            "it": "Tutti gli eventi",
+            "en": "All events",
+            "de": "Alle Veranstaltungen"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "event",
+            "classifications": null,
+            "classification": null
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        },
+        {
+          "id": "profile_cit_csvimport_Mostre_item_comuneintasca",
+          "name": {
+            "it": "Mostre",
+            "en": "Exhibitions",
+            "de": "Ausstellungen"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "event",
+            "classifications": null,
+            "classification": "Mostre"
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        },
+        {
+          "id": "profile_cit_csvimport_Iniziative_varie_item_comuneintasca",
+          "name": {
+            "it": "Iniziative varie",
+            "en": "Various initiatives",
+            "de": "Verschiedene Initiativen"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "event",
+            "classifications": null,
+            "classification": "Iniziative varie"
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        },
+        {
+          "id": "profile_cit_csvimport_Spettacoli_item_comuneintasca",
+          "name": {
+            "it": "Spettacoli",
+            "en": "Shows",
+            "de": "Shows"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "event",
+            "classifications": null,
+            "classification": "Spettacoli"
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        },
+        {
+          "id": "profile_cit_csvimport_Incontri,_convegni_e_conferenze_item_comuneintasca",
+          "name": {
+            "it": "Incontri, convegni e conferenze",
+            "en": "Meetings, seminars and conferences",
+            "de": "Tagungen, Seminare und Konferenzen"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "event",
+            "classifications": null,
+            "classification": "Incontri, convegni e conferenze"
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        },
+        {
+          "id": "profile_cit_csvimport_Feste,_mercati_e_fiere_item_comuneintasca",
+          "name": {
+            "it": "Feste, mercati e fiere",
+            "en": "Festivals, markets and fairs",
+            "de": "Festivals, Märkte und Messen"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "event",
+            "classifications": null,
+            "classification": "Feste, mercati e fiere"
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        },
+        {
+          "id": "profile_cit_csvimport_Competizioni_e_gare_item_comuneintasca",
+          "name": {
+            "it": "Competizioni e gare",
+            "en": "Competitions and contests",
+            "de": "Wettbewerbe und Gewinnspiele"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "event",
+            "classifications": null,
+            "classification": "Competizioni e gare"
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        },
+        {
+          "id": "profile_cit_csvimport_Corsi_e_laboratori_item_comuneintasca",
+          "name": {
+            "it": "Corsi e laboratori",
+            "en": "Courses and workshops",
+            "de": "Kurse und Workshops"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "event",
+            "classifications": null,
+            "classification": "Corsi e laboratori"
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        },
+        {
+          "id": "24edf0c174b14eb2e4cc51b7223bed6e",
+          "name": {
+            "it": "Manifestazioni",
+            "en": "Event series",
+            "de": "Veranstaltungsreihe"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "event",
+            "classifications": null,
+            "classification": "_complex"
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        }
+      ],
+      "query": null,
+      "ref": null,
+      "type": null,
+      "app": null
+    },
+    {
+      "id": "profile_cit_csvimport_Percorsi_item_comuneintasca",
+      "name": {
+        "it": "PERCORSI",
+        "en": "TOURISTIC ITINERARIES",
+        "de": "TOUREN UND ROUTEN"
+      },
+      "description": null,
+      "image": null,
+      "objectIds": null,
+      "items": [
+        {
+          "id": "profile_cit_992a7ca32e9a335c575a46b6988c46a8",
+          "name": {
+            "it": "Percorsi Turistici",
+            "en": "Touristic Itineraries",
+            "de": "Touren und Routen"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "itineraries",
+            "classifications": null,
+            "classification": null
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        }
+      ],
+      "query": null,
+      "ref": null,
+      "type": null,
+      "app": null
+    },
+    {
+      "id": "profile_cit_csvimport_Info_utili_item_comuneintasca",
+      "name": {
+        "it": "INFO UTILI",
+        "en": "USEFUL  INFORMATIONS",
+        "de": "WEITERE INFORMATIONEN"
+      },
+      "description": null,
+      "image": null,
+      "objectIds": null,
+      "items": [
+        {
+          "id": "profile_cit_csvimport_Servizi_item_comuneintasca",
+          "name": {
+            "it": "Servizi",
+            "en": "Services",
+            "de": "Dienstleistungen"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "content",
+            "classifications": null,
+            "classification": "Servizi"
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        },
+        {
+          "id": "profile_cit_csvimport_Contatti_item_comuneintasca",
+          "name": {
+            "it": "Contatti",
+            "en": "Contacts",
+            "de": "Kontakten"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "content",
+            "classifications": null,
+            "classification": "Contatti"
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        }
+      ],
+      "query": null,
+      "ref": null,
+      "type": null,
+      "app": null
     }
-  ]
+  ],
+  "visible": true,
+  "lastModified": 0
 }

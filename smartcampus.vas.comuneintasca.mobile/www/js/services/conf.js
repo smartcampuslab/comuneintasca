@@ -1,7 +1,7 @@
 angular.module('ilcomuneintasca.services.conf', [])
 
 .factory('Config', function ($q, $http, $window, $filter, $rootScope) {
-  var DEVELOPMENT=false;
+  var DEVELOPMENT=true;
   $rootScope.DEV=DEVELOPMENT;
   
   // when the following is TRUE, we show special buttons 
@@ -9,8 +9,8 @@ angular.module('ilcomuneintasca.services.conf', [])
   // even if not in development mode
   // $rootScope.DEV=true;
 
-  var SYNC_WEBAPP='comuneintasca-oc';
-  var SCHEMA_VERSION=102;
+  var SYNC_WEBAPP='comuneintasca-ricadi';
+  var SCHEMA_VERSION=1;
   var SYNC_HOST="tn";
   if (DEVELOPMENT) SYNC_HOST="vas-dev";
   var LOCAL_PROFILE="opencontent";
@@ -295,9 +295,9 @@ angular.module('ilcomuneintasca.services.conf', [])
       de: 'Kommt bald...'
     },
     'app_title': {
-      it: 'TRENTO<br/>IL COMUNE IN TASCA',
-      en: 'TRENTO<br/>THE CITY IN YOUR POCKET',
-      de: 'TRENTO<br/>DIE STADT IN DER TASCHE'
+      it: 'RICADI<br/>IL COMUNE IN TASCA',
+      en: 'RICADI<br/>THE CITY IN YOUR POCKET',
+      de: 'RICADI<br/>DIE STADT IN DER TASCHE'
     },
     'sidemenu_Home': {
       it: 'Home',

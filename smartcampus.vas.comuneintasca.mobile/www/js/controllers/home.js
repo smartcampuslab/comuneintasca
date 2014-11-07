@@ -52,8 +52,8 @@ angular.module('ilcomuneintasca.controllers.home', [])
   $scope.highlights = null;
   var defaultHighlight = {
     id: null,
-    name:{ 'it':'Trento', 'en':'Trento', 'de':'Trento' },
-    image: 'img/hp-box/trento.png',
+    name:{ 'it':'Ricadi', 'en':'Ricadi', 'de':'Ricadi' },
+    image: 'img/hp-box/citta.png',
     ref: 'info'
   };
   DatiDB.sync().then(function (data) {

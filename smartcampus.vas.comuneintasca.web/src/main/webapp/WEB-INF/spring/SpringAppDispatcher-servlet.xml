@@ -53,7 +53,7 @@
 
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg ref="mongo" />
-		<constructor-arg name="databaseName" value="comuneintasca-oc" />
+		<constructor-arg name="databaseName" value="comuneintasca-ricadi" />
 	</bean>
 
     <bean id="syncObjectStorage" class="eu.trentorise.smartcampus.comuneintasca.data.GeoTimeStorage">
@@ -63,16 +63,6 @@
 		<property name="storage" ref="syncObjectStorage" />
 		<property name="client" ref="serviceBusClient" />
 	</bean>
-	<bean id="objectProcessor" class="eu.trentorise.smartcampus.comuneintasca.processor.ObjectProcessor">
-	</bean>
-	<bean id="itineraryProcessor" class="eu.trentorise.smartcampus.comuneintasca.processor.ItineraryGenerator">
-	</bean>
-	<bean id="homeProcessor" class="eu.trentorise.smartcampus.comuneintasca.processor.HomeProcessor">
-	</bean>
-	<!-- 
-	<bean id="configProcessor" class="eu.trentorise.smartcampus.comuneintasca.processor.ConfigProcessor">
-	</bean>
-		 -->
 	
 	<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
 		<property name="brokerURL" value="${smartcampus.vas.web.activeMQ.brokerURL}" />
@@ -84,7 +74,7 @@
 		<constructor-arg>
 			<ref bean="connectionFactory" />
 		</constructor-arg>
-		<property name="clientId" value="vas_comuneintasca_oc_subscriber" />
+		<property name="clientId" value="vas_comuneintasca_ricadi_subscriber" />
 		<property name="listener" ref="eventProcessor" />
 	</bean>
 	

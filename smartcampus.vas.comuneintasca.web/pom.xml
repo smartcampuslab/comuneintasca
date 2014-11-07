@@ -152,7 +152,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>comuneintasca-oc</finalName>
+		<finalName>comuneintasca-ricadi</finalName>
 	</build>
 
 	<repositories>

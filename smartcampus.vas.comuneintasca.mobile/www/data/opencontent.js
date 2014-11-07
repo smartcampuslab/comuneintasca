@@ -1,7 +1,7 @@
 #!/usr/local/bin/node
 var jsonPath = require('JSONPath');
 
-var trento = require('./trento.json');
+var trento = require('./data.json');
 //console.log('version: '+trento.version);
 
 Object.keys(trento.updated).forEach(function(k) {

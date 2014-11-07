@@ -17,7 +17,7 @@
 var dirstocreate = [
 	'platforms/android/res/values', 'platforms/android/res/values-it', 'platforms/android/res/values-de', 
 	'platforms/android/res/drawable-mdpi', 'platforms/android/res/drawable-hdpi', 'platforms/android/res/drawable-xhdpi', 'platforms/android/res/drawable-xxhdpi', 
-	'platforms/ios/Trento - Il Comune in Tasca/Resources/de.lproj', 'platforms/ios/Trento - Il Comune in Tasca/Resources/it.lproj'
+//	'platforms/ios/Trento - Il Comune in Tasca/Resources/de.lproj', 'platforms/ios/Trento - Il Comune in Tasca/Resources/it.lproj'
 ];
  
 var filestocopy = [{

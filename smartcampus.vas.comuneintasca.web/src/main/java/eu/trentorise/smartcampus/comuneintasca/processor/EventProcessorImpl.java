@@ -61,10 +61,8 @@ import eu.trentorise.smartcampus.comuneintasca.model.MenuItemQuery;
 import eu.trentorise.smartcampus.comuneintasca.model.Organization;
 import eu.trentorise.smartcampus.comuneintasca.model.POIObject;
 import eu.trentorise.smartcampus.comuneintasca.model.RestaurantObject;
-import eu.trentorise.smartcampus.network.JsonUtils;
 import eu.trentorise.smartcampus.presentation.common.exception.DataException;
 import eu.trentorise.smartcampus.presentation.data.BasicObject;
-import eu.trentorise.smartcampus.service.festivaleconomia.data.message.Festivaleconomia.Trans;
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.ConfigData;
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.Evento;
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nCultura;
@@ -181,12 +179,6 @@ public class EventProcessorImpl implements ServiceBusListener {
 				}
 				if (Subscriber.METHOD_ITINERARI.equals(methodName)) {
 					updateItinerari(data);
-				}
-
-			}
-			if (Subscriber.SERVICE_YMIR.equals(serviceId)) {
-				if (Subscriber.METHOD_EVENTS.equals(methodName)) {
-					updateEventsYmir(data);
 				}
 
 			}
@@ -577,58 +569,6 @@ public class EventProcessorImpl implements ServiceBusListener {
 			storage.deleteObjectById(s);
 		}
 
-	}
-
-	private void updateEventsYmir(List<ByteString> data) throws Exception {
-		Set<String> oldIds = getOldIds("festivaleconomia");
-
-		ObjectFilters filters = getFilters("event"); 
-
-		for (ByteString bs : data) {
-			eu.trentorise.smartcampus.service.festivaleconomia.data.message.Festivaleconomia.Evento bt = eu.trentorise.smartcampus.service.festivaleconomia.data.message.Festivaleconomia.Evento.parseFrom(bs);
-			EventObject old = null;
-			oldIds.remove(bt.getId());
-			try {
-				old = storage.getObjectById(bt.getId(), EventObject.class);
-			} catch (Exception e) {}
-			if (old == null || old.getLastModified() < bt.getLastModified()) {
-				EventObject no = new EventObject();
-				no.setId(bt.getId());
-				no.setAddress(convertTranslated(bt.getAddressList()));
-				// fix for classification of the app
-				// no.setCategory(convertTranslated(bt.getCategoryList()).get("it"));
-				no.setCategory("Incontri, convegni e conferenze");
-				no.setDescription(convertTranslated(bt.getDescriptionList()));
-				no.setFromTime(bt.getFromTime());
-				no.setToTime(bt.getToTime());
-				no.setImage(getImageURL(bt.getImage()));
-				no.setLastModified(bt.getLastModified());
-				no.setSource("festivaleconomia");
-				no.setTitle(convertTranslated(bt.getTitleList()));
-				no.setToTime(bt.getToTime());
-				no.setUrl(bt.getUrl());
-
-				no.setVisible(applies(no, filters));
-
-				storage.storeObject(no);
-			}
-		}
-
-		for (String s : oldIds) {
-			logger.info("Deleting event " + s);
-			storage.deleteObjectById(s);
-		}
-	}
-
-	private Map<String, String> convertTranslated(List<Trans> list) {
-		Map<String, String> res = new HashMap<String, String>();
-		for (Trans t : list) {
-			String lang = t.getLang();
-			if (lang.isEmpty())
-				lang = "it";
-			res.put(lang, t.getValue());
-		}
-		return res;
 	}
 
 	private Map<String, String> toMap(I18nString str) {

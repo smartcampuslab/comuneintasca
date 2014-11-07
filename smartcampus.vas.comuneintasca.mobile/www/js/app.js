@@ -232,7 +232,7 @@ angular.module('ilcomuneintasca', [
         // fix for broken opencontent data
         // ??? can it be removed ???
         if (typeof item.image=='string' && item.image.indexOf('http')==-1 && item.image.charAt(item.image.length-1)=='|') {
-          item.image='http://www.comune.trento.it/'+item.image.substring(0,item.image.length-1);
+          item.image='/'+item.image.substring(0,item.image.length-1);
           console.log('broken opencontent image url fixed!');
         }
 

@@ -1,124 +1,9 @@
 {
-  "id": "54088b79975a10f95cae0266",
-  "updateTime": 1413212029269,
-  "version": 1506,
+  "id": "1",
+  "updateTime": 1415379473673,
+  "version": 1,
   "user": null,
-  "highlights": [
-    {
-      "id": "profile_cit_75aceda860befbcb1fe8bd1a0f8be85c",
-      "name": {
-        "it": "Trento",
-        "en": "Trento",
-        "de": "Trento"
-      },
-      "description": null,
-      "image": {
-        "it": "http://www.comune.trento.it/var/comunetn/storage/images-versioned/8554658/1-ita-IT/Trento1.jpg",
-        "en": "http://www.comune.trento.it/var/comunetn/storage/images-versioned/8554663/1-eng-GB/Trento1.jpg",
-        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/trento/8554668-2-ger-DE/Trento.jpg"
-      },
-      "objectIds": [
-        "text.3004",
-        "text.3001"
-      ],
-      "items": null,
-      "query": null,
-      "ref": null,
-      "type": "content",
-      "app": null
-    },
-    {
-      "id": "profile_cit_405be9ac05df567b4c87b4d31119e52e",
-      "name": {
-        "it": "Muse",
-        "en": "Muse",
-        "de": "Muse"
-      },
-      "description": null,
-      "image": {
-        "it": "http://www.comune.trento.it/var/comunetn/storage/images-versioned/8554673/1-ita-IT/Muse1.jpg",
-        "en": "http://www.comune.trento.it/var/comunetn/storage/images-versioned/8554678/1-eng-GB/Muse1.jpg",
-        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/muse/8554683-2-ger-DE/Muse.jpg"
-      },
-      "objectIds": [
-        "cultura.72"
-      ],
-      "items": null,
-      "query": null,
-      "ref": null,
-      "type": "poi",
-      "app": null
-    },
-    {
-      "id": "profile_cit_74d4ff66560754b78e0c72b19069c4d9",
-      "name": {
-        "it": "Il Monte Bondone",
-        "en": "Il Monte Bondone",
-        "de": "Il Monte Bondone"
-      },
-      "description": null,
-      "image": {
-        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/conoscere/il-monte-bondone/8554856-3-ita-IT/Il-Monte-Bondone.jpg",
-        "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/conoscere/il-monte-bondone/8554861-2-eng-GB/Il-Monte-Bondone.jpg",
-        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/conoscere/il-monte-bondone/8554866-2-ger-DE/Il-Monte-Bondone.jpg"
-      },
-      "objectIds": [
-        "text.3018",
-        "text.3019",
-        "text.3020",
-        "text.3021"
-      ],
-      "items": null,
-      "query": null,
-      "ref": "profile_cit_74d4ff66560754b78e0c72b19069c4d9",
-      "type": null,
-      "app": null
-    },
-    {
-      "id": "d347c18f3a931ae6a512b7d80591afd8",
-      "name": {
-        "it": "Rinascimenti eccentrici",
-        "en": "Rinascimenti eccentrici",
-        "de": "Rinascimenti eccentrici"
-      },
-      "description": null,
-      "image": {
-        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/rinascimenti-eccentrici/8622728-1-ita-IT/Rinascimenti-eccentrici.jpg",
-        "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/rinascimenti-eccentrici/8622728-1-ita-IT/Rinascimenti-eccentrici.jpg",
-        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/rinascimenti-eccentrici/8622728-1-ita-IT/Rinascimenti-eccentrici.jpg"
-      },
-      "objectIds": [
-        "98c07591b6c32e51b3afd2d57503080e"
-      ],
-      "items": null,
-      "query": null,
-      "ref": null,
-      "type": "event",
-      "app": null
-    },
-    {
-      "id": "8cc43799380fcd360be1219b9fa6b152",
-      "name": {
-        "it": "La Card 'TrentoRovereto città di culture'",
-        "en": "The 'TrentoRovereto Città di culture' card",
-        "de": "Die 'TrentoRovereto Città di culture'-Karte"
-      },
-      "description": null,
-      "image": {
-        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/la-card-trentorovereto-citta-di-culture/8622743-1-ita-IT/La-Card-TrentoRovereto-citta-di-culture.jpg",
-        "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/la-card-trentorovereto-citta-di-culture/8622743-1-ita-IT/La-Card-TrentoRovereto-citta-di-culture.jpg",
-        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/la-card-trentorovereto-citta-di-culture/8622743-1-ita-IT/La-Card-TrentoRovereto-citta-di-culture.jpg"
-      },
-      "objectIds": [
-        "text.3005"
-      ],
-      "items": null,
-      "query": null,
-      "ref": null,
-      "type": "content",
-      "app": null
-    }
-  ],
+  "highlights": [],
   "navigationItems": [
     {
       "id": "profile_cit_2cc4db1674d9e8994658eac954355d31",
@@ -857,5 +742,5 @@
     }
   ],
   "visible": true,
-  "lastModified": 1412855948000
+  "lastModified": 0
 }

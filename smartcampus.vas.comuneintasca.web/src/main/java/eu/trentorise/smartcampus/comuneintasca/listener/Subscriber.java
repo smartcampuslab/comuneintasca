@@ -30,7 +30,6 @@ import org.springframework.beans.factory.annotation.Value;
 
 public class Subscriber {
 
-	public static final String SERVICE_YMIR = "smartcampus.service.festivaleconomia";
 	public static final String SERVICE_OD = "smartcampus.service.opendata";
 	public static final String METHOD_EVENTS = "GetEventiParam";
 	public static final String METHOD_CONFIG = "GetConfig";
@@ -111,7 +110,6 @@ public class Subscriber {
 			params.put("url", itinerariURL);
 			client.subscribeService(SERVICE_OD, METHOD_ITINERARI, params);
 
-//			client.subscribeService(SERVICE_YMIR, METHOD_EVENTS, params);
 		} catch (InvocationException e) {
 			logger.error("Failed to subscribe for service events: " + e.getMessage());
 		}

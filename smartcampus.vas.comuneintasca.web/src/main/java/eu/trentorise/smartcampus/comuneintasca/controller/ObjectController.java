@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import eu.trentorise.smartcampus.comuneintasca.model.ConfigObject;
+import eu.trentorise.smartcampus.comuneintasca.model.DynamicConfigObject;
 import eu.trentorise.smartcampus.comuneintasca.model.ContentObject;
 import eu.trentorise.smartcampus.comuneintasca.model.EventObject;
 import eu.trentorise.smartcampus.comuneintasca.model.HomeObject;
@@ -55,8 +55,8 @@ public class ObjectController extends AbstractObjectController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/config")
-	public @ResponseBody ConfigObject getConfig() throws DataException {
-		return storage.getObjectsByType(ConfigObject.class).get(0);
+	public @ResponseBody DynamicConfigObject getConfig() throws DataException {
+		return storage.getObjectsByType(DynamicConfigObject.class).get(0);
 	}	
 
 	@RequestMapping(method = RequestMethod.GET, value = "/home")

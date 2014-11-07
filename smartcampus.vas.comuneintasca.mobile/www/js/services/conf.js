@@ -15,6 +15,11 @@ angular.module('ilcomuneintasca.services.conf', [])
   if (DEVELOPMENT) SYNC_HOST="vas-dev";
   var LOCAL_PROFILE="opencontent";
 
+  // customization parameters
+  var cityName = { 'it':'Trento', 'en':'Trento', 'de':'Trento' };
+  var imagePath = 'http://www.comune.trento.it/var/comunetn';
+  var dbName = 'ricadi';
+  
   function parseConfig(config) {
     if (config) {
       if (config.menu) {
@@ -295,9 +300,9 @@ angular.module('ilcomuneintasca.services.conf', [])
       de: 'Kommt bald...'
     },
     'app_title': {
-      it: 'TRENTO<br/>IL COMUNE IN TASCA',
-      en: 'TRENTO<br/>THE CITY IN YOUR POCKET',
-      de: 'TRENTO<br/>DIE STADT IN DER TASCHE'
+      it: cityName.it.toUpperCase()+'<br/>IL COMUNE IN TASCA',
+      en: cityName.en.toUpperCase()+'<br/>THE CITY IN YOUR POCKET',
+      de: cityName.de.toUpperCase()+'<br/>DIE STADT IN DER TASCHE'
     },
     'sidemenu_Home': {
       it: 'Home',
@@ -806,6 +811,15 @@ angular.module('ilcomuneintasca.services.conf', [])
         it: 'UNKNOWN',
         en: 'UNKNOWN'
       };
+    },
+    cityName: function() {
+      return cityName;
+    },
+    imagePath: function() {
+      return imagePath;
+    },
+    dbName: function() {
+      return dbName;
     }
   }
 })

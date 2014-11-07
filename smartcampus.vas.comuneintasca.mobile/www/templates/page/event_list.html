@@ -11,7 +11,7 @@
                 
                 ng-click="gotoSubpath(obj.id)" class="coll-item item-thumbnail-left">
         <!-- comuni-img class="item-image comuni-item-image" gotdata="gotdata" sonscount="true"></comuni-img -->
-        <div class="item-image comuni-item-image comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj)}})">
+        <div class="item-image comuni-item-image comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj,'list')}})">
           <div ng-if="obj.sonscount>0" class="dida"><span>{{obj.sonscount}}</span><i class="icon ion-ios7-flag-outline"></i>&nbsp;</div>
         </div>
         <h2>{{obj.title | translate}}</h2>

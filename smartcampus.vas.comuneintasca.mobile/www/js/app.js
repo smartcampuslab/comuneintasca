@@ -223,7 +223,7 @@ angular.module('ilcomuneintasca', [
     },0);
   }
     
-  $rootScope.getParsedImageURL=function(item){
+  $rootScope.getParsedImageURL=function(item,type){
     if (!item) return 'svg/placeholder.svg';
 
     if (!item.parsedimageurl) {
@@ -231,10 +231,21 @@ angular.module('ilcomuneintasca', [
       if (item.image) {
         // fix for broken opencontent data
         // ??? can it be removed ???
-        if (typeof item.image=='string' && item.image.indexOf('http')==-1 && item.image.charAt(item.image.length-1)=='|') item.image='http://trento.opencontent.it/'+item.image.substring(0,item.image.length-1);
+        if (typeof item.image=='string' && item.image.indexOf('http')==-1 && item.image.charAt(item.image.length-1)=='|') {
+          item.image='http://www.comune.trento.it/'+item.image.substring(0,item.image.length-1);
+          console.log('broken opencontent image url fixed!');
+        }
 
         var imageUrl=$filter('translate')(item.image);
         if (imageUrl && imageUrl != '' && imageUrl != 'false') {
+          if (type=='list') {
+            if (imageUrl.indexOf('http://www.comune.trento.it/var/comunetn')==0) {
+              imageUrl=imageUrl.replace('.jpg','_medium.jpg');
+              //console.log('used smaller image...');
+            } else {
+              console.log('cannot use smaller image...');
+            }
+          }
           return Files.get(imageUrl).then(function (fileUrl) {
             //console.log('########### fileUrl: '+fileUrl);
             item['parsedimageurl']=fileUrl;

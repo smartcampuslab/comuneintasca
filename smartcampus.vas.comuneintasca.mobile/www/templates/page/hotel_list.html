@@ -7,7 +7,7 @@
 
               ng-click="gotoSubpath(obj.id)" class="item-thumbnail-left coll-item">
       <!-- comuni-img class="item-image comuni-item-image" gotdata="gotdata" dida="{{obj.distance | number:1}} {{'entry_km' | translate}}"></comuni-img -->
-      <div class="item-image comuni-item-image comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj)}})">
+      <div class="item-image comuni-item-image comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj,'list')}})">
         <div ng-if="obj.distance" class="dida">{{obj.distance | number:1}} {{'entry_km' | translate}}</div>
       </div>
       <h2>{{obj.title | translate}}</h2>

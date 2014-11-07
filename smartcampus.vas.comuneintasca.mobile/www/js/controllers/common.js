@@ -483,6 +483,8 @@ angular.module('ilcomuneintasca.controllers.common', [])
                   $scope.stickyLabel=label;
                 });
               }
+            } else {
+              $scope.stickyLabel=null;
             }
           };          
           $scope.calcGroupOffset = function (index) {

@@ -18,7 +18,7 @@ angular.module('ilcomuneintasca.services.conf', [])
   // customization parameters
   var cityName = { 'it':'Trento', 'en':'Trento', 'de':'Trento' };
   var imagePath = 'http://www.comune.trento.it/var/comunetn';
-  var dbName = 'ricadi';
+  var dbName = 'trento';
   
   function parseConfig(config) {
     if (config) {

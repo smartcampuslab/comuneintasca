@@ -832,15 +832,15 @@ angular.module('ilcomuneintasca.services.db', [])
           //console.log('qParams: ' + qParams);
           //console.log('DatiDB.get("' + dbname + '", "' + parentId + '"); dbQuery launched...');
           tx.executeSql(dbQuery, qParams, function (tx2, results) {
-						Profiling._do('dbsons', 'sql');
+            Profiling._do('dbsons', 'sql');
             //console.log('DatiDB.get("' + dbname + '", "' + parentId + '"); dbQuery completed');
             var resultslen = results.rows.length;
-						for (var i = 0; i < resultslen; i++) {
-							var item = results.rows.item(i);
-							lista.push(parseDbRow(item));
-						}
-						Profiling._do('dbsons', 'parse');
-						dbsons.resolve(lista);
+            for (var i = 0; i < resultslen; i++) {
+              var item = results.rows.item(i);
+              lista.push(parseDbRow(item));
+            }
+            Profiling._do('dbsons', 'parse');
+            dbsons.resolve(lista);
           }, function (tx2, err) {
             $ionicLoading.hide();
             console.log('error: ' + err);

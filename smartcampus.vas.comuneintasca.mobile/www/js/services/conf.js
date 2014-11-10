@@ -822,7 +822,11 @@ angular.module('ilcomuneintasca.services.conf', [])
     _do: function (label, details) {
       if (Config.doProfiling()) {
         var startTime = startTimes[label] || -1;
-        if (startTime != -1) console.log('PROFILING: ' + label + (details ? '(' + details + ')' : '') + '=' + ((new Date).getTime() - startTime));
+        if (startTime != -1) {
+          var nowTime = (new Date).getTime();
+          console.log('PROFILING: ' + label + (details ? '(' + details + ')' : '') + '=' + (nowTime - startTime));
+          if (details) startTimes[label]=nowTime;
+        }
       }
     }
   };

@@ -81,4 +81,19 @@ public class TestConnector {
 		assertEquals(1, publishObjects.size());
 	}
 
+	@Test
+	public void eventsConfigWithQuery() throws DataException {
+		
+		eventsNoConfig();
+		List<ByteString> data = Collections.singletonList(ObjectCreator.createConfigProtoWithQuery().toByteString());
+		serviceBusClient.notifyData(data, "smartcampus.service.opendata", "GetConfig", "1");
+		
+		List<EventObject> draftObjects = dataService.getDraftObjects(EventObject.class, ObjectCreator.TEST_APP);
+		assertNotNull(draftObjects);
+		assertEquals(1, draftObjects.size());
+
+		List<EventObject> publishObjects = dataService.getPublishedObjects(EventObject.class, ObjectCreator.TEST_APP);
+		assertNotNull(publishObjects);
+		assertEquals(1, publishObjects.size());
+	}
 }

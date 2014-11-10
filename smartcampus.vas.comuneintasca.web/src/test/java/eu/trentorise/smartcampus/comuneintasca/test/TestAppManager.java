@@ -27,7 +27,7 @@ public class TestAppManager {
 	
 	@Test
 	public void getAppData() throws DataException {
-		App app = manager.getApp("smartcampus.service.opendata", "GetEvetiParam", "1");
+		App app = manager.getApp("smartcampus.service.opendata", "GetEventiParam", "1");
 		assertNotNull(app);
 
 		app = manager.getApp("smartcampus.service.opendata", "Test3", "1");

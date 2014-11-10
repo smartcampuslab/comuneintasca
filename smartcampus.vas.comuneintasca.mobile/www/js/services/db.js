@@ -7,6 +7,9 @@ angular.module('ilcomuneintasca.services.db', [])
   var POI_CATE_FROM_IT=true;
 
   var parseDbRow = function (dbrow) {
+    //comment out this line to profile each function call
+    //Profiling.start('dbparse');
+
     //console.log('dbrow.id: '+dbrow.id);
     var item = JSON.parse(dbrow.data);
 
@@ -49,6 +52,7 @@ angular.module('ilcomuneintasca.services.db', [])
     item['dbClassification'] = dbrow.classification || '';
     item['dbClassification2'] = dbrow.classification2 || '';
     item['dbClassification3'] = dbrow.classification3 || '';
+    Profiling._do('dbparse','classification');
 
     if (dbtype == 'content') {
       //NO-OP
@@ -89,6 +93,8 @@ angular.module('ilcomuneintasca.services.db', [])
       var maineventDate=new Date(item.fromDate);
       item['date']=maineventDate.getMonth()*100 + maineventDate.getDate();
     }
+    Profiling._do('dbparse','type');
+
     //console.log('item.location: ' + JSON.stringify(item.location));
     if (item.hasOwnProperty('location') && item.location) {
       if ($rootScope.myPosition) {
@@ -103,8 +109,12 @@ angular.module('ilcomuneintasca.services.db', [])
     } else {
       //console.log('item.location UNKNOWN');
     }
+    Profiling._do('dbparse','location');
+
     if (dbrow.fromTime > 0) item['fromTime'] = dbrow.fromTime;
     if (dbrow.toTime > 0) item['toTime'] = dbrow.toTime;
+    Profiling._do('dbparse','location');
+
     return item;
   };
 
@@ -146,7 +156,7 @@ angular.module('ilcomuneintasca.services.db', [])
       //console.log('cordova db inited...');
       dbObj = window.sqlitePlugin.openDatabase({
         name: dbName,
-        bgType: 0, skipBackup: true
+        /*bgType: 0,*/ skipBackup: true
       });
       dbopenDeferred.resolve(dbObj);
     }, false);
@@ -165,19 +175,38 @@ angular.module('ilcomuneintasca.services.db', [])
       dbObj.transaction(function (tx) {
         tx.executeSql('DROP TABLE IF EXISTS ContentObjects');
         tx.executeSql('CREATE TABLE IF NOT EXISTS ContentObjects (id text primary key, objid integer, parentid text, version integer, type text, category text, classification text, classification2 text, classification3 text, data text, lat real, lon real, fromTime integer, toTime integer)');
-        tx.executeSql('CREATE INDEX IF NOT EXISTS co_id ON ContentObjects( id )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_objid ON ContentObjects( objid )');
-        tx.executeSql('CREATE INDEX IF NOT EXISTS co_parentid ON ContentObjects( parentid )');
-        tx.executeSql('CREATE INDEX IF NOT EXISTS co_idparentid ON ContentObjects( id, parentid )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_pid ON ContentObjects( parentid )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_idpid ON ContentObjects( id, parentid )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_type ON ContentObjects( type )');
-        tx.executeSql('CREATE INDEX IF NOT EXISTS co_cate ON ContentObjects( category )');
+        //tx.executeSql('CREATE INDEX IF NOT EXISTS co_cate ON ContentObjects( category )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_class ON ContentObjects( classification )');
-        tx.executeSql('CREATE INDEX IF NOT EXISTS co_class2 ON ContentObjects( classification, classification2 )');
-        tx.executeSql('CREATE INDEX IF NOT EXISTS co_class3 ON ContentObjects( classification, classification2, classification3 )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_class2 ON ContentObjects( classification2 )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_class3 ON ContentObjects( classification3 )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_lat ON ContentObjects( lat )');
-        tx.executeSql('CREATE INDEX IF NOT EXISTS co_lon ON ContentObjects( lon )');
-        tx.executeSql('CREATE INDEX IF NOT EXISTS co_typeclass ON ContentObjects( type, classification )');
+        //tx.executeSql('CREATE INDEX IF NOT EXISTS co_lon ON ContentObjects( lon )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_lon ON ContentObjects( lat,lon )');
+        //tx.executeSql('CREATE INDEX IF NOT EXISTS co_tf ON ContentObjects( fromTime )');
+        //tx.executeSql('CREATE INDEX IF NOT EXISTS co_tt ON ContentObjects( toTime )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_tt ON ContentObjects( type, toTime )');
+        //tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_ttf ON ContentObjects( type, fromTime, toTime )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_pid_type_class ON ContentObjects( parentid, type, classification )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_class ON ContentObjects( type, classification )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_class2 ON ContentObjects( type, classification2 )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_class3 ON ContentObjects( type, classification3 )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_class123 ON ContentObjects( type, classification, classification2, classification3 )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_class_tt ON ContentObjects( type, classification, toTime )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_class2_tt ON ContentObjects( type, classification2, toTime )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_class3_tt ON ContentObjects( type, classification3, toTime )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_class123_tt ON ContentObjects( type, classification, classification2, classification3, toTime )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_class_ttf ON ContentObjects( type, classification, fromTime, toTime )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_class2_ttf ON ContentObjects( type, classification2, fromTime, toTime )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_class3_ttf ON ContentObjects( type, classification3, fromTime, toTime )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_class123_ttf ON ContentObjects( type, classification, classification2, classification3, fromTime, toTime )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_typeid ON ContentObjects( type, id )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_typeid_class_tt ON ContentObjects( type, id, classification, toTime )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_typeid_class_tft ON ContentObjects( type, id, classification, fromTime, toTime )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_typeid_class123_tft ON ContentObjects( type, id, classification, classification2, classification3, fromTime, toTime )');
 
         // if favs schema changes, we need to specify some special changes to perform to upgrade it
         if (currentSchemaVersion==0) {
@@ -202,6 +231,20 @@ angular.module('ilcomuneintasca.services.db', [])
       });
     } else {
       //console.log('no need to init database...');
+/*
+      dbObj.transaction(function (tx) {
+        tx.executeSql("select * from sqlite_master where type='index'", [], function (tx, res) { //success callback
+          console.log('database schema following:');
+          for (i = 0; i < res.rows.length; i++) console.log(res.rows.item(i).sql);
+        }, function (e) { //error callback
+          console.log('unable dump table schema 1');
+        });
+      }, function (e) { //success callback
+        console.log('dump table schema ok');
+      }, function (e) { //error callback
+        console.log('unable dump table schema 2');
+      });
+*/
       dbDeferred.resolve(dbObj);
     }
   });
@@ -575,12 +618,14 @@ angular.module('ilcomuneintasca.services.db', [])
 						' GROUP BY c.id';
           //console.log('[DB.all()] sql: '+sql);
           tx.executeSql(sql, [types[dbname]], function (tx, results) {
+            Profiling._do('dball','sql');
             var len = results.rows.length,
               i;
             for (i = 0; i < len; i++) {
               var item = results.rows.item(i);
               lista.push(parseDbRow(item));
             }
+            Profiling._do('dball','parse');
           }, function (tx, err) {
             $ionicLoading.hide();
             console.log('data error!');
@@ -627,6 +672,15 @@ angular.module('ilcomuneintasca.services.db', [])
 					
           var d = new Date();
           var min_toTime = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0).getTime() - 1;
+
+/*
+          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount ' +
+						'FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id' +
+            ' WHERE c.type=? ' +
+            (_complex==undefined ? (cateId ? ' AND c.classification=?' : '') : ' AND c.classification' + (_complex?'=':'!=') + "'_complex'" ) + 
+						' GROUP BY c.id';
+          var params = (cateId ? [types[dbname], cateId] : [types[dbname]]);
+*/
           var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount ' +
 						'FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id' +
             ' WHERE c.type=? ' +
@@ -634,16 +688,20 @@ angular.module('ilcomuneintasca.services.db', [])
             ' AND (s.id IS NULL OR s.toTime > ' + min_toTime + ')' +
             (_complex==undefined ? '' : ' AND c.classification' + (_complex?'=':'!=') + "'_complex'" ) + 
 						' GROUP BY c.id';
-          //console.log('[DB.cate()] sql: '+sql);
           var params = (cateId ? [types[dbname], cateId, cateId, cateId] : [types[dbname]]);
+
+          //console.log('[DB.cate()] sql: '+sql);
           //console.log('[DB.cate()] params: '+params);
+
           tx.executeSql(sql, params, function (tx2, cateResults) {
+            Profiling._do('dbcate','sql');
             var len = cateResults.rows.length,
               i;
             for (i = 0; i < len; i++) {
               var item = cateResults.rows.item(i);
               lista.push(parseDbRow(item));
             }
+            Profiling._do('dbcate','parse');
             data.resolve(lista);
           }, function (tx2, err) {
             $ionicLoading.hide();
@@ -689,6 +747,14 @@ angular.module('ilcomuneintasca.services.db', [])
             }
           }
 
+/*
+          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, c.parentid'+
+						' FROM ContentObjects c' +
+            ' WHERE c.type=?' +
+            ' AND c.fromTime > 0 AND c.fromTime <' + toTime + ' AND c.toTime > ' + fromTime + 
+						(cateId ? ' AND (c.classification=? OR c.classification2=? OR c.classification3=?)' : '') + 
+            (_complex==undefined ? '' : ' AND c.classification' + (_complex?'=':'!=') + "'_complex'" );
+*/
           var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount'+
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id' +
             ' WHERE c.type=?' +
@@ -696,10 +762,13 @@ angular.module('ilcomuneintasca.services.db', [])
 						(cateId ? ' AND (c.classification=? OR c.classification2=? OR c.classification3=?)' : '') + 
             (_complex==undefined ? '' : ' AND c.classification' + (_complex?'=':'!=') + "'_complex'" ) + 
 						' GROUP BY c.id';
-          //console.log('[DB.byTimeInterval()] sql: '+sql);
           var params = cateId ? [types[dbname], cateId, cateId, cateId] : [types[dbname]];
+
+          //console.log('[DB.byTimeInterval()] sql: '+sql);
           //console.log('[DB.byTimeInterval()] params: '+params);
+
           tx.executeSql(sql, params, function (tx2, cateResults) {
+            Profiling._do('byTimeInterval','sql');
             var len = cateResults.rows.length,
               i;
             for (i = 0; i < len; i++) {
@@ -708,6 +777,7 @@ angular.module('ilcomuneintasca.services.db', [])
               dbItem.ctx=objContext;
               lista.push(dbItem);
             }
+            Profiling._do('byTimeInterval','parse');
             data.resolve(lista);
           }, function (tx2, err) {
             $ionicLoading.hide();
@@ -719,11 +789,11 @@ angular.module('ilcomuneintasca.services.db', [])
         }, function (error) { //error callback
           $ionicLoading.hide();
           console.log('db.cate() ERROR: ' + error);
-          Profiling._do('dbcate');
+          Profiling._do('byTimeInterval');
           data.reject(error);
         }, function () { //success callback
           $ionicLoading.hide();
-          Profiling._do('dbcate');
+          Profiling._do('byTimeInterval');
           data.resolve(lista);
         });
       });
@@ -762,14 +832,15 @@ angular.module('ilcomuneintasca.services.db', [])
           //console.log('qParams: ' + qParams);
           //console.log('DatiDB.get("' + dbname + '", "' + parentId + '"); dbQuery launched...');
           tx.executeSql(dbQuery, qParams, function (tx2, results) {
+            Profiling._do('dbsons', 'sql');
             //console.log('DatiDB.get("' + dbname + '", "' + parentId + '"); dbQuery completed');
             var resultslen = results.rows.length;
-						for (var i = 0; i < resultslen; i++) {
-							var item = results.rows.item(i);
-							lista.push(parseDbRow(item));
-						}
-						Profiling._do('dbsons', 'list');
-						dbsons.resolve(lista);
+            for (var i = 0; i < resultslen; i++) {
+              var item = results.rows.item(i);
+              lista.push(parseDbRow(item));
+            }
+            Profiling._do('dbsons', 'parse');
+            dbsons.resolve(lista);
           }, function (tx2, err) {
             $ionicLoading.hide();
             console.log('error: ' + err);

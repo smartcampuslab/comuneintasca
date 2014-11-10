@@ -9,7 +9,7 @@ else
 fi
 echo "host: $DATA_HOST_NAME"
 
-curl -H "Content-Type: application/json" -d '{"updated":{}}' "https://$DATA_HOST_NAME.smartcampuslab.it/$DATA_WEBAPP_NAME/sync?since=0" -o trento.json
+curl -H "Content-Type: application/json" -d '{"updated":{}}' "https://$DATA_HOST_NAME.smartcampuslab.it/$DATA_WEBAPP_NAME/sync?since=0" -o data.json
 if [ $? == 0 ]; then
   PROFILE="opencontent.json"
   echo "profile: $PROFILE"

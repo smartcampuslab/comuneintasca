@@ -133,7 +133,7 @@ angular.module('ilcomuneintasca.services.db', [])
 
   var localSyncOptions = {
     method: 'GET',
-    url: 'data/trento.json',
+    url: 'data/data.json',
     remote: false
   };
 
@@ -149,7 +149,7 @@ angular.module('ilcomuneintasca.services.db', [])
   var dbObj;
 
   var dbopenDeferred = $q.defer();
-  var dbName="Trento";
+  var dbName=Config.dbName();
   if (ionic.Platform.isWebView()) {
     //console.log('cordova db...');
     document.addEventListener("deviceready", function () {
@@ -162,7 +162,7 @@ angular.module('ilcomuneintasca.services.db', [])
     }, false);
   } else {
     //console.log('web db...');
-    dbObj = window.openDatabase(dbName, '1.0', 'Trento - Il Comune in Tasca', 5 * 1024 * 1024);
+    dbObj = window.openDatabase(dbName, '1.0', Config.dbName()+' - Il Comune in Tasca', 5 * 1024 * 1024);
 //    remoteSyncOptions = localSyncOptions;
     dbopenDeferred.resolve(dbObj);
   }

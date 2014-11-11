@@ -2,6 +2,11 @@ package eu.trentorise.smartcampus.comuneintasca.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import it.smartcommunitylab.comuneintasca.connector.AppManager;
+import it.smartcommunitylab.comuneintasca.connector.ConnectorStorage;
+import it.smartcommunitylab.comuneintasca.core.data.AppSyncStorageImpl;
+import it.smartcommunitylab.comuneintasca.core.model.EventObject;
+import it.smartcommunitylab.comuneintasca.core.service.DataService;
 
 import java.util.Collections;
 import java.util.List;
@@ -16,11 +21,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.google.protobuf.ByteString;
 
-import eu.trentorise.smartcampus.comuneintasca.connector.AppManager;
-import eu.trentorise.smartcampus.comuneintasca.connector.ConnectorStorage;
-import eu.trentorise.smartcampus.comuneintasca.data.AppSyncStorageImpl;
-import eu.trentorise.smartcampus.comuneintasca.model.EventObject;
-import eu.trentorise.smartcampus.comuneintasca.service.DataService;
 import eu.trentorise.smartcampus.comuneintasca.test.config.TestConfig;
 import eu.trentorise.smartcampus.comuneintasca.test.config.TestServiceBusClient;
 import eu.trentorise.smartcampus.comuneintasca.test.util.ObjectCreator;

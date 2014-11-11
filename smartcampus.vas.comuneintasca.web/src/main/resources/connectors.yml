@@ -1,0 +1,52 @@
+apps:
+  - id: TrentoInTasca
+    sources: 
+        - type: it.smartcommunitylab.comuneintasca.core.model.EventObject
+          url: http://www.comune.trento.it/api/opendata/v1/content/class/event/offset/0/limit/1000
+          serviceId: smartcampus.service.opendata
+          methodName: GetEventiParam
+          imagePath: http://www.comune.trento.it/
+          autoPublish: true
+          
+        - type: it.smartcommunitylab.comuneintasca.core.model.ConfigObject
+          url: http://www.comune.trento.it/comuneintasca/data
+          serviceId: smartcampus.service.opendata
+          methodName: GetConfig
+          imagePath: http://www.comune.trento.it/
+          
+        - type: it.smartcommunitylab.comuneintasca.core.model.RestaurantObject
+          url: http://www.comune.trento.it/api/opendata/v1/content/class/ristorante/offset/0/limit/1000
+          serviceId: smartcampus.service.opendata
+          methodName: GetRestaurants
+          imagePath: http://www.comune.trento.it/
+          
+        - type: it.smartcommunitylab.comuneintasca.core.model.HotelObject
+          url: http://www.comune.trento.it/api/opendata/v1/content/class/accomodation/offset/0/limit/1000
+          serviceId: smartcampus.service.opendata
+          methodName: GetHotels
+          imagePath: http://www.comune.trento.it/
+          
+        - type: it.smartcommunitylab.comuneintasca.core.model.MainEventObject
+          url: http://www.comune.trento.it/api/opendata/v1/content/class/iniziativa/offset/0/limit/1000
+          serviceId: smartcampus.service.opendata
+          methodName: GetMainEvents
+          imagePath: http://www.comune.trento.it/
+          
+        - type: it.smartcommunitylab.comuneintasca.core.model.POIObject
+          url: http://www.comune.trento.it/api/opendata/v1/content/class/luogo/offset/0/limit/1000
+          serviceId: smartcampus.service.opendata
+          methodName: GetCultura
+          imagePath: http://www.comune.trento.it/
+          
+        - type: it.smartcommunitylab.comuneintasca.core.model.ContentObject
+          url: http://www.comune.trento.it/api/opendata/v1/content/class/folder/offset/0/limit/1000
+          serviceId: smartcampus.service.opendata
+          methodName: GetTesti
+          imagePath: http://www.comune.trento.it/
+          
+        - type: it.smartcommunitylab.comuneintasca.core.model.ItineraryObject
+          url: http://www.comune.trento.it/api/opendata/v1/content/class/itinerario/offset/0/limit/1000
+          serviceId: smartcampus.service.opendata
+          methodName: GetItinerari
+          imagePath: http://www.comune.trento.it/
+          

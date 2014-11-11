@@ -1,10 +1,11 @@
 package eu.trentorise.smartcampus.comuneintasca.test.util;
 
+import it.smartcommunitylab.comuneintasca.core.model.EventObject;
+
 import java.util.Collections;
 
 import com.google.protobuf.AbstractMessageLite;
 
-import eu.trentorise.smartcampus.comuneintasca.model.EventObject;
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.ConfigData;
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.Evento;
 

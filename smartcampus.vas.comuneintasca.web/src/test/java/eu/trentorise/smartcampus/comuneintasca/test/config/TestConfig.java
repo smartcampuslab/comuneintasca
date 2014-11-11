@@ -12,8 +12,8 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoException;
 
 @Configuration
-@ComponentScan(basePackages = "eu.trentorise.smartcampus.comuneintasca")
-@EnableMongoRepositories(basePackages = "eu.trentorise.smartcampus.comuneintasca.connector")
+@ComponentScan(basePackages = {"it.smartcommunitylab.comuneintasca.core", "it.smartcommunitylab.comuneintasca.connector"})
+@EnableMongoRepositories(basePackages = "it.smartcommunitylab.comuneintasca.connector")
 public class TestConfig {
 
 	@Bean(name="mongoTemplate")

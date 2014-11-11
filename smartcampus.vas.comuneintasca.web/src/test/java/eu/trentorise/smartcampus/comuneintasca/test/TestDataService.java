@@ -2,6 +2,10 @@ package eu.trentorise.smartcampus.comuneintasca.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import it.smartcommunitylab.comuneintasca.core.data.AppSyncStorageImpl;
+import it.smartcommunitylab.comuneintasca.core.model.AppObject;
+import it.smartcommunitylab.comuneintasca.core.model.EventObject;
+import it.smartcommunitylab.comuneintasca.core.service.DataService;
 
 import java.util.List;
 
@@ -13,10 +17,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import eu.trentorise.smartcampus.comuneintasca.data.AppSyncStorageImpl;
-import eu.trentorise.smartcampus.comuneintasca.model.AppObject;
-import eu.trentorise.smartcampus.comuneintasca.model.EventObject;
-import eu.trentorise.smartcampus.comuneintasca.service.DataService;
 import eu.trentorise.smartcampus.comuneintasca.test.config.TestConfig;
 import eu.trentorise.smartcampus.comuneintasca.test.util.ObjectCreator;
 import eu.trentorise.smartcampus.presentation.common.exception.DataException;

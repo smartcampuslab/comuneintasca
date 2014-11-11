@@ -3,6 +3,9 @@ package eu.trentorise.smartcampus.comuneintasca.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import it.smartcommunitylab.comuneintasca.connector.ConnectorStorage;
+import it.smartcommunitylab.comuneintasca.core.model.AppObject;
+import it.smartcommunitylab.comuneintasca.core.model.EventObject;
 
 import java.util.List;
 
@@ -14,9 +17,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import eu.trentorise.smartcampus.comuneintasca.connector.ConnectorStorage;
-import eu.trentorise.smartcampus.comuneintasca.model.AppObject;
-import eu.trentorise.smartcampus.comuneintasca.model.EventObject;
 import eu.trentorise.smartcampus.comuneintasca.test.config.TestConfig;
 import eu.trentorise.smartcampus.comuneintasca.test.util.ObjectCreator;
 import eu.trentorise.smartcampus.presentation.common.exception.DataException;

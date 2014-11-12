@@ -1,7 +1,7 @@
 <ion-view title="{{group.name|translate}}">
   <ion-content class="has-header" delegate-handle="listScroll">
     <ion-list>
-      <ion-item ng-repeat="menu in group.items" ng-href="#/app/{{getMenuPath(group,menu)}}">
+      <ion-item ng-repeat="menu in group.items" ng-click="goto(getMenuPath(group,menu))">
         <strong ng-if="group.id=='eventi' && menu.id=='all'">{{menu.name | translate}}</strong>
         <span ng-if="group.id!='eventi' || menu.id!='all'">{{menu.name | translate}}</span>
       </ion-item>

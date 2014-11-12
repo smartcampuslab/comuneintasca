@@ -156,7 +156,8 @@ angular.module('ilcomuneintasca.services.db', [])
       //console.log('cordova db inited...');
       dbObj = window.sqlitePlugin.openDatabase({
         name: dbName,
-        /*bgType: 0,*/ skipBackup: true
+        /*bgType: 0,*/ 
+        skipBackup: true
       });
       dbopenDeferred.resolve(dbObj);
     }, false);

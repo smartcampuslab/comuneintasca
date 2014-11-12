@@ -174,7 +174,16 @@ angular.module('ilcomuneintasca.services.db', [])
     if (currentSchemaVersion == 0 || currentSchemaVersion != SCHEMA_VERSION) {
       console.log('initializing database...');
       dbObj.transaction(function (tx) {
+        // if favs schema changes, we need to specify some special changes to perform to upgrade it
+        if (currentSchemaVersion==0) {
+          tx.executeSql('DROP TABLE IF EXISTS Favorites');
+          console.log('favorites table created')
+          tx.executeSql('CREATE TABLE IF NOT EXISTS Favorites (id text primary key)');
+          tx.executeSql('CREATE INDEX IF NOT EXISTS fav_id ON Favorites( id )');
+        }
+
         tx.executeSql('DROP TABLE IF EXISTS ContentObjects');
+        console.log('contents table created')
         tx.executeSql('CREATE TABLE IF NOT EXISTS ContentObjects (id text primary key, objid integer, parentid text, version integer, type text, category text, classification text, classification2 text, classification3 text, data text, lat real, lon real, fromTime integer, toTime integer)');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_objid ON ContentObjects( objid )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_pid ON ContentObjects( parentid )');
@@ -208,13 +217,6 @@ angular.module('ilcomuneintasca.services.db', [])
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_typeid_class_tt ON ContentObjects( type, id, classification, toTime )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_typeid_class_tft ON ContentObjects( type, id, classification, fromTime, toTime )');
         tx.executeSql('CREATE INDEX IF NOT EXISTS co_typeid_class123_tft ON ContentObjects( type, id, classification, classification2, classification3, fromTime, toTime )');
-
-        // if favs schema changes, we need to specify some special changes to perform to upgrade it
-        if (currentSchemaVersion==0) {
-          tx.executeSql('DROP TABLE IF EXISTS Favorites');
-          tx.executeSql('CREATE TABLE IF NOT EXISTS Favorites (id text primary key)');
-          tx.executeSql('CREATE INDEX IF NOT EXISTS fav_id ON Favorites( id )');
-        }
       }, function (error) { //error callback
         console.log('cannot initialize db! ')
         console.log(error);

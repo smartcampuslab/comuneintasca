@@ -127,10 +127,12 @@ angular.module('ilcomuneintasca', [
     if (group_id=='percorsi'&& menu_id=='itineraries' || 
         (group.items.length == 1 && (menu.type == 'itineraries' || (menu.query != null && menu.query.type=='itineraries')))) {
       $rootScope.itineraryGroup = group;  
-      return 'itineraries';
+      mp='itineraries';
     } else {
-      return 'page/'+group_id+'/'+menu_id+'/';
+      mp='page/'+group_id+'/'+menu_id+'/';
     }
+    //console.log('getMenuPath()='+mp);
+    return mp;
   }
   $rootScope.gotoSubpath = function (subpath) {
     //console.log('full subpath: '+$location.path()+subpath)

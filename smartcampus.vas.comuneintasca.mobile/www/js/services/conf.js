@@ -819,7 +819,7 @@ angular.module('ilcomuneintasca.services.conf', [])
       return dbName;
     },
     doProfiling: function () {
-      return true;
+      return false;
     }
   }
 })

@@ -74,7 +74,10 @@ to enable custom "skipBack" option for sqlplugin add these lines to source file 
 >					} else {
 >						NSLog(@"Error excluding %@ from backup: %@", [dburl lastPathComponent], error);
 >					}
-> /* OLDER (LESS THAN 5.1) iOS VERSION
+>				}
+
+for apps deployed on ios versione older than 5.1
+
 >					const char* attrName = "com.apple.MobileBackup";
 >					u_int8_t attrValue = 1;
 >					int result = setxattr(name, attrName, &attrValue, sizeof(attrValue), 0, 0);
@@ -83,5 +86,4 @@ to enable custom "skipBack" option for sqlplugin add these lines to source file 
 >					} else {
 >						//NSLog(@"error marking file");
 >					}
-> */
->				}
+

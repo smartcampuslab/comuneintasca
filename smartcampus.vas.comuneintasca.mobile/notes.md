@@ -56,7 +56,7 @@ must become
 >
 >if (CDV_IsIPhone5()) {
 
-to enable custom "skipBack" option for sqlplugin add these lines to 
+to enable custom "skipBack" option for sqlplugin add these lines to source file *plugins/com.phonegap.plugins.sqlite/src/ios/SQLitePlugin.m* right before creating brand new db with *sqlite3_create_function()*
 
 >				BOOL skipBackup=NO;
 >				NSString *skipBackupValue = [options objectForKey:@"skipBackup"];

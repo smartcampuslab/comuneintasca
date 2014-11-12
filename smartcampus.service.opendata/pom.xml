@@ -95,7 +95,6 @@
 							    <method>
 									<methodName>GetEventiParam</methodName>
 									<defaultParameters>
-										<parameters />
 									</defaultParameters>
 									<statusParameters>
 										<storable>true</storable>
@@ -114,7 +113,6 @@
 								<method>
 									<methodName>GetConfig</methodName>
 									<defaultParameters>
-										<parameters />
 									</defaultParameters>
 									<statusParameters>
 										<storable>true</storable>
@@ -133,7 +131,6 @@
 								<method>
 									<methodName>GetRestaurants</methodName>
 									<defaultParameters>
-										<parameters />
 									</defaultParameters>
 									<statusParameters>
 										<storable>true</storable>
@@ -152,7 +149,6 @@
 								<method>
 									<methodName>GetHotels</methodName>
 									<defaultParameters>
-										<parameters />
 									</defaultParameters>
 									<statusParameters>
 										<storable>true</storable>
@@ -171,7 +167,6 @@
 								<method>
 									<methodName>GetCultura</methodName>
 									<defaultParameters>
-										<parameters />
 									</defaultParameters>
 									<statusParameters>
 										<storable>true</storable>
@@ -190,7 +185,6 @@
 								<method>
 									<methodName>GetMainEvents</methodName>
 									<defaultParameters>
-										<parameters />
 									</defaultParameters>
 									<statusParameters>
 										<storable>true</storable>
@@ -209,7 +203,6 @@
 								<method>
 									<methodName>GetTesti</methodName>
 									<defaultParameters>
-										<parameters />
 									</defaultParameters>
 									<statusParameters>
 										<storable>true</storable>
@@ -228,7 +221,24 @@
 								<method>
 									<methodName>GetItinerari</methodName>
 									<defaultParameters>
-										<parameters />
+									</defaultParameters>
+									<statusParameters>
+										<storable>true</storable>
+										<automaticRefresh>true</automaticRefresh>
+										<delay>#{1000L*30}</delay>
+										<period>#{1000L*60*60*4}</period>
+										<periodOnDefault>#{1000L*60*60*4}</periodOnDefault>
+										<periodOnFailure>#{1000L*60*60*8}</periodOnFailure>
+										<cacheValidityPeriod>#{1000L*60*60*24}</cacheValidityPeriod>
+										<validityPeriod>#{1000L*60*60*24}</validityPeriod>
+										<serviceBlocked>false</serviceBlocked>
+										<dataFlowInvokable>true</dataFlowInvokable>
+										<runnableAfterDelay>true</runnableAfterDelay>
+									</statusParameters>
+								</method>																															
+								<method>
+									<methodName>GetTerritoryServices</methodName>
+									<defaultParameters>
 									</defaultParameters>
 									<statusParameters>
 										<storable>true</storable>

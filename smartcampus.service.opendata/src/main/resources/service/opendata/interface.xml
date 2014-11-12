@@ -36,19 +36,24 @@
 		    <parameter name="url" type="String"/>
 			<output type="eu.trentorise.smartcampus.service.opendata.data.message.Opendata$I18nItinerario" repeated="true" />
 		</operation>									
-		
+		<operation name="GetTerritoryServices" storable="true">
+		    <parameter name="url" type="String"/>
+			<output type="eu.trentorise.smartcampus.service.opendata.data.message.Opendata$I18nCultura" repeated="true" />
+		</operation>		
+				
 	</interface>
 
 	<implementation package="eu.trentorise.smartcampus.service.opendata">
 		<operationImpl name="GetEventi"/>
 		<operationImpl name="GetEventiParam"/>
-				<operationImpl name="GetConfig"/>
+		<operationImpl name="GetConfig"/>
 		<operationImpl name="GetRestaurants"/>
 		<operationImpl name="GetHotels"/>
 		<operationImpl name="GetCultura"/>
 		<operationImpl name="GetMainEvents"/>
 		<operationImpl name="GetTesti"/>
 		<operationImpl name="GetItinerari"/>
-	</implementation>			
+		<operationImpl name="GetTerritoryServices"/>
+			</implementation>			
 	
 </service-definition>

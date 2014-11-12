@@ -53,6 +53,36 @@ must become
 >	imageName = @"Default";
 >	NSLog(@"INFO: The default splashscreen is named %@", imageName);
 >}
+>
+>if (CDV_IsIPhone5()) {
 
-if (CDV_IsIPhone5()) {
+to enable custom "skipBack" option for sqlplugin add these lines to 
+
+>				BOOL skipBackup=NO;
+>				NSString *skipBackupValue = [options objectForKey:@"skipBackup"];
+>				if (skipBackupValue != NULL) {
+>					skipBackup=[skipBackupValue boolValue];
+>				}
+>				if (skipBackup) {
+>					NSURL *dburl=[NSURL fileURLWithPath:(NSString *)dbname];
+>					//NSLog(@"db url: %@", dburl);
+>
+>					NSError *error=nil;
+>					BOOL success=[dburl setResourceValue:[NSNumber numberWithBool:YES] forKey:NSURLIsExcludedFromBackupKey error:&error];
+>					if (success) {
+>						NSLog(@"Excluded %@ from backup", [dburl lastPathComponent]);
+>					} else {
+>						NSLog(@"Error excluding %@ from backup: %@", [dburl lastPathComponent], error);
+>					}
+>/* OLDER (LESS THAN 5.1) iOS VERSION
+>					const char* attrName = "com.apple.MobileBackup";
+>					u_int8_t attrValue = 1;
+>					int result = setxattr(name, attrName, &attrValue, sizeof(attrValue), 0, 0);
+>					if (result==0) {
+>						//NSLog(@"marked db file '%s' as not to be backed up on icloud", name);
+>					} else {
+>						//NSLog(@"error marking file");
+>					}
+>*/
+>				}
 

@@ -104,13 +104,14 @@ public class EventProcessorImpl implements ServiceBusListener {
 	private static Map<String, MappingDescriptor> descriptors = new HashMap<String, MappingDescriptor>();
 	static {
 		descriptors.put("event", new EventMappingDescriptor());
-		descriptors.put("ristorante",new MappingDescriptor("ristorante", "restaurant", RestaurantObject.class)); 
-		descriptors.put("accomodation",new MappingDescriptor("accomodation", "hotel", HotelObject.class)); 
+		descriptors.put("ristorante",new MappingDescriptor("ristorante", "restaurant", RestaurantObject.class, "tipo_ristorante")); 
+		descriptors.put("accomodation",new MappingDescriptor("accomodation", "hotel", HotelObject.class, "tipo_alloggio")); 
 		descriptors.put("iniziativa",new MappingDescriptor("iniziativa", "mainevent", MainEventObject.class, "tipo_evento")); 
 		descriptors.put("itinerario",new MappingDescriptor("itinerario", "itineraries", ItineraryObject.class));
 		descriptors.put("luogo",new MappingDescriptor("luogo", "poi", POIObject.class, "tipo_luogo")); 
 		descriptors.put("testo_generico",new MappingDescriptor("testo_generico", "content", ContentObject.class, "classifications")); 
 		descriptors.put("folder",new MappingDescriptor("folder", "content", ContentObject.class, "classifications")); 
+		descriptors.put("servizio_sul_territorio",new MappingDescriptor("servizio_sul_territorio", "poi", POIObject.class, "tipo_servizio_sul_territorio")); 
 	}
 	
 	
@@ -180,7 +181,9 @@ public class EventProcessorImpl implements ServiceBusListener {
 				if (Subscriber.METHOD_ITINERARI.equals(methodName)) {
 					updateItinerari(data);
 				}
-
+				if (Subscriber.METHOD_SERVIZI.equals(methodName)) {
+					updateServizi(data);
+				}
 			}
 		} catch (Exception e) {
 			logger.error("Error updating " + methodName);
@@ -188,10 +191,10 @@ public class EventProcessorImpl implements ServiceBusListener {
 		}
 	}
 
-	private Set<String> getOldIds(String src) throws DataException {
-		List<EventObject> oldList = storage.searchObjects(EventObject.class, Collections.<String, Object> singletonMap("source", src));
+	private <T extends BaseCITObject> Set<String> getOldIds(Class<T> cls, String src) throws DataException {
+		List<T> oldList = storage.searchObjects(cls, Collections.<String, Object> singletonMap("source", src));
 		Set<String> oldIds = new HashSet<String>();
-		for (EventObject o : oldList) {
+		for (T o : oldList) {
 			oldIds.add(o.getId());
 		}
 		return oldIds;
@@ -207,7 +210,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 	}
 
 	private void updateEvents(List<ByteString> data) throws Exception {
-		Set<String> oldIds = getOldIds("opendata.trento");
+		Set<String> oldIds = getOldIds(EventObject.class,"opendata.trento");
 
 		
 		ObjectFilters filters = getFilters("event"); 
@@ -375,8 +378,62 @@ public class EventProcessorImpl implements ServiceBusListener {
 
 	}
 
+	private void updateServizi(List<ByteString> data) throws Exception {
+		Set<String> oldIds = getOldIds(POIObject.class,"opendata.trento.servizio_sul_territorio");
+
+		ObjectFilters filters = getFilters("poi"); 
+
+		for (ByteString bs : data) {
+			I18nCultura bt = I18nCultura.parseFrom(bs);
+			oldIds.remove(bt.getId());
+			POIObject old = null;
+			try {
+				old = storage.getObjectById(bt.getId(), POIObject.class);
+			} catch (Exception e) {}
+
+			if (old == null || old.getLastModified() < bt.getLastModified()) {
+				POIObject no = new POIObject();
+				no.setId(bt.getId());
+				no.setAddress(toMap(bt.getAddress()));
+				no.setCategory("servizio_sul_territorio");
+				// TODO: classification
+				no.setClassification(toMap(bt.getClassification()));
+				no.setSource("opendata.trento.servizio_sul_territorio");
+
+				Map<String, String> contacts = new HashMap<String, String>();
+				contacts.put("email", bt.getEmail());
+				contacts.put("phone", bt.getPhone());
+				no.setContacts(contacts);
+
+				no.setDescription(toMap(bt.getDescription()));
+				no.setImage(getImageURL(bt.getImage()));
+				no.setLastModified(bt.getLastModified());
+				if (bt.hasLat() && bt.hasLon()) {
+					no.setLocation(new double[] { bt.getLat(), bt.getLon() });
+				}
+
+				no.setSubtitle(toMap(bt.getSubtitle()));
+				no.setTitle(toMap(bt.getTitle()));
+				no.setInfo(toMap(bt.getInfo()));
+				no.setUpdateTime(System.currentTimeMillis());
+				no.setUrl(bt.getUrl());
+				no.setContactFullName(bt.getContactFullName());
+				no.setObjectId(bt.getObjectId());
+
+				no.setVisible(applies(no, filters));
+
+				storage.storeObject(no);
+			}
+		}
+		for (String s : oldIds) {
+			logger.info("Deleting cultura " + s);
+			storage.deleteObjectById(s);
+		}
+
+	}
+
 	private void updateCultura(List<ByteString> data) throws Exception {
-		Set<String> oldIds = getOldIds(POIObject.class);
+		Set<String> oldIds = getOldIds(POIObject.class,"opendata.trento.cultura");
 
 		ObjectFilters filters = getFilters("poi"); 
 
@@ -395,6 +452,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 				no.setCategory("cultura");
 				// TODO: classification
 				no.setClassification(toMap(bt.getClassification()));
+				no.setSource("opendata.trento.cultura");
 
 				Map<String, String> contacts = new HashMap<String, String>();
 				contacts.put("email", bt.getEmail());

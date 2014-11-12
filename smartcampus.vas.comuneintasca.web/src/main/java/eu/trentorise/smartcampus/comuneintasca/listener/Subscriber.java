@@ -40,6 +40,7 @@ public class Subscriber {
 	public static final String METHOD_MAINEVENTS = "GetMainEvents";
 	public static final String METHOD_TESTI = "GetTesti";
 	public static final String METHOD_ITINERARI = "GetItinerari";
+	public static final String METHOD_SERVIZI = "GetTerritoryServices";
 
 	@Autowired
 	@Value("${url.config}")
@@ -73,6 +74,10 @@ public class Subscriber {
 	@Value("${url.testi}")
 	private String testiURL;		
 	
+	@Autowired
+	@Value("${url.servizi}")
+	private String serviziURL;		
+
 	private ServiceBusClient client;
 	
 	private Log logger = LogFactory.getLog(getClass());
@@ -109,6 +114,9 @@ public class Subscriber {
 
 			params.put("url", itinerariURL);
 			client.subscribeService(SERVICE_OD, METHOD_ITINERARI, params);
+
+			params.put("url", serviziURL);
+			client.subscribeService(SERVICE_OD, METHOD_SERVIZI, params);
 
 		} catch (InvocationException e) {
 			logger.error("Failed to subscribe for service events: " + e.getMessage());

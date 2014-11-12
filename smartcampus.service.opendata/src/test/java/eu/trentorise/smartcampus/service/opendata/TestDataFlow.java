@@ -13,19 +13,19 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.google.protobuf.Message;
 
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.Evento;
-import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nCultura;
-import eu.trentorise.smartcampus.service.opendata.impl.GetCulturaDataFlow;
-import eu.trentorise.smartcampus.service.opendata.impl.GetEventiDataFlow;
+import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nRestaurant;
+import eu.trentorise.smartcampus.service.opendata.impl.GetConfigDataFlow;
+import eu.trentorise.smartcampus.service.opendata.impl.GetEventiParamDataFlow;
 
 public class TestDataFlow extends TestCase {
 
-	public void _testEvents() throws Exception {
+	public void testEvents() throws Exception {
 		DataFlowTestHelper helper = new DataFlowTestHelper();
 		Map<String, Object> parameters = new HashMap<String, Object>();		
 		
-		parameters.put("url", "http://www.comune.trento.it/api/opendata/v1/content/class/event/offset/0/limit/1000");
+		parameters.put("url", "http://ricadi.opencontent.it/api/opendata/v1/content/class/event/offset/0/limit/1000");
 
-		Map<String, Object> out0 = helper.executeDataFlow("smartcampus.service.opendata", "GetEventi", new GetEventiDataFlow(), parameters);
+		Map<String, Object> out0 = helper.executeDataFlow("smartcampus.service.opendata", "GetEventiParam", new GetEventiParamDataFlow(), parameters);
 		List<Message> data0 = (List<Message>)out0.get("data");
 		for (Message msg: data0) {
 			System.err.println(((Evento)msg).getLastModified()+" : "+((Evento)msg).getTitle());
@@ -34,7 +34,7 @@ public class TestDataFlow extends TestCase {
 	}
 	
 	
-	public void testData() throws Exception {
+	public void _testData() throws Exception {
 		DataFlowTestHelper helper = new DataFlowTestHelper();
 		Map<String, Object> parameters = new HashMap<String, Object>();		
 		
@@ -64,11 +64,11 @@ public class TestDataFlow extends TestCase {
 
 
 //		parameters.put("url", "http://trento.opencontent.it/comuneintasca/data");
-//		parameters.put("url", "http://www.comune.trento.it/comuneintasca/data"); 
-//		Map<String, Object> out1 = helper.executeDataFlow("smartcampus.service.opendata", "GetConfig", new GetConfigDataFlow(), parameters);		
+		parameters.put("url", "http://www.comune.trento.it/comuneintasca/data"); 
+		Map<String, Object> out1 = helper.executeDataFlow("smartcampus.service.opendata", "GetConfig", new GetConfigDataFlow(), parameters);		
 		
 //		parameters.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754329/list/limit/1000");
-//		parameters.put("url", "http://www.comune.trento.it/api/opendata/v1/content/class/ristorante/offset/0/limit/1000"); // prod
+//		parameters.put("url", "http://ricadi.opencontent.it/api/opendata/v1/content/class/ristorante/offset/0/limit/1000"); // prod
 //		Map<String, Object> out1 = helper.executeDataFlow("smartcampus.service.opendata", "GetRestaurants", new GetRestaurantsDataFlow(), parameters);
 
 //		parameters.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754211/list/limit/1000");
@@ -76,8 +76,8 @@ public class TestDataFlow extends TestCase {
 //		Map<String, Object> out1 = helper.executeDataFlow("smartcampus.service.opendata", "GetHotels", new GetHotelsDataFlow(), parameters);
 		
 //		parameters.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754058/list/limit/1000");  // cultura
-		parameters.put("url", "http://www.comune.trento.it/api/opendata/v1/content/class/luogo/offset/0/limit/1000"); // prod
-		Map<String, Object> out1 = helper.executeDataFlow("smartcampus.service.opendata", "GetCultura", new GetCulturaDataFlow(), parameters);		
+//		parameters.put("url", "http://www.comune.trento.it/api/opendata/v1/content/class/luogo/offset/0/limit/1000"); // prod
+//		Map<String, Object> out1 = helper.executeDataFlow("smartcampus.service.opendata", "GetCultura", new GetCulturaDataFlow(), parameters);		
 //		
 //		parameters.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754317/list/limit/1000");
 //		parameters.put("url", "http://www.comune.trento.it/api/opendata/v1/content/class/iniziativa/offset/0/limit/1000"); // prod
@@ -96,10 +96,11 @@ public class TestDataFlow extends TestCase {
 		System.out.println(data1.size());
 		for (Message msg: data1) {
 //			System.err.println(((I18nMainEvent)msg).getClassification()+" : "+((I18nMainEvent)msg).getTitle().getIt()+":"+((I18nMainEvent)msg).getId()+":"+":"+((I18nMainEvent)msg).getLastModified());
-			System.err.println(((I18nCultura)msg).getClassification().getIt()+" : "+((I18nCultura)msg).getTitle().getIt()+":"+((I18nCultura)msg).getId()+":"+":"+((I18nCultura)msg).getLastModified());
+//			System.err.println(((I18nCultura)msg).getClassification().getIt()+" : "+((I18nCultura)msg).getTitle().getIt()+":"+((I18nCultura)msg).getId()+":"+":"+((I18nCultura)msg).getLastModified());
 //			System.err.println(msg);
 //			System.err.println(((I18nTesto)msg).getTitle().getIt());
 //			System.err.println(((ConfigData)msg).getData());
+			System.err.println(((I18nRestaurant)msg).getClassification().getIt()+" : "+((I18nRestaurant)msg).getTitle().getIt()+":"+((I18nRestaurant)msg).getId()+":"+":"+((I18nRestaurant)msg).getLastModified());
 			
 //			ConfigData cd = (ConfigData)msg;
 //			System.out.println(cd.getData());

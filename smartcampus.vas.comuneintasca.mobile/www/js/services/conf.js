@@ -710,9 +710,6 @@ angular.module('ilcomuneintasca.services.conf', [])
     keys: function () {
       return keys;
     },
-    doProfiling: function () {
-      return false;
-    },
     savedImagesDirName: function () {
       return 'IlComuneInTasca-ImagesCache';
     },
@@ -820,6 +817,9 @@ angular.module('ilcomuneintasca.services.conf', [])
     },
     dbName: function() {
       return dbName;
+    },
+    doProfiling: function () {
+      return true;
     }
   }
 })

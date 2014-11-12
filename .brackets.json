@@ -2,6 +2,7 @@
     "jscodehints.detectedExclusions": [
         "/Users/enrico/Desktop/fbk/dev/comuneintasca/smartcampus.vas.comuneintasca.mobile/platforms/_backups/ios/build/device/Trento - Il Comune in Tasca.app/www/js/libs/crypto-js/sha1-min.js",
         "/Users/enrico/Desktop/fbk/dev/comuneintasca/smartcampus.vas.comuneintasca.mobile/platforms/_backups/ios/build/device/Trento - Il Comune in Tasca.app/www/js/libs/localize.js",
-        "/Users/enrico/Desktop/fbk/dev/comuneintasca/smartcampus.vas.comuneintasca.oldmobile/platforms/ios/build/emulator/Trento - Il Comune in Tasca.app/www/plugins/org.apache.cordova.device/www/device.js"
+        "/Users/enrico/Desktop/fbk/dev/comuneintasca/smartcampus.vas.comuneintasca.oldmobile/platforms/ios/build/emulator/Trento - Il Comune in Tasca.app/www/plugins/org.apache.cordova.device/www/device.js",
+        "/Users/enrico/Desktop/fbk/dev/comuneintasca/smartcampus.vas.comuneintasca.mobile/www/js/services/conf.js"
     ]
 }

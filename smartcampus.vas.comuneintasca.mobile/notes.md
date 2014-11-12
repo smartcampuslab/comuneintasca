@@ -78,7 +78,7 @@ to enable custom "skipBack" option for sqlplugin add these lines to source file 
 
 for apps deployed on ios versione older than 5.1
 
->#import <sys/xattr.h>
+>\#import \<sys/xattr.h\>
 > [...]
 >					const char* attrName = "com.apple.MobileBackup";
 >					u_int8_t attrValue = 1;

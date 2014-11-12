@@ -110,7 +110,7 @@ angular.module('ilcomuneintasca.controllers.home', [])
               }
               */
               $scope.highlights=highlightsVerified;
-              $ionicSlideBoxDelegate.$getByHandle('highlights').update();
+              $ionicSlideBoxDelegate.update();
             }
           })
         } else if (highlights.length>0) {

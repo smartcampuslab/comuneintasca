@@ -414,6 +414,8 @@ angular.module('ilcomuneintasca.services.db', [])
                             classified.resolve(['misc','','']);
                           }
                         }
+                      } else if (contentTypeKey == 'servizio_sul_territorio') {
+                          classified.resolve([item.classification.it,'','']);
                       } else if (contentTypeKey == 'poi') {
                         if (POI_CATE_FROM_IT) {
                           classified.resolve([item.classification.it,'','']);

@@ -233,17 +233,8 @@ ion-side-menu .item {
   padding: .5em;
   text-align: center;
 }
-.hp-box.festival {
-  background-image: url(../img/hp-box/festivaleconomia.png);
-}
-.hp-box.sport {
-  background-image: url(../img/hp-box/sportnelverde.png);
-}
-.hp-box.palazzi {
-  background-image: url(../img/hp-box/palazziaperti.png);
-}
-.hp-box.trento {
-  background-image: url(../img/hp-box/trento.png);
+.hp-box.city {
+  background-image: url(../img/hp-box/city.png);
 }
 #home-buttons button {
   background-color: #b7d6e8;

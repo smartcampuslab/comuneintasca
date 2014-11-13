@@ -145,8 +145,10 @@ angular.module('ilcomuneintasca.controllers.home', [])
             "app": null
           });
         }
-        var rows=[], row=-1;
+        var rows=[], row=-1, pos=0;
         for (ii=0; ii<items.length; ii++) {
+          items[ii]['pos']=pos;
+          pos++;
           if ((ii%2)==0) {
             row++;
             rows[row]=[];

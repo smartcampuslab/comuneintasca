@@ -44,12 +44,19 @@ blu: #2975a7;
 blu scuro: #1b4d6e;
 */
 
+
 .padding.notop { padding-top:0; }
 .padding.nobottom { padding-bottom:0; }
+
 
 h1,h2,h3,h4 {
   color: #1b4d6e;
 }
+h1,h2, h3, h4, h5, h6,
+#home-buttons b, ion-side-menu b {
+  font-family: 'HelveticaNeue-CondensedBold';
+}
+
 .comuni-html-description a,
 .comuni-html-info a {
   color: #2975a7;
@@ -60,6 +67,8 @@ h1,h2,h3,h4 {
   color:#000;
   margin-bottom:.4em;
 }
+
+
 .bar.bar-comuni-home .title,
 .bar .title-home {
   line-height: 22px;
@@ -75,27 +84,30 @@ h1,h2,h3,h4 {
 .bar.bar-comuni .button {
   color: #fff;
 }
+
+
 ion-tabs, .tabs {
   border-color: #2975a7;
-  background-color: #b7d6e8;
+  background-color: #CCC !important;
   color: #2975a7;
 }
 .tabs .tab-item {
   /*  opacity: 1;*/
 }
-.item-input-inset {
-  background-color: #b7d6e8;
+.tabs .tab-item.activated, .tabs .tab-item.active, .tabs .tab-item.tab-item-active { 
+  color:#2975a7 !important;font-weight:bold !important;border-bottom:5px solid #2975a7 !important; border-top-width: 0 !important; margin-top:0 !important; 
 }
-.item-input-inset .item-input-wrapper {
-  background-color: #fff;
-}
+
+
+.item-input-inset { background-color: #2f2d2d; }
+.item-input-inset .item-input-wrapper { background-color: #c5c5c4; }
 .item-input-inset .item-input-wrapper .placeholder-icon,
 .item-input-inset .item-input-wrapper input {
-  color: #2975a7;
+  color: #000;
 }
-.item-input-inset .button.button-clear {
-  color: #2975a7;
-}
+.item-input-inset .button.button-clear { color: #c5c5c4; }
+
+
 .bar.bar-comuni-home {
   border: none;
   background-image: url(../svg/flag.svg);
@@ -112,18 +124,18 @@ ion-tabs, .tabs {
 .bar.bar-dark-comuni .title {
   color: #fff;
 }
+
+
 ion-side-menu .item-divider {
   background-color: #2975a7;
   color: #fff;
   opacity: .5;
 }
 ion-side-menu.menu {
-  background-color: #b7d6e8;
+  background-color: #2f2d2d;
 }
-ion-side-menu .item {
-  background-color: transparent;
-  border-color: #2975a7;
-}
+ion-side-menu .list .item { background-color: transparent;color:#fff;border-color:rgba(41,117,167,.2); }
+
 .item-complex .item-content,
 .item-radio .item-content {
   background-color: transparent;
@@ -236,9 +248,11 @@ ion-side-menu .item {
 .hp-box.city {
   background-image: url(../img/hp-box/city.png);
 }
+
+
 #home-buttons button {
-  background-color: #b7d6e8;
-  color: #2975a7;
+  background-color: #2f2d2d;
+  color: #fff;
   margin: 0;
   height: 32px;
   padding: 0 4px;
@@ -264,6 +278,8 @@ ion-side-menu .item {
 #home-buttons.lang_de button {
   font-size: smaller;
 }
+
+
 .comuneicon::before {
   line-height: 32px !important;
   font-size: 32px !important;
@@ -357,16 +373,8 @@ ion-side-menu .item {
   bottom: 0;
   width: 100%;
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-#home-buttons b,
-ion-side-menu b {
-  font-family: 'HelveticaNeue-CondensedBold';
-}
+
+
 #credits .row {
   padding: 0;
 }
@@ -377,6 +385,7 @@ ion-side-menu b {
 /*#credits .button-icon:before {
   font-size: smaller;
 }*/
+
 
 .modal-filter .has-footer {
   bottom: 65px;
@@ -420,13 +429,12 @@ p.phone-button {
 }
 
 
-comuni-img, .comuni-item-image {
-	position: relative;
-}
+comuni-img, .comuni-item-image { position: relative; }
+.comuni-item-image { border: 5px solid #2975a7; }
+
 .dida {
-  position:relative;
-	line-height:17px; color:#1b4d6e; background-color: #b7d6e8;
-	position: absolute; bottom:0;right:0;padding:0 .4em 0 .5em;
+	color:#fff; background-color: #2975a7;
+	line-height:17px; position: absolute; bottom:0;right:0;padding:0 .4em 0 .5em;
 }
 .dida span { margin-right:.5em; }
 .dida i { font-size:1.4em;position:absolute;right:0;bottom:-1px; }

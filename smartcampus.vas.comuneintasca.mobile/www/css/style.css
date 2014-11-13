@@ -468,5 +468,5 @@ comuni-img, .comuni-item-image {
 .comuni-html-description li, comuni-html-info li { margin-left:10px; }
 
 
-.list { padding-top:0;padding-bottom:0; }
+ion-list > .list { padding-top:1;padding-bottom:1; }
 .sticky-label { margin-top:1px;width:100%;z-index:1;position:absolute;top:74px; color: #2975a7; }

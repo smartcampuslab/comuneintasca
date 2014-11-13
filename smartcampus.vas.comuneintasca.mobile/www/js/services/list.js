@@ -1,6 +1,6 @@
 angular.module('ilcomuneintasca.services.list', [])
 
-.factory('ListToolbox', function ($rootScope, $q, $ionicPopup, $ionicModal, $filter, MapHelper, $location, Config, $timeout, $ionicScrollDelegate) {
+.factory('ListToolbox', function ($rootScope, $q, $ionicPopup, $ionicModal, $filter, MapHelper, $location, Config, Profiling, $timeout, $ionicScrollDelegate) {
   var openSortPopup = function ($scope, options, presel, callback) {
     var title = $filter('translate')(Config.keys()['OrderBy']);
     var template = '<div class="list">';
@@ -84,6 +84,7 @@ angular.module('ilcomuneintasca.services.list', [])
     },
     // expect conf with load, orderingTypes, defaultOrdering, getData, title, filterOptions, defaultFilter, doFilter
     prepare: function ($scope, conf) {
+      Profiling.start('sort.prepare');
       var d = $q.defer();
       //$scope.gotdata = d.promise;
       if ($scope.$navDirection == 'back') {
@@ -94,6 +95,7 @@ angular.module('ilcomuneintasca.services.list', [])
         state.data = null;
       }
       conf.load(state.data);
+      Profiling._do('sort.prepare','conf.load');
 /*
       $scope.goToItem = function (path) {
         //state.data = conf.getData();
@@ -179,6 +181,7 @@ angular.module('ilcomuneintasca.services.list', [])
           $scope.ordering.searchText = null;
         };
       }
+      Profiling._do('sort.prepare','done');
     }
   }
 })

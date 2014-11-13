@@ -40,8 +40,14 @@ public class TerritoryServiceScript extends OpenContentScript {
 		}
 		
 		builder.setTitle(getI18NStringValue(i18n, FIELDS, "titolo", VALUE));
+		if (!builder.getTitle().hasIt()) {
+			builder.setTitle(getI18NStringValue(i18n, FIELDS, "title", VALUE));
+		}
 		
 		builder.setDescription(getI18NStringValue(i18n, FIELDS, "abstract", VALUE));
+		if (!builder.getDescription().hasIt()) {
+			builder.setDescription(getI18NStringValue(i18n, FIELDS, "descrizione", VALUE));
+		}
 
 //		builder.setSubtitle(getI18NStringValue(i18n, FIELDS, "abstract", VALUE));
 
@@ -56,6 +62,9 @@ public class TerritoryServiceScript extends OpenContentScript {
 		}
 		
 		Object gps = getRecValue(getMap(i18n,DEFAULT_LANGUAGE), FIELDS, "gps", STRING_VALUE);
+		if (gps == null || !(gps instanceof String)) {
+			gps = getRecValue(getMap(i18n,DEFAULT_LANGUAGE), FIELDS, "geo", STRING_VALUE);
+		}
 		if (gps != null && gps instanceof String) {
 			Double latlon[] = extractGPS((String)gps);
 			if (latlon != null) {

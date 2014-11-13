@@ -61,6 +61,7 @@ import eu.trentorise.smartcampus.comuneintasca.model.MenuItemQuery;
 import eu.trentorise.smartcampus.comuneintasca.model.Organization;
 import eu.trentorise.smartcampus.comuneintasca.model.POIObject;
 import eu.trentorise.smartcampus.comuneintasca.model.RestaurantObject;
+import eu.trentorise.smartcampus.comuneintasca.model.TerritoryServiceObject;
 import eu.trentorise.smartcampus.presentation.common.exception.DataException;
 import eu.trentorise.smartcampus.presentation.data.BasicObject;
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.ConfigData;
@@ -111,7 +112,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 		descriptors.put("luogo",new MappingDescriptor("luogo", "poi", POIObject.class, "tipo_luogo")); 
 		descriptors.put("testo_generico",new MappingDescriptor("testo_generico", "content", ContentObject.class, "classifications")); 
 		descriptors.put("folder",new MappingDescriptor("folder", "content", ContentObject.class, "classifications")); 
-		descriptors.put("servizio_sul_territorio",new MappingDescriptor("servizio_sul_territorio", "poi", POIObject.class, "tipo_servizio_sul_territorio")); 
+		descriptors.put("servizio_sul_territorio",new MappingDescriptor("servizio_sul_territorio", "servizio_sul_territorio", TerritoryServiceObject.class, "tipo_servizio_sul_territorio")); 
 	}
 	
 	
@@ -381,7 +382,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 	private void updateServizi(List<ByteString> data) throws Exception {
 		Set<String> oldIds = getOldIds(POIObject.class,"opendata.trento.servizio_sul_territorio");
 
-		ObjectFilters filters = getFilters("poi"); 
+		ObjectFilters filters = getFilters("servizio_sul_territorio"); 
 
 		for (ByteString bs : data) {
 			I18nCultura bt = I18nCultura.parseFrom(bs);
@@ -392,7 +393,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 			} catch (Exception e) {}
 
 			if (old == null || old.getLastModified() < bt.getLastModified()) {
-				POIObject no = new POIObject();
+				TerritoryServiceObject no = new TerritoryServiceObject();
 				no.setId(bt.getId());
 				no.setAddress(toMap(bt.getAddress()));
 				no.setCategory("servizio_sul_territorio");
@@ -426,7 +427,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 			}
 		}
 		for (String s : oldIds) {
-			logger.info("Deleting cultura " + s);
+			logger.info("Deleting servizio_sul_territorio " + s);
 			storage.deleteObjectById(s);
 		}
 
@@ -837,7 +838,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 						String objectId = iterator.next();
 						List<GeoTimeSyncObjectBean> objs = storage.genericSearch(Collections.<String, Object> singletonMap("id", objectId));
 						if (objs == null || objs.isEmpty()) {
-							iterator.remove();
+//							iterator.remove();
 						}
 					}
 					if (item.getObjectIds().isEmpty()) {
@@ -846,15 +847,21 @@ public class EventProcessorImpl implements ServiceBusListener {
 						continue;
 					}
 				}
-				String type = findType(item);
-				item.setType(type);
+				String type = null;
+				try {
+					type = findType(item);
+				} catch (MissingDataException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				if (type != null) {
+					item.setType(type);
 					logger.info("Set type to " + type + " for " + ((item.getName() != null) ? item.getName().get("it") : item.getId()));
-				} else if (item.getItems() == null || item.getItems().isEmpty())  {
-					if (item.getObjectIds() == null || item.getObjectIds().size() != 1 || !item.getObjectIds().contains(item.getId())) {
-						logger.error("Missing type for " + ((item.getName() != null) ? item.getName().get("it") : item.getId()));
-						throw new MissingDataException("Missing type for " + ((item.getName() != null) ? item.getName().get("it") : item.getId()));
-					}
+//				} else if (item.getItems() == null || item.getItems().isEmpty())  {
+//					if (item.getObjectIds() == null || item.getObjectIds().size() != 1 || !item.getObjectIds().contains(item.getId())) {
+//						logger.error("Missing type for " + ((item.getName() != null) ? item.getName().get("it") : item.getId()));
+//						throw new MissingDataException("Missing type for " + ((item.getName() != null) ? item.getName().get("it") : item.getId()));
+//					}
 				} 
 			}
 			if (item.getItems() != null) {

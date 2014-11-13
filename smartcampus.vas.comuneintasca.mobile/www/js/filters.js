@@ -55,7 +55,7 @@ angular.module('ilcomuneintasca.filters', [])
         if (input.hasOwnProperty('it')) {
           return input.it || '';
         } else {
-          return input || '';
+          return '';
         }
       }
     }

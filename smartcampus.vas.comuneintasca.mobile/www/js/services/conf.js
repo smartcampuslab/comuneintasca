@@ -355,7 +355,8 @@ angular.module('ilcomuneintasca.services.conf', [])
     'hotel': {
       de: 'Hotel',
       it: 'Hotel',
-      en: 'Hotel'
+      en: 'Hotel',
+      sinonyms:['Residence']
     },
     'hostel': {
       de: 'Jugendherberge',
@@ -365,17 +366,20 @@ angular.module('ilcomuneintasca.services.conf', [])
     'agri': {
       de: 'Agritourismusbetrieb',
       it: 'Agritur',
-      en: 'Farmhouse Inn'
+      en: 'Farmhouse Inn',
+      sinonyms:['Agriturismo']
     },
     'bnb': {
       de: 'Bed and Breakfast',
       it: 'Bed and Breakfast',
-      en: 'Bed and Breakfast'
+      en: 'Bed and Breakfast',
+      sinonyms:['B&B']
     },
     'camp': {
       de: 'Campingplatz',
       it: 'Campeggio',
-      en: 'Camp-site'
+      en: 'Camp-site',
+      sinonyms:['Camping','Villaggio']
     },
     'rooms': {
       de: 'Zimmervermietung',
@@ -385,7 +389,8 @@ angular.module('ilcomuneintasca.services.conf', [])
     'apts': {
       de: 'Ferienwohnungen',
       it: 'Appartamenti per vacanze',
-      en: 'Holiday apartments'
+      en: 'Holiday apartments',
+      sinonyms:['Appartamenti']
     },
   };
 
@@ -398,12 +403,14 @@ angular.module('ilcomuneintasca.services.conf', [])
     'pizzeria': {
       de: '',
       it: 'Pizzeria',
-      en: ''
+      en: '',
+      sinonyms:['Pizzerie']
     },
     'trattoria': {
       de: 'Gastwirtschaft',
       it: 'Trattoria',
-      en: ''
+      en: 'Trattoria',
+      sinonyms:['Trattorie']
     },
     'typical': {
       de: 'Bed and Breakfast',
@@ -413,7 +420,8 @@ angular.module('ilcomuneintasca.services.conf', [])
     'restaurant': {
       de: 'Restaurant',
       it: 'Ristorante',
-      en: 'Restaurant'
+      en: 'Restaurant',
+      sinonyms:['Ristoranti']
     },
     'pub': {
       de: 'Bierstube',
@@ -515,7 +523,8 @@ angular.module('ilcomuneintasca.services.conf', [])
     'mainevent': 'eu.trentorise.smartcampus.comuneintasca.model.MainEventObject',
     //'home': 'eu.trentorise.smartcampus.comuneintasca.model.HomeObject',
     'oldconfig': 'eu.trentorise.smartcampus.comuneintasca.model.ConfigObject',
-    'config': 'eu.trentorise.smartcampus.comuneintasca.model.DynamicConfigObject'
+    'config': 'eu.trentorise.smartcampus.comuneintasca.model.DynamicConfigObject',
+    'servizio_sul_territorio': 'eu.trentorise.smartcampus.comuneintasca.model.TerritoryServiceObject'
   };
 
   function cloneParentGroup(group) {
@@ -609,6 +618,10 @@ angular.module('ilcomuneintasca.services.conf', [])
           }
         },
         "poi":{
+          "sort":{ "options":["A-Z", "Z-A", "Distance"], "default":"Distance" },
+          "map":true
+        },
+        "servizio_sul_territorio":{
           "sort":{ "options":["A-Z", "Z-A", "Distance"], "default":"Distance" },
           "map":true
         },
@@ -768,6 +781,11 @@ angular.module('ilcomuneintasca.services.conf', [])
       for (var hotelType in hotelTypes) {
         if (hotelTypes.hasOwnProperty(hotelType)) {
           if (hotelTypes[hotelType].it == cate) return hotelType;
+          if (!!hotelTypes[hotelType].sinonyms) {
+            for (var i = 0; i < hotelTypes[hotelType].sinonyms.length; i++) {
+              if (hotelTypes[hotelType].sinonyms[i] == cate) return hotelType;
+            }
+          }
         }
       }
       console.log('unknown hotel cate: "'+cate+'"');
@@ -795,6 +813,11 @@ angular.module('ilcomuneintasca.services.conf', [])
       for (var restaurantType in restaurantTypes) {
         if (restaurantTypes.hasOwnProperty(restaurantType)) {
           if (restaurantTypes[restaurantType].it == cate) return restaurantType;
+          if (!!restaurantTypes[restaurantType].sinonyms) {
+            for (var i = 0; i < restaurantTypes[restaurantType].sinonyms.length; i++) {
+              if (restaurantTypes[restaurantType].sinonyms[i] == cate) return restaurantType;
+            }
+          }
         }
       }
       console.log('unknown restaurant cate: "'+cate+'"');

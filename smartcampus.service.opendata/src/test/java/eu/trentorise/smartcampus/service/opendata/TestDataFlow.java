@@ -8,14 +8,10 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 
-import org.codehaus.jackson.map.ObjectMapper;
-
 import com.google.protobuf.Message;
 
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.Evento;
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nCultura;
-import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nRestaurant;
-import eu.trentorise.smartcampus.service.opendata.impl.GetConfigDataFlow;
 import eu.trentorise.smartcampus.service.opendata.impl.GetEventiParamDataFlow;
 import eu.trentorise.smartcampus.service.opendata.impl.GetTerritoryServicesDataFlow;
 
@@ -82,7 +78,7 @@ public class TestDataFlow extends TestCase {
 //		Map<String, Object> out1 = helper.executeDataFlow("smartcampus.service.opendata", "GetHotels", new GetHotelsDataFlow(), parameters);
 		
 //		parameters.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754058/list/limit/1000");  // cultura
-//		parameters.put("url", "http://www.comune.trento.it/api/opendata/v1/content/class/luogo/offset/0/limit/1000"); // prod
+//		parameters.put("url", "http://ricadi.opencontent.it/api/opendata/v1/content/class/luogo/offset/0/limit/1000"); // prod
 //		Map<String, Object> out1 = helper.executeDataFlow("smartcampus.service.opendata", "GetCultura", new GetCulturaDataFlow(), parameters);		
 //		
 //		parameters.put("url", "http://trento.opencontent.it/api/opendata/v1/content/node/754317/list/limit/1000");
@@ -97,16 +93,16 @@ public class TestDataFlow extends TestCase {
 //		parameters.put("url", "http://www.comune.trento.it/api/opendata/v1/content/node/870374/list/limit/1000"); // prod
 //		Map<String, Object> out1 = helper.executeDataFlow("smartcampus.service.opendata", "GetItinerari", new GetItinerariDataFlow(), parameters);		
 		
-		ObjectMapper mapper = new ObjectMapper();		
+//		ObjectMapper mapper = new ObjectMapper();		
 		List<Message> data1 = (List<Message>)out1.get("data");
 		System.out.println(data1.size());
 		for (Message msg: data1) {
 //			System.err.println(((I18nMainEvent)msg).getClassification()+" : "+((I18nMainEvent)msg).getTitle().getIt()+":"+((I18nMainEvent)msg).getId()+":"+":"+((I18nMainEvent)msg).getLastModified());
-//			System.err.println(((I18nCultura)msg).getClassification().getIt()+" : "+((I18nCultura)msg).getTitle().getIt()+":"+((I18nCultura)msg).getId()+":"+":"+((I18nCultura)msg).getLastModified());
-//			System.err.println(msg);
+			System.err.println(((I18nCultura)msg).getClassification().getIt()+" : "+((I18nCultura)msg).getTitle().getIt()+":"+((I18nCultura)msg).getId()+":"+":"+((I18nCultura)msg).getLastModified());
+			System.err.println(msg);
 //			System.err.println(((I18nTesto)msg).getTitle().getIt());
 //			System.err.println(((ConfigData)msg).getData());
-			System.err.println(((I18nCultura)msg).getClassification().getIt()+" : "+((I18nCultura)msg).getTitle().getIt()+":"+((I18nCultura)msg).getId()+":"+":"+((I18nCultura)msg).getLastModified());
+//			System.err.println(((I18nCultura)msg).getClassification().getIt()+" : "+((I18nCultura)msg).getTitle().getIt()+":"+((I18nCultura)msg).getId()+":"+":"+((I18nCultura)msg).getLastModified());
 			
 //			ConfigData cd = (ConfigData)msg;
 //			System.out.println(cd.getData());

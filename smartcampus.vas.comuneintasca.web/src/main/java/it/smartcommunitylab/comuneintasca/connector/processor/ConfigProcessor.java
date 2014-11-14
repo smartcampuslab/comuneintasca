@@ -192,30 +192,35 @@ public class ConfigProcessor {
 			}
 			
 			if (item.getType() == null && item.getQuery() == null && item.getRef() == null && item.getApp() == null) {
-				if (item.getObjectIds() != null && !item.getObjectIds().isEmpty()) {
-					for (Iterator<String> iterator = item.getObjectIds().iterator(); iterator.hasNext();) {
-						String objectId = iterator.next();
-						AppObject objs = connectorStorage.getObjectById(objectId, app.getId());
-						if (objs == null) {
-							iterator.remove();
-						}
-					}
-					if (item.getObjectIds().isEmpty()) {
-						logger.warn("Removing item "+item.getId());
-						menuIterator.remove();
-						continue;
-					}
-				}
+//				if (item.getObjectIds() != null && !item.getObjectIds().isEmpty()) {
+//					for (Iterator<String> iterator = item.getObjectIds().iterator(); iterator.hasNext();) {
+//						String objectId = iterator.next();
+//						AppObject objs = connectorStorage.getObjectById(objectId, app.getId());
+//						if (objs == null) {
+//							iterator.remove();
+//						}
+//					}
+//					if (item.getObjectIds().isEmpty()) {
+//						logger.warn("Removing item "+item.getId());
+//						menuIterator.remove();
+//						continue;
+//					}
+//				}
 				
-				String type = findType(item, app);
-				item.setType(type);
+				String type = null;
+				try {
+					type = findType(item, app);
+				} catch (MissingDataException e) {
+					logger.error(e.getMessage());
+				}
 				if (type != null) {
+					item.setType(type);
 					logger.info("Set type to " + type + " for " + ((item.getName() != null) ? item.getName().get("it") : item.getId()));
-				} else if (item.getItems() == null || item.getItems().isEmpty())  {
-					if (item.getObjectIds() == null || item.getObjectIds().size() != 1 || !item.getObjectIds().contains(item.getId())) {
-						logger.error("Missing type for " + ((item.getName() != null) ? item.getName().get("it") : item.getId()));
-						throw new MissingDataException("Missing type for " + ((item.getName() != null) ? item.getName().get("it") : item.getId()));
-					}
+//				} else if (item.getItems() == null || item.getItems().isEmpty())  {
+//					if (item.getObjectIds() == null || item.getObjectIds().size() != 1 || !item.getObjectIds().contains(item.getId())) {
+//						logger.error("Missing type for " + ((item.getName() != null) ? item.getName().get("it") : item.getId()));
+//						throw new MissingDataException("Missing type for " + ((item.getName() != null) ? item.getName().get("it") : item.getId()));
+//					}
 				} 
 			}
 			if (item.getItems() != null) {

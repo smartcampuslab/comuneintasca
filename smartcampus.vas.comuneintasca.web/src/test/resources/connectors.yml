@@ -8,7 +8,7 @@ apps:
           imagePath: http://url.it
           autoPublish: true
 
-        - type: it.smartcommunitylab.comuneintasca.core.model.ConfigObject
+        - type: it.smartcommunitylab.comuneintasca.core.model.DynamicConfigObject
           url: http://url.it
           serviceId: smartcampus.service.opendata
           methodName: GetConfig

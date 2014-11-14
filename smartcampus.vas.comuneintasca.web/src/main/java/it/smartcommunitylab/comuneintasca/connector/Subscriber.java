@@ -37,6 +37,7 @@ public class Subscriber {
 	public static final String METHOD_MAINEVENTS = "GetMainEvents";
 	public static final String METHOD_TESTI = "GetTesti";
 	public static final String METHOD_ITINERARI = "GetItinerari";
+	public static final String METHOD_TERRITORY_SERVICE = "GetTerritoryServices";
 
 	private ServiceBusClient client;
 	

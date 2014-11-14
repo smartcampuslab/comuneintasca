@@ -17,7 +17,7 @@ package it.smartcommunitylab.comuneintasca.core.model;
 
 import java.util.List;
 
-public class ConfigObject extends AppObject {
+public class DynamicConfigObject extends AppObject {
 	private static final long serialVersionUID = 3952436037350859543L;
 
 	private String appId;
@@ -36,7 +36,7 @@ public class ConfigObject extends AppObject {
 		this.lastModified = lastModified;
 	}
 
-	public ConfigObject() {
+	public DynamicConfigObject() {
 	}
 
 	public List<MenuItem> getHighlights() {

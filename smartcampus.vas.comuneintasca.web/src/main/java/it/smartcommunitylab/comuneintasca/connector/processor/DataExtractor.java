@@ -9,6 +9,7 @@ import it.smartcommunitylab.comuneintasca.core.model.MainEventObject;
 import it.smartcommunitylab.comuneintasca.core.model.Organization;
 import it.smartcommunitylab.comuneintasca.core.model.POIObject;
 import it.smartcommunitylab.comuneintasca.core.model.RestaurantObject;
+import it.smartcommunitylab.comuneintasca.core.model.TerritoryServiceObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -376,6 +377,55 @@ public class DataExtractor {
 			return target.getLastModified() < source.getLastModified();
 		}
 	};
+	public Extractor<Opendata.I18nCultura, TerritoryServiceObject> territoryServiceExtractor  = new Extractor<Opendata.I18nCultura, TerritoryServiceObject>() {
+
+		@Override
+		public I18nCultura readData(ByteString bs) throws Exception {
+			return I18nCultura.parseFrom(bs);
+		}
+
+		@Override
+		public TerritoryServiceObject extractData(I18nCultura bt, SourceEntry entry) {
+			TerritoryServiceObject no = new TerritoryServiceObject();
+			no.setId(bt.getId());
+			no.setAddress(toMap(bt.getAddress()));
+			no.setCategory("servizio_sul_territorio");
+			// TODO: classification
+			no.setClassification(toMap(bt.getClassification()));
+
+			Map<String, String> contacts = new HashMap<String, String>();
+			contacts.put("email", bt.getEmail());
+			contacts.put("phone", bt.getPhone());
+			no.setContacts(contacts);
+
+			no.setDescription(toMap(bt.getDescription()));
+			no.setImage(getImageURL(bt.getImage(), entry));
+			no.setLastModified(bt.getLastModified());
+			if (bt.hasLat() && bt.hasLon()) {
+				no.setLocation(new double[] { bt.getLat(), bt.getLon() });
+			}
+
+			no.setSubtitle(toMap(bt.getSubtitle()));
+			no.setTitle(toMap(bt.getTitle()));
+			no.setInfo(toMap(bt.getInfo()));
+			no.setUpdateTime(System.currentTimeMillis());
+			no.setUrl(bt.getUrl());
+			no.setContactFullName(bt.getContactFullName());
+			no.setObjectId(bt.getObjectId());
+			return no;
+		}
+
+		@Override
+		public String getId(I18nCultura obj) {
+			return obj.getId();
+		}
+
+		@Override
+		public boolean isNewer(I18nCultura source, TerritoryServiceObject target) {
+			return target.getLastModified() < source.getLastModified();
+		}
+	};
+
 	
 
 	public String getImageURL(String image, SourceEntry entry) {

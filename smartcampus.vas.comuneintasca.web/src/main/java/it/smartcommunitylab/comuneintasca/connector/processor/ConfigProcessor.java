@@ -4,7 +4,7 @@ import it.smartcommunitylab.comuneintasca.connector.App;
 import it.smartcommunitylab.comuneintasca.connector.ConnectorStorage;
 import it.smartcommunitylab.comuneintasca.core.model.AppObject;
 import it.smartcommunitylab.comuneintasca.core.model.BaseCITObject;
-import it.smartcommunitylab.comuneintasca.core.model.ConfigObject;
+import it.smartcommunitylab.comuneintasca.core.model.DynamicConfigObject;
 import it.smartcommunitylab.comuneintasca.core.model.ContentObject;
 import it.smartcommunitylab.comuneintasca.core.model.EventObject;
 import it.smartcommunitylab.comuneintasca.core.model.HotelObject;
@@ -14,6 +14,7 @@ import it.smartcommunitylab.comuneintasca.core.model.MenuItem;
 import it.smartcommunitylab.comuneintasca.core.model.MenuItemQuery;
 import it.smartcommunitylab.comuneintasca.core.model.POIObject;
 import it.smartcommunitylab.comuneintasca.core.model.RestaurantObject;
+import it.smartcommunitylab.comuneintasca.core.model.TerritoryServiceObject;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -46,13 +47,14 @@ public class ConfigProcessor {
 	private static Map<String, MappingDescriptor> descriptors = new HashMap<String, MappingDescriptor>();
 	static {
 		descriptors.put("event", new EventMappingDescriptor());
-		descriptors.put("ristorante",new MappingDescriptor("ristorante", "restaurant", RestaurantObject.class)); 
-		descriptors.put("accomodation",new MappingDescriptor("accomodation", "hotel", HotelObject.class)); 
+		descriptors.put("ristorante",new MappingDescriptor("ristorante", "restaurant", RestaurantObject.class, "tipo_ristorante")); 
+		descriptors.put("accomodation",new MappingDescriptor("accomodation", "hotel", HotelObject.class,"tipo_alloggio")); 
 		descriptors.put("iniziativa",new MappingDescriptor("iniziativa", "mainevent", MainEventObject.class, "tipo_evento")); 
 		descriptors.put("itinerario",new MappingDescriptor("itinerario", "itineraries", ItineraryObject.class));
 		descriptors.put("luogo",new MappingDescriptor("luogo", "poi", POIObject.class, "tipo_luogo")); 
 		descriptors.put("testo_generico",new MappingDescriptor("testo_generico", "content", ContentObject.class, "classifications")); 
 		descriptors.put("folder",new MappingDescriptor("folder", "content", ContentObject.class, "classifications")); 
+		descriptors.put("luogo",new MappingDescriptor("servizio_sul_territorio", "servizio_sul_territorio", TerritoryServiceObject.class, "tipo_servizio_sul_territorio")); 
 	}
 	
 	private static Log logger = LogFactory.getLog(ConfigProcessor.class);
@@ -67,7 +69,7 @@ public class ConfigProcessor {
 	 * @param app
 	 * @throws Exception
 	 */
-	public void buildConfig(ConfigObject config, App app) throws Exception {
+	public void buildConfig(DynamicConfigObject config, App app) throws Exception {
 		try {
 			completeConfig(config, true, app);
 			Map<String, String> idMapping = buildQueryClassification(config);
@@ -79,7 +81,7 @@ public class ConfigProcessor {
 
 	}
 	
-	private void completeConfig(ConfigObject config, boolean retry, App app) throws Exception {
+	private void completeConfig(DynamicConfigObject config, boolean retry, App app) throws Exception {
 		try {
 			setType(config.getHighlights(), app);
 			setType(config.getMenu(), app);
@@ -90,7 +92,7 @@ public class ConfigProcessor {
 		}
 	}
 	
-	private void fillRef(ConfigObject config, Map<String, String> idMapping) throws MissingDataException {
+	private void fillRef(DynamicConfigObject config, Map<String, String> idMapping) throws MissingDataException {
 		try {
 		fillRef(config, config.getHighlights(), idMapping);
 		fillRef(config, config.getMenu(), idMapping);
@@ -103,7 +105,7 @@ public class ConfigProcessor {
 	}		
 	}
 
-	private void removeHighlightRef(ConfigObject config) {
+	private void removeHighlightRef(DynamicConfigObject config) {
 		for (MenuItem item : config.getHighlights()) {
 			if ((item.getObjectIds() == null || item.getObjectIds().isEmpty()) && item.getRef() != null) {
 				MenuItem refItem = findReferredItem(config, item.getRef(), false);
@@ -116,7 +118,7 @@ public class ConfigProcessor {
 		}
 	}
 
-	private void fillRef(ConfigObject config, List<MenuItem> items, Map<String, String> idMapping) throws MissingDataException {
+	private void fillRef(DynamicConfigObject config, List<MenuItem> items, Map<String, String> idMapping) throws MissingDataException {
 		for (MenuItem item : items) {
 			if (item.getRef() != null && !item.getRef().isEmpty()) {
 				MenuItem referred = findReferredItem(config, item.getRef(), true);
@@ -140,7 +142,7 @@ public class ConfigProcessor {
 		}
 	}
 
-	private MenuItem findReferredItem(ConfigObject config, String ref, boolean highlights) {
+	private MenuItem findReferredItem(DynamicConfigObject config, String ref, boolean highlights) {
 		MenuItem referred = null;
 		if (highlights) {
 		referred = findReferredItem(config.getHighlights(), ref);
@@ -242,7 +244,7 @@ public class ConfigProcessor {
 		return null;
 	}
 
-	private Map<String, String> buildQueryClassification(ConfigObject config) throws BadDataException {
+	private Map<String, String> buildQueryClassification(DynamicConfigObject config) throws BadDataException {
 		try {
 		Map<String, String> idMapping = new TreeMap<String, String>();
 		
@@ -310,7 +312,7 @@ public class ConfigProcessor {
 	 * @param object
 	 * @return
 	 */
-	public Map<String, ObjectFilters> constructFilters(ConfigObject object) {
+	public Map<String, ObjectFilters> constructFilters(DynamicConfigObject object) {
 		Map<String,ObjectFilters> res = new HashMap<String, ObjectFilters>();
 		
 		constructFilters(object.getHighlights(), res);

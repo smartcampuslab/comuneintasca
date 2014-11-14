@@ -10,7 +10,7 @@ import it.smartcommunitylab.comuneintasca.connector.processor.ConfigProcessor.Ob
 import it.smartcommunitylab.comuneintasca.connector.processor.DataExtractor.Extractor;
 import it.smartcommunitylab.comuneintasca.core.model.AppObject;
 import it.smartcommunitylab.comuneintasca.core.model.BaseCITObject;
-import it.smartcommunitylab.comuneintasca.core.model.ConfigObject;
+import it.smartcommunitylab.comuneintasca.core.model.DynamicConfigObject;
 import it.smartcommunitylab.comuneintasca.core.model.ContentObject;
 import it.smartcommunitylab.comuneintasca.core.model.EventObject;
 import it.smartcommunitylab.comuneintasca.core.model.HotelObject;
@@ -18,6 +18,7 @@ import it.smartcommunitylab.comuneintasca.core.model.ItineraryObject;
 import it.smartcommunitylab.comuneintasca.core.model.MainEventObject;
 import it.smartcommunitylab.comuneintasca.core.model.POIObject;
 import it.smartcommunitylab.comuneintasca.core.model.RestaurantObject;
+import it.smartcommunitylab.comuneintasca.core.model.TerritoryServiceObject;
 import it.smartcommunitylab.comuneintasca.core.service.DataService;
 
 import java.util.ArrayList;
@@ -85,6 +86,9 @@ public class DataProcessor implements ServiceBusListener {
 				if (Subscriber.METHOD_CULTURA.equals(methodName)) {
 					updateCultura(data, app, entry);
 				}
+				if (Subscriber.METHOD_TERRITORY_SERVICE.equals(methodName)) {
+					updateTerritoryServices(data, app, entry);
+				}
 				if (Subscriber.METHOD_MAINEVENTS.equals(methodName)) {
 					updateMainEvents(data, app, entry);
 				}
@@ -108,7 +112,7 @@ public class DataProcessor implements ServiceBusListener {
 
 		ObjectMapper mapper = new ObjectMapper();
 
-		ConfigObject config = mapper.readValue(d, ConfigObject.class);
+		DynamicConfigObject config = mapper.readValue(d, DynamicConfigObject.class);
 
 		try {
 			configProcessor.buildConfig(config, app);
@@ -116,8 +120,8 @@ public class DataProcessor implements ServiceBusListener {
 			return;
 		}
 
-		List<ConfigObject> oldList = dataService.getDraftObjects(ConfigObject.class, app.getId());
-		ConfigObject old = null;
+		List<DynamicConfigObject> oldList = dataService.getDraftObjects(DynamicConfigObject.class, app.getId());
+		DynamicConfigObject old = null;
 		if (oldList != null && !oldList.isEmpty()) {
 			old = oldList.get(0);
 			if (old.getLastModified() < cd.getDateModified()) {
@@ -153,7 +157,7 @@ public class DataProcessor implements ServiceBusListener {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private void updateAll(ConfigObject config, App app) throws DataException {
+	private void updateAll(DynamicConfigObject config, App app) throws DataException {
 		Map<String,ObjectFilters> map = configProcessor.constructFilters(config);
 		Map<Class, ObjectFilters> classMap = new HashMap<Class, ObjectFilters>();
 		List<AppObject> allObjects = connectorStorage.getAllAppObjects(app.getId());
@@ -189,9 +193,9 @@ public class DataProcessor implements ServiceBusListener {
 	}
 
 	private ObjectFilters getFilters(String key, App app) throws DataException {
-		List<ConfigObject> oldList = connectorStorage.getObjectsByType(ConfigObject.class, app.getId());
+		List<DynamicConfigObject> oldList = connectorStorage.getObjectsByType(DynamicConfigObject.class, app.getId());
 		if (oldList != null && oldList.size() > 0) {
-			ConfigObject old = oldList.get(0);
+			DynamicConfigObject old = oldList.get(0);
 			Map<String, ObjectFilters> constructFilters = configProcessor.constructFilters(old);
 			return constructFilters.get(key);
 		}
@@ -272,6 +276,10 @@ public class DataProcessor implements ServiceBusListener {
 
 	private void updateCultura(List<ByteString> data, App app, SourceEntry entry) throws Exception {
 		updateData(data, app, entry, "poi", POIObject.class, dataExtractor.poiExtractor);
+	}
+
+	private void updateTerritoryServices(List<ByteString> data, App app, SourceEntry entry) throws Exception {
+		updateData(data, app, entry, "servizio_sul_territorio", TerritoryServiceObject.class, dataExtractor.territoryServiceExtractor);
 	}
 
 	private void updateHotels(List<ByteString> data, App app, SourceEntry entry) throws Exception {

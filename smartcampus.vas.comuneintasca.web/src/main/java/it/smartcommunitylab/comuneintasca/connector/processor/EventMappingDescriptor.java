@@ -1,6 +1,7 @@
 package it.smartcommunitylab.comuneintasca.connector.processor;
 
 import it.smartcommunitylab.comuneintasca.core.model.EventObject;
+import it.smartcommunitylab.comuneintasca.core.model.TypeConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ import org.apache.commons.lang.StringUtils;
 public class EventMappingDescriptor extends MappingDescriptor {
 
 	public EventMappingDescriptor() {
-		super("event", "event", EventObject.class, "tipo_evento", "tipo_eventi_manifestazioni");
+		super("event", TypeConstants.TYPE_EVENT, EventObject.class, "tipo_evento", "tipo_eventi_manifestazioni");
 	}
 
 	@Override

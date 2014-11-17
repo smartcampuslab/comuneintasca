@@ -19,6 +19,7 @@ import it.smartcommunitylab.comuneintasca.core.model.MainEventObject;
 import it.smartcommunitylab.comuneintasca.core.model.POIObject;
 import it.smartcommunitylab.comuneintasca.core.model.RestaurantObject;
 import it.smartcommunitylab.comuneintasca.core.model.TerritoryServiceObject;
+import it.smartcommunitylab.comuneintasca.core.model.TypeConstants;
 import it.smartcommunitylab.comuneintasca.core.service.DataService;
 
 import java.util.ArrayList;
@@ -255,31 +256,31 @@ public class DataProcessor implements ServiceBusListener {
 	}
 	
 	private void updateEvents(List<ByteString> data, App app, SourceEntry entry) throws Exception {
-		updateData(data, app, entry, "event", EventObject.class, dataExtractor.eventExtractor);
+		updateData(data, app, entry, TypeConstants.TYPE_EVENT, EventObject.class, dataExtractor.eventExtractor);
 	}
 
 	private void updateRestaurants(List<ByteString> data, App app, SourceEntry entry) throws Exception {
-		updateData(data, app, entry, "restaurant", RestaurantObject.class, dataExtractor.restaurantExtractor);
+		updateData(data, app, entry, TypeConstants.TYPE_RESTAURANT, RestaurantObject.class, dataExtractor.restaurantExtractor);
 	}
 
 	private void updateItinerari(List<ByteString> data, App app, SourceEntry entry) throws Exception {
-		updateData(data, app, entry, "itineraries", ItineraryObject.class, dataExtractor.itineraryExtractor);
+		updateData(data, app, entry, TypeConstants.TYPE_ITINERARY, ItineraryObject.class, dataExtractor.itineraryExtractor);
 	}
 
 	private void updateTesti(List<ByteString> data, App app, SourceEntry entry) throws Exception {
-		updateData(data, app, entry, "content", ContentObject.class, dataExtractor.contentExtractor);
+		updateData(data, app, entry, TypeConstants.TYPE_CONTENT, ContentObject.class, dataExtractor.contentExtractor);
 	}
 
 	private void updateMainEvents(List<ByteString> data, App app, SourceEntry entry) throws Exception {
-		updateData(data, app, entry, "mainevent", MainEventObject.class, dataExtractor.mainEventExtractor);
+		updateData(data, app, entry, TypeConstants.TYPE_MAINEVENT, MainEventObject.class, dataExtractor.mainEventExtractor);
 	}
 
 	private void updateCultura(List<ByteString> data, App app, SourceEntry entry) throws Exception {
-		updateData(data, app, entry, "poi", POIObject.class, dataExtractor.poiExtractor);
+		updateData(data, app, entry, TypeConstants.TYPE_POI, POIObject.class, dataExtractor.poiExtractor);
 	}
 
 	private void updateTerritoryServices(List<ByteString> data, App app, SourceEntry entry) throws Exception {
-		updateData(data, app, entry, "servizio_sul_territorio", TerritoryServiceObject.class, dataExtractor.territoryServiceExtractor);
+		updateData(data, app, entry, TypeConstants.TYPE_TERRITORY_SERVICE, TerritoryServiceObject.class, dataExtractor.territoryServiceExtractor);
 	}
 
 	private void updateHotels(List<ByteString> data, App app, SourceEntry entry) throws Exception {

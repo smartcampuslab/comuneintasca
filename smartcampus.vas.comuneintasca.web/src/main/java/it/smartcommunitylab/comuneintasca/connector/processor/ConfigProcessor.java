@@ -15,6 +15,7 @@ import it.smartcommunitylab.comuneintasca.core.model.MenuItemQuery;
 import it.smartcommunitylab.comuneintasca.core.model.POIObject;
 import it.smartcommunitylab.comuneintasca.core.model.RestaurantObject;
 import it.smartcommunitylab.comuneintasca.core.model.TerritoryServiceObject;
+import it.smartcommunitylab.comuneintasca.core.model.TypeConstants;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -47,14 +48,14 @@ public class ConfigProcessor {
 	private static Map<String, MappingDescriptor> descriptors = new HashMap<String, MappingDescriptor>();
 	static {
 		descriptors.put("event", new EventMappingDescriptor());
-		descriptors.put("ristorante",new MappingDescriptor("ristorante", "restaurant", RestaurantObject.class, "tipo_ristorante")); 
-		descriptors.put("accomodation",new MappingDescriptor("accomodation", "hotel", HotelObject.class,"tipo_alloggio")); 
-		descriptors.put("iniziativa",new MappingDescriptor("iniziativa", "mainevent", MainEventObject.class, "tipo_evento")); 
-		descriptors.put("itinerario",new MappingDescriptor("itinerario", "itineraries", ItineraryObject.class));
-		descriptors.put("luogo",new MappingDescriptor("luogo", "poi", POIObject.class, "tipo_luogo")); 
-		descriptors.put("testo_generico",new MappingDescriptor("testo_generico", "content", ContentObject.class, "classifications")); 
-		descriptors.put("folder",new MappingDescriptor("folder", "content", ContentObject.class, "classifications")); 
-		descriptors.put("luogo",new MappingDescriptor("servizio_sul_territorio", "servizio_sul_territorio", TerritoryServiceObject.class, "tipo_servizio_sul_territorio")); 
+		descriptors.put("ristorante",new MappingDescriptor("ristorante", TypeConstants.TYPE_RESTAURANT, RestaurantObject.class, "tipo_ristorante")); 
+		descriptors.put("accomodation",new MappingDescriptor("accomodation", TypeConstants.TYPE_HOTEL, HotelObject.class,"tipo_alloggio")); 
+		descriptors.put("iniziativa",new MappingDescriptor("iniziativa", TypeConstants.TYPE_MAINEVENT, MainEventObject.class, "tipo_evento")); 
+		descriptors.put("itinerario",new MappingDescriptor("itinerario", TypeConstants.TYPE_ITINERARY, ItineraryObject.class));
+		descriptors.put("luogo",new MappingDescriptor("luogo", TypeConstants.TYPE_POI, POIObject.class, "tipo_luogo")); 
+		descriptors.put("testo_generico",new MappingDescriptor("testo_generico", TypeConstants.TYPE_CONTENT, ContentObject.class, "classifications")); 
+		descriptors.put("folder",new MappingDescriptor("folder", TypeConstants.TYPE_CONTENT, ContentObject.class, "classifications")); 
+		descriptors.put("luogo",new MappingDescriptor("servizio_sul_territorio", TypeConstants.TYPE_TERRITORY_SERVICE, TerritoryServiceObject.class, "tipo_servizio_sul_territorio")); 
 	}
 	
 	private static Log logger = LogFactory.getLog(ConfigProcessor.class);

@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class WiredServiceBusClient extends JMSServiceBusClient {
 
 	@Autowired

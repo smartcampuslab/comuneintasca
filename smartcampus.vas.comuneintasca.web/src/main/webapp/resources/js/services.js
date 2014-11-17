@@ -23,18 +23,18 @@ angular.module('DataService', [])
           });
           return deferred.promise;
        },
-       publishApp: function(app) {
+       publishApp: function() {
 	      var deferred = $q.defer();
-	      $http.put('console/'+app+'/publish',{}).success(function(data) {
+	      $http.put('console/publish',{}).success(function(data) {
 	        deferred.resolve(data);
 	      }).error(function(e) {
 	        deferred.reject(e);
 	      });
 	      return deferred.promise;
         },
-		publishType: function(app, type) {
+		publishType: function(type) {
 		    var deferred = $q.defer();
-		    $http.put('console/'+app+'/publish/'+type,{}).success(function(data) {
+		    $http.put('console/publish/'+type,{}).success(function(data) {
 		      deferred.resolve(data);
 		    }).error(function(e) {
 		      deferred.reject(e);

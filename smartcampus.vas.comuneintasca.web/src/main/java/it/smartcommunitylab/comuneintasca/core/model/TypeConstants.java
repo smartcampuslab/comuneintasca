@@ -2,6 +2,7 @@ package it.smartcommunitylab.comuneintasca.core.model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class TypeConstants {
 
@@ -30,5 +31,9 @@ public class TypeConstants {
 	
 	public static Class<? extends AppObject> getTypeMapping(String type) {
 		return map.get(type);
+	}
+
+	public static Set<String> getTypes() {
+		return map.keySet();
 	}
 }

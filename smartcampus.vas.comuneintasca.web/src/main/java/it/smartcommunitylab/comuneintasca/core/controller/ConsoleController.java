@@ -1,14 +1,13 @@
 package it.smartcommunitylab.comuneintasca.core.controller;
 
 import it.smartcommunitylab.comuneintasca.core.model.AppObject;
-import it.smartcommunitylab.comuneintasca.core.model.AppSettings;
 import it.smartcommunitylab.comuneintasca.core.model.TypeConstants;
+import it.smartcommunitylab.comuneintasca.core.model.app.AppSettings;
 import it.smartcommunitylab.comuneintasca.core.security.AppSetup;
 import it.smartcommunitylab.comuneintasca.core.security.CustomAuthenticationProvider.AppDetails;
 import it.smartcommunitylab.comuneintasca.core.service.DataService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,21 +37,26 @@ public class ConsoleController {
 
 	@RequestMapping("/console/data")
 	public @ResponseBody AppSettings getApp() throws DataException {
+		String app = getAppId();
+		AppSettings settings = appSetup.findAppById(app);
+		settings.setTypeStates(dataService.computeTypeStates(app));
+		return settings;
+	}
+
+	private String getAppId() {
 		AppDetails details = (AppDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String app = details.getUsername();
-		return appSetup.findAppById(app);
+		return app;
 	}
 	
 	
-	@RequestMapping(value="/console/{app}/publish", method=RequestMethod.PUT)
-//	@PreAuthorize("hasAuthority('#app')")
-	public @ResponseBody void publishApp(@PathVariable String app) throws DataException {
-		dataService.publishApp(app);
+	@RequestMapping(value="/console/publish", method=RequestMethod.PUT)
+	public @ResponseBody void publishApp() throws DataException {
+		dataService.publishApp(getAppId());
 	}
-	@RequestMapping(value="/console/{app}/publish/{type}", method=RequestMethod.PUT)
-	@PreAuthorize("hasAuthority('#app')")
-	public @ResponseBody void publishAppType(@PathVariable String app, @PathVariable String type) throws DataException {
-		dataService.publishType(mapTypeToClass(type), app, null);
+	@RequestMapping(value="/console/publish/{type}", method=RequestMethod.PUT)
+	public @ResponseBody void publishAppType(@PathVariable String type) throws DataException {
+		dataService.publishType(mapTypeToClass(type), getAppId(), null);
 	}
 	
 	@SuppressWarnings("unchecked")

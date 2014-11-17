@@ -10,6 +10,28 @@
 					  <button type="button" class="btn btn-primary" ng-click="publishApp(profile.id)">Publish app</button> 
 					</div>
 				</div>
+                <div class="row">
+                    <h2>Types</h2>
+                    <table class="table">
+                        <tr>
+                            <th>Object Type</th>
+                            <th>Total</th>
+                            <th>New</th>
+                            <th>Deleted</th>
+                            <th>Modified</th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="ts in profile.typeStates">
+                            <td>{{ts.type}}</td>
+                            <td>{{ts.totalObjects}}</td>
+                            <td>{{ts.newObjects}}</td>
+                            <td>{{ts.deletedObjects}}</td>
+                            <td>{{ts.changedObjects}}</td>
+                            <td>
+                            <a ng-if="ts.newObjects || ts.deletedObjects || ts.changedObjects || ts.totalObjects" ng-click="publishType(ts.type)" class="btn btn-default btn-mini btn-spaced pull-right"><span class="glyphicon glyphicon-upload"></span></a></td>
+                        </tr>
+                    </table>
+                </div>
 			</div>
 		</div>
 	</div>

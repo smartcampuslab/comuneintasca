@@ -1,6 +1,6 @@
 package it.smartcommunitylab.comuneintasca.core.security;
 
-import it.smartcommunitylab.comuneintasca.core.model.AppSettings;
+import it.smartcommunitylab.comuneintasca.core.model.app.AppSettings;
 
 import java.util.Collection;
 import java.util.Collections;

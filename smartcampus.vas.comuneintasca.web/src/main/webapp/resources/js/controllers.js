@@ -7,7 +7,7 @@ var consoleControllers = angular.module('consoleControllers', [])
     });
     
     $scope.publishApp = function() {
-    	DataService.publishApp($scope.profile.id).then(function(res){
+    	DataService.publishApp().then(function(res){
     		//
     	},
     	function(e) {
@@ -15,7 +15,7 @@ var consoleControllers = angular.module('consoleControllers', [])
     	});
     };
     $scope.publishType = function(type) {
-    	DataService.publishType($scope.profile.id, type).then(function(res){
+    	DataService.publishType(type).then(function(res){
     		//
     	},
     	function(e) {

@@ -2,10 +2,15 @@ package it.smartcommunitylab.comuneintasca.core.service;
 
 import it.smartcommunitylab.comuneintasca.core.data.AppSyncStorage;
 import it.smartcommunitylab.comuneintasca.core.model.AppObject;
+import it.smartcommunitylab.comuneintasca.core.model.TypeConstants;
+import it.smartcommunitylab.comuneintasca.core.model.app.TypeState;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -179,5 +184,49 @@ public class DataService {
 	 */
 	public AppObject getDraftObject(String id, String app) throws DataException {
 		return storage.getObjectDraftById(id, app);
+	}
+	
+	/**
+	 * Compute app type statistics
+	 * @param app
+	 * @return
+	 */
+	public List<TypeState> computeTypeStates(String app) {
+		List<TypeState> states = new ArrayList<TypeState>();
+		Set<String> types = TypeConstants.getTypes();
+		for (String type : types) {
+			states.add(computeTypeState(app, type));
+		}
+		return states;
+	}
+	private TypeState computeTypeState(String app, String type) {
+		Class<? extends AppObject> cls = TypeConstants.getTypeMapping(type);
+		List<? extends AppObject> drafts = getDraftObjects(cls, app);
+		if (drafts == null) drafts = Collections.emptyList();
+		Map<String, AppObject> map = new HashMap<String, AppObject>();
+		for (AppObject o : drafts) {
+			map.put(o.getLocalId(), o);
+		}
+		List<? extends AppObject> publish = getPublishedObjects(cls, app);
+		if (publish == null) publish = Collections.emptyList();
+		int deleted = 0,
+			updated = 0;
+		for (AppObject n : publish) {
+			AppObject o = map.get(n.getLocalId());
+			if (o == null) {
+				deleted++;
+			} else if (o.getLastModified() != n.getLastModified()) {
+				updated++;
+			}
+			map.remove(n.getLocalId());
+		}
+		
+		TypeState res = new TypeState();
+		res.setType(type);
+		res.setTotalObjects(drafts.size());
+		res.setDeletedObjects(deleted);
+		res.setChangedObjects(updated);
+		res.setNewObjects(map.size());
+		return res;
 	}
 }

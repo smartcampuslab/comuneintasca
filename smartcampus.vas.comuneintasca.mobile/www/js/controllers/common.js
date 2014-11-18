@@ -586,9 +586,9 @@ angular.module('ilcomuneintasca.controllers.common', [])
           if (sg.query.hasOwnProperty('filter') || sg._parent.hasOwnProperty('filter') || dbtypeCustomisations.hasOwnProperty('filter')) {
 
             if (sg_query_type == "hotel") {
-              tboptions.filterOptions = Config.hotelTypesList();
+              tboptions.filterOptions = DatiDB.cleanupCatesOfType(Config.hotelTypesList(),sg_query_type);
             } else if (sg_query_type == "restaurant") {
-              tboptions.filterOptions = Config.restaurantTypesList();
+              tboptions.filterOptions = DatiDB.cleanupCatesOfType(Config.restaurantTypesList(),sg_query_type);
             }
 
             tboptions.doFilter = function (filter_default) {

@@ -855,21 +855,23 @@ angular.module('ilcomuneintasca.services.conf', [])
   var reallyDoProfiling=Config.doProfiling();
   var startTimes = {};
   return {
+    start2: function (label) {
+      startTimes[label] = (new Date).getTime();
+    },
     start: function (label) {
-      if (reallyDoProfiling) {
-        startTimes[label] = (new Date).getTime();
-      }
+      if (reallyDoProfiling) this.start2(label);
     },
 
-    _do: function (label, details) {
-      if (reallyDoProfiling) {
-        var startTime = startTimes[label] || -1;
-        if (startTime != -1) {
-          var nowTime = (new Date).getTime();
-          console.log('PROFILING: ' + label + (details ? '(' + details + ')' : '') + '=' + (nowTime - startTime));
-          if (details) startTimes[label]=nowTime;
-        }
+    _do2: function (label, details) {
+      var startTime = startTimes[label] || -1;
+      if (startTime != -1) {
+        var nowTime = (new Date).getTime();
+        console.log('PROFILING: ' + label + (details ? '(' + details + ')' : '') + '=' + (nowTime - startTime));
+        if (details) startTimes[label]=nowTime;
       }
+    },
+    _do: function (label, details) {
+      if (reallyDoProfiling) this._do2(label, details);
     }
   };
 })

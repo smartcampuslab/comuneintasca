@@ -92,12 +92,12 @@ angular.module('ilcomuneintasca.services.db', [])
       });
 
     } else if (dbtype == 'restaurant') {
-      if (item.dbClassification != '') item.dbClassification = Config.restaurantCateFromDbClassification(item.dbClassification);
-      if (item.dbClassification2 != '') item.dbClassification2 = Config.restaurantCateFromDbClassification(item.dbClassification2);
-      if (item.dbClassification3 != '') item.dbClassification3 = Config.restaurantCateFromDbClassification(item.dbClassification3);
+      if (item.dbClassification != '') item.dbClassification = Config.restaurantCateFromType(item.dbClassification);
+      if (item.dbClassification2 != '') item.dbClassification2 = Config.restaurantCateFromType(item.dbClassification2);
+      if (item.dbClassification3 != '') item.dbClassification3 = Config.restaurantCateFromType(item.dbClassification3);
 
     } else if (dbtype == 'hotel') {
-      //NO-OP
+      if (item.dbClassification != '') item.dbClassification = Config.hotelCateFromType(item.dbClassification);
 
     } else if (dbtype == 'itinerary') {
       //NO-OP

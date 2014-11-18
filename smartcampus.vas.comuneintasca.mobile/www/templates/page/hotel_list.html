@@ -11,7 +11,7 @@
         <div ng-if="obj.distance" class="dida">{{obj.distance | number:1}} {{'entry_km' | translate}}</div>
       </div>
       <h2>{{obj.title | translate}}</h2>
-      <p>{{obj.classification | translate}} <i class="icon ion-ios7-star" ng-if="!! obj.stars" ng-repeat="n in _.range(0, obj.stars)"></i></p>
+      <p>{{obj.dbClassification | translate}} <i class="icon ion-ios7-star" ng-if="!! obj.stars" ng-repeat="n in _.range(0, obj.stars)"></i></p>
       <div class="row comuni-item-bottom">
         <div class="col comuni-item-bottom-text">
           <span>{{obj.address | translate | addrclean}}</span>

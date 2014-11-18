@@ -720,10 +720,11 @@ angular.module('ilcomuneintasca.services.db', [])
               i;
             for (i = 0; i < len; i++) {
               var item = cateResults.rows.item(i);
-              lista.push(parseDbRow(item));
+              //lista.push(parseDbRow(item));
+              lista.push(item);
             }
-            Profiling._do('dbcate','parse');
-            data.resolve(lista);
+            Profiling._do('dbcate','lista');
+            //data.resolve(lista);
           }, function (tx2, err) {
             $ionicLoading.hide();
             console.log('cate data error!');
@@ -738,7 +739,11 @@ angular.module('ilcomuneintasca.services.db', [])
           data.reject(error);
         }, function () { //success callback
           $ionicLoading.hide();
-          Profiling._do('dbcate');
+          Profiling._do('dbcate','*****');
+
+          for (i in lista) lista[i]=parseDbRow(lista[i]);
+          Profiling._do('dbcate','parse');
+          
           data.resolve(lista);
         });
       });
@@ -794,12 +799,10 @@ angular.module('ilcomuneintasca.services.db', [])
               i;
             for (i = 0; i < len; i++) {
               var item = cateResults.rows.item(i);
-              var dbItem=parseDbRow(item);
-              dbItem.ctx=objContext;
-              lista.push(dbItem);
+              item.ctx=objContext;
+              lista.push(item);
             }
             Profiling._do('byTimeInterval','parse');
-            data.resolve(lista);
           }, function (tx2, err) {
             $ionicLoading.hide();
             console.log('byTimeInterval data error!');
@@ -815,6 +818,11 @@ angular.module('ilcomuneintasca.services.db', [])
         }, function () { //success callback
           $ionicLoading.hide();
           Profiling._do('byTimeInterval');
+          Profiling._do('byTimeInterval','*****');
+
+          for (i in lista) lista[i]=parseDbRow(lista[i]);
+          Profiling._do('byTimeInterval','parse');
+          
           data.resolve(lista);
         });
       });
@@ -861,7 +869,6 @@ angular.module('ilcomuneintasca.services.db', [])
               lista.push(parseDbRow(item));
             }
             Profiling._do('dbsons', 'parse');
-            dbsons.resolve(lista);
           }, function (tx2, err) {
             $ionicLoading.hide();
             console.log('error: ' + err);

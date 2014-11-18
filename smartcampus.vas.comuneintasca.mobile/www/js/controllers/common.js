@@ -632,20 +632,17 @@ angular.module('ilcomuneintasca.controllers.common', [])
                   $scope.resultsAll = data;
                   //$scope.results = data;
                   if (sg_query_type=='event') {
-                    $scope.resultsGroups = DateUtility.regroup($scope,sg_query_type,d,t,sg.query.classification).then(function(rg){
-                      $ionicLoading.hide();
-                      return rg;
-                    });
+                    $scope.resultsGroups = DateUtility.regroup($scope,sg_query_type,d,t,sg.query.classification);
                   } else {
                     dosort(data);
-                    $ionicLoading.hide();
                   }
                 } else {
-                  $ionicLoading.hide();
                   $scope.results = [];
                   $scope.resultsAll = [];
                   $scope.resultsGroups = [];
                 }
+                $ionicLoading.hide();
+
                 var listScroll=$ionicScrollDelegate.$getByHandle('listScroll');
                 if (!!listScroll) {
                   $timeout(function(){ listScroll.scrollTop(false); });

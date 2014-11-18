@@ -38,9 +38,22 @@ angular.module('ilcomuneintasca.services.db', [])
           //console.log('abslink: '+item['abslink']);
           item['menu'] = sg;
         } else {
-          console.log('sg NULL!');
-          console.log('dbtype: '+dbtype);
-          console.log('dbrow.classification: '+dbrow.classification);
+          //console.log('searching submenu without classification...');
+          Config.menuGroupSubgroupByTypeAndClassification(dbtype).then(function(sg){
+            if (sg) {
+              item['abslink'] = '#/app/page/'+sg._parent.id+'/'+sg.id+'/' + item.id;
+              //console.log('#2 abslink: '+item['abslink']);
+              item['menu'] = sg;
+            } else {
+              console.log('sg NULL!');
+              console.log('dbtype: '+dbtype);
+              console.log('dbrow.classification: '+dbrow.classification);
+            }
+          },function(){
+            console.log('#2 sg NOT FOUND!');
+            console.log('#2 dbtype: '+dbtype);
+            console.log('#2 dbrow.classification: '+dbrow.classification);
+          });
         }
       },function(){
         console.log('sg NOT FOUND!');

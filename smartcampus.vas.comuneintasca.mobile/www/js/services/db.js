@@ -1176,6 +1176,72 @@ angular.module('ilcomuneintasca.services.db', [])
         });
       });
       return dbitem.promise;
+    },
+    cleanupCatesOfType: function (cates,type) {
+      Profiling.start('filterclean');
+      var returned=$q.defer();
+
+      //console.log('type: '+type);
+      //console.log('types[type]: '+types[type]);
+
+      db.then(function (dbObj) {
+        Profiling._do('filterclean','dbobj');
+        
+        dbObj.transaction(function (tx) {
+          Profiling._do('filterclean','dbtrans');
+          
+          var cleaned={};
+          for (key in cates) {
+            cleaned[key]=$q.defer();
+          }
+          Profiling._do('filterclean','promises');
+
+          var filteredCates=[];
+          for (var key in cates) {
+            var cate=cates[key].it;
+            //console.log('cates['+key+']: '+cate);
+            var dbQuery="select distinct '"+key+"' as catekey from ContentObjects where type=? and (classification=? OR classification2=? OR classification3=?)";
+            //console.log('dbQuery: '+dbQuery);
+            var dbQueryArgs=[ types[type], key, key, key ];
+            //console.log('dbQueryArgs: '+dbQueryArgs);
+            tx.executeSql(dbQuery,dbQueryArgs,function (tx, results) {
+              var resultslen = results.rows.length;
+              //console.log('resultslen='+resultslen);
+              if (resultslen>0) {
+                var item = results.rows.item(0);
+                //console.log('cates['+item.catekey+']='+[item.catekey]);
+                //filteredCates.push(cates[item.catekey]);
+                filteredCates[item.catekey]=cates[item.catekey];
+                Profiling._do('filterclean', 'done');
+                cleaned[item.catekey].resolve();
+              } else {
+                //console.log('no results for cates['+key+']: ');
+                Profiling._do('filterclean', 'err1');
+                cleaned[key].reject();
+              }
+            }, function (tx, err) {
+              console.log('error: ' + err);
+              Profiling._do('filterclean', 'sqlerror');
+              cleaned[key].reject();
+            });
+          }
+
+          $q.all(cleaned).then(function() {
+            returned.resolve(filteredCates);
+          });
+        }, function (error) { //error callback
+          Profiling._do('filterclean', 'tx error');
+          console.log('db.cleanupCatesOfType() ERROR: ' + error);
+          returned.reject(error);
+        }, function () { //success callback
+          Profiling._do('filterclean', 'tx success');
+        });
+      },function (error) {
+        returned.reject(error);
+      });
+
+      Profiling._do('filterclean','returned');
+      return returned.promise;
     }
   }
 })

@@ -1,13 +1,13 @@
 <ion-view title="TEST">
   <ion-content class="has-header">
     <!-- comuni-img ng-if="obj.image" class="content-image-main" gotdata="gotdata" detail="true"></comuni-img -->
-    <div class="item-image comuni-item-image comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj)}})"></div>
+    <!-- div class="item-image comuni-item-image comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj)}})"></div -->
     <div class="padding">
       <h1>TEST</h1>
       <p>{{test}}</p>
       <ion-list>
-        <ion-item ng-repeat="obj in results track by $index">
-          <h2>{{obj.title | translate}}</h2>
+        <ion-item ng-repeat="cate in cates track by $index">
+          <h2>{{cate | translate}}</h2>
         </ion-item>
       </ion-list>
     </div>

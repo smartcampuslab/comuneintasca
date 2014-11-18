@@ -750,9 +750,10 @@ angular.module('ilcomuneintasca.controllers.common', [])
 }])
 
 
-.controller('TestCtrl', function ($scope, DatiDB) {
+.controller('TestCtrl', function ($scope, DatiDB, Config) {
   $scope.test='test page...';
-  $scope.gotdata = DatiDB.all('itinerary').then(function (data) {
-    $scope.results=data;
+  DatiDB.cleanupCatesOfType(Config.hotelTypesList(),'hotel').then(function(filteredCategories){
+    $scope.cates=filteredCategories;
   });
+  //$scope.cates = DatiDB.cleanupCatesOfType(Config.restaurantTypesList(),'restaurant');
 })

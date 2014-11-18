@@ -191,9 +191,11 @@ angular.module('ilcomuneintasca.controllers.common', [])
     //$window.history.back();
   };
   $scope.$on('$destroy', function () {
+    $scope.scrolldata = [];
+    $scope.groupscrolldata = [];
     $scope.results = [];
-    $scope.resultsAll = [];
-    $scope.resultsGroups=[];
+    //$scope.resultsAll = [];
+    //$scope.resultsGroups=[];
     Files.queuedFilesCancel();
   });
 

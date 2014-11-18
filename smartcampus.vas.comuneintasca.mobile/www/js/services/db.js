@@ -673,7 +673,7 @@ angular.module('ilcomuneintasca.services.db', [])
         Profiling.start('dbcate');
         var loading = $ionicLoading.show({
           template: $filter('translate')(Config.keys()['loading']),
-          delay: 600,
+          delay: 200,
           duration: Config.loadingOverlayTimeoutMillis()
         });
 
@@ -755,7 +755,7 @@ angular.module('ilcomuneintasca.services.db', [])
         Profiling.start('byTimeInterval');
         var loading = $ionicLoading.show({
           template: $filter('translate')(Config.keys()['loading']),
-          delay: 600,
+          delay: 200,
           duration: Config.loadingOverlayTimeoutMillis()
         });
 

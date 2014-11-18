@@ -172,7 +172,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
     $scope.group = g;
   });
 })
-.controller('PageCtrl', function ($scope, $rootScope, $state, $stateParams, $filter, $location, $window, $timeout, Profiling, Config, DatiDB, Files, ListToolbox, DateUtility, GeoLocate, MapHelper, $ionicScrollDelegate, $ionicViewService) {
+.controller('PageCtrl', function ($scope, $rootScope, $state, $stateParams, $filter, $location, $window, $timeout, Profiling, Config, DatiDB, Files, ListToolbox, DateUtility, GeoLocate, MapHelper, $ionicScrollDelegate, $ionicViewService, $ionicLoading) {
   Profiling.start('page');
 
   $scope.results=[];
@@ -592,6 +592,12 @@ angular.module('ilcomuneintasca.controllers.common', [])
             }
 
             tboptions.doFilter = function (filter_default) {
+              var loading = $ionicLoading.show({
+                template: $filter('translate')(Config.keys()['loading']),
+                delay: 600,
+                duration: Config.loadingOverlayTimeoutMillis()
+              });
+
               filter=ListToolbox.getState().filter||filter_default;
               //console.log('doFilter("'+filter+'")...');
               var t = 0;
@@ -635,11 +641,16 @@ angular.module('ilcomuneintasca.controllers.common', [])
                   $scope.resultsAll = data;
 //                  $scope.results = data;
                   if (sg_query_type=='event') {
-                    $scope.resultsGroups = DateUtility.regroup($scope,sg_query_type,d,t,sg.query.classification);
+                    $scope.resultsGroups = DateUtility.regroup($scope,sg_query_type,d,t,sg.query.classification).then(function(rg){
+                      $ionicLoading.hide();
+                      return rg;
+                    });
                   } else {
                     dosort(data);
+                    $ionicLoading.hide();
                   }
                 } else {
+                  $ionicLoading.hide();
                   $scope.results = [];
                   $scope.resultsAll = [];
                   $scope.resultsGroups = [];

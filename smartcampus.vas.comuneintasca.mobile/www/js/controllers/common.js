@@ -586,8 +586,10 @@ angular.module('ilcomuneintasca.controllers.common', [])
           if (sg.query.hasOwnProperty('filter') || sg._parent.hasOwnProperty('filter') || dbtypeCustomisations.hasOwnProperty('filter')) {
 
             if (sg_query_type == "hotel") {
+              //tboptions.filterOptions = Config.hotelTypesList();
               tboptions.filterOptions = DatiDB.cleanupCatesOfType(Config.hotelTypesList(),sg_query_type);
             } else if (sg_query_type == "restaurant") {
+              //tboptions.filterOptions = Config.restaurantTypesList();
               tboptions.filterOptions = DatiDB.cleanupCatesOfType(Config.restaurantTypesList(),sg_query_type);
             }
 
@@ -613,24 +615,13 @@ angular.module('ilcomuneintasca.controllers.common', [])
               }
               //console.log('t: '+t);
               if (t > 0) {
-                //console.log('sg.query.classification: '+sg.query.classification);
-                //console.log('sg_query_type: '+sg_query_type);
-                if (sg.query.classification) {
-                  //console.log('doFilter classification...');
-                } else {
-                  //console.log('doFilter ALL...');
-                }
+                //console.log('doFilter byTimeInterval...');
                 $scope.gotdbdata = DatiDB.byTimeInterval(sg_query_type, f, t, sg.query.classification);
               } else {
                 if (filter) {
-                  //console.log('doFilter FILTER cate...');
+                  //console.log('doFilter FILTER: '+filter);
                   $scope.gotdbdata = DatiDB.cate(sg_query_type, filter);
                 } else {
-                  if (sg.query.classification) {
-                    //console.log('doFilter NO FILTER classification...');
-                  } else {
-                    //console.log('doFilter NO FILTER ALL...');
-                  }
                   $scope.gotdbdata = DatiDB.cate(sg_query_type, sg.query.classification);
                 }
               }
@@ -639,7 +630,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
                 if (data) {
                   //$scope.results = $filter('extOrderBy')(data,$scope.ordering);
                   $scope.resultsAll = data;
-//                  $scope.results = data;
+                  //$scope.results = data;
                   if (sg_query_type=='event') {
                     $scope.resultsGroups = DateUtility.regroup($scope,sg_query_type,d,t,sg.query.classification).then(function(rg){
                       $ionicLoading.hide();

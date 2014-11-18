@@ -8,10 +8,12 @@ angular.module('ilcomuneintasca.services.db', [])
 
   var parseDbRow = function (dbrow) {
     //comment out this line to profile each function call
+    //Profiling.start('dbparse.total');
     //Profiling.start('dbparse');
 
     //console.log('dbrow.id: '+dbrow.id);
     var item = JSON.parse(dbrow.data);
+    Profiling._do('dbparse','json');
 
 		if (dbrow.parentid) {
 			item['parentid']=dbrow.parentid;
@@ -126,8 +128,9 @@ angular.module('ilcomuneintasca.services.db', [])
 
     if (dbrow.fromTime > 0) item['fromTime'] = dbrow.fromTime;
     if (dbrow.toTime > 0) item['toTime'] = dbrow.toTime;
-    Profiling._do('dbparse','location');
+    Profiling._do('dbparse','time');
 
+    Profiling._do('dbparse.total');
     return item;
   };
 

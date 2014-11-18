@@ -768,12 +768,21 @@ angular.module('ilcomuneintasca.services.conf', [])
     textTypesList: function () {
       return textTypes;
     },
+
     hotelTypesList: function () {
       return hotelTypes;
     },
     hotelCateFromType: function (type) {
       return hotelTypes[type];
     },
+
+    restaurantTypesList: function () {
+      return restaurantTypes;
+    },
+    restaurantCateFromType: function (type) {
+      return restaurantTypes[type];
+    },
+
     hotelTypeFromCate: function (cate) {
       for (var hotelType in hotelTypes) {
         if (hotelTypes.hasOwnProperty(hotelType)) {
@@ -799,12 +808,6 @@ angular.module('ilcomuneintasca.services.conf', [])
         it: 'UNKNOWN',
         en: 'UNKNOWN'
       };
-    },
-    restaurantTypesList: function () {
-      return restaurantTypes;
-    },
-    restaurantCateFromType: function (type) {
-      return restaurantTypes[type];
     },
     restaurantTypeFromCate: function (cate) {
       for (var restaurantType in restaurantTypes) {
@@ -832,6 +835,7 @@ angular.module('ilcomuneintasca.services.conf', [])
         en: 'UNKNOWN'
       };
     },
+ 
     cityName: function() {
       return cityName;
     },

@@ -51,12 +51,14 @@ public class ConsoleController {
 	
 	
 	@RequestMapping(value="/console/publish", method=RequestMethod.PUT)
-	public @ResponseBody void publishApp() throws DataException {
+	public @ResponseBody AppSettings publishApp() throws DataException {
 		dataService.publishApp(getAppId());
+		return getApp();
 	}
 	@RequestMapping(value="/console/publish/{type}", method=RequestMethod.PUT)
-	public @ResponseBody void publishAppType(@PathVariable String type) throws DataException {
+	public @ResponseBody AppSettings publishAppType(@PathVariable String type) throws DataException {
 		dataService.publishType(mapTypeToClass(type), getAppId(), null);
+		return getApp();
 	}
 	
 	@SuppressWarnings("unchecked")

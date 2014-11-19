@@ -232,17 +232,17 @@ public class DataProcessor implements ServiceBusListener {
 			S bt = extractor.readData(bs);
 			String id = extractor.getId(bt);
 			oldIds.remove(id);
-			T old = null;
+			T obj = null;
 			try {
-				old = connectorStorage.getObjectById(id, targetCls, app.getId());
+				obj = connectorStorage.getObjectById(id, targetCls, app.getId());
 			} catch (Exception e) {}
-			if (old == null || extractor.isNewer(bt, old)) {
-				T no = extractor.extractData(bt, entry);
-				connectorStorage.storeObject(no, app.getId());
-				boolean applies = applies(no, filters);
-				if (applies) {
-					toPublish.add(no);
-				}
+			if (obj == null || extractor.isNewer(bt, obj)) {
+				obj = extractor.extractData(bt, entry);
+				connectorStorage.storeObject(obj, app.getId());
+			}
+			boolean applies = applies(obj, filters);
+			if (applies) {
+				toPublish.add(obj);
 			}
 		}
 		dataService.upsertType(toPublish, targetCls, app.getId(), classifier);

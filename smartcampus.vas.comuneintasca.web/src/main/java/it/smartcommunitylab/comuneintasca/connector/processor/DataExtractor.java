@@ -430,10 +430,14 @@ public class DataExtractor {
 
 	public String getImageURL(String image, SourceEntry entry) {
 		if (image == null || image.isEmpty()) return null;
-		if (!image.startsWith("http")) {
-			return (entry.getImagePath() == null ? "" : entry.getImagePath()) + image.replace("|", "");
+		String img = image;
+		if (img.indexOf('|')>0) {
+			img = img.substring(0,img.indexOf('|'));
+		} 
+		if (!img.startsWith("http")) {
+			return (entry.getImagePath() == null ? "" : entry.getImagePath()) + img;
 		}
-		return image;
+		return img;
 	}
 
 	private Map<String, String> toMap(I18nString str) {

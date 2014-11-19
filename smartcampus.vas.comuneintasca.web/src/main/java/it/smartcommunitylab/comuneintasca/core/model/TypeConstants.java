@@ -1,6 +1,6 @@
 package it.smartcommunitylab.comuneintasca.core.model;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,7 +16,7 @@ public class TypeConstants {
 	public static final String TYPE_CONFIG = "config";
 	public static final String TYPE_TERRITORY_SERVICE = "servizio_sul_territorio";
 	
-	private static final Map<String, Class<? extends AppObject>> map = new HashMap<String, Class<? extends AppObject>>();
+	private static final Map<String, Class<? extends AppObject>> map = new LinkedHashMap<String, Class<? extends AppObject>>();
 	static {
 		map.put(TYPE_CONFIG, DynamicConfigObject.class);
 		map.put(TYPE_CONTENT, ContentObject.class);

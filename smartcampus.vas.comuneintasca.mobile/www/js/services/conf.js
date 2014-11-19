@@ -1,7 +1,7 @@
 angular.module('ilcomuneintasca.services.conf', [])
 
 .factory('Config', function ($q, $http, $window, $filter, $rootScope) {
-  var DEVELOPMENT=false;
+  var DEVELOPMENT=true;
   $rootScope.DEV=DEVELOPMENT;
   
   // when the following is TRUE, we show special buttons 
@@ -9,12 +9,13 @@ angular.module('ilcomuneintasca.services.conf', [])
   // even if not in development mode
   // $rootScope.DEV=true;
 
-  var SYNC_WEBAPP='comuneintasca-oc';
-  var SCHEMA_VERSION=109;
+  var SYNC_WEBAPP='comuneintasca-multi';
+  var SCHEMA_VERSION=110;
   var SYNC_HOST="tn";
   if (DEVELOPMENT) SYNC_HOST="vas-dev";
   var LOCAL_PROFILE="opencontent";
-
+  var WEBAPP_MULTI="/TrentoInTasca";
+  
   // customization parameters
   var cityName = { 'it':'Trento', 'en':'Trento', 'de':'Trento' };
   var imagePath = 'http://www.comune.trento.it/var/comunetn';
@@ -514,17 +515,17 @@ angular.module('ilcomuneintasca.services.conf', [])
   }
 
   var contentTypes = {
-    'content': 'eu.trentorise.smartcampus.comuneintasca.model.ContentObject',
-    'poi': 'eu.trentorise.smartcampus.comuneintasca.model.POIObject',
-    'event': 'eu.trentorise.smartcampus.comuneintasca.model.EventObject',
-    'restaurant': 'eu.trentorise.smartcampus.comuneintasca.model.RestaurantObject',
-    'hotel': 'eu.trentorise.smartcampus.comuneintasca.model.HotelObject',
-    'itinerary': 'eu.trentorise.smartcampus.comuneintasca.model.ItineraryObject',
-    'mainevent': 'eu.trentorise.smartcampus.comuneintasca.model.MainEventObject',
-    //'home': 'eu.trentorise.smartcampus.comuneintasca.model.HomeObject',
-    'oldconfig': 'eu.trentorise.smartcampus.comuneintasca.model.ConfigObject',
-    'config': 'eu.trentorise.smartcampus.comuneintasca.model.DynamicConfigObject',
-    'servizio_sul_territorio': 'eu.trentorise.smartcampus.comuneintasca.model.TerritoryServiceObject'
+    'content': 'it.smartcommunitylab.comuneintasca.core.model.ContentObject',
+    'poi': 'it.smartcommunitylab.comuneintasca.core.model.POIObject',
+    'event': 'it.smartcommunitylab.comuneintasca.core.model.EventObject',
+    'restaurant': 'it.smartcommunitylab.comuneintasca.core.model.RestaurantObject',
+    'hotel': 'it.smartcommunitylab.comuneintasca.core.model.HotelObject',
+    'itinerary': 'it.smartcommunitylab.comuneintasca.core.model.ItineraryObject',
+    'mainevent': 'it.smartcommunitylab.comuneintasca.core.model.MainEventObject',
+    //'home': 'it.smartcommunitylab.comuneintasca.core.model.HomeObject',
+    'oldconfig': 'it.smartcommunitylab.comuneintasca.core.model.ConfigObject',
+    'config': 'it.smartcommunitylab.comuneintasca.core.model.DynamicConfigObject',
+    'servizio_sul_territorio': 'it.smartcommunitylab.comuneintasca.core.model.TerritoryServiceObject'
   };
 
   function cloneParentGroup(group) {
@@ -731,7 +732,7 @@ angular.module('ilcomuneintasca.services.conf', [])
     },
     syncUrl: function () {
 //      return 'https://'+SYNC_HOST+'.smartcampuslab.it/comuneintasca/sync';
-      return 'https://'+SYNC_HOST+'.smartcampuslab.it/'+SYNC_WEBAPP+'/sync';
+      return 'https://'+SYNC_HOST+'.smartcampuslab.it/'+SYNC_WEBAPP+'/sync/'+WEBAPP_MULTI;
     },
     syncTimeoutSeconds: function () {
       //return 60 * 60; /* 60 times 60 seconds = EVERY HOUR */

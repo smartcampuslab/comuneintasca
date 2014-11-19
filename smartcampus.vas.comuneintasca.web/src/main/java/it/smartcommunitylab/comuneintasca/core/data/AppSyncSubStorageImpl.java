@@ -205,6 +205,13 @@ public class AppSyncSubStorageImpl extends GenericObjectSyncMongoStorage<AppSync
 		return obj;
 	}
 
+	@Override
+	protected BasicObject convertBeanToBasicObject(AppSyncBean object, Class<? extends BasicObject> cls) {
+		AppObject appObj = (AppObject)super.convertBeanToBasicObject(object, cls);
+		appObj.setId(appObj.getLocalId());
+		return appObj;
+	}
+
 	private <T extends AppObject> AppSyncBean getBean(T obj, String appId) {
 		AppSyncBean old = null;
 		Criteria criteria = createBaseCriteria(appId);

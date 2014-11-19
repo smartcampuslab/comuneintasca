@@ -253,7 +253,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
     });
   /*
         var sg_query_type=sg.query.type || 'content';
-        if (sg_query_type.indexOf('eu.trentorise.smartcampus.comuneintasca.model.')==0) sg_query_type=Config.contentKeyFromDbType(sg_query_type);
+        if (sg_query_type.indexOf('it.smartcommunitylab.comuneintasca.core.model.')==0) sg_query_type=Config.contentKeyFromDbType(sg_query_type);
         var dbtypeCustomisations = Config.getProfileExtensions()[sg_query_type] || {};
         var dbtypeClass = sg.query.classification || '_none_';
         var dbtypeClassCustomisations = {};
@@ -272,7 +272,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
       $scope.title = sg.name;
       if (sg.query) {
         var sg_query_type=sg.query.type || 'content';
-        if (sg_query_type.indexOf('eu.trentorise.smartcampus.comuneintasca.model.')==0) sg_query_type=Config.contentKeyFromDbType(sg_query_type);
+        if (sg_query_type.indexOf('it.smartcommunitylab.comuneintasca.core.model.')==0) sg_query_type=Config.contentKeyFromDbType(sg_query_type);
         var dbtypeCustomisations = Config.getProfileExtensions()[sg_query_type] || {};
         var dbtypeClass = sg.query.classification || '_none_';
         var dbtypeClassCustomisations = {};

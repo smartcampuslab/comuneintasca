@@ -1,8 +1,11 @@
 {
-  "id": "54088b79975a10f95cae0266",
-  "updateTime": 1413212029269,
-  "version": 1506,
+  "id": null,
+  "updateTime": 1416393754722,
+  "version": 237851,
   "user": null,
+  "appId": "TrentoInTasca",
+  "lastModified": 1416323637000,
+  "localId": null,
   "highlights": [
     {
       "id": "profile_cit_75aceda860befbcb1fe8bd1a0f8be85c",
@@ -77,23 +80,23 @@
     {
       "id": "d347c18f3a931ae6a512b7d80591afd8",
       "name": {
-        "it": "Rinascimenti eccentrici",
+        "it": "Trento, città del Natale e il Mercatino di Natale",
         "en": "Rinascimenti eccentrici",
         "de": "Rinascimenti eccentrici"
       },
       "description": null,
       "image": {
-        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/rinascimenti-eccentrici/8622728-1-ita-IT/Rinascimenti-eccentrici.jpg",
+        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/trento-citta-del-natale-e-il-mercatino-di-natale/8622728-4-ita-IT/Trento-citta-del-Natale-e-il-Mercatino-di-Natale.jpg",
         "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/rinascimenti-eccentrici/8622728-1-ita-IT/Rinascimenti-eccentrici.jpg",
         "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/rinascimenti-eccentrici/8622728-1-ita-IT/Rinascimenti-eccentrici.jpg"
       },
       "objectIds": [
-        "98c07591b6c32e51b3afd2d57503080e"
+        "event.major.11"
       ],
       "items": null,
       "query": null,
       "ref": null,
-      "type": "event",
+      "type": "mainevent",
       "app": null
     },
     {
@@ -183,7 +186,6 @@
       "ref": null,
       "type": null,
       "app": {
-        "ios": null,
         "android": "eu.trentorise.smartcampus.viaggiatrento"
       }
     },
@@ -747,9 +749,9 @@
           "objectIds": null,
           "items": null,
           "query": {
-            "type": "event",
+            "type": "mainevent",
             "classifications": null,
-            "classification": "_complex"
+            "classification": "Manifestazioni"
           },
           "ref": null,
           "type": null,
@@ -848,6 +850,24 @@
           "ref": null,
           "type": null,
           "app": null
+        },
+        {
+          "id": "184aeb2b2cc299fa85bb3e314eac2b4c",
+          "name": {
+            "it": "Farmacie"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "poi",
+            "classifications": null,
+            "classification": "Farmacia"
+          },
+          "ref": null,
+          "type": null,
+          "app": null
         }
       ],
       "query": null,
@@ -855,7 +875,5 @@
       "type": null,
       "app": null
     }
-  ],
-  "visible": true,
-  "lastModified": 1412855948000
+  ]
 }

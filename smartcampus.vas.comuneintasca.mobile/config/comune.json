@@ -1,6 +1,7 @@
 {
   "id":"trento",
   "nome":"Trento",
+  "langs":[ "en", "it", "de" ],
   "android":{
     "package":"it.smartcampuslab.comuni.trento",
     "version":{ "name":"3.0.1", "code":11 }

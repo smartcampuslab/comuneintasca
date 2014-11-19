@@ -218,7 +218,7 @@ public class ConfigProcessor {
 				}
 				if (type != null) {
 					item.setType(type);
-					logger.info("Set type to " + type + " for " + ((item.getName() != null) ? item.getName().get("it") : item.getId()));
+					logger.debug("Set type to " + type + " for " + ((item.getName() != null) ? item.getName().get("it") : item.getId()));
 //				} else if (item.getItems() == null || item.getItems().isEmpty())  {
 //					if (item.getObjectIds() == null || item.getObjectIds().size() != 1 || !item.getObjectIds().contains(item.getId())) {
 //						logger.error("Missing type for " + ((item.getName() != null) ? item.getName().get("it") : item.getId()));

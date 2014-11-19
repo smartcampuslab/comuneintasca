@@ -66,12 +66,12 @@ public class DataProcessor implements ServiceBusListener {
 
 	@Override
 	public void onServiceEvents(String serviceId, String methodName, String subscriptionId, List<ByteString> data) {
-		logger.info("Processing update for {}/{} with subscriptionId {}",serviceId, methodName, subscriptionId);
+		logger.debug("Processing update for {}/{} with subscriptionId {}",serviceId, methodName, subscriptionId);
 		App app = appManager.getApp(serviceId, methodName, subscriptionId);
 		if (app == null) return;
-		logger.info("-- found app ",app.getId());
+		logger.debug("-- found app {}",app.getId());
 		SourceEntry entry = app.findEntry(serviceId, methodName, subscriptionId);
-		logger.info("-- found source ", entry);
+		logger.debug("-- found source {}", entry);
 		try {
 			if (Subscriber.SERVICE_OD.equals(serviceId)) {
 				if (Subscriber.METHOD_CONFIG.equals(methodName)) {
@@ -251,7 +251,7 @@ public class DataProcessor implements ServiceBusListener {
 		}
 		
 		for (String s : oldIds) {
-			logger.info("Deleting object " + s);
+			logger.debug("Deleting object " + s);
 			connectorStorage.deleteObjectById(s, targetCls, app.getId());
 		}
 
@@ -286,7 +286,7 @@ public class DataProcessor implements ServiceBusListener {
 	}
 
 	private void updateHotels(List<ByteString> data, App app, SourceEntry entry) throws Exception {
-		updateData(data, app, entry, "hotels", HotelObject.class, dataExtractor.hotelExtractor);
+		updateData(data, app, entry, TypeConstants.TYPE_HOTEL, HotelObject.class, dataExtractor.hotelExtractor);
 	}
 
 

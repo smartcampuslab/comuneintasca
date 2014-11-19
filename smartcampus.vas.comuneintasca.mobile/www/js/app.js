@@ -105,6 +105,11 @@ angular.module('ilcomuneintasca', [
   }
   $rootScope.lang=localStorage.lang=lang;
 
+  $rootScope.gotoPromise = function (promise) {
+    promise.then(function(link){
+      $rootScope.goto(link);
+    });
+  };
   $rootScope.goto = function (link) {
     if (link) {
       if (link.indexOf('#/app/')==0) link=link.substring(1);
@@ -122,10 +127,12 @@ angular.module('ilcomuneintasca', [
     if (group_id=='percorsi'&& menu_id=='itineraries' || 
         (group.items.length == 1 && (menu.type == 'itineraries' || (menu.query != null && menu.query.type=='itineraries')))) {
       $rootScope.itineraryGroup = group;  
-      return 'itineraries';
+      mp='itineraries';
     } else {
-      return 'page/'+group_id+'/'+menu_id+'/';
+      mp='page/'+group_id+'/'+menu_id+'/';
     }
+    //console.log('getMenuPath()='+mp);
+    return mp;
   }
   $rootScope.gotoSubpath = function (subpath) {
     //console.log('full subpath: '+$location.path()+subpath)
@@ -218,7 +225,7 @@ angular.module('ilcomuneintasca', [
     },0);
   }
     
-  $rootScope.getParsedImageURL=function(item){
+  $rootScope.getParsedImageURL=function(item,type){
     if (!item) return 'svg/placeholder.svg';
 
     if (!item.parsedimageurl) {
@@ -226,10 +233,21 @@ angular.module('ilcomuneintasca', [
       if (item.image) {
         // fix for broken opencontent data
         // ??? can it be removed ???
-        if (typeof item.image=='string' && item.image.indexOf('http')==-1 && item.image.charAt(item.image.length-1)=='|') item.image='http://trento.opencontent.it/'+item.image.substring(0,item.image.length-1);
+        if (typeof item.image=='string' && item.image.indexOf('http')==-1 && item.image.charAt(item.image.length-1)=='|') {
+          item.image='/'+item.image.substring(0,item.image.length-1);
+          console.log('broken opencontent image url fixed!');
+        }
 
         var imageUrl=$filter('translate')(item.image);
         if (imageUrl && imageUrl != '' && imageUrl != 'false') {
+          if (type=='list') {
+            if (imageUrl.indexOf(Config.imagePath())==0) {
+              imageUrl=imageUrl.replace('.jpg','_medium.jpg');
+              //console.log('used smaller image...');
+            } else {
+              console.log('cannot use smaller image...');
+            }
+          }
           return Files.get(imageUrl).then(function (fileUrl) {
             //console.log('########### fileUrl: '+fileUrl);
             item['parsedimageurl']=fileUrl;
@@ -260,7 +278,7 @@ angular.module('ilcomuneintasca', [
 
     var arr = [];
     if (filter && filter.length > 0) {
-      //console.log('ordering.1: '+filter);
+      //console.log('ordering w/ filter: '+filter);
       var f = filter.toLowerCase();
       for (var i = 0; i < input.length; i++) {
         if ($filter('translate')(input[i].title).toLowerCase().indexOf(f) >= 0) {
@@ -268,7 +286,7 @@ angular.module('ilcomuneintasca', [
         }
       }
     } else {
-      //console.log('ordering.2');
+      //console.log('ordering w/o filter');
       arr = input.slice(0);
     }
 
@@ -284,9 +302,9 @@ angular.module('ilcomuneintasca', [
         var dif = b1.localeCompare(a1);
         return dif;
       } else if ('Date' == order) {
-        var a1 = a.fromTime ? a.fromTime : a.fromDate;
-        var b1 = b.fromTime ? b.fromTime : b.fromDate;
-        var dif = b1 - a1;
+        var a1 = a.date ? a.date : (a.fromTime ? a.fromTime : a.fromDate);
+        var b1 = b.date ? b.date : (b.fromTime ? b.fromTime : b.fromDate);
+        var dif = a1 - b1;
         return dif;
       } else if ('DateFrom' == order) {
         var a1 = a.fromTime ? a.fromTime : a.fromDate;
@@ -313,11 +331,8 @@ angular.module('ilcomuneintasca', [
     return arr;
   }
 })
-/*
-/mainevents
-/itineraries
-/offices
-*/
+
+
 .config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('app', {

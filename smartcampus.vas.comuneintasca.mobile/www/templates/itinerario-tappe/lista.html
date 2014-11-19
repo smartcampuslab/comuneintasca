@@ -5,7 +5,7 @@
               href="#/app/itinstep/{{itinerario.id}}/step/{{obj.id}}" 
               class="item-thumbnail-left itinerari"> 
       <!-- comuni-img class="item-image comuni-item-image" gotdata="gotdata"></comuni-img -->
-      <div class="item-image comuni-item-image comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj)}})"></div>
+      <div class="item-image comuni-item-image comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj,'list')}})"></div>
       <h2>{{$index + 1}}. {{obj.title | translate}}</h2>
       <div class="comuni-item-bottom2 row row-bottom">
         <div class="comuni-item-bottom2 col">{{obj.address | translate | addrclean}}</div>

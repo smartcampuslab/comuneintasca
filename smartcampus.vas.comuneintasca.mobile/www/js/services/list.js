@@ -1,6 +1,6 @@
 angular.module('ilcomuneintasca.services.list', [])
 
-.factory('ListToolbox', function ($rootScope, $q, $ionicPopup, $ionicModal, $filter, MapHelper, $location, Config, $timeout, $ionicScrollDelegate) {
+.factory('ListToolbox', function ($rootScope, $q, $ionicPopup, $ionicModal, $filter, MapHelper, $location, Config, Profiling, $timeout, $ionicScrollDelegate) {
   var openSortPopup = function ($scope, options, presel, callback) {
     var title = $filter('translate')(Config.keys()['OrderBy']);
     var template = '<div class="list">';
@@ -30,10 +30,11 @@ angular.module('ilcomuneintasca.services.list', [])
     });
   }
 
-  var openFilterPopup = function ($scope, options, presel, callback) {
+  var completeFilterPopup = function ($scope, options, presel) {
     var title = $filter('translate')(Config.keys()['Filter']);
     var template = '<div class="modal modal-filter"><ion-header-bar><h1 class="title">' + title + '</h1></ion-header-bar><ion-content><div class="list">';
     var body = '<a class="item item-icon-right" ng-click="closeModal(\'__all\')">' + $filter('translate')(Config.keys()['All']) + '<i class="icon ' + (presel == null ? 'ion-ios7-checkmark' : 'ion-ios7-circle-outline') + '"></i></a>';
+
     for (var key in options) {
       var s = $filter('translate')(options[key]);
       s = '<a class="item item-icon-right" ng-click="closeModal(\'' + key + '\')">' + s + '<i class="icon ' + (key == presel ? 'ion-ios7-checkmark' : 'ion-ios7-circle-outline') + '"></i></a>';
@@ -46,6 +47,9 @@ angular.module('ilcomuneintasca.services.list', [])
       animation: 'slide-in-up'
     });
     $scope.filtermodal.show();
+  }
+
+  var openFilterPopup = function ($scope, options, presel, callback) {
     $scope.$on('$destroy', function () {
       $scope.filtermodal.remove();
     });
@@ -53,6 +57,16 @@ angular.module('ilcomuneintasca.services.list', [])
       $scope.filtermodal.hide();
       if ('__all' == val) callback(null);
       else if (val) callback(val);
+    }
+
+    if (typeof options.then=='function') {
+      //console.log('options is a promise...');
+      options.then(function(opts){
+        completeFilterPopup($scope, opts, presel);
+      });
+    } else {
+      //console.log('options is NOT a promise...');
+      completeFilterPopup($scope, options, presel);
     }
     /*
       // An elaborate, custom popup
@@ -84,6 +98,7 @@ angular.module('ilcomuneintasca.services.list', [])
     },
     // expect conf with load, orderingTypes, defaultOrdering, getData, title, filterOptions, defaultFilter, doFilter
     prepare: function ($scope, conf) {
+      Profiling.start('sort.prepare');
       var d = $q.defer();
       //$scope.gotdata = d.promise;
       if ($scope.$navDirection == 'back') {
@@ -94,6 +109,7 @@ angular.module('ilcomuneintasca.services.list', [])
         state.data = null;
       }
       conf.load(state.data);
+      Profiling._do('sort.prepare','conf.load');
 /*
       $scope.goToItem = function (path) {
         //state.data = conf.getData();
@@ -142,8 +158,9 @@ angular.module('ilcomuneintasca.services.list', [])
         $scope.filter = $scope.$navDirection != 'back' ? conf.defaultFilter : state.filter||conf.defaultFilter;
         //console.log('$scope.filter: '+JSON.stringify($scope.filter));
         $scope.showFilterPopup = function () {
-          if (!!$ionicScrollDelegate.$getByHandle('listScroll')) {
-            $timeout(function(){ $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false); });
+          var listScroll=$ionicScrollDelegate.$getByHandle('listScroll');
+          if (!!listScroll) {
+            $timeout(function(){ listScroll.scrollTop(false); });
           }  
           openFilterPopup($scope, $scope.filterOptions, $scope.filter, function (res) {
             $scope.filter = res;
@@ -158,8 +175,9 @@ angular.module('ilcomuneintasca.services.list', [])
         $scope.showSearch = function (e) {
           $scope.searching = true;
           var footer = e.target.parentNode.parentNode.parentNode;
-          if (!!$ionicScrollDelegate.$getByHandle('listScroll')) {
-            $timeout(function(){ $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false); });
+          var listScroll=$ionicScrollDelegate.$getByHandle('listScroll');
+          if (!!listScroll) {
+            $timeout(function(){ listScroll.scrollTop(false); });
           }  
           //console.log(footer);
           $timeout(function () {
@@ -177,6 +195,7 @@ angular.module('ilcomuneintasca.services.list', [])
           $scope.ordering.searchText = null;
         };
       }
+      Profiling._do('sort.prepare','done');
     }
   }
 })

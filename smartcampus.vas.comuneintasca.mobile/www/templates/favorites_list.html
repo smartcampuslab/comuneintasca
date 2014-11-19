@@ -6,10 +6,11 @@
     <ion-list ng-if="!! favorites.length">
       <div class="item item-divider" align="center">{{'list_results' | translate_plur:favorites.length}}</div>
       <ion-item class="item-thumbnail-left" ng-repeat="obj in favorites" collection-item-width="'100%'" collection-item-height="'80px'" ng-click="goto(obj.abslink)">
-        <comuni-img class="item-image comuni-item-image" gotdata="gotdata"></comuni-img>
+        <!-- comuni-img class="item-image comuni-item-image" gotdata="gotdata"></comuni-img -->
+        <div class="item-image comuni-item-image comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj,'list')}})"></div>
         <h2 class="fav-{{obj.dbType}}">{{obj.title | translate}}</h2>
-        <p data-ng-if="obj.menu && obj.dbType!='event'">{{obj.menu.name | translate}}</p>
-        <p data-ng-if="obj.menu && obj.dbType=='event'">{{obj.category | translate}}</p>
+        <p ng-if="obj.dbType!='hotel' && obj.dbType!='restaurant' && obj.menu">{{obj.menu.name | translate}}</p>
+        <p ng-if="obj.dbType=='hotel' || obj.dbType=='restaurant'">{{obj.dbClassification | translate}}<span ng-if="obj.dbClassification2">, {{obj.dbClassification2 | translate}}</span><span ng-if="obj.dbClassification3">, {{obj.dbClassification3 | translate}}</span></p>
         <!-- p data-ng-if="obj.menu && obj.menu._parent">{{obj.menu._parent.name | translate}}</p -->
       </ion-item>
     </ion-list>

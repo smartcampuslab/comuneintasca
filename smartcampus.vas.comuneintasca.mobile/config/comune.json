@@ -1,0 +1,13 @@
+{
+  "id":"trento",
+  "nome":"Trento",
+  "langs":[ "en", "it", "de" ],
+  "android":{
+    "package":"it.smartcampuslab.comuni.trento",
+    "version":{ "name":"3.0.1", "code":11 }
+  },
+  "ios":{
+    "package":"it.smartcampuslab.ilcomuneintasca",
+    "version":{ "name":"3.0.1", "build":"141119.1220" }
+  }
+}

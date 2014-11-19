@@ -4,10 +4,9 @@
 <ion-content class="has-header" delegate-handle="listScroll">
   <ion-list>
     <ion-item ng-repeat="obj in scrolldata track by $index" 
-
               ng-click="gotoSubpath(obj.id)" class="item-thumbnail-left coll-item">
       <!-- comuni-img class="item-image comuni-item-image" gotdata="gotdata"></comuni-img -->
-      <div class="item-image comuni-item-image comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj)}})"></div>
+      <div class="item-image comuni-item-image comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj,'list')}})"></div>
       <h2>{{obj.title | translate}}</h2>
       <p class="comuni-item-bottomdetail">{{obj.eventDateDescription | translate}}</p>
     </ion-item>

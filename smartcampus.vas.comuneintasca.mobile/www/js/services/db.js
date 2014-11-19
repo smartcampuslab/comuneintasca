@@ -7,8 +7,13 @@ angular.module('ilcomuneintasca.services.db', [])
   var POI_CATE_FROM_IT=true;
 
   var parseDbRow = function (dbrow) {
+    //comment out this line to profile each function call
+    //Profiling.start('dbparse.total');
+    //Profiling.start('dbparse');
+
     //console.log('dbrow.id: '+dbrow.id);
     var item = JSON.parse(dbrow.data);
+    Profiling._do('dbparse','json');
 
 		if (dbrow.parentid) {
 			item['parentid']=dbrow.parentid;
@@ -25,7 +30,7 @@ angular.module('ilcomuneintasca.services.db', [])
     //console.log('dbrow.classification: '+dbrow.classification);
     if (dbtype == 'itinerary') {
       item['abslink'] = '#/app/itinerary/' + item.id + '/info';
-      Config.menuGroupSubgroup('percorsi','itineraries').then(function(sg){
+      Config.menuGroupSubgroupByTypeAndClassification('itineraries').then(function(sg){
         item['menu']=sg;
       });
     } else {
@@ -35,9 +40,22 @@ angular.module('ilcomuneintasca.services.db', [])
           //console.log('abslink: '+item['abslink']);
           item['menu'] = sg;
         } else {
-          console.log('sg NULL!');
-          console.log('dbtype: '+dbtype);
-          console.log('dbrow.classification: '+dbrow.classification);
+          //console.log('searching submenu without classification...');
+          Config.menuGroupSubgroupByTypeAndClassification(dbtype).then(function(sg){
+            if (sg) {
+              item['abslink'] = '#/app/page/'+sg._parent.id+'/'+sg.id+'/' + item.id;
+              //console.log('#2 abslink: '+item['abslink']);
+              item['menu'] = sg;
+            } else {
+              console.log('sg NULL!');
+              console.log('dbtype: '+dbtype);
+              console.log('dbrow.classification: '+dbrow.classification);
+            }
+          },function(){
+            console.log('#2 sg NOT FOUND!');
+            console.log('#2 dbtype: '+dbtype);
+            console.log('#2 dbrow.classification: '+dbrow.classification);
+          });
         }
       },function(){
         console.log('sg NOT FOUND!');
@@ -49,6 +67,7 @@ angular.module('ilcomuneintasca.services.db', [])
     item['dbClassification'] = dbrow.classification || '';
     item['dbClassification2'] = dbrow.classification2 || '';
     item['dbClassification3'] = dbrow.classification3 || '';
+    Profiling._do('dbparse','classification');
 
     if (dbtype == 'content') {
       //NO-OP
@@ -75,20 +94,22 @@ angular.module('ilcomuneintasca.services.db', [])
       });
 
     } else if (dbtype == 'restaurant') {
-      if (item.dbClassification != '') item.dbClassification = Config.restaurantCateFromDbClassification(item.dbClassification);
-      if (item.dbClassification2 != '') item.dbClassification2 = Config.restaurantCateFromDbClassification(item.dbClassification2);
-      if (item.dbClassification3 != '') item.dbClassification3 = Config.restaurantCateFromDbClassification(item.dbClassification3);
+      if (item.dbClassification != '') item.dbClassification = Config.restaurantCateFromType(item.dbClassification);
+      if (item.dbClassification2 != '') item.dbClassification2 = Config.restaurantCateFromType(item.dbClassification2);
+      if (item.dbClassification3 != '') item.dbClassification3 = Config.restaurantCateFromType(item.dbClassification3);
 
     } else if (dbtype == 'hotel') {
-      //NO-OP
+      if (item.dbClassification != '') item.dbClassification = Config.hotelCateFromType(item.dbClassification);
 
     } else if (dbtype == 'itinerary') {
       //NO-OP
 
     } else if (dbtype == 'mainevent') {
-      //NO-OP
-
+      var maineventDate=new Date(item.fromDate);
+      item['date']=maineventDate.getMonth()*100 + maineventDate.getDate();
     }
+    Profiling._do('dbparse','type');
+
     //console.log('item.location: ' + JSON.stringify(item.location));
     if (item.hasOwnProperty('location') && item.location) {
       if ($rootScope.myPosition) {
@@ -103,8 +124,13 @@ angular.module('ilcomuneintasca.services.db', [])
     } else {
       //console.log('item.location UNKNOWN');
     }
+    Profiling._do('dbparse','location');
+
     if (dbrow.fromTime > 0) item['fromTime'] = dbrow.fromTime;
     if (dbrow.toTime > 0) item['toTime'] = dbrow.toTime;
+    Profiling._do('dbparse','time');
+
+    Profiling._do('dbparse.total');
     return item;
   };
 
@@ -123,7 +149,7 @@ angular.module('ilcomuneintasca.services.db', [])
 
   var localSyncOptions = {
     method: 'GET',
-    url: 'data/trento.json',
+    url: 'data/data.json',
     remote: false
   };
 
@@ -139,20 +165,21 @@ angular.module('ilcomuneintasca.services.db', [])
   var dbObj;
 
   var dbopenDeferred = $q.defer();
-  var dbName="Trento";
+  var dbName=Config.dbName();
   if (ionic.Platform.isWebView()) {
     //console.log('cordova db...');
     document.addEventListener("deviceready", function () {
       //console.log('cordova db inited...');
       dbObj = window.sqlitePlugin.openDatabase({
         name: dbName,
-        bgType: 0, skipBackup: true
+        bgType: 1,
+        skipBackup: true
       });
       dbopenDeferred.resolve(dbObj);
     }, false);
   } else {
     //console.log('web db...');
-    dbObj = window.openDatabase(dbName, '1.0', 'Trento - Il Comune in Tasca', 5 * 1024 * 1024);
+    dbObj = window.openDatabase(dbName, '1.0', Config.dbName()+' - Il Comune in Tasca', 5 * 1024 * 1024);
 //    remoteSyncOptions = localSyncOptions;
     dbopenDeferred.resolve(dbObj);
   }
@@ -163,28 +190,49 @@ angular.module('ilcomuneintasca.services.db', [])
     if (currentSchemaVersion == 0 || currentSchemaVersion != SCHEMA_VERSION) {
       console.log('initializing database...');
       dbObj.transaction(function (tx) {
-        tx.executeSql('DROP TABLE IF EXISTS ContentObjects');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS ContentObjects (id text primary key, objid integer, parentid text, version integer, type text, category text, classification text, classification2 text, classification3 text, data text, lat real, lon real, fromTime integer, toTime integer)');
-        tx.executeSql('CREATE INDEX IF NOT EXISTS co_id ON ContentObjects( id )');
-        tx.executeSql('CREATE INDEX IF NOT EXISTS co_objid ON ContentObjects( objid )');
-        tx.executeSql('CREATE INDEX IF NOT EXISTS co_parentid ON ContentObjects( parentid )');
-        tx.executeSql('CREATE INDEX IF NOT EXISTS co_idparentid ON ContentObjects( id, parentid )');
-        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type ON ContentObjects( type )');
-        tx.executeSql('CREATE INDEX IF NOT EXISTS co_cate ON ContentObjects( category )');
-        tx.executeSql('CREATE INDEX IF NOT EXISTS co_class ON ContentObjects( classification )');
-        tx.executeSql('CREATE INDEX IF NOT EXISTS co_class2 ON ContentObjects( classification, classification2 )');
-        tx.executeSql('CREATE INDEX IF NOT EXISTS co_class3 ON ContentObjects( classification, classification2, classification3 )');
-        tx.executeSql('CREATE INDEX IF NOT EXISTS co_lat ON ContentObjects( lat )');
-        tx.executeSql('CREATE INDEX IF NOT EXISTS co_lon ON ContentObjects( lon )');
-        tx.executeSql('CREATE INDEX IF NOT EXISTS co_typeclass ON ContentObjects( type, classification )');
-        tx.executeSql('CREATE INDEX IF NOT EXISTS co_typeid ON ContentObjects( type, id )');
-
         // if favs schema changes, we need to specify some special changes to perform to upgrade it
         if (currentSchemaVersion==0) {
           tx.executeSql('DROP TABLE IF EXISTS Favorites');
+          console.log('favorites table created')
           tx.executeSql('CREATE TABLE IF NOT EXISTS Favorites (id text primary key)');
           tx.executeSql('CREATE INDEX IF NOT EXISTS fav_id ON Favorites( id )');
         }
+
+        tx.executeSql('DROP TABLE IF EXISTS ContentObjects');
+        console.log('contents table created')
+        tx.executeSql('CREATE TABLE IF NOT EXISTS ContentObjects (id text primary key, objid integer, parentid text, version integer, type text, category text, classification text, classification2 text, classification3 text, data text, lat real, lon real, fromTime integer, toTime integer)');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_objid ON ContentObjects( objid )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_pid ON ContentObjects( parentid )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_idpid ON ContentObjects( id, parentid )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type ON ContentObjects( type )');
+        //tx.executeSql('CREATE INDEX IF NOT EXISTS co_cate ON ContentObjects( category )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_class ON ContentObjects( classification )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_class2 ON ContentObjects( classification2 )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_class3 ON ContentObjects( classification3 )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_lat ON ContentObjects( lat )');
+        //tx.executeSql('CREATE INDEX IF NOT EXISTS co_lon ON ContentObjects( lon )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_lon ON ContentObjects( lat,lon )');
+        //tx.executeSql('CREATE INDEX IF NOT EXISTS co_tf ON ContentObjects( fromTime )');
+        //tx.executeSql('CREATE INDEX IF NOT EXISTS co_tt ON ContentObjects( toTime )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_tt ON ContentObjects( type, toTime )');
+        //tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_ttf ON ContentObjects( type, fromTime, toTime )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_pid_type_class ON ContentObjects( parentid, type, classification )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_class ON ContentObjects( type, classification )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_class2 ON ContentObjects( type, classification2 )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_class3 ON ContentObjects( type, classification3 )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_class123 ON ContentObjects( type, classification, classification2, classification3 )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_class_tt ON ContentObjects( type, classification, toTime )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_class2_tt ON ContentObjects( type, classification2, toTime )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_class3_tt ON ContentObjects( type, classification3, toTime )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_class123_tt ON ContentObjects( type, classification, classification2, classification3, toTime )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_class_ttf ON ContentObjects( type, classification, fromTime, toTime )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_class2_ttf ON ContentObjects( type, classification2, fromTime, toTime )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_class3_ttf ON ContentObjects( type, classification3, fromTime, toTime )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_type_class123_ttf ON ContentObjects( type, classification, classification2, classification3, fromTime, toTime )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_typeid ON ContentObjects( type, id )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_typeid_class_tt ON ContentObjects( type, id, classification, toTime )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_typeid_class_tft ON ContentObjects( type, id, classification, fromTime, toTime )');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS co_typeid_class123_tft ON ContentObjects( type, id, classification, classification2, classification3, fromTime, toTime )');
       }, function (error) { //error callback
         console.log('cannot initialize db! ')
         console.log(error);
@@ -202,6 +250,20 @@ angular.module('ilcomuneintasca.services.db', [])
       });
     } else {
       //console.log('no need to init database...');
+/*
+      dbObj.transaction(function (tx) {
+        tx.executeSql("select * from sqlite_master where type='index'", [], function (tx, res) { //success callback
+          console.log('database schema following:');
+          for (i = 0; i < res.rows.length; i++) console.log(res.rows.item(i).sql);
+        }, function (e) { //error callback
+          console.log('unable dump table schema 1');
+        });
+      }, function (e) { //success callback
+        console.log('dump table schema ok');
+      }, function (e) { //error callback
+        console.log('unable dump table schema 2');
+      });
+*/
       dbDeferred.resolve(dbObj);
     }
   });
@@ -368,6 +430,8 @@ angular.module('ilcomuneintasca.services.db', [])
                             classified.resolve(['misc','','']);
                           }
                         }
+                      } else if (contentTypeKey == 'servizio_sul_territorio') {
+                          classified.resolve([item.classification.it,'','']);
                       } else if (contentTypeKey == 'poi') {
                         if (POI_CATE_FROM_IT) {
                           classified.resolve([item.classification.it,'','']);
@@ -409,6 +473,14 @@ angular.module('ilcomuneintasca.services.db', [])
                         } else if (contentTypeKey == 'mainevent') {
                           classification = item.classification.it;
                           item.category = 'mainevent';
+
+                          /*
+                          fromTime = item.fromDate;
+                          if (item.toDate > 0) toTime = item.toDate;
+                          else toTime = fromTime;
+                          console.log('event fromTime: ' + fromTime);
+                          console.log('event toTime: ' + toTime);
+                          */
 
                         } else if (contentTypeKey == 'hotel') {
                           classification = Config.hotelTypeFromCate(item.classification.it);
@@ -487,9 +559,9 @@ angular.module('ilcomuneintasca.services.db', [])
                     });
 
                     // events cleanup
-                    var nowTime = (new Date()).getTime();
-                    //console.log('[EVENTS CLEANUP] nowTime=' + new Date(nowTime));
-                    var yesterdayTime = nowTime - (24 * 60 * 60 * 1000);
+                    var nowTime = new Date();
+                    //console.log('[EVENTS CLEANUP] nowTime=' + nowTime);
+                    var yesterdayTime = new Date(nowTime.getFullYear(), nowTime.getMonth(), nowTime.getDate(), 0, 0, 0, 0).getTime();
                     //console.log('[EVENTS CLEANUP] yesterdayTime=' + new Date(yesterdayTime));
                     tx.executeSql('DELETE FROM ContentObjects WHERE type = ? AND toTime < ?', [ types['event'],yesterdayTime ], function (tx, res) { //success callback
                       console.log('deleted old events');
@@ -567,12 +639,14 @@ angular.module('ilcomuneintasca.services.db', [])
 						' GROUP BY c.id';
           //console.log('[DB.all()] sql: '+sql);
           tx.executeSql(sql, [types[dbname]], function (tx, results) {
+            Profiling._do('dball','sql');
             var len = results.rows.length,
               i;
             for (i = 0; i < len; i++) {
               var item = results.rows.item(i);
               lista.push(parseDbRow(item));
             }
+            Profiling._do('dball','parse');
           }, function (tx, err) {
             $ionicLoading.hide();
             console.log('data error!');
@@ -599,7 +673,7 @@ angular.module('ilcomuneintasca.services.db', [])
         Profiling.start('dbcate');
         var loading = $ionicLoading.show({
           template: $filter('translate')(Config.keys()['loading']),
-          delay: 600,
+          delay: 200,
           duration: Config.loadingOverlayTimeoutMillis()
         });
 
@@ -617,25 +691,40 @@ angular.module('ilcomuneintasca.services.db', [])
             }
           }
 					
-          var fromTime = new Date().getTime();
+          var d = new Date();
+          var min_toTime = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0).getTime() - 1;
+
+/*
+          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount ' +
+						'FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id' +
+            ' WHERE c.type=? ' +
+            (_complex==undefined ? (cateId ? ' AND c.classification=?' : '') : ' AND c.classification' + (_complex?'=':'!=') + "'_complex'" ) + 
+						' GROUP BY c.id';
+          var params = (cateId ? [types[dbname], cateId] : [types[dbname]]);
+*/
           var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount ' +
 						'FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id' +
             ' WHERE c.type=? ' +
 						(cateId ? ' AND (c.classification=? OR c.classification2=? OR c.classification3=?)' : '') + 
-            ' AND (s.id IS NULL OR s.toTime > ' + fromTime + ')' +
+            ' AND (s.id IS NULL OR s.toTime > ' + min_toTime + ')' +
             (_complex==undefined ? '' : ' AND c.classification' + (_complex?'=':'!=') + "'_complex'" ) + 
 						' GROUP BY c.id';
-          //console.log('[DB.cate()] sql: '+sql);
           var params = (cateId ? [types[dbname], cateId, cateId, cateId] : [types[dbname]]);
+
+          //console.log('[DB.cate()] sql: '+sql);
           //console.log('[DB.cate()] params: '+params);
+
           tx.executeSql(sql, params, function (tx2, cateResults) {
+            Profiling._do('dbcate','sql');
             var len = cateResults.rows.length,
               i;
             for (i = 0; i < len; i++) {
               var item = cateResults.rows.item(i);
-              lista.push(parseDbRow(item));
+              //lista.push(parseDbRow(item));
+              lista.push(item);
             }
-            data.resolve(lista);
+            Profiling._do('dbcate','lista');
+            //data.resolve(lista);
           }, function (tx2, err) {
             $ionicLoading.hide();
             console.log('cate data error!');
@@ -650,7 +739,11 @@ angular.module('ilcomuneintasca.services.db', [])
           data.reject(error);
         }, function () { //success callback
           $ionicLoading.hide();
-          Profiling._do('dbcate');
+          Profiling._do('dbcate','*****');
+
+          for (i in lista) lista[i]=parseDbRow(lista[i]);
+          Profiling._do('dbcate','parse');
+          
           data.resolve(lista);
         });
       });
@@ -662,7 +755,7 @@ angular.module('ilcomuneintasca.services.db', [])
         Profiling.start('byTimeInterval');
         var loading = $ionicLoading.show({
           template: $filter('translate')(Config.keys()['loading']),
-          delay: 600,
+          delay: 200,
           duration: Config.loadingOverlayTimeoutMillis()
         });
 
@@ -680,6 +773,14 @@ angular.module('ilcomuneintasca.services.db', [])
             }
           }
 
+/*
+          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, c.parentid'+
+						' FROM ContentObjects c' +
+            ' WHERE c.type=?' +
+            ' AND c.fromTime > 0 AND c.fromTime <' + toTime + ' AND c.toTime > ' + fromTime + 
+						(cateId ? ' AND (c.classification=? OR c.classification2=? OR c.classification3=?)' : '') + 
+            (_complex==undefined ? '' : ' AND c.classification' + (_complex?'=':'!=') + "'_complex'" );
+*/
           var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount'+
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id' +
             ' WHERE c.type=?' +
@@ -687,19 +788,21 @@ angular.module('ilcomuneintasca.services.db', [])
 						(cateId ? ' AND (c.classification=? OR c.classification2=? OR c.classification3=?)' : '') + 
             (_complex==undefined ? '' : ' AND c.classification' + (_complex?'=':'!=') + "'_complex'" ) + 
 						' GROUP BY c.id';
-          //console.log('[DB.byTimeInterval()] sql: '+sql);
           var params = cateId ? [types[dbname], cateId, cateId, cateId] : [types[dbname]];
+
+          //console.log('[DB.byTimeInterval()] sql: '+sql);
           //console.log('[DB.byTimeInterval()] params: '+params);
+
           tx.executeSql(sql, params, function (tx2, cateResults) {
+            Profiling._do('byTimeInterval','sql');
             var len = cateResults.rows.length,
               i;
             for (i = 0; i < len; i++) {
               var item = cateResults.rows.item(i);
-              var dbItem=parseDbRow(item);
-              dbItem.ctx=objContext;
-              lista.push(dbItem);
+              item.ctx=objContext;
+              lista.push(item);
             }
-            data.resolve(lista);
+            Profiling._do('byTimeInterval','parse');
           }, function (tx2, err) {
             $ionicLoading.hide();
             console.log('byTimeInterval data error!');
@@ -710,11 +813,16 @@ angular.module('ilcomuneintasca.services.db', [])
         }, function (error) { //error callback
           $ionicLoading.hide();
           console.log('db.cate() ERROR: ' + error);
-          Profiling._do('dbcate');
+          Profiling._do('byTimeInterval');
           data.reject(error);
         }, function () { //success callback
           $ionicLoading.hide();
-          Profiling._do('dbcate');
+          Profiling._do('byTimeInterval');
+          Profiling._do('byTimeInterval','*****');
+
+          for (i in lista) lista[i]=parseDbRow(lista[i]);
+          Profiling._do('byTimeInterval','parse');
+          
           data.resolve(lista);
         });
       });
@@ -753,14 +861,14 @@ angular.module('ilcomuneintasca.services.db', [])
           //console.log('qParams: ' + qParams);
           //console.log('DatiDB.get("' + dbname + '", "' + parentId + '"); dbQuery launched...');
           tx.executeSql(dbQuery, qParams, function (tx2, results) {
+            Profiling._do('dbsons', 'sql');
             //console.log('DatiDB.get("' + dbname + '", "' + parentId + '"); dbQuery completed');
             var resultslen = results.rows.length;
-						for (var i = 0; i < resultslen; i++) {
-							var item = results.rows.item(i);
-							lista.push(parseDbRow(item));
-						}
-						Profiling._do('dbsons', 'list');
-						dbsons.resolve(lista);
+            for (var i = 0; i < resultslen; i++) {
+              var item = results.rows.item(i);
+              lista.push(parseDbRow(item));
+            }
+            Profiling._do('dbsons', 'parse');
           }, function (tx2, err) {
             $ionicLoading.hide();
             console.log('error: ' + err);
@@ -804,12 +912,13 @@ angular.module('ilcomuneintasca.services.db', [])
           var qParams = objId.split(',');
           qParams.unshift(types[dbname]);
 
-          var fromTime = new Date().getTime();
+          var d = new Date();
+          var min_toTime = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0).getTime() - 1;
 					var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount'+
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id'+
             ' WHERE c.type=?' +
             ' AND ' + idCond + 
-            ' AND (s.id IS NULL OR s.toTime > ' + fromTime + ')' +
+            ' AND (s.id IS NULL OR s.toTime > ' + min_toTime + ')' +
             ' GROUP BY c.id';
           //console.log('dbQuery: ' + dbQuery);
           //console.log('qParams: ' + qParams);
@@ -879,12 +988,13 @@ angular.module('ilcomuneintasca.services.db', [])
           var qParams = itemId.split(',');
           if (dbname) qParams.unshift(types[dbname]);
 
-          var fromTime = new Date().getTime();
+          var d = new Date();
+          var min_toTime = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0).getTime() - 1;
 					var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount'+
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id'+
             (dbname?' WHERE c.type=?':'') +
             ' AND ' + idCond + 
-            ' AND (s.id IS NULL OR s.toTime > ' + fromTime + ')' +
+            ' AND (s.id IS NULL OR s.toTime > ' + min_toTime + ')' +
             ' GROUP BY c.id';
           //console.log('dbQuery: ' + dbQuery);
           //console.log('qParams: ' + qParams);
@@ -930,7 +1040,7 @@ angular.module('ilcomuneintasca.services.db', [])
         return dbitem.promise;
       });
     },
-    checkIDs: function (itemIds) {
+    checkIDs: function (itemIds,ref) {
       //console.log('DatiDB.checkIDs(); itemIds: ' + itemIds);
       Profiling.start('dbcheck');
       var dbitem = $q.defer();
@@ -952,19 +1062,19 @@ angular.module('ilcomuneintasca.services.db', [])
             } else {
               //console.log('DB.checkIDs('+itemIds+'): not found!');
               Profiling._do('dbcheck', 'sql empty');
-              dbitem.reject('not found!');
+              dbitem.reject([itemIds,ref]);
             }
           }, function (tx2, err) {
             $ionicLoading.hide();
             console.log('error: ' + err);
             Profiling._do('dbcheck', 'sql error');
-            dbitem.reject(err);
+            dbitem.reject([itemIds,ref]);
           });
         }, function (error) { //error callback
           $ionicLoading.hide();
           console.log('DB.checkIDs() ERROR: ' + error);
           Profiling._do('dbcheck', 'tx error');
-          dbitem.reject(error);
+          dbitem.reject([itemIds,ref]);
         }, function () { //success callback
           $ionicLoading.hide();
           Profiling._do('dbcheck', 'tx success');
@@ -1089,6 +1199,97 @@ angular.module('ilcomuneintasca.services.db', [])
         });
       });
       return dbitem.promise;
+    },
+    cleanupCatesOfType: function (cates,type) {
+      Profiling.start('filterclean');
+      var returned=$q.defer();
+
+      //console.log('type: '+type);
+      //console.log('types[type]: '+types[type]);
+
+      db.then(function (dbObj) {
+        //Profiling._do('filterclean','dbobj');
+        
+        dbObj.transaction(function (tx) {
+          Profiling._do('filterclean','dbtrans');
+          
+          var cleaned={};
+          var cleanedPromises=[];
+          for (key in cates) {
+            var d=$q.defer();
+            cleaned[key]=d;
+            cleanedPromises.push(d.promise);
+          }
+          //Profiling._do('filterclean','promises');
+
+          for (var key in cates) {
+            var cate=cates[key].it;
+            //console.log('cates['+key+']: '+cate);
+            var dbQuery="select count(*) as totale, '"+key+"' as catekey from ContentObjects where type=? and (classification=? OR classification2=? OR classification3=?)";
+            //console.log('dbQuery: '+dbQuery);
+            var dbQueryArgs=[ types[type], key, key, key ];
+            //console.log('dbQueryArgs: '+dbQueryArgs);
+            tx.executeSql(dbQuery,dbQueryArgs,function (tx, results) {
+              var resultslen = results.rows.length;
+              //console.log('resultslen='+resultslen);
+              if (resultslen>0) {
+                var item = results.rows.item(0);
+                //console.log('cates['+item.catekey+']='+item.catekey);
+
+                //filteredCates.push(cates[item.catekey]);
+                //filteredCates[item.catekey]=cates[item.catekey];
+                //cleaned[item.catekey].resolve();
+
+                //console.log('cates['+item.catekey+'].count='+item.totale);
+                Profiling._do('filterclean', 'done.'+item.catekey);
+                if (item.totale>0) {
+                  cleaned[item.catekey].resolve(item.catekey);
+                } else {
+                  cleaned[item.catekey].resolve(null);
+                }
+              } else {
+                //console.log('no results for cates['+key+']: ');
+                Profiling._do('filterclean', 'err.'+key);
+                cleaned[key].reject();
+              }
+            }, function (tx, err) {
+              console.log('error: ' + err);
+              Profiling._do('filterclean', 'sql tx2 error');
+              cleaned[key].reject();
+            });
+          }
+
+          $q.all(cleanedPromises).then(function(cleanedPromisesCates) {
+            //console.log('cleanedPromisesCates: '+cleanedPromisesCates);
+            Profiling._do('filterclean', 'q.all');
+
+            var filteredCates={};
+            for (i in cleanedPromisesCates) {
+              var key=cleanedPromisesCates[i];
+              if (key!=null) filteredCates[key]=cates[key];
+            }
+            //console.log('filteredCates keys: '+Object.keys(filteredCates));
+
+            returned.resolve(filteredCates);
+          },function(err){
+            console.log('$q.all() error: ' + err);
+            Profiling._do('filterclean', 'q.all error');
+            returned.reject(err);
+          });
+        }, function (error) { //error callback
+          Profiling._do('filterclean', 'tx error');
+          console.log('db.cleanupCatesOfType() ERROR: ' + error);
+          returned.reject(error);
+        }, function () { //success callback
+          Profiling._do('filterclean', 'sql tx1 success');
+        });
+      },function (error) {
+        console.log('dbobj ERROR: ' + error);
+        returned.reject(error);
+      });
+
+      Profiling._do('filterclean','returned');
+      return returned.promise;
     }
   }
 })

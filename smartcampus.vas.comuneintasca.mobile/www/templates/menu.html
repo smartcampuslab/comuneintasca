@@ -1,7 +1,7 @@
 <ion-side-menus>
 
-  <ion-pane ion-side-menu-content>
-    <ion-nav-bar class="bar-comuni nav-title-slide-ios7" id="navbar">
+  <ion-side-menu-content drag-content="false">
+    <ion-nav-bar class="bar-comuni" id="navbar">
       <ion-nav-buttons side="left">
         <ion-nav-back-button class="button-clear button-dark">
           <i class="icon ion-ios7-arrow-back"></i>
@@ -13,7 +13,7 @@
     </ion-nav-bar>
     <ion-nav-view name="menuContent" animation="slide-left-right">
     </ion-nav-view>
-  </ion-pane>
+  </ion-side-menu-content>
 
   <ion-side-menu side="right">
     <ion-header-bar class="bar-dark-comuni">
@@ -24,14 +24,17 @@
         <ion-item nav-clear menu-close class="item-accordion" ng-click="goto('home')">
           <span ng-bind="'sidemenu_Home' | translate" class="comunimenu-home"></span>
         </ion-item>
+        <ion-item ng-if="DEV" nav-clear menu-close class="item-accordion" ng-click="goto('test')">
+          <span class="comunimenu-home"><em>¡test!</em></span>
+        </ion-item>
 
-        <div ng-if="menu" ng-repeat="(groupIndex, menuGroup) in menu" class="comunimenu-{{menuGroup.id|cleanMenuID}}">
+        <div ng-if="menu" ng-repeat="(groupIndex, menuGroup) in menu" class="comunimenu-pos{{groupIndex}}">
           <ion-item class="item-header item-icon-right" ng-click="showGroup(groupIndex)">
             <b ng-bind="menuGroup.name | translate"></b>
             <i class="icon comunimenu-{{menuGroup.id}}" ng-class="{'ion-chevron-down': !isGroupShown(groupIndex), 'ion-chevron-up': isGroupShown(groupIndex)}"></i>
           </ion-item>
           <div ng-show="isGroupShown(groupIndex)">
-            <ion-item ng-repeat="(itemIndex, menuItem) in menuGroup.items" menu-close class="item-accordion" ng-href="#/app/{{getMenuPath(menuGroup,menuItem)}}">
+            <ion-item ng-repeat="(itemIndex, menuItem) in menuGroup.items" menu-close class="item-accordion" ng-click="goto(getMenuPath(menuGroup,menuItem))">
               <span ng-class="{'comunisubmenu-all': (menuItem.query != null && menuItem.query.type=='event' && menuItem.query.classification==null)}" ng-bind="menuItem.name | translate"></span>
             </ion-item>
           </div>

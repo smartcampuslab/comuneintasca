@@ -3,13 +3,23 @@ angular.module('ilcomuneintasca.services.conf', [])
 .factory('Config', function ($q, $http, $window, $filter, $rootScope) {
   var DEVELOPMENT=false;
   $rootScope.DEV=DEVELOPMENT;
-  //$rootScope.DEV=true;
+  
+  // when the following is TRUE, we show special buttons 
+  // (actually just the db RESET button in settings)
+  // even if not in development mode
+  // $rootScope.DEV=true;
 
-  var SCHEMA_VERSION=101;
+  var SYNC_WEBAPP='comuneintasca-oc';
+  var SCHEMA_VERSION=109;
   var SYNC_HOST="tn";
   if (DEVELOPMENT) SYNC_HOST="vas-dev";
   var LOCAL_PROFILE="opencontent";
 
+  // customization parameters
+  var cityName = { 'it':'Trento', 'en':'Trento', 'de':'Trento' };
+  var imagePath = 'http://www.comune.trento.it/var/comunetn';
+  var dbName = 'trento';
+  
   function parseConfig(config) {
     if (config) {
       if (config.menu) {
@@ -290,9 +300,9 @@ angular.module('ilcomuneintasca.services.conf', [])
       de: 'Kommt bald...'
     },
     'app_title': {
-      it: 'TRENTO<br/>IL COMUNE IN TASCA',
-      en: 'TRENTO<br/>THE CITY IN YOUR POCKET',
-      de: 'TRENTO<br/>DIE STADT IN DER TASCHE'
+      it: cityName.it.toUpperCase()+'<br/>IL COMUNE IN TASCA',
+      en: cityName.en.toUpperCase()+'<br/>THE CITY IN YOUR POCKET',
+      de: cityName.de.toUpperCase()+'<br/>DIE STADT IN DER TASCHE'
     },
     'sidemenu_Home': {
       it: 'Home',
@@ -345,7 +355,8 @@ angular.module('ilcomuneintasca.services.conf', [])
     'hotel': {
       de: 'Hotel',
       it: 'Hotel',
-      en: 'Hotel'
+      en: 'Hotel',
+      sinonyms:['Residence']
     },
     'hostel': {
       de: 'Jugendherberge',
@@ -355,17 +366,20 @@ angular.module('ilcomuneintasca.services.conf', [])
     'agri': {
       de: 'Agritourismusbetrieb',
       it: 'Agritur',
-      en: 'Farmhouse Inn'
+      en: 'Farmhouse Inn',
+      sinonyms:['Agriturismo']
     },
     'bnb': {
       de: 'Bed and Breakfast',
       it: 'Bed and Breakfast',
-      en: 'Bed and Breakfast'
+      en: 'Bed and Breakfast',
+      sinonyms:['B&B']
     },
     'camp': {
       de: 'Campingplatz',
       it: 'Campeggio',
-      en: 'Camp-site'
+      en: 'Camp-site',
+      sinonyms:['Camping','Villaggio']
     },
     'rooms': {
       de: 'Zimmervermietung',
@@ -375,7 +389,8 @@ angular.module('ilcomuneintasca.services.conf', [])
     'apts': {
       de: 'Ferienwohnungen',
       it: 'Appartamenti per vacanze',
-      en: 'Holiday apartments'
+      en: 'Holiday apartments',
+      sinonyms:['Appartamenti']
     },
   };
 
@@ -388,12 +403,14 @@ angular.module('ilcomuneintasca.services.conf', [])
     'pizzeria': {
       de: '',
       it: 'Pizzeria',
-      en: ''
+      en: '',
+      sinonyms:['Pizzerie']
     },
     'trattoria': {
       de: 'Gastwirtschaft',
       it: 'Trattoria',
-      en: ''
+      en: 'Trattoria',
+      sinonyms:['Trattorie']
     },
     'typical': {
       de: 'Bed and Breakfast',
@@ -403,7 +420,8 @@ angular.module('ilcomuneintasca.services.conf', [])
     'restaurant': {
       de: 'Restaurant',
       it: 'Ristorante',
-      en: 'Restaurant'
+      en: 'Restaurant',
+      sinonyms:['Ristoranti']
     },
     'pub': {
       de: 'Bierstube',
@@ -505,7 +523,8 @@ angular.module('ilcomuneintasca.services.conf', [])
     'mainevent': 'eu.trentorise.smartcampus.comuneintasca.model.MainEventObject',
     //'home': 'eu.trentorise.smartcampus.comuneintasca.model.HomeObject',
     'oldconfig': 'eu.trentorise.smartcampus.comuneintasca.model.ConfigObject',
-    'config': 'eu.trentorise.smartcampus.comuneintasca.model.DynamicConfigObject'
+    'config': 'eu.trentorise.smartcampus.comuneintasca.model.DynamicConfigObject',
+    'servizio_sul_territorio': 'eu.trentorise.smartcampus.comuneintasca.model.TerritoryServiceObject'
   };
 
   function cloneParentGroup(group) {
@@ -602,6 +621,10 @@ angular.module('ilcomuneintasca.services.conf', [])
           "sort":{ "options":["A-Z", "Z-A", "Distance"], "default":"Distance" },
           "map":true
         },
+        "servizio_sul_territorio":{
+          "sort":{ "options":["A-Z", "Z-A", "Distance"], "default":"Distance" },
+          "map":true
+        },
         "hotel":{
           "sort":{ "options":["A-Z", "Z-A", "Distance", "Stars"], "default":"Distance" }, 
           "filter":true, 
@@ -681,7 +704,7 @@ angular.module('ilcomuneintasca.services.conf', [])
           if (group.items) {
             for (sgi=0; sgi<group.items.length; sgi++) {
               var sg=group.items[sgi];
-              if ( sg.query && sg.query.type==type && ( (!sg.query.classification) || (classification&&classification==sg.query.classification) ) ) {
+              if ( sg.query && sg.query.type==type && ( (!classification && !sg.query.classification) || (classification&&classification==sg.query.classification) ) ) {
                 sg._parent=cloneParentGroup(group);
                 return sg;
               } else if (sg.type && sg.type==type && classification==null) {
@@ -700,9 +723,6 @@ angular.module('ilcomuneintasca.services.conf', [])
     keys: function () {
       return keys;
     },
-    doProfiling: function () {
-      return false;
-    },
     savedImagesDirName: function () {
       return 'IlComuneInTasca-ImagesCache';
     },
@@ -710,7 +730,8 @@ angular.module('ilcomuneintasca.services.conf', [])
       return SCHEMA_VERSION;
     },
     syncUrl: function () {
-      return 'https://'+SYNC_HOST+'.smartcampuslab.it/comuneintasca/sync';
+//      return 'https://'+SYNC_HOST+'.smartcampuslab.it/comuneintasca/sync';
+      return 'https://'+SYNC_HOST+'.smartcampuslab.it/'+SYNC_WEBAPP+'/sync';
     },
     syncTimeoutSeconds: function () {
       //return 60 * 60; /* 60 times 60 seconds = EVERY HOUR */
@@ -747,16 +768,30 @@ angular.module('ilcomuneintasca.services.conf', [])
     textTypesList: function () {
       return textTypes;
     },
+
     hotelTypesList: function () {
       return hotelTypes;
     },
     hotelCateFromType: function (type) {
       return hotelTypes[type];
     },
+
+    restaurantTypesList: function () {
+      return restaurantTypes;
+    },
+    restaurantCateFromType: function (type) {
+      return restaurantTypes[type];
+    },
+
     hotelTypeFromCate: function (cate) {
       for (var hotelType in hotelTypes) {
         if (hotelTypes.hasOwnProperty(hotelType)) {
           if (hotelTypes[hotelType].it == cate) return hotelType;
+          if (!!hotelTypes[hotelType].sinonyms) {
+            for (var i = 0; i < hotelTypes[hotelType].sinonyms.length; i++) {
+              if (hotelTypes[hotelType].sinonyms[i] == cate) return hotelType;
+            }
+          }
         }
       }
       console.log('unknown hotel cate: "'+cate+'"');
@@ -774,16 +809,15 @@ angular.module('ilcomuneintasca.services.conf', [])
         en: 'UNKNOWN'
       };
     },
-    restaurantTypesList: function () {
-      return restaurantTypes;
-    },
-    restaurantCateFromType: function (type) {
-      return restaurantTypes[type];
-    },
     restaurantTypeFromCate: function (cate) {
       for (var restaurantType in restaurantTypes) {
         if (restaurantTypes.hasOwnProperty(restaurantType)) {
           if (restaurantTypes[restaurantType].it == cate) return restaurantType;
+          if (!!restaurantTypes[restaurantType].sinonyms) {
+            for (var i = 0; i < restaurantTypes[restaurantType].sinonyms.length; i++) {
+              if (restaurantTypes[restaurantType].sinonyms[i] == cate) return restaurantType;
+            }
+          }
         }
       }
       console.log('unknown restaurant cate: "'+cate+'"');
@@ -800,24 +834,45 @@ angular.module('ilcomuneintasca.services.conf', [])
         it: 'UNKNOWN',
         en: 'UNKNOWN'
       };
+    },
+ 
+    cityName: function() {
+      return cityName;
+    },
+    imagePath: function() {
+      return imagePath;
+    },
+    dbName: function() {
+      return dbName;
+    },
+    doProfiling: function () {
+      return false;
     }
   }
 })
 
 .factory('Profiling', function (Config) {
+  var reallyDoProfiling=Config.doProfiling();
   var startTimes = {};
   return {
+    start2: function (label) {
+      startTimes[label] = (new Date).getTime();
+    },
     start: function (label) {
-      if (Config.doProfiling()) {
-        startTimes[label] = (new Date).getTime();
-      }
+      if (reallyDoProfiling) this.start2(label);
     },
 
-    _do: function (label, details) {
-      if (Config.doProfiling()) {
-        var startTime = startTimes[label] || -1;
-        if (startTime != -1) console.log('PROFILING: ' + label + (details ? '(' + details + ')' : '') + '=' + ((new Date).getTime() - startTime));
+    _do2: function (label, details, info) {
+      var startTime = startTimes[label] || -1;
+      if (startTime != -1) {
+        var nowTime = (new Date).getTime();
+        console.log('PROFILING: ' + label + (details ? '(' + details + ')' : '') + '=' + (nowTime - startTime));
+        //if (details) startTimes[label]=nowTime;
+        if (!!info) console.log(info);
       }
+    },
+    _do: function (label, details, info) {
+      if (reallyDoProfiling) this._do2(label, details);
     }
   };
 })

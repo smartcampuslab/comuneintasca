@@ -172,7 +172,9 @@ angular.module('ilcomuneintasca.controllers.common', [])
     $scope.group = g;
   });
 })
-.controller('PageCtrl', function ($scope, $rootScope, $state, $stateParams, $filter, $location, $window, $timeout, Profiling, Config, DatiDB, Files, ListToolbox, DateUtility, GeoLocate, MapHelper, $ionicScrollDelegate, $ionicViewService) {
+.controller('PageCtrl', function ($scope, $rootScope, $state, $stateParams, $filter, $location, $window, $timeout, Profiling, Config, DatiDB, Files, ListToolbox, DateUtility, GeoLocate, MapHelper, $ionicScrollDelegate, $ionicViewService, $ionicLoading) {
+  Profiling.start('page');
+
   $scope.results=[];
   $scope.resultsGroups=[];
   
@@ -189,9 +191,11 @@ angular.module('ilcomuneintasca.controllers.common', [])
     //$window.history.back();
   };
   $scope.$on('$destroy', function () {
+    $scope.scrolldata = [];
+    $scope.groupscrolldata = [];
     $scope.results = [];
-    $scope.resultsAll = [];
-    $scope.resultsGroups=[];
+    //$scope.resultsAll = [];
+    //$scope.resultsGroups=[];
     Files.queuedFilesCancel();
   });
 
@@ -259,8 +263,6 @@ angular.module('ilcomuneintasca.controllers.common', [])
           $scope.template = 'templates/page/' + (sg.view || sg_query_type) + ($state.current.data && $state.current.data.sons ? '_sons' : '') + '.html';
   */
   } else {
-    Profiling.start('page');
-
     Config.menuGroupSubgroup($stateParams.groupId, $stateParams.menuId).then(function (sg) {
       Profiling._do('page', 'menuGroupSubgroup found');
       if (!sg) {
@@ -297,6 +299,10 @@ angular.module('ilcomuneintasca.controllers.common', [])
 
             if (data.parentid) {
               //console.log('siblings');
+              
+              $scope.obj['parentAbsLink']=Config.menuGroupSubgroupByTypeAndClassification(sg_query_type,'_complex').then(function(sg){
+                return 'page/'+sg._parent.id+'/'+sg.id+'/'+data.parentid;
+              });
 
               $scope.gotsonsdata = DatiDB.getByParent(sg_query_type, data.parentid).then(function (data) {
                 $scope.sons = data;
@@ -320,7 +326,13 @@ angular.module('ilcomuneintasca.controllers.common', [])
                   $scope.sonsVisible = null;
                 } else {
                   $scope.gotsonsdata = DatiDB.getByParent(sg_query_type, data.id).then(function (data) {
-                    if (!$scope.sons) $scope.sons = data;
+                    if (!$scope.sons) {
+                      if (data.length > 0 && data[0].fromTime) {
+                        $scope.sons = $filter('extOrderBy')(data,{order:'DateFrom'});
+                      } else {
+                        $scope.sons = data;
+                      }
+                    }  
                     $scope.sonsVisible = true;
                   });
                 }
@@ -329,7 +341,11 @@ angular.module('ilcomuneintasca.controllers.common', [])
               if ($state.current.data && $state.current.data.sons) {
                 //console.log('sons');
                 $scope.gotsonsdata = DatiDB.getByParent(sg_query_type, data.id).then(function (data) {
-                  $scope.sons = data;
+                  if (data.length > 0 && data[0].fromTime) {
+                    $scope.sons = $filter('extOrderBy')(data,{order:'DateFrom'});
+                  } else {
+                    $scope.sons = data;
+                  }  
                 });
               }
             }
@@ -349,6 +365,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
 
           var dosort = function(data) {
               if (tboptions.hasSort || tboptions.hasSearch) {
+                Profiling.start('sort.do');
                 $scope.results = [];
                 Files.queuedFilesCancel();
 
@@ -361,6 +378,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
                     }
                   }
                 }
+                Profiling._do('sort.do');
               }  
           };    
 
@@ -429,7 +447,63 @@ angular.module('ilcomuneintasca.controllers.common', [])
               }
             }
           };
-          
+
+          $scope.groupOffsets=[];
+          $scope.heights_header=32;
+          $scope.heights_item=99;
+          $scope.stickyTopBase=74;
+          $scope.stickyTop=$scope.stickyTopBase;
+          $scope.stickyLabel=null;
+          $scope.checkPosition = function() {
+            var listScroll=$ionicScrollDelegate.$getByHandle('listScroll');
+            if (listScroll && $scope.resultsGroups && $scope.resultsGroups.length>1) {
+              var top=listScroll.getScrollPosition().top;
+              var label='';
+              for (i in $scope.groupOffsets) {
+                i=parseInt(i);
+                //console.log($scope.groupOffsets[i]+' <= '+top+($scope.groupOffsets.length>0&&i<$scope.groupOffsets.length-1?' < '+$scope.groupOffsets[i+1]:''));
+                if (top>=$scope.groupOffsets[i]) {
+                  if (i==$scope.groupOffsets.length-1 || top<$scope.groupOffsets[i+1]) {
+                    label=$scope.groupscrolldata[i].label;
+                    if (i!=$scope.groupOffsets.length-1 && top>($scope.groupOffsets[i+1]-$scope.heights_header)) {
+                      deltaUp=$scope.heights_header - ($scope.groupOffsets[i+1]-top);
+//console.log('deltaUp: '+deltaUp);
+                      $timeout(function(){
+                        $scope.stickyTop=($scope.stickyTopBase - deltaUp) + 'px';
+//console.log('$scope.stickyTop: '+$scope.stickyTop);
+                      });
+                    } else {
+                      if ($scope.stickyTop!=$scope.stickyTopBase) {
+                        $timeout(function(){
+                          $scope.stickyTop=$scope.stickyTopBase;
+                        });
+                      }
+                    }
+                  } 
+                }
+              }
+              if (label!=$scope.stickyLabel) {
+                if (label) $timeout(function(){
+                  $scope.stickyLabel=label;
+                });
+              }
+            } else {
+              $scope.stickyLabel=null;
+            }
+          };          
+          $scope.calcGroupOffset = function (index) {
+            offset=0;
+            for (i in $scope.groupscrolldata) {
+              if (i<index) {
+                if ($scope.groupscrolldata[i].results.length>0) {
+                  offset+=$scope.heights_header + $scope.groupscrolldata[i].results.length*$scope.heights_item - 1;
+                }
+              }
+            }
+            $scope.groupOffsets[index]=offset;
+//console.log('$scope.groupOffsets['+index+']='+offset);
+            return offset;
+          }
           
           var tboptions = {
             hasSort: false,
@@ -455,8 +529,9 @@ angular.module('ilcomuneintasca.controllers.common', [])
                     $scope.resultsAll = data;
 //                    $scope.results = data;
                     dosort(data);
-                    if (!!$ionicScrollDelegate.$getByHandle('listScroll')) {
-                      $timeout(function(){ $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false); });
+                    var listScroll=$ionicScrollDelegate.$getByHandle('listScroll');
+                    if (!!listScroll) {
+                      $timeout(function(){ listScroll.scrollTop(false); });
                     }
                   });
                 }
@@ -513,45 +588,42 @@ angular.module('ilcomuneintasca.controllers.common', [])
           if (sg.query.hasOwnProperty('filter') || sg._parent.hasOwnProperty('filter') || dbtypeCustomisations.hasOwnProperty('filter')) {
 
             if (sg_query_type == "hotel") {
-              tboptions.filterOptions = Config.hotelTypesList();
+              //tboptions.filterOptions = Config.hotelTypesList();
+              tboptions.filterOptions = DatiDB.cleanupCatesOfType(Config.hotelTypesList(),sg_query_type);
             } else if (sg_query_type == "restaurant") {
-              tboptions.filterOptions = Config.restaurantTypesList();
+              //tboptions.filterOptions = Config.restaurantTypesList();
+              tboptions.filterOptions = DatiDB.cleanupCatesOfType(Config.restaurantTypesList(),sg_query_type);
             }
 
             tboptions.doFilter = function (filter_default) {
+              var loading = $ionicLoading.show({
+                template: $filter('translate')(Config.keys()['loading']),
+                delay: 600,
+                duration: Config.loadingOverlayTimeoutMillis()
+              });
+
               filter=ListToolbox.getState().filter||filter_default;
               //console.log('doFilter("'+filter+'")...');
               var t = 0;
               var d = new Date();
-              var f = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime() - 1;
-              if (filter == 'today') {
-                t = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1).getTime();
-              } else if (filter == 'week') {
-                t = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 7).getTime();
-              } else if (filter == 'month') {
-                t = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 30).getTime();
-              }
+              var f = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0).getTime() - 1; //subtracting 1 micro since condition needs just > (not >=)
               //console.log('f: '+f);
+              if (filter == 'today') {
+                t = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 23, 59, 59, 999).getTime() + 1; //adding 1 micro since condition needs just < (not <=)
+              } else if (filter == 'week') {
+                t = new Date(d.getFullYear(), d.getMonth(), d.getDate()+7, 23, 59, 59, 999).getTime() + 1; //adding 1 micro since condition needs just < (not <=)
+              } else if (filter == 'month') {
+                t = new Date(d.getFullYear(), d.getMonth(), d.getDate()+30, 23, 59, 59, 999).getTime() + 1; //adding 1 micro since condition needs just < (not <=)
+              }
               //console.log('t: '+t);
               if (t > 0) {
-                //console.log('sg.query.classification: '+sg.query.classification);
-                //console.log('sg_query_type: '+sg_query_type);
-                if (sg.query.classification) {
-                  //console.log('doFilter classification...');
-                } else {
-                  //console.log('doFilter ALL...');
-                }
+                //console.log('doFilter byTimeInterval...');
                 $scope.gotdbdata = DatiDB.byTimeInterval(sg_query_type, f, t, sg.query.classification);
               } else {
                 if (filter) {
-                  //console.log('doFilter FILTER cate...');
+                  //console.log('doFilter FILTER: '+filter);
                   $scope.gotdbdata = DatiDB.cate(sg_query_type, filter);
                 } else {
-                  if (sg.query.classification) {
-                    //console.log('doFilter NO FILTER classification...');
-                  } else {
-                    //console.log('doFilter NO FILTER ALL...');
-                  }
                   $scope.gotdbdata = DatiDB.cate(sg_query_type, sg.query.classification);
                 }
               }
@@ -560,7 +632,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
                 if (data) {
                   //$scope.results = $filter('extOrderBy')(data,$scope.ordering);
                   $scope.resultsAll = data;
-//                  $scope.results = data;
+                  //$scope.results = data;
                   if (sg_query_type=='event') {
                     $scope.resultsGroups = DateUtility.regroup($scope,sg_query_type,d,t,sg.query.classification);
                   } else {
@@ -571,8 +643,11 @@ angular.module('ilcomuneintasca.controllers.common', [])
                   $scope.resultsAll = [];
                   $scope.resultsGroups = [];
                 }
-                if (!!$ionicScrollDelegate.$getByHandle('listScroll')) {
-                  $timeout(function(){ $ionicScrollDelegate.$getByHandle('listScroll').scrollTop(false); });
+                $ionicLoading.hide();
+
+                var listScroll=$ionicScrollDelegate.$getByHandle('listScroll');
+                if (!!listScroll) {
+                  $timeout(function(){ listScroll.scrollTop(false); });
                 }
 
                 if (filter) {
@@ -649,6 +724,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
       }
     });
   }
+  Profiling._do('page', 'DONE');
 })
 
 
@@ -675,9 +751,10 @@ angular.module('ilcomuneintasca.controllers.common', [])
 }])
 
 
-.controller('TestCtrl', function ($scope, DatiDB) {
+.controller('TestCtrl', function ($scope, DatiDB, Config) {
   $scope.test='test page...';
-  $scope.gotdata = DatiDB.all('itinerary').then(function (data) {
-    $scope.results=data;
+  DatiDB.cleanupCatesOfType(Config.hotelTypesList(),'hotel').then(function(filteredCategories){
+    $scope.cates=filteredCategories;
   });
+  //$scope.cates = DatiDB.cleanupCatesOfType(Config.restaurantTypesList(),'restaurant');
 })

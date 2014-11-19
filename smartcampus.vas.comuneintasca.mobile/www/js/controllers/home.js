@@ -52,8 +52,8 @@ angular.module('ilcomuneintasca.controllers.home', [])
   $scope.highlights = null;
   var defaultHighlight = {
     id: null,
-    name:{ 'it':'Trento', 'en':'Trento', 'de':'Trento' },
-    image: 'img/hp-box/trento.png',
+    name: Config.cityName(),
+    image: 'img/hp-box/city.png',
     ref: 'info'
   };
   DatiDB.sync().then(function (data) {
@@ -76,11 +76,11 @@ angular.module('ilcomuneintasca.controllers.home', [])
           var item=items[hli];
           if (item.objectIds) {
             //console.log('adding items "'+item.objectIds+'"...');
-            hlVerificationsPromises.push(DatiDB.checkIDs(item.objectIds).then(function(ids){
+            hlVerificationsPromises.push(DatiDB.checkIDs(item.objectIds,item).then(function(ids){
               hlVerifiedObjects.push(ids);
               //console.log('verified items "'+ids+'"');
-            },function(){
-              console.log('missing objectIds "'+item.objectIds+'" for highlight item "'+item.id+'"');
+            },function(rr){
+              console.log('missing objectIds "'+rr[0]+'" '+(rr[1]&&rr[1].id?'for highlight item "'+rr[1].id+'"':''));
             }));
           } else {
             console.log('unknown highlight type for "'+(item.id||item)+'"');
@@ -145,8 +145,10 @@ angular.module('ilcomuneintasca.controllers.home', [])
             "app": null
           });
         }
-        var rows=[], row=-1;
+        var rows=[], row=-1, pos=0;
         for (ii=0; ii<items.length; ii++) {
+          items[ii]['pos']=pos;
+          pos++;
           if ((ii%2)==0) {
             row++;
             rows[row]=[];

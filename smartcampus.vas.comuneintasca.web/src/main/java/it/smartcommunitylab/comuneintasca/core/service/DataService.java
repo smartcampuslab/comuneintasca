@@ -215,7 +215,7 @@ public class DataService {
 			AppObject o = map.get(n.getLocalId());
 			if (o == null) {
 				deleted++;
-			} else if (o.getLastModified() != n.getLastModified()) {
+			} else if (!o.getLastModified().equals(n.getLastModified())) {
 				updated++;
 			}
 			map.remove(n.getLocalId());

@@ -70,5 +70,29 @@ public class DynamicConfigObject extends AppObject {
 	public void setAppId(String appId) {
 		this.appId = appId;
 	}
-	
+
+	public boolean dataEquals(DynamicConfigObject o) {
+		if (highlights.size() != o.getHighlights().size()) return false;
+		for (int i = 0; i < highlights.size(); i++) {
+			if (!highlights.get(i).sameData(o.getHighlights().get(i))) {
+				System.err.println("different highlight "+i);
+				return false; 
+			}
+		}
+		if (navigationItems.size() != o.getNavigationItems().size()) return false;
+		for (int i = 0; i < navigationItems.size(); i++) {
+			if (!navigationItems.get(i).sameData(o.getNavigationItems().get(i))) {
+				System.err.println("different navitem "+i);
+				return false; 
+			}
+		}
+		if (menu.size() != o.getMenu().size()) return false;
+		for (int i = 0; i < menu.size(); i++) {
+			if (!menu.get(i).sameData(o.getMenu().get(i))) {
+				System.err.println("different menu "+i);
+				return false; 
+			}
+		}
+		return true;
+	}
 }

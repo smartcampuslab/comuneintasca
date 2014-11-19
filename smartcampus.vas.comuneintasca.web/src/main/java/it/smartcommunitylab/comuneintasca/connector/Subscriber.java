@@ -54,13 +54,15 @@ public class Subscriber {
 			for (SourceEntry source : app.getSources()) {
 				String serviceId = source.getServiceId();
 				String methodName = source.getMethodName();
-				if (source.getSubscriptionId() != null) {
-					client.unsubscribeService(serviceId, methodName, source.getSubscriptionId());
-				}
+//				if (source.getSubscriptionId() != null) {
+//					logger.info("UNSUBSCRIBING source "+source.getMethodName()+": "+source.getSubscriptionId());
+//					client.unsubscribeService(serviceId, methodName, source.getSubscriptionId());
+//				}
 				Map<String, Object> params = new TreeMap<String, Object>();
 				params.put("url", source.getUrl());
 				String newSubscriptionId =  client.subscribeService(serviceId, methodName, params);
 				source.setSubscriptionId(newSubscriptionId);
+				logger.info("SUBSCRIBED source "+source.getMethodName()+": "+source.getSubscriptionId());
 			}
 			logger.info("DONE SUBSCRIBING app "+app.getId());
 		} catch (InvocationException e) {

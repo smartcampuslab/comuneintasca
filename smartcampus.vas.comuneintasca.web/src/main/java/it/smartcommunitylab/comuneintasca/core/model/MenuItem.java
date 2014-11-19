@@ -18,8 +18,20 @@ package it.smartcommunitylab.comuneintasca.core.model;
 import java.util.List;
 import java.util.Map;
 
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.SerializationConfig;
+
+@SuppressWarnings("deprecation")
 public class MenuItem {
 
+	private static final ObjectMapper canonicalObjectMapper = new ObjectMapper();
+	static {
+		canonicalObjectMapper.disable(SerializationConfig.Feature.FAIL_ON_EMPTY_BEANS);
+		canonicalObjectMapper.disable(SerializationConfig.Feature.WRITE_EMPTY_JSON_ARRAYS);
+		canonicalObjectMapper.disable(SerializationConfig.Feature.WRITE_NULL_PROPERTIES);
+		canonicalObjectMapper.disable(SerializationConfig.Feature.WRITE_NULL_MAP_VALUES);
+	}
+	
 	private String id;
 	private Map<String,String> name;
 	private Map<String,String> description;
@@ -90,6 +102,16 @@ public class MenuItem {
 	}
 	public void setApp(Map<String, String> app) {
 		this.app = app;
+	}
+
+	public boolean sameData(MenuItem obj) {
+		try {
+			String _this = canonicalObjectMapper.writeValueAsString(this),
+				   _that = canonicalObjectMapper.writeValueAsString(obj);
+			return _this.equals(_that);
+		} catch (Exception e) {
+			return false;
+		}
 	}
 	
 	

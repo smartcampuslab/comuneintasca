@@ -10,8 +10,8 @@ import it.smartcommunitylab.comuneintasca.connector.processor.ConfigProcessor.Ob
 import it.smartcommunitylab.comuneintasca.connector.processor.DataExtractor.Extractor;
 import it.smartcommunitylab.comuneintasca.core.model.AppObject;
 import it.smartcommunitylab.comuneintasca.core.model.BaseCITObject;
-import it.smartcommunitylab.comuneintasca.core.model.DynamicConfigObject;
 import it.smartcommunitylab.comuneintasca.core.model.ContentObject;
+import it.smartcommunitylab.comuneintasca.core.model.DynamicConfigObject;
 import it.smartcommunitylab.comuneintasca.core.model.EventObject;
 import it.smartcommunitylab.comuneintasca.core.model.HotelObject;
 import it.smartcommunitylab.comuneintasca.core.model.ItineraryObject;
@@ -29,9 +29,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -62,14 +62,16 @@ public class DataProcessor implements ServiceBusListener {
 	@Autowired
 	private ConfigProcessor configProcessor;
 	
-	private static Log logger = LogFactory.getLog(DataProcessor.class);
+	private static Logger logger = LoggerFactory.getLogger(DataProcessor.class);
 
 	@Override
 	public void onServiceEvents(String serviceId, String methodName, String subscriptionId, List<ByteString> data) {
+		logger.info("Processing update for {}/{} with subscriptionId {}",serviceId, methodName, subscriptionId);
 		App app = appManager.getApp(serviceId, methodName, subscriptionId);
 		if (app == null) return;
-		
+		logger.info("-- found app ",app.getId());
 		SourceEntry entry = app.findEntry(serviceId, methodName, subscriptionId);
+		logger.info("-- found source ", entry);
 		try {
 			if (Subscriber.SERVICE_OD.equals(serviceId)) {
 				if (Subscriber.METHOD_CONFIG.equals(methodName)) {
@@ -125,7 +127,7 @@ public class DataProcessor implements ServiceBusListener {
 		DynamicConfigObject old = null;
 		if (oldList != null && !oldList.isEmpty()) {
 			old = oldList.get(0);
-			if (old.getLastModified() < cd.getDateModified()) {
+			if (old.getLastModified() < cd.getDateModified() || !old.dataEquals(config)) {
 				config.setId(old.getId());
 				config.setAppId(app.getId());
 				config.setLastModified(cd.getDateModified());

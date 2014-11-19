@@ -55,7 +55,7 @@ public class ConfigProcessor {
 		descriptors.put("luogo",new MappingDescriptor("luogo", TypeConstants.TYPE_POI, POIObject.class, "tipo_luogo")); 
 		descriptors.put("testo_generico",new MappingDescriptor("testo_generico", TypeConstants.TYPE_CONTENT, ContentObject.class, "classifications")); 
 		descriptors.put("folder",new MappingDescriptor("folder", TypeConstants.TYPE_CONTENT, ContentObject.class, "classifications")); 
-		descriptors.put("luogo",new MappingDescriptor("servizio_sul_territorio", TypeConstants.TYPE_TERRITORY_SERVICE, TerritoryServiceObject.class, "tipo_servizio_sul_territorio")); 
+		descriptors.put("servizio_sul_territorio",new MappingDescriptor("servizio_sul_territorio", TypeConstants.TYPE_TERRITORY_SERVICE, TerritoryServiceObject.class, "tipo_servizio_sul_territorio", "tipo_luogo")); 
 	}
 	
 	private static Log logger = LogFactory.getLog(ConfigProcessor.class);
@@ -76,6 +76,7 @@ public class ConfigProcessor {
 			Map<String, String> idMapping = buildQueryClassification(config);
 			fillRef(config, idMapping);
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.error("Error processing configuration, not saving");
 			throw e;
 		}
@@ -101,6 +102,7 @@ public class ConfigProcessor {
 		
 		removeHighlightRef(config);
 	} catch (MissingDataException e) {
+		e.printStackTrace();
 		logger.error("Cannot complete references.");
 		throw e;
 	}		
@@ -262,6 +264,7 @@ public class ConfigProcessor {
 		
 		return idMapping;
 		} catch (BadDataException e) {
+			e.printStackTrace();
 			logger.error("Cannot build query classifications.");
 			throw e;
 		}

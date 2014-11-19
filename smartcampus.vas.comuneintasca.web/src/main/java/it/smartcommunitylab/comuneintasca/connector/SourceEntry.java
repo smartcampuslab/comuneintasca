@@ -58,4 +58,12 @@ public class SourceEntry {
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
 	}
+	@Override
+	public String toString() {
+		return "SourceEntry [serviceId=" + serviceId + ", methodName="
+				+ methodName + ", type=" + type + ", classifier=" + classifier
+				+ "]";
+	}
+	
+	
 }

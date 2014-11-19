@@ -3,13 +3,14 @@ var fs = require('fs');
 var path = require('path');
  
 
-var NOME_COMUNE='Trento';
 var defaultLang='en';
 var rootdir = process.argv[2];
 
+var config = require(path.join(rootdir, 'config', 'comune.json'));
+var NOME_COMUNE=config.nome;
+console.log('NOME_COMUNE: '+NOME_COMUNE);
 
 var androidDirsToCreate = [
-	'platforms/android/res/values', 'platforms/android/res/values-it', 'platforms/android/res/values-de', 
 	'platforms/android/res/drawable-mdpi', 'platforms/android/res/drawable-hdpi', 'platforms/android/res/drawable-xhdpi', 'platforms/android/res/drawable-xxhdpi'
 ]; 
 var androidFilesToCopy = [{
@@ -187,8 +188,7 @@ if (fs.existsSync(path.join(rootdir, 'platforms/ios'))) {
     var def_srcfile = path.join(rootdir, 'config/ticons/Resources/iphone', 'Default'+ suffix +'.png');
     copySrcToDestOnlyIfNeeded(def_srcfile,path.join(rootdir, 'platforms/ios/'+NOME_COMUNE+' - Il Comune in Tasca/Resources/splash', 'Default'+ suffix +'~iphone.png'),false);
 
-    ['en','it','de']
-    .forEach(function(lang) {
+    config.langs.forEach(function(lang) {
       var srcfile = path.join(rootdir, 'config/ticons/i18n', lang, 'Default'+ suffix +'.png');
       copySrcToDestOnlyIfNeeded(srcfile,path.join(rootdir, 'platforms/ios/'+NOME_COMUNE+' - Il Comune in Tasca/Resources/splash', 'Default_'+lang + suffix +'~iphone.png'),false);
     }); 
@@ -199,8 +199,7 @@ if (fs.existsSync(path.join(rootdir, 'platforms/ios'))) {
     var def_srcfile = path.join(rootdir, 'config/ticons/Resources/iphone', 'Default'+ suffix +'.png');
     copySrcToDestOnlyIfNeeded(def_srcfile,path.join(rootdir, 'platforms/ios/'+NOME_COMUNE+' - Il Comune in Tasca/Resources/splash', 'Default'+ suffix +'~ipad.png'),false);
 
-    ['en','it','de']
-    .forEach(function(lang) {
+    config.langs.forEach(function(lang) {
       var srcfile = path.join(rootdir, 'config/ticons/i18n', lang, 'Default'+ suffix +'.png');
       copySrcToDestOnlyIfNeeded(srcfile,path.join(rootdir, 'platforms/ios/'+NOME_COMUNE+' - Il Comune in Tasca/Resources/splash', 'Default_'+lang + suffix +'~ipad.png'),false);
     }); 
@@ -211,6 +210,9 @@ if (fs.existsSync(path.join(rootdir, 'platforms/ios'))) {
 
 
 if (fs.existsSync(path.join(rootdir, 'platforms/android'))) {
+  config.langs.forEach(function(lang) {
+    androidDirsToCreate.push('platforms/android/res/values'+(lang==defaultLang?'':'-'+lang));
+  });
   androidDirsToCreate.forEach(function(d) {
     var destdir = path.join(rootdir, d);
     if (!fs.existsSync(destdir)) fs.mkdirSync(destdir);
@@ -231,8 +233,7 @@ if (fs.existsSync(path.join(rootdir, 'platforms/android'))) {
     var destfile = path.join(rootdir, 'platforms/android/res/drawable' + suffix, 'icon.png');
     copySrcToDestOnlyIfNeeded(srcfile,destfile,true);
 
-    ['en','it','de']
-    .forEach(function(lang) {
+    config.langs.forEach(function(lang) {
       var suffix='-' + lang + '-' + d + 'dpi';
       var srcfile = path.join(rootdir, 'config/ticons/platform/android/res/drawable' + suffix, 'background.9.png');
       if (fs.existsSync(srcfile)) {

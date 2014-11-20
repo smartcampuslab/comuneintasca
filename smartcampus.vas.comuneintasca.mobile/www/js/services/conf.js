@@ -1,7 +1,7 @@
 angular.module('ilcomuneintasca.services.conf', [])
 
 .factory('Config', function ($q, $http, $window, $filter, $rootScope) {
-  var DEVELOPMENT=true;
+  var DEVELOPMENT=false;
   $rootScope.DEV=DEVELOPMENT;
   
   // when the following is TRUE, we show special buttons 

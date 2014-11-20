@@ -1,10 +1,10 @@
 {
   "id": null,
-  "updateTime": 1416393754722,
-  "version": 237851,
+  "updateTime": 1416486662194,
+  "version": 7048,
   "user": null,
   "appId": "TrentoInTasca",
-  "lastModified": 1416323637000,
+  "lastModified": 1416410935000,
   "localId": null,
   "highlights": [
     {
@@ -80,13 +80,13 @@
     {
       "id": "d347c18f3a931ae6a512b7d80591afd8",
       "name": {
-        "it": "Trento, città del Natale e il Mercatino di Natale",
+        "it": "il Natale di Trento",
         "en": "Rinascimenti eccentrici",
         "de": "Rinascimenti eccentrici"
       },
       "description": null,
       "image": {
-        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/trento-citta-del-natale-e-il-mercatino-di-natale/8622728-4-ita-IT/Trento-citta-del-Natale-e-il-Mercatino-di-Natale.jpg",
+        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/il-natale-di-trento/8622728-4-ita-IT/il-Natale-di-Trento.jpg",
         "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/rinascimenti-eccentrici/8622728-1-ita-IT/Rinascimenti-eccentrici.jpg",
         "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/rinascimenti-eccentrici/8622728-1-ita-IT/Rinascimenti-eccentrici.jpg"
       },
@@ -755,6 +755,24 @@
           },
           "ref": null,
           "type": null,
+          "app": null
+        },
+        {
+          "id": "da3a5dacdd9a11ca9c3eb2241489ea34",
+          "name": {
+            "it": "IN EVIDENZA: Natale a Trento"
+          },
+          "description": null,
+          "image": {
+            "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/eventi/in-evidenza-natale-a-trento/8707936-1-ita-IT/IN-EVIDENZA-Natale-a-Trento.jpg"
+          },
+          "objectIds": [
+            "event.major.3"
+          ],
+          "items": null,
+          "query": null,
+          "ref": null,
+          "type": "mainevent",
           "app": null
         }
       ],

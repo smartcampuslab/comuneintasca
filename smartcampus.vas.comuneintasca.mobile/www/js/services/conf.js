@@ -2,7 +2,11 @@ angular.module('ilcomuneintasca.services.conf', [])
 
 .factory('Config', function ($q, $http, $window, $filter, $rootScope) {
   var DEVELOPMENT=false;
+  if (typeof localStorage.DEV!='undefined') DEVELOPMENT=(localStorage.DEV==true || localStorage.DEV=='true');
   $rootScope.DEV=DEVELOPMENT;
+  //console.log('localStorage.DEV: '+localStorage.DEV);
+  //console.log('DEVELOPMENT: '+DEVELOPMENT);
+  //console.log('$rootScope.DEV: '+$rootScope.DEV);
   
   // when the following is TRUE, we show special buttons 
   // (actually just the db RESET button in settings)

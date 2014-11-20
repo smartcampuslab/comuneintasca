@@ -27,8 +27,39 @@ angular.module('ilcomuneintasca', [
   });
 }])
 
-.run(function ($ionicPlatform, $rootScope, $state, $filter, $location, Config, DatiDB, Files, GeoLocate) {
+.run(function ($ionicPlatform, $rootScope, $state, $filter, $location, $window, Config, DatiDB, Files, GeoLocate, $ionicPopup) {
   $rootScope.mapsReady=false;
+  
+  $rootScope.devmodeCount=0;
+  $rootScope.devmodeLast=null;
+  $rootScope.devmode=function(){
+    var now=new Date().getTime();
+    if ($rootScope.devmodeLast && now-$rootScope.devmodeLast>500) {
+      $rootScope.devmodeCount=1;
+    } else {
+      $rootScope.devmodeCount++;
+      if ($rootScope.devmodeCount==3) {
+        $rootScope.devmodeCount=0;
+        $rootScope.devmodeLast=null;
+        if ($rootScope.DEV==true || $rootScope.DEV=='true') {
+          $rootScope.DEV=false;
+        } else {
+          $rootScope.DEV=true;
+        }
+        localStorage.DEV=$rootScope.DEV;
+
+        $ionicPopup.alert({
+          title: 'DEV MODE',
+          template: 'development mode '+($rootScope.DEV?'activated':'deactivated')
+        }).then(function(res) {
+          $window.location.reload();
+        });
+      } else {
+        $rootScope.devmodeLast=now;
+      }
+    }
+    $rootScope.devmodeLast=now;
+  };
   
   $rootScope.locationWatchID = undefined;
   //  ionic.Platform.fullScreen(false,true);

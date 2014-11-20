@@ -114,5 +114,12 @@ public class MenuItem {
 		}
 	}
 	
-	
+	@Override
+	public String toString() {
+		try {
+			return canonicalObjectMapper.writeValueAsString(this);
+		} catch (Exception e) {
+			return super.toString();
+		}
+	}
 }

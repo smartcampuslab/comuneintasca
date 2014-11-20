@@ -716,7 +716,10 @@ angular.module('ilcomuneintasca.controllers.common', [])
         //console.log('$scope.template: '+$scope.template);
         $scope.gotdata = DatiDB.get(sg_type, sg.objectIds.join(',')).then(function (data) {
           //console.log('objectIds gotdata!');
-          data = (data.hasOwnProperty('length') ? data : [data]);
+          if (!data.hasOwnProperty('length')) {
+            $scope.obj = data;
+            data = [data];
+          }
           $scope.results = data;
         });
       } else {

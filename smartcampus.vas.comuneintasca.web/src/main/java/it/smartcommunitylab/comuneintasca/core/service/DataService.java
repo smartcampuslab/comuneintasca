@@ -71,7 +71,7 @@ public class DataService {
 		}
 		for (AppObject n : objects) {
 			AppObject o = oldIds.get(n.getId());
-			if (o == null || o.getLastModified() < n.getLastModified()) {
+			if (o == null || o.different(n)) {
 				storage.storeDraftObject(n, app);
 			} 
 			oldIds.remove(n.getId());
@@ -127,7 +127,7 @@ public class DataService {
 		}
 		for (AppObject n : draftObjects) {
 			AppObject o = oldIds.get(n.getId());
-			if (o == null || o.getLastModified() < n.getLastModified()) {
+			if (o == null || o.different(n)) {
 				storage.storeObject(n, app);
 			} 
 			oldIds.remove(n.getId());
@@ -215,7 +215,7 @@ public class DataService {
 			AppObject o = map.get(n.getLocalId());
 			if (o == null) {
 				deleted++;
-			} else if (!o.getLastModified().equals(n.getLastModified())) {
+			} else if (o.different(n)) {
 				updated++;
 			}
 			map.remove(n.getLocalId());

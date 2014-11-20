@@ -71,6 +71,14 @@ public class DynamicConfigObject extends AppObject {
 		this.appId = appId;
 	}
 
+	
+	@Override
+	public boolean different(AppObject obj) {
+		if (!super.different(obj)) return true;
+		if (!(obj instanceof DynamicConfigObject)) return false;
+		return !dataEquals((DynamicConfigObject)obj);
+	}
+
 	public boolean dataEquals(DynamicConfigObject o) {
 		if (highlights.size() != o.getHighlights().size()) return false;
 		for (int i = 0; i < highlights.size(); i++) {
@@ -90,6 +98,8 @@ public class DynamicConfigObject extends AppObject {
 		for (int i = 0; i < menu.size(); i++) {
 			if (!menu.get(i).sameData(o.getMenu().get(i))) {
 				System.err.println("different menu "+i);
+				System.err.println("THIS:"+menu.get(i).toString());
+				System.err.println("THAT:"+o.getMenu().get(i).toString());
 				return false; 
 			}
 		}

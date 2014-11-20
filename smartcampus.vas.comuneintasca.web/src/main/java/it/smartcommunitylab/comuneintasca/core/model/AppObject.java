@@ -27,4 +27,11 @@ public class AppObject extends BasicObject {
 	public void setLocalId(String localId) {
 		this.localId = localId;
 	}
+	
+	public boolean different(AppObject obj) {
+		if (obj == null) return true;
+		if (lastModified == null) return obj.getLastModified() != null;
+		
+		return !lastModified.equals(obj.getLastModified());
+	}
 }

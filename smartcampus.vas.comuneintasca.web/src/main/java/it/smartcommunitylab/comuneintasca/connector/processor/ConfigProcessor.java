@@ -4,8 +4,8 @@ import it.smartcommunitylab.comuneintasca.connector.App;
 import it.smartcommunitylab.comuneintasca.connector.ConnectorStorage;
 import it.smartcommunitylab.comuneintasca.core.model.AppObject;
 import it.smartcommunitylab.comuneintasca.core.model.BaseCITObject;
-import it.smartcommunitylab.comuneintasca.core.model.DynamicConfigObject;
 import it.smartcommunitylab.comuneintasca.core.model.ContentObject;
+import it.smartcommunitylab.comuneintasca.core.model.DynamicConfigObject;
 import it.smartcommunitylab.comuneintasca.core.model.EventObject;
 import it.smartcommunitylab.comuneintasca.core.model.HotelObject;
 import it.smartcommunitylab.comuneintasca.core.model.ItineraryObject;
@@ -18,6 +18,7 @@ import it.smartcommunitylab.comuneintasca.core.model.TerritoryServiceObject;
 import it.smartcommunitylab.comuneintasca.core.model.TypeConstants;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -27,8 +28,8 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -58,7 +59,7 @@ public class ConfigProcessor {
 		descriptors.put("servizio_sul_territorio",new MappingDescriptor("servizio_sul_territorio", TypeConstants.TYPE_TERRITORY_SERVICE, TerritoryServiceObject.class, "tipo_servizio_sul_territorio", "tipo_luogo")); 
 	}
 	
-	private static Log logger = LogFactory.getLog(ConfigProcessor.class);
+	private static Logger logger = LoggerFactory.getLogger(ConfigProcessor.class);
 
 	
 	/**
@@ -256,11 +257,27 @@ public class ConfigProcessor {
 		try {
 		Map<String, String> idMapping = new TreeMap<String, String>();
 		
-		for (MenuItem menu : config.getMenu()) {
-			if (menu.getItems() != null) {
-				idMapping.putAll(buildQueryClassification(menu.getItems()));
+		for (MenuItem firstLevelMemu: config.getMenu()) {
+			if (firstLevelMemu.getItems() == null || firstLevelMemu.getItems().isEmpty()) {
+				MenuItem secondLevel = new MenuItem();
+				secondLevel.setId(firstLevelMemu.getId()+"_sub");
+				secondLevel.setApp(firstLevelMemu.getApp());
+				secondLevel.setDescription(firstLevelMemu.getDescription());
+				secondLevel.setImage(firstLevelMemu.getImage());
+				secondLevel.setName(firstLevelMemu.getName());
+				secondLevel.setObjectIds(firstLevelMemu.getObjectIds());
+				secondLevel.setQuery(firstLevelMemu.getQuery());
+				secondLevel.setRef(firstLevelMemu.getRef());
+				secondLevel.setType(firstLevelMemu.getType());
+				firstLevelMemu.setObjectIds(null);
+				firstLevelMemu.setQuery(null);
+				firstLevelMemu.setApp(null);
+				firstLevelMemu.setRef(null);
+				firstLevelMemu.setItems(Collections.singletonList(secondLevel));
 			}
 		}
+		
+		buildQueryClassification(config.getMenu());
 		
 		return idMapping;
 		} catch (BadDataException e) {
@@ -275,16 +292,19 @@ public class ConfigProcessor {
 		
 		for (MenuItem item : items) {
 			MenuItemQuery query = item.getQuery();
+			logger.trace("Mapping query for item "+item);
 			if (query != null) {
 				List<Map<String, String>> classifications = query.getClassifications();
 				String classification = "";
 				String type = query.getType();
+				logger.trace("source query type {}", type);
 				MappingDescriptor md = findDescriptor(type);
 				if (md == null) {
 					throw new BadDataException("Cannot map " + type + " to internal type");
 				}
 				String newType = md.getLocalType();
 				query.setType(newType);
+				logger.trace("query new type {}", query.getType());
 				if (classifications != null) {
 					query.setClassification(md.extractClassification(classifications));
 					query.setClassifications(null);

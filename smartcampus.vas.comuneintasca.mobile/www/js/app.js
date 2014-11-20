@@ -27,39 +27,8 @@ angular.module('ilcomuneintasca', [
   });
 }])
 
-.run(function ($ionicPlatform, $rootScope, $state, $filter, $location, $window, Config, DatiDB, Files, GeoLocate, $ionicPopup) {
+.run(function ($ionicPlatform, $rootScope, $state, $filter, $location, Config, DatiDB, Files, GeoLocate, $ionicPopup) {
   $rootScope.mapsReady=false;
-  
-  $rootScope.devmodeCount=0;
-  $rootScope.devmodeLast=null;
-  $rootScope.devmode=function(){
-    var now=new Date().getTime();
-    if ($rootScope.devmodeLast && now-$rootScope.devmodeLast>500) {
-      $rootScope.devmodeCount=1;
-    } else {
-      $rootScope.devmodeCount++;
-      if ($rootScope.devmodeCount==3) {
-        $rootScope.devmodeCount=0;
-        $rootScope.devmodeLast=null;
-        if ($rootScope.DEV==true || $rootScope.DEV=='true') {
-          $rootScope.DEV=false;
-        } else {
-          $rootScope.DEV=true;
-        }
-        localStorage.DEV=$rootScope.DEV;
-
-        $ionicPopup.alert({
-          title: 'DEV MODE',
-          template: 'development mode '+($rootScope.DEV?'activated':'deactivated')
-        }).then(function(res) {
-          $window.location.reload();
-        });
-      } else {
-        $rootScope.devmodeLast=now;
-      }
-    }
-    $rootScope.devmodeLast=now;
-  };
   
   $rootScope.locationWatchID = undefined;
   //  ionic.Platform.fullScreen(false,true);
@@ -297,7 +266,13 @@ angular.module('ilcomuneintasca', [
     var url=$rootScope.getParsedImageURL(item);
     return (url=='svg/placeholder.svg');
   }
-    
+
+  $rootScope.TEST_CONNECTION = (localStorage.TEST_CONNECTION+'')==='true' ? true : false;
+  $rootScope.switchTestConnection = function() {
+      $rootScope.TEST_CONNECTION = !$rootScope.TEST_CONNECTION;
+      localStorage.TEST_CONNECTION = $rootScope.TEST_CONNECTION;
+  }
+  
   $rootScope.extOrderBySorter=function(input, params){
     if (!input || !params || !params.order) return input;
     //console.log('input.length: '+input.length);

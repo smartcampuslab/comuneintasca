@@ -90,6 +90,26 @@ angular.module('ilcomuneintasca.controllers.common', [])
     });
   };
 
+  $scope.testConnReqStart = 0;
+  $scope.testConnReqCount = 0;
+  $scope.enableTestConnection = function() {
+    var curr = new Date().getTime();
+    if ($scope.testConnReqStart == 0 || curr - $scope.testConnReqStart > 1000) {
+      $scope.testConnReqCount = 0;
+      $scope.testConnReqStart = curr;
+    }
+    $scope.testConnReqCount += 1;
+    if ($scope.testConnReqCount == 5) {
+      $rootScope.switchTestConnection();
+      $ionicPopup.alert({
+        title: 'TEST MODE',
+        template: $rootScope.TEST_CONNECTION ? $filter('translate')('settings_data_sync_draft_enabled') : $filter('translate')('settings_data_sync_draft_disabled')
+      }).then(function(res){
+        $scope.dbFullReset();
+      });
+    }
+  }
+  
 
   $ionicModal.fromTemplateUrl('templates/credits.html', {
     scope: $scope,

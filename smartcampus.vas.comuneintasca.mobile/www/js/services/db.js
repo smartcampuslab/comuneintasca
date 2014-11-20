@@ -387,38 +387,30 @@ angular.module('ilcomuneintasca.services.db', [])
                         //console.log('event fromTime: ' + fromTime);
                         //console.log('event toTime: ' + toTime);
 
-// NOT NEEDED ANYMORE
-// since comeplex events are now instances of MainEvent 
-// with classification "Manifestazioni"
-//                        if (item.eventForm=='Manifestazione') {
-//                          console.log('*** Manifestazione ***: '+item.title.it);
-//                          classified.resolve(['_complex','','']);
-//                        } else {
-                          if (item.parentEventId) {
-                            var parentEvent=item.parentEventId;
-                            if (typeof parentEvent == "string") {
-                              try {
-                                parentEvent=JSON.parse(parentEvent);
-                              } catch(err) {
-                                console.log('unparsable parentEvent string for item '+item.id+'/'+item.objectId+': '+parentEvent);
-                                console.log(err);
-                                parentEvent = {};
-                              }  
-                            }
-                            if (parentEvent.objectRemoteId) {
-                              parentid=parentEvent.objectRemoteId;
-                            }
+                        if (item.parentEventId) {
+                          var parentEvent=item.parentEventId;
+                          if (typeof parentEvent == "string") {
+                            try {
+                              parentEvent=JSON.parse(parentEvent);
+                            } catch(err) {
+                              console.log('unparsable parentEvent string for item '+item.id+'/'+item.objectId+': '+parentEvent);
+                              console.log(err);
+                              parentEvent = {};
+                            }  
                           }
-                          //console.log('event parent id: ' + parentid);
+                          if (parentEvent.objectRemoteId) {
+                            parentid=parentEvent.objectRemoteId;
+                          }
+                        }
+                        console.log('event parent id: ' + parentid);
 
-                          //console.log('event cate: ' + item.category);
-                          if (item.category) {
-                            classified.resolve([item.category,'','']);
-                          } else {
-                            console.log('content db category is NULL for item: '+item.id);
-                            classified.resolve(['misc','','']);
-                          }
-//                        }
+                        //console.log('event cate: ' + item.category);
+                        if (item.category) {
+                          classified.resolve([item.category,'','']);
+                        } else {
+                          console.log('content db category is NULL for item: '+item.id);
+                          classified.resolve(['misc','','']);
+                        }
 
                       } else if (contentTypeKey == 'content') {
                         if (typeof item.classification === 'object') classification = item.classification.it;

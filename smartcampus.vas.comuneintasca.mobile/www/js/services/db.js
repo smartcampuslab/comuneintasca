@@ -3,8 +3,6 @@ angular.module('ilcomuneintasca.services.db', [])
 .factory('DatiDB', function ($q, $http, $rootScope, $filter, $timeout, Config, Files, Profiling, GeoLocate, $ionicLoading) {
   var SCHEMA_VERSION = Config.schemaVersion();
   var types = Config.contentTypesList();
-  var EVENTS_CATE_FROM_IT=true;
-  var POI_CATE_FROM_IT=true;
 
   var parseDbRow = function (dbrow) {
     //comment out this line to profile each function call
@@ -389,10 +387,13 @@ angular.module('ilcomuneintasca.services.db', [])
                         //console.log('event fromTime: ' + fromTime);
                         //console.log('event toTime: ' + toTime);
 
-                        if (item.eventForm=='Manifestazione') {
-                          //console.log('*** Manifestazione ***: '+item.title.it);
-                          classified.resolve(['_complex','','']);
-                        } else {
+// NOT NEEDED ANYMORE
+// since comeplex events are now instances of MainEvent 
+// with classification "Manifestazioni"
+//                        if (item.eventForm=='Manifestazione') {
+//                          console.log('*** Manifestazione ***: '+item.title.it);
+//                          classified.resolve(['_complex','','']);
+//                        } else {
                           if (item.parentEventId) {
                             var parentEvent=item.parentEventId;
                             if (typeof parentEvent == "string") {
@@ -412,100 +413,58 @@ angular.module('ilcomuneintasca.services.db', [])
 
                           //console.log('event cate: ' + item.category);
                           if (item.category) {
-                            if (EVENTS_CATE_FROM_IT) {
-                              classified.resolve([item.category,'','']);
-                            } else {
-                              Config.menuGroupSubgroupByLocaleName('eventi','it',item.category).then(function(sg){
-                                if (sg) {
-                                  //console.log('content db sg classification: '+sg.id);
-                                  classified.resolve([sg.id,'','']);
-                                } else {
-                                  console.log('content db sg classification is NULL for event cate: '+classification);
-                                  classified.resolve(['misc','','']);
-                                }
-                              });
-                            }
+                            classified.resolve([item.category,'','']);
                           } else {
                             console.log('content db category is NULL for item: '+item.id);
                             classified.resolve(['misc','','']);
                           }
-                        }
-                      } else if (contentTypeKey == 'servizio_sul_territorio') {
-                          classified.resolve([item.classification.it,'','']);
-                      } else if (contentTypeKey == 'poi') {
-                        if (POI_CATE_FROM_IT) {
-                          classified.resolve([item.classification.it,'','']);
+//                        }
+
+                      } else if (contentTypeKey == 'content') {
+                        if (typeof item.classification === 'object') classification = item.classification.it;
+                        else classification = item.classification;
+
+                      } else if (contentTypeKey == 'mainevent') {
+                        classification = item.classification.it;
+                        item.category = 'mainevent';
+
+                        /*
+                        fromTime = item.fromDate;
+                        if (item.toDate > 0) toTime = item.toDate;
+                        else toTime = fromTime;
+                        console.log('event fromTime: ' + fromTime);
+                        console.log('event toTime: ' + toTime);
+                        */
+
+                      } else if (contentTypeKey == 'hotel') {
+                        classification = Config.hotelTypeFromCate(item.classification.it);
+
+                      } else if (contentTypeKey == 'restaurant') {
+                        if (item.classification.it.indexOf(',')!=-1) {
+                          classifications = item.classification.it.split(',');
                         } else {
-                          //category fix for opencontent data
-                          switch (item.classification.it) {
-                            //case 'Altri siti di interesse storico artistico':
-                            //  item.classification.it='Edifici storici';
-                            //  break;
-                            case 'Edificio storico':
-                              item.classification.it='Edifici storici';
-                              break;
-                            case 'Chiesa':
-                              item.classification.it='Chiese';
-                              break;
-                            case 'Museo':
-                              item.classification.it='Musei';
-                              break;
-                            case 'Area archeologica':
-                            case 'Aree archeologiche':
-                              item.classification.it='Aree Archeologiche';
-                              break;
-                          }
-                          Config.menuGroupSubgroupByLocaleName('visitare','it',item.classification.it).then(function(sg){
-                            if (sg) {
-                              //console.log('content db sg classification: '+sg.id);
-                              classified.resolve([sg.id,'','']);
-                            } else {
-                              console.log('content db sg classification is NULL for place cate: '+item.classification.it);
-                              classified.resolve(['unknown','','']);
-                            }
-                          });
+                          classifications = item.classification.it.split(';');
                         }
-                      } else {
-                        if (contentTypeKey == 'content') {
-                          if (typeof item.classification === 'object') classification = item.classification.it;
-                          else classification = item.classification;
-
-                        } else if (contentTypeKey == 'mainevent') {
-                          classification = item.classification.it;
-                          item.category = 'mainevent';
-
-                          /*
-                          fromTime = item.fromDate;
-                          if (item.toDate > 0) toTime = item.toDate;
-                          else toTime = fromTime;
-                          console.log('event fromTime: ' + fromTime);
-                          console.log('event toTime: ' + toTime);
-                          */
-
-                        } else if (contentTypeKey == 'hotel') {
-                          classification = Config.hotelTypeFromCate(item.classification.it);
-
-                        } else if (contentTypeKey == 'restaurant') {
-                          if (item.classification.it.indexOf(',')!=-1) {
-                            classifications = item.classification.it.split(',');
-                          } else {
-                            classifications = item.classification.it.split(';');
+                        classification = Config.restaurantTypeFromCate(classifications[0].trim());
+                        if (classifications.length > 1) {
+                          classification2 = Config.restaurantTypeFromCate(classifications[1].trim());
+                          if (classifications.length > 2) {
+                            classification3 = Config.restaurantTypeFromCate(classifications[2].trim());
                           }
-                          classification = Config.restaurantTypeFromCate(classifications[0].trim());
-                          if (classifications.length > 1) {
-                            classification2 = Config.restaurantTypeFromCate(classifications[1].trim());
-                            if (classifications.length > 2) {
-                              classification3 = Config.restaurantTypeFromCate(classifications[2].trim());
-                            }
-                          }
-                          item.category = 'ristorazione';
                         }
+                        item.category = 'ristorazione';
+                      } else if (contentTypeKey == 'poi') {
+                        classification = item.classification.it;
 
-                        //console.log('classification: ' + classification);
-                        //console.log('classification2: ' + classification2);
-                        //console.log('classification3: ' + classification3);
-                        classified.resolve([classification,classification2,classification3]);
+                      } else if (contentTypeKey == 'servizio_sul_territorio') {
+                        classification = item.classification.it;
+
                       }
+                      //console.log('classification: ' + classification);
+                      //console.log('classification2: ' + classification2);
+                      //console.log('classification3: ' + classification3);
+                      classified.resolve([classification,classification2,classification3]);
+
                       objsReady.push(classified.promise.then(function(clfs){
                         values = [item.id, item.objectId, parentid, item.version, contentTypeClassName, item.category, clfs[0], clfs[1], clfs[2], JSON.stringify(item), ((item.location && item.location.length == 2) ? item.location[0] : -1), ((item.location && item.location.length == 2) ? item.location[1] : -1), fromTime, toTime];
                         itemsToInsert.push(values)

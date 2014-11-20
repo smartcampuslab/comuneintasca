@@ -298,17 +298,20 @@ angular.module('ilcomuneintasca.controllers.common', [])
             };
 
             if (data.parentid) {
-              //console.log('siblings');
-              
-              $scope.obj['parentAbsLink']=Config.menuGroupSubgroupByTypeAndClassification(sg_query_type,'_complex').then(function(sg){
+              //console.log('parent: '+Config.contentKeyFromDbType(data.parenttype));
+              //console.log(JSON.stringify(data.parent));
+
+              $scope.obj['parentAbsLink']=Config.menuGroupSubgroupByTypeAndClassification(Config.contentKeyFromDbType(data.parenttype),data.parent.classification.it).then(function(sg){
                 return 'page/'+sg._parent.id+'/'+sg.id+'/'+data.parentid;
               });
+
+              /*
+              console.log('siblings');
 
               $scope.gotsonsdata = DatiDB.getByParent(sg_query_type, data.parentid).then(function (data) {
                 $scope.sons = data;
                 $scope.siblingscount = data.length;
               });
-
               $scope.toggleSiblings = function () {
                 if ($scope.sonsVisible) {
                   $scope.sonsVisible = null;
@@ -318,6 +321,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
                   })
                 }
               }
+              */
             } else if (data.sonscount > 0) {
               //console.log('sons');
 
@@ -325,7 +329,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
                 if ($scope.sonsVisible) {
                   $scope.sonsVisible = null;
                 } else {
-                  $scope.gotsonsdata = DatiDB.getByParent(sg_query_type, data.id).then(function (data) {
+                  $scope.gotsonsdata = DatiDB.getByParent(null, data.id).then(function (data) {
                     if (!$scope.sons) {
                       if (data.length > 0 && data[0].fromTime) {
                         $scope.sons = $filter('extOrderBy')(data,{order:'DateFrom'});

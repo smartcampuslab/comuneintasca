@@ -15,6 +15,7 @@ angular.module('ilcomuneintasca.services.db', [])
 
 		if (dbrow.parentid) {
 			item['parentid']=dbrow.parentid;
+			item['parenttype']=dbrow.parenttype;
 			item['parent']=JSON.parse(dbrow.parent);
 		}
 		item['sonscount']=dbrow.sonscount;
@@ -402,7 +403,7 @@ angular.module('ilcomuneintasca.services.db', [])
                             parentid=parentEvent.objectRemoteId;
                           }
                         }
-                        console.log('event parent id: ' + parentid);
+                        if (parentid) console.log('event parent id: ' + parentid);
 
                         //console.log('event cate: ' + item.category);
                         if (item.category) {
@@ -583,7 +584,7 @@ angular.module('ilcomuneintasca.services.db', [])
             _complex=false;
           }
 
-          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount' +
+          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.type AS parenttype, p.data AS parent, count(s.id) as sonscount' +
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id' +
             ' WHERE c.type=? ' +
             (_complex==undefined ? '' : ' AND c.classification' + (_complex?'=':'!=') + "'_complex'" ) + 
@@ -646,14 +647,14 @@ angular.module('ilcomuneintasca.services.db', [])
           var min_toTime = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0).getTime() - 1;
 
 /*
-          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount ' +
+          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.type AS parenttype, p.data AS parent, count(s.id) as sonscount ' +
 						'FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id' +
             ' WHERE c.type=? ' +
             (_complex==undefined ? (cateId ? ' AND c.classification=?' : '') : ' AND c.classification' + (_complex?'=':'!=') + "'_complex'" ) + 
 						' GROUP BY c.id';
           var params = (cateId ? [types[dbname], cateId] : [types[dbname]]);
 */
-          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount ' +
+          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.type AS parenttype, p.data AS parent, count(s.id) as sonscount ' +
 						'FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id' +
             ' WHERE c.type=? ' +
 						(cateId ? ' AND (c.classification=? OR c.classification2=? OR c.classification3=?)' : '') + 
@@ -690,7 +691,7 @@ angular.module('ilcomuneintasca.services.db', [])
           data.reject(error);
         }, function () { //success callback
           $ionicLoading.hide();
-          Profiling._do('dbcate','*****');
+          Profiling._do('dbcate','tx success');
 
           for (i in lista) lista[i]=parseDbRow(lista[i]);
           Profiling._do('dbcate','parse');
@@ -732,7 +733,7 @@ angular.module('ilcomuneintasca.services.db', [])
 						(cateId ? ' AND (c.classification=? OR c.classification2=? OR c.classification3=?)' : '') + 
             (_complex==undefined ? '' : ' AND c.classification' + (_complex?'=':'!=') + "'_complex'" );
 */
-          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount'+
+          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.type AS parenttype, p.data AS parent, count(s.id) as sonscount'+
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id' +
             ' WHERE c.type=?' +
             ' AND c.fromTime > 0 AND c.fromTime <' + toTime + ' AND c.toTime > ' + fromTime + 
@@ -768,8 +769,7 @@ angular.module('ilcomuneintasca.services.db', [])
           data.reject(error);
         }, function () { //success callback
           $ionicLoading.hide();
-          Profiling._do('byTimeInterval');
-          Profiling._do('byTimeInterval','*****');
+          Profiling._do('byTimeInterval','tx success');
 
           for (i in lista) lista[i]=parseDbRow(lista[i]);
           Profiling._do('byTimeInterval','parse');
@@ -780,7 +780,7 @@ angular.module('ilcomuneintasca.services.db', [])
       return data.promise;
     },
     getByParent: function (dbname, parentId) {
-      //console.log('DatiDB.get("' + dbname + '","' + parentId + '")');
+      console.log('DatiDB.get("' + dbname + '","' + parentId + '")');
       return this.sync().then(function (dbVersion) {
         Profiling.start('dbsons');
         var loading = $ionicLoading.show({
@@ -801,23 +801,23 @@ angular.module('ilcomuneintasca.services.db', [])
             idCond = 'c.parentid IN (' + itemsIds.join() + ')';
           }
           var qParams = parentId.split(',');
-          qParams.unshift(types[dbname]);
+          if (dbname) qParams.unshift(types[dbname]);
 
           var fromTime = new Date().getTime();
-          var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent'+
+          var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.type AS parenttype, p.data AS parent'+
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid'+
-            ' WHERE c.type=? ' +
-            ' AND ' + idCond +
+            ' WHERE' + (dbname ? ' c.type=? AND ' : ' ') + idCond +
             ' GROUP BY c.id';
-          //console.log('qParams: ' + qParams);
-          //console.log('DatiDB.get("' + dbname + '", "' + parentId + '"); dbQuery launched...');
+          console.log('dbQuery: '+dbQuery);
+          console.log('qParams: ' + qParams);
           tx.executeSql(dbQuery, qParams, function (tx2, results) {
             Profiling._do('dbsons', 'sql');
-            //console.log('DatiDB.get("' + dbname + '", "' + parentId + '"); dbQuery completed');
             var resultslen = results.rows.length;
+console.log('resultslen: '+resultslen);
             for (var i = 0; i < resultslen; i++) {
               var item = results.rows.item(i);
-              lista.push(parseDbRow(item));
+              //lista.push(parseDbRow(item));
+              lista.push(item);
             }
             Profiling._do('dbsons', 'parse');
           }, function (tx2, err) {
@@ -834,6 +834,11 @@ angular.module('ilcomuneintasca.services.db', [])
         }, function () { //success callback
           $ionicLoading.hide();
           Profiling._do('dbsons', 'tx success');
+
+          for (i in lista) lista[i]=parseDbRow(lista[i]);
+          Profiling._do('dbsons','parse');
+          
+          dbsons.resolve(lista);
         });
 
         return dbsons.promise;
@@ -865,7 +870,7 @@ angular.module('ilcomuneintasca.services.db', [])
 
           var d = new Date();
           var min_toTime = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0).getTime() - 1;
-					var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount'+
+					var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.type AS parenttype, p.data AS parent, count(s.id) as sonscount'+
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id'+
             ' WHERE c.type=?' +
             ' AND ' + idCond + 
@@ -941,7 +946,7 @@ angular.module('ilcomuneintasca.services.db', [])
 
           var d = new Date();
           var min_toTime = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0).getTime() - 1;
-					var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount'+
+					var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.type AS parenttype, p.data AS parent, count(s.id) as sonscount'+
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id'+
             (dbname?' WHERE c.type=?':'') +
             ' AND ' + idCond + 

@@ -57,7 +57,7 @@ public class OpenDataScript {
 		map = (Map<String, Object>) map.get("fields");
 		
 		e = (Map<String, Object>) map.get("special");
-		builder.setSpecial(!"0".equals(e.get("value")));
+		builder.setSpecial(e != null && !"0".equals(e.get("value")));
 		
 		e = (Map<String, Object>) map.get("titolo");
 		builder.setTitle(e.get("value").toString());
@@ -92,7 +92,7 @@ public class OpenDataScript {
 		e = (Map<String, Object>) map.get("image");
 		builder.setImage(e.get("value").toString().trim());
 		e = (Map<String, Object>) map.get("tipo_eventi_manifestazioni");
-		if (!(e.get("value") instanceof Boolean) || (Boolean)e.get("value")) {
+		if (e != null && (!(e.get("value") instanceof Boolean) || (Boolean)e.get("value"))) {
 			builder.setEventType(((Map)e.get("value")).get("objectName").toString());
 		}
 		e = (Map<String, Object>) map.get("iniziativa");
@@ -141,9 +141,9 @@ public class OpenDataScript {
 				orgs.add(Organization.newBuilder().setType("associazione").setTitle(e.get("value").toString()).build());
 			}
 		e = (Map<String, Object>) map.get("ente");
-			if (!(e.get("value") instanceof Boolean) || (Boolean)e.get("value")) {
-				orgs.add(Organization.newBuilder().setType("ente").setTitle(e.get("value").toString()).build());
-			}
+		if (e != null && (!(e.get("value") instanceof Boolean) || (Boolean)e.get("value"))) {
+			orgs.add(Organization.newBuilder().setType("ente").setTitle(e.get("value").toString()).build());
+		}
 		builder.addAllOrganizations(orgs);
 		
 		return builder.build();

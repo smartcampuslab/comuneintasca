@@ -2,11 +2,7 @@ angular.module('ilcomuneintasca.services.conf', [])
 
 .factory('Config', function ($q, $http, $window, $filter, $rootScope) {
   var DEVELOPMENT=false;
-  if (typeof localStorage.DEV!='undefined') DEVELOPMENT=(localStorage.DEV==true || localStorage.DEV=='true');
   $rootScope.DEV=DEVELOPMENT;
-  //console.log('localStorage.DEV: '+localStorage.DEV);
-  //console.log('DEVELOPMENT: '+DEVELOPMENT);
-  //console.log('$rootScope.DEV: '+$rootScope.DEV);
   
   // when the following is TRUE, we show special buttons 
   // (actually just the db RESET button in settings)
@@ -18,7 +14,7 @@ angular.module('ilcomuneintasca.services.conf', [])
   var SYNC_HOST="tn";
   if (DEVELOPMENT) SYNC_HOST="vas-dev";
   var LOCAL_PROFILE="opencontent";
-  var WEBAPP_MULTI="/TrentoInTasca";
+  var WEBAPP_MULTI="TrentoInTasca";
   
   // customization parameters
   var cityName = { 'it':'Trento', 'en':'Trento', 'de':'Trento' };
@@ -103,6 +99,19 @@ angular.module('ilcomuneintasca.services.conf', [])
       it: 'Aggiorna dati',
       en: 'Update data',
       de: 'Dateien ändern'
+    },
+    'settings_data_sync_draft': {
+      it: 'Aggiorna dati DRAFT',
+      en: 'Update DRAFT data',
+      de: 'DRAFT Dateien ändern'
+    },
+    'settings_data_sync_draft_enabled': {
+      it: "Modalità di test e' abilitata.",
+      en: 'Test mode enabled.',
+    },
+    'settings_data_sync_draft_disabled': {
+      it: "Modalità di test e' disabilitata.",
+      en: 'Test mode disabled.',
     },
     'settings_data': {
       it: 'Gestione dati e immagini',
@@ -736,7 +745,8 @@ angular.module('ilcomuneintasca.services.conf', [])
     },
     syncUrl: function () {
 //      return 'https://'+SYNC_HOST+'.smartcampuslab.it/comuneintasca/sync';
-      return 'https://'+SYNC_HOST+'.smartcampuslab.it/'+SYNC_WEBAPP+'/sync/'+WEBAPP_MULTI;
+      var SYNC_MODE = $rootScope.TEST_CONNECTION ? 'sync' : 'syncdraft';
+      return 'https://'+SYNC_HOST+'.smartcampuslab.it/'+SYNC_WEBAPP+'/'+SYNC_MODE+'/'+WEBAPP_MULTI;
     },
     syncTimeoutSeconds: function () {
       //return 60 * 60; /* 60 times 60 seconds = EVERY HOUR */

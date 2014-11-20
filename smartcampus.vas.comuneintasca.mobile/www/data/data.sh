@@ -1,7 +1,8 @@
 #!/bin/sh
-DATA_WEBAPP_NAME="comuneintasca-oc"
+DATA_WEBAPP_NAME="comuneintasca-multi"
+DATA_WEBAPP_MULTI="TrentoInTasca"
 
-grep "DEVELOPMENT=true" ../js/services/conf.js &>/dev/null
+grep "var DEVELOPMENT=true;" ../js/services/conf.js &>/dev/null
 if [ $? == 0 ]; then
   DATA_HOST_NAME="vas-dev"
 else
@@ -9,7 +10,7 @@ else
 fi
 echo "host: $DATA_HOST_NAME"
 
-curl -H "Content-Type: application/json" -d '{"updated":{}}' "https://$DATA_HOST_NAME.smartcampuslab.it/$DATA_WEBAPP_NAME/sync?since=0" -o data.json
+curl -H "Content-Type: application/json" -d '{"updated":{}}' "https://$DATA_HOST_NAME.smartcampuslab.it/$DATA_WEBAPP_NAME/sync/$DATA_WEBAPP_MULTI?since=0" -o data.json
 if [ $? == 0 ]; then
   PROFILE="opencontent.json"
   echo "profile: $PROFILE"

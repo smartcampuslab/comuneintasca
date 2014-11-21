@@ -290,6 +290,12 @@ angular.module('ilcomuneintasca.services.db', [])
         console.log('DB FULL-RESET completed.');
       });
 		},
+		remotereset: function () { 
+			localStorage.currentDbVersion=currentDbVersion=1;
+			return this.reset().then(function(){
+        console.log('DB REMOTE-RESET completed.');
+      });
+		},
     sync: function () {
       if (syncinprogress!=null) {
         //console.log('waiting for previuos sync process to finish...');

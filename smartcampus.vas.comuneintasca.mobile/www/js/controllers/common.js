@@ -89,6 +89,14 @@ angular.module('ilcomuneintasca.controllers.common', [])
       });
     });
   };
+  $scope.dbRemoteReset = function () {
+    console.log('remote reset!');
+    DatiDB.remotereset().then(function () {
+      console.log('remote db reset completed!');
+      $scope.settings.hide();
+      $window.location.reload();
+    });
+  };
 
   $scope.testConnReqStart = 0;
   $scope.testConnReqCount = 0;
@@ -105,7 +113,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
         title: 'TEST MODE',
         template: $rootScope.TEST_CONNECTION ? $filter('translate')('settings_data_sync_draft_enabled') : $filter('translate')('settings_data_sync_draft_disabled')
       }).then(function(res){
-        $scope.dbFullReset();
+        $scope.dbRemoteReset();
       });
     }
   }

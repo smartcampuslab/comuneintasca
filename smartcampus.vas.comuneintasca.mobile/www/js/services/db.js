@@ -17,6 +17,7 @@ angular.module('ilcomuneintasca.services.db', [])
 
 		if (dbrow.parentid) {
 			item['parentid']=dbrow.parentid;
+			item['parenttype']=dbrow.parenttype;
 			item['parent']=JSON.parse(dbrow.parent);
 		}
 		item['sonscount']=dbrow.sonscount;
@@ -632,7 +633,7 @@ angular.module('ilcomuneintasca.services.db', [])
             _complex=false;
           }
 
-          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount' +
+          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.type AS parenttype, p.data AS parent, count(s.id) as sonscount' +
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id' +
             ' WHERE c.type=? ' +
             (_complex==undefined ? '' : ' AND c.classification' + (_complex?'=':'!=') + "'_complex'" ) + 
@@ -695,14 +696,14 @@ angular.module('ilcomuneintasca.services.db', [])
           var min_toTime = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0).getTime() - 1;
 
 /*
-          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount ' +
+          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.type AS parenttype, p.data AS parent, count(s.id) as sonscount ' +
 						'FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id' +
             ' WHERE c.type=? ' +
             (_complex==undefined ? (cateId ? ' AND c.classification=?' : '') : ' AND c.classification' + (_complex?'=':'!=') + "'_complex'" ) + 
 						' GROUP BY c.id';
           var params = (cateId ? [types[dbname], cateId] : [types[dbname]]);
 */
-          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount ' +
+          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.type AS parenttype, p.data AS parent, count(s.id) as sonscount ' +
 						'FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id' +
             ' WHERE c.type=? ' +
 						(cateId ? ' AND (c.classification=? OR c.classification2=? OR c.classification3=?)' : '') + 
@@ -781,7 +782,7 @@ angular.module('ilcomuneintasca.services.db', [])
 						(cateId ? ' AND (c.classification=? OR c.classification2=? OR c.classification3=?)' : '') + 
             (_complex==undefined ? '' : ' AND c.classification' + (_complex?'=':'!=') + "'_complex'" );
 */
-          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount'+
+          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.type AS parenttype, p.data AS parent, count(s.id) as sonscount'+
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id' +
             ' WHERE c.type=?' +
             ' AND c.fromTime > 0 AND c.fromTime <' + toTime + ' AND c.toTime > ' + fromTime + 
@@ -853,7 +854,7 @@ angular.module('ilcomuneintasca.services.db', [])
           qParams.unshift(types[dbname]);
 
           var fromTime = new Date().getTime();
-          var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent'+
+          var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.type AS parenttype, p.data AS parent'+
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid'+
             ' WHERE c.type=? ' +
             ' AND ' + idCond +
@@ -914,7 +915,7 @@ angular.module('ilcomuneintasca.services.db', [])
 
           var d = new Date();
           var min_toTime = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0).getTime() - 1;
-					var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount'+
+					var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.type AS parenttype, p.data AS parent, count(s.id) as sonscount'+
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id'+
             ' WHERE c.type=?' +
             ' AND ' + idCond + 
@@ -990,7 +991,7 @@ angular.module('ilcomuneintasca.services.db', [])
 
           var d = new Date();
           var min_toTime = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0).getTime() - 1;
-					var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount'+
+					var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.type AS parenttype, p.data AS parent, count(s.id) as sonscount'+
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id'+
             (dbname?' WHERE c.type=?':'') +
             ' AND ' + idCond + 

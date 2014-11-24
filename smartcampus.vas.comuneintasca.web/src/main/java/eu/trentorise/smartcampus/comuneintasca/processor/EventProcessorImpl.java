@@ -127,6 +127,7 @@ public class EventProcessorImpl implements ServiceBusListener {
 	public EventProcessorImpl() throws Exception {
 	}
 
+	
 	@PostConstruct
 	private void initConfig() throws Exception {
 		updating = true;
@@ -1053,11 +1054,15 @@ public class EventProcessorImpl implements ServiceBusListener {
 	}
 
 	public String getImageURL(String image) {
-		if (image == null || image.isEmpty()) return null;
-		if (!image.startsWith("http")) {
-			return imagePrefix + image.replace("|", "");
+		String img = image;
+		if (img == null || img.isEmpty()) return null;
+		if (img.indexOf('|') > 0) {
+			img = img.substring(0,img.indexOf('|'));
 		}
-		return image;
+		if (!img.startsWith("http")) {
+			return imagePrefix + img;
+		}
+		return img;
 	}
 
 	public GeoTimeObjectSyncStorage getStorage() {

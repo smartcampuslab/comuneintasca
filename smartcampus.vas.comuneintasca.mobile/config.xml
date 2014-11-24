@@ -25,13 +25,13 @@
   <preference name="AutoHideSplashScreen" value="false" />
   <preference name="auto-hide-splash-screen" value="false" />
   <preference name="SplashScreen" value="splash" />
-  <preference name="SplashScreenDelay" value="6000" />
+  <preference name="SplashScreenDelay" value="5000" />
   <preference name="KeyboardDisplayRequiresUserAction" value="false" />
   <feature name="Keyboard">
     <param name="ios-package" value="IonicKeyboard" onload="true" />
   </feature>
   <preference name="exit-on-suspend" value="false" />
   <preference name="detect-data-types" value="false" />
-  <preference name="KeepRunning" value="false"/>
+  <preference name="KeepRunning" value="true"/>
   <!-- preference name="Orientation" value="portrait" / -->
 </widget>

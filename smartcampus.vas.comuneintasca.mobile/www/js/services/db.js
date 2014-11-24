@@ -884,6 +884,7 @@ angular.module('ilcomuneintasca.services.db', [])
         }, function () { //success callback
           $ionicLoading.hide();
           Profiling._do('dbsons', 'tx success');
+          dbsons.resolve(lista);
         });
 
         return dbsons.promise;

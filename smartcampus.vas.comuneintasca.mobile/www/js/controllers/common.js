@@ -297,11 +297,27 @@ angular.module('ilcomuneintasca.controllers.common', [])
               });
             };
 
+            //console.log('data.sonscount='+data.sonscount);
             if (data.parentid) {
-              //console.log('parent: type='+Config.contentKeyFromDbType(data.parenttype));
-              //console.log('parent: classification='+data.parent.classification.it);
-              $scope.obj['parentAbsLink']=Config.menuGroupSubgroupByTypeAndClassification(Config.contentKeyFromDbType(data.parenttype),data.parent.classification.it).then(function(sg){
-                return 'page/'+sg._parent.id+'/'+sg.id+'/'+data.parentid;
+              var parenttype=Config.contentKeyFromDbType(data.parenttype);
+              //console.log('parent: type='+parenttype);
+              
+              var classification;
+              if (parenttype=='event' && data.parent.eventForm=='Manifestazione') {
+                classification='_complex';
+              } else if (data.parent.classification) {
+                classification=data.parent.classification.it;
+              }
+              //console.log('parent: classification='+classification);
+
+              $scope.obj['parentAbsLink']=Config.menuGroupSubgroupByTypeAndClassification(parenttype,classification).then(function(sg){
+                if (sg) {
+                  return 'page/'+sg._parent.id+'/'+sg.id+'/'+data.parentid;
+                } else if (classification) {
+                  return Config.menuGroupSubgroupByTypeAndClassification(parenttype,null).then(function(sg){
+                    return 'page/'+sg._parent.id+'/'+sg.id+'/'+data.parentid;
+                  });
+                }
               });
 
               /*
@@ -329,7 +345,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
                 if ($scope.sonsVisible) {
                   $scope.sonsVisible = null;
                 } else {
-                  $scope.gotsonsdata = DatiDB.getByParent(sg_query_type, data.id).then(function (data) {
+                  $scope.gotsonsdata = DatiDB.getByParent(null, data.id).then(function (data) {
                     if (!$scope.sons) {
                       if (data.length > 0 && data[0].fromTime) {
                         $scope.sons = $filter('extOrderBy')(data,{order:'DateFrom'});

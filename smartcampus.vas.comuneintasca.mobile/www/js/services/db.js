@@ -851,20 +851,19 @@ angular.module('ilcomuneintasca.services.db', [])
             idCond = 'c.parentid IN (' + itemsIds.join() + ')';
           }
           var qParams = parentId.split(',');
-          qParams.unshift(types[dbname]);
+          if (dbname) qParams.unshift(types[dbname]);
 
           var fromTime = new Date().getTime();
           var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.type AS parenttype, p.data AS parent'+
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid'+
-            ' WHERE c.type=? ' +
-            ' AND ' + idCond +
+            ' WHERE' + (dbname ? ' c.type=? AND ' : ' ') + idCond +
             ' GROUP BY c.id';
+          //console.log('dbQuery: '+dbQuery);
           //console.log('qParams: ' + qParams);
-          //console.log('DatiDB.get("' + dbname + '", "' + parentId + '"); dbQuery launched...');
           tx.executeSql(dbQuery, qParams, function (tx2, results) {
             Profiling._do('dbsons', 'sql');
-            //console.log('DatiDB.get("' + dbname + '", "' + parentId + '"); dbQuery completed');
             var resultslen = results.rows.length;
+            //console.log('resultslen: '+resultslen);
             for (var i = 0; i < resultslen; i++) {
               var item = results.rows.item(i);
               lista.push(parseDbRow(item));

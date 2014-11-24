@@ -298,7 +298,9 @@ angular.module('ilcomuneintasca.controllers.common', [])
             };
 
             if (data.parentid) {
-              $scope.obj['parentAbsLink']=Config.menuGroupSubgroupByTypeAndClassification(sg_query_type,'_complex').then(function(sg){
+              //console.log('parent: type='+Config.contentKeyFromDbType(data.parenttype));
+              //console.log('parent: classification='+data.parent.classification.it);
+              $scope.obj['parentAbsLink']=Config.menuGroupSubgroupByTypeAndClassification(Config.contentKeyFromDbType(data.parenttype),data.parent.classification.it).then(function(sg){
                 return 'page/'+sg._parent.id+'/'+sg.id+'/'+data.parentid;
               });
 

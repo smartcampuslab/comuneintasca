@@ -1,10 +1,10 @@
 {
   "id": null,
-  "updateTime": 1416486662194,
-  "version": 7048,
+  "updateTime": 1416501080240,
+  "version": 8711,
   "user": null,
   "appId": "TrentoInTasca",
-  "lastModified": 1416410935000,
+  "lastModified": 1416500856000,
   "localId": null,
   "highlights": [
     {
@@ -767,7 +767,7 @@
             "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/eventi/in-evidenza-natale-a-trento/8707936-1-ita-IT/IN-EVIDENZA-Natale-a-Trento.jpg"
           },
           "objectIds": [
-            "event.major.3"
+            "event.major.11"
           ],
           "items": null,
           "query": null,

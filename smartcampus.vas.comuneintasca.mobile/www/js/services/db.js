@@ -410,7 +410,7 @@ angular.module('ilcomuneintasca.services.db', [])
                             parentid=parentEvent.objectRemoteId;
                           }
                         }
-                        if (parentid) console.log('event parent id: ' + parentid);
+                        //if (parentid) console.log('event parent id: ' + parentid);
 
                         //console.log('event cate: ' + item.category);
                         if (item.category) {

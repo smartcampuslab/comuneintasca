@@ -180,7 +180,7 @@ angular.module('ilcomuneintasca.services.db', [])
     }, false);
   } else {
     //console.log('web db...');
-    dbObj = window.openDatabase(dbName, '1.0', Config.dbName()+' - Il Comune in Tasca', 5 * 1024 * 1024);
+    dbObj = window.openDatabase(dbName, '1.0', dbName+' - Il Comune in Tasca', 5 * 1024 * 1024);
 //    remoteSyncOptions = localSyncOptions;
     dbopenDeferred.resolve(dbObj);
   }

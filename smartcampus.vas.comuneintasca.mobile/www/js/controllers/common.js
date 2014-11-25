@@ -291,6 +291,120 @@ angular.module('ilcomuneintasca.controllers.common', [])
           $scope.template = 'templates/page/' + (sg.view || sg_query_type) + ($state.current.data && $state.current.data.sons ? '_sons' : '') + '.html';
   */
   } else {
+    var gotItemData=function (data) {
+      Profiling._do('page', 'item:gotdata');
+      //console.log('itemId gotdata!');
+      $scope.obj = data;
+
+      $scope.isObjFavorite = false;
+      DatiDB.isFavorite(data.id).then(function (res) {
+        $scope.isObjFavorite=res; 
+      });
+      $scope.toggleFavorite = function (obj) {
+        DatiDB.setFavorite(obj.id, !$scope.isObjFavorite).then(function (res) {
+          $scope.isObjFavorite=res;
+        });
+      };
+
+      //console.log('data.sonscount='+data.sonscount);
+      if (data.parentid) {
+        var parenttype=Config.contentKeyFromDbType(data.parenttype);
+        //console.log('parent: type='+parenttype);
+
+        var classification;
+        if (parenttype=='event' && data.parent.eventForm=='Manifestazione') {
+          classification='_complex';
+        } else if (data.parent.classification) {
+          classification=data.parent.classification.it;
+        }
+        //console.log('parent: classification='+classification);
+
+        $scope.obj['parentAbsLink']=Config.menuGroupSubgroupByTypeAndClassification(parenttype,classification).then(function(sg){
+          if (sg) {
+            return 'page/'+sg._parent.id+'/'+sg.id+'/'+data.parentid;
+          } else if (classification) {
+            return Config.menuGroupSubgroupByTypeAndClassification(parenttype,null).then(function(sg){
+              return 'page/'+sg._parent.id+'/'+sg.id+'/'+data.parentid;
+            });
+          }
+        });
+
+        /*
+        console.log('siblings');
+
+        $scope.gotsonsdata = DatiDB.getByParent(sg_query_type, data.parentid).then(function (data) {
+          $scope.sons = data;
+          $scope.siblingscount = data.length;
+        });
+        $scope.toggleSiblings = function () {
+          if ($scope.sonsVisible) {
+            $scope.sonsVisible = null;
+          } else {
+            $scope.gotsonsdata.then(function () {
+              $scope.sonsVisible = true;
+            })
+          }
+        }
+        */
+      } else if (data.sonscount > 0) {
+        //console.log('sons');
+
+        $scope.toggleSons = function () {
+          if ($scope.sonsVisible) {
+            $scope.sonsVisible = null;
+          } else {
+            var loading = $ionicLoading.show({
+              template: $filter('translate')(Config.keys()['loading']),
+              delay: 400,
+              duration: Config.loadingOverlayTimeoutMillis()
+            });
+            $scope.gotsonsdata = DatiDB.getByParent(null, data.id).then(function (data) {
+              if (!$scope.sons) {
+                if (data.length > 0 && data[0].fromTime) {
+                  $scope.sons = $filter('extOrderBy')(data,{order:'DateFrom'});
+                } else {
+                  $scope.sons = data;
+                }
+              }  
+              $scope.sonsVisible = true;
+              
+              $ionicLoading.hide();
+            },function(err){
+              $ionicLoading.hide();
+            });
+          }
+        }
+
+        if ($state.current.data && $state.current.data.sons) {
+          console.log('sons preloading...');
+          var loading = $ionicLoading.show({
+            template: $filter('translate')(Config.keys()['loading']),
+            delay: 400,
+            duration: Config.loadingOverlayTimeoutMillis()
+          });
+          $scope.gotsonsdata = DatiDB.getByParent(sg_query_type, data.id).then(function (data) {
+            if (data.length > 0 && data[0].fromTime) {
+              $scope.sons = $filter('extOrderBy')(data,{order:'DateFrom'});
+            } else {
+              $scope.sons = data;
+            }
+              
+            $ionicLoading.hide();
+          },function(err){
+            $ionicLoading.hide();
+          });
+        }
+      }
+
+      if (data.location) {
+        GeoLocate.locate().then(function (latlon) {
+          $scope.distance = GeoLocate.distance(latlon, data.location);
+        });
+      } else {
+        console.log('no known location for place');
+      }
+    };
+    
     Config.menuGroupSubgroup($stateParams.groupId, $stateParams.menuId).then(function (sg) {
       Profiling._do('page', 'menuGroupSubgroup found');
       if (!sg) {
@@ -310,86 +424,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
           Profiling._do('page', 'item');
 
           $scope.template = 'templates/page/' + (sg.view || sg_query_type) + ($state.current.data && $state.current.data.sons ? '_sons' : '') + '.html';
-          $scope.gotdata = DatiDB.get(sg_query_type, $stateParams.itemId).then(function (data) {
-            Profiling._do('page', 'item:gotdata');
-            //console.log('itemId gotdata!');
-            $scope.obj = data;
-
-            $scope.isObjFavorite = false;
-            DatiDB.isFavorite(data.id).then(function (res) {
-              $scope.isObjFavorite=res; 
-            });
-            $scope.toggleFavorite = function (obj) {
-              DatiDB.setFavorite(obj.id, !$scope.isObjFavorite).then(function (res) {
-                $scope.isObjFavorite=res;
-              });
-            };
-
-            if (data.parentid) {
-              //console.log('parent: '+Config.contentKeyFromDbType(data.parenttype));
-              //console.log(JSON.stringify(data.parent));
-
-              $scope.obj['parentAbsLink']=Config.menuGroupSubgroupByTypeAndClassification(Config.contentKeyFromDbType(data.parenttype),data.parent.classification.it).then(function(sg){
-                return 'page/'+sg._parent.id+'/'+sg.id+'/'+data.parentid;
-              });
-
-              /*
-              console.log('siblings');
-
-              $scope.gotsonsdata = DatiDB.getByParent(sg_query_type, data.parentid).then(function (data) {
-                $scope.sons = data;
-                $scope.siblingscount = data.length;
-              });
-              $scope.toggleSiblings = function () {
-                if ($scope.sonsVisible) {
-                  $scope.sonsVisible = null;
-                } else {
-                  $scope.gotsonsdata.then(function () {
-                    $scope.sonsVisible = true;
-                  })
-                }
-              }
-              */
-            } else if (data.sonscount > 0) {
-              //console.log('sons');
-
-              $scope.toggleSons = function () {
-                if ($scope.sonsVisible) {
-                  $scope.sonsVisible = null;
-                } else {
-                  $scope.gotsonsdata = DatiDB.getByParent(null, data.id).then(function (data) {
-                    if (!$scope.sons) {
-                      if (data.length > 0 && data[0].fromTime) {
-                        $scope.sons = $filter('extOrderBy')(data,{order:'DateFrom'});
-                      } else {
-                        $scope.sons = data;
-                      }
-                    }  
-                    $scope.sonsVisible = true;
-                  });
-                }
-              }
-
-              if ($state.current.data && $state.current.data.sons) {
-                //console.log('sons');
-                $scope.gotsonsdata = DatiDB.getByParent(sg_query_type, data.id).then(function (data) {
-                  if (data.length > 0 && data[0].fromTime) {
-                    $scope.sons = $filter('extOrderBy')(data,{order:'DateFrom'});
-                  } else {
-                    $scope.sons = data;
-                  }  
-                });
-              }
-            }
-
-            if (data.location) {
-              GeoLocate.locate().then(function (latlon) {
-                $scope.distance = GeoLocate.distance(latlon, data.location);
-              });
-            } else {
-              console.log('no known location for place');
-            }
-          });
+          $scope.gotdata = DatiDB.get(sg_query_type, $stateParams.itemId).then(gotItemData);
         } else {
           Profiling._do('page', 'list');
 
@@ -746,6 +781,8 @@ angular.module('ilcomuneintasca.controllers.common', [])
         if (sg_type=='text') sg_type='content';
         $scope.template = 'templates/page/' + (sg.view || sg_type || sg._parent.view || 'content') + '.html';
         //console.log('$scope.template: '+$scope.template);
+        $scope.gotdata = DatiDB.get(sg_type, sg.objectIds.join(',')).then(gotItemData);
+        /*
         $scope.gotdata = DatiDB.get(sg_type, sg.objectIds.join(',')).then(function (data) {
           //console.log('objectIds gotdata!');
           if (!data.hasOwnProperty('length')) {
@@ -754,6 +791,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
           }
           $scope.results = data;
         });
+        */
       } else {
         console.log('unkown menu object type!');
       }

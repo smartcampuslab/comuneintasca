@@ -192,12 +192,13 @@ angular.module('ilcomuneintasca.services.db', [])
       console.log('initializing database...');
       dbObj.transaction(function (tx) {
         // if favs schema changes, we need to specify some special changes to perform to upgrade it
-        if (currentSchemaVersion==0) {
-          tx.executeSql('DROP TABLE IF EXISTS Favorites');
-          console.log('favorites table created')
-          tx.executeSql('CREATE TABLE IF NOT EXISTS Favorites (id text primary key)');
-          tx.executeSql('CREATE INDEX IF NOT EXISTS fav_id ON Favorites( id )');
-        }
+        //if (currentSchemaVersion==0) {
+          //tx.executeSql('DROP TABLE IF EXISTS Favorites');
+          //console.log('favorites table dropped')
+        //}
+        tx.executeSql('CREATE TABLE IF NOT EXISTS Favorites (id text primary key)');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS fav_id ON Favorites( id )');
+        console.log('favorites table done')
 
         tx.executeSql('DROP TABLE IF EXISTS ContentObjects');
         console.log('contents table created')

@@ -787,7 +787,7 @@ angular.module('ilcomuneintasca.services.db', [])
       return data.promise;
     },
     getByParent: function (dbname, parentId) {
-      console.log('DatiDB.get("' + dbname + '","' + parentId + '")');
+      //console.log('DatiDB.get("' + dbname + '","' + parentId + '")');
       return this.sync().then(function (dbVersion) {
         Profiling.start('dbsons');
         var loading = $ionicLoading.show({
@@ -815,12 +815,12 @@ angular.module('ilcomuneintasca.services.db', [])
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid'+
             ' WHERE' + (dbname ? ' c.type=? AND ' : ' ') + idCond +
             ' GROUP BY c.id';
-          console.log('dbQuery: '+dbQuery);
-          console.log('qParams: ' + qParams);
+          //console.log('dbQuery: '+dbQuery);
+          //console.log('qParams: ' + qParams);
           tx.executeSql(dbQuery, qParams, function (tx2, results) {
             Profiling._do('dbsons', 'sql');
             var resultslen = results.rows.length;
-console.log('resultslen: '+resultslen);
+            //console.log('resultslen: '+resultslen);
             for (var i = 0; i < resultslen; i++) {
               var item = results.rows.item(i);
               //lista.push(parseDbRow(item));

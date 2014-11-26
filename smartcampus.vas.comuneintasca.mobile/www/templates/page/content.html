@@ -10,7 +10,7 @@
       </div>
     </div>
   </div>
-  <div ng-if="results">
+  <div ng-if="results && !obj">
     <div class="comuni-content" ng-repeat="obj in results">
       <!-- comuni-img class="content-image-main" gotdata="gotdata" detail="true"></comuni-img -->
       <div ng-if="!emptyParsedImageURL(obj)" class="content-image-main comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj)}})"></div>

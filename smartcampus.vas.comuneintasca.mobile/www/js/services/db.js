@@ -529,7 +529,7 @@ angular.module('ilcomuneintasca.services.db', [])
                     });
 
                   }, function (err) { //error callback
-                    console.log('cannot update db: '+err);
+                    console.log('cannot update db: '+err.message);
                     $ionicLoading.hide();
                     Profiling._do('dbsync');
                     syncinprogress=null;
@@ -572,7 +572,7 @@ angular.module('ilcomuneintasca.services.db', [])
       });
       return syncronization.promise;
     },
-    all: function (dbname) {
+    all: function (dbname, parentId) {
       var data = $q.defer();
       this.sync().then(function (dbVersion) {
         Profiling.start('dball');
@@ -586,7 +586,19 @@ angular.module('ilcomuneintasca.services.db', [])
         dbObj.transaction(function (tx) {
           //console.log('[DB.all()] dbname: '+dbname);
 
-					var _complex=undefined;
+          var parentIdCond,parentIds;
+          if (parentId) {
+            var parentIds=parentId.split(',')
+            if (parentId.indexOf(',') == -1) {
+              parentIdCond = 'c.parentid=?';
+            } else {
+              for (i in parentIds) parentIds[i] = '?';
+              parentIdCond = 'c.parentid IN (' + itemsIds.join() + ')';
+            }
+          }
+          //console.log('parentIdCond: '+parentIdCond);
+
+          var _complex=undefined;
           if (dbname=='event') {
             _complex=false;
           }
@@ -594,10 +606,18 @@ angular.module('ilcomuneintasca.services.db', [])
           var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.type AS parenttype, p.data AS parent, count(s.id) as sonscount' +
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id' +
             ' WHERE c.type=? ' +
+						(parentIdCond ? ' AND '+parentIdCond : '') + 
             (_complex==undefined ? '' : ' AND c.classification' + (_complex?'=':'!=') + "'_complex'" ) + 
 						' GROUP BY c.id';
+          var params = [ types[dbname] ];
+          if (parentId) {
+            for (i in parentIds) params.push(parentIds[i]);
+          }
+
           //console.log('[DB.all()] sql: '+sql);
-          tx.executeSql(sql, [types[dbname]], function (tx, results) {
+          //console.log('[DB.all()] params: '+params);
+
+          tx.executeSql(sql, params, function (tx, results) {
             Profiling._do('dball','sql');
             var len = results.rows.length,
               i;
@@ -626,7 +646,7 @@ angular.module('ilcomuneintasca.services.db', [])
       });
       return data.promise;
     },
-    cate: function (dbname, cateId) {
+    cate: function (dbname, cateId, parentId) {
       var data = $q.defer();
       this.sync().then(function (dbVersion) {
         Profiling.start('dbcate');
@@ -641,7 +661,19 @@ angular.module('ilcomuneintasca.services.db', [])
           //console.log('[DB.cate()] dbname: '+dbname);
           //console.log('[DB.cate()] cateId: ' + cateId);
 
-					var _complex=undefined;
+          var parentIdCond,parentIds;
+          if (parentId) {
+            var parentIds=parentId.split(',')
+            if (parentId.indexOf(',') == -1) {
+              parentIdCond = 'c.parentid=?';
+            } else {
+              for (i in parentIds) parentIds[i] = '?';
+              parentIdCond = 'c.parentid IN (' + itemsIds.join() + ')';
+            }
+          }
+          //console.log('parentIdCond: '+parentIdCond);
+
+          var _complex=undefined;
           if (dbname=='event') {
             if (cateId && cateId=='_complex') {
               _complex=true;
@@ -664,11 +696,20 @@ angular.module('ilcomuneintasca.services.db', [])
           var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.type AS parenttype, p.data AS parent, count(s.id) as sonscount ' +
 						'FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id' +
             ' WHERE c.type=? ' +
+						(parentIdCond ? ' AND '+parentIdCond : '') + 
 						(cateId ? ' AND (c.classification=? OR c.classification2=? OR c.classification3=?)' : '') + 
             ' AND (s.id IS NULL OR s.toTime > ' + min_toTime + ')' +
             (_complex==undefined ? '' : ' AND c.classification' + (_complex?'=':'!=') + "'_complex'" ) + 
 						' GROUP BY c.id';
-          var params = (cateId ? [types[dbname], cateId, cateId, cateId] : [types[dbname]]);
+          var params = [ types[dbname] ];
+          if (parentId) {
+            for (i in parentIds) params.push(parentIds[i]);
+          }
+          if (cateId) {
+            params.push(cateId);
+            params.push(cateId);
+            params.push(cateId);
+          }
 
           //console.log('[DB.cate()] sql: '+sql);
           //console.log('[DB.cate()] params: '+params);
@@ -708,7 +749,7 @@ angular.module('ilcomuneintasca.services.db', [])
       });
       return data.promise;
     },
-    byTimeInterval: function (dbname, fromTime, toTime, cateId, objContext) {
+    byTimeInterval: function (dbname, fromTime, toTime, cateId, objContext, parentId) {
       var data = $q.defer();
       this.sync().then(function (dbVersion) {
         Profiling.start('byTimeInterval');
@@ -723,7 +764,19 @@ angular.module('ilcomuneintasca.services.db', [])
           //console.log('[DB.byTimeInterval()] dbname: '+dbname);
           //console.log('[DB.byTimeInterval()] cateId: ' + cateId);
 
-					var _complex=undefined;
+          var parentIdCond,parentIds;
+          if (parentId) {
+            var parentIds=parentId.split(',')
+            if (parentId.indexOf(',') == -1) {
+              parentIdCond = 'c.parentid=?';
+            } else {
+              for (i in parentIds) parentIds[i] = '?';
+              parentIdCond = 'c.parentid IN (' + itemsIds.join() + ')';
+            }
+          }
+          //console.log('parentIdCond: '+parentIdCond);
+
+          var _complex=undefined;
           if (dbname=='event') {
             if (cateId && cateId=='_complex') {
               _complex=true;
@@ -743,11 +796,20 @@ angular.module('ilcomuneintasca.services.db', [])
           var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.type AS parenttype, p.data AS parent, count(s.id) as sonscount'+
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id' +
             ' WHERE c.type=?' +
+						(parentIdCond ? ' AND '+parentIdCond : '') + 
             ' AND c.fromTime > 0 AND c.fromTime <' + toTime + ' AND c.toTime > ' + fromTime + 
 						(cateId ? ' AND (c.classification=? OR c.classification2=? OR c.classification3=?)' : '') + 
             (_complex==undefined ? '' : ' AND c.classification' + (_complex?'=':'!=') + "'_complex'" ) + 
 						' GROUP BY c.id';
-          var params = cateId ? [types[dbname], cateId, cateId, cateId] : [types[dbname]];
+          var params = [ types[dbname] ];
+          if (parentId) {
+            for (i in parentIds) params.push(parentIds[i]);
+          }
+          if (cateId) {
+            params.push(cateId);
+            params.push(cateId);
+            params.push(cateId);
+          }
 
           //console.log('[DB.byTimeInterval()] sql: '+sql);
           //console.log('[DB.byTimeInterval()] params: '+params);
@@ -792,7 +854,7 @@ angular.module('ilcomuneintasca.services.db', [])
         Profiling.start('dbsons');
         var loading = $ionicLoading.show({
           template: $filter('translate')(Config.keys()['loading']),
-          delay: 600,
+          delay: 400,
           duration: Config.loadingOverlayTimeoutMillis()
         });
 

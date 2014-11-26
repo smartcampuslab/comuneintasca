@@ -628,6 +628,7 @@ angular.module('ilcomuneintasca.services.conf', [])
           //overrides for specific query classifications
           "classifications":{
             "_none_":{ "filter":{ "default":"today" } },
+            "_parent_":{ "filter":{ "default":null } },
             "_complex":{ "filter":{ "default":null } }
           }
         },

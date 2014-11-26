@@ -136,6 +136,8 @@ angular.module('ilcomuneintasca', [
   }
   $rootScope.gotoSubpath = function (subpath) {
     //console.log('full subpath: '+$location.path()+subpath)
+    var actualpath=$location.path();
+    if (actualpath.length>0 && actualpath.charAt(actualpath.length-1)=='/' && subpath.charAt(0)=='/') subpath=subpath.substring(1);
     $location.path($location.path()+subpath);
   }
 
@@ -366,8 +368,8 @@ angular.module('ilcomuneintasca', [
         }
       }
     })
-    .state('app.page', {
-      url: "/page/:groupId/:menuId/:itemId",
+    .state('app.itempage', {
+      url: "/page/:groupId/:itemId",
       views: {
         'menuContent': {
           templateUrl: "templates/page.html",
@@ -375,8 +377,20 @@ angular.module('ilcomuneintasca', [
         }
       }
     })
-    .state('app.itempage', {
-      url: "/page/:groupId/:itemId",
+    .state('app.itemsons', {
+      url: "/page/:groupId/:itemId/sons",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/page.html",
+          controller: "PageCtrl"
+        }
+      },
+      data: {
+        sons: true
+      }
+    })
+    .state('app.page', {
+      url: "/page/:groupId/:menuId/:itemId",
       views: {
         'menuContent': {
           templateUrl: "templates/page.html",

@@ -88,10 +88,20 @@ angular.module('ilcomuneintasca.services.conf', [])
   }
   
   var keys = {
-    'settings_done': {
-      it: 'operazione completata',
-      en: 'operation completed',
-      de: 'operation beendet'
+    'exitapp_title': {
+      it: 'Uscita App',
+      en: 'App Exit',
+      de: 'App Exit'
+    },
+    'exitapp_template': {
+      it: 'Confermi la chiusura dell\'app?',
+      en: 'Really exit the app?',
+      de: 'Really exit the app?'
+    },
+    'exitapp_ok': {
+      it: 'OK, chiudi!',
+      en: 'OK, exit!',
+      de: 'OK, exit!'
     },
     'settings_data_clean': {
       it: 'Elimina file temporanei',

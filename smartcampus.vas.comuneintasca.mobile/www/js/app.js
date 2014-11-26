@@ -52,10 +52,17 @@ angular.module('ilcomuneintasca', [
   }, false);
   $ionicPlatform.ready(function () {
     //console.log('IONIC READY!');
-    // Disable BACK button on home
     $ionicPlatform.registerBackButtonAction(function (event) {
       if($state.current.name=="app.home"){
-        console.log('not going back anymore!');
+        //console.log('going back in home...');
+        $ionicPopup.confirm({
+          title: $filter('translate')('exitapp_title'),
+          template: $filter('translate')('exitapp_template'),
+          cancelText: $filter('translate')('cancel'),
+          okText: $filter('translate')('exitapp_ok'),
+        }).then(function(reallyExit) {
+          if (reallyExit) ionic.Platform.exitApp();
+        });
       } else {
         navigator.app.backHistory();
       }

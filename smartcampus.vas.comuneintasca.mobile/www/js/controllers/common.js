@@ -2,6 +2,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
 
 .controller('MenuCtrl', ['$scope', '$rootScope', '$location', '$ionicModal', '$ionicLoading', '$ionicPopup', '$filter', '$window', 'Config', 'Files', 'DatiDB', 'GoogleMapApi'.ns(), function ($scope, $rootScope, $location, $ionicModal, $ionicLoading, $ionicPopup, $filter, $window, Config, Files, DatiDB, GoogleMapApi) {
   $scope.shownGroup = null;
+  $scope.version=Config.getVersion();
 
   GoogleMapApi.then(function(maps) {
     //console.log('GoogleMapApi is READY!!!');

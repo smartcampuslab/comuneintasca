@@ -2,13 +2,16 @@ angular.module('ilcomuneintasca.services.conf', [])
 
 .factory('Config', function ($q, $http, $window, $filter, $rootScope) {
   var DEVELOPMENT=false;
-  $rootScope.DEV=DEVELOPMENT;
-  
+
   // when the following is TRUE, we show special buttons 
   // (actually just the db RESET button in settings)
   // even if not in development mode
+  $rootScope.DEV=DEVELOPMENT;
   // $rootScope.DEV=true;
 
+  var APP_VERSION='3.1.0';
+  var APP_BUILD='141126.1626';
+  
   var SYNC_WEBAPP='comuneintasca-multi';
   var SCHEMA_VERSION=110;
   var SYNC_HOST="tn";
@@ -559,6 +562,9 @@ angular.module('ilcomuneintasca.services.conf', [])
   }
   
   return {
+    getVersion: function () {
+      return 'v '+APP_VERSION+(APP_BUILD&&APP_BUILD!=''?'<br/>('+APP_BUILD+')':'');
+    },
     getLang: function () {
       var browserLanguage = '';
       // works for earlier version of Android (2.3.x)

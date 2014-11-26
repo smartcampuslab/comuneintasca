@@ -377,6 +377,21 @@ ion-side-menu .list .item { background-color: transparent;color:#fff;border-colo
 
 #credits .row {
   padding: 0;
+  margin-bottom:20px;
+}
+#credits .row.title {
+  margin-top:20px;
+  margin-bottom:0px;
+}
+#credits .row.last {
+  margin-bottom:40px;
+}
+#credits .row.version {
+  color:#aaa;
+}
+#credits .row.version .col {
+  font-size:12px;
+  line-height:12px;
 }
 #credits .col {
   text-align: center;
@@ -478,3 +493,4 @@ comuni-img, .comuni-item-image { position: relative; }
 
 ion-list > .list { padding-top:1;padding-bottom:1; }
 .sticky-label { margin-top:1px;width:100%;z-index:1;position:absolute;top:74px; color: #2975a7; }
+

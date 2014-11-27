@@ -233,9 +233,10 @@ angular.module('ilcomuneintasca.controllers.common', [])
 
     if (!data.hasOwnProperty('length')) {
       $scope.obj = data;
-      data = [data];
+      //data = [data];
+    } else {
+      $scope.results = data;
     }
-    $scope.results = data;
 
     $scope.isObjFavorite = false;
     DatiDB.isFavorite(data.id).then(function (res) {
@@ -309,6 +310,11 @@ angular.module('ilcomuneintasca.controllers.common', [])
     var dbtypeClass = sg.query.classification || (sg.query.parent?'_parent_':'_none_');
     var dbtypeClassCustomisations = {};
     if (dbtypeCustomisations.classifications && dbtypeCustomisations.classifications[dbtypeClass]) dbtypeClassCustomisations = dbtypeCustomisations.classifications[dbtypeClass];
+
+            /* HANDLE MANY EVENTS: IF TOO MANY EVENTS, FORCE WEEK FILTER */
+        if (dbtypeClass == '_parent_' && sg_query_type=='event' && sg.query.sonscount > 50) {
+          dbtypeClassCustomisations = { "filter":{ "default":'week' } };
+        }
 
     $scope.template = 'templates/page/' + (sg.view || dbtypeClassCustomisations.view || sg_query_type + '_list') + '.html';
     //console.log('$scope.template: '+$scope.template);
@@ -558,6 +564,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
         var d = new Date();
         var f = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0).getTime() - 1; //subtracting 1 micro since condition needs just > (not >=)
         //console.log('f: '+f);
+                
         if (filter == 'today') {
           t = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 23, 59, 59, 999).getTime() + 1; //adding 1 micro since condition needs just < (not <=)
         } else if (filter == 'week') {
@@ -565,7 +572,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
         } else if (filter == 'month') {
           t = new Date(d.getFullYear(), d.getMonth(), d.getDate()+30, 23, 59, 59, 999).getTime() + 1; //adding 1 micro since condition needs just < (not <=)
         } else if (filter == 'all') {
-          filter=null;
+          filter = null;
         }
         //console.log('t: '+t);
         if (t > 0) {
@@ -586,7 +593,20 @@ angular.module('ilcomuneintasca.controllers.common', [])
             $scope.resultsAll = data;
             //$scope.results = data;
             if (sg_query_type=='event') {
-              $scope.resultsGroups = DateUtility.regroup($scope,sg_query_type,d,t,sg.query.classification);
+              // group by date 
+              if (t == 0 && !!$scope.resultsAll) {
+                for (var i = 0; i < $scope.resultsAll.length; i++) {
+                  var elem = $scope.resultsAll[i];
+                  if (t < elem.toTime) t = elem.toTime;
+                  if (t < elem.fromTime) t = elem.fromTime;
+                }
+              }
+              var groups = DateUtility.regroup($scope,sg_query_type,d,t,sg.query.classification);
+              // ungroup if there are less than 3 events per day
+              if (sg.query.parent && groups.length > 1 && $scope.resultsAll.length / groups.length <= 1) {
+                groups = DateUtility.flatgroup($scope);
+              }
+              $scope.resultsGroups = groups;
             } else {
               dosort(data);
             }
@@ -682,9 +702,10 @@ angular.module('ilcomuneintasca.controllers.common', [])
 
           if ($state.current.data && $state.current.data.sons) {
             //console.log('sons sublist...');
-            DatiDB.getByParent(null, $stateParams.itemId).then(function (data) {
-              doListPage({query:{data:data,parent:$stateParams.itemId}});
-            });
+//            DatiDB.getByParent(null, $stateParams.itemId).then(function (data) {
+//              doListPage({query:{data:data,parent:$stateParams.itemId}});
+//            });
+              doListPage({query:{data:null, type: 'event', parent:$stateParams.itemId, sonscount: $stateParams.sonscount}});
           } else {
             $scope.gotdata = DatiDB.get(type, item.objectIds.join(',')).then(function (data) {
               var sg_query_type = null;
@@ -724,9 +745,10 @@ angular.module('ilcomuneintasca.controllers.common', [])
 
           if ($state.current.data && $state.current.data.sons) {
             console.log('sons sublist...');
-            DatiDB.getByParent(null, $stateParams.itemId).then(function (data) {
-              doListPage({query:{data:data,parent:$stateParams.itemId}});
-            });
+            //DatiDB.getByParent(null, $stateParams.itemId).then(function (data) {
+            //  doListPage({query:{data:data,parent:$stateParams.itemId}});
+            //});
+            doListPage({query:{data:null,type:'event',parent:$stateParams.itemId, sonscount: $stateParams.sonscount}});
           } else {
             var sg_query_type=sg.query.type || 'content';
 
@@ -747,9 +769,10 @@ angular.module('ilcomuneintasca.controllers.common', [])
 
         if ($state.current.data && $state.current.data.sons) {
           console.log('sons sublist...');
-          DatiDB.getByParent(null, sg.objectIds.join(',')).then(function (data) {
-            doListPage({query:{data:data,parent:sg.objectIds.join(',')}});
-          });
+//          DatiDB.getByParent(null, sg.objectIds.join(',')).then(function (data) {
+//            doListPage({query:{data:data,parent:sg.objectIds.join(',')}});
+//          });
+            doListPage({query:{data:null,type:'event',parent:sg.objectIds.join(','), sonscount: $stateParams.sonscount}});
         } else {
           var sg_type=sg.type || sg._parent.type || 'content';
           if (sg_type=='text') sg_type='content';

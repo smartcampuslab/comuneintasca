@@ -378,7 +378,7 @@ angular.module('ilcomuneintasca', [
       }
     })
     .state('app.itemsons', {
-      url: "/page/:groupId/:itemId/sons",
+      url: "/page/:groupId/:itemId/sons/:sonscount",
       views: {
         'menuContent': {
           templateUrl: "templates/page.html",
@@ -399,7 +399,7 @@ angular.module('ilcomuneintasca', [
       }
     })
     .state('app.sons', {
-      url: "/page/:groupId/:menuId/:itemId/sons",
+      url: "/page/:groupId/:menuId/:itemId/sons/:sonscount",
       views: {
         'menuContent': {
           templateUrl: "templates/page.html",

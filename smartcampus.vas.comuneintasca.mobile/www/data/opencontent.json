@@ -1,33 +1,32 @@
 {
   "id": null,
-  "updateTime": 1416501080240,
-  "version": 8711,
+  "updateTime": 1417078549195,
+  "version": 27768,
   "user": null,
   "appId": "TrentoInTasca",
-  "lastModified": 1416500856000,
+  "lastModified": 1417074734000,
   "localId": null,
   "highlights": [
     {
       "id": "profile_cit_75aceda860befbcb1fe8bd1a0f8be85c",
       "name": {
-        "it": "Trento",
-        "en": "Trento",
-        "de": "Trento"
+        "it": "Natale a Trento",
+        "en": "Christmas in Trento",
+        "de": "“Weihnachtsstadt in Trient"
       },
       "description": null,
       "image": {
-        "it": "http://www.comune.trento.it/var/comunetn/storage/images-versioned/8554658/1-ita-IT/Trento1.jpg",
-        "en": "http://www.comune.trento.it/var/comunetn/storage/images-versioned/8554663/1-eng-GB/Trento1.jpg",
-        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/trento/8554668-2-ger-DE/Trento.jpg"
+        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/natale-a-trento/8554658-3-ita-IT/Natale-a-Trento.jpg",
+        "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/natale-a-trento/8554663-4-eng-GB/Christmas-in-Trento.jpg",
+        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/natale-a-trento/8554668-5-ger-DE/Weihnachtsstadt-in-Trient.jpg"
       },
       "objectIds": [
-        "text.3004",
-        "text.3001"
+        "event.major.11"
       ],
       "items": null,
       "query": null,
       "ref": null,
-      "type": "content",
+      "type": "mainevent",
       "app": null
     },
     {
@@ -53,45 +52,20 @@
       "app": null
     },
     {
-      "id": "profile_cit_74d4ff66560754b78e0c72b19069c4d9",
-      "name": {
-        "it": "Il Monte Bondone",
-        "en": "Il Monte Bondone",
-        "de": "Il Monte Bondone"
-      },
-      "description": null,
-      "image": {
-        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/conoscere/il-monte-bondone/8554856-3-ita-IT/Il-Monte-Bondone.jpg",
-        "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/conoscere/il-monte-bondone/8554861-2-eng-GB/Il-Monte-Bondone.jpg",
-        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/conoscere/il-monte-bondone/8554866-2-ger-DE/Il-Monte-Bondone.jpg"
-      },
-      "objectIds": [
-        "text.3018",
-        "text.3019",
-        "text.3020",
-        "text.3021"
-      ],
-      "items": null,
-      "query": null,
-      "ref": "profile_cit_74d4ff66560754b78e0c72b19069c4d9",
-      "type": null,
-      "app": null
-    },
-    {
       "id": "d347c18f3a931ae6a512b7d80591afd8",
       "name": {
-        "it": "il Natale di Trento",
+        "it": "Natale e sport sul Monte Bondone",
         "en": "Rinascimenti eccentrici",
         "de": "Rinascimenti eccentrici"
       },
       "description": null,
       "image": {
-        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/il-natale-di-trento/8622728-4-ita-IT/il-Natale-di-Trento.jpg",
+        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/natale-e-sport-sul-monte-bondone/8622728-9-ita-IT/Natale-e-sport-sul-Monte-Bondone.jpg",
         "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/rinascimenti-eccentrici/8622728-1-ita-IT/Rinascimenti-eccentrici.jpg",
         "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/rinascimenti-eccentrici/8622728-1-ita-IT/Rinascimenti-eccentrici.jpg"
       },
       "objectIds": [
-        "event.major.11"
+        "64e6e0f73d67f3629c4468c3eb52c1f6"
       ],
       "items": null,
       "query": null,
@@ -119,6 +93,26 @@
       "query": null,
       "ref": null,
       "type": "content",
+      "app": null
+    },
+    {
+      "id": "f1b1d0f9485fcdda1b6622d1b1ae1a9c",
+      "name": {
+        "it": "Condividete le vostre Foto del Natale",
+        "en": "Share your pictures about Christmas"
+      },
+      "description": null,
+      "image": {
+        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/condividete-le-vostre-foto-del-natale/8714288-1-ita-IT/Condividete-le-vostre-Foto-del-Natale.jpg",
+        "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/condividete-le-vostre-foto-del-natale/8726356-3-eng-GB/Share-your-pictures-about-Christmas.jpg"
+      },
+      "objectIds": [
+        "ced5c1a5366707f28cfe7468f18ae96b"
+      ],
+      "items": null,
+      "query": null,
+      "ref": null,
+      "type": "mainevent",
       "app": null
     }
   ],
@@ -253,13 +247,13 @@
         {
           "id": "profile_cit_8ea91c65223746d1c1ef32b06459e6ce",
           "name": {
-            "it": "Introduzione",
+            "it": "Trento si presenta",
             "en": "Info",
             "de": "Info"
           },
           "description": null,
           "image": {
-            "it": "http://www.comune.trento.it/var/comunetn/storage/images-versioned/8554796/1-ita-IT/Introduzione1.jpg",
+            "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/menu-laterale/conoscere/trento-si-presenta/8554796-1-ita-IT/Trento-si-presenta.jpg",
             "en": "http://www.comune.trento.it/var/comunetn/storage/images-versioned/8554801/1-eng-GB/Info1.jpg",
             "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/conoscere/introduzione/8554806-1-ger-DE/Info.jpg"
           },
@@ -346,20 +340,19 @@
           },
           "description": null,
           "image": {
-            "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/conoscere/il-monte-bondone/8554856-3-ita-IT/Il-Monte-Bondone.jpg",
+            "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/menu-laterale/conoscere/il-monte-bondone/8554856-11-ita-IT/Il-Monte-Bondone.jpg",
             "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/conoscere/il-monte-bondone/8554861-2-eng-GB/Il-Monte-Bondone.jpg",
             "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/conoscere/il-monte-bondone/8554866-2-ger-DE/Il-Monte-Bondone.jpg"
           },
-          "objectIds": [
-            "text.3018",
-            "text.3019",
-            "text.3020",
-            "text.3021"
-          ],
+          "objectIds": null,
           "items": null,
-          "query": null,
+          "query": {
+            "type": "content",
+            "classifications": null,
+            "classification": "bondone"
+          },
           "ref": null,
-          "type": "content",
+          "type": null,
           "app": null
         }
       ],
@@ -620,21 +613,21 @@
         {
           "id": "profile_cit_csvimport_Iniziative_varie_item_comuneintasca",
           "name": {
-            "it": "Iniziative varie",
+            "it": "NATALE A TRENTO",
             "en": "Various initiatives",
             "de": "Verschiedene Initiativen"
           },
           "description": null,
-          "image": null,
-          "objectIds": null,
-          "items": null,
-          "query": {
-            "type": "event",
-            "classifications": null,
-            "classification": "Iniziative varie"
+          "image": {
+            "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/eventi/natale-a-trento/8555021-3-ita-IT/NATALE-A-TRENTO.jpg"
           },
+          "objectIds": [
+            "event.major.11"
+          ],
+          "items": null,
+          "query": null,
           "ref": null,
-          "type": null,
+          "type": "mainevent",
           "app": null
         },
         {
@@ -760,19 +753,19 @@
         {
           "id": "da3a5dacdd9a11ca9c3eb2241489ea34",
           "name": {
-            "it": "IN EVIDENZA: Natale a Trento"
+            "it": "Iniziative varie"
           },
           "description": null,
-          "image": {
-            "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/eventi/in-evidenza-natale-a-trento/8707936-1-ita-IT/IN-EVIDENZA-Natale-a-Trento.jpg"
-          },
-          "objectIds": [
-            "event.major.11"
-          ],
+          "image": null,
+          "objectIds": null,
           "items": null,
-          "query": null,
+          "query": {
+            "type": "event",
+            "classifications": null,
+            "classification": "Iniziative varie"
+          },
           "ref": null,
-          "type": "mainevent",
+          "type": null,
           "app": null
         }
       ],

@@ -33,6 +33,13 @@ angular.module('ilcomuneintasca.services.date', [])
       }
       return dateString;
     },
+    flatgroup: function (scope) {
+        var ordered = $filter('extOrderBy')(scope.resultsAll,scope.ordering);
+        groups=[
+          { label : null, results:ordered }
+        ];
+        return groups;
+    },
     regroup: function (scope,type,from,to,classification) {
       //console.log('scope.filter: '+scope.filter);
       var groups = null;

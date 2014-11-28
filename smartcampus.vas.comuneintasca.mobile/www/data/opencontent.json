@@ -1,10 +1,10 @@
 {
   "id": null,
-  "updateTime": 1417078549195,
-  "version": 27768,
+  "updateTime": 1417101459536,
+  "version": 40109,
   "user": null,
   "appId": "TrentoInTasca",
-  "lastModified": 1417074734000,
+  "lastModified": 1417101349000,
   "localId": null,
   "highlights": [
     {
@@ -12,7 +12,7 @@
       "name": {
         "it": "Natale a Trento",
         "en": "Christmas in Trento",
-        "de": "“Weihnachtsstadt in Trient"
+        "de": "Weihnachtsstadt in Trient"
       },
       "description": null,
       "image": {
@@ -55,14 +55,14 @@
       "id": "d347c18f3a931ae6a512b7d80591afd8",
       "name": {
         "it": "Natale e sport sul Monte Bondone",
-        "en": "Rinascimenti eccentrici",
-        "de": "Rinascimenti eccentrici"
+        "en": "Christmas and sports in Monte Bondone",
+        "de": "Monte Bondone für Weihnachten und Sport"
       },
       "description": null,
       "image": {
-        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/natale-e-sport-sul-monte-bondone/8622728-9-ita-IT/Natale-e-sport-sul-Monte-Bondone.jpg",
-        "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/rinascimenti-eccentrici/8622728-1-ita-IT/Rinascimenti-eccentrici.jpg",
-        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/rinascimenti-eccentrici/8622728-1-ita-IT/Rinascimenti-eccentrici.jpg"
+        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/natale-e-sport-sul-monte-bondone/8622728-12-ita-IT/Natale-e-sport-sul-Monte-Bondone.jpg",
+        "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/natale-e-sport-sul-monte-bondone/8622733-10-eng-GB/Christmas-and-sports-in-Monte-Bondone.jpg",
+        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/natale-e-sport-sul-monte-bondone/8622738-11-ger-DE/Monte-Bondone-fuer-Weihnachten-und-Sport.jpg"
       },
       "objectIds": [
         "64e6e0f73d67f3629c4468c3eb52c1f6"
@@ -99,12 +99,14 @@
       "id": "f1b1d0f9485fcdda1b6622d1b1ae1a9c",
       "name": {
         "it": "Condividete le vostre Foto del Natale",
-        "en": "Share your pictures about Christmas"
+        "en": "Share your pictures about Christmas",
+        "de": "Teilen Sie Ihre Fotos von Weihnachten"
       },
       "description": null,
       "image": {
         "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/condividete-le-vostre-foto-del-natale/8714288-1-ita-IT/Condividete-le-vostre-Foto-del-Natale.jpg",
-        "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/condividete-le-vostre-foto-del-natale/8726356-3-eng-GB/Share-your-pictures-about-Christmas.jpg"
+        "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/condividete-le-vostre-foto-del-natale/8726356-3-eng-GB/Share-your-pictures-about-Christmas.jpg",
+        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/condividete-le-vostre-foto-del-natale/8727077-4-ger-DE/Teilen-Sie-Ihre-Fotos-von-Weihnachten.jpg"
       },
       "objectIds": [
         "ced5c1a5366707f28cfe7468f18ae96b"
@@ -593,6 +595,28 @@
         {
           "id": "profile_cit_csvimport_Mostre_item_comuneintasca",
           "name": {
+            "it": "NATALE A TRENTO",
+            "en": "CHRISTMAS IN TRENTO",
+            "de": "WEIHNACHTSSTADT IN TRIENT"
+          },
+          "description": null,
+          "image": {
+            "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/menu-laterale/eventi/natale-a-trento/8555006-3-ita-IT/NATALE-A-TRENTO.jpg",
+            "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/menu-laterale/eventi/natale-a-trento/8555011-4-eng-GB/CHRISTMAS-IN-TRENTO.jpg",
+            "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/menu-laterale/eventi/natale-a-trento/8555016-5-ger-DE/WEIHNACHTSSTADT-IN-TRIENT.jpg"
+          },
+          "objectIds": [
+            "event.major.11"
+          ],
+          "items": null,
+          "query": null,
+          "ref": null,
+          "type": "mainevent",
+          "app": null
+        },
+        {
+          "id": "profile_cit_csvimport_Iniziative_varie_item_comuneintasca",
+          "name": {
             "it": "Mostre",
             "en": "Exhibitions",
             "de": "Ausstellungen"
@@ -608,26 +632,6 @@
           },
           "ref": null,
           "type": null,
-          "app": null
-        },
-        {
-          "id": "profile_cit_csvimport_Iniziative_varie_item_comuneintasca",
-          "name": {
-            "it": "NATALE A TRENTO",
-            "en": "Various initiatives",
-            "de": "Verschiedene Initiativen"
-          },
-          "description": null,
-          "image": {
-            "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/eventi/natale-a-trento/8555021-3-ita-IT/NATALE-A-TRENTO.jpg"
-          },
-          "objectIds": [
-            "event.major.11"
-          ],
-          "items": null,
-          "query": null,
-          "ref": null,
-          "type": "mainevent",
           "app": null
         },
         {
@@ -753,7 +757,9 @@
         {
           "id": "da3a5dacdd9a11ca9c3eb2241489ea34",
           "name": {
-            "it": "Iniziative varie"
+            "it": "Iniziative varie",
+            "en": "Various initiatives",
+            "de": "Verschiedene Initiativen"
           },
           "description": null,
           "image": null,
@@ -865,7 +871,9 @@
         {
           "id": "184aeb2b2cc299fa85bb3e314eac2b4c",
           "name": {
-            "it": "Farmacie"
+            "it": "Farmacie",
+            "en": "Pharmacies",
+            "de": "Apotheken"
           },
           "description": null,
           "image": null,
@@ -878,6 +886,24 @@
           },
           "ref": null,
           "type": null,
+          "app": null
+        },
+        {
+          "id": "e0514a579fefc1cd9a6c692fcd7264ee",
+          "name": {
+            "it": "Arrivare a Trento"
+          },
+          "description": null,
+          "image": {
+            "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/menu-laterale/info-utili/arrivare-a-trento/8727290-1-ita-IT/Arrivare-a-Trento.jpg"
+          },
+          "objectIds": [
+            "4b8834e1c27b237c07faebc96d8dab37"
+          ],
+          "items": null,
+          "query": null,
+          "ref": null,
+          "type": "content",
           "app": null
         }
       ],

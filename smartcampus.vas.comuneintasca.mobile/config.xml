@@ -32,6 +32,6 @@
   </feature>
   <preference name="exit-on-suspend" value="false" />
   <preference name="detect-data-types" value="false" />
-  <preference name="KeepRunning" value="false"/>
+  <preference name="KeepRunning" value="true"/>
   <!-- preference name="Orientation" value="portrait" / -->
 </widget>

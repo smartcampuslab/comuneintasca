@@ -209,14 +209,19 @@ angular.module('ilcomuneintasca', [
   }
   $rootScope.bringmethere = function (loc) {
     if (device.platform == "Android") {
-      window.open("http://maps.google.com/maps?daddr=" + loc[0] + "," + loc[1], "_system");
+      setTimeout(function(){
+        window.open("http://maps.google.com/maps?daddr=" + loc[0] + "," + loc[1], "_system");
+      },10);
     } else if (device.platform == "iOS") {
       var url = "maps:daddr=" + loc[0] + "," + loc[1];
-      successFn();
-      window.location = url;
+      //successFn();
+      setTimeout(function(){
+        window.location = url;
+      },10);
     } else {
       console.error("Unknown platform");
     }
+    return false;
   }
   $rootScope.share = function (text, webUrl, imgUrl) {
     if (typeof text == 'object') {

@@ -143,6 +143,8 @@ angular.module('ilcomuneintasca', [
   }
   $rootScope.gotoSubpath = function (subpath) {
     //console.log('full subpath: '+$location.path()+subpath)
+    var actualpath=$location.path();
+    if (actualpath.length>0 && actualpath.charAt(actualpath.length-1)=='/' && subpath.charAt(0)=='/') subpath=subpath.substring(1);
     $location.path($location.path()+subpath);
   }
 
@@ -373,15 +375,6 @@ angular.module('ilcomuneintasca', [
         }
       }
     })
-    .state('app.page', {
-      url: "/page/:groupId/:menuId/:itemId",
-      views: {
-        'menuContent': {
-          templateUrl: "templates/page.html",
-          controller: "PageCtrl"
-        }
-      }
-    })
     .state('app.itempage', {
       url: "/page/:groupId/:itemId",
       views: {
@@ -391,8 +384,29 @@ angular.module('ilcomuneintasca', [
         }
       }
     })
+    .state('app.itemsons', {
+      url: "/page/:groupId/:itemId/sons/:sonscount",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/page.html",
+          controller: "PageCtrl"
+        }
+      },
+      data: {
+        sons: true
+      }
+    })
+    .state('app.page', {
+      url: "/page/:groupId/:menuId/:itemId",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/page.html",
+          controller: "PageCtrl"
+        }
+      }
+    })
     .state('app.sons', {
-      url: "/page/:groupId/:menuId/:itemId/sons",
+      url: "/page/:groupId/:menuId/:itemId/sons/:sonscount",
       views: {
         'menuContent': {
           templateUrl: "templates/page.html",

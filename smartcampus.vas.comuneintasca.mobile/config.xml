@@ -30,8 +30,8 @@
   <feature name="Keyboard">
     <param name="ios-package" value="IonicKeyboard" onload="true" />
   </feature>
+  <preference name="exit-on-suspend" value="false" />
   <preference name="detect-data-types" value="false" />
   <preference name="KeepRunning" value="true"/>
-  <!-- preference name="exit-on-suspend" value="false" / -->
   <!-- preference name="Orientation" value="portrait" / -->
 </widget>

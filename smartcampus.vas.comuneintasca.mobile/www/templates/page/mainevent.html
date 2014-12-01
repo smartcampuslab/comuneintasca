@@ -10,7 +10,7 @@
       <div class="comuni-html-description" ng-if="obj.contacts.email"><b>E-mail:</b> <a ng-click="email(obj.contacts.email)">{{obj.contacts.email}}</a></div>
       <div class="comuni-html-description" ng-if="obj.url"><b>Web:</b> <a ng-click="extLink(obj.url)">{{obj.url}}</a></div>
     </div>
-    <button ng-if="obj.sonscount>0" class="button button-full eventscount icon-right ion-chevron-down" ng-click="toggleSons()" data-off-ng-click="gotoSubpath('/sons')">{{ 'complex_events_found' | translate_plur:obj.sonscount }}</button>
+    <button ng-if="obj.sonscount>0" class="button button-full eventscount icon-right ion-chevron-right" data-off-ng-click="toggleSons()" ng-click="gotoSubpath('/sons/'+obj.sonscount)">{{ 'complex_events_found' | translate_plur:obj.sonscount }}</button>
     <div class="padding notop">
       <div class="comuni-html-description" compile="obj.description | translate"></div>
       <div class="comuni-html-description" compile="obj.info | translate"></div>

@@ -9,7 +9,7 @@
       <ion-item-divider ng-if="group.label" class="item item-divider" ng-attr-data-offset="{{calcGroupOffset($index)}}"> {{group.label}}</ion-item-divider>
       <ion-item ng-repeat="obj in group.results track by $index"
                 
-                ng-click="gotoSubpath(obj.id)" class="coll-item item-thumbnail-left">
+                href="{{obj.abslink}}" data-off-ng-click="gotoSubpath(obj.id)" class="coll-item item-thumbnail-left">
         <!-- comuni-img class="item-image comuni-item-image" gotdata="gotdata" sonscount="true"></comuni-img -->
         <div class="item-image comuni-item-image comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj,'list')}})">
           <div ng-if="obj.sonscount>0" class="dida"><span>{{obj.sonscount}}</span><i class="icon ion-ios7-flag-outline"></i>&nbsp;</div>

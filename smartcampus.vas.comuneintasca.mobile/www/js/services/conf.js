@@ -119,11 +119,11 @@ angular.module('ilcomuneintasca.services.conf', [])
       de: 'DRAFT Dateien ändern'
     },
     'settings_data_sync_draft_enabled': {
-      it: "Modalità di test e' abilitata.",
+      it: "Modalità di test abilitata.",
       en: 'Test mode enabled.',
     },
     'settings_data_sync_draft_disabled': {
-      it: "Modalità di test e' disabilitata.",
+      it: "Modalità di test disabilitata.",
       en: 'Test mode disabled.',
     },
     'settings_data': {
@@ -644,6 +644,7 @@ angular.module('ilcomuneintasca.services.conf', [])
           //overrides for specific query classifications
           "classifications":{
             "_none_":{ "filter":{ "default":"today" } },
+            "_parent_":{ "filter":{ "default":null } },
             "_complex":{ "filter":{ "default":null } }
           }
         },

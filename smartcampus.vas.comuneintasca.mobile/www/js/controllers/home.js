@@ -70,9 +70,10 @@ angular.module('ilcomuneintasca.controllers.home', [])
         //console.log('highlights.length: '+items.length);
         var highlights = [];
 
-        var hlVerifiedObjects = [];
-        var hlVerificationsPromises = [];
-        for (hli=0; hli<items.length; hli++) {
+        var hlVerifiedObjects = [], 
+            hlVerificationsPromises = [],
+            MAX=Config.getHomeHighlightsMax();
+        for (hli=0; hli<items.length && hli<MAX; hli++) {
           var item=items[hli];
           if (item.objectIds) {
             //console.log('adding items "'+item.objectIds+'"...');

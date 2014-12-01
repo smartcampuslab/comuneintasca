@@ -14,6 +14,7 @@ angular.module('ilcomuneintasca.services.conf', [])
   
   var SYNC_WEBAPP='comuneintasca-multi';
   var SCHEMA_VERSION=110;
+  var HOME_HIGHLIGHTS_MAX=6;
   var SYNC_HOST="tn";
   if (DEVELOPMENT) SYNC_HOST="vas-dev";
   var LOCAL_PROFILE="opencontent";
@@ -759,6 +760,9 @@ angular.module('ilcomuneintasca.services.conf', [])
     },
     schemaVersion: function () {
       return SCHEMA_VERSION;
+    },
+    getHomeHighlightsMax: function () {
+      return HOME_HIGHLIGHTS_MAX;
     },
     syncUrl: function () {
 //      return 'https://'+SYNC_HOST+'.smartcampuslab.it/comuneintasca/sync';

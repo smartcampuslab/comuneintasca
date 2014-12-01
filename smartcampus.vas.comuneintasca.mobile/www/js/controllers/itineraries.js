@@ -91,13 +91,16 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
       $scope.isObjFavorite=res; 
     });
     
+    //console.log('data.steps.join(): '+data.steps.join());
     $scope.gotstepsdata=DatiDB.get('poi', data.steps.join()).then(function (luoghi) {
       //console.log('luoghi: '+luoghi);
       $scope.location = luoghi[0].location;
       var tappe=[];
       angular.forEach(luoghi, function (luogo, idx) {
         //console.log('luogo#'+idx+': '+luogo.id);
-        tappe[idx] = luogo;
+        var realidx=data.steps.indexOf(luogo.id);
+        //console.log('data.steps.indexOf(luogo.id): '+realidx);
+        tappe[realidx] = luogo;
       });
       $scope.tappe = tappe;
       return luoghi;
@@ -315,6 +318,7 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
         });
       });
 
+      //console.log('data.steps.join(): '+data.steps.join());
       DatiDB.get('poi', data.steps.join()).then(function (luoghi) {
         var models=[];
         if ($rootScope.myPosition) {
@@ -333,14 +337,15 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
             m.setInfoBubble(luogo.title.it);
             map2.addMarker(m);*/
 
-            luogo.step = idx + 1;
+            var realidx=data.steps.indexOf(luogo.id);
+            
+            luogo.step = realidx + 1;
             luogo.key = luogo.id;
             luogo.latitude = luogo.location[0];
             luogo.longitude = luogo.location[1];
             luogo.icon = 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=' + (luogo.step) + '|2975A7|FFFFFF';
 
-            //console.log('data.steps.indexOf(luogo.id): '+data.steps.indexOf(luogo.id));
-            models.push(luogo);
+            models[realidx]=luogo;
           } else {
             console.log('WARNING: no location for "' + luogo.title.it + '"');
           }

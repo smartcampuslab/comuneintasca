@@ -84,6 +84,14 @@ public class DataExtractor {
 			if (bt.hasParentEventId()) {
 				no.setParentEventId(bt.getParentEventId());
 			}
+			
+			Map<String, String> contacts = new HashMap<String, String>();
+			if (bt.hasEmail())
+				contacts.put("email", bt.getEmail());
+			if (bt.hasPhone())
+				contacts.put("phone", bt.getPhone());
+			no.setContacts(contacts);
+
 			no.setShortTitle(Collections.singletonMap("it", bt.getShortTitle()));
 			no.setSource("opendata.trento");
 			no.setSpecial(bt.getSpecial());

@@ -1,10 +1,10 @@
 {
   "id": null,
-  "updateTime": 1417101459536,
-  "version": 40109,
+  "updateTime": 1417445559824,
+  "version": 43305,
   "user": null,
   "appId": "TrentoInTasca",
-  "lastModified": 1417101349000,
+  "lastModified": 1417445390000,
   "localId": null,
   "highlights": [
     {
@@ -16,9 +16,9 @@
       },
       "description": null,
       "image": {
-        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/natale-a-trento/8554658-3-ita-IT/Natale-a-Trento.jpg",
-        "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/natale-a-trento/8554663-4-eng-GB/Christmas-in-Trento.jpg",
-        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/natale-a-trento/8554668-5-ger-DE/Weihnachtsstadt-in-Trient.jpg"
+        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/natale-a-trento/8554658-8-ita-IT/Natale-a-Trento.jpg",
+        "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/natale-a-trento/8554663-9-eng-GB/Christmas-in-Trento.jpg",
+        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/natale-a-trento/8554668-10-ger-DE/Weihnachtsstadt-in-Trient.jpg"
       },
       "objectIds": [
         "event.major.11"

@@ -26,6 +26,7 @@
     </div>
     <button ng-if="obj.sonscount>0" class="button button-full eventscount icon-right ion-chevron-right" data-off-ng-click="toggleSons()" ng-click="gotoSubpath('/sons')">{{ 'complex_events_found' | translate_plur:obj.sonscount }}</button>
     <div class="padding notop">
+      <div class="comuni-html-description subtitle" compile="obj.subtitle | translate"></div>
       <div class="comuni-html-description" compile="obj.description | translate"></div>
       <div class="comuni-html-description" compile="obj.info | translate"></div>
     </div>

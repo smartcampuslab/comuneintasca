@@ -24,6 +24,8 @@ message Evento {
  optional string eventType = 21;
  repeated string topics = 22;
  repeated Organization organizations = 23;
+ optional string email = 24;
+ optional string phone = 25;
  }
  
 message Organization {

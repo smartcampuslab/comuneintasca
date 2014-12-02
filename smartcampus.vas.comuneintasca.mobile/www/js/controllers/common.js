@@ -204,8 +204,8 @@ angular.module('ilcomuneintasca.controllers.common', [])
 .controller('PageCtrl', function ($scope, $rootScope, $state, $stateParams, $filter, $location, $window, $timeout, Profiling, Config, DatiDB, Files, ListToolbox, DateUtility, GeoLocate, MapHelper, $ionicScrollDelegate, $ionicViewService, $ionicLoading) {
   Profiling.start('page');
 
-  $scope.results=[];
-  $scope.resultsGroups=[];
+  //$scope.results=[];
+  //$scope.resultsGroups=[];
   
   $scope._ = _;
   $scope.getLocaleDateString = function (time) {
@@ -223,8 +223,8 @@ angular.module('ilcomuneintasca.controllers.common', [])
     $scope.scrolldata = [];
     $scope.groupscrolldata = [];
     $scope.results = [];
+    $scope.resultsGroups=[];
     //$scope.resultsAll = [];
-    //$scope.resultsGroups=[];
     Files.queuedFilesCancel();
   });
 
@@ -613,8 +613,8 @@ angular.module('ilcomuneintasca.controllers.common', [])
             }
           } else {
             $scope.results = [];
-            $scope.resultsAll = [];
             $scope.resultsGroups = [];
+            $scope.resultsAll = [];
           }
           $ionicLoading.hide();
 

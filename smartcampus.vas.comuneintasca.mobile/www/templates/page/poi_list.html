@@ -1,5 +1,5 @@
 <ion-header-bar class="bar-subheader item item-divider" align="center">
-  {{'list_results' | translate_plur:results.length}}
+  <span ng-if="!scrolldata">{{'loading' | translate }}</span><span ng-if="scrolldata">{{'list_results' | translate_plur:results.length}}</span>
 </ion-header-bar>
 <ion-content class="has-header" delegate-handle="listScroll">
   <ion-list>

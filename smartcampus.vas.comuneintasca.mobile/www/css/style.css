@@ -381,7 +381,7 @@ ion-side-menu .list .item { background-color: transparent;color:#fff;border-colo
 }
 #credits .row.title {
   margin-top:20px;
-  margin-bottom:0px;
+  margin-bottom:10px;
 }
 #credits .row.last {
   margin-bottom:40px;

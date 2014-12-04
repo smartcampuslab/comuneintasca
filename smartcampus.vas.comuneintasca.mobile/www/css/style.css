@@ -494,3 +494,6 @@ comuni-img, .comuni-item-image { position: relative; }
 ion-list > .list { padding-top:1;padding-bottom:1; }
 .sticky-label { margin-top:1px;width:100%;z-index:1;position:absolute;top:74px; color: #2975a7; }
 
+.popup .appicon { position:absolute;top:8px;left:8px; width:32px;margin-bottom }
+.popup-head { background-color:#2975a7; }
+.popup-head h3 { padding-left:28px; color:#fff; }

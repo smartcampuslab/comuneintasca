@@ -29,7 +29,16 @@ angular.module('ilcomuneintasca', [
 
 .run(function ($ionicPlatform, $rootScope, $state, $filter, $location, Config, DatiDB, Files, GeoLocate, $ionicPopup) {
   $rootScope.mapsReady=false;
-  
+  $rootScope.reallyexitapp=function(){
+    $ionicPopup.confirm({
+      title: $filter('translate')('exitapp_title'),
+      template: $filter('translate')('exitapp_template'),
+      cancelText: $filter('translate')('cancel'),
+      okText: $filter('translate')('exitapp_ok'),
+    }).then(function(reallyExit) {
+      if (reallyExit) ionic.Platform.exitApp();
+    });
+  };
   $rootScope.locationWatchID = undefined;
   //  ionic.Platform.fullScreen(false,true);
   if (typeof (Number.prototype.toRad) === "undefined") {
@@ -55,14 +64,7 @@ angular.module('ilcomuneintasca', [
     $ionicPlatform.registerBackButtonAction(function (event) {
       if($state.current.name=="app.home"){
         //console.log('going back in home...');
-        $ionicPopup.confirm({
-          title: $filter('translate')('exitapp_title'),
-          template: $filter('translate')('exitapp_template'),
-          cancelText: $filter('translate')('cancel'),
-          okText: $filter('translate')('exitapp_ok'),
-        }).then(function(reallyExit) {
-          if (reallyExit) ionic.Platform.exitApp();
-        });
+        $rootScope.reallyexitapp();
       } else {
         navigator.app.backHistory();
       }

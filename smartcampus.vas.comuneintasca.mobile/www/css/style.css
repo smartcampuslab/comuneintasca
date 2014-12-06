@@ -496,4 +496,6 @@ ion-list > .list { padding-top:1;padding-bottom:1; }
 
 .popup .appicon { position:absolute;top:8px;left:8px; width:32px;margin-bottom }
 .popup-head { background-color:#2975a7; }
-.popup-head h3 { padding-left:28px; color:#fff; }
+.popup-title, .popup-sub-title { color:#fff; }
+
+.popup-title.exit h3 { padding-left:28px; }

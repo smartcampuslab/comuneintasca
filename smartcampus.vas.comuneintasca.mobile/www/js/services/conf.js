@@ -383,7 +383,7 @@ angular.module('ilcomuneintasca.services.conf', [])
       de: null
     }
   };
-  var appicon='<img class="appicon" src="img/icon.png" />';
+  var appicon=''; //<img class="appicon" src="img/icon.png" />';
   keys.exitapp_title.it=appicon + ' ' + cityName.it + ' - ' + keys.credits_app.it;
   keys.exitapp_title.en=appicon + ' ' + cityName.en + ' - ' + keys.credits_app.en;
   keys.exitapp_title.de=appicon + ' ' + cityName.de + ' - ' + keys.credits_app.de;

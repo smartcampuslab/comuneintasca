@@ -195,6 +195,71 @@ angular.module('ilcomuneintasca.services.fs', [])
         //console.log('no queued[#2] files to cancel...');
       }
     },
+    deleteall: function () {
+      var deleted = $q.defer();
+      filesystem.then(function (mainDir) {
+        if (ionic.Platform.isWebView()) {
+					console.log('deleteall() on mainDir: ' + mainDir.toURL());
+
+          var deletingOverlay = $ionicLoading.show({
+            template: $filter('translate')(Config.keys()['cleaning']),
+            duration: Config.fileCleanupOverlayTimeoutMillis()
+          });
+
+          var allTotalSizesDeferreds = {};
+          var allTotalSizesPromises = {};
+          var allFilesMetadata = [];
+          var totalSize=0;
+          var dirReader=mainDir.createReader()
+
+          var toArray=function(list){ return Array.prototype.slice.call(list || [], 0); };
+          // we'll keep calling readEntries() until no more results are returned (https://developer.mozilla.org/en-US/docs/Web/API/DirectoryReader#readEntries)
+          var readAllEntries = function() {
+            dirReader.readEntries(function(results) {
+              if (!results.length) {
+                console.log('data dir reading done: done deleting all files');
+              } else {
+                console.log('reading data dir: '+results.length+' entries');
+                for (i=0; i<results.length; i++) {
+                  entry=results[i];
+                  if (entry.isDirectory) {
+                    console.log('Directory: ' + entry.nativeURL);
+                  } else if (entry.isFile) {
+                    var fileURI=entry.nativeURL;
+                    console.log('File: ' + fileURI);
+                    //window.resolveLocalFileSystemURL(md.uri, function(fileEntry) {
+                      entry.remove(function(obj){
+                        console.log('file deleted: '+JSON.stringify(obj));
+                      },function(){
+                        console.log('ERROR: cannot delete file!');
+                      });
+                    //});
+                  }
+                }
+                readAllEntries();
+              }
+              $ionicLoading.hide();
+              Profiling._do('fsdeleteall');
+              deleted.resolve(mainDir);
+            }, function() {
+              console.log('error reading data dir');
+              $ionicLoading.hide();
+              Profiling._do('fsdeleteall');
+              deleted.reject(mainDir);
+            });
+          };
+          readAllEntries();
+        } else {
+          console.log('fsdeleteall from browser: nothing to do!');
+          deleted.resolve(mainDir);
+        }
+      },function(err){
+        $ionicLoading.hide();
+        //console.log('fs deleteall error!');
+        deleted.reject(mainDir);
+      });
+      return deleted.promise;
+    },
     cleanup: function () {
       //console.log('cleanup()...');
       var cleaned = $q.defer();

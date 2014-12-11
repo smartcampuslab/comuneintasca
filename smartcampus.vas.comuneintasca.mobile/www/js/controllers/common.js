@@ -50,7 +50,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
   $scope.fsCleanup = function () {
     console.log('clean!');
     localStorage.lastFileCleanup = -1;
-    Files.cleanup().then(function () {
+    Files.deleteall().then(function () {
       console.log('fs cleanup completed!');
       $ionicPopup.alert({
         title: $filter('translate')('settings_data_clean'),

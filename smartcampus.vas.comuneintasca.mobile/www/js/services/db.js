@@ -486,12 +486,7 @@ angular.module('ilcomuneintasca.services.db', [])
                     angular.forEach(itemsToInsert, function (rowData, rowIdx) {
                       tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [rowData[0]], function (tx, res) { //success callback
                         tx.executeSql('INSERT INTO ContentObjects (id, objid, parentid, version, type, category, classification, classification2, classification3, data, lat, lon, fromTime, toTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', rowData, function (tx, res) { //success callback
-                          //if (rowData[4].indexOf('.ItineraryObject')!=-1) {
-
-                          console.log('inserted obj ('+rowData[4]+') with id: ' + rowData[0]);
-                          //console.log('inserted obj: ' + JSON.stringify(rowData));
-
-                          //}
+                          //console.log('inserted obj ('+rowData[4]+') with id: ' + rowData[0]);
                         }, function (e) { //error callback
                           console.log('unable to insert obj with id ' + rowData[0] + ': ' + e.message);
                         });
@@ -515,7 +510,7 @@ angular.module('ilcomuneintasca.services.db', [])
                         angular.forEach(deletions, function (item, idx) {
                           //console.log('deleting obj with id: ' + item);
                           tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [item], function (tx, res) { //success callback
-                            console.log('deleted obj with id: ' + item);
+                            //console.log('deleted obj with id: ' + item);
                           }, function (e) { //error callback
                             console.log('unable to delete obj with id ' + item + ': ' + e.message);
                           });

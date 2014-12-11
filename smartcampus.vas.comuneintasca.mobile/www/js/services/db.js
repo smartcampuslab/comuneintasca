@@ -150,15 +150,13 @@ angular.module('ilcomuneintasca.services.db', [])
     url: 'data/data.json',
     remote: false
   };
-
-  var remoteSyncURL = Config.syncUrl()+'?since=';
   var remoteSyncOptions = {
     method: 'POST',
-    url: remoteSyncURL + currentDbVersion,
+    url: Config.syncUrl() + currentDbVersion,
     data: '{"updated":{}}',
     remote: true
   };
-  //console.log('remoteSyncOptions.url: '+remoteSyncOptions.url);
+  console.log('remoteSyncOptions.url: '+remoteSyncOptions.url);
 
   var dbObj;
 
@@ -337,7 +335,7 @@ angular.module('ilcomuneintasca.services.db', [])
             //} else if (!currentSyncOptions || currentSyncOptions.remote) {
             } else {
               currentSyncOptions = remoteSyncOptions;
-              currentSyncOptions.url = remoteSyncURL + currentDbVersion;
+              currentSyncOptions.url = Config.syncUrl() + currentDbVersion;
             }
             console.log('currentSyncOptions: ' + JSON.stringify(currentSyncOptions));
 

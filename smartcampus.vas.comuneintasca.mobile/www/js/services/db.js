@@ -137,8 +137,7 @@ angular.module('ilcomuneintasca.services.db', [])
   if (localStorage.currentSchemaVersion) currentSchemaVersion = Number(localStorage.currentSchemaVersion);
   //console.log('currentSchemaVersion: ' + currentSchemaVersion);
 
-  var currentDbVersion = 0,
-    lastSynced = -1;
+  var currentDbVersion = 0, lastSynced = -1;
   if (currentSchemaVersion == SCHEMA_VERSION) {
     if (localStorage.currentDbVersion) currentDbVersion = Number(localStorage.currentDbVersion);
     if (localStorage.lastSynced) lastSynced = Number(localStorage.lastSynced);

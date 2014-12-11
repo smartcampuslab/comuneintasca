@@ -774,9 +774,10 @@ angular.module('ilcomuneintasca.services.conf', [])
       return HOME_HIGHLIGHTS_MAX;
     },
     syncUrl: function () {
-//      return 'https://'+SYNC_HOST+'.smartcampuslab.it/comuneintasca/sync';
-      var SYNC_MODE = $rootScope.TEST_CONNECTION ? 'sync' : 'syncdraft';
-      return 'https://'+SYNC_HOST+'.smartcampuslab.it/'+SYNC_WEBAPP+'/'+SYNC_MODE+'/'+WEBAPP_MULTI;
+      //console.log('$rootScope.TEST_CONNECTION: '+(!!$rootScope.TEST_CONNECTION));
+      var SYNC_MODE = (!!$rootScope.TEST_CONNECTION ? 'syncdraft' : 'sync');
+      //console.log('SYNC_MODE: '+SYNC_MODE);
+      return 'https://'+SYNC_HOST+'.smartcommunitylab.it/'+SYNC_WEBAPP+'/'+SYNC_MODE+'/'+WEBAPP_MULTI+'?since=';
     },
     syncTimeoutSeconds: function () {
       //return 60 * 60; /* 60 times 60 seconds = EVERY HOUR */

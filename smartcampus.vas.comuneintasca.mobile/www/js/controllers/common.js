@@ -312,10 +312,10 @@ angular.module('ilcomuneintasca.controllers.common', [])
     var dbtypeClassCustomisations = {};
     if (dbtypeCustomisations.classifications && dbtypeCustomisations.classifications[dbtypeClass]) dbtypeClassCustomisations = dbtypeCustomisations.classifications[dbtypeClass];
 
-            /* HANDLE MANY EVENTS: IF TOO MANY EVENTS, FORCE WEEK FILTER */
-        if (dbtypeClass == '_parent_' && sg_query_type=='event' && sg.query.sonscount > 50) {
-          dbtypeClassCustomisations = { "filter":{ "default":'week' } };
-        }
+    /* HANDLE MANY EVENTS: IF TOO MANY EVENTS, FORCE WEEK FILTER */
+    if (dbtypeClass == '_parent_' && sg_query_type=='event' && sg.query.sonscount > 50) {
+      dbtypeClassCustomisations = { "filter":{ "default":'week' } };
+    }
 
     $scope.template = 'templates/page/' + (sg.view || dbtypeClassCustomisations.view || sg_query_type + '_list') + '.html';
     //console.log('$scope.template: '+$scope.template);

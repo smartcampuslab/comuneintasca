@@ -10,10 +10,10 @@ angular.module('ilcomuneintasca.services.conf', [])
   // $rootScope.DEV=true;
 
   var APP_VERSION='3.1.0';
-  var APP_BUILD='RC1';
+  var APP_BUILD='RC2';
   
   var SYNC_WEBAPP='comuneintasca-multi';
-  var SCHEMA_VERSION=110;
+  var SCHEMA_VERSION=111;
   var HOME_HIGHLIGHTS_MAX=6;
   var SYNC_HOST="tn";
   if (DEVELOPMENT) SYNC_HOST="vas-dev";

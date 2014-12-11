@@ -1,6 +1,6 @@
 angular.module('ilcomuneintasca.services.db', [])
 
-.factory('DatiDB', function ($q, $http, $rootScope, $filter, $timeout, Config, Files, Profiling, GeoLocate, $ionicLoading) {
+.factory('DatiDB', function ($q, $http, $rootScope, $filter, $timeout, $window, Config, Files, Profiling, GeoLocate, $ionicLoading) {
   var SCHEMA_VERSION = Config.schemaVersion();
   var types = Config.contentTypesList();
 
@@ -282,19 +282,43 @@ angular.module('ilcomuneintasca.services.db', [])
         console.log('DB not resetted.');
       });
 		},
-		fullreset: function () { 
-			localStorage.currentDbVersion=currentDbVersion=0;
+		fullreset: function (cb) { 
+			localStorage.currentDbVersion=0;
+      localStorage.currentSchemaVersion=0;
       localStorage.cachedProfile=null;
-			return this.reset().then(function(){
-        console.log('DB FULL-RESET completed.');
-      });
+      if (cb && typeof cb['then']=='function') {
+        cb.then(function(){
+          console.log('DB FULL-RESET completed #1.');
+          $window.location.reload();
+        });
+      } else {
+        if (cb && typeof cb=='function') cb();
+        var loading = $ionicLoading.show({
+          template: $filter('translate')(Config.keys()['loading']),
+          duration: Config.loadingOverlayTimeoutMillis()
+        });
+        console.log('DB FULL-RESET completed #2.');
+        $window.location.reload();
+      }
 		},
-		remotereset: function () { 
-			localStorage.currentDbVersion=currentDbVersion=1;
+		remotereset: function (cb) { 
+			localStorage.currentDbVersion=1;
+      localStorage.currentSchemaVersion=0;
       localStorage.cachedProfile=null;
-			return this.reset().then(function(){
-        console.log('DB REMOTE-RESET completed.');
-      });
+      if (cb && typeof cb['then']=='function') {
+        cb.then(function(){
+          console.log('DB REMOTE-RESET completed #1.');
+          $window.location.reload();
+        });
+      } else {
+        if (cb && typeof cb=='function') cb();
+        var loading = $ionicLoading.show({
+          template: $filter('translate')(Config.keys()['loading']),
+          duration: Config.loadingOverlayTimeoutMillis()
+        });
+        console.log('DB REMOTE-RESET completed #2.');
+        $window.location.reload();
+      }
 		},
     sync: function () {
       if (syncinprogress!=null) {

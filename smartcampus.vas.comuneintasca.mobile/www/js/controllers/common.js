@@ -78,24 +78,21 @@ angular.module('ilcomuneintasca.controllers.common', [])
   };
   $scope.dbFullReset = function () {
     console.log('reset!');
-    DatiDB.fullreset().then(function () {
-      console.log('full db reset completed!');
+    DatiDB.fullreset(
       $ionicPopup.alert({
         title: 'RESET',
         template: 'done'
       }).then(function(res) {
         console.log('full db reset acknowledged!');
         $scope.settings.hide();
-        $window.location.reload();
-      });
-    });
+      })
+    );
   };
   $scope.dbRemoteReset = function () {
     console.log('remote reset!');
-    DatiDB.remotereset().then(function () {
+    DatiDB.remotereset(function () {
       console.log('remote db reset completed!');
       $scope.settings.hide();
-      $window.location.reload();
     });
   };
 

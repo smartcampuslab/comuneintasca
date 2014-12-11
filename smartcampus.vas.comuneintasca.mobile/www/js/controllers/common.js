@@ -305,7 +305,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
     }
     var sg_query_type = sg.query.type || 'content';
     if (sg_query_type.indexOf('it.smartcommunitylab.comuneintasca.core.model.')==0) sg_query_type=Config.contentKeyFromDbType(sg_query_type);
-    console.log('sg_query_type: '+sg_query_type);
+    //console.log('sg_query_type: '+sg_query_type);
 
     var dbtypeCustomisations = Config.getProfileExtensions()[sg_query_type] || {};
     var dbtypeClass = sg.query.classification || (sg.query.parent?'_parent_':'_none_');
@@ -729,9 +729,9 @@ angular.module('ilcomuneintasca.controllers.common', [])
       }
     });
   } else {    
-    console.log('$stateParams.groupId: '+$stateParams.groupId);
-    console.log('$stateParams.menuId: '+$stateParams.menuId);
-    console.log('$stateParams.itemId: '+$stateParams.itemId);
+    //console.log('$stateParams.groupId: '+$stateParams.groupId);
+    //console.log('$stateParams.menuId: '+$stateParams.menuId);
+    //console.log('$stateParams.itemId: '+$stateParams.itemId);
     Config.menuGroupSubgroup($stateParams.groupId, $stateParams.menuId||$stateParams.itemId).then(function (sg) {
       Profiling._do('page', 'menuGroupSubgroup found');
       if (!sg) {

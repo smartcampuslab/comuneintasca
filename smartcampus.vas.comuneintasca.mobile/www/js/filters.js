@@ -46,12 +46,15 @@ angular.module('ilcomuneintasca.filters', [])
     if (!input) {
       return '';
     } else {
+      if (debug) console.log('input.0: '+input);
       if (debug) console.log('input var type: ' + typeof input);
       if (typeof input == 'string') input = Config.keys()[input] || input;
       if (input[lang] && input[lang] != '') {
+        if (debug) console.log('input.1: '+JSON.stringify(input));
         return input[lang];
       } else {
         if (debug) console.log('input it: ' + (input.it || 'FALSY'));
+        if (debug) console.log('input.2: '+JSON.stringify(input));
         if (input.hasOwnProperty('it')) {
           return input.it || '';
         } else {

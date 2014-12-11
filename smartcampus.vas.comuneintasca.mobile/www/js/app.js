@@ -285,8 +285,7 @@ angular.module('ilcomuneintasca', [
 
   $rootScope.TEST_CONNECTION = (localStorage.TEST_CONNECTION+'')==='true' ? true : false;
   $rootScope.switchTestConnection = function() {
-      $rootScope.TEST_CONNECTION = !$rootScope.TEST_CONNECTION;
-      localStorage.TEST_CONNECTION = $rootScope.TEST_CONNECTION;
+    localStorage.TEST_CONNECTION = $rootScope.TEST_CONNECTION = !$rootScope.TEST_CONNECTION;
   }
   
   $rootScope.extOrderBySorter=function(input, params){

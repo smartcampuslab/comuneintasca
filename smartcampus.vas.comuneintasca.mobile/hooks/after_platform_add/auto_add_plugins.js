@@ -18,7 +18,7 @@ var pluginlist = [
   "org.apache.cordova.geolocation",
   "org.apache.cordova.splashscreen",
   "org.apache.cordova.network-information",
-  "org.apache.cordova.core.inappbrowser",
+  "org.apache.cordova.inappbrowser",
   "de.appplant.cordova.plugin.email-composer",
   "https://github.com/brodysoft/Cordova-SQLitePlugin.git",
   "https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git",

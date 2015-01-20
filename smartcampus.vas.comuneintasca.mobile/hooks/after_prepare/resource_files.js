@@ -64,7 +64,9 @@ var androidFilesToCopy = [{
 }];
 
 var iosDirsToCreate = [
-	'platforms/ios/'+NOME_COMUNE+' - Il Comune in Tasca/Resources/de.lproj', 'platforms/ios/'+NOME_COMUNE+' - Il Comune in Tasca/Resources/it.lproj'
+	'platforms/ios/'+NOME_COMUNE+' - Il Comune in Tasca/Resources/de.lproj', 
+	'platforms/ios/'+NOME_COMUNE+' - Il Comune in Tasca/Resources/en.lproj', 
+  'platforms/ios/'+NOME_COMUNE+' - Il Comune in Tasca/Resources/it.lproj'
 ];
 var iosFilesToCopy = [{
     "config/ticons/Resources/iphone/appicon-Small-40@2x.png": 

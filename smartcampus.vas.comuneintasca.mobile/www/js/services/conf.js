@@ -10,7 +10,7 @@ angular.module('ilcomuneintasca.services.conf', [])
   // $rootScope.DEV=true;
 
   var APP_VERSION='3.1.0';
-  var APP_BUILD='RC2';
+  var APP_BUILD='';
   
   var SYNC_WEBAPP='comuneintasca-multi';
   var SCHEMA_VERSION=111;

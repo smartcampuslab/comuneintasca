@@ -23,8 +23,8 @@ In main project "Build Phases" add MagicKit-iOS to target dependancies, libMagic
 
 On app target "Build settings" let flag "OTHER_LDFLAGS" inherit settings from base project and set "User Header Search Paths" to these two values:
 
-$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts
-$(BUILT_PRODUCTS_DIR)
+>$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts
+>$(BUILT_PRODUCTS_DIR)
 
 (taken from http://stackoverflow.com/questions/5543854/xcode-4-cant-locate-public-header-files-from-static-library-dependency)
 

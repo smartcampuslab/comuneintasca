@@ -7,21 +7,26 @@ http://ticons.fokkezb.nl
 
 ##iOS
 
-###[FIXED IN VERSION 3.4.1+] How to make Cordova work on arm64 architectures (iphone5s)
-https://git-wip-us.apache.org/repos/asf?p=cordova-ios.git;h=82ce4f2
-(linked from JIRA thread: https://issues.apache.org/jira/browse/CB-6150)
+After installing cocoapods with 
 
-###Missing headers during archive
+>sudo gem install cocoapods
 
-As per instructions here:
+copy config/ios/xcode/Podfile into platforms/ios/ than, from within the latter folder, launch command
 
-http://stackoverflow.com/questions/5543854/xcode-4-cant-locate-public-header-files-from-static-library-dependency
+>pod install
 
-set "Public Headers Folder Path" of xcode subproject "Build Settings" of target "MagicKit-ios" to "MagicKit" and 
-set "Public Headers Folder Path" of xcode subproject "Build Settings" of target "CordovaLib" to "Cordova". Then go to "Build Settings" panel of main Xcode project and set "User Header Search Paths" to these two values:
+From now on always open .xcworkspacefile (instead of normal xcode project)
+
+Unzip file config/ios/xcode/MagicKit-150120.zip inside xcode platforms/ios/ and drag-and-drop subproject file onto app main project (within workspace, remember!).
+
+In main project "Build Phases" add MagicKit-iOS to target dependancies, libMagicKit-iOS.a to "Link Binary with libraries" along with libz.dylib
+
+On app target "Build settings" let flag "OTHER_LDFLAGS" inherit settings from base project and set "User Header Search Paths" to these two values:
 
 $(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts
 $(BUILT_PRODUCTS_DIR)
+
+(taken from http://stackoverflow.com/questions/5543854/xcode-4-cant-locate-public-header-files-from-static-library-dependency)
 
 
 ###Localized splash screen
@@ -96,3 +101,8 @@ must become
 >// Extra for SQLCipher:
 >// const char *key = [@"your_key_here" UTF8String];
 >// if(key != NULL) sqlite3_key(db, key, strlen(key));
+
+###[FIXED IN VERSION 3.4.1+] How to make Cordova work on arm64 architectures (iphone5s)
+https://git-wip-us.apache.org/repos/asf?p=cordova-ios.git;h=82ce4f2
+(linked from JIRA thread: https://issues.apache.org/jira/browse/CB-6150)
+

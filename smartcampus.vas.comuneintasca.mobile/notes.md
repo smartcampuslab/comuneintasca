@@ -19,6 +19,8 @@ From now on always open .xcworkspacefile (instead of normal xcode project)
 
 Unzip file config/ios/xcode/MagicKit-150120.zip inside xcode platforms/ios/ and drag-and-drop subproject file onto app main project (within workspace, remember!).
 
+Drag and drop into app xcode project also "magic.gpc" file that can be found inside "MagicKit" folder (cfr last step). Flag "copy items if needed" and appropriate target inside "Add to targets" checkboxes list.
+
 In main project "Build Phases" add MagicKit-iOS to target dependancies, libMagicKit-iOS.a to "Link Binary with libraries" along with libz.dylib
 
 On app target "Build settings" let flag "OTHER_LDFLAGS" inherit settings from base project and set "User Header Search Paths" to these two values:

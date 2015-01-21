@@ -30,9 +30,9 @@ On app target "Build settings" let flag "OTHER_LDFLAGS" inherit settings from ba
 
 (taken from http://stackoverflow.com/questions/5543854/xcode-4-cant-locate-public-header-files-from-static-library-dependency)
 
-Drag and drop Finder folders "en.lproj", "it.lproj" and "de.lproj" inside Resources folder onto project "Resources" group.
+Drag and drop Finder folders "en.lproj", "it.lproj" and "de.lproj" inside Resources folder onto project "Resources" group (be sure that appropriate target inside "Add to targets" checkboxes list is selected).
 
-Drag and drop all splash images  inside "Resources/splash" folder onto project "Resources/splash" group.
+Drag and drop all splash images inside "Resources/splash" folder onto project "Resources/splash" group (be sure that appropriate target inside "Add to targets" checkboxes list is selected).
 
 
 ###Localized splash screen

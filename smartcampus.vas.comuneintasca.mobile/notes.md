@@ -25,10 +25,14 @@ In main project "Build Phases" add MagicKit-iOS to target dependancies, libMagic
 
 On app target "Build settings" let flag "OTHER_LDFLAGS" inherit settings from base project and set "User Header Search Paths" to these two values:
 
->$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts
->$(BUILT_PRODUCTS_DIR)
+    $(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts
+    $(BUILT_PRODUCTS_DIR)
 
 (taken from http://stackoverflow.com/questions/5543854/xcode-4-cant-locate-public-header-files-from-static-library-dependency)
+
+Drag and drop Finder folders "en.lproj", "it.lproj" and "de.lproj" inside Resources folder onto project "Resources" group.
+
+Drag and drop all splash images  inside "Resources/splash" folder onto project "Resources/splash" group.
 
 
 ###Localized splash screen

@@ -1,87 +1,96 @@
 angular.module('ilcomuneintasca.filters', [])
 
-.filter('translate', function ($rootScope) {
-  lang = $rootScope.lang;
-  return function (input) {
-    // console.log('translate: lang='+lang);
+.filter('ellipsis', function ($rootScope) {
+  return function (input, limit) {
     if (!input) {
       return '';
     } else {
-      if (input[lang] && input[lang] != '') {
-        return input[lang];
+      if (input.length < limit) {
+        return input;
+      } else if (limit < 4) {
+        return input.substring(0, limit);
       } else {
-        return input.it || '';
+        return input.substring(0, limit - 3) + '...';
       }
     }
   };
 })
 
-.filter('extOrderBy', function ($rootScope, $filter, GeoLocate) {
-  return function (input, params) {
-    if (!input || !params || !params.ordering) return input;
+.filter('cleanMenuID', function ($filter) {
+  return function (input) {
+    if (!input) return '';
+    if (input.indexOf('csvimport_') == 0) {
+      return input.replace(/[^_]+_([^_]+)_.*/gi, '$1').toLowerCase().replace(/\s+/gi, '_');
+    } else {
+      return input;
+    }
+  }
+})
 
-    var order = params.ordering;
-    var filter = params.searchText;
+.filter('addrclean', function ($filter) {
+  return function (input) {
+    addr = $filter('translate')(input);
+    if (!addr) {
+      return '';
+    } else {
+      addr = addr.replace(/38\d\d\d/i, '');
+      return addr;
+    }
+  }
+})
 
-    var arr = [];
-    if (filter && filter.length > 0) {
-      var f = filter.toLowerCase();
-      for (var i = 0; i < input.length; i++) {
-        if ($filter('translate')(input[i].title).toLowerCase().indexOf(f) >= 0) {
-          arr.push(input[i]);
+.filter('translate', function ($rootScope, Config) {
+  return function (input, debug) {
+    lang = $rootScope.lang;
+    if (debug) console.log('translate: lang=' + lang);
+    if (!input) {
+      return '';
+    } else {
+      if (debug) console.log('input.0: '+input);
+      if (debug) console.log('input var type: ' + typeof input);
+      if (typeof input == 'string') input = Config.keys()[input] || input;
+      if (input[lang] && input[lang] != '') {
+        if (debug) console.log('input.1: '+JSON.stringify(input));
+        return input[lang];
+      } else {
+        if (debug) console.log('input it: ' + (input.it || 'FALSY'));
+        if (debug) console.log('input.2: '+JSON.stringify(input));
+        if (input.hasOwnProperty('it')) {
+          return input.it || '';
+        } else {
+          return (typeof input == 'string' ? input : '') || '';
         }
       }
-    } else {
-      arr = input.slice(0);
     }
+  };
+})
 
-    arr.sort(function (a, b) {
-      if ('A-Z' == order) {
-        var a1 = $filter('translate')(a.title);
-        var b1 = $filter('translate')(b.title);
-        var dif = a1.localeCompare(b1);
-        return dif;
+.filter('translate_plur', function ($filter) {
+  return function (input, count) {
+    if (typeof count == 'object') {
+      var countAll = 0;
+      for (g in count) {
+        //console.log('count[g].results.length: '+ (count[g].results?count[g].results.length:'NULL'));
+        if (count[g].results) countAll += count[g].results.length;
       }
-      if ('Z-A' == order) {
-        var a1 = $filter('translate')(a.title);
-        var b1 = $filter('translate')(b.title);
-        var dif = b1.localeCompare(a1);
-        return dif;
+      count = countAll;
+    }
+    if (typeof input == 'string' && typeof count == 'number') {
+      if (count == 0) {
+        return $filter('translate')(input + '_none');
+      } else if (count == 1) {
+        return $filter('translate')(input + '_single');
+      } else {
+        return count + ' ' + $filter('translate')(input + '_plural');
       }
-      if ('Date' == order) {
-        var a1 = a.fromTime ? a.fromTime : a.fromDate;
-        var b1 = b.fromTime ? b.fromTime : b.fromDate;
-        var dif = b1 - a1;
-        return dif;
-      }
-      if ('DateFrom' == order) {
-        var a1 = a.fromTime ? a.fromTime : a.fromDate;
-        var b1 = b.fromTime ? b.fromTime : b.fromDate;
-        var dif = a1 - b1;
-        return dif;
-      }
-      if ('DateTo' == order) {
-        var a1 = a.toTime ? a.toTime : a.toDate;
-        var b1 = b.toTime ? b.toTime : b.toDate;
-        var dif = a1 - b1;
-        return dif;
-      }
+    } else {
+      return $filter('translate')(input);
+    }
+  };
+})
 
-      if ('Distance' == order) {
-        var a1 = a.distance;
-        var b1 = b.distance;
-        return a1 - b1;
-      }
-      if ('Stars' == order) {
-        var a1 = a.stars || 0;
-        var b1 = b.stars || 0;
-        return b1 - a1;
-      }
-      return 0;
-    });
-
-    return arr;
-  }
+.filter('extOrderBy', function ($rootScope) {
+  return $rootScope.extOrderBySorter;
 })
 
 .filter("nl2br", function ($filter) {

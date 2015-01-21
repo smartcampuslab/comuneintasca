@@ -1,45 +1,47 @@
 <div class="modal" id="credits">
-  <ion-nav-buttons side="right">
-  </ion-nav-buttons>
   <ion-header-bar>
-    <h1 class="title">{{'credits_title' | i18n}}</h1>
+    <h1 class="title">{{'credits_title' | translate}}</h1>
     <button class="button button-icon icon ion-ios7-close-empty" ng-click="credits.hide()"></button>
   </ion-header-bar>
   <ion-content>
     <div class="row">
       <div class="col">
         <span class="h2 h2-credits">Trento</span><br/>
-        <span class="h2 h2-credits">{{'credits_app' | i18n | nl2br}}</span><br/>
-        <span class="h4 h4-credits">{{'credits_appfamily' | i18n}}</span>
+        <span class="h2 h2-credits">{{'credits_app' | translate | nl2br}}</span><br/>
+        <span class="h4 h4-credits">{{'credits_appfamily' | translate}}</span>
       </div>
     </div>
 
-    <div class="row" style="margin-top: 30px;">
-      <div class="col"><span class="h4 credits-title">{{'credits_project' | i18n}}</span></div>
-    </div>
-
-    <div class="row" style="margin-top: 10px;">
-        <div class="col col-50" ng-click="extLink('http://www.fbk.eu')">
-          <img src="img/credits/fbk.png" width="40%"/>
-        </div>
-        <div class="col col-50 col-center" style="text-align:left" ng-click="extLink('http://www.smartcampuslab.it')">
-          <img src="img/credits/smart_campus_credits.png" width="60%" />
-        </div>  
-    </div>
-    <div class="row" style="margin-top: 10px;" ng-click="extLink('http://www.innovazione.comunitrentini.tn.it')">
-      <div class="col col-center"><img src="img/credits/consorzio_comuni_trentini.png" width="50%" /></div>
+    <div class="row version">
+      <div class="col" ng-bind-html="version"></div>
     </div>
     
-    <div class="row" style="margin-top: 20px;">
-      <div class="col"><span class="h4 credits-title">{{'credits_sponsored' | i18n}}</span></div>
-    </div>
-    <div class="row" style="margin-top: 10px;" ng-click="extLink('http://www.comune.trento.it')">
-      <div class="col col-center"><img src="img/credits/comune_trento.png" width="60%" /></div>
+    <div class="row title">
+      <div class="col"><span class="h4 credits-title">{{'credits_project' | translate}}</span></div>
     </div>
 
-    <div class="row" style="margin-top: 20px;">
-      <div class="col"><span class="h4 credits-title">{{'credits_info' | i18n}}</span>
-      <br/><span class="h5" ng-click="extLink('mailto:ilcomuneintasca@smartcampuslab.it')"><u>ilcomuneintasca@smartcampuslab.it</u></span></div>
+    <div class="row">
+        <div class="col col-50">
+          <a href="http://www.fbk.eu" target="_system"><img src="img/credits/fbk.png" width="40%"/></a>
+        </div>
+        <div class="col col-50 col-center">
+          <a href="http://www.smartcampuslab.it" target="_system"><img src="img/credits/smart_campus_credits.png" width="60%" /></a>
+        </div>  
     </div>
-    </ion-content>
+    <div class="row">
+      <div class="col col-center"><a href="http://www.innovazione.comunitrentini.tn.it" target="_system"><img src="img/credits/consorzio_comuni_trentini.png" width="50%" /></a></div>
+    </div>
+    
+    <div class="row title">
+      <div class="col"><span class="h4 credits-title">{{'credits_sponsored' | translate}}</span></div>
+    </div>
+    <div class="row">
+      <div class="col col-center"><a href="http://www.comune.trento.it" target="_system"><img src="img/credits/comune_trento.png" width="60%" /></a></div>
+    </div>
+
+    <div class="row title last">
+      <div class="col"><span class="h4 credits-title">{{'credits_info' | translate}}</span>
+      <br/><a class="h5" href="mailto:ilcomuneintasca@smartcampuslab.it">ilcomuneintasca@smartcampuslab.it</a></div>
+    </div>
+  </ion-content>
 </div>

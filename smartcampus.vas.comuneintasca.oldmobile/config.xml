@@ -16,6 +16,4 @@
   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true"/>
   </feature>
-  <preference name="SplashScreen" value="splash" />
-  <preference name="AutoHideSplashScreen" value="false" />
 </widget>

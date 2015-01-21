@@ -1,16 +1,43 @@
 angular.module('ilcomuneintasca.services.fs', [])
 
-.factory('Files', function ($q, $http, Config, $queue, Profiling, $ionicLoading, $filter) {
-  var lastFileCleanup = -1;
-  if (localStorage.lastFileCleanup) lastFileCleanup = Number(localStorage.lastFileCleanup);
-  //console.log('lastFileCleanup: ' + lastFileCleanup);
+.factory('Files', function ($q, $http, Config, Profiling, $ionicLoading, $filter, $queue) {
+  var downloadQueues=null;
+/*
+  var downloadQueues=new Array(3);
+  for (var i=0; i<downloadQueues.length; i++) {
+    downloadQueues[i]=$queue.queue(queueFileDownload, {
+      delay: 10, // delay 10 millis between processing items
+      paused: false, // run immediatly
+      complete: function() { console.log('downloadQueues[]: complete!'); }
+    });
+  }
+*/
 
+//  var queuedFiles=null;
+  var queuedFiles=[];
+
+  
   var queueFileDownload = function (obj) {
+    obj.downloading=true;
+/*
+    if (downloadQueues) {
+      console.log('now working on queued[#1] download "' + obj.url + '" (len: '+downloadQueues[0].size()+')');
+    } else if (queuedFiles) {
+      console.log('now working on queued[#2] download "' + obj.url + '" (len: '+queuedFiles.length+')');
+    }
+*/
     var fileTransfer = new FileTransfer();
     fileTransfer.download(obj.url, obj.savepath, function (fileEntry) {
-     //console.log("downloaded file: " + obj.url);
-     //console.log("downloaded to: " + fileEntry.nativeURL);
-     Profiling._do('fileget', 'saved');
+      //console.log("downloaded file: " + obj.url);
+      //console.log("downloaded to: " + fileEntry.nativeURL);
+      Profiling._do('fileget', 'saved');
+
+      if (downloadQueues) {
+        //console.log('(queue[#1] len: '+downloadQueues[0].size()+')');
+      } else if (queuedFiles) {
+        //console.log('(queue[#2] len: '+queuedFiles.length+')');
+      }
+
       //DISABLED 
       /*
       window.FileMetadata.getMetadataForURL(obj.url,function(url_metadata){
@@ -43,6 +70,15 @@ angular.module('ilcomuneintasca.services.fs', [])
           });
         }
       });
+
+      if (downloadQueues) {
+        //console.log('downloaded queued[#1] file "' + obj.url + '" (len: '+downloadQueues[0].size()+')');
+      } else if (queuedFiles) {
+        var downloadedFile=queuedFiles.shift();
+        //console.log('downloaded queued[#2] file "' + downloadedFile.url + '" (len: '+queuedFiles.length+')');
+        if (queuedFiles.length>0) queueFileDownload(queuedFiles[0]);
+      }
+
       if (device.version.indexOf('2.') == 0) {
         //console.log("download complete: " + fileEntry.nativeURL + " (Android 2.x)");
         obj.promise.resolve(fileEntry.nativeURL);
@@ -53,21 +89,21 @@ angular.module('ilcomuneintasca.services.fs', [])
     }, function (error) {
       //console.log("download error source " + error.source);console.log("download error target " + error.target);console.log("donwload error code: " + error.code);
       Profiling._do('fileget', 'save error');
+
+      if (downloadQueues) {
+        console.log('cannot download queued[#1] file "' + obj.url + '" (len: '+downloadQueues[0].size()+')');
+      } else if (queuedFiles) {
+        var downloadedFile=queuedFiles.shift();
+        console.log('cannot download queued[#2] file "' + downloadedFile.url + '" (len: '+queuedFiles.length+')');
+        if (queuedFiles.length>0) queueFileDownload(queuedFiles[0]);
+      }
+      
       obj.promise.reject(error);
     }, true, { /* headers: { "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA==" } */ });
   };
-  /*
-  var downloadQueues=new Array(3);
-  for (var i=0; i<downloadQueues.length; i++) {
-    downloadQueues[i]=$queue.queue(queueFileDownload, {
-      delay: 10, // delay 10 millis between processing items
-      paused: false, // run immediatly
-      complete: function() { console.log('downloadQueues[]: complete!'); }
-    });
-  }
-  */
+
   var IMAGESDIR_NAME = Config.savedImagesDirName();
-  console.log('savedImagesDirName: ' + IMAGESDIR_NAME);
+  //console.log('savedImagesDirName: ' + IMAGESDIR_NAME);
   var onErrorFS = function (e) {
     console.log('File API Exception:');
     console.log(e);
@@ -117,7 +153,7 @@ angular.module('ilcomuneintasca.services.fs', [])
         fsRoot.getDirectory(IMAGESDIR_NAME, {
           create: true
         }, function (dirEntry) {
-          console.log('images cache dirEntry nativeURL: ' + dirEntry.nativeURL);
+          //console.log('images cache dirEntry nativeURL: ' + dirEntry.nativeURL);
           fsObj.resolve(dirEntry);
         }, function (err) {
           console.log('cannot find main folder fs');
@@ -145,13 +181,97 @@ angular.module('ilcomuneintasca.services.fs', [])
     fsObj.resolve();
   }
   return {
+    queuedFilesCancel: function () {
+      if (queuedFiles.length>1) {
+        //console.log('canceling '+queuedFiles.length+' queued[#2] files...');
+        var fileToCancel=queuedFiles.pop();
+        while (fileToCancel) {
+          //console.log('canceling download of queued[#2] file "' + fileToCancel.url + '" (len: '+queuedFiles.length+')');
+          fileToCancel.promise.reject('download canceled');
+          fileToCancel=queuedFiles.pop();
+        }
+        //console.log('finished canceling downloads (len: '+queuedFiles.length+')');
+      } else {
+        //console.log('no queued[#2] files to cancel...');
+      }
+    },
+    deleteall: function () {
+      var deleted = $q.defer();
+      filesystem.then(function (mainDir) {
+        if (ionic.Platform.isWebView()) {
+					console.log('deleteall() on mainDir: ' + mainDir.toURL());
+
+          var deletingOverlay = $ionicLoading.show({
+            template: $filter('translate')(Config.keys()['cleaning']),
+            duration: Config.fileCleanupOverlayTimeoutMillis()
+          });
+
+          var allTotalSizesDeferreds = {};
+          var allTotalSizesPromises = {};
+          var allFilesMetadata = [];
+          var totalSize=0;
+          var dirReader=mainDir.createReader()
+
+          var toArray=function(list){ return Array.prototype.slice.call(list || [], 0); };
+          // we'll keep calling readEntries() until no more results are returned (https://developer.mozilla.org/en-US/docs/Web/API/DirectoryReader#readEntries)
+          var readAllEntries = function() {
+            dirReader.readEntries(function(results) {
+              if (!results.length) {
+                console.log('data dir reading done: done deleting all files');
+              } else {
+                console.log('reading data dir: '+results.length+' entries');
+                for (i=0; i<results.length; i++) {
+                  entry=results[i];
+                  if (entry.isDirectory) {
+                    console.log('Directory: ' + entry.nativeURL);
+                  } else if (entry.isFile) {
+                    var fileURI=entry.nativeURL;
+                    console.log('File: ' + fileURI);
+                    //window.resolveLocalFileSystemURL(md.uri, function(fileEntry) {
+                      entry.remove(function(obj){
+                        console.log('file deleted: '+JSON.stringify(obj));
+                      },function(){
+                        console.log('ERROR: cannot delete file!');
+                      });
+                    //});
+                  }
+                }
+                readAllEntries();
+              }
+              $ionicLoading.hide();
+              Profiling._do('fsdeleteall');
+              deleted.resolve(mainDir);
+            }, function() {
+              console.log('error reading data dir');
+              $ionicLoading.hide();
+              Profiling._do('fsdeleteall');
+              deleted.reject(mainDir);
+            });
+          };
+          readAllEntries();
+        } else {
+          console.log('fsdeleteall from browser: nothing to do!');
+          deleted.resolve(mainDir);
+        }
+      },function(err){
+        $ionicLoading.hide();
+        //console.log('fs deleteall error!');
+        deleted.reject(mainDir);
+      });
+      return deleted.promise;
+    },
     cleanup: function () {
       //console.log('cleanup()...');
       var cleaned = $q.defer();
       filesystem.then(function (mainDir) {
         if (ionic.Platform.isWebView()) {
-          //console.log('cleaning mainDir: ' + mainDir.toURL());
+					//console.log('cleaning mainDir: ' + mainDir.toURL());
           //console.log(mainDir.nativeUrl);
+
+					var lastFileCleanup = -1;
+					if (localStorage.lastFileCleanup) lastFileCleanup = Number(localStorage.lastFileCleanup);
+					//console.log('lastFileCleanup: ' + lastFileCleanup);
+
           var now_as_epoch = parseInt((new Date).getTime() / 1000);
           var to = (lastFileCleanup + Config.fileCleanupTimeoutSeconds());
           if (lastFileCleanup == -1 || now_as_epoch > to) {
@@ -162,8 +282,7 @@ angular.module('ilcomuneintasca.services.fs', [])
             localStorage.lastFileCleanup = lastFileCleanup;
 
             var cleaningOverlay = $ionicLoading.show({
-              content: $filter('translate')(Config.keys()['cleaning']),
-              showDelay: 1500, // how many milliseconds to delay before showing the indicator
+              template: $filter('translate')(Config.keys()['cleaning']),
               duration: Config.fileCleanupOverlayTimeoutMillis()
             });
 
@@ -178,7 +297,7 @@ angular.module('ilcomuneintasca.services.fs', [])
             var readAllEntries = function() {
               dirReader.readEntries(function(results) {
                 if (!results.length) {
-                  console.log('data dir reading done: waiting for all files ('+allTotalSizesPromises.length+') metadata...');
+                  console.log('data dir reading done: waiting for all files (tot: '+allTotalSizesPromises.length+') metadata...');
                   //console.log('allTotalSizesPromises.length: '+allTotalSizesPromises.length);
                   $q.all(allTotalSizesPromises).then(function(){
                     var totalSizeMB=totalSize/1000000;
@@ -219,6 +338,11 @@ angular.module('ilcomuneintasca.services.fs', [])
                     $ionicLoading.hide();
                     Profiling._do('filecleanup');
                     cleaned.resolve(mainDir);
+                  },function(){
+                    console.log('Files.clenup(): error waiting readEntries!');
+                    $ionicLoading.hide();
+                    Profiling._do('filecleanup');
+                    cleaned.reject(mainDir);
                   });
                 } else {
                   console.log('reading data dir: '+results.length+' entries');
@@ -243,6 +367,9 @@ angular.module('ilcomuneintasca.services.fs', [])
                 }
               }, function() {
                 console.log('error reading data dir');
+                $ionicLoading.hide();
+                Profiling._do('filecleanup');
+                cleaned.reject(mainDir);
               });
             };
             readAllEntries();
@@ -262,25 +389,33 @@ angular.module('ilcomuneintasca.services.fs', [])
           } else {
             $ionicLoading.hide();
             //console.log('avoiding too frequent file cleanups. seconds since last one: ' + (now_as_epoch - lastFileCleanup));
+            //console.log('fs cleanup done2!');
             cleaned.resolve(mainDir);
           }
         } else {
+          //console.log('fs cleanup done1!');
           cleaned.resolve(mainDir);
         }
+      },function(err){
+        $ionicLoading.hide();
+        //console.log('fs cleanup error!');
+        cleaned.reject(mainDir);
       });
       return cleaned.promise;
     },
     get: function (fileurl) {
+      //console.log('FS.get() - fileurl: '+fileurl);
       var filegot = $q.defer();
       this.cleanup().then(function (mainDir) {
-        //console.log('fileurl: '+fileurl);
-        //var filename = fileurl.substring(fileurl.lastIndexOf('/') + 1);
-        var filename = CryptoJS.SHA1(fileurl).toString(CryptoJS.enc.Hex) + '.jpg';
-        //console.log('filename: '+filename);
         if (ionic.Platform.isWebView()) {
           Profiling.start('fileget');
+          //var filename = fileurl.substring(fileurl.lastIndexOf('/') + 1);
+          var filename = CryptoJS.SHA1(fileurl).toString(CryptoJS.enc.Hex) + '.jpg';
+          Profiling._do('fileget', 'sha1');
+          //console.log('filename: '+filename);
           //console.log('rootDir: ' + mainDir.fullPath);
           mainDir.getFile(filename, {}, function (fileEntry) {
+            Profiling._do('fileget', 'already');
             /*
             console.log('fileEntry.toURL(): ' + fileEntry.toURL());
             console.log('fileEntry.nativeURL: ' + fileEntry.nativeURL);
@@ -297,7 +432,6 @@ angular.module('ilcomuneintasca.services.fs', [])
             });
             */
             var filesavepath = fsRoot.toURL() + IMAGESDIR_NAME + '/' + filename;
-            Profiling._do('fileget', 'already');
             if (device.version.indexOf('2.') == 0) {
               //console.log('already downloaded to "' + fileEntry.nativeURL + '" (Android 2.x)');
               filegot.resolve(fileEntry.nativeURL);
@@ -314,14 +448,34 @@ angular.module('ilcomuneintasca.services.fs', [])
               var fileObj = {
                 savepath: fsRoot.toURL() + IMAGESDIR_NAME + '/' + filename,
                 url: fileurl,
+                downloading: false,
                 promise: filegot
               };
               //console.log('not found: downloading to "' + fileObj.savepath + '"');
-              queueFileDownload(fileObj);
+              if (downloadQueues) {
+                downloadQueues[0].add(fileObj);
+                //console.log('queued[#1] download "' + fileObj.url + '" (len: '+downloadQueues[0].size()+')');
+              } else if (queuedFiles) {
+                queuedFiles.push(fileObj);
+                if (queuedFiles.length==1) {
+                  //console.log('starting queued[#2] download "' + fileObj.url + '"');
+                  queueFileDownload(fileObj);
+                } else {
+                  //console.log('queued[#2] download "' + fileObj.url + '" (len: '+queuedFiles.length+')');
+                }
+              } else {
+                //console.log('immediatly downloading "' + fileObj.url + '"');
+                queueFileDownload(fileObj);
+              }
             }
           });
         } else {
-          filegot.resolve(fileurl);
+          //console.log('from browser... url: '+fileurl);
+          if (fileurl && (fileurl.indexOf('http://')==0 || fileurl.indexOf('https://')==0)) {
+            filegot.resolve(fileurl);
+          } else {
+            filegot.reject('invalid url (not http nor https)');
+          }
         }
     });
       return filegot.promise;

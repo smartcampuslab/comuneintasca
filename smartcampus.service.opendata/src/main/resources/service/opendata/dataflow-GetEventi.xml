@@ -4,7 +4,7 @@ xmlns="http://www.example.org/mml-schema"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.example.org/mml-schema mml-schema.xsd ">
 
-	<variable name="eventi" type="String"/>
+    <variable name="eventi" type="String"/>
 	<variable name="links" type="List"/>
 	
 	<httpConnector name="connector" method="GET" encoding="UTF-8"/>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataflow
+xmlns="http://www.example.org/mml-schema"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.example.org/mml-schema mml-schema.xsd ">
+
+    <input name="url" type="String" />
+    
+	<variable name="config" type="String"/>
+	<variable name="links" type="List"/>
+	
+	<httpConnector name="connector" method="GET" encoding="UTF-8"/>
+	
+	<connect name="c1" connector="connector" outputVar="config" transformer="string">
+		<properties>
+			<property name="url">
+				<value>url</value>
+			</property>
+		</properties>
+	</connect>		
+
+	<script outputVar="links">
+		<className>eu.trentorise.smartcampus.service.opendata.scripts.OpenContentScript</className>
+		<method>extractUri</method>
+		<variables>
+			<value>config</value>
+		</variables>		
+	</script>		
+	
+	<foreach item="link" itemClass="eu.trentorise.smartcampus.service.opendata.data.message.Opendata.ConfigLink" aggregateVariable="list" outputVar="output" writeAction="append" writeMethod="addAll">
+		<items>links</items>
+	    <connect name="c1" connector="connector" outputVar="config" transformer="string">
+			<properties>
+				<property name="url">
+					<value>link.getUri()</value>
+				</property>
+			</properties>
+		</connect>		
+		<script outputVar="list" writeAction="append" onError="abort">
+			<className>eu.trentorise.smartcampus.service.opendata.scripts.ConfigScript</className>
+			<method>copyData</method>
+			<variables>
+			    <value>link</value>
+				<value>config</value>
+			</variables>		
+		</script>		
+		    			    		    
+	</foreach>
+	
+</dataflow>

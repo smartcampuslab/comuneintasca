@@ -1,0 +1,20 @@
+<ion-header-bar class="bar-subheader item item-divider" align="center">
+  <span ng-if="!scrolldata">{{'loading' | translate }}</span><span ng-if="scrolldata">{{'list_results' | translate_plur:results.length}}</span>
+</ion-header-bar>
+<ion-content class="has-header" delegate-handle="listScroll">
+  <ion-list>
+    <ion-item ng-repeat="obj in scrolldata track by $index" 
+              ng-click="gotoSubpath(obj.id)" class="item-thumbnail-left coll-item">
+      <!-- comuni-img class="item-image comuni-item-image" gotdata="gotdata"></comuni-img -->
+      <div class="item-image comuni-item-image comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj)}})">
+        <div ng-if="obj.sonscount>0" class="dida"><span>{{obj.sonscount}}</span><i class="icon ion-ios7-flag-outline"></i>&nbsp;</div>
+      </div>
+      <h2>{{obj.title | translate}}</h2>
+      <p>{{obj.eventDateDescription | translate}}</p>
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll on-infinite="loadMore()" distance="10%" ng-if="hasMoreDataToLoad()"></ion-infinite-scroll>
+</ion-content>
+<ion-footer-bar>
+  <div ng-include="'templates/list_toolbox.html'"></div>
+</ion-footer-bar>      

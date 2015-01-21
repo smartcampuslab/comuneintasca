@@ -1,0 +1,11 @@
+<ion-content class="has-header">
+    <div class="comuni-content">
+      <!-- comuni-img ng-if="obj.image" class="content-image-main" gotdata="gotdata" detail="true"></comuni-img -->
+      <div ng-if="!emptyParsedImageURL(obj)" class="content-image-main comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj)}})"></div>
+      <div class="padding">
+          <h2>{{obj.title | translate}}</h2>
+          <div class="comuni-html-description" compile="obj.description | translate"></div>
+          <div class="comuni-html-info" compile="obj.info | translate"></div>
+      </div>
+    </div>
+</ion-content>

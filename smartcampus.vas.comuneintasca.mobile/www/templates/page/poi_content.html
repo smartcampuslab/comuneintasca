@@ -1,0 +1,21 @@
+<ion-content class="has-header">
+  <!-- comuni-img ng-if="obj.image" class="content-image-main" gotdata="gotdata" detail="true"></comuni-img -->
+  <div ng-if="!emptyParsedImageURL(obj)" class="content-image-main comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj)}})"></div>
+  <div class="padding">
+    <h1>{{obj.title | translate}}</h1>
+    <div class="list card sinottico">
+      <div ng-if="!!(obj.address | translate)" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-location-outline"></i>{{obj.address | translate}}</div>
+      <div ng-if="!!(obj.distance)" class="item item-text-wrap item-icon-left"><i class="icon ion-arrow-resize"></i>{{obj.distance | number:1}} {{'entry_km' | translate}}</div>
+      <div ng-if="!!(obj.contacts.phone)" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-telephone-outline"></i><a href="tel:{{obj.contacts.phone}}">{{obj.contacts.phone}}</a></div>
+      <div ng-if="!!(obj.contacts.email)" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-email-outline"></i><a ng-click="email(obj.contacts.email)">{{obj.contacts.email}}</a></div>
+      <div ng-if="!!(obj.url)" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-world-outline"></i><a ng-click="extLink(obj.url)">{{obj.url}}</a></div>
+    </div>
+  </div>
+  <div class="padding">
+    <div class="comuni-html-description" compile="obj.description | translate"></div>
+    <div ng-if="obj.info|translate">
+      <h3>{{'itinerari_title_accessibilita' | translate}}</h3>
+      <div class="comuni-html-info" compile="obj.info|translate"></div>
+    </div>
+  </div>
+</ion-content>

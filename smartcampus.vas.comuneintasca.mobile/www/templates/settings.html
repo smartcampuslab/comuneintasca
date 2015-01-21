@@ -1,0 +1,20 @@
+<div class="modal" id="credits">
+  <ion-header-bar>
+    <h1 class="title" on-tap="enableTestConnection()">{{'settings_title' | translate}}</h1>
+    <button class="button button-icon icon ion-ios7-close-empty" ng-click="settings.hide()"></button>
+  </ion-header-bar>
+  <ion-content class="has-header">
+    <div class="list card">
+      <div class="item item-divider">{{'settings_language'|translate}}</div>
+        <label class="item item-radio"><input lang-radio type="radio" name="group" ng-click="setLang('it')" rel="it"><div class="item-content">Italiano</div><i class="radio-icon ion-checkmark"></i></label>
+        <label class="item item-radio"><input lang-radio type="radio" name="group" ng-click="setLang('en')" rel="en"><div class="item-content">English</div><i class="radio-icon ion-checkmark"></i></label>
+        <label class="item item-radio"><input lang-radio type="radio" name="group" ng-click="setLang('de')" rel="de"><div class="item-content">Deutsch</div><i class="radio-icon ion-checkmark"></i></label>
+    </div>
+    <div class="list card">
+      <div class="item item-divider">{{'settings_data'|translate}}</div>
+      <a ng-click="fsCleanup()" class="item item-icon-left"><i class="icon ion-trash-a"></i>{{'settings_data_clean'|translate}}</a>
+      <a ng-if="!TEST_CONNECTION" ng-click="dbReset()" nav-clear class="item item-icon-left"><i class="icon ion-loop"></i>{{'settings_data_sync'|translate}}</a>
+      <a ng-if="TEST_CONNECTION" ng-click="dbReset()" nav-clear class="item item-icon-left"><i class="icon ion-loop"></i>{{'settings_data_sync_draft'|translate}}</a>
+      <!-- a ng-if="DEV" ng-click="dbFullReset()" nav-clear class="item item-icon-left"><i class="icon ion-loop"></i>RESET</a -->
+  </ion-content>
+</div>

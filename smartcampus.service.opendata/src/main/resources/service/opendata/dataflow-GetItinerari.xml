@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataflow
+xmlns="http://www.example.org/mml-schema"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.example.org/mml-schema mml-schema.xsd ">
+
+    <input name="url" type="String" />
+    
+	<variable name="itinerario" type="String"/>
+	<variable name="itinerarioen" type="String"/>
+	<variable name="itinerariode" type="String"/>	
+	<variable name="links" type="List"/>
+	
+	<httpConnector name="connector" method="GET" encoding="UTF-8"/>
+	
+	<connect name="c1" connector="connector" outputVar="itinerario" transformer="string">
+		<properties>
+			<property name="url">
+				<value>url</value>
+			</property>
+		</properties>
+	</connect>		
+
+	<script outputVar="links">
+		<className>eu.trentorise.smartcampus.service.opendata.scripts.OpenContentScript</className>
+		<method>extractLinks</method>
+		<variables>
+			<value>itinerario</value>
+		</variables>		
+	</script>		
+	
+	<foreach item="link" itemClass="String" aggregateVariable="list" outputVar="output" writeAction="append" writeMethod="addAll">
+		<items>links</items>
+	    <connect name="c1" connector="connector" outputVar="itinerario" transformer="string">
+			<properties>
+				<property name="url">
+					<value>link</value>
+				</property>
+			</properties>
+		</connect>		
+	    <connect name="c2" connector="connector" outputVar="itinerarioen" transformer="string">
+			<properties>
+				<property name="url">
+					<value>link + "?Translation=eng-GB"</value>
+				</property>
+			</properties>
+		</connect>		
+	    <connect name="c3" connector="connector" outputVar="itinerariode" transformer="string">
+			<properties>
+				<property name="url">
+					<value>link + "?Translation=ger-DE"</value>
+				</property>
+			</properties>
+		</connect>			
+		<script outputVar="list" writeAction="append" onError="abort">
+			<className>eu.trentorise.smartcampus.service.opendata.scripts.ItineraryScript</className>
+			<method>extractData</method>
+			<variables>
+				<value>itinerario</value>
+				<value>itinerarioen</value>
+				<value>itinerariode</value>
+			</variables>		
+		</script>		
+		    			    		    
+	</foreach>
+	
+</dataflow>

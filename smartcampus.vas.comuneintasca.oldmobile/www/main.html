@@ -31,14 +31,17 @@
 					<div class="appname"><h2>{{'appname1' | i18n}}<br/>{{'appname2' | i18n}}</h2></div>
 					<div id="obsolete"><h4 class="color-alert">-{{'obsolete' | i18n}}-<br/>{{'txt1' | i18n}}</h4></div>
 					<div id="web">
-						<div class="text">{{ 'txt2_web'|i18n }}<br/>{{'txt3'|i18n }}</div>
+						<div class="text" ng-hide="platform" ng-bind-html="translate('txt2_web')"></div>
+						<div class="text" ng-show="iosPlatform" ng-bind-html="translate('txt2_ios')"></div>
+						<div class="text" ng-show="androidPlatform" ng-bind-html="translate('txt2_android')" ng-click="androidUninstall()"></div>
+            <div class="text">{{'txt3' | i18n}}</div>
 						<div class="row row-center" id="box" ng-click="appDownload()">
 							<div class="col image"><img src="img/icon.png" /></div>
 							<div class="col new" ng-show="platform">
+								<!-- h4 class="color">{{'new_app' | i18n}}</h4 -->
 								<div class="button-download">
-									<img ng-show="platform == 'iOS'" ng-attr-src="img/appstore{{ '_suffix' | i18n}}.svg" />
-									<img ng-show="platform == 'Android'" ng-attr-src="img/play{{ '_suffix' | i18n}}.png" />
-                  <h4 ng-show="platform == 'web'" class="color">{{'new_app' | i18n}}</h4>
+									<img ng-attr-src="img/appstore{{ '_suffix' | i18n}}.svg" ng-show="platform == 'iOS'" />
+									<img ng-attr-src="img/play{{ '_suffix' | i18n}}.png" ng-show="platform == 'Android'" />
 								</div>
 							</div>
 						</div>

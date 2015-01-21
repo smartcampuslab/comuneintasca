@@ -1,20 +1,14 @@
-<ion-view title="{{'leaf_Itinerario' | i18n}}"  hide-back-button="true">
-  <ion-content class="has-header" scroll="false" id="map-container-itineraries">
-    <ion-nav-buttons side="left">
-    <button class="button button-clear" ng-click="bk()">
-    <i class="icon ion-ios7-arrow-back"></i>
-    </button>
-    </ion-nav-buttons>
+<ion-view title="{{'leaf_Itinerario' | translate}}" hide-back-button="true">
+  <ion-content class="has-header" scroll="false" id="map2-container">
     <div class="item item-divider" align="center">{{itinerario.title | translate}}</div>
     <div id="map2">
-      <google-map data-tap-disabled="true" center="map.center" zoom="map.zoom" pan="map.pan" options="map.options" draggable="{{map.draggable}}" refresh="map.refresh">
-        <markers models="markers.models" coords="markers.coords" fit="markers.fit" icon="markers.icon" doCluster="markers.doCluster" click="openMarkerPopup">
-        </markers>
+      <ui-gmap-google-map data-tap-disabled="true" center="map.center" zoom="map.zoom" pan="map.pan" options="map.options" draggable="map.draggable" refresh="map.refresh">
+        <ui-gmap-markers models="markers.models" coords="markers.coords" fit="markers.fit" icon="markers.icon" doCluster="markers.doCluster" click="openMarkerPopup"></ui-gmap-markers>
         <!--
         <polyline path="markers.poly" stroke="polyline.stroke" clickable="polyline.clickable" draggable="polyline.draggable" editable="polyline.editable" geodesic="polyline.geodesic" visible="polyline.visible">
         </polyline>
         -->
-      </google-map>
+      </ui-gmap-google-map>
     </div>
   </ion-content>
 </ion-view>

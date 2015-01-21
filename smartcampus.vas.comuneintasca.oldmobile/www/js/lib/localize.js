@@ -13,7 +13,7 @@ angular.module('localization', [])
     // managing the translation dictionary
     .provider('localize', function localizeProvider() {
         
-        this.languages = [ 'en', 'it', 'de' ];
+        this.languages = ['en', 'it', 'de'  ];
         this.defaultLanguage = 'en';
         this.ext = 'js';
 
@@ -56,9 +56,6 @@ angular.module('localization', [])
                     }
 
                     value = value.split('-')[0];
-                        console.log('value='+value);
-                        console.log('provider.languages='+provider.languages);
-                        console.log('value idx '+provider.languages.indexOf(value));
 
                     if (provider.languages.indexOf(value) > -1) {
                         return value;
@@ -85,9 +82,7 @@ angular.module('localization', [])
                             lang = $window.navigator.userLanguage || $window.navigator.language;
                         }
                         // set language
-                        console.log('localize lang='+lang);
                         localize.language = this.fallbackLanguage(lang);
-                        console.log('localize.language='+localize.language);
                     }
                     return 'i18n/resources-locale_' + localize.language + '.' + provider.ext;
                 },

@@ -1,0 +1,6 @@
+apps:
+  - id: TrentoInTasca
+    password: trento 
+  - id: RicadiInTasca
+    password: ricadi 
+          

@@ -1,6 +1,29 @@
 angular.module('ilcomuneintasca.controllers.itineraries', [])
 
-.controller('ItinerariCtrl', function ($scope, DatiDB, ListToolbox) {
+.controller('ItinerariCtrl', function ($scope, $rootScope, $location, $filter, Config, DatiDB, ListToolbox) {
+//  Config.menuGroupSubgroup('percorsi','itineraries').then(function(sg){
+//    $scope.title = sg.name;
+//  });
+  if ($rootScope.itineraryGroup) {
+    $scope.title = $rootScope.itineraryGroup.name;
+  }  
+
+  var dosort = function() {
+    $scope.itinerari = $filter('extOrderBy')($scope.itinerari,$scope.ordering);
+  };
+
+  $scope.$watch('ordering.searchText', function(newValue, oldValue) {
+    if (newValue!=oldValue) {
+      if (oldValue == null) {
+        $scope.allItinerari = $scope.itinerari;
+      } else {
+        $scope.itinerari = $scope.allItinerari;
+      }
+      //console.log('search for: '+newValue+' ('+oldValue+')');
+      dosort();
+    }
+  });
+  
   ListToolbox.prepare($scope, {
     load: function (cache) {
       if (cache) {
@@ -8,9 +31,11 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
       } else {
         $scope.gotdata = DatiDB.all('itinerary').then(function (data) {
           $scope.itinerari = data;
+          dosort();
         });
       }
     },
+    doSort: dosort,
     getData: function () {
       return $scope.itinerari;
     },
@@ -20,10 +45,11 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
   });
   $scope.gotdata = DatiDB.all('itinerary').then(function (data) {
     $scope.itinerari = data;
+    dosort();
   });
 })
 
-.controller('ItinerarioCtrl', function ($scope, DatiDB, $stateParams, $window, $location, $ionicPlatform, $timeout) {
+.controller('ItinerarioCtrl', function ($scope, DatiDB, $stateParams, $window, $location, $ionicPlatform, $ionicViewService, $timeout) {
 /*  
   var back = function(event) {
     event.preventDefault();
@@ -35,41 +61,126 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
     $ionicPlatform.offHardwareBackButton(back);
   });
 */
-  $scope.backActive = false;
-  $timeout(function(){$scope.backActive = true;},200);
-    
-  $scope.bk = function () {
-    $window.history.back();
+  $scope.backActive = true;
+  $scope.explicitBack = function () {
+    return $state.current && $state.current.data && $state.current.data.explicitBack;
   };
+  $scope.bk = function () {
+    //console.log('back from itin...');
+    var backView = $ionicViewService.getBackView();
+    backView && backView.go();
+//    $window.history.back();
+  };
+
   $scope.clr = function () {
     $location.replace();
   };
 
+  $scope.isObjFavorite = false;
+  $scope.toggleFavorite = function (obj) {
+    DatiDB.setFavorite(obj.id, !$scope.isObjFavorite).then(function (res) {
+      $scope.isObjFavorite=res;
+    });
+  };
   
   $scope.itinerarioId = $stateParams.itinerarioId;
-  $scope.gotdata = DatiDB.get('itinerary', $stateParams.itinerarioId).then(function (data) {
+  $scope.gotitindata = DatiDB.get('itinerary', $stateParams.itinerarioId).then(function (data) {
     $scope.itinerario = data;
-    DatiDB.get('poi', data.steps.join()).then(function (luoghi) {
-      var tappe = [];
+
+    DatiDB.isFavorite(data.id).then(function (res) {
+      $scope.isObjFavorite=res; 
+    });
+    
+    //console.log('data.steps.join(): '+data.steps.join());
+    $scope.gotstepsdata=DatiDB.get('poi', data.steps.join()).then(function (luoghi) {
+      //console.log('luoghi: '+luoghi);
+      $scope.location = luoghi[0].location;
+      var tappe=[];
       angular.forEach(luoghi, function (luogo, idx) {
-        tappe[data.steps.indexOf(luogo.id)] = luogo;
+        //console.log('luogo#'+idx+': '+luogo.id);
+        var realidx=data.steps.indexOf(luogo.id);
+        //console.log('data.steps.indexOf(luogo.id): '+realidx);
+        tappe[realidx] = luogo;
       });
       $scope.tappe = tappe;
-      $scope.location = luoghi[0].location;
+      return luoghi;
     });
+    return data;
   });
 })
 
-.controller('ItinerarioInfoCtrl', function ($scope, DatiDB, $stateParams) {})
+.controller('ItinerarioInfoCtrl', function ($scope, DatiDB, $stateParams) {
+})
+.controller('ItinerarioTappeCtrl', function ($scope, DatiDB, $stateParams) {
+/*
+  console.log('itin id: '+$scope.itinerarioId);
+  $scope.gotitindata.then(function(data){
+    console.log('gotitindata: '+JSON.stringify(data.steps));
+    console.log('$scope.gotstepsdata: '+$scope.gotstepsdata);
+    $scope.gotstepsdata.then(function(luoghi){
+      console.log('luoghi#2: '+luoghi);
+      var tappe=[];
+      angular.forEach(luoghi, function (luogo, idx) {
+        console.log('luogo#'+idx+': '+luogo.id);
+        tappe[idx] = luogo;
+      });
+      $scope.tappe = tappe;
+      return luoghi;
+    },function(){
+      console.log('errore gotstepsdata');
+    });
+*/
+/*
+    $scope.gotstepsdata=DatiDB.get('poi', data.steps.join()).then(function (luoghi) {
+      var tappe = [];
+      $scope.tappe = tappe;
+      angular.forEach(luoghi, function (luogo, idx) {
+        console.log('luogo#'+idx+': '+luogo.id);
+        tappe[idx] = luogo;
+        luogo.abslinkgot.then(function(){
+          luogo['abslink']='#/app/itinstep/'+$scope.itinerario.id+'/poi/'+luogo.id;
+        });
+      });
+      return tappe;
+    });
+*/
+//  });
+})
+.controller('ItinerarioPoiCtrl', function ($scope, $state, $timeout, $window, DatiDB, $stateParams, $ionicViewService) {
+  $scope.backActive = true;
+  $scope.explicitBack = function () {
+    return $state.current && $state.current.data && $state.current.data.explicitBack;
+  };
+  $scope.bk = function () {
+    //console.log('back from inside itin POIs!');
+    var backView = $ionicViewService.getBackView();
+    backView && backView.go();
+  };
+    
+  //console.log('itin id: '+$stateParams.itinerarioId);
+  //console.log('poi id: '+$stateParams.poiId);
+  $scope.gotdata = DatiDB.get('poi', $stateParams.poiId).then(function (data) {
+    $scope.obj=data;
 
-.controller('ItinerarioTappeCtrl', function ($scope, DatiDB, $stateParams) {})
+    $scope.isObjFavorite = false;
+    DatiDB.isFavorite(data.id).then(function (res) {
+      $scope.isObjFavorite=res; 
+    });
+    $scope.toggleFavorite = function (obj) {
+      DatiDB.setFavorite(obj.id, !$scope.isObjFavorite).then(function (res) {
+        $scope.isObjFavorite=res;
+      });
+    };
+  });
+})
 
-.controller('ItinerarioMappaCtrl', function ($scope, DatiDB, $stateParams, $filter, $ionicPopup, $location, Config) {
+.controller('ItinerarioMappaCtrl',['$rootScope', '$scope', '$q', 'DatiDB', '$stateParams', '$filter', '$ionicPopup', '$location', 'Config', 'GoogleMapApi'.ns(), function ($rootScope, $scope, $q, DatiDB, $stateParams, $filter, $ionicPopup, $location, Config, GoogleMapApi) {
+  var gotheight=$q.defer();
   $scope.$on('$viewContentLoaded', function () {
-    var mapHeight = 10; // or any other calculated value
-    mapHeight = angular.element(document.querySelector('#map-container-itineraries'))[0].offsetHeight;
-    mapHeight = mapHeight - 32 - 44; // header + footer
-    angular.element(document.querySelector('.angular-google-map-container'))[0].style.height = mapHeight + 'px';
+    var mapHeight = 600; // or any other calculated value
+    mapHeight = angular.element(document.querySelector('#map2-container'))[0].offsetHeight;
+    //console.log('mapheight: '+mapHeight);
+    gotheight.resolve(mapHeight + 40);
   });
 
   $scope.map = {
@@ -82,8 +193,8 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
     zoom: 8,
     pan: false,
     options: {
-      'streetViewControl': false,
-      'zoomControl': true,
+      streetViewControl: false,
+      zoomControl: true,
       styles:[{
         featureType:"poi",
         elementType:"labels",
@@ -97,9 +208,11 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
   /* Very dirty workaround!!! */
   $scope.markers = {
     models: [{
+      key: -1,
       latitude: 0,
       longitude: 0
     }, {
+      key: -2,
       latitude: 0,
       longitude: 0
     }],
@@ -113,111 +226,153 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
     coords: 'self',
     fit: true,
     icon: 'icon',
-    // click: 'openInfoWindow($markerModel)',
     doCluster: false
   };
 
-  $scope.openMarkerPopup = function ($markerModel) {
-    $scope.activeMarker = $markerModel;
+  GoogleMapApi.then(function(maps) {
+    console.log('GoogleMapApi is READY!!!');
 
-    var title = $filter('translate')($markerModel.title);
-    var template = '<div>';
-    template += title;
-    template += '</div>';
-    var templateUrl = 'templates/mappa_popup.html';
-
-    // An elaborate, custom popup
-    var myPopup = $ionicPopup.show({
-      // template: template,
-      templateUrl: templateUrl,
-      title: $filter('translate')($scope.activeMarker.title),
-      subTitle: !!$scope.activeMarker.distance ? $filter('number')($scope.activeMarker.distance, 1) + ' Km' : '',
-      scope: $scope,
-      buttons: [{
-        text: $filter('translate')(Config.keys()['Close']),
-        type: 'button-default',
-        onTap: function (e) {
-          $scope.activeMarker = null;
-        }
-            }, {
-        text: $filter('translate')(Config.keys()['Details']),
-        type: 'button-positive',
-        onTap: function (e) {
-          var itemUrl = '/app/itineraryplace/' + $scope.activeMarker.id; //$scope.activeMarker.abslink.substring(1);
-          $location.path(itemUrl);
-        }
-        }]
+    gotheight.promise.then(function (mapHeight) {
+      angular.element(document.querySelector('#map2 .angular-google-map-container'))[0].style.height = mapHeight + 'px';
     });
-    $scope.show = myPopup;
-    myPopup.then(function (res) {
-      // console.log('Marker popup: ' + res);
-    });
-  }
 
-  $scope.polylineOptions = {
-    strokeColor: '#ff0000',
-    strokeWeight: 3,
-    strokeOpacity: 1.0,
-    clickable: false,
-    draggable: false,
-    editable: false,
-    geodesic: true,
-    visible: true
-  };
+    $scope.openMarkerPopup = function ($marker) {
+      if ($marker.key=='myPos') {
+        //console.log('no actions on click my position marker');
+        return;
+      }
+      for (i in $scope.markers.models) {
+        if ($scope.markers.models[i].key==$marker.key) {
+          $scope.activeMarker=$scope.markers.models[i];
+        }
+      }
 
-  $scope.polyline = {
-    stroke: {
-      color: $scope.polylineOptions.strokeColor,
-      weight: $scope.polylineOptions.strokeWeight,
-      opacity: $scope.polylineOptions.strokeOpacity
-    },
-    clickable: $scope.polylineOptions.clickable,
-    draggable: $scope.polylineOptions.draggable,
-    editable: $scope.polylineOptions.editable,
-    geodesic: $scope.polylineOptions.geodesic,
-    visible: $scope.polylineOptions.visible
-  };
+      var title = $filter('translate')($scope.activeMarker.title);
+      var template = '<div>';
+      template += title;
+      template += '</div>';
+      var templateUrl = 'templates/mappa_popup.html';
 
-  DatiDB.get('itinerary', $stateParams.itinerarioId).then(function (data) {
-    $scope.markers.poly = [];
-    angular.forEach(data.stepLines, function (line) {
-      var points = google.maps.geometry.encoding.decodePath(line);
-      angular.forEach(points, function (p) {
-        $scope.markers.poly.push({
-          latitude: p.lat(),
-          longitude: p.lng()
+      // An elaborate, custom popup
+      var myPopup = $ionicPopup.show({
+        // template: template,
+        templateUrl: templateUrl,
+        title: $scope.activeMarker.step+'. '+$filter('translate')($scope.activeMarker.title),
+        subTitle: !!$scope.activeMarker.distance ? $filter('number')($scope.activeMarker.distance, 1) + ' Km' : '',
+        scope: $scope,
+        buttons: [{
+            text: $filter('translate')(Config.keys()['Close']),
+            type: 'button-default',
+            onTap: function (e) {
+              $scope.activeMarker = null;
+            }
+          }, {
+            text: $filter('translate')(Config.keys()['Details']),
+            type: 'button-positive',
+            onTap: function (e) {
+              //var itemUrl = '/app/itinerary/'+$scope.itinerario.id+'/steps/'+$scope.activeMarker.id;
+              var itemUrl = '/app/itinstep/'+$scope.itinerario.id+'/step/'+$scope.activeMarker.id;
+              $location.path(itemUrl);
+            }
+          }]
+      });
+      $scope.show = myPopup;
+      myPopup.then(function (res) {
+        // console.log('Marker popup: ' + res);
+      });
+    }
+
+    $scope.polylineOptions = {
+      strokeColor: '#ff0000',
+      strokeWeight: 3,
+      strokeOpacity: 1.0,
+      clickable: false,
+      draggable: false,
+      editable: false,
+      geodesic: true,
+      visible: true
+    };
+
+    $scope.polyline = {
+      stroke: {
+        color: $scope.polylineOptions.strokeColor,
+        weight: $scope.polylineOptions.strokeWeight,
+        opacity: $scope.polylineOptions.strokeOpacity
+      },
+      clickable: $scope.polylineOptions.clickable,
+      draggable: $scope.polylineOptions.draggable,
+      editable: $scope.polylineOptions.editable,
+      geodesic: $scope.polylineOptions.geodesic,
+      visible: $scope.polylineOptions.visible
+    };
+
+    DatiDB.get('itinerary', $stateParams.itinerarioId).then(function (data) {
+      $scope.markers.poly = [];
+      angular.forEach(data.stepLines, function (line) {
+        var points = google.maps.geometry.encoding.decodePath(line);
+        angular.forEach(points, function (p) {
+          $scope.markers.poly.push({
+            latitude: p.lat(),
+            longitude: p.lng()
+          });
         });
       });
-    });
 
-    DatiDB.get('poi', data.steps.join()).then(function (luoghi) {
-      $scope.markers.models = [];
+      //console.log('data.steps.join(): '+data.steps.join());
+      DatiDB.get('poi', data.steps.join()).then(function (luoghi) {
+        //console.log('luoghi.length: '+luoghi.length);
+        var models=new Array(luoghi.length);
+        angular.forEach(luoghi, function (luogo, idx) {
+          //console.log('luogo['+idx+']: '+(luogo.title?JSON.stringify(luogo.title):'UNDEF')+' ('+luogo.id+')');
+          if (!!luogo.location) {
+            /*m = new mxn.Marker(new mxn.LatLonPoint(luogo.location[0], luogo.location[1]));
+            m.setIcon('img/mapmarker.png', [25, 40], [25 / 2, 40 / 2]);
+            m.setInfoBubble(luogo.title.it);
+            map2.addMarker(m);*/
 
-      angular.forEach(luoghi, function (luogo, idx) {
-        // for (var i = 0; i < luoghi.length; i++) {
-        console.log(luogo.title.it);
-        if (!!luogo.location) {
-          /*m = new mxn.Marker(new mxn.LatLonPoint(luogo.location[0], luogo.location[1]));
-          m.setIcon('img/mapmarker.png', [25, 40], [25 / 2, 40 / 2]);
-          m.setInfoBubble(luogo.title.it);
-          map2.addMarker(m);*/
+            var realidx=data.steps.indexOf(luogo.id);
+            //console.log('realidx: '+realidx);
+            
+            luogo.step = realidx + 1;
+            luogo.key = luogo.id;
+            luogo.latitude = luogo.location[0];
+            luogo.longitude = luogo.location[1];
+            luogo.icon = 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=' + luogo.step + '|2975A7|FFFFFF';
 
-          luogo.latitude = luogo.location[0];
-          luogo.longitude = luogo.location[1];
-          luogo.icon = 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=' + (data.steps.indexOf(luogo.id) + 1) + '|2975A7|FFFFFF';
+            //console.log('luogo.step: '+luogo.step);
+            models[realidx]=luogo;
+          } else {
+            console.log('WARNING: no location for "' + luogo.title.it + '"');
+          }
+        });
+        //console.log('models.length #1: '+models.length);
+        angular.forEach(models, function (luogo, idx) {
+          if (!luogo) {
+            console.log('WARNING: no luogo for models idx "' + idx + '"');
+            models.splice(idx,1);
+          } else {
+            //console.log('luogo['+idx+']: '+(luogo.title?JSON.stringify(luogo.title.it):'UNDEF')+' ('+luogo.key+')');
+          }
+        });
+        //console.log('models.length #2: '+models.length);
+        if ($rootScope.myPosition) {
+          var p={ 'id':'myPos', 'key':'myPos', latitude:$rootScope.myPosition[0], longitude:$rootScope.myPosition[1] };
+          //console.log('geolocation (lat,lon): ' + JSON.stringify(p));
+          models.unshift(p);
         } else {
-          console.log('WARNING: no location for "' + luogo.title.it + '"');
-          luogo.latitude = 0;
-          luogo.longitude = 0;
+          console.log('unknown location: not showing myPos marker!');
         }
-        $scope.markers.models[data.steps.indexOf(luogo.id)] = luogo;
+        //console.log('models.length #3: '+models.length);
+        $scope.markers.models=models;
+
+        // drawDirections($scope.map.control, $scope.markers.models);
+
+        /*setTimeout(function () {
+          map2.autoCenterAndZoom();
+        }, 500);*/
       });
-
-      // drawDirections($scope.map.control, $scope.markers.models);
-
-      /*setTimeout(function () {
-        map2.autoCenterAndZoom();
-      }, 500);*/
     });
+  },function(err){
+    console.log('GoogleMapApi is NOT AVAILABLE!!!');
   });
-})
+}])

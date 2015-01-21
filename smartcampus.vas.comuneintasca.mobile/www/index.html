@@ -2,13 +2,59 @@
 <html>
 
 <head>
-  <title>title</title>
-  <script>
-    window.location = './main.html';
-  </script>
-</head>
+  <meta charset="utf-8">
+  <title>loading...</title>
+  <link href="css/font.css" rel="stylesheet">
+  <link href="ionic/ionic.min.css" rel="stylesheet">
+  <link href="fonts/ilcomuneintasca.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/style2.css" rel="stylesheet">
 
-<body>
+  <style>
+    body { background-color:#2975a7; }
+  </style>
+
+  <script src="js/libs/jquery-v1.min.js"></script>
+  <script src="js/libs/underscore-min.js" type="text/javascript"></script>
+  
+  <script src="ionic/ionic.bundle.min.js"></script>
+  <!-- script src="js/libs/angular-queue.js"></script -->
+
+  <script src="js/libs/crypto-js/core-min.js"></script>
+  <script src="js/libs/crypto-js/sha1-min.js"></script>
+  <script src="js/libs/crypto-js/enc-base64-min.js"></script>
+
+  <script src="js/libs/lodash.min.js" type="text/javascript"></script>
+  <script src="js/libs/bluebird.js" type="text/javascript"></script>
+  <script src="js/libs/angular-google-maps.min.js" type="text/javascript"></script>
+
+  <!-- your app's js -->
+  <script src="js/app.js"></script>
+  <script src="js/controllers/common.js"></script>
+  <script src="js/controllers/home.js"></script>
+  <script src="js/controllers/itineraries.js"></script>
+  <script src="js/services/conf.js"></script>
+  <script src="js/services/date.js"></script>
+  <script src="js/services/list.js"></script>
+  <script src="js/services/geo.js"></script>
+  <script src="js/services/map.js"></script>
+  <script src="js/services/db.js"></script>
+  <script src="js/services/fs.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="js/directives.js"></script>
+
+  <script>
+  $(window).load(function(){
+    console.log('loading real ui...');
+    setTimeout(function(){ window.location = './main.html'; },50);
+  });
+  </script>
+  </head>
+
+<body bgcolor="#2975a7">
+  <script>
+  window.location = './main.html';
+  </script>
 </body>
 
 </html>

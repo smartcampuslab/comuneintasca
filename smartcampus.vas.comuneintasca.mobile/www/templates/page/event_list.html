@@ -1,0 +1,32 @@
+<ion-header-bar class="bar-subheader item item-divider" align="center">
+  <span ng-if="filterDef">{{filterDef | translate | ellipsis:20}}<span ng-if="filterDetail">{{filterDetail}}</span>: </span>
+  <span ng-if="!groupscrolldata">{{'loading' | translate }}</span><span ng-if="groupscrolldata">{{'list_results' | translate_plur:resultsAll.length}}</span>
+</ion-header-bar>
+<div ng-if="stickyLabel" id="stickyLabel" class="sticky-label item item-divider has-header" ng-attr-style="top:{{stickyTop}}">{{stickyLabel}}</div>
+<ion-content class="has-header" delegate-handle="listScroll" on-scroll="checkPosition()">
+  <ion-list ng-if="resultsGroups">
+    <div class="listgroup" ng-repeat="group in groupscrolldata track by $index">
+      <ion-item-divider ng-if="group.label" class="item item-divider" ng-attr-data-offset="{{calcGroupOffset($index)}}"> {{group.label}}</ion-item-divider>
+      <ion-item ng-repeat="obj in group.results track by $index"
+                
+                href="{{obj.abslink}}" data-off-ng-click="gotoSubpath(obj.id)" class="coll-item item-thumbnail-left">
+        <!-- comuni-img class="item-image comuni-item-image" gotdata="gotdata" sonscount="true"></comuni-img -->
+        <div class="item-image comuni-item-image comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj,'list')}})">
+          <div ng-if="obj.sonscount>0" class="dida"><span>{{obj.sonscount}}</span><i class="icon ion-ios7-flag-outline"></i>&nbsp;</div>
+        </div>
+        <h2>{{obj.title | translate}}</h2>
+        <!-- p ng-if="obj.fromTime">{{obj.fromTime | date:'dd/MM/yyyy HH:mm'}}<span ng-if="obj.fromTime !== obj.toTime"> - {{obj.toTime | date:'dd/MM/yyyy HH:mm'}}</span></p -->
+        <p ng-if="obj.eventPeriod && filter!='today' && obj.dbClassification!='Mostre'">{{obj.eventPeriod | translate}}</p>
+        <div class="row comuni-item-bottom">
+          <div class="col comuni-item-bottom-text">
+            <span>{{obj.address | translate | addrclean}}</span>
+          </div>
+        </div>
+      </ion-item>
+    </div>
+  </ion-list>
+  <ion-infinite-scroll on-infinite="loadMoreGroups()" distance="10%" ng-if="hasMoreGroupsToLoad()"></ion-infinite-scroll>
+</ion-content>
+<ion-footer-bar>
+  <div ng-include="'templates/list_toolbox.html'"></div>
+</ion-footer-bar>

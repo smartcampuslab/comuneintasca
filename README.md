@@ -9,11 +9,19 @@ Instructions:
 
 Install nodejs, npm and ant.
 
-Then add this line to the bashrc:
+For android development, add something like this line to the bashrc (or equivalent):
 
 	export PATH=${PATH}:/Development/adt-bundle/sdk/platform-tools:/Development/adt-bundle/sdk/tools
+ 
+then install Cordova and Ionic with:
 
-install all the plugins
+	npm install -g cordova ionic
+
+On ios, also install ios-sim package with command:
+
+	npm install -g ios-deploy
+
+All needed plugins should already be installed by appropriate "platform add" hooks, but here are the list of needed plugins
 
 _(added by ionic)_
 
@@ -27,8 +35,7 @@ _(project specific)_
 	cordova plugin add org.apache.cordova.file
 	cordova plugin add org.apache.cordova.file-transfer
 	cordova plugin add org.apache.cordova.geolocation
-	cordova plugin add org.apache.cordova.core.inappbrowser
-		(if the above fails, try: cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-inappbrowser.git)
+	cordova plugin add org.apache.cordova.inappbrowser
 	cordova plugin add de.appplant.cordova.plugin.email-composer
 	cordova plugin add https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git
 	cordova plugin add org.apache.cordova.network-information

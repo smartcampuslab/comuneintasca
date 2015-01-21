@@ -1,6 +1,6 @@
 angular.module('ilcomuneintasca.services.map', [])
 
-.factory('MapHelper', function ($location, $filter, $ionicPopup, Config, $ionicScrollDelegate) {
+.factory('MapHelper', function ($rootScope, $location, $filter, $ionicPopup, Config, $ionicScrollDelegate) {
   var map = {
     control: {},
     draggable: 'true',
@@ -50,32 +50,49 @@ angular.module('ilcomuneintasca.services.map', [])
   return {
     prepare: function (t, data) {
       showInfoWindow = false;
-      markers.models = [];
       title = t;
 
+      markers.models = [];
+      
+      if ($rootScope.myPosition) {
+        p={ 'id':'myPos', 'key':'myMapPos', latitude:$rootScope.myPosition[0], longitude:$rootScope.myPosition[1] };
+        //console.log('myMapPos geolocation (lat,lon): ' + JSON.stringify(p));
+        markers.models.push(p);
+      } else {
+        console.log('unknown location: not showing myPos marker!');
+      }
       angular.forEach(data, function (luogo, idx) {
         if (!!luogo.location) {
+          //console.log($filter('translate')(luogo.title));
+          luogo.key = luogo.id;
           luogo.latitude = luogo.location[0];
           luogo.longitude = luogo.location[1];
           luogo.icon = 'https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=';
           luogo.icon += (!!categoriesIcons[luogo.category] ? categoriesIcons[luogo.category] : categoriesIcons['other']) + '|2975A7';
-          markers.models.push(luogo)
+          markers.models.push(luogo);
+        } else {
+          console.log('WARNING: no location for "' + luogo.title.it + '"');
         }
       });
 
       $location.path('/app/mappa');
     },
     start: function ($scope) {
-      $scope.activeMarker = null;
+      //console.log('[cordova] map started!!!');
+
       $scope.map = map;
-      $scope.markers = markers;
+      $scope.markers=markers;
+      $scope.activeMarker = null;
+      console.log('scope.markers.models: '+JSON.stringify($scope.markers.models.length));
 
-      console.log('[cordova] map started!!!');
+      $scope.openMarkerPopup = function ($marker) {
+        if ($marker.key=='myMapPos') {
+          //console.log('no actions on click my position marker');
+          return;
+        }
+        for (i in $scope.markers.models) if ($scope.markers.models[i].key==$marker.key) $scope.activeMarker=$scope.markers.models[i];
 
-      $scope.openMarkerPopup = function ($markerModel) {
-        $scope.activeMarker = $markerModel;
-
-        var title = $filter('translate')($markerModel.title);
+        var title = $filter('translate')($scope.activeMarker.title);
         var template = '<div>';
         template += title;
         template += '</div>';
@@ -88,20 +105,22 @@ angular.module('ilcomuneintasca.services.map', [])
           title: $filter('translate')($scope.activeMarker.title),
           subTitle: !!$scope.activeMarker.distance ? $filter('number')($scope.activeMarker.distance, 1) + ' Km' : '',
           scope: $scope,
-          buttons: [{
-            text: $filter('translate')(Config.keys()['Close']),
-            type: 'button-default',
-            onTap: function (e) {
-              $scope.activeMarker = null;
-            }
+          buttons: [
+            {
+              text: $filter('translate')(Config.keys()['Close']),
+              type: 'button-default',
+              onTap: function (e) {
+                $scope.activeMarker = null;
+              }
             }, {
-            text: $filter('translate')(Config.keys()['Details']),
-            type: 'button-positive',
-            onTap: function (e) {
-              var itemUrl = $scope.activeMarker.abslink.substring(1);
-              $location.path(itemUrl);
+              text: $filter('translate')(Config.keys()['Details']),
+              type: 'button-positive',
+              onTap: function (e) {
+                var itemUrl = $scope.activeMarker.abslink.substring(1);
+                $location.path(itemUrl);
+              }
             }
-        }]
+          ]
         });
         $scope.show = myPopup;
         myPopup.then(function (res) {

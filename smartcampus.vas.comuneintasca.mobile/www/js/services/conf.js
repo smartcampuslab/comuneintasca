@@ -1,173 +1,399 @@
 angular.module('ilcomuneintasca.services.conf', [])
 
-.factory('Config', function ($q) {
+.factory('Config', function ($q, $http, $window, $filter, $rootScope) {
+  var DEVELOPMENT=false;
+
+  // when the following is TRUE, we show special buttons 
+  // (actually just the db RESET button in settings)
+  // even if not in development mode
+  $rootScope.DEV=DEVELOPMENT;
+  // $rootScope.DEV=true;
+
+  var APP_VERSION='3.1.0';
+  var APP_BUILD='';
+  
+  var SYNC_WEBAPP='comuneintasca-multi';
+  var SCHEMA_VERSION=111;
+  var HOME_HIGHLIGHTS_MAX=6;
+  var SYNC_HOST="tn";
+  if (DEVELOPMENT) SYNC_HOST="vas-dev";
+  var LOCAL_PROFILE="opencontent";
+  var WEBAPP_MULTI="TrentoInTasca";
+  
+  // customization parameters
+  var cityName = { 'it':'Trento', 'en':'Trento', 'de':'Trento' };
+  var imagePath = 'http://www.comune.trento.it/var/comunetn';
+  var dbName = 'Trento';
+  
+  function parseConfig(config) {
+    if (config) {
+      if (config.menu) {
+        for (mgi=0; mgi<config.menu.length; mgi++) {
+          var group=config.menu[mgi];
+          if (group.items) {
+            for (ii=0; ii<group.items.length; ii++) {
+              var item=group.items[ii];
+              if (item.objectIds) {
+                item.path="/app/"+(item.view||"page")+"/"+item.type+"/"+item.objectIds.join(',');
+              } else if (item.query) {
+                item.path="/app/"+(item.view||"list")+"/"+item.query.type+(item.query.classification?"/"+item.query.classification:"");
+              } else {
+                item.path="/menu/"+$filter('cleanMenuID')(group.id)+"/"+ii;
+                console.log('unkown menu item: '+item.path);
+              }
+              //console.log('item['+group.id+']['+item.id+'].path="'+item.path+'"');
+            }
+          } else {
+            console.log('CONFIG.group["'+(group.id||group)+'"] has no items!');
+          }
+        }
+      } else {
+        console.log('CONFIG.menu is NULL!');
+      }
+      if (config.menu) {
+       var prepareNavItemName = function(txt) {
+        if (txt.length <= 10) return txt;
+         var center = Math.floor(txt.length / 2);
+         for (var i = 0; i < center;i++) {
+            if (txt.charAt(center+i) == ' ') {
+              return txt.substr(0,center+i)+'<br/>'+txt.substr(center+i+1, txt.length-1);
+            }
+            if (txt.charAt(center-i) == ' ') {
+              return txt.substr(0,center-i)+'<br/>'+txt.substr(center-i+1, txt.length-1);
+            }
+         }
+         return txt;
+       };
+       for (ngi=0; ngi<config.navigationItems.length; ngi++) {
+          var item=config.navigationItems[ngi];
+          if (item.name) {
+            angular.forEach(item.name, function (txt, loc) {
+              if (item.name[loc]) item.name[loc]=prepareNavItemName(txt);//txt.replace(/\s+/g,"<br/>");
+            });
+          } else {
+            console.log('no name for button "'+(item.id||item)+'"');
+          }
+          if (item.hasOwnProperty("app")) {
+            item.extraClasses="variant";
+          } else if (item.hasOwnProperty("ref")) {
+            item.path="/menu/"+item.ref;
+          }
+        }
+      } else {
+        console.log('CONFIG.navigationItems is NULL!');
+      }
+    } else {
+      console.log('CONFIG is NULL!');
+    }
+    return config;
+  }
+  
   var keys = {
+    'settings_done': {
+      it: 'operazione completata',
+      en: 'operation completed',
+      de: 'operation beendet'
+    },
+    'settings_data_clean': {
+      it: 'Elimina file temporanei',
+      en: 'Delete temporary files',
+      de: 'Temporäre Dateien löschen'
+    },
+    'settings_data_sync': {
+      it: 'Aggiorna dati',
+      en: 'Update data',
+      de: 'Dateien ändern'
+    },
+    'settings_data_sync_draft': {
+      it: 'Aggiorna dati DRAFT',
+      en: 'Update DRAFT data',
+      de: 'DRAFT Dateien ändern'
+    },
+    'settings_data_sync_draft_enabled': {
+      it: "Modalità di test abilitata.",
+      en: 'Test mode enabled.',
+    },
+    'settings_data_sync_draft_disabled': {
+      it: "Modalità di test disabilitata.",
+      en: 'Test mode disabled.',
+    },
+    'settings_data': {
+      it: 'Gestione dati e immagini',
+      en: 'Manage data and images',
+      de: 'Dateien und Bilder verwalten'
+    },
+    'settings_language': {
+      it: 'Lingua',
+      en: 'Language',
+      de: 'Sprache'
+    },
+    'settings_title': {
+      it: 'Impostazioni',
+      en: 'Settings',
+      de: 'Einstellungen'
+    },
+    'itinerari_title_accessibilita': {
+      it: 'Accessibilità',
+      en: 'Accessibility',
+      de: 'Zugänglichkeit'
+    },
+    'entry_km': {
+      it: 'Km',
+      en: 'Km',
+      de: 'Km'
+    },
+    'cancel': {
+      it: 'Annulla',
+      en: 'Cancel',
+      de: 'Annullieren'
+    },
+    'search': {
+      it: 'Cerca',
+      en: 'Search',
+      de: 'Suche'
+    },
+    'list_results_none': {
+      it: 'nessun risultato',
+      en: 'no results',
+      de: 'Keine Ergebnisse'
+    },
+    'list_results_single': {
+      it: 'un solo risultato',
+      en: 'one result only',
+      de: 'Ein Ergebnis'
+    },
+    'list_results_plural': {
+      it: 'risultati',
+      en: 'results',
+      de: 'Ergebnisse'
+    },
+    'restaurant_opening': {
+      it: 'Orari',
+      en: 'Opening',
+      de: 'Geschäftszeiten'
+    },
+    'restaurant_closing': {
+      it: 'Giorni di chiusura',
+      en: 'Closing days',
+      de: 'Ruhetag'
+    },
+    'restaurant_price': {
+      it: 'Prezzo indicativo',
+      en: 'Price range',
+      de: 'Preise'
+    },
+    'restaurant_services': {
+      it: 'Servizi disponibili',
+      en: 'Services',
+      de: 'Anlagen'
+    },
+    'leaf_Hotel': {
+      it: 'Hotel',
+      en: 'Hotel',
+      de: 'Übernachtung'
+    },
+    'leaf_Restaurant': {
+      it: 'Ristorante',
+      en: 'Restaurant',
+      de: 'Gastronomie'
+    },
+    'complex_events_none': {
+      it: 'no eventi',
+      en: 'no events',
+      de: 'kein veranstaltung'
+    },
+    'complex_events_single': {
+      it: 'un evento',
+      en: 'one event',
+      de: 'ein veranstaltung'
+    },
+    'complex_events_plural': {
+      it: 'eventi',
+      en: 'events',
+      de: 'veranstaltungen'
+    },
+    'complex_events_found_single': {
+      it: 'un evento collegato',
+      en: 'one related event',
+      de: 'ein veranstaltung'
+    },
+    'complex_events_found_plural': {
+      it: 'eventi collegati',
+      en: 'related events',
+      de: 'veranstaltungen'
+    },
+    'leaf_Itinerario': {
+      it: 'Itinerario',
+      en: 'Itinerary',
+      de: 'Itinerary'
+    },
     'Stars': {
-      'it': 'Stelle',
-      'en': 'Stars',
-      'de': 'Star'
+      it: 'Stelle',
+      en: 'Stars',
+      de: 'Star'
     },
     'Date': {
-      'it': 'Data',
-      'en': 'Date',
-      'de': 'Datum'
+      it: 'Data',
+      en: 'Date',
+      de: 'Datum'
     },
     'DateFrom': {
-      'it': 'Data di inizio',
-      'en': 'Start date',
-      'de': 'Startdatum'
+      it: 'Data di inizio',
+      en: 'Start date',
+      de: 'Startdatum'
     },
     'DateTo': {
-      'it': 'Data di fine',
-      'en': 'End date',
-      'de': 'Endatum'
+      it: 'Data di fine',
+      en: 'End date',
+      de: 'Endatum'
     },
     'Distance': {
-      'it': 'Distanza',
-      'en': 'Distance',
-      'de': 'Distanz'
+      it: 'Distanza',
+      en: 'Distance',
+      de: 'Distanz'
     },
     'OrderBy': {
-      'it': 'Ordinare per',
-      'en': 'Order by',
-      'de': 'Bestellung'
+      it: 'Ordinare per',
+      en: 'Order by',
+      de: 'Bestellung'
     },
     'Filter': {
-      'it': 'Filtra',
-      'en': 'Filter',
-      'de': 'Filter'
+      it: 'Filtra',
+      en: 'Filter',
+      de: 'Filter'
     },
     'Cancel': {
-      'it': 'Chiudi',
-      'en': 'Cancel',
-      'de': 'Annullieren'
+      it: 'Chiudi',
+      en: 'Cancel',
+      de: 'Annullieren'
     },
     'All': {
-      'it': 'Tutti',
-      'en': 'All',
-      'de': 'Alles'
+      it: 'Tutti',
+      en: 'All',
+      de: 'Alles'
     },
     'A-Z': {
-      'it': 'A-Z',
-      'en': 'A-Z',
-      'de': 'A-Z'
+      it: 'A-Z',
+      en: 'A-Z',
+      de: 'A-Z'
     },
     'Z-A': {
-      'it': 'Z-A',
-      'en': 'Z-A',
-      'de': 'Z-A'
+      it: 'Z-A',
+      en: 'Z-A',
+      de: 'Z-A'
     },
     'Details': {
-      'it': 'Dettagli',
-      'en': 'Details',
-      'de': 'Details'
+      it: 'Dettagli',
+      en: 'Details',
+      de: 'Details'
     },
     'Close': {
-      'it': 'Chiudi',
-      'en': 'Close',
-      'de': 'Schließen'
+      it: 'Chiudi',
+      en: 'Close',
+      de: 'Schließen'
     },
     'loading': {
-      'it': 'caricamento in corso...',
-      'en': 'loading...',
-      'de': 'Uploaden im Laufe...'
+      it: 'caricamento in corso...',
+      en: 'loading...',
+      de: 'loading...'
     },
     'loading_short': {
-      'it': 'carico...',
-      'en': 'loading...',
-      'de': 'loading...'
+      it: 'carico...',
+      en: 'loading...',
+      de: 'loading...'
     },
     'syncing': {
-      'it': 'aggiornamento in corso...',
-      'en': 'syncing...',
-      'de': 'Laufende Aktualisierung...'
+      it: 'aggiornamento in corso...',
+      en: 'syncing...',
+      de: 'Laufende Aktualisierung...'
     },
     'cleaning': {
-      'it': 'pulizia in corso...',
-      'en': 'cleaning...',
-      'de': 'Reinigung im Laufe...'
+      it: 'pulizia in corso...',
+      en: 'cleaning...',
+      de: 'Reinigung im Laufe...'
+    },
+    'coming_soon': {
+      it: 'In preparazione...',
+      en: 'Coming soon...',
+      de: 'Kommt bald...'
+    },
+    'app_title': {
+      it: cityName.it.toUpperCase()+'<br/>IL COMUNE IN TASCA',
+      en: cityName.en.toUpperCase()+'<br/>THE CITY IN YOUR POCKET',
+      de: cityName.de.toUpperCase()+'<br/>DIE STADT IN DER TASCHE'
+    },
+    'sidemenu_Home': {
+      it: 'Home',
+      en: 'Home',
+      de: 'Home'
+    },
+    'sidemenu_Favourites': {
+      it: 'PREFERITI',
+      en: 'FAVORITES',
+      de: 'LIEBLINGSSEITEN'
+    },
+    'list_no-favorites': {
+      it: 'Nessun preferito salvato',
+      en: 'No favorites saved, yet',
+      de: 'Keine Lieblingsseiten gespeichert'
+    },
+    'credits_title': {
+      it: 'Credits',
+      en: 'Credits',
+      de: 'Credits'
+    },
+    'credits_app': {
+      it: 'Il Comune in Tasca',
+      en: 'The City in your Pocket',
+      de: 'Die Stadt in der Tasche'
+    },
+    'credits_appfamily': {
+      it: 'L\'app dei Comuni Trentini',
+      en: 'The Trentino Municipalities app',
+      de: 'App der Gemeinden im Trentino'
+    },
+    'credits_project': {
+      it: 'Un progetto di:',
+      en: 'A project by:',
+      de: 'Ein projekt:'
+    },
+    'credits_sponsored': {
+      it: 'Con la collaborazione di:',
+      en: 'In collaboration with:',
+      de: 'In Zusammenarbeit mit der:'
+    },
+    'credits_info': {
+      it: 'Per informazioni:',
+      en: 'Further information:',
+      de: 'Informationen:'
+    },
+    'exitapp_template': {
+      it: 'Sei sicuro di voler uscire dall\'app?',
+      en: 'Do you really want to exit the app?',
+      de: 'Do you really want to exit the app?'
+    },
+    'exitapp_ok': {
+      it: 'OK',
+      en: 'OK',
+      de: 'OK'
+    },
+    'exitapp_title': {
+      it: null,
+      en: null,
+      de: null
     }
   };
-  var poiTypes = {
-    'museums': {
-      de: 'Museen',
-      it: 'Musei',
-      en: 'Museums'
-    },
-    'buildings': {
-      de: 'Historische Gebäude',
-      it: 'Edifici storici',
-      en: 'Historic Buildings'
-    },
-    'churches': {
-      de: 'Kirchen',
-      it: 'Chiese',
-      en: 'Churches'
-    },
-    'acheo': {
-      de: 'Archäologische Areas',
-      it: 'Aree Archeologiche',
-      en: 'Archaeological Areas'
-    },
-    'parks': {
-      de: 'Natur',
-      it: 'Natura',
-      en: 'Nature'
-    },
-    'misc': {
-      de: 'Andere Seiten von historischem und künstlerischem Interesse',
-      it: 'Altri siti di interesse storico artistico',
-      en: 'Other sites of historical and artistic interest'
-    }
-  };
-  var eventTypes = {
-    'all': {
-      de: 'Alle Veranstaltungen',
-      it: 'Tutti gli eventi',
-      en: 'All events'
-    },
-    'fairs': {
-      de: 'Festivals, Märkte und Messen',
-      it: 'Feste, mercati e fiere',
-      en: 'Festivals, markets and fairs'
-    },
-    'conferences': {
-      de: 'Tagungen, Seminare und Konferenzen',
-      it: 'Incontri, convegni e conferenze',
-      en: 'Meetings, seminars and conferences'
-    },
-    'shows': {
-      de: 'Shows',
-      it: 'Spettacoli',
-      en: 'Shows'
-    },
-    'exhibitions': {
-      de: 'Ausstellungen',
-      it: 'Mostre',
-      en: 'Exhibitions'
-    },
-    'labs': {
-      de: 'Kurse und Workshops',
-      it: 'Corsi e laboratori',
-      en: 'Courses and workshops'
-    },
-    'competitions': {
-      de: 'Wettbewerbe und Gewinnspiele',
-      it: 'Competizioni e gare',
-      en: 'Competitions and contests'
-    },
-    'misc': {
-      de: 'Verschiedene Initiativen',
-      it: 'Iniziative varie',
-      en: 'Various initiatives'
-    },
-  };
+  var appicon=''; //<img class="appicon" src="img/icon.png" />';
+  keys.exitapp_title.it=appicon + ' ' + cityName.it + ' - ' + keys.credits_app.it;
+  keys.exitapp_title.en=appicon + ' ' + cityName.en + ' - ' + keys.credits_app.en;
+  keys.exitapp_title.de=appicon + ' ' + cityName.de + ' - ' + keys.credits_app.de;
 
   var hotelTypes = {
     'hotel': {
       de: 'Hotel',
       it: 'Hotel',
-      en: 'Hotel'
+      en: 'Hotel',
+      sinonyms:['Residence']
     },
     'hostel': {
       de: 'Jugendherberge',
@@ -177,17 +403,20 @@ angular.module('ilcomuneintasca.services.conf', [])
     'agri': {
       de: 'Agritourismusbetrieb',
       it: 'Agritur',
-      en: 'Farmhouse Inn'
+      en: 'Farmhouse Inn',
+      sinonyms:['Agriturismo']
     },
     'bnb': {
       de: 'Bed and Breakfast',
       it: 'Bed and Breakfast',
-      en: 'Bed and Breakfast'
+      en: 'Bed and Breakfast',
+      sinonyms:['B&B']
     },
     'camp': {
       de: 'Campingplatz',
       it: 'Campeggio',
-      en: 'Camp-site'
+      en: 'Camp-site',
+      sinonyms:['Camping','Villaggio']
     },
     'rooms': {
       de: 'Zimmervermietung',
@@ -197,7 +426,8 @@ angular.module('ilcomuneintasca.services.conf', [])
     'apts': {
       de: 'Ferienwohnungen',
       it: 'Appartamenti per vacanze',
-      en: 'Holiday apartments'
+      en: 'Holiday apartments',
+      sinonyms:['Appartamenti']
     },
   };
 
@@ -210,12 +440,14 @@ angular.module('ilcomuneintasca.services.conf', [])
     'pizzeria': {
       de: '',
       it: 'Pizzeria',
-      en: ''
+      en: '',
+      sinonyms:['Pizzerie']
     },
     'trattoria': {
       de: 'Gastwirtschaft',
       it: 'Trattoria',
-      en: ''
+      en: 'Trattoria',
+      sinonyms:['Trattorie']
     },
     'typical': {
       de: 'Bed and Breakfast',
@@ -225,7 +457,8 @@ angular.module('ilcomuneintasca.services.conf', [])
     'restaurant': {
       de: 'Restaurant',
       it: 'Ristorante',
-      en: 'Restaurant'
+      en: 'Restaurant',
+      sinonyms:['Ristoranti']
     },
     'pub': {
       de: 'Bierstube',
@@ -314,55 +547,237 @@ angular.module('ilcomuneintasca.services.conf', [])
       de: 'Kontakten',
       it: 'Contatti',
       en: 'Contacts'
-    },
-    'In preparazione...': {
-      de: 'Kommt bald...',
-      it: 'In preparazione...',
-      en: 'Coming soon...'
     }
   }
 
   var contentTypes = {
-    'content': 'eu.trentorise.smartcampus.comuneintasca.model.ContentObject',
-    'poi': 'eu.trentorise.smartcampus.comuneintasca.model.POIObject',
-    'event': 'eu.trentorise.smartcampus.comuneintasca.model.EventObject',
-    'restaurant': 'eu.trentorise.smartcampus.comuneintasca.model.RestaurantObject',
-    'hotel': 'eu.trentorise.smartcampus.comuneintasca.model.HotelObject',
-    'itinerary': 'eu.trentorise.smartcampus.comuneintasca.model.ItineraryObject',
-    'mainevent': 'eu.trentorise.smartcampus.comuneintasca.model.MainEventObject',
-    'home': 'eu.trentorise.smartcampus.comuneintasca.model.HomeObject'
+    'content': 'it.smartcommunitylab.comuneintasca.core.model.ContentObject',
+    'poi': 'it.smartcommunitylab.comuneintasca.core.model.POIObject',
+    'event': 'it.smartcommunitylab.comuneintasca.core.model.EventObject',
+    'restaurant': 'it.smartcommunitylab.comuneintasca.core.model.RestaurantObject',
+    'hotel': 'it.smartcommunitylab.comuneintasca.core.model.HotelObject',
+    'itinerary': 'it.smartcommunitylab.comuneintasca.core.model.ItineraryObject',
+    'mainevent': 'it.smartcommunitylab.comuneintasca.core.model.MainEventObject',
+    //'home': 'it.smartcommunitylab.comuneintasca.core.model.HomeObject',
+    'oldconfig': 'it.smartcommunitylab.comuneintasca.core.model.ConfigObject',
+    'config': 'it.smartcommunitylab.comuneintasca.core.model.DynamicConfigObject',
+    'servizio_sul_territorio': 'it.smartcommunitylab.comuneintasca.core.model.TerritoryServiceObject'
   };
 
-  var eventFilterTypes = {
-    'today': {
-      it: 'Oggi',
-      en: 'Today',
-      de: 'Heute'
-    },
-    'week': {
-      it: 'Prossimi 7 giorni',
-      en: 'Next 7 days',
-      de: 'Nächsten 7 Tage'
-    },
-    'month': {
-      it: 'Prossimi 30 giorni',
-      en: 'Next 30 days',
-      de: 'Nächsten 30 Tage'
-    }
-  };
-
+  function cloneParentGroup(group) {
+    /*
+    var r=_.map(group,function(value,key,list){ 
+      if (key=='items') {
+        return false; 
+      } else {
+        //console.log('key: '+key);
+        return _.clone(value);
+      }
+    });
+    */
+    var r={}
+    if (group.name) r['name']=group.name;
+    if (group.id) r['id']=group.id;
+    return r;
+  }
+  
   return {
+    getVersion: function () {
+      return 'v '+APP_VERSION+(APP_BUILD&&APP_BUILD!=''?'<br/>('+APP_BUILD+')':'');
+    },
+    getLang: function () {
+      var browserLanguage = '';
+      // works for earlier version of Android (2.3.x)
+      var androidLang;
+      if ($window.navigator && $window.navigator.userAgent && (androidLang = $window.navigator.userAgent.match(/android.*\W(\w\w)-(\w\w)\W/i))) {
+        browserLanguage = androidLang[1];
+      } else {
+        // works for iOS, Android 4.x and other devices
+        browserLanguage = $window.navigator.userLanguage || $window.navigator.language;
+      }
+      var lang = browserLanguage.substring(0, 2);
+      if (lang != 'it' && lang != 'en' && lang != 'de') lang = 'en';
+      return lang;
+    },
+    getProfile: function () {
+      //console.log('getProfile()');
+      var profileLoaded = $q.defer();
+      //console.log('localStorage.cachedProfile: '+localStorage.cachedProfile);
+      if (localStorage.cachedProfile && localStorage.cachedProfile!='undefined' && localStorage.cachedProfile!='null') {
+        //console.log('using locally cached profile');
+        profileLoaded.resolve(parseConfig(JSON.parse(localStorage.cachedProfile)));
+      } else {
+        //console.log('getting predefined profile');
+        $http.get('data/'+LOCAL_PROFILE+'.json').success(function(data, status, headers, config){
+          localStorage.cachedProfile=JSON.stringify(data);
+          $rootScope.$emit('profileUpdated');
+          profileLoaded.resolve(parseConfig(data));
+        }).error(function(data, status, headers, config){
+          console.log('error getting predefined config "data/'+LOCAL_PROFILE+'.json"!');
+          profileLoaded.reject();
+        });
+      }
+      return profileLoaded.promise;
+    },
+    getProfileExtensions: function() {
+      return {
+        "content":{
+          "classifications":{
+            "bondone":{ "view":"content" },
+          }
+        },
+        "mainevent":{
+          "sort":{ "options":["A-Z", "Z-A", "Date"], "default":"Date" }
+        },
+        "event":{
+          "sort":{ "options":["A-Z", "Z-A", "DateFrom", "DateTo"], "default":"DateTo" },
+          "filter":{ 
+            "options": {
+              "today": {
+                "it": "Oggi",
+                "en": "Today",
+                "de": "Heute"
+              },
+              "week": {
+                "it": "Prossimi 7 giorni",
+                "en": "Next 7 days",
+                "de": "Nächsten 7 Tage"
+              },
+              "month": {
+                "it": "Prossimi 30 giorni",
+                "en": "Next 30 days",
+                "de": "Nächsten 30 Tage"
+              }
+            }, 
+            "default":"week" 
+          },
+          //overrides for specific query classifications
+          "classifications":{
+            "_none_":{ "filter":{ "default":"today" } },
+            "_parent_":{ "filter":{ "default":null } },
+            "_complex":{ "filter":{ "default":null } }
+          }
+        },
+        "poi":{
+          "sort":{ "options":["A-Z", "Z-A", "Distance"], "default":"Distance" },
+          "map":true
+        },
+        "servizio_sul_territorio":{
+          "sort":{ "options":["A-Z", "Z-A", "Distance"], "default":"Distance" },
+          "map":true
+        },
+        "hotel":{
+          "sort":{ "options":["A-Z", "Z-A", "Distance", "Stars"], "default":"Distance" }, 
+          "filter":true, 
+          "map":true
+        },
+        "restaurant":{
+          "sort":{ "options":["A-Z", "Z-A", "Distance"], "default":"Distance" }, 
+          "filter":true,
+          "map":true
+        }
+      }
+    },
+    highlights: function () {
+      return this.getProfile().then(function(data) {
+        //console.log(data.highlights[0].image);
+        //data.highlights._parent={ id: 'highlights' };
+        return data.highlights;
+      });
+    },
+    navigationItems: function () {
+      return this.getProfile().then(function(data) {
+        return data.navigationItems;
+      });
+    },
+    navigationItemsGroup: function (label) {
+      return this.navigationItems().then(function(items) {
+        for (gi=0; gi<items.length; gi++) {
+          if (items[gi].id==label) return items[gi];
+        }
+        return null;
+      });
+    },
+    menu: function () {
+      return this.getProfile().then(function(data) {
+        return data.menu;
+      });
+    },
+    menuGroup: function (label) {
+      return this.menu().then(function(menu) {
+        for (gi=0; gi<menu.length; gi++) {
+          if (menu[gi].id==label || $filter('cleanMenuID')(menu[gi].id)==label) return menu[gi];
+        }
+        return null;
+      });
+    },
+    menuGroupSubgroup: function (label1, label2) {
+      if (label1=='highlights') return this.highlights();
+      return this.menuGroup(label1).then(function(group) {
+        if (group) {
+          for (sgi=0; sgi<group.items.length; sgi++) {
+            if (group.items[sgi].id==label2 || $filter('cleanMenuID')(group.items[sgi].id)==label2) {
+              group.items[sgi]._parent=cloneParentGroup(group);
+              return group.items[sgi];
+            }
+          }
+        }
+        return null;
+      });
+    },
+    menuGroupSubgroupByLocaleName: function (label1, lcl, label2) {
+      return this.menuGroup(label1).then(function(group) {
+        if (group) {
+          for (sgi=0; sgi<group.items.length; sgi++) {
+            if (group.items[sgi].name[lcl]==label2) {
+              group.items[sgi]._parent=cloneParentGroup(group);
+              return group.items[sgi];
+            }
+          }
+        }
+        return null;
+      });
+    },
+    menuGroupSubgroupByTypeAndClassification: function (type, classification) {
+      return this.menu().then(function(menu) {
+        for (gi=0; gi<menu.length; gi++) {
+          var group=menu[gi];
+          if (group.items) {
+            for (sgi=0; sgi<group.items.length; sgi++) {
+              var sg=group.items[sgi];
+              if ( sg.query && sg.query.type==type && ( (!classification && !sg.query.classification) || (classification&&classification==sg.query.classification) ) ) {
+                sg._parent=cloneParentGroup(group);
+                return sg;
+              } else if (sg.type && sg.type==type && classification==null) {
+                sg._parent=cloneParentGroup(group);
+                return sg;
+              }
+            }
+          //} else if (group.objectIds) {
+          } else {
+            throw "no items for group: "+group.id;
+          }
+        }
+        return null;
+      });
+    },
     keys: function () {
       return keys;
-    },
-    doProfiling: function () {
-      return false;
     },
     savedImagesDirName: function () {
       return 'IlComuneInTasca-ImagesCache';
     },
     schemaVersion: function () {
-      return 73;
+      return SCHEMA_VERSION;
+    },
+    getHomeHighlightsMax: function () {
+      return HOME_HIGHLIGHTS_MAX;
+    },
+    syncUrl: function () {
+      //console.log('$rootScope.TEST_CONNECTION: '+(!!$rootScope.TEST_CONNECTION));
+      var SYNC_MODE = (!!$rootScope.TEST_CONNECTION ? 'syncdraft' : 'sync');
+      //console.log('SYNC_MODE: '+SYNC_MODE);
+      return 'https://'+SYNC_HOST+'.smartcommunitylab.it/'+SYNC_WEBAPP+'/'+SYNC_MODE+'/'+WEBAPP_MULTI+'?since=';
     },
     syncTimeoutSeconds: function () {
       //return 60 * 60; /* 60 times 60 seconds = EVERY HOUR */
@@ -388,9 +803,6 @@ angular.module('ilcomuneintasca.services.conf', [])
     contentTypesList: function () {
       return contentTypes;
     },
-    eventFilterTypeList: function () {
-      return eventFilterTypes;
-    },
     contentKeyFromDbType: function (dbtype) {
       for (var contentType in contentTypes) {
         if (contentTypes.hasOwnProperty(contentType)) {
@@ -399,50 +811,37 @@ angular.module('ilcomuneintasca.services.conf', [])
       }
       return '';
     },
-    poiTypesList: function () {
-      return poiTypes;
-    },
     textTypesList: function () {
       return textTypes;
     },
-    poiCateFromType: function (type) {
-      return poiTypes[type];
-    },
-    poiCateFromDbClassification: function (dbclassification) {
-      for (var poiType in poiTypes) {
-        if (poiTypes.hasOwnProperty(poiType)) {
-          if (poiTypes[poiType].it == dbclassification) return poiTypes[poiType];
-        }
-      }
-      return {
-        de: 'UNKNOWN',
-        it: 'UNKNOWN',
-        en: 'UNKNOWN'
-      };
-    },
-    eventTypesList: function () {
-      return eventTypes;
-    },
-    eventCateFromType: function (type) {
-      return eventTypes[type];
-    },
-    eventCateFromDbClassification: function (dbclassification) {
-      for (var eventType in eventTypes) {
-        if (eventTypes.hasOwnProperty(eventType)) {
-          if (eventTypes[eventType].it == dbclassification) return eventTypes[eventType];
-        }
-      }
-      return {
-        de: 'UNKNOWN',
-        it: 'UNKNOWN',
-        en: 'UNKNOWN'
-      };
-    },
+
     hotelTypesList: function () {
       return hotelTypes;
     },
     hotelCateFromType: function (type) {
       return hotelTypes[type];
+    },
+
+    restaurantTypesList: function () {
+      return restaurantTypes;
+    },
+    restaurantCateFromType: function (type) {
+      return restaurantTypes[type];
+    },
+
+    hotelTypeFromCate: function (cate) {
+      for (var hotelType in hotelTypes) {
+        if (hotelTypes.hasOwnProperty(hotelType)) {
+          if (hotelTypes[hotelType].it == cate) return hotelType;
+          if (!!hotelTypes[hotelType].sinonyms) {
+            for (var i = 0; i < hotelTypes[hotelType].sinonyms.length; i++) {
+              if (hotelTypes[hotelType].sinonyms[i] == cate) return hotelType;
+            }
+          }
+        }
+      }
+      console.log('unknown hotel cate: "'+cate+'"');
+      return null;
     },
     hotelCateFromDbClassification: function (dbclassification) {
       for (var hotelType in hotelTypes) {
@@ -456,11 +855,19 @@ angular.module('ilcomuneintasca.services.conf', [])
         en: 'UNKNOWN'
       };
     },
-    restaurantTypesList: function () {
-      return restaurantTypes;
-    },
-    restaurantCateFromType: function (type) {
-      return restaurantTypes[type];
+    restaurantTypeFromCate: function (cate) {
+      for (var restaurantType in restaurantTypes) {
+        if (restaurantTypes.hasOwnProperty(restaurantType)) {
+          if (restaurantTypes[restaurantType].it == cate) return restaurantType;
+          if (!!restaurantTypes[restaurantType].sinonyms) {
+            for (var i = 0; i < restaurantTypes[restaurantType].sinonyms.length; i++) {
+              if (restaurantTypes[restaurantType].sinonyms[i] == cate) return restaurantType;
+            }
+          }
+        }
+      }
+      console.log('unknown restaurant cate: "'+cate+'"');
+      return null;
     },
     restaurantCateFromDbClassification: function (dbclassification) {
       for (var restaurantType in restaurantTypes) {
@@ -473,24 +880,45 @@ angular.module('ilcomuneintasca.services.conf', [])
         it: 'UNKNOWN',
         en: 'UNKNOWN'
       };
+    },
+ 
+    cityName: function() {
+      return cityName;
+    },
+    imagePath: function() {
+      return imagePath;
+    },
+    dbName: function() {
+      return dbName;
+    },
+    doProfiling: function () {
+      return false;
     }
   }
 })
 
 .factory('Profiling', function (Config) {
+  var reallyDoProfiling=Config.doProfiling();
   var startTimes = {};
   return {
+    start2: function (label) {
+      startTimes[label] = (new Date).getTime();
+    },
     start: function (label) {
-      if (Config.doProfiling()) {
-        startTimes[label] = (new Date).getTime();
-      }
+      if (reallyDoProfiling) this.start2(label);
     },
 
-    _do: function (label, details) {
-      if (Config.doProfiling()) {
-        var startTime = startTimes[label] || -1;
-        if (startTime != -1) console.log('PROFILE: ' + label + (details ? '(' + details + ')' : '') + '=' + ((new Date).getTime() - startTime));
+    _do2: function (label, details, info) {
+      var startTime = startTimes[label] || -1;
+      if (startTime != -1) {
+        var nowTime = (new Date).getTime();
+        console.log('PROFILING: ' + label + (details ? '(' + details + ')' : '') + '=' + (nowTime - startTime));
+        //if (details) startTimes[label]=nowTime;
+        if (!!info) console.log(info);
       }
+    },
+    _do: function (label, details, info) {
+      if (reallyDoProfiling) this._do2(label, details);
     }
   };
 })

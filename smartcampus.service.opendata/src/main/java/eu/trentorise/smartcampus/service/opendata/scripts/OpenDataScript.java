@@ -57,16 +57,16 @@ public class OpenDataScript {
 		map = (Map<String, Object>) map.get("fields");
 		
 		e = (Map<String, Object>) map.get("special");
-		builder.setSpecial(!"0".equals(e.get("value")));
+		builder.setSpecial(e != null && !"0".equals(e.get("value")));
 		
 		e = (Map<String, Object>) map.get("titolo");
-		builder.setTitle(e.get("value").toString());
+		builder.setTitle(getStringValue(e));
 		e = (Map<String, Object>) map.get("short_title");
-		builder.setShortTitle(e.get("value").toString());
+		builder.setShortTitle(getStringValue(e));
 		e = (Map<String, Object>) map.get("abstract");
-		builder.setSubtitle(e.get("value").toString());
+		builder.setSubtitle(getStringValue(e));
 		e = (Map<String, Object>) map.get("text");
-		builder.setDescription(e.get("value").toString());
+		builder.setDescription(getStringValue(e));
 		e = (Map<String, Object>) map.get("from_time");
 		try {
 			builder.setFromTime(Long.parseLong(e.get("value").toString())*1000);
@@ -78,21 +78,26 @@ public class OpenDataScript {
 		} catch (Exception e1) {
 		}
 		e = (Map<String, Object>) map.get("periodo_svolgimento");
-		builder.setEventPeriod(e.get("value").toString());
+		builder.setEventPeriod(getStringValue(e));
 		e = (Map<String, Object>) map.get("orario_svolgimento");
-		builder.setEventTiming(e.get("value").toString());
+		builder.setEventTiming(getStringValue(e));
 		e = (Map<String, Object>) map.get("durata");
-		builder.setDuration(e.get("value").toString());
+		builder.setDuration(getStringValue(e));
 		e = (Map<String, Object>) map.get("luogo_svolgimento");
-		builder.setAddress(e.get("value").toString());
+		builder.setAddress(getStringValue(e));
 		e = (Map<String, Object>) map.get("informazioni");
-		builder.setInfo(e.get("value").toString());
+		builder.setInfo(getStringValue(e));
 		e = (Map<String, Object>) map.get("costi");
-		builder.setCost(e.get("value").toString());
+		builder.setCost(getStringValue(e));
 		e = (Map<String, Object>) map.get("image");
-		builder.setImage(e.get("value").toString().trim());
+		builder.setImage(getStringValue(e).trim());
+		e = (Map<String, Object>) map.get("email");
+		builder.setEmail(getStringValue(e).trim());
+		e = (Map<String, Object>) map.get("telefono");
+		builder.setPhone(getStringValue(e).trim());
+		
 		e = (Map<String, Object>) map.get("tipo_eventi_manifestazioni");
-		if (!(e.get("value") instanceof Boolean) || (Boolean)e.get("value")) {
+		if (e != null && (!(e.get("value") instanceof Boolean) || (Boolean)e.get("value"))) {
 			builder.setEventType(((Map)e.get("value")).get("objectName").toString());
 		}
 		e = (Map<String, Object>) map.get("iniziativa");
@@ -141,13 +146,19 @@ public class OpenDataScript {
 				orgs.add(Organization.newBuilder().setType("associazione").setTitle(e.get("value").toString()).build());
 			}
 		e = (Map<String, Object>) map.get("ente");
-			if (!(e.get("value") instanceof Boolean) || (Boolean)e.get("value")) {
-				orgs.add(Organization.newBuilder().setType("ente").setTitle(e.get("value").toString()).build());
-			}
+		if (e != null && (!(e.get("value") instanceof Boolean) || (Boolean)e.get("value"))) {
+			orgs.add(Organization.newBuilder().setType("ente").setTitle(e.get("value").toString()).build());
+		}
 		builder.addAllOrganizations(orgs);
 		
 		return builder.build();
 	}
 
-
+	private String getStringValue(Map<String,Object> e) {
+		if (e != null && e.get("value") != null && e.get("value") instanceof String) {
+			return e.get("value").toString();
+		}
+		return "";
+	}
 }
+ 

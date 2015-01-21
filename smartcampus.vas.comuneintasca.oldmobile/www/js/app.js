@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'localization', 'ngCordova'])
 
-.run(function ($ionicPlatform, $rootScope, $timeout, $filter, $window) {
+.run(function ($ionicPlatform, $rootScope, $timeout, $filter) {
 	$ionicPlatform.ready(function () {
 		// Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
 		// for form inputs)
@@ -23,15 +23,14 @@ angular.module('starter', ['ionic', 'localization', 'ngCordova'])
 						//console.log('$rootScope.platform=' + $rootScope.platform);
 						$rootScope.iosPlatform = ($rootScope.platform == 'iOS');
 						$rootScope.androidPlatform = ($rootScope.platform == 'Android');
-
-            setTimeout(function(){ navigator.splashscreen.hide(); },0);
-          } else {
+					} else {
 						$rootScope.webPlatform = true;
 					}
 				});
 			});
 		} else {
-			$rootScope.platform = 'web';
+			//$rootScope.platform = 'iOS';
+			//$rootScope.iosPlatform = true;
 			$rootScope.webPlatform = true;
 		}
 	});

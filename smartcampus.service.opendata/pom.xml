@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>eu.trentorise.smartcampus</groupId>
 	<artifactId>smartcampus.service.opendata</artifactId>
@@ -82,17 +81,179 @@
 									<statusParameters>
 										<storable>true</storable>
 										<automaticRefresh>true</automaticRefresh>
+										<delay>#{1000L*20}</delay>
+										<period>#{1000L*60*60*4}</period>
+										<periodOnDefault>#{1000L*60*60*4}</periodOnDefault>
+										<periodOnFailure>#{1000L*60*60*8}</periodOnFailure>
+										<cacheValidityPeriod>#{1000L*60*60*24}</cacheValidityPeriod>
+										<validityPeriod>#{1000L*60*60*24}</validityPeriod>
+										<serviceBlocked>false</serviceBlocked>
+										<dataFlowInvokable>true</dataFlowInvokable>
+										<runnableAfterDelay>true</runnableAfterDelay>
+									</statusParameters>
+								</method>
+							    <method>
+									<methodName>GetEventiParam</methodName>
+									<defaultParameters>
+									</defaultParameters>
+									<statusParameters>
+										<storable>true</storable>
+										<automaticRefresh>true</automaticRefresh>
 										<delay>#{1000L*30}</delay>
-										<period>#{1000L*60*60*24*1}</period>
-										<periodOnDefault>#{1000L*60*60*24*1}</periodOnDefault>
-										<periodOnFailure>#{1000L*60*60*24*2}</periodOnFailure>
-										<cacheValidityPeriod>#{1000L*60*60*24*30}</cacheValidityPeriod>
+										<period>#{1000L*60*60*4}</period>
+										<periodOnDefault>#{1000L*60*60*4}</periodOnDefault>
+										<periodOnFailure>#{1000L*60*60*8}</periodOnFailure>
+										<cacheValidityPeriod>#{1000L*60*60*24}</cacheValidityPeriod>
+										<validityPeriod>#{1000L*60*60*24}</validityPeriod>
+										<serviceBlocked>false</serviceBlocked>
+										<dataFlowInvokable>true</dataFlowInvokable>
+										<runnableAfterDelay>true</runnableAfterDelay>
+									</statusParameters>
+								</method>
+								<method>
+									<methodName>GetConfig</methodName>
+									<defaultParameters>
+									</defaultParameters>
+									<statusParameters>
+										<storable>true</storable>
+										<automaticRefresh>true</automaticRefresh>
+										<delay>#{1000L*10}</delay>
+										<period>#{1000L*60*5}</period>
+										<periodOnDefault>#{1000L*60*5}</periodOnDefault>
+										<periodOnFailure>#{11000L*60*10}</periodOnFailure>
+										<cacheValidityPeriod>#{1000L*60}</cacheValidityPeriod>
 										<validityPeriod>#{1000L*60*60*24*30}</validityPeriod>
 										<serviceBlocked>false</serviceBlocked>
 										<dataFlowInvokable>true</dataFlowInvokable>
 										<runnableAfterDelay>true</runnableAfterDelay>
 									</statusParameters>
 								</method>
+								<method>
+									<methodName>GetRestaurants</methodName>
+									<defaultParameters>
+									</defaultParameters>
+									<statusParameters>
+										<storable>true</storable>
+										<automaticRefresh>true</automaticRefresh>
+										<delay>#{1000L*30}</delay>
+										<period>#{1000L*60*60*4}</period>
+										<periodOnDefault>#{1000L*60*60*4}</periodOnDefault>
+										<periodOnFailure>#{1000L*60*60*8}</periodOnFailure>
+										<cacheValidityPeriod>#{1000L*60*60*24}</cacheValidityPeriod>
+										<validityPeriod>#{1000L*60*60*24}</validityPeriod>
+										<serviceBlocked>false</serviceBlocked>
+										<dataFlowInvokable>true</dataFlowInvokable>
+										<runnableAfterDelay>true</runnableAfterDelay>
+									</statusParameters>
+								</method>
+								<method>
+									<methodName>GetHotels</methodName>
+									<defaultParameters>
+									</defaultParameters>
+									<statusParameters>
+										<storable>true</storable>
+										<automaticRefresh>true</automaticRefresh>
+										<delay>#{1000L*30}</delay>
+										<period>#{1000L*60*60*4}</period>
+										<periodOnDefault>#{1000L*60*60*4}</periodOnDefault>
+										<periodOnFailure>#{1000L*60*60*8}</periodOnFailure>
+										<cacheValidityPeriod>#{1000L*60*60*24}</cacheValidityPeriod>
+										<validityPeriod>#{1000L*60*60*24}</validityPeriod>
+										<serviceBlocked>false</serviceBlocked>
+										<dataFlowInvokable>true</dataFlowInvokable>
+										<runnableAfterDelay>true</runnableAfterDelay>
+									</statusParameters>
+								</method>
+								<method>
+									<methodName>GetCultura</methodName>
+									<defaultParameters>
+									</defaultParameters>
+									<statusParameters>
+										<storable>true</storable>
+										<automaticRefresh>true</automaticRefresh>
+										<delay>#{1000L*30}</delay>
+										<period>#{1000L*60*60*4}</period>
+										<periodOnDefault>#{1000L*60*60*4}</periodOnDefault>
+										<periodOnFailure>#{1000L*60*60*8}</periodOnFailure>
+										<cacheValidityPeriod>#{1000L*60*60*24}</cacheValidityPeriod>
+										<validityPeriod>#{1000L*60*60*24}</validityPeriod>
+										<serviceBlocked>false</serviceBlocked>
+										<dataFlowInvokable>true</dataFlowInvokable>
+										<runnableAfterDelay>true</runnableAfterDelay>
+									</statusParameters>
+								</method>	
+								<method>
+									<methodName>GetMainEvents</methodName>
+									<defaultParameters>
+									</defaultParameters>
+									<statusParameters>
+										<storable>true</storable>
+										<automaticRefresh>true</automaticRefresh>
+										<delay>#{1000L*30}</delay>
+										<period>#{1000L*60*60*4}</period>
+										<periodOnDefault>#{1000L*60*60*4}</periodOnDefault>
+										<periodOnFailure>#{1000L*60*60*8}</periodOnFailure>
+										<cacheValidityPeriod>#{1000L*60*60*24}</cacheValidityPeriod>
+										<validityPeriod>#{1000L*60*60*24}</validityPeriod>
+										<serviceBlocked>false</serviceBlocked>
+										<dataFlowInvokable>true</dataFlowInvokable>
+										<runnableAfterDelay>true</runnableAfterDelay>
+									</statusParameters>
+								</method>	
+								<method>
+									<methodName>GetTesti</methodName>
+									<defaultParameters>
+									</defaultParameters>
+									<statusParameters>
+										<storable>true</storable>
+										<automaticRefresh>true</automaticRefresh>
+										<delay>#{1000L*30}</delay>
+										<period>#{1000L*60*60*4}</period>
+										<periodOnDefault>#{1000L*60*60*4}</periodOnDefault>
+										<periodOnFailure>#{1000L*60*60*8}</periodOnFailure>
+										<cacheValidityPeriod>#{1000L*60*60*24}</cacheValidityPeriod>
+										<validityPeriod>#{1000L*60*60*24}</validityPeriod>
+										<serviceBlocked>false</serviceBlocked>
+										<dataFlowInvokable>true</dataFlowInvokable>
+										<runnableAfterDelay>true</runnableAfterDelay>
+									</statusParameters>
+								</method>		
+								<method>
+									<methodName>GetItinerari</methodName>
+									<defaultParameters>
+									</defaultParameters>
+									<statusParameters>
+										<storable>true</storable>
+										<automaticRefresh>true</automaticRefresh>
+										<delay>#{1000L*30}</delay>
+										<period>#{1000L*60*60*4}</period>
+										<periodOnDefault>#{1000L*60*60*4}</periodOnDefault>
+										<periodOnFailure>#{1000L*60*60*8}</periodOnFailure>
+										<cacheValidityPeriod>#{1000L*60*60*24}</cacheValidityPeriod>
+										<validityPeriod>#{1000L*60*60*24}</validityPeriod>
+										<serviceBlocked>false</serviceBlocked>
+										<dataFlowInvokable>true</dataFlowInvokable>
+										<runnableAfterDelay>true</runnableAfterDelay>
+									</statusParameters>
+								</method>																															
+								<method>
+									<methodName>GetTerritoryServices</methodName>
+									<defaultParameters>
+									</defaultParameters>
+									<statusParameters>
+										<storable>true</storable>
+										<automaticRefresh>true</automaticRefresh>
+										<delay>#{1000L*30}</delay>
+										<period>#{1000L*60*60*4}</period>
+										<periodOnDefault>#{1000L*60*60*4}</periodOnDefault>
+										<periodOnFailure>#{1000L*60*60*8}</periodOnFailure>
+										<cacheValidityPeriod>#{1000L*60*60*24}</cacheValidityPeriod>
+										<validityPeriod>#{1000L*60*60*24}</validityPeriod>
+										<serviceBlocked>false</serviceBlocked>
+										<dataFlowInvokable>true</dataFlowInvokable>
+										<runnableAfterDelay>true</runnableAfterDelay>
+									</statusParameters>
+								</method>																															
 							</methods>
 						</service>
 					</services>

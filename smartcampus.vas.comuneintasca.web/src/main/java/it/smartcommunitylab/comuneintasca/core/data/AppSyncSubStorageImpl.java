@@ -102,10 +102,10 @@ public class AppSyncSubStorageImpl extends GenericObjectSyncMongoStorage<AppSync
 		}
 		if (from != null || to != null) {
 			if (from != null) {
-				criteria.and("toTime").gte(from);
+				criteria.and("content.toTime").gte(from);
 			}
 			if (to != null) {
-				criteria.and("fromTime").lte(to);
+				criteria.and("content.fromTime").lte(to);
 			}
 		}
 		if (inCriteria != null) {

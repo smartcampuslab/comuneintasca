@@ -35,8 +35,6 @@ public class ObjectFilter {
 	private Long fromTime;
 	private Long toTime;
 	
-	private String className;
-
 	private Map<String,Object> criteria = null;
 	private SortedMap<String,Integer> sort = null;
 
@@ -66,14 +64,6 @@ public class ObjectFilter {
 
 	public void setCriteria(Map<String, Object> criteria) {
 		this.criteria = criteria;
-	}
-
-	public String getClassName() {
-		return className;
-	}
-
-	public void setClassName(String className) {
-		this.className = className;
 	}
 
 	/**

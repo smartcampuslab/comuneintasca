@@ -89,7 +89,7 @@ public class AppSyncSubStorageImpl extends GenericObjectSyncMongoStorage<AppSync
 		}
 		criteria.and("deleted").is(false);
 		if (circle != null) {
-			criteria.and("location").within(circle);
+			criteria.and("content.location").within(circle);
 		}
 		if (text != null && !text.isEmpty()) {
 			Criteria[] or = new Criteria[5];

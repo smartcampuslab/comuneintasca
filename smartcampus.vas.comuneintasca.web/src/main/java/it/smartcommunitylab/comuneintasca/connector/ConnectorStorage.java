@@ -66,11 +66,11 @@ public class ConnectorStorage {
 	}
 
 	public <T extends AppObject> List<T> getObjectsByType(Class<T> cls, String appId) throws DataException {
-		return getStorage().searchObjects(appId, cls, null, 0, -1);
+		return getStorage().searchObjects(appId, cls, null, null, null, null, null, null, null, 0, -1);
 //		return mongoTemplate.find(Query.query(Criteria.where("appId").is(appId).and(CLASS_FIELD).is(cls.getName())), cls, COLLECTION);
 	}
 	public <T extends AppObject> List<T> getObjectsByType(Class<T> cls, String classifier, String appId) throws DataException {
-		return getStorage().searchObjects(appId, cls, Collections.<String,Object>singletonMap("classifier", classifier), 0, -1);
+		return getStorage().searchObjects(appId, cls, null, null, null, null, null, Collections.<String,Object>singletonMap("classifier", classifier), null, 0, -1);
 //		return mongoTemplate.find(Query.query(Criteria.where("appId").is(appId).and(CLASS_FIELD).is(cls.getName()).and("classifier").is(classifier)), cls, COLLECTION);
 	}
 

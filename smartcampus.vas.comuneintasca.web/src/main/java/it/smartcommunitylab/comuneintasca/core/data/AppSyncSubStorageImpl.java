@@ -7,8 +7,13 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
 
 import org.bson.types.ObjectId;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
+import org.springframework.data.geo.Circle;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -46,15 +51,28 @@ public class AppSyncSubStorageImpl extends GenericObjectSyncMongoStorage<AppSync
 	@Override
 	public <T extends AppObject> List<T> searchObjects(String appId,
 			Class<T> inCls, 
+			Circle circle, 
+			String text, String lang,
+			Long from, Long to, 
 			Map<String, Object> inCriteria, 
+			SortedMap<String,Integer> sort, 
 			int limit, int skip) throws DataException 
 	{
-		Criteria criteria = createSearchCriteria(appId, inCls, inCriteria);
+		Criteria criteria = createSearchCriteria(appId, inCls, circle, text, lang, from, to, inCriteria);
 		Query query = Query.query(criteria);
 		if (limit > 0)
 			query.limit(limit);
 		if (skip > 0)
 			query.skip(skip);
+		if (sort != null && !sort.isEmpty()) {
+			Order[] orderings = new Order[sort.size()];
+			int i = 0;
+			for (String key : sort.keySet()) {
+				Order order = new Order(sort.get(key) > 0 ? Direction.ASC : Direction.DESC,"content."+key);
+				orderings[i++] = order;
+			}
+			query.with(new Sort(orderings));
+		}
 
 		Class<T> cls = inCls;
 		if (cls == null)
@@ -63,12 +81,33 @@ public class AppSyncSubStorageImpl extends GenericObjectSyncMongoStorage<AppSync
 		return find(query, cls);
 	}
 
-	private <T> Criteria createSearchCriteria(String appId, Class<T> cls, Map<String, Object> inCriteria) {
+	private <T> Criteria createSearchCriteria(String appId, Class<T> cls, Circle circle, String text, String lang,
+			Long from, Long to,  Map<String, Object> inCriteria) {
 		Criteria criteria = createBaseCriteria(appId);
 		if (cls != null) {
 			criteria.and("type").is(cls.getCanonicalName());
 		}
 		criteria.and("deleted").is(false);
+		if (circle != null) {
+			criteria.and("location").within(circle);
+		}
+		if (text != null && !text.isEmpty()) {
+			Criteria[] or = new Criteria[5];
+			or[0] = new Criteria("content.title."+lang).regex(text.toLowerCase(),"i");
+			or[1] = new Criteria("content.shortTitle."+lang).regex(text.toLowerCase(),"i");
+			or[2] = new Criteria("content.subtitle."+lang).regex(text.toLowerCase(),"i");
+			or[3] = new Criteria("content.description."+lang).regex(text.toLowerCase(),"i");
+			or[4] = new Criteria("content.info."+lang).regex(text.toLowerCase(),"i");
+			criteria.orOperator(or);
+		}
+		if (from != null || to != null) {
+			if (from != null) {
+				criteria.and("toTime").gte(from);
+			}
+			if (to != null) {
+				criteria.and("fromTime").lte(to);
+			}
+		}
 		if (inCriteria != null) {
 			for (String key : inCriteria.keySet()) {
 				criteria.and("content." + key).is(inCriteria.get(key));

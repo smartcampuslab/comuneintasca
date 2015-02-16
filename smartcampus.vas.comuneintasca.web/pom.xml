@@ -8,13 +8,19 @@
 	<name>Comune in Tasca webapp</name>
 
 	<properties>
-		<spring.version>3.1.3.RELEASE</spring.version>
+		<spring.version>4.0.6.RELEASE</spring.version>
 		<servicebus-core>1.3</servicebus-core>
 		<service-engine-client>1.4</service-engine-client>
-		<spring-security-version>3.1.0.RELEASE</spring-security-version>
+		<spring-security-version>3.2.4.RELEASE</spring-security-version>
 	</properties>
 
 	<dependencies>
+		<dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-log4j12</artifactId>
+		    <version>1.7.7</version>
+		</dependency>
+	
 		<dependency>
 			<groupId>org.apache.odftoolkit</groupId>
 			<artifactId>simple-odf</artifactId>
@@ -24,22 +30,17 @@
 		<!-- Servlet and lib -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>jsp-api</artifactId>
-			<version>2.1</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
 		</dependency>
 
+		<dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.13</version>
+        </dependency>
+		
 		<!-- Security -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -61,6 +62,12 @@
 			<groupId>it.sayservice.platform</groupId>
 			<artifactId>service-engine-client</artifactId>
 			<version>${service-engine-client}</version>
+			<exclusions>
+<!-- 			 <exclusion> -->
+<!-- 			     <groupId>org.slf4j</groupId> -->
+<!-- 			     <artifactId>slf4j-log4j12</artifactId> -->
+<!-- 			 </exclusion> -->
+			</exclusions>
 		</dependency>
 <!-- 		<dependency> -->
 <!-- 			<groupId>it.sayservice.platform</groupId> -->
@@ -70,7 +77,7 @@
 		<dependency>
 			<groupId>eu.trentorise.smartcampus</groupId>
 			<artifactId>syncstorage.web</artifactId>
-			<version>1.3</version>
+			<version>1.4</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
@@ -114,6 +121,16 @@
 			<artifactId>spring-aop</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
@@ -131,17 +148,33 @@
 	      <type>jar</type>
 	      <scope>compile</scope>
 	    </dependency>
+	    <dependency>
+	        <groupId>cglib</groupId>
+	        <artifactId>cglib</artifactId>
+	        <version>2.2.2</version>
+	    </dependency>
+	    
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
 	</dependencies>
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.6</version>
-				<configuration>
-					<skipTests>true</skipTests>
-				</configuration>
-			</plugin>
+		    <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -152,13 +185,13 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>comuneintasca</finalName>
+		<finalName>comuneintasca-multi</finalName>
 	</build>
 
 	<repositories>
 		<repository>
 			<id>SmartCampus-releases</id>
-			<url>http://repository.smartcampuslab.it/content/repositories/releases</url>
+			<url>http://repository.smartcommunitylab.it/content/repositories/releases</url>
 		</repository>
 	</repositories>
 

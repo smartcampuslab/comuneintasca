@@ -64,7 +64,7 @@ public class DataService {
 		if (classifier != null) {
 			criteria.put("classifier", classifier);
 		}
-		List<T> old = storage.searchDraftObjects(app, cls, null, criteria , null, 0, -1);
+		List<T> old = storage.searchDraftObjects(app, cls, null, null, null, null, null, criteria, null, 0, -1);
 		Map<String, AppObject> oldIds = new HashMap<String, AppObject>();
 		for (AppObject o : old) {
 			oldIds.put(o.getId(), o);
@@ -114,8 +114,8 @@ public class DataService {
 		if (classifier != null) {
 			criteria.put("classifier", classifier);
 		}
-		List<T> draftObjects = storage.searchDraftObjects(app, cls, null, criteria, null, 0, -1);
-		List<T> publishObjects = storage.searchObjects(app, cls, null, criteria, null, 0, -1);
+		List<T> draftObjects = storage.searchDraftObjects(app, cls, null, null, null, null, null, criteria, null, 0, -1);
+		List<T> publishObjects = storage.searchObjects(app, cls, null, null, null, null, null, criteria, null, 0, -1);
 
 		updatePublish(app, draftObjects, publishObjects);
 	}
@@ -156,7 +156,7 @@ public class DataService {
 	 */
 	public <T extends AppObject> List<T> getPublishedObjects(Class<T> cls, String app) {
 		try {
-			return storage.searchObjects(app, cls, null, null, null, 0, -1);
+			return storage.searchObjects(app, cls, null, null, null, null, null, null, null, 0, -1);
 		} catch (DataException e) {
 			return null;
 		}
@@ -169,7 +169,7 @@ public class DataService {
 	 */
 	public <T extends AppObject> List<T> getDraftObjects(Class<T> cls, String app) {
 		try {
-			return storage.searchDraftObjects(app, cls, null, null, null, 0, -1);
+			return storage.searchDraftObjects(app, cls, null, null, null, null, null, null, null, 0, -1);
 		} catch (DataException e) {
 			return null;
 		}

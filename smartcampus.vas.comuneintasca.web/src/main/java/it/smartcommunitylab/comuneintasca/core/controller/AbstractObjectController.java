@@ -24,29 +24,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.geo.Circle;
 
 public class AbstractObjectController {
-
-	private static final String SEARCH_FILTER_PARAM = "filter";
 
 	@Autowired
 	protected AppSyncStorage storage;
 
 	protected Log logger = LogFactory.getLog(this.getClass());
 
-	public <T extends BaseCITObject> List<T> getAllObject(String appId, HttpServletRequest request, Class<T> cls) throws Exception {
+	public <T extends BaseCITObject> List<T> getAllObject(String appId, ObjectFilter filterObj, Class<T> cls) throws Exception {
 		try {
-			ObjectFilter filterObj = null;
 			Map<String, Object> criteria = null;
-			String filter = request.getParameter(SEARCH_FILTER_PARAM);
-			if (filter != null) {
-				filterObj = new ObjectMapper().readValue(filter, ObjectFilter.class);
+			if (filterObj != null) {
 				criteria = filterObj.getCriteria() != null ? filterObj.getCriteria() : new HashMap<String, Object>();
 				if (filterObj.getCategories() != null && !filterObj.getCategories().isEmpty()) {
 					criteria.put("category",
@@ -64,11 +57,20 @@ public class AbstractObjectController {
 			if (filterObj.getLimit() == null || filterObj.getLimit() < 0) {
 				filterObj.setLimit(100);
 			} 
+			Circle circle = null;
+			if (filterObj.getCenter() != null && filterObj.getRadius() != null) {
+				circle = new Circle(filterObj.getCenter()[0],
+						filterObj.getCenter()[1], filterObj.getRadius());
+			}
 
 			List<T> objects = null;
 
 			objects = storage.searchObjects(appId, (Class<T>) cls,
-					filterObj.getText(), criteria, filterObj.getSort(),
+					circle,
+					filterObj.getText(), filterObj.getLang(), 
+					filterObj.getFromTime(),
+					filterObj.getToTime(),
+					criteria, filterObj.getSort(),
 					filterObj.getLimit(), filterObj.getSkip());
 
 			if (objects != null) {

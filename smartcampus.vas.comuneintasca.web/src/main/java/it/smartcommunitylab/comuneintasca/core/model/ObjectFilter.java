@@ -27,6 +27,13 @@ public class ObjectFilter {
 	private Integer skip;
 	
 	private String text;
+	private String lang;
+
+	private double[] center;
+	private Double radius;
+	
+	private Long fromTime;
+	private Long toTime;
 	
 	private String className;
 
@@ -97,5 +104,45 @@ public class ObjectFilter {
 
 	public void setCategories(List<String> categories) {
 		this.categories = categories;
+	}
+
+	public String getLang() {
+		return lang;
+	}
+
+	public void setLang(String lang) {
+		this.lang = lang;
+	}
+
+	public double[] getCenter() {
+		return center;
+	}
+
+	public void setCenter(double[] center) {
+		this.center = center;
+	}
+
+	public Double getRadius() {
+		return radius;
+	}
+
+	public void setRadius(Double radius) {
+		this.radius = radius;
+	}
+
+	public Long getFromTime() {
+		return fromTime;
+	}
+
+	public void setFromTime(Long fromTime) {
+		this.fromTime = fromTime;
+	}
+
+	public Long getToTime() {
+		return toTime;
+	}
+
+	public void setToTime(Long toTime) {
+		this.toTime = toTime;
 	}
 }

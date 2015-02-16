@@ -24,6 +24,7 @@ import java.util.SortedMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.geo.Circle;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Component;
 
@@ -62,20 +63,22 @@ public class AppSyncStorageImpl implements AppSyncStorage {
 
 	@Override
 	public <T extends AppObject> List<T> searchObjects(String appId,
-			Class<T> cls, String text, 
+			Class<T> cls, Circle circle, String text, String lang,
+			Long from, Long to, 
 			Map<String, Object> criteria, SortedMap<String, Integer> sort,
 			int limit, int skip) throws DataException {
-		return publishStorage.searchObjects(appId, cls, criteria, limit, skip);
+		return publishStorage.searchObjects(appId, cls, circle, text, lang, from, to, criteria, sort, limit, skip);
 	}
 
 
 
 	@Override
 	public <T extends AppObject> List<T> searchDraftObjects(String appId,
-			Class<T> cls, String text, 
+			Class<T> cls, Circle circle, String text, String lang,
+			Long from, Long to, 
 			Map<String, Object> criteria, SortedMap<String, Integer> sort,
 			int limit, int skip) throws DataException {
-		return draftStorage.searchObjects(appId, cls, criteria, limit, skip);
+		return draftStorage.searchObjects(appId, cls, circle, text, lang, from, to, criteria, sort, limit, skip);
 	}
 
 	@Override

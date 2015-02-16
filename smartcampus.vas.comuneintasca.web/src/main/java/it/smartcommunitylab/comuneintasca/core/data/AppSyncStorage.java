@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 
+import org.springframework.data.geo.Circle;
+
 import eu.trentorise.smartcampus.presentation.common.exception.DataException;
 import eu.trentorise.smartcampus.presentation.data.SyncData;
 
@@ -29,8 +31,20 @@ public interface AppSyncStorage {
 	SyncData getSyncAppData(long since, String appId, Map<String,Object> include, Map<String,Object> exclude) throws DataException;
 	SyncData getSyncAppDraftData(long since, String appId, Map<String,Object> include, Map<String,Object> exclude) throws DataException;
 
-	public <T extends AppObject> List<T> searchObjects(String appId, Class<T> cls, String text, Map<String, Object> criteria, SortedMap<String,Integer> sort, int limit, int skip) throws DataException; 
-	public <T extends AppObject> List<T> searchDraftObjects(String appId, Class<T> cls, String text, Map<String, Object> criteria, SortedMap<String,Integer> sort, int limit, int skip) throws DataException; 
+	public <T extends AppObject> List<T> searchObjects(String appId, Class<T> cls, 
+			Circle circle,
+			String text, 
+			String lang,
+			Long from, Long to, 
+			Map<String, Object> criteria, 
+			SortedMap<String,Integer> sort, int limit, int skip) throws DataException; 
+	public <T extends AppObject> List<T> searchDraftObjects(String appId, Class<T> cls, 
+			Circle circle,
+			String text, 
+			String lang,
+			Long from, Long to, 
+			Map<String, Object> criteria, 
+			SortedMap<String,Integer> sort, int limit, int skip) throws DataException; 
 	
 	public List<AppObject> getAllAppObjects(String appId) throws DataException;
 	public AppObject getObjectById(String id, String appId) throws DataException;

@@ -149,6 +149,9 @@ angular.module('ilcomuneintasca.controllers.home', [])
         var rows=[], row=-1, pos=0;
         for (ii=0; ii<items.length; ii++) {
           items[ii]['pos']=pos;
+          if (Config.navItemMap()[items[ii].id]) {
+            items[ii].id = Config.navItemMap()[items[ii].id];
+          }
           pos++;
           if ((ii%2)==0) {
             row++;

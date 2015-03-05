@@ -9,21 +9,43 @@ angular.module('ilcomuneintasca.services.conf', [])
   $rootScope.DEV=DEVELOPMENT;
   // $rootScope.DEV=true;
 
-  var APP_VERSION='3.1.0';
-  var APP_BUILD='';
-  
   var SYNC_WEBAPP='comuneintasca-multi';
   var SCHEMA_VERSION=111;
   var HOME_HIGHLIGHTS_MAX=6;
   var SYNC_HOST="tn";
-  if (DEVELOPMENT) SYNC_HOST="vas-dev";
+  if (DEVELOPMENT) SYNC_HOST="dev";
   var LOCAL_PROFILE="opencontent";
-  var WEBAPP_MULTI="TrentoInTasca";
   
   // customization parameters
+//  // RICADI
+//  var APP_VERSION='0.1.0';
+//  var APP_BUILD='';
+//  var WEBAPP_MULTI="RicadiInTasca";
+//  var cityName = { 'it':'Ricadi', 'en':'Ricadi', 'de':'Ricadi' };
+//  var imagePath = 'http://www.comune.trento.it/var/comunetn';
+//  var dbName = 'ricadi';
+//  var nvItemMap = {
+//    'ee123e0729fc6394020850129e3e22e0':'conoscere', 
+//    '936d735838e60e33ae940de691580991':'visitare',
+//    'cd3b58dfb21537fa0b720d89bf6af0a0':'mangiare_e_dormire',
+//    '5f9cba3a3562635835dae003b95e30fd':'info_utili'
+//  };
+  // TRENTO
+  var APP_VERSION='3.1.0';
+  var APP_BUILD='';
+  var WEBAPP_MULTI="TrentoInTasca";
   var cityName = { 'it':'Trento', 'en':'Trento', 'de':'Trento' };
   var imagePath = 'http://www.comune.trento.it/var/comunetn';
   var dbName = 'Trento';
+  var nvItemMap = {
+    'profile_cit_csvimport_Viaggia_Trento_item_comuneintasca':'viaggia_trento', 
+    'profile_cit_csvimport_Visitare_item_comuneintasca':'visitare',
+    'profile_cit_csvimport_Mangiare_e_dormire_item_comuneintasca':'mangiare_e_dormire',
+    'profile_cit_csvimport_Info_utili_item_comuneintasca':'info_utili',
+    'profile_cit_csvimport_Eventi_item_comuneintasca':'eventi',
+    'profile_cit_2cc4db1674d9e8994658eac954355d31':'conoscere',
+    'profile_cit_csvimport_Percorsi_item_comuneintasca':'percorsi'  
+  };
   
   function parseConfig(config) {
     if (config) {
@@ -814,7 +836,6 @@ angular.module('ilcomuneintasca.services.conf', [])
     textTypesList: function () {
       return textTypes;
     },
-
     hotelTypesList: function () {
       return hotelTypes;
     },
@@ -893,6 +914,9 @@ angular.module('ilcomuneintasca.services.conf', [])
     },
     doProfiling: function () {
       return false;
+    },
+    navItemMap: function() {
+      return nvItemMap ? nvItemMap : {};
     }
   }
 })

@@ -1,20 +1,21 @@
 angular.module('ilcomuneintasca.services.db', [])
 
-.factory('DatiDB', function ($q, $http, $rootScope, $filter, $timeout, Config, Files, Profiling, GeoLocate, $ionicLoading) {
+.factory('DatiDB', function ($q, $http, $rootScope, $filter, $timeout, $window, Config, Files, Profiling, GeoLocate, $ionicLoading) {
   var SCHEMA_VERSION = Config.schemaVersion();
   var types = Config.contentTypesList();
-  var EVENTS_CATE_FROM_IT=true;
-  var POI_CATE_FROM_IT=true;
 
   var parseDbRow = function (dbrow) {
     //comment out this line to profile each function call
+    //Profiling.start('dbparse.total');
     //Profiling.start('dbparse');
 
     //console.log('dbrow.id: '+dbrow.id);
     var item = JSON.parse(dbrow.data);
+    Profiling._do('dbparse','json');
 
 		if (dbrow.parentid) {
 			item['parentid']=dbrow.parentid;
+			item['parenttype']=dbrow.parenttype;
 			item['parent']=JSON.parse(dbrow.parent);
 		}
 		item['sonscount']=dbrow.sonscount;
@@ -38,9 +39,22 @@ angular.module('ilcomuneintasca.services.db', [])
           //console.log('abslink: '+item['abslink']);
           item['menu'] = sg;
         } else {
-          console.log('sg NULL!');
-          console.log('dbtype: '+dbtype);
-          console.log('dbrow.classification: '+dbrow.classification);
+          //console.log('searching submenu without classification...');
+          Config.menuGroupSubgroupByTypeAndClassification(dbtype).then(function(sg){
+            if (sg) {
+              item['abslink'] = '#/app/page/'+sg._parent.id+'/'+sg.id+'/' + item.id;
+              //console.log('#2 abslink: '+item['abslink']);
+              item['menu'] = sg;
+            } else {
+              console.log('sg NULL!');
+              console.log('dbtype: '+dbtype);
+              console.log('dbrow.classification: '+dbrow.classification);
+            }
+          },function(){
+            console.log('#2 sg NOT FOUND!');
+            console.log('#2 dbtype: '+dbtype);
+            console.log('#2 dbrow.classification: '+dbrow.classification);
+          });
         }
       },function(){
         console.log('sg NOT FOUND!');
@@ -79,12 +93,12 @@ angular.module('ilcomuneintasca.services.db', [])
       });
 
     } else if (dbtype == 'restaurant') {
-      if (item.dbClassification != '') item.dbClassification = Config.restaurantCateFromDbClassification(item.dbClassification);
-      if (item.dbClassification2 != '') item.dbClassification2 = Config.restaurantCateFromDbClassification(item.dbClassification2);
-      if (item.dbClassification3 != '') item.dbClassification3 = Config.restaurantCateFromDbClassification(item.dbClassification3);
+      if (item.dbClassification != '') item.dbClassification = Config.restaurantCateFromType(item.dbClassification);
+      if (item.dbClassification2 != '') item.dbClassification2 = Config.restaurantCateFromType(item.dbClassification2);
+      if (item.dbClassification3 != '') item.dbClassification3 = Config.restaurantCateFromType(item.dbClassification3);
 
     } else if (dbtype == 'hotel') {
-      //NO-OP
+      if (item.dbClassification != '') item.dbClassification = Config.hotelCateFromType(item.dbClassification);
 
     } else if (dbtype == 'itinerary') {
       //NO-OP
@@ -113,8 +127,9 @@ angular.module('ilcomuneintasca.services.db', [])
 
     if (dbrow.fromTime > 0) item['fromTime'] = dbrow.fromTime;
     if (dbrow.toTime > 0) item['toTime'] = dbrow.toTime;
-    Profiling._do('dbparse','location');
+    Profiling._do('dbparse','time');
 
+    Profiling._do('dbparse.total');
     return item;
   };
 
@@ -122,8 +137,7 @@ angular.module('ilcomuneintasca.services.db', [])
   if (localStorage.currentSchemaVersion) currentSchemaVersion = Number(localStorage.currentSchemaVersion);
   //console.log('currentSchemaVersion: ' + currentSchemaVersion);
 
-  var currentDbVersion = 0,
-    lastSynced = -1;
+  var currentDbVersion = 0, lastSynced = -1;
   if (currentSchemaVersion == SCHEMA_VERSION) {
     if (localStorage.currentDbVersion) currentDbVersion = Number(localStorage.currentDbVersion);
     if (localStorage.lastSynced) lastSynced = Number(localStorage.lastSynced);
@@ -136,15 +150,13 @@ angular.module('ilcomuneintasca.services.db', [])
     url: 'data/data.json',
     remote: false
   };
-
-  var remoteSyncURL = Config.syncUrl()+'?since=';
   var remoteSyncOptions = {
     method: 'POST',
-    url: remoteSyncURL + currentDbVersion,
+    url: Config.syncUrl() + currentDbVersion,
     data: '{"updated":{}}',
     remote: true
   };
-  //console.log('remoteSyncOptions.url: '+remoteSyncOptions.url);
+  console.log('remoteSyncOptions.url: '+remoteSyncOptions.url);
 
   var dbObj;
 
@@ -156,14 +168,14 @@ angular.module('ilcomuneintasca.services.db', [])
       //console.log('cordova db inited...');
       dbObj = window.sqlitePlugin.openDatabase({
         name: dbName,
-        /*bgType: 0,*/ 
+        bgType: 1,
         skipBackup: true
       });
       dbopenDeferred.resolve(dbObj);
     }, false);
   } else {
     //console.log('web db...');
-    dbObj = window.openDatabase(dbName, '1.0', Config.dbName()+' - Il Comune in Tasca', 5 * 1024 * 1024);
+    dbObj = window.openDatabase(dbName, '1.0', dbName+' - Il Comune in Tasca', 5 * 1024 * 1024);
 //    remoteSyncOptions = localSyncOptions;
     dbopenDeferred.resolve(dbObj);
   }
@@ -175,12 +187,13 @@ angular.module('ilcomuneintasca.services.db', [])
       console.log('initializing database...');
       dbObj.transaction(function (tx) {
         // if favs schema changes, we need to specify some special changes to perform to upgrade it
-        if (currentSchemaVersion==0) {
-          tx.executeSql('DROP TABLE IF EXISTS Favorites');
-          console.log('favorites table created')
-          tx.executeSql('CREATE TABLE IF NOT EXISTS Favorites (id text primary key)');
-          tx.executeSql('CREATE INDEX IF NOT EXISTS fav_id ON Favorites( id )');
-        }
+        //if (currentSchemaVersion==0) {
+          //tx.executeSql('DROP TABLE IF EXISTS Favorites');
+          //console.log('favorites table dropped')
+        //}
+        tx.executeSql('CREATE TABLE IF NOT EXISTS Favorites (id text primary key)');
+        tx.executeSql('CREATE INDEX IF NOT EXISTS fav_id ON Favorites( id )');
+        console.log('favorites table done')
 
         tx.executeSql('DROP TABLE IF EXISTS ContentObjects');
         console.log('contents table created')
@@ -258,7 +271,7 @@ angular.module('ilcomuneintasca.services.db', [])
   return {
 		reset: function () { 
       if (!ionic.Platform.isWebView() || navigator.connection.type != Connection.NONE) {
-        localStorage.cachedProfile=null;
+        //localStorage.cachedProfile=null;
         localStorage.lastSynced=lastSynced=-1;
       } else {
         console.log('cannot reset db: offline!');
@@ -269,10 +282,28 @@ angular.module('ilcomuneintasca.services.db', [])
         console.log('DB not resetted.');
       });
 		},
-		fullreset: function () { 
+		fullreset: function (cb) { 
 			localStorage.currentDbVersion=currentDbVersion=0;
-			return this.reset().then(function(){
+      localStorage.cachedProfile=null;
+      var loading = $ionicLoading.show({
+        template: $filter('translate')(Config.keys()['loading']),
+        delay: 400,
+        duration: Config.loadingOverlayTimeoutMillis()
+      });
+      return this.reset().then(function(){
         console.log('DB FULL-RESET completed.');
+      });
+		},
+		remotereset: function (cb) { 
+			localStorage.currentDbVersion=currentDbVersion=1;
+      localStorage.cachedProfile=null;
+      var loading = $ionicLoading.show({
+        template: $filter('translate')(Config.keys()['loading']),
+        delay: 400,
+        duration: Config.loadingOverlayTimeoutMillis()
+      });
+      return this.reset().then(function(){
+        console.log('DB REMOTE-RESET completed.');
       });
 		},
     sync: function () {
@@ -314,7 +345,7 @@ angular.module('ilcomuneintasca.services.db', [])
             //} else if (!currentSyncOptions || currentSyncOptions.remote) {
             } else {
               currentSyncOptions = remoteSyncOptions;
-              currentSyncOptions.url = remoteSyncURL + currentDbVersion;
+              currentSyncOptions.url = Config.syncUrl() + currentDbVersion;
             }
             console.log('currentSyncOptions: ' + JSON.stringify(currentSyncOptions));
 
@@ -373,123 +404,76 @@ angular.module('ilcomuneintasca.services.db', [])
                         //console.log('event fromTime: ' + fromTime);
                         //console.log('event toTime: ' + toTime);
 
-                        if (item.eventForm=='Manifestazione') {
-                          //console.log('*** Manifestazione ***: '+item.title.it);
-                          classified.resolve(['_complex','','']);
-                        } else {
-                          if (item.parentEventId) {
-                            var parentEvent=item.parentEventId;
-                            if (typeof parentEvent == "string") {
-                              try {
-                                parentEvent=JSON.parse(parentEvent);
-                              } catch(err) {
-                                console.log('unparsable parentEvent string for item '+item.id+'/'+item.objectId+': '+parentEvent);
-                                console.log(err);
-                                parentEvent = {};
-                              }  
-                            }
-                            if (parentEvent.objectRemoteId) {
-                              parentid=parentEvent.objectRemoteId;
-                            }
+                        if (item.parentEventId) {
+                          var parentEvent=item.parentEventId;
+                          if (typeof parentEvent == "string") {
+                            try {
+                              parentEvent=JSON.parse(parentEvent);
+                            } catch(err) {
+                              console.log('unparsable parentEvent string for item '+item.id+'/'+item.objectId+': '+parentEvent);
+                              console.log(err);
+                              parentEvent = {};
+                            }  
                           }
-                          //console.log('event parent id: ' + parentid);
-
-                          //console.log('event cate: ' + item.category);
-                          if (item.category) {
-                            if (EVENTS_CATE_FROM_IT) {
-                              classified.resolve([item.category,'','']);
-                            } else {
-                              Config.menuGroupSubgroupByLocaleName('eventi','it',item.category).then(function(sg){
-                                if (sg) {
-                                  //console.log('content db sg classification: '+sg.id);
-                                  classified.resolve([sg.id,'','']);
-                                } else {
-                                  console.log('content db sg classification is NULL for event cate: '+classification);
-                                  classified.resolve(['misc','','']);
-                                }
-                              });
-                            }
-                          } else {
-                            console.log('content db category is NULL for item: '+item.id);
-                            classified.resolve(['misc','','']);
+                          if (parentEvent.objectRemoteId) {
+                            parentid=parentEvent.objectRemoteId;
                           }
                         }
-                      } else if (contentTypeKey == 'servizio_sul_territorio') {
-                          classified.resolve([item.classification.it,'','']);
+                        //if (parentid) console.log('event parent id: ' + parentid);
+
+                        //console.log('event cate: ' + item.category);
+                        if (item.category) {
+                          classified.resolve([item.category,'','']);
+                        } else {
+                          console.log('content db category is NULL for item: '+item.id);
+                          classified.resolve(['misc','','']);
+                        }
+
+                      } else if (contentTypeKey == 'content') {
+                        if (typeof item.classification === 'object') classification = item.classification.it;
+                        else classification = item.classification;
+
+                      } else if (contentTypeKey == 'mainevent') {
+                        classification = item.classification.it;
+                        item.category = 'mainevent';
+
+                        /*
+                        fromTime = item.fromDate;
+                        if (item.toDate > 0) toTime = item.toDate;
+                        else toTime = fromTime;
+                        console.log('event fromTime: ' + fromTime);
+                        console.log('event toTime: ' + toTime);
+                        */
+
+                      } else if (contentTypeKey == 'hotel') {
+                        classification = Config.hotelTypeFromCate(item.classification.it);
+
+                      } else if (contentTypeKey == 'restaurant') {
+                        if (item.classification.it.indexOf(',')!=-1) {
+                          classifications = item.classification.it.split(',');
+                        } else {
+                          classifications = item.classification.it.split(';');
+                        }
+                        classification = Config.restaurantTypeFromCate(classifications[0].trim());
+                        if (classifications.length > 1) {
+                          classification2 = Config.restaurantTypeFromCate(classifications[1].trim());
+                          if (classifications.length > 2) {
+                            classification3 = Config.restaurantTypeFromCate(classifications[2].trim());
+                          }
+                        }
+                        item.category = 'ristorazione';
                       } else if (contentTypeKey == 'poi') {
-                        if (POI_CATE_FROM_IT) {
-                          classified.resolve([item.classification.it,'','']);
-                        } else {
-                          //category fix for opencontent data
-                          switch (item.classification.it) {
-                            //case 'Altri siti di interesse storico artistico':
-                            //  item.classification.it='Edifici storici';
-                            //  break;
-                            case 'Edificio storico':
-                              item.classification.it='Edifici storici';
-                              break;
-                            case 'Chiesa':
-                              item.classification.it='Chiese';
-                              break;
-                            case 'Museo':
-                              item.classification.it='Musei';
-                              break;
-                            case 'Area archeologica':
-                            case 'Aree archeologiche':
-                              item.classification.it='Aree Archeologiche';
-                              break;
-                          }
-                          Config.menuGroupSubgroupByLocaleName('visitare','it',item.classification.it).then(function(sg){
-                            if (sg) {
-                              //console.log('content db sg classification: '+sg.id);
-                              classified.resolve([sg.id,'','']);
-                            } else {
-                              console.log('content db sg classification is NULL for place cate: '+item.classification.it);
-                              classified.resolve(['unknown','','']);
-                            }
-                          });
-                        }
-                      } else {
-                        if (contentTypeKey == 'content') {
-                          if (typeof item.classification === 'object') classification = item.classification.it;
-                          else classification = item.classification;
+                        classification = item.classification.it;
 
-                        } else if (contentTypeKey == 'mainevent') {
-                          classification = item.classification.it;
-                          item.category = 'mainevent';
+                      } else if (contentTypeKey == 'servizio_sul_territorio') {
+                        classification = item.classification.it;
 
-                          /*
-                          fromTime = item.fromDate;
-                          if (item.toDate > 0) toTime = item.toDate;
-                          else toTime = fromTime;
-                          console.log('event fromTime: ' + fromTime);
-                          console.log('event toTime: ' + toTime);
-                          */
-
-                        } else if (contentTypeKey == 'hotel') {
-                          classification = Config.hotelTypeFromCate(item.classification.it);
-
-                        } else if (contentTypeKey == 'restaurant') {
-                          if (item.classification.it.indexOf(',')!=-1) {
-                            classifications = item.classification.it.split(',');
-                          } else {
-                            classifications = item.classification.it.split(';');
-                          }
-                          classification = Config.restaurantTypeFromCate(classifications[0].trim());
-                          if (classifications.length > 1) {
-                            classification2 = Config.restaurantTypeFromCate(classifications[1].trim());
-                            if (classifications.length > 2) {
-                              classification3 = Config.restaurantTypeFromCate(classifications[2].trim());
-                            }
-                          }
-                          item.category = 'ristorazione';
-                        }
-
-                        //console.log('classification: ' + classification);
-                        //console.log('classification2: ' + classification2);
-                        //console.log('classification3: ' + classification3);
-                        classified.resolve([classification,classification2,classification3]);
                       }
+                      //console.log('classification: ' + classification);
+                      //console.log('classification2: ' + classification2);
+                      //console.log('classification3: ' + classification3);
+                      classified.resolve([classification,classification2,classification3]);
+
                       objsReady.push(classified.promise.then(function(clfs){
                         values = [item.id, item.objectId, parentid, item.version, contentTypeClassName, item.category, clfs[0], clfs[1], clfs[2], JSON.stringify(item), ((item.location && item.location.length == 2) ? item.location[0] : -1), ((item.location && item.location.length == 2) ? item.location[1] : -1), fromTime, toTime];
                         itemsToInsert.push(values)
@@ -503,17 +487,16 @@ angular.module('ilcomuneintasca.services.db', [])
 
                 });
 
+                var insertsPromise = $q.defer();
+                var deletionsPromise = $q.defer();
+
                 $q.all(objsReady).then(function(){
+                  //console.log('itemsToInsert.length: '+itemsToInsert.length);
                   dbObj.transaction(function (tx) {
                     angular.forEach(itemsToInsert, function (rowData, rowIdx) {
                       tx.executeSql('DELETE FROM ContentObjects WHERE id=?', [rowData[0]], function (tx, res) { //success callback
                         tx.executeSql('INSERT INTO ContentObjects (id, objid, parentid, version, type, category, classification, classification2, classification3, data, lat, lon, fromTime, toTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', rowData, function (tx, res) { //success callback
-                          //if (rowData[4].indexOf('.ItineraryObject')!=-1) {
-
-                          //console.log('inserted obj ('+rowData[4]+') with id: ' + rowData[0]);
-                          //console.log('inserted obj: ' + JSON.stringify(rowData));
-
-                          //}
+                          console.log('inserted obj ('+rowData[4]+') with id: ' + rowData[0]);
                         }, function (e) { //error callback
                           console.log('unable to insert obj with id ' + rowData[0] + ': ' + e.message);
                         });
@@ -521,10 +504,17 @@ angular.module('ilcomuneintasca.services.db', [])
                         console.log('unable to delete obj with id ' + rowData[0] + ': ' + e.message);
                       });
                     });
+                  }, function (err) { //error callback
+                    console.log('cannot do inserts: '+err.message);
+                    insertsPromise.reject();
+                  }, function () { //success callback
+                    console.log('inserted');
+                    insertsPromise.resolve();
+                  });
 
+                  dbObj.transaction(function (tx) {
                     angular.forEach(types, function (contentTypeClassName, contentTypeKey) {
                       //console.log('DELETIONS[' + contentTypeKey + ']: ' + contentTypeClassName);
-
                       if (!angular.isUndefined(data.deleted[contentTypeClassName])) {
                         deletions = data.deleted[contentTypeClassName];
                         console.log('DELETIONS[' + contentTypeKey + ']: ' + deletions.length);
@@ -538,11 +528,10 @@ angular.module('ilcomuneintasca.services.db', [])
                           });
                         });
                       } else {
-                        //console.log('nothing to delete');
+                        console.log('nothing to delete for "'+contentTypeKey+'"');
                       }
                     });
 
-                    // events cleanup
                     var nowTime = new Date();
                     //console.log('[EVENTS CLEANUP] nowTime=' + nowTime);
                     var yesterdayTime = new Date(nowTime.getFullYear(), nowTime.getMonth(), nowTime.getDate(), 0, 0, 0, 0).getTime();
@@ -554,13 +543,16 @@ angular.module('ilcomuneintasca.services.db', [])
                     });
 
                   }, function (err) { //error callback
-                    console.log('cannot update db: '+err);
-                    $ionicLoading.hide();
-                    Profiling._do('dbsync');
-                    syncinprogress=null;
-                    syncronization.reject();
+                    console.log('cannot do deletions: '+err.message);
+                    deletionsPromise.reject();
                   }, function () { //success callback
-                    //console.log('synced');
+                    console.log('deletions done');
+                    deletionsPromise.resolve();
+                  });
+
+                }).then(function(){
+                  console.log('waiting for insertsPromise &deletionsPromise...');
+                  $q.all([insertsPromise.promise, deletionsPromise.promise]).then(function(){
                     $ionicLoading.hide();
                     currentDbVersion = nextVersion;
                     localStorage.currentDbVersion = currentDbVersion;
@@ -569,6 +561,11 @@ angular.module('ilcomuneintasca.services.db', [])
                     syncinprogress=null;
                     syncronization.resolve(currentDbVersion);
                   });
+                },function(err){
+                  $ionicLoading.hide();
+                  Profiling._do('dbsync');
+                  syncinprogress=null;
+                  syncronization.reject();
                 });
 
               } else {
@@ -597,7 +594,7 @@ angular.module('ilcomuneintasca.services.db', [])
       });
       return syncronization.promise;
     },
-    all: function (dbname) {
+    all: function (dbname, parentId) {
       var data = $q.defer();
       this.sync().then(function (dbVersion) {
         Profiling.start('dball');
@@ -611,18 +608,38 @@ angular.module('ilcomuneintasca.services.db', [])
         dbObj.transaction(function (tx) {
           //console.log('[DB.all()] dbname: '+dbname);
 
-					var _complex=undefined;
+          var parentIdCond,parentIds;
+          if (parentId) {
+            var parentIds=parentId.split(',')
+            if (parentId.indexOf(',') == -1) {
+              parentIdCond = 'c.parentid=?';
+            } else {
+              for (i in parentIds) parentIds[i] = '?';
+              parentIdCond = 'c.parentid IN (' + itemsIds.join() + ')';
+            }
+          }
+          //console.log('parentIdCond: '+parentIdCond);
+
+          var _complex=undefined;
           if (dbname=='event') {
             _complex=false;
           }
 
-          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount' +
+          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.type AS parenttype, p.data AS parent, count(s.id) as sonscount' +
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id' +
             ' WHERE c.type=? ' +
+						(parentIdCond ? ' AND '+parentIdCond : '') + 
             (_complex==undefined ? '' : ' AND c.classification' + (_complex?'=':'!=') + "'_complex'" ) + 
 						' GROUP BY c.id';
+          var params = [ types[dbname] ];
+          if (parentId) {
+            for (i in parentIds) params.push(parentIds[i]);
+          }
+
           //console.log('[DB.all()] sql: '+sql);
-          tx.executeSql(sql, [types[dbname]], function (tx, results) {
+          //console.log('[DB.all()] params: '+params);
+
+          tx.executeSql(sql, params, function (tx, results) {
             Profiling._do('dball','sql');
             var len = results.rows.length,
               i;
@@ -651,13 +668,13 @@ angular.module('ilcomuneintasca.services.db', [])
       });
       return data.promise;
     },
-    cate: function (dbname, cateId) {
+    cate: function (dbname, cateId, parentId) {
       var data = $q.defer();
       this.sync().then(function (dbVersion) {
         Profiling.start('dbcate');
         var loading = $ionicLoading.show({
           template: $filter('translate')(Config.keys()['loading']),
-          delay: 600,
+          delay: 200,
           duration: Config.loadingOverlayTimeoutMillis()
         });
 
@@ -666,7 +683,19 @@ angular.module('ilcomuneintasca.services.db', [])
           //console.log('[DB.cate()] dbname: '+dbname);
           //console.log('[DB.cate()] cateId: ' + cateId);
 
-					var _complex=undefined;
+          var parentIdCond,parentIds;
+          if (parentId) {
+            var parentIds=parentId.split(',')
+            if (parentId.indexOf(',') == -1) {
+              parentIdCond = 'c.parentid=?';
+            } else {
+              for (i in parentIds) parentIds[i] = '?';
+              parentIdCond = 'c.parentid IN (' + itemsIds.join() + ')';
+            }
+          }
+          //console.log('parentIdCond: '+parentIdCond);
+
+          var _complex=undefined;
           if (dbname=='event') {
             if (cateId && cateId=='_complex') {
               _complex=true;
@@ -679,21 +708,30 @@ angular.module('ilcomuneintasca.services.db', [])
           var min_toTime = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0).getTime() - 1;
 
 /*
-          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount ' +
+          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.type AS parenttype, p.data AS parent, count(s.id) as sonscount ' +
 						'FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id' +
             ' WHERE c.type=? ' +
             (_complex==undefined ? (cateId ? ' AND c.classification=?' : '') : ' AND c.classification' + (_complex?'=':'!=') + "'_complex'" ) + 
 						' GROUP BY c.id';
           var params = (cateId ? [types[dbname], cateId] : [types[dbname]]);
 */
-          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount ' +
+          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.type AS parenttype, p.data AS parent, count(s.id) as sonscount ' +
 						'FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id' +
             ' WHERE c.type=? ' +
+						(parentIdCond ? ' AND '+parentIdCond : '') + 
 						(cateId ? ' AND (c.classification=? OR c.classification2=? OR c.classification3=?)' : '') + 
             ' AND (s.id IS NULL OR s.toTime > ' + min_toTime + ')' +
             (_complex==undefined ? '' : ' AND c.classification' + (_complex?'=':'!=') + "'_complex'" ) + 
 						' GROUP BY c.id';
-          var params = (cateId ? [types[dbname], cateId, cateId, cateId] : [types[dbname]]);
+          var params = [ types[dbname] ];
+          if (parentId) {
+            for (i in parentIds) params.push(parentIds[i]);
+          }
+          if (cateId) {
+            params.push(cateId);
+            params.push(cateId);
+            params.push(cateId);
+          }
 
           //console.log('[DB.cate()] sql: '+sql);
           //console.log('[DB.cate()] params: '+params);
@@ -704,10 +742,11 @@ angular.module('ilcomuneintasca.services.db', [])
               i;
             for (i = 0; i < len; i++) {
               var item = cateResults.rows.item(i);
-              lista.push(parseDbRow(item));
+              //lista.push(parseDbRow(item));
+              lista.push(item);
             }
-            Profiling._do('dbcate','parse');
-            data.resolve(lista);
+            Profiling._do('dbcate','lista');
+            //data.resolve(lista);
           }, function (tx2, err) {
             $ionicLoading.hide();
             console.log('cate data error!');
@@ -722,19 +761,23 @@ angular.module('ilcomuneintasca.services.db', [])
           data.reject(error);
         }, function () { //success callback
           $ionicLoading.hide();
-          Profiling._do('dbcate');
+          Profiling._do('dbcate','tx success');
+
+          for (i in lista) lista[i]=parseDbRow(lista[i]);
+          Profiling._do('dbcate','parse');
+          
           data.resolve(lista);
         });
       });
       return data.promise;
     },
-    byTimeInterval: function (dbname, fromTime, toTime, cateId, objContext) {
+    byTimeInterval: function (dbname, fromTime, toTime, cateId, objContext, parentId) {
       var data = $q.defer();
       this.sync().then(function (dbVersion) {
         Profiling.start('byTimeInterval');
         var loading = $ionicLoading.show({
           template: $filter('translate')(Config.keys()['loading']),
-          delay: 600,
+          delay: 200,
           duration: Config.loadingOverlayTimeoutMillis()
         });
 
@@ -743,7 +786,19 @@ angular.module('ilcomuneintasca.services.db', [])
           //console.log('[DB.byTimeInterval()] dbname: '+dbname);
           //console.log('[DB.byTimeInterval()] cateId: ' + cateId);
 
-					var _complex=undefined;
+          var parentIdCond,parentIds;
+          if (parentId) {
+            var parentIds=parentId.split(',')
+            if (parentId.indexOf(',') == -1) {
+              parentIdCond = 'c.parentid=?';
+            } else {
+              for (i in parentIds) parentIds[i] = '?';
+              parentIdCond = 'c.parentid IN (' + itemsIds.join() + ')';
+            }
+          }
+          //console.log('parentIdCond: '+parentIdCond);
+
+          var _complex=undefined;
           if (dbname=='event') {
             if (cateId && cateId=='_complex') {
               _complex=true;
@@ -760,14 +815,23 @@ angular.module('ilcomuneintasca.services.db', [])
 						(cateId ? ' AND (c.classification=? OR c.classification2=? OR c.classification3=?)' : '') + 
             (_complex==undefined ? '' : ' AND c.classification' + (_complex?'=':'!=') + "'_complex'" );
 */
-          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount'+
+          var sql = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.type AS parenttype, p.data AS parent, count(s.id) as sonscount'+
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id' +
             ' WHERE c.type=?' +
+						(parentIdCond ? ' AND '+parentIdCond : '') + 
             ' AND c.fromTime > 0 AND c.fromTime <' + toTime + ' AND c.toTime > ' + fromTime + 
 						(cateId ? ' AND (c.classification=? OR c.classification2=? OR c.classification3=?)' : '') + 
             (_complex==undefined ? '' : ' AND c.classification' + (_complex?'=':'!=') + "'_complex'" ) + 
 						' GROUP BY c.id';
-          var params = cateId ? [types[dbname], cateId, cateId, cateId] : [types[dbname]];
+          var params = [ types[dbname] ];
+          if (parentId) {
+            for (i in parentIds) params.push(parentIds[i]);
+          }
+          if (cateId) {
+            params.push(cateId);
+            params.push(cateId);
+            params.push(cateId);
+          }
 
           //console.log('[DB.byTimeInterval()] sql: '+sql);
           //console.log('[DB.byTimeInterval()] params: '+params);
@@ -778,12 +842,10 @@ angular.module('ilcomuneintasca.services.db', [])
               i;
             for (i = 0; i < len; i++) {
               var item = cateResults.rows.item(i);
-              var dbItem=parseDbRow(item);
-              dbItem.ctx=objContext;
-              lista.push(dbItem);
+              item.ctx=objContext;
+              lista.push(item);
             }
             Profiling._do('byTimeInterval','parse');
-            data.resolve(lista);
           }, function (tx2, err) {
             $ionicLoading.hide();
             console.log('byTimeInterval data error!');
@@ -798,7 +860,11 @@ angular.module('ilcomuneintasca.services.db', [])
           data.reject(error);
         }, function () { //success callback
           $ionicLoading.hide();
-          Profiling._do('byTimeInterval');
+          Profiling._do('byTimeInterval','tx success');
+
+          for (i in lista) lista[i]=parseDbRow(lista[i]);
+          Profiling._do('byTimeInterval','parse');
+          
           data.resolve(lista);
         });
       });
@@ -810,7 +876,7 @@ angular.module('ilcomuneintasca.services.db', [])
         Profiling.start('dbsons');
         var loading = $ionicLoading.show({
           template: $filter('translate')(Config.keys()['loading']),
-          delay: 600,
+          delay: 400,
           duration: Config.loadingOverlayTimeoutMillis()
         });
 
@@ -826,26 +892,25 @@ angular.module('ilcomuneintasca.services.db', [])
             idCond = 'c.parentid IN (' + itemsIds.join() + ')';
           }
           var qParams = parentId.split(',');
-          qParams.unshift(types[dbname]);
+          if (dbname) qParams.unshift(types[dbname]);
 
           var fromTime = new Date().getTime();
-          var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent'+
+          var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.type AS parenttype, p.data AS parent'+
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid'+
-            ' WHERE c.type=? ' +
-            ' AND ' + idCond +
+            ' WHERE' + (dbname ? ' c.type=? AND ' : ' ') + idCond +
             ' GROUP BY c.id';
+          //console.log('dbQuery: '+dbQuery);
           //console.log('qParams: ' + qParams);
-          //console.log('DatiDB.get("' + dbname + '", "' + parentId + '"); dbQuery launched...');
           tx.executeSql(dbQuery, qParams, function (tx2, results) {
             Profiling._do('dbsons', 'sql');
-            //console.log('DatiDB.get("' + dbname + '", "' + parentId + '"); dbQuery completed');
             var resultslen = results.rows.length;
+            //console.log('resultslen: '+resultslen);
             for (var i = 0; i < resultslen; i++) {
               var item = results.rows.item(i);
-              lista.push(parseDbRow(item));
+              //lista.push(parseDbRow(item));
+              lista.push(item);
             }
             Profiling._do('dbsons', 'parse');
-            dbsons.resolve(lista);
           }, function (tx2, err) {
             $ionicLoading.hide();
             console.log('error: ' + err);
@@ -860,6 +925,11 @@ angular.module('ilcomuneintasca.services.db', [])
         }, function () { //success callback
           $ionicLoading.hide();
           Profiling._do('dbsons', 'tx success');
+
+          for (i in lista) lista[i]=parseDbRow(lista[i]);
+          Profiling._do('dbsons','parse');
+          
+          dbsons.resolve(lista);
         });
 
         return dbsons.promise;
@@ -891,7 +961,7 @@ angular.module('ilcomuneintasca.services.db', [])
 
           var d = new Date();
           var min_toTime = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0).getTime() - 1;
-					var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount'+
+					var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.type AS parenttype, p.data AS parent, count(s.id) as sonscount'+
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id'+
             ' WHERE c.type=?' +
             ' AND ' + idCond + 
@@ -967,7 +1037,7 @@ angular.module('ilcomuneintasca.services.db', [])
 
           var d = new Date();
           var min_toTime = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0).getTime() - 1;
-					var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.data AS parent, count(s.id) as sonscount'+
+					var dbQuery = 'SELECT c.id, c.type, c.classification, c.classification2, c.classification3, c.data, c.lat, c.lon, p.id AS parentid, p.type AS parenttype, p.data AS parent, count(s.id) as sonscount'+
 						' FROM ContentObjects c LEFT OUTER JOIN ContentObjects p ON p.id=c.parentid LEFT OUTER JOIN ContentObjects s ON s.parentid=c.id'+
             (dbname?' WHERE c.type=?':'') +
             ' AND ' + idCond + 
@@ -1176,6 +1246,97 @@ angular.module('ilcomuneintasca.services.db', [])
         });
       });
       return dbitem.promise;
+    },
+    cleanupCatesOfType: function (cates,type) {
+      Profiling.start('filterclean');
+      var returned=$q.defer();
+
+      //console.log('type: '+type);
+      //console.log('types[type]: '+types[type]);
+
+      db.then(function (dbObj) {
+        //Profiling._do('filterclean','dbobj');
+        
+        dbObj.transaction(function (tx) {
+          Profiling._do('filterclean','dbtrans');
+          
+          var cleaned={};
+          var cleanedPromises=[];
+          for (key in cates) {
+            var d=$q.defer();
+            cleaned[key]=d;
+            cleanedPromises.push(d.promise);
+          }
+          //Profiling._do('filterclean','promises');
+
+          for (var key in cates) {
+            var cate=cates[key].it;
+            //console.log('cates['+key+']: '+cate);
+            var dbQuery="select count(*) as totale, '"+key+"' as catekey from ContentObjects where type=? and (classification=? OR classification2=? OR classification3=?)";
+            //console.log('dbQuery: '+dbQuery);
+            var dbQueryArgs=[ types[type], key, key, key ];
+            //console.log('dbQueryArgs: '+dbQueryArgs);
+            tx.executeSql(dbQuery,dbQueryArgs,function (tx, results) {
+              var resultslen = results.rows.length;
+              //console.log('resultslen='+resultslen);
+              if (resultslen>0) {
+                var item = results.rows.item(0);
+                //console.log('cates['+item.catekey+']='+item.catekey);
+
+                //filteredCates.push(cates[item.catekey]);
+                //filteredCates[item.catekey]=cates[item.catekey];
+                //cleaned[item.catekey].resolve();
+
+                //console.log('cates['+item.catekey+'].count='+item.totale);
+                Profiling._do('filterclean', 'done.'+item.catekey);
+                if (item.totale>0) {
+                  cleaned[item.catekey].resolve(item.catekey);
+                } else {
+                  cleaned[item.catekey].resolve(null);
+                }
+              } else {
+                //console.log('no results for cates['+key+']: ');
+                Profiling._do('filterclean', 'err.'+key);
+                cleaned[key].reject();
+              }
+            }, function (tx, err) {
+              console.log('error: ' + err);
+              Profiling._do('filterclean', 'sql tx2 error');
+              cleaned[key].reject();
+            });
+          }
+
+          $q.all(cleanedPromises).then(function(cleanedPromisesCates) {
+            //console.log('cleanedPromisesCates: '+cleanedPromisesCates);
+            Profiling._do('filterclean', 'q.all');
+
+            var filteredCates={};
+            for (i in cleanedPromisesCates) {
+              var key=cleanedPromisesCates[i];
+              if (key!=null) filteredCates[key]=cates[key];
+            }
+            //console.log('filteredCates keys: '+Object.keys(filteredCates));
+
+            returned.resolve(filteredCates);
+          },function(err){
+            console.log('$q.all() error: ' + err);
+            Profiling._do('filterclean', 'q.all error');
+            returned.reject(err);
+          });
+        }, function (error) { //error callback
+          Profiling._do('filterclean', 'tx error');
+          console.log('db.cleanupCatesOfType() ERROR: ' + error);
+          returned.reject(error);
+        }, function () { //success callback
+          Profiling._do('filterclean', 'sql tx1 success');
+        });
+      },function (error) {
+        console.log('dbobj ERROR: ' + error);
+        returned.reject(error);
+      });
+
+      Profiling._do('filterclean','returned');
+      return returned.promise;
     }
   }
 })

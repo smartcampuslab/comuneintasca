@@ -1,24 +1,51 @@
 angular.module('ilcomuneintasca.services.conf', [])
 
 .factory('Config', function ($q, $http, $window, $filter, $rootScope) {
-  var DEVELOPMENT=true;
-  $rootScope.DEV=DEVELOPMENT;
-  
+  var DEVELOPMENT=false;
+
   // when the following is TRUE, we show special buttons 
   // (actually just the db RESET button in settings)
   // even if not in development mode
+  $rootScope.DEV=DEVELOPMENT;
   // $rootScope.DEV=true;
 
-  var SYNC_WEBAPP='comuneintasca-ricadi';
-  var SCHEMA_VERSION=1;
+  var SYNC_WEBAPP='comuneintasca-multi';
+  var SCHEMA_VERSION=111;
+  var HOME_HIGHLIGHTS_MAX=6;
   var SYNC_HOST="tn";
-  if (DEVELOPMENT) SYNC_HOST="vas-dev";
+  if (DEVELOPMENT) SYNC_HOST="dev";
   var LOCAL_PROFILE="opencontent";
-
+  
   // customization parameters
+  // RICADI
+  var APP_VERSION='0.1.0';
+  var APP_BUILD='';
+  var WEBAPP_MULTI="RicadiInTasca";
   var cityName = { 'it':'Ricadi', 'en':'Ricadi', 'de':'Ricadi' };
   var imagePath = 'http://www.comune.trento.it/var/comunetn';
   var dbName = 'ricadi';
+  var nvItemMap = {
+    'ee123e0729fc6394020850129e3e22e0':'conoscere', 
+    '936d735838e60e33ae940de691580991':'visitare',
+    'cd3b58dfb21537fa0b720d89bf6af0a0':'mangiare_e_dormire',
+    '5f9cba3a3562635835dae003b95e30fd':'info_utili'
+  };
+//  // TRENTO
+//  var APP_VERSION='3.1.0';
+//  var APP_BUILD='';
+//  var WEBAPP_MULTI="TrentoInTasca";
+//  var cityName = { 'it':'Trento', 'en':'Trento', 'de':'Trento' };
+//  var imagePath = 'http://www.comune.trento.it/var/comunetn';
+//  var dbName = 'Trento';
+//  var nvItemMap = {
+//    'profile_cit_csvimport_Viaggia_Trento_item_comuneintasca':'viaggia_trento', 
+//    'profile_cit_csvimport_Visitare_item_comuneintasca':'visitare',
+//    'profile_cit_csvimport_Mangiare_e_dormire_item_comuneintasca':'mangiare_e_dormire',
+//    'profile_cit_csvimport_Info_utili_item_comuneintasca':'info_utili',
+//    'profile_cit_csvimport_Eventi_item_comuneintasca':'eventi',
+//    'profile_cit_2cc4db1674d9e8994658eac954355d31':'conoscere',
+//    'profile_cit_csvimport_Percorsi_item_comuneintasca':'percorsi'  
+//  };
   
   function parseConfig(config) {
     if (config) {
@@ -98,6 +125,19 @@ angular.module('ilcomuneintasca.services.conf', [])
       it: 'Aggiorna dati',
       en: 'Update data',
       de: 'Dateien ändern'
+    },
+    'settings_data_sync_draft': {
+      it: 'Aggiorna dati DRAFT',
+      en: 'Update DRAFT data',
+      de: 'DRAFT Dateien ändern'
+    },
+    'settings_data_sync_draft_enabled': {
+      it: "Modalità di test abilitata.",
+      en: 'Test mode enabled.',
+    },
+    'settings_data_sync_draft_disabled': {
+      it: "Modalità di test disabilitata.",
+      en: 'Test mode disabled.',
     },
     'settings_data': {
       it: 'Gestione dati e immagini',
@@ -348,8 +388,27 @@ angular.module('ilcomuneintasca.services.conf', [])
       it: 'Per informazioni:',
       en: 'Further information:',
       de: 'Informationen:'
+    },
+    'exitapp_template': {
+      it: 'Sei sicuro di voler uscire dall\'app?',
+      en: 'Do you really want to exit the app?',
+      de: 'Do you really want to exit the app?'
+    },
+    'exitapp_ok': {
+      it: 'OK',
+      en: 'OK',
+      de: 'OK'
+    },
+    'exitapp_title': {
+      it: null,
+      en: null,
+      de: null
     }
   };
+  var appicon=''; //<img class="appicon" src="img/icon.png" />';
+  keys.exitapp_title.it=appicon + ' ' + cityName.it + ' - ' + keys.credits_app.it;
+  keys.exitapp_title.en=appicon + ' ' + cityName.en + ' - ' + keys.credits_app.en;
+  keys.exitapp_title.de=appicon + ' ' + cityName.de + ' - ' + keys.credits_app.de;
 
   var hotelTypes = {
     'hotel': {
@@ -514,17 +573,17 @@ angular.module('ilcomuneintasca.services.conf', [])
   }
 
   var contentTypes = {
-    'content': 'eu.trentorise.smartcampus.comuneintasca.model.ContentObject',
-    'poi': 'eu.trentorise.smartcampus.comuneintasca.model.POIObject',
-    'event': 'eu.trentorise.smartcampus.comuneintasca.model.EventObject',
-    'restaurant': 'eu.trentorise.smartcampus.comuneintasca.model.RestaurantObject',
-    'hotel': 'eu.trentorise.smartcampus.comuneintasca.model.HotelObject',
-    'itinerary': 'eu.trentorise.smartcampus.comuneintasca.model.ItineraryObject',
-    'mainevent': 'eu.trentorise.smartcampus.comuneintasca.model.MainEventObject',
-    //'home': 'eu.trentorise.smartcampus.comuneintasca.model.HomeObject',
-    'oldconfig': 'eu.trentorise.smartcampus.comuneintasca.model.ConfigObject',
-    'config': 'eu.trentorise.smartcampus.comuneintasca.model.DynamicConfigObject',
-    'servizio_sul_territorio': 'eu.trentorise.smartcampus.comuneintasca.model.TerritoryServiceObject'
+    'content': 'it.smartcommunitylab.comuneintasca.core.model.ContentObject',
+    'poi': 'it.smartcommunitylab.comuneintasca.core.model.POIObject',
+    'event': 'it.smartcommunitylab.comuneintasca.core.model.EventObject',
+    'restaurant': 'it.smartcommunitylab.comuneintasca.core.model.RestaurantObject',
+    'hotel': 'it.smartcommunitylab.comuneintasca.core.model.HotelObject',
+    'itinerary': 'it.smartcommunitylab.comuneintasca.core.model.ItineraryObject',
+    'mainevent': 'it.smartcommunitylab.comuneintasca.core.model.MainEventObject',
+    //'home': 'it.smartcommunitylab.comuneintasca.core.model.HomeObject',
+    'oldconfig': 'it.smartcommunitylab.comuneintasca.core.model.ConfigObject',
+    'config': 'it.smartcommunitylab.comuneintasca.core.model.DynamicConfigObject',
+    'servizio_sul_territorio': 'it.smartcommunitylab.comuneintasca.core.model.TerritoryServiceObject'
   };
 
   function cloneParentGroup(group) {
@@ -545,6 +604,9 @@ angular.module('ilcomuneintasca.services.conf', [])
   }
   
   return {
+    getVersion: function () {
+      return 'v '+APP_VERSION+(APP_BUILD&&APP_BUILD!=''?'<br/>('+APP_BUILD+')':'');
+    },
     getLang: function () {
       var browserLanguage = '';
       // works for earlier version of Android (2.3.x)
@@ -614,6 +676,7 @@ angular.module('ilcomuneintasca.services.conf', [])
           //overrides for specific query classifications
           "classifications":{
             "_none_":{ "filter":{ "default":"today" } },
+            "_parent_":{ "filter":{ "default":null } },
             "_complex":{ "filter":{ "default":null } }
           }
         },
@@ -729,9 +792,14 @@ angular.module('ilcomuneintasca.services.conf', [])
     schemaVersion: function () {
       return SCHEMA_VERSION;
     },
+    getHomeHighlightsMax: function () {
+      return HOME_HIGHLIGHTS_MAX;
+    },
     syncUrl: function () {
-//      return 'https://'+SYNC_HOST+'.smartcampuslab.it/comuneintasca/sync';
-      return 'https://'+SYNC_HOST+'.smartcampuslab.it/'+SYNC_WEBAPP+'/sync';
+      //console.log('$rootScope.TEST_CONNECTION: '+(!!$rootScope.TEST_CONNECTION));
+      var SYNC_MODE = (!!$rootScope.TEST_CONNECTION ? 'syncdraft' : 'sync');
+      //console.log('SYNC_MODE: '+SYNC_MODE);
+      return 'https://'+SYNC_HOST+'.smartcommunitylab.it/'+SYNC_WEBAPP+'/'+SYNC_MODE+'/'+WEBAPP_MULTI+'?since=';
     },
     syncTimeoutSeconds: function () {
       //return 60 * 60; /* 60 times 60 seconds = EVERY HOUR */
@@ -774,6 +842,14 @@ angular.module('ilcomuneintasca.services.conf', [])
     hotelCateFromType: function (type) {
       return hotelTypes[type];
     },
+
+    restaurantTypesList: function () {
+      return restaurantTypes;
+    },
+    restaurantCateFromType: function (type) {
+      return restaurantTypes[type];
+    },
+
     hotelTypeFromCate: function (cate) {
       for (var hotelType in hotelTypes) {
         if (hotelTypes.hasOwnProperty(hotelType)) {
@@ -799,12 +875,6 @@ angular.module('ilcomuneintasca.services.conf', [])
         it: 'UNKNOWN',
         en: 'UNKNOWN'
       };
-    },
-    restaurantTypesList: function () {
-      return restaurantTypes;
-    },
-    restaurantCateFromType: function (type) {
-      return restaurantTypes[type];
     },
     restaurantTypeFromCate: function (cate) {
       for (var restaurantType in restaurantTypes) {
@@ -832,6 +902,7 @@ angular.module('ilcomuneintasca.services.conf', [])
         en: 'UNKNOWN'
       };
     },
+ 
     cityName: function() {
       return cityName;
     },
@@ -843,6 +914,9 @@ angular.module('ilcomuneintasca.services.conf', [])
     },
     doProfiling: function () {
       return false;
+    },
+    navItemMap: function() {
+      return nvItemMap ? nvItemMap : {};
     }
   }
 })
@@ -851,21 +925,24 @@ angular.module('ilcomuneintasca.services.conf', [])
   var reallyDoProfiling=Config.doProfiling();
   var startTimes = {};
   return {
+    start2: function (label) {
+      startTimes[label] = (new Date).getTime();
+    },
     start: function (label) {
-      if (reallyDoProfiling) {
-        startTimes[label] = (new Date).getTime();
-      }
+      if (reallyDoProfiling) this.start2(label);
     },
 
-    _do: function (label, details) {
-      if (reallyDoProfiling) {
-        var startTime = startTimes[label] || -1;
-        if (startTime != -1) {
-          var nowTime = (new Date).getTime();
-          console.log('PROFILING: ' + label + (details ? '(' + details + ')' : '') + '=' + (nowTime - startTime));
-          if (details) startTimes[label]=nowTime;
-        }
+    _do2: function (label, details, info) {
+      var startTime = startTimes[label] || -1;
+      if (startTime != -1) {
+        var nowTime = (new Date).getTime();
+        console.log('PROFILING: ' + label + (details ? '(' + details + ')' : '') + '=' + (nowTime - startTime));
+        //if (details) startTimes[label]=nowTime;
+        if (!!info) console.log(info);
       }
+    },
+    _do: function (label, details, info) {
+      if (reallyDoProfiling) this._do2(label, details);
     }
   };
 })

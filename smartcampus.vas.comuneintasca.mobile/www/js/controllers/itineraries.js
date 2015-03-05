@@ -91,13 +91,16 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
       $scope.isObjFavorite=res; 
     });
     
+    //console.log('data.steps.join(): '+data.steps.join());
     $scope.gotstepsdata=DatiDB.get('poi', data.steps.join()).then(function (luoghi) {
       //console.log('luoghi: '+luoghi);
       $scope.location = luoghi[0].location;
       var tappe=[];
       angular.forEach(luoghi, function (luogo, idx) {
         //console.log('luogo#'+idx+': '+luogo.id);
-        tappe[idx] = luogo;
+        var realidx=data.steps.indexOf(luogo.id);
+        //console.log('data.steps.indexOf(luogo.id): '+realidx);
+        tappe[realidx] = luogo;
       });
       $scope.tappe = tappe;
       return luoghi;
@@ -315,36 +318,51 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
         });
       });
 
+      //console.log('data.steps.join(): '+data.steps.join());
       DatiDB.get('poi', data.steps.join()).then(function (luoghi) {
-        var models=[];
-        if ($rootScope.myPosition) {
-          var p={ 'id':'myPos', 'key':'myPos', latitude:$rootScope.myPosition[0], longitude:$rootScope.myPosition[1] };
-          //console.log('geolocation (lat,lon): ' + JSON.stringify(p));
-          models.push(p);
-        } else {
-          console.log('unknown location: not showing myPos marker!');
-        }
+        //console.log('luoghi.length: '+luoghi.length);
+        var models=new Array(luoghi.length);
         angular.forEach(luoghi, function (luogo, idx) {
-          // for (var i = 0; i < luoghi.length; i++) {
-          //console.log(luogo.title.it);
+          //console.log('luogo['+idx+']: '+(luogo.title?JSON.stringify(luogo.title):'UNDEF')+' ('+luogo.id+')');
           if (!!luogo.location) {
             /*m = new mxn.Marker(new mxn.LatLonPoint(luogo.location[0], luogo.location[1]));
             m.setIcon('img/mapmarker.png', [25, 40], [25 / 2, 40 / 2]);
             m.setInfoBubble(luogo.title.it);
             map2.addMarker(m);*/
 
-            luogo.step = idx + 1;
+            var realidx=data.steps.indexOf(luogo.id);
+            //console.log('realidx: '+realidx);
+            
+            luogo.step = realidx + 1;
             luogo.key = luogo.id;
             luogo.latitude = luogo.location[0];
             luogo.longitude = luogo.location[1];
-            luogo.icon = 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=' + (luogo.step) + '|2975A7|FFFFFF';
+            luogo.icon = 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=' + luogo.step + '|2975A7|FFFFFF';
 
-            //console.log('data.steps.indexOf(luogo.id): '+data.steps.indexOf(luogo.id));
-            models.push(luogo);
+            //console.log('luogo.step: '+luogo.step);
+            models[realidx]=luogo;
           } else {
             console.log('WARNING: no location for "' + luogo.title.it + '"');
           }
         });
+        //console.log('models.length #1: '+models.length);
+        angular.forEach(models, function (luogo, idx) {
+          if (!luogo) {
+            console.log('WARNING: no luogo for models idx "' + idx + '"');
+            models.splice(idx,1);
+          } else {
+            //console.log('luogo['+idx+']: '+(luogo.title?JSON.stringify(luogo.title.it):'UNDEF')+' ('+luogo.key+')');
+          }
+        });
+        //console.log('models.length #2: '+models.length);
+        if ($rootScope.myPosition) {
+          var p={ 'id':'myPos', 'key':'myPos', latitude:$rootScope.myPosition[0], longitude:$rootScope.myPosition[1] };
+          //console.log('geolocation (lat,lon): ' + JSON.stringify(p));
+          models.unshift(p);
+        } else {
+          console.log('unknown location: not showing myPos marker!');
+        }
+        //console.log('models.length #3: '+models.length);
         $scope.markers.models=models;
 
         // drawDirections($scope.map.control, $scope.markers.models);

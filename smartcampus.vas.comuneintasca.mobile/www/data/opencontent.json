@@ -1,20 +1,23 @@
 {
-  "id": "546463b8975a483fda544fe2",
-  "updateTime": 1415865272075,
-  "version": 971,
+  "id": null,
+  "updateTime": 1425378468515,
+  "version": 35187,
   "user": null,
+  "appId": "RicadiInTasca",
+  "lastModified": 1425378164000,
+  "localId": null,
   "highlights": [
     {
       "id": "086bcc619bae7600a645104a00be5243",
       "name": {
-        "it": "Ricadi in Breve",
-        "en": null,
-        "de": null
+        "it": "Ricadi in Breve"
       },
       "description": null,
-      "image": null,
+      "image": {
+        "it": "http://ricadi.opencontent.it/var/ricadi/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/ricadi-in-breve/22432-3-ita-IT/Ricadi-in-Breve.jpg"
+      },
       "objectIds": [
-        "086bcc619bae7600a645104a00be5243"
+        "87d51c4933773fd90cec637f70190801"
       ],
       "items": null,
       "query": null,
@@ -25,15 +28,11 @@
     {
       "id": "ccb5831d57f03da19457261ed4aa0942",
       "name": {
-        "it": "La cipolla",
-        "en": null,
-        "de": null
+        "it": "La cipolla"
       },
       "description": null,
       "image": {
-        "it": "http://ricadi.opencontent.it/var/ricadi/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/la-cipolla/22439-2-ita-IT/La-cipolla.jpg",
-        "en": null,
-        "de": null
+        "it": "http://ricadi.opencontent.it/var/ricadi/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/la-cipolla/22439-2-ita-IT/La-cipolla.jpg"
       },
       "objectIds": [
         "fffc1e8b86f896e6cf35b021384970fe"
@@ -43,16 +42,117 @@
       "ref": null,
       "type": null,
       "app": null
+    },
+    {
+      "id": "107064db3cf2ed05a87cc040cd525d2b",
+      "name": {
+        "it": "Giuseppe Berto"
+      },
+      "description": null,
+      "image": {
+        "it": "http://ricadi.opencontent.it/var/ricadi/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/giuseppe-berto/26654-1-ita-IT/Giuseppe-Berto.jpg"
+      },
+      "objectIds": [
+        "7b25f5223fa47ff205dbc9d4a35cb051"
+      ],
+      "items": null,
+      "query": null,
+      "ref": null,
+      "type": null,
+      "app": null
     }
   ],
-  "navigationItems": [],
+  "navigationItems": [
+    {
+      "id": "ee123e0729fc6394020850129e3e22e0",
+      "name": {
+        "it": "Conoscere"
+      },
+      "description": null,
+      "image": null,
+      "objectIds": null,
+      "items": null,
+      "query": null,
+      "ref": "ee123e0729fc6394020850129e3e22e0",
+      "type": null,
+      "app": null
+    },
+    {
+      "id": "936d735838e60e33ae940de691580991",
+      "name": {
+        "it": "Visitare"
+      },
+      "description": null,
+      "image": null,
+      "objectIds": null,
+      "items": null,
+      "query": null,
+      "ref": "936d735838e60e33ae940de691580991",
+      "type": null,
+      "app": null
+    },
+    {
+      "id": "cd3b58dfb21537fa0b720d89bf6af0a0",
+      "name": {
+        "it": "Dormire e mangiare"
+      },
+      "description": null,
+      "image": null,
+      "objectIds": null,
+      "items": null,
+      "query": null,
+      "ref": "cd3b58dfb21537fa0b720d89bf6af0a0",
+      "type": null,
+      "app": null
+    },
+    {
+      "id": "5f9cba3a3562635835dae003b95e30fd",
+      "name": {
+        "it": "Info utili"
+      },
+      "description": null,
+      "image": null,
+      "objectIds": null,
+      "items": null,
+      "query": null,
+      "ref": "5f9cba3a3562635835dae003b95e30fd",
+      "type": null,
+      "app": null
+    },
+    {
+      "id": "ad94673caa967e022fd137627094d238",
+      "name": {
+        "it": "La Costa degli Dei"
+      },
+      "description": null,
+      "image": null,
+      "objectIds": null,
+      "items": null,
+      "query": null,
+      "ref": "ad94673caa967e022fd137627094d238",
+      "type": null,
+      "app": null
+    },
+    {
+      "id": "66c5c1638a069d4bff58b6331f725b6c",
+      "name": {
+        "it": "Preferiti"
+      },
+      "description": null,
+      "image": null,
+      "objectIds": null,
+      "items": null,
+      "query": null,
+      "ref": "66c5c1638a069d4bff58b6331f725b6c",
+      "type": null,
+      "app": null
+    }
+  ],
   "menu": [
     {
       "id": "ee123e0729fc6394020850129e3e22e0",
       "name": {
-        "it": "Conoscere",
-        "en": null,
-        "de": null
+        "it": "Conoscere"
       },
       "description": null,
       "image": null,
@@ -61,32 +161,14 @@
         {
           "id": "8550c16f968dc33fa6eab74adade0515",
           "name": {
-            "it": "In breve",
-            "en": null,
-            "de": null
+            "it": "In breve"
           },
           "description": null,
-          "image": null,
-          "objectIds": [
-            "8550c16f968dc33fa6eab74adade0515"
-          ],
-          "items": null,
-          "query": null,
-          "ref": null,
-          "type": null,
-          "app": null
-        },
-        {
-          "id": "1973df67ae2fb1a6a5e4ca1cc2c1d8e0",
-          "name": {
-            "it": "Storia",
-            "en": null,
-            "de": null
+          "image": {
+            "it": "http://ricadi.opencontent.it/var/ricadi/storage/images/applicazioni/comune-in-tasca/turista/menu-laterale/conoscere/in-breve/22259-3-ita-IT/In-breve.jpg"
           },
-          "description": null,
-          "image": null,
           "objectIds": [
-            "1973df67ae2fb1a6a5e4ca1cc2c1d8e0"
+            "87d51c4933773fd90cec637f70190801"
           ],
           "items": null,
           "query": null,
@@ -97,17 +179,35 @@
         {
           "id": "19219e419c60690f73edcbb5676169fa",
           "name": {
-            "it": "Curiosità",
-            "en": null,
-            "de": null
+            "it": "Curiosità"
+          },
+          "description": null,
+          "image": {
+            "it": "http://ricadi.opencontent.it/var/ricadi/storage/images/applicazioni/comune-in-tasca/turista/menu-laterale/conoscere/curiosita/22273-4-ita-IT/Curiosita.jpg"
+          },
+          "objectIds": [
+            "8853058b19565fbd1ef84a41ac9415f8",
+            "7b25f5223fa47ff205dbc9d4a35cb051",
+            "fffc1e8b86f896e6cf35b021384970fe",
+            "7a8c7b0a2aff3d159eed3510e6935309",
+            "96fdbdd13f73b8bbcdb42de081f0daf1",
+            "7798320eb4ef0f79e40e95186b25a1d5"
+          ],
+          "items": null,
+          "query": null,
+          "ref": null,
+          "type": null,
+          "app": null
+        },
+        {
+          "id": "1973df67ae2fb1a6a5e4ca1cc2c1d8e0",
+          "name": {
+            "it": "Storia"
           },
           "description": null,
           "image": null,
           "objectIds": [
-            "7b25f5223fa47ff205dbc9d4a35cb051",
-            "fffc1e8b86f896e6cf35b021384970fe",
-            "7a8c7b0a2aff3d159eed3510e6935309",
-            "7798320eb4ef0f79e40e95186b25a1d5"
+            "b8850f1809dcad6c45ef98e86722ac51"
           ],
           "items": null,
           "query": null,
@@ -124,120 +224,153 @@
     {
       "id": "936d735838e60e33ae940de691580991",
       "name": {
-        "it": "Visitare",
-        "en": null,
-        "de": null
+        "it": "Visitare"
       },
       "description": null,
       "image": null,
       "objectIds": null,
       "items": [
         {
-          "id": "835e06bd70e02a0a561b85bbc011cdb2",
-          "name": {
-            "it": "Tropea",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": [
-            "835e06bd70e02a0a561b85bbc011cdb2"
-          ],
-          "items": null,
-          "query": null,
-          "ref": null,
-          "type": null,
-          "app": null
-        },
-        {
-          "id": "f9646f8c33bdb0a0118446101bb59812",
-          "name": {
-            "it": "Spilinga",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": [
-            "d7ab33edfcc7a859dc088c40a4839182"
-          ],
-          "items": null,
-          "query": null,
-          "ref": null,
-          "type": null,
-          "app": null
-        },
-        {
           "id": "5330da2ce7709f69ab19c063ce73cdf4",
           "name": {
-            "it": "Drapia",
-            "en": null,
-            "de": null
+            "it": "Drapia"
           },
-          "description": null,
-          "image": null,
+          "description": {
+            "it": "Drapia è una località molto frequentata sia da turisti nazionali che internazionali."
+          },
+          "image": {
+            "it": "http://ricadi.opencontent.it/var/ricadi/storage/images/applicazioni/comune-in-tasca/turista/menu-laterale/visitare/drapia/22301-2-ita-IT/Drapia.jpg"
+          },
           "objectIds": [
-            "e19bd281145034c5e7fb1420e084bcf1"
+            "0bfface6e7bb104ac0b76fce6d8b7d02",
+            "65173f599edd5d7e09f7f0189feb463a",
+            "63d76685cc26dfc5387b8d79f0e410f6",
+            "e411e6612683a492641c94d648d5b499"
           ],
           "items": null,
           "query": null,
           "ref": null,
-          "type": null,
-          "app": null
-        },
-        {
-          "id": "b643cef78913bbea41ea7ab8b0dfabb3",
-          "name": {
-            "it": "Zambrone",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": [
-            "7ffc534c0bf65cfcb3bfe7a436b6b683"
-          ],
-          "items": null,
-          "query": null,
-          "ref": null,
-          "type": null,
+          "type": "poi",
           "app": null
         },
         {
           "id": "2944ffbf3ee329347debcdf0de500ff3",
           "name": {
-            "it": "Parghelia",
-            "en": null,
-            "de": null
+            "it": "Parghelia"
           },
-          "description": null,
-          "image": null,
+          "description": {
+            "it": "Parghelia è un paese posto sulla Costa degli Dei e caratterizzato da 8 km di spiagge meravigliose che lo hanno reso sempre più una meta turistica estiva."
+          },
+          "image": {
+            "it": "http://ricadi.opencontent.it/var/ricadi/storage/images/applicazioni/comune-in-tasca/turista/menu-laterale/visitare/parghelia/22315-2-ita-IT/Parghelia.jpg"
+          },
           "objectIds": [
-            "3032a64bd831162fee9ce741a1e70d9e"
+            "efcce4c1b4a0d9c521247e81e399cda3"
           ],
           "items": null,
           "query": null,
           "ref": null,
-          "type": null,
+          "type": "poi",
           "app": null
         },
         {
           "id": "4e73962bcca47283858c144064d0a46a",
           "name": {
-            "it": "Ricadi",
-            "en": null,
-            "de": null
+            "it": "Ricadi"
           },
-          "description": null,
-          "image": null,
+          "description": {
+            "it": "Il comune di Ricadi è situato tra il golfo di Sant'Eufemia (Lamezia Terme - CZ) e quello di Gioia Tauro (RC). Proprio il promontorio di Capo Vaticano divide i due golfi calabresi. A Nord confina con il comune di Tropea, a Sud con quello di Joppolo e ad Est, verso l'entroterra (Monte Poro), con quelli di Drapia e di Spilinga, tutti appartenenti alla provincia di Vibo Valentia. Ad ovest, invece, è bagnato per 12 km dal mar Tirreno."
+          },
+          "image": {
+            "it": "http://ricadi.opencontent.it/var/ricadi/storage/images/applicazioni/comune-in-tasca/turista/menu-laterale/visitare/ricadi/22334-2-ita-IT/Ricadi.jpg"
+          },
           "objectIds": [
-            "4e73962bcca47283858c144064d0a46a"
+            "a323fa49dae53b25a27e433681d952fd",
+            "5e4925cba02e9516ab15244e0eb847f5",
+            "6423a8e192ae788608b19b3e1db37cd5",
+            "f37cee688e64244aad7b5369ca975f22",
+            "11f03e32ccc3a9745b15efe0273ac1a6",
+            "7f5cf1872043a83aea2dd64c360a43f8",
+            "437e5ca18bc333b86e5a2f5c382473b8",
+            "f1879dee3d3dd5570679b2532ef319a6",
+            "037d2f51fd95b0798cd9250965cc2c16",
+            "c7cec6f1ef703a6e7b8c3f8bafe4226c"
           ],
           "items": null,
           "query": null,
           "ref": null,
-          "type": null,
+          "type": "poi",
+          "app": null
+        },
+        {
+          "id": "f9646f8c33bdb0a0118446101bb59812",
+          "name": {
+            "it": "Spilinga"
+          },
+          "description": {
+            "it": "Spilinga è un paese che vive di agricoltura ed allevamento, ma che si sta sviluppando come centro turistico grazie alla vicinanza delle località balneari di Ricadi e Tropea."
+          },
+          "image": null,
+          "objectIds": [
+            "75e737ab38405a39835c01903c4b3c93",
+            "4ec11e0587f3c0fee34549fce7431673"
+          ],
+          "items": null,
+          "query": null,
+          "ref": null,
+          "type": "poi",
+          "app": null
+        },
+        {
+          "id": "835e06bd70e02a0a561b85bbc011cdb2",
+          "name": {
+            "it": "Tropea"
+          },
+          "description": {
+            "it": "Tropea è tra i più piccoli comuni d'Italia per estensione territoriale. La cittadina si divide in due zone: nella parte superiore, costruita sulla roccia, vive la maggior parte della popolazione e si svolge la vita cittadina, nella parte inferiore si trova il porto e viene chiamata la marina."
+          },
+          "image": {
+            "it": "http://ricadi.opencontent.it/var/ricadi/storage/images/applicazioni/comune-in-tasca/turista/menu-laterale/visitare/tropea/22287-3-ita-IT/Tropea.jpg"
+          },
+          "objectIds": [
+            "d83d4516b9e69c39229acaf74786f561",
+            "f475709a4d95d6aba033d810425dacf2",
+            "7c0f833659282e1dcddc523dab189f6b",
+            "5cb7b0e5aa60137971e274f62d287b8b",
+            "78c9c32edc1732f9977e56cff3b3f138",
+            "803f4ee5c2e48445538a4310f30b3da5",
+            "0f852a5487bd2fca59c8921cb53ed554",
+            "026aa00af67d37897746351f1023af8f",
+            "46e3c3b736e7f225ab8e45116338c262",
+            "e9bf7362da5dad8e8ceb13f2525d40a5",
+            "a21aee688bb65e319a478f1be78bf436"
+          ],
+          "items": null,
+          "query": null,
+          "ref": null,
+          "type": "poi",
+          "app": null
+        },
+        {
+          "id": "b643cef78913bbea41ea7ab8b0dfabb3",
+          "name": {
+            "it": "Zambrone"
+          },
+          "description": {
+            "it": "Zambrone si trova su un altipiano a 222 mslm ed il suo paesaggio si caratterizza per il litorale lungo il quale spiagge lunghe e basse si alternano a scogliere granitiche. E' possibile godere di una splendida veduta dello Stromboli."
+          },
+          "image": {
+            "it": "http://ricadi.opencontent.it/var/ricadi/storage/images/applicazioni/comune-in-tasca/turista/menu-laterale/visitare/zambrone/22308-2-ita-IT/Zambrone.jpg"
+          },
+          "objectIds": [
+            "753bd879dbb8ac6a61358f0941800f82",
+            "8d07b8b649c3b644a856310bdf4c8055",
+            "a5d897ad2e3f7d65f74d604c0562415f"
+          ],
+          "items": null,
+          "query": null,
+          "ref": null,
+          "type": "poi",
           "app": null
         }
       ],
@@ -249,9 +382,7 @@
     {
       "id": "5f9cba3a3562635835dae003b95e30fd",
       "name": {
-        "it": "Info utili",
-        "en": null,
-        "de": null
+        "it": "Info utili"
       },
       "description": null,
       "image": null,
@@ -260,9 +391,7 @@
         {
           "id": "3da53d1dd6ea6fcb24f6ae61b4201047",
           "name": {
-            "it": "Sanità e farmacie",
-            "en": null,
-            "de": null
+            "it": "Ambulatori"
           },
           "description": null,
           "image": null,
@@ -271,87 +400,7 @@
           "query": {
             "type": "servizio_sul_territorio",
             "classifications": null,
-            "classification": "Ambulatorio,servizio_sul_territorio"
-          },
-          "ref": null,
-          "type": null,
-          "app": null
-        },
-        {
-          "id": "827732a75bea3df5dae64f71fbe320a5",
-          "name": {
-            "it": "Poste",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": null,
-          "items": null,
-          "query": {
-            "type": "servizio_sul_territorio",
-            "classifications": null,
-            "classification": "Ufficio_postale"
-          },
-          "ref": null,
-          "type": null,
-          "app": null
-        },
-        {
-          "id": "93e2d79eda92a53dae12d499a884d53e",
-          "name": {
-            "it": "Distributori",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": null,
-          "items": null,
-          "query": {
-            "type": "servizio_sul_territorio",
-            "classifications": null,
-            "classification": "Distributore"
-          },
-          "ref": null,
-          "type": null,
-          "app": null
-        },
-        {
-          "id": "9ec1e8735262aaca6f5028578c063c5a",
-          "name": {
-            "it": "Stazioni dei treni",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": null,
-          "items": null,
-          "query": {
-            "type": "servizio_sul_territorio",
-            "classifications": null,
-            "classification": "Stazione_dei_treni"
-          },
-          "ref": null,
-          "type": null,
-          "app": null
-        },
-        {
-          "id": "313394166a268fbb7125bae6374ae47c",
-          "name": {
-            "it": "Carabinieri",
-            "en": null,
-            "de": null
-          },
-          "description": null,
-          "image": null,
-          "objectIds": null,
-          "items": null,
-          "query": {
-            "type": "servizio_sul_territorio",
-            "classifications": null,
-            "classification": "Carabinieri"
+            "classification": "Ambulatorio"
           },
           "ref": null,
           "type": null,
@@ -360,9 +409,7 @@
         {
           "id": "a7e7ffa33f979c2fe8a33039837b5af8",
           "name": {
-            "it": "Banche",
-            "en": null,
-            "de": null
+            "it": "Banche"
           },
           "description": null,
           "image": null,
@@ -378,11 +425,81 @@
           "app": null
         },
         {
+          "id": "313394166a268fbb7125bae6374ae47c",
+          "name": {
+            "it": "Carabinieri"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "servizio_sul_territorio",
+            "classifications": null,
+            "classification": "Carabinieri"
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        },
+        {
+          "id": "93e2d79eda92a53dae12d499a884d53e",
+          "name": {
+            "it": "Distributori"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "servizio_sul_territorio",
+            "classifications": null,
+            "classification": "Distributore"
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        },
+        {
+          "id": "69e32e4dd9dcd8cfb7e84ccb2ca8cfa9",
+          "name": {
+            "it": "Farmacie"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "servizio_sul_territorio",
+            "classifications": null,
+            "classification": "Farmacia"
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        },
+        {
+          "id": "ea3607ea3e68cd0a694ad3be96fffe66",
+          "name": {
+            "it": "Ospedali"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "servizio_sul_territorio",
+            "classifications": null,
+            "classification": "ospedale"
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        },
+        {
           "id": "5c299278d4946dab9cf13312d48e9d83",
           "name": {
-            "it": "Parcheggi",
-            "en": null,
-            "de": null
+            "it": "Parcheggi"
           },
           "description": null,
           "image": null,
@@ -392,6 +509,42 @@
             "type": "servizio_sul_territorio",
             "classifications": null,
             "classification": "Parcheggio"
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        },
+        {
+          "id": "827732a75bea3df5dae64f71fbe320a5",
+          "name": {
+            "it": "Poste"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "servizio_sul_territorio",
+            "classifications": null,
+            "classification": "Ufficio_postale"
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        },
+        {
+          "id": "9ec1e8735262aaca6f5028578c063c5a",
+          "name": {
+            "it": "Stazioni dei treni"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "servizio_sul_territorio",
+            "classifications": null,
+            "classification": "Stazione_dei_treni"
           },
           "ref": null,
           "type": null,
@@ -406,9 +559,7 @@
     {
       "id": "cd3b58dfb21537fa0b720d89bf6af0a0",
       "name": {
-        "it": "Dormire e mangiare",
-        "en": null,
-        "de": null
+        "it": "Dormire e mangiare"
       },
       "description": null,
       "image": null,
@@ -417,156 +568,17 @@
         {
           "id": "4c2311b639d055caf43f661829a20478",
           "name": {
-            "it": "Dormire",
-            "en": null,
-            "de": null
+            "it": "Dormire"
           },
           "description": null,
           "image": null,
           "objectIds": null,
-          "items": [
-            {
-              "id": "3c9f89708d85ffe0e7dea867d974b2a2",
-              "name": {
-                "it": "B&B",
-                "en": null,
-                "de": null
-              },
-              "description": null,
-              "image": null,
-              "objectIds": null,
-              "items": null,
-              "query": {
-                "type": "hotel",
-                "classifications": null,
-                "classification": "B&B"
-              },
-              "ref": null,
-              "type": null,
-              "app": null
-            },
-            {
-              "id": "36cd8df37e63d6248f48758ac0e231a0",
-              "name": {
-                "it": "Agriturismo",
-                "en": null,
-                "de": null
-              },
-              "description": null,
-              "image": null,
-              "objectIds": null,
-              "items": null,
-              "query": {
-                "type": "hotel",
-                "classifications": null,
-                "classification": "Agriturismo"
-              },
-              "ref": null,
-              "type": null,
-              "app": null
-            },
-            {
-              "id": "c003a06fcde5590ebfb35042c61c10db",
-              "name": {
-                "it": "Appartamenti",
-                "en": null,
-                "de": null
-              },
-              "description": null,
-              "image": null,
-              "objectIds": null,
-              "items": null,
-              "query": {
-                "type": "hotel",
-                "classifications": null,
-                "classification": "Appartamenti"
-              },
-              "ref": null,
-              "type": null,
-              "app": null
-            },
-            {
-              "id": "33604ec2cc97afb31ad9ed3e08df3ae3",
-              "name": {
-                "it": "Camping",
-                "en": null,
-                "de": null
-              },
-              "description": null,
-              "image": null,
-              "objectIds": null,
-              "items": null,
-              "query": {
-                "type": "hotel",
-                "classifications": null,
-                "classification": "Camping"
-              },
-              "ref": null,
-              "type": null,
-              "app": null
-            },
-            {
-              "id": "60f341f2ac24ad05badb80cb0a6974f1",
-              "name": {
-                "it": "Hotel",
-                "en": null,
-                "de": null
-              },
-              "description": null,
-              "image": null,
-              "objectIds": null,
-              "items": null,
-              "query": {
-                "type": "hotel",
-                "classifications": null,
-                "classification": "hotel"
-              },
-              "ref": null,
-              "type": null,
-              "app": null
-            },
-            {
-              "id": "0ba83a431644c0d4977f70092eb0fe5b",
-              "name": {
-                "it": "Residence",
-                "en": null,
-                "de": null
-              },
-              "description": null,
-              "image": null,
-              "objectIds": null,
-              "items": null,
-              "query": {
-                "type": "hotel",
-                "classifications": null,
-                "classification": "Residence"
-              },
-              "ref": null,
-              "type": null,
-              "app": null
-            },
-            {
-              "id": "b11b6391c7a629193a9ca3570d84ecb4",
-              "name": {
-                "it": "Villaggio",
-                "en": null,
-                "de": null
-              },
-              "description": null,
-              "image": null,
-              "objectIds": null,
-              "items": null,
-              "query": {
-                "type": "hotel",
-                "classifications": null,
-                "classification": "Villaggio"
-              },
-              "ref": null,
-              "type": null,
-              "app": null
-            }
-          ],
-          "query": null,
+          "items": null,
+          "query": {
+            "type": "hotel",
+            "classifications": null,
+            "classification": null
+          },
           "ref": null,
           "type": null,
           "app": null
@@ -574,95 +586,12 @@
         {
           "id": "64a69867a8dc2c799fb841d7d1b06dff",
           "name": {
-            "it": "Mangiare",
-            "en": null,
-            "de": null
+            "it": "Mangiare"
           },
           "description": null,
           "image": null,
           "objectIds": null,
-          "items": [
-            {
-              "id": "a3bbc6cf9701d4d2d82208692ef997c2",
-              "name": {
-                "it": "Ristoranti",
-                "en": null,
-                "de": null
-              },
-              "description": null,
-              "image": null,
-              "objectIds": null,
-              "items": null,
-              "query": {
-                "type": "restaurant",
-                "classifications": null,
-                "classification": "Ristoranti"
-              },
-              "ref": null,
-              "type": null,
-              "app": null
-            },
-            {
-              "id": "69125ca2d0562533afd45fd9520fc034",
-              "name": {
-                "it": "Pizzerie",
-                "en": null,
-                "de": null
-              },
-              "description": null,
-              "image": null,
-              "objectIds": null,
-              "items": null,
-              "query": {
-                "type": "restaurant",
-                "classifications": null,
-                "classification": "Pizzerie"
-              },
-              "ref": null,
-              "type": null,
-              "app": null
-            },
-            {
-              "id": "02fbf12a0d62a6ff9f9c59623c0fae81",
-              "name": {
-                "it": "Trattorie",
-                "en": null,
-                "de": null
-              },
-              "description": null,
-              "image": null,
-              "objectIds": null,
-              "items": null,
-              "query": {
-                "type": "restaurant",
-                "classifications": null,
-                "classification": "Trattorie"
-              },
-              "ref": null,
-              "type": null,
-              "app": null
-            },
-            {
-              "id": "dfc74ccce5fe77fd3905e5ac5e1a6a2d",
-              "name": {
-                "it": "Agritur",
-                "en": null,
-                "de": null
-              },
-              "description": null,
-              "image": null,
-              "objectIds": null,
-              "items": null,
-              "query": {
-                "type": "restaurant",
-                "classifications": null,
-                "classification": "Agritur"
-              },
-              "ref": null,
-              "type": null,
-              "app": null
-            }
-          ],
+          "items": null,
           "query": {
             "type": "restaurant",
             "classifications": null,
@@ -681,22 +610,71 @@
     {
       "id": "ad94673caa967e022fd137627094d238",
       "name": {
-        "it": "Spiagge",
-        "en": null,
-        "de": null
+        "it": "La Costa degli Dei"
       },
       "description": null,
       "image": null,
       "objectIds": null,
-      "items": null,
+      "items": [
+        {
+          "id": "f379ccd396e3242c2fd3da68ccc4e2ec",
+          "name": {
+            "it": "Grotte"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "poi",
+            "classifications": null,
+            "classification": "grotta"
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        },
+        {
+          "id": "3a14998a140e138e15bedc8cb2c443bd",
+          "name": {
+            "it": "Scoglio"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "poi",
+            "classifications": null,
+            "classification": "scoglio"
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        },
+        {
+          "id": "222775de9fdeef683b4d6b82df39728c",
+          "name": {
+            "it": "Spiagge"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "poi",
+            "classifications": null,
+            "classification": "spiaggia"
+          },
+          "ref": null,
+          "type": null,
+          "app": null
+        }
+      ],
       "query": {
-        "type": "luogo",
-        "classifications": [
-          {
-            "tipo_luogo": "Spiaggia"
-          }
-        ],
-        "classification": null
+        "type": "poi",
+        "classifications": null,
+        "classification": "Spiaggia"
       },
       "ref": null,
       "type": null,
@@ -705,22 +683,33 @@
     {
       "id": "66c5c1638a069d4bff58b6331f725b6c",
       "name": {
-        "it": "Preferiti",
-        "en": null,
-        "de": null
+        "it": "Preferiti"
       },
       "description": null,
       "image": null,
-      "objectIds": [
-        "66c5c1638a069d4bff58b6331f725b6c"
+      "objectIds": null,
+      "items": [
+        {
+          "id": "66c5c1638a069d4bff58b6331f725b6c_sub",
+          "name": {
+            "it": "Preferiti"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": [
+            "66c5c1638a069d4bff58b6331f725b6c"
+          ],
+          "items": null,
+          "query": null,
+          "ref": null,
+          "type": null,
+          "app": null
+        }
       ],
-      "items": null,
       "query": null,
       "ref": null,
       "type": null,
       "app": null
     }
-  ],
-  "visible": true,
-  "lastModified": 1415703275000
+  ]
 }

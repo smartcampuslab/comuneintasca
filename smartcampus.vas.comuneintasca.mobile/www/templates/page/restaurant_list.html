@@ -1,5 +1,6 @@
 <ion-header-bar class="bar-subheader item item-divider" align="center">
-  <span ng-if="filterDef">{{filterDef | translate | ellipsis:20}}: </span><span ng-if="!results">{{'loading' | translate }}</span><span ng-if="results">{{'list_results' | translate_plur:results.length}}</span>
+  <span ng-if="filterDef">{{filterDef | translate | ellipsis:20}}<span ng-if="filterDetail">{{filterDetail}}</span>: </span>
+  <span ng-if="!scrolldata">{{'loading' | translate }}</span><span ng-if="scrolldata">{{'list_results' | translate_plur:results.length}}</span>
 </ion-header-bar>
 <ion-content class="has-header" delegate-handle="listScroll">
   <ion-list>
@@ -11,7 +12,7 @@
         <div ng-if="obj.distance" class="dida">{{obj.distance | number:1}} {{'entry_km' | translate}}</div>
       </div>
       <h2>{{obj.title | translate}}</h2>
-      <p>{{obj.classification | translate}}</p>
+      <p>{{obj.dbClassification | translate}}<span ng-if="obj.dbClassification2">, {{obj.dbClassification2 | translate}}</span><span ng-if="obj.dbClassification3">, {{obj.dbClassification3 | translate}}</span></p>
       <div class="row comuni-item-bottom">
         <div class="col comuni-item-bottom-text">
           <span>{{obj.address | translate | addrclean}}</span>

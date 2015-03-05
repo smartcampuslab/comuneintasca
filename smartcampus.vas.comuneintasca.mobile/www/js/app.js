@@ -27,9 +27,18 @@ angular.module('ilcomuneintasca', [
   });
 }])
 
-.run(function ($ionicPlatform, $rootScope, $state, $filter, $location, Config, DatiDB, Files, GeoLocate) {
+.run(function ($ionicPlatform, $rootScope, $state, $filter, $location, Config, DatiDB, Files, GeoLocate, $ionicPopup) {
   $rootScope.mapsReady=false;
-  
+  $rootScope.reallyexitapp=function(){
+    $ionicPopup.confirm({
+      title: $filter('translate')('exitapp_title'),
+      template: $filter('translate')('exitapp_template'),
+      cancelText: $filter('translate')('cancel'),
+      okText: $filter('translate')('exitapp_ok'),
+    }).then(function(reallyExit) {
+      if (reallyExit) ionic.Platform.exitApp();
+    });
+  };
   $rootScope.locationWatchID = undefined;
   //  ionic.Platform.fullScreen(false,true);
   if (typeof (Number.prototype.toRad) === "undefined") {
@@ -52,10 +61,10 @@ angular.module('ilcomuneintasca', [
   }, false);
   $ionicPlatform.ready(function () {
     //console.log('IONIC READY!');
-    // Disable BACK button on home
     $ionicPlatform.registerBackButtonAction(function (event) {
       if($state.current.name=="app.home"){
-        console.log('not going back anymore!');
+        //console.log('going back in home...');
+        $rootScope.reallyexitapp();
       } else {
         navigator.app.backHistory();
       }
@@ -136,6 +145,8 @@ angular.module('ilcomuneintasca', [
   }
   $rootScope.gotoSubpath = function (subpath) {
     //console.log('full subpath: '+$location.path()+subpath)
+    var actualpath=$location.path();
+    if (actualpath.length>0 && actualpath.charAt(actualpath.length-1)=='/' && subpath.charAt(0)=='/') subpath=subpath.substring(1);
     $location.path($location.path()+subpath);
   }
 
@@ -200,14 +211,19 @@ angular.module('ilcomuneintasca', [
   }
   $rootScope.bringmethere = function (loc) {
     if (device.platform == "Android") {
-      window.open("http://maps.google.com/maps?daddr=" + loc[0] + "," + loc[1], "_system");
+      setTimeout(function(){
+        window.open("http://maps.google.com/maps?daddr=" + loc[0] + "," + loc[1], "_system");
+      },10);
     } else if (device.platform == "iOS") {
       var url = "maps:daddr=" + loc[0] + "," + loc[1];
-      successFn();
-      window.location = url;
+      //successFn();
+      setTimeout(function(){
+        window.location = url;
+      },10);
     } else {
       console.error("Unknown platform");
     }
+    return false;
   }
   $rootScope.share = function (text, webUrl, imgUrl) {
     if (typeof text == 'object') {
@@ -266,7 +282,12 @@ angular.module('ilcomuneintasca', [
     var url=$rootScope.getParsedImageURL(item);
     return (url=='svg/placeholder.svg');
   }
-    
+
+  $rootScope.TEST_CONNECTION = (localStorage.TEST_CONNECTION+'')==='true' ? true : false;
+  $rootScope.switchTestConnection = function() {
+    localStorage.TEST_CONNECTION = $rootScope.TEST_CONNECTION = !$rootScope.TEST_CONNECTION;
+  }
+  
   $rootScope.extOrderBySorter=function(input, params){
     if (!input || !params || !params.order) return input;
     //console.log('input.length: '+input.length);
@@ -360,15 +381,6 @@ angular.module('ilcomuneintasca', [
         }
       }
     })
-    .state('app.page', {
-      url: "/page/:groupId/:menuId/:itemId",
-      views: {
-        'menuContent': {
-          templateUrl: "templates/page.html",
-          controller: "PageCtrl"
-        }
-      }
-    })
     .state('app.itempage', {
       url: "/page/:groupId/:itemId",
       views: {
@@ -378,8 +390,29 @@ angular.module('ilcomuneintasca', [
         }
       }
     })
+    .state('app.itemsons', {
+      url: "/page/:groupId/:itemId/sons/:sonscount",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/page.html",
+          controller: "PageCtrl"
+        }
+      },
+      data: {
+        sons: true
+      }
+    })
+    .state('app.page', {
+      url: "/page/:groupId/:menuId/:itemId",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/page.html",
+          controller: "PageCtrl"
+        }
+      }
+    })
     .state('app.sons', {
-      url: "/page/:groupId/:menuId/:itemId/sons",
+      url: "/page/:groupId/:menuId/:itemId/sons/:sonscount",
       views: {
         'menuContent': {
           templateUrl: "templates/page.html",

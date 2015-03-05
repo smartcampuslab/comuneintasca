@@ -1,0 +1,13 @@
+{
+  "id":"ricadi",
+  "nome":"Ricadi",
+  "langs":[ "en", "it", "de" ],
+  "android":{
+    "package":"it.smartcommunitylab.comuni.ricadi",
+    "version":{ "name":"3.0.1", "code":11 }
+  },
+  "ios":{
+    "package":"it.smartcommunitylab.comuni.ricadi",
+    "version":{ "name":"3.0.1", "build":"141119.1220" }
+  }
+}

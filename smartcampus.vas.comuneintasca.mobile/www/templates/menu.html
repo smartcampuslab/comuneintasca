@@ -24,6 +24,9 @@
         <ion-item nav-clear menu-close class="item-accordion" ng-click="goto('home')">
           <span ng-bind="'sidemenu_Home' | translate" class="comunimenu-home"></span>
         </ion-item>
+        <!--ion-item ng-if="DEV" nav-clear menu-close class="item-accordion" ng-click="goto('test')">
+          <span class="comunimenu-home"><em>¡test!</em></span>
+        </ion-item-->
 
         <div ng-if="menu" ng-repeat="(groupIndex, menuGroup) in menu" class="comunimenu-pos{{groupIndex}}">
           <ion-item class="item-header item-icon-right" ng-click="showGroup(groupIndex)">

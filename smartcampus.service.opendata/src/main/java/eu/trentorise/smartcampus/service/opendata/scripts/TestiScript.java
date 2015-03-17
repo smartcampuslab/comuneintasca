@@ -44,6 +44,9 @@ public class TestiScript extends OpenContentScript {
 		builder.setClassification(getI18NStringValue(i18n, FIELDS, "classifications", VALUE));
 		
 		builder.setDescription(getI18NStringValue(i18n, FIELDS, "description", VALUE));
+		if (!builder.getDescription().hasIt()) {
+			builder.setDescription(getI18NStringValue(i18n, FIELDS, "descrizione", VALUE));
+		}
 
 		builder.setSubtitle(getI18NStringValue(i18n, FIELDS, "abstract", VALUE));
 		

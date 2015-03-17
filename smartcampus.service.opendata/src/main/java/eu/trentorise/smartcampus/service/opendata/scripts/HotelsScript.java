@@ -49,6 +49,10 @@ public class HotelsScript extends OpenContentScript {
 		}
 
 		builder.setSubtitle(getI18NStringValue(i18n, FIELDS, "abstract", VALUE));
+		builder.setDescription(getI18NStringValue(i18n, FIELDS, "descrizione", VALUE));
+		if (!builder.getDescription().hasIt()) {
+			builder.setDescription(getI18NStringValue(i18n, FIELDS, "description", VALUE));
+		}
 
 		builder.setAddress(getI18NStringValue(i18n, FIELDS, "indirizzo", VALUE));
 		
@@ -83,7 +87,10 @@ public class HotelsScript extends OpenContentScript {
 			builder.setEmail((String)email);
 		}		
 		
-		
+		I18nString info = getI18NStringValue(i18n, FIELDS, "info", VALUE);
+		if (info.hasIt()) {
+			builder.setInfo(info);
+		}		
 
 		Object stars = getRecValue(getMap(i18n,DEFAULT_LANGUAGE), FIELDS, "stars", STRING_VALUE);
 		if (stars != null && stars instanceof String) {

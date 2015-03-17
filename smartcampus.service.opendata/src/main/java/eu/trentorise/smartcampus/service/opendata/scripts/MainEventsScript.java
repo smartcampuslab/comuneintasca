@@ -42,8 +42,12 @@ public class MainEventsScript extends OpenContentScript {
 		builder.setTitle(getI18NStringValue(i18n, FIELDS, "titolo", VALUE));
 		
 		builder.setDescription(getI18NStringValue(i18n, FIELDS, "descrizione", VALUE));
+		if (!builder.getDescription().hasIt()) {
+			builder.setDescription(getI18NStringValue(i18n, FIELDS, "description", VALUE));
+		}
 
 		builder.setSubtitle(getI18NStringValue(i18n, FIELDS, "abstract", VALUE));
+		builder.setInfo(getI18NStringValue(i18n, FIELDS, "info", VALUE));
 
 		builder.setAddress(getI18NStringValue(i18n, FIELDS, "indirizzo", VALUE));
 		

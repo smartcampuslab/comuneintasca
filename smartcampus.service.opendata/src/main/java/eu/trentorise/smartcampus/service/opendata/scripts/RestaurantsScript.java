@@ -49,7 +49,11 @@ public class RestaurantsScript extends OpenContentScript {
 			builder.setClassification(cat);
 		}
 
-		builder.setDescription(getI18NStringValue(i18n, FIELDS, "abstract", VALUE));
+		builder.setSubtitle(getI18NStringValue(i18n, FIELDS, "abstract", VALUE));
+		builder.setDescription(getI18NStringValue(i18n, FIELDS, "descrizione", VALUE));
+		if (!builder.getDescription().hasIt()) {
+			builder.setDescription(getI18NStringValue(i18n, FIELDS, "description", VALUE));
+		}
 
 		builder.setAddress(getI18NStringValue(i18n, FIELDS, "indirizzo", VALUE));
 		
@@ -93,6 +97,11 @@ public class RestaurantsScript extends OpenContentScript {
 		I18nString equip = getI18NStringValue(i18n, FIELDS, "servizi_offerti", VALUE, OBJECT_NAME);
 		builder.setEquipment(equip);
 		
+		I18nString info = getI18NStringValue(i18n, FIELDS, "info", VALUE);
+		if (info.hasIt()) {
+			builder.setInfo(info);
+		}		
+
 		return builder.build();
 	}
 	

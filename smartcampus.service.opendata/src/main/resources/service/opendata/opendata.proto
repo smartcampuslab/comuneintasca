@@ -61,20 +61,23 @@ message I18nRestaurant {
 message I18nHotel {
  required string id = 1;
  required I18nString title = 2;
- optional I18nString subtitle = 3;
- optional I18nString classification = 4;
- optional string url = 5;
- optional string image = 6;
- optional double lat = 7;
- optional double lon = 8; 
- optional I18nString address = 9;
- optional int64 lastModified = 10;
- optional int32 stars = 11;
- optional string phone = 12;
- optional string phone2 = 13;
- optional string fax = 14;
- optional string email = 15; 
- required string objectId = 16;
+ optional I18nString shortTitle = 3;
+ optional I18nString subtitle = 4;
+ optional I18nString info = 5;
+ optional I18nString description = 6;
+ optional I18nString classification = 7;
+ optional string url = 8;
+ optional string image = 9;
+ optional double lat = 10;
+ optional double lon = 11; 
+ optional I18nString address = 12;
+ optional int64 lastModified = 13;
+ optional int32 stars = 14;
+ optional string phone = 15;
+ optional string phone2 = 16;
+ optional string fax = 17;
+ optional string email = 18; 
+ required string objectId = 19;
  } 
  
 message I18nCultura {
@@ -114,6 +117,7 @@ message I18nMainEvent {
  optional int64 toDate = 15;
  optional I18nString dateDescription = 16; 
  required string objectId = 17;
+ optional I18nString info = 18;    
 }
 
 message I18nTesto {

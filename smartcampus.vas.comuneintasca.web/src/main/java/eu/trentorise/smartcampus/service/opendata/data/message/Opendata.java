@@ -6013,62 +6013,77 @@ public final class Opendata {
     eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getTitle();
     eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder getTitleOrBuilder();
     
-    // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString subtitle = 3;
+    // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString shortTitle = 3;
+    boolean hasShortTitle();
+    eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getShortTitle();
+    eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder getShortTitleOrBuilder();
+    
+    // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString subtitle = 4;
     boolean hasSubtitle();
     eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getSubtitle();
     eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder getSubtitleOrBuilder();
     
-    // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString classification = 4;
+    // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString info = 5;
+    boolean hasInfo();
+    eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getInfo();
+    eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder getInfoOrBuilder();
+    
+    // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString description = 6;
+    boolean hasDescription();
+    eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getDescription();
+    eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder getDescriptionOrBuilder();
+    
+    // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString classification = 7;
     boolean hasClassification();
     eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getClassification();
     eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder getClassificationOrBuilder();
     
-    // optional string url = 5;
+    // optional string url = 8;
     boolean hasUrl();
     String getUrl();
     
-    // optional string image = 6;
+    // optional string image = 9;
     boolean hasImage();
     String getImage();
     
-    // optional double lat = 7;
+    // optional double lat = 10;
     boolean hasLat();
     double getLat();
     
-    // optional double lon = 8;
+    // optional double lon = 11;
     boolean hasLon();
     double getLon();
     
-    // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString address = 9;
+    // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString address = 12;
     boolean hasAddress();
     eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getAddress();
     eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder getAddressOrBuilder();
     
-    // optional int64 lastModified = 10;
+    // optional int64 lastModified = 13;
     boolean hasLastModified();
     long getLastModified();
     
-    // optional int32 stars = 11;
+    // optional int32 stars = 14;
     boolean hasStars();
     int getStars();
     
-    // optional string phone = 12;
+    // optional string phone = 15;
     boolean hasPhone();
     String getPhone();
     
-    // optional string phone2 = 13;
+    // optional string phone2 = 16;
     boolean hasPhone2();
     String getPhone2();
     
-    // optional string fax = 14;
+    // optional string fax = 17;
     boolean hasFax();
     String getFax();
     
-    // optional string email = 15;
+    // optional string email = 18;
     boolean hasEmail();
     String getEmail();
     
-    // required string objectId = 16;
+    // required string objectId = 19;
     boolean hasObjectId();
     String getObjectId();
   }
@@ -6146,11 +6161,24 @@ public final class Opendata {
       return title_;
     }
     
-    // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString subtitle = 3;
-    public static final int SUBTITLE_FIELD_NUMBER = 3;
+    // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString shortTitle = 3;
+    public static final int SHORTTITLE_FIELD_NUMBER = 3;
+    private eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString shortTitle_;
+    public boolean hasShortTitle() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getShortTitle() {
+      return shortTitle_;
+    }
+    public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder getShortTitleOrBuilder() {
+      return shortTitle_;
+    }
+    
+    // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString subtitle = 4;
+    public static final int SUBTITLE_FIELD_NUMBER = 4;
     private eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString subtitle_;
     public boolean hasSubtitle() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
+      return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getSubtitle() {
       return subtitle_;
@@ -6159,11 +6187,37 @@ public final class Opendata {
       return subtitle_;
     }
     
-    // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString classification = 4;
-    public static final int CLASSIFICATION_FIELD_NUMBER = 4;
+    // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString info = 5;
+    public static final int INFO_FIELD_NUMBER = 5;
+    private eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString info_;
+    public boolean hasInfo() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getInfo() {
+      return info_;
+    }
+    public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder getInfoOrBuilder() {
+      return info_;
+    }
+    
+    // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString description = 6;
+    public static final int DESCRIPTION_FIELD_NUMBER = 6;
+    private eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString description_;
+    public boolean hasDescription() {
+      return ((bitField0_ & 0x00000020) == 0x00000020);
+    }
+    public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getDescription() {
+      return description_;
+    }
+    public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder getDescriptionOrBuilder() {
+      return description_;
+    }
+    
+    // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString classification = 7;
+    public static final int CLASSIFICATION_FIELD_NUMBER = 7;
     private eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString classification_;
     public boolean hasClassification() {
-      return ((bitField0_ & 0x00000008) == 0x00000008);
+      return ((bitField0_ & 0x00000040) == 0x00000040);
     }
     public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getClassification() {
       return classification_;
@@ -6172,11 +6226,11 @@ public final class Opendata {
       return classification_;
     }
     
-    // optional string url = 5;
-    public static final int URL_FIELD_NUMBER = 5;
+    // optional string url = 8;
+    public static final int URL_FIELD_NUMBER = 8;
     private java.lang.Object url_;
     public boolean hasUrl() {
-      return ((bitField0_ & 0x00000010) == 0x00000010);
+      return ((bitField0_ & 0x00000080) == 0x00000080);
     }
     public String getUrl() {
       java.lang.Object ref = url_;
@@ -6204,11 +6258,11 @@ public final class Opendata {
       }
     }
     
-    // optional string image = 6;
-    public static final int IMAGE_FIELD_NUMBER = 6;
+    // optional string image = 9;
+    public static final int IMAGE_FIELD_NUMBER = 9;
     private java.lang.Object image_;
     public boolean hasImage() {
-      return ((bitField0_ & 0x00000020) == 0x00000020);
+      return ((bitField0_ & 0x00000100) == 0x00000100);
     }
     public String getImage() {
       java.lang.Object ref = image_;
@@ -6236,31 +6290,31 @@ public final class Opendata {
       }
     }
     
-    // optional double lat = 7;
-    public static final int LAT_FIELD_NUMBER = 7;
+    // optional double lat = 10;
+    public static final int LAT_FIELD_NUMBER = 10;
     private double lat_;
     public boolean hasLat() {
-      return ((bitField0_ & 0x00000040) == 0x00000040);
+      return ((bitField0_ & 0x00000200) == 0x00000200);
     }
     public double getLat() {
       return lat_;
     }
     
-    // optional double lon = 8;
-    public static final int LON_FIELD_NUMBER = 8;
+    // optional double lon = 11;
+    public static final int LON_FIELD_NUMBER = 11;
     private double lon_;
     public boolean hasLon() {
-      return ((bitField0_ & 0x00000080) == 0x00000080);
+      return ((bitField0_ & 0x00000400) == 0x00000400);
     }
     public double getLon() {
       return lon_;
     }
     
-    // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString address = 9;
-    public static final int ADDRESS_FIELD_NUMBER = 9;
+    // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString address = 12;
+    public static final int ADDRESS_FIELD_NUMBER = 12;
     private eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString address_;
     public boolean hasAddress() {
-      return ((bitField0_ & 0x00000100) == 0x00000100);
+      return ((bitField0_ & 0x00000800) == 0x00000800);
     }
     public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getAddress() {
       return address_;
@@ -6269,31 +6323,31 @@ public final class Opendata {
       return address_;
     }
     
-    // optional int64 lastModified = 10;
-    public static final int LASTMODIFIED_FIELD_NUMBER = 10;
+    // optional int64 lastModified = 13;
+    public static final int LASTMODIFIED_FIELD_NUMBER = 13;
     private long lastModified_;
     public boolean hasLastModified() {
-      return ((bitField0_ & 0x00000200) == 0x00000200);
+      return ((bitField0_ & 0x00001000) == 0x00001000);
     }
     public long getLastModified() {
       return lastModified_;
     }
     
-    // optional int32 stars = 11;
-    public static final int STARS_FIELD_NUMBER = 11;
+    // optional int32 stars = 14;
+    public static final int STARS_FIELD_NUMBER = 14;
     private int stars_;
     public boolean hasStars() {
-      return ((bitField0_ & 0x00000400) == 0x00000400);
+      return ((bitField0_ & 0x00002000) == 0x00002000);
     }
     public int getStars() {
       return stars_;
     }
     
-    // optional string phone = 12;
-    public static final int PHONE_FIELD_NUMBER = 12;
+    // optional string phone = 15;
+    public static final int PHONE_FIELD_NUMBER = 15;
     private java.lang.Object phone_;
     public boolean hasPhone() {
-      return ((bitField0_ & 0x00000800) == 0x00000800);
+      return ((bitField0_ & 0x00004000) == 0x00004000);
     }
     public String getPhone() {
       java.lang.Object ref = phone_;
@@ -6321,11 +6375,11 @@ public final class Opendata {
       }
     }
     
-    // optional string phone2 = 13;
-    public static final int PHONE2_FIELD_NUMBER = 13;
+    // optional string phone2 = 16;
+    public static final int PHONE2_FIELD_NUMBER = 16;
     private java.lang.Object phone2_;
     public boolean hasPhone2() {
-      return ((bitField0_ & 0x00001000) == 0x00001000);
+      return ((bitField0_ & 0x00008000) == 0x00008000);
     }
     public String getPhone2() {
       java.lang.Object ref = phone2_;
@@ -6353,11 +6407,11 @@ public final class Opendata {
       }
     }
     
-    // optional string fax = 14;
-    public static final int FAX_FIELD_NUMBER = 14;
+    // optional string fax = 17;
+    public static final int FAX_FIELD_NUMBER = 17;
     private java.lang.Object fax_;
     public boolean hasFax() {
-      return ((bitField0_ & 0x00002000) == 0x00002000);
+      return ((bitField0_ & 0x00010000) == 0x00010000);
     }
     public String getFax() {
       java.lang.Object ref = fax_;
@@ -6385,11 +6439,11 @@ public final class Opendata {
       }
     }
     
-    // optional string email = 15;
-    public static final int EMAIL_FIELD_NUMBER = 15;
+    // optional string email = 18;
+    public static final int EMAIL_FIELD_NUMBER = 18;
     private java.lang.Object email_;
     public boolean hasEmail() {
-      return ((bitField0_ & 0x00004000) == 0x00004000);
+      return ((bitField0_ & 0x00020000) == 0x00020000);
     }
     public String getEmail() {
       java.lang.Object ref = email_;
@@ -6417,11 +6471,11 @@ public final class Opendata {
       }
     }
     
-    // required string objectId = 16;
-    public static final int OBJECTID_FIELD_NUMBER = 16;
+    // required string objectId = 19;
+    public static final int OBJECTID_FIELD_NUMBER = 19;
     private java.lang.Object objectId_;
     public boolean hasObjectId() {
-      return ((bitField0_ & 0x00008000) == 0x00008000);
+      return ((bitField0_ & 0x00040000) == 0x00040000);
     }
     public String getObjectId() {
       java.lang.Object ref = objectId_;
@@ -6452,7 +6506,10 @@ public final class Opendata {
     private void initFields() {
       id_ = "";
       title_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
+      shortTitle_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
       subtitle_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
+      info_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
+      description_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
       classification_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
       url_ = "";
       image_ = "";
@@ -6498,46 +6555,55 @@ public final class Opendata {
         output.writeMessage(2, title_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeMessage(3, subtitle_);
+        output.writeMessage(3, shortTitle_);
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        output.writeMessage(4, classification_);
+        output.writeMessage(4, subtitle_);
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
-        output.writeBytes(5, getUrlBytes());
+        output.writeMessage(5, info_);
       }
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
-        output.writeBytes(6, getImageBytes());
+        output.writeMessage(6, description_);
       }
       if (((bitField0_ & 0x00000040) == 0x00000040)) {
-        output.writeDouble(7, lat_);
+        output.writeMessage(7, classification_);
       }
       if (((bitField0_ & 0x00000080) == 0x00000080)) {
-        output.writeDouble(8, lon_);
+        output.writeBytes(8, getUrlBytes());
       }
       if (((bitField0_ & 0x00000100) == 0x00000100)) {
-        output.writeMessage(9, address_);
+        output.writeBytes(9, getImageBytes());
       }
       if (((bitField0_ & 0x00000200) == 0x00000200)) {
-        output.writeInt64(10, lastModified_);
+        output.writeDouble(10, lat_);
       }
       if (((bitField0_ & 0x00000400) == 0x00000400)) {
-        output.writeInt32(11, stars_);
+        output.writeDouble(11, lon_);
       }
       if (((bitField0_ & 0x00000800) == 0x00000800)) {
-        output.writeBytes(12, getPhoneBytes());
+        output.writeMessage(12, address_);
       }
       if (((bitField0_ & 0x00001000) == 0x00001000)) {
-        output.writeBytes(13, getPhone2Bytes());
+        output.writeInt64(13, lastModified_);
       }
       if (((bitField0_ & 0x00002000) == 0x00002000)) {
-        output.writeBytes(14, getFaxBytes());
+        output.writeInt32(14, stars_);
       }
       if (((bitField0_ & 0x00004000) == 0x00004000)) {
-        output.writeBytes(15, getEmailBytes());
+        output.writeBytes(15, getPhoneBytes());
       }
       if (((bitField0_ & 0x00008000) == 0x00008000)) {
-        output.writeBytes(16, getObjectIdBytes());
+        output.writeBytes(16, getPhone2Bytes());
+      }
+      if (((bitField0_ & 0x00010000) == 0x00010000)) {
+        output.writeBytes(17, getFaxBytes());
+      }
+      if (((bitField0_ & 0x00020000) == 0x00020000)) {
+        output.writeBytes(18, getEmailBytes());
+      }
+      if (((bitField0_ & 0x00040000) == 0x00040000)) {
+        output.writeBytes(19, getObjectIdBytes());
       }
       getUnknownFields().writeTo(output);
     }
@@ -6558,59 +6624,71 @@ public final class Opendata {
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, subtitle_);
+          .computeMessageSize(3, shortTitle_);
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, classification_);
+          .computeMessageSize(4, subtitle_);
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(5, getUrlBytes());
+          .computeMessageSize(5, info_);
       }
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(6, getImageBytes());
+          .computeMessageSize(6, description_);
       }
       if (((bitField0_ & 0x00000040) == 0x00000040)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(7, lat_);
+          .computeMessageSize(7, classification_);
       }
       if (((bitField0_ & 0x00000080) == 0x00000080)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(8, lon_);
+          .computeBytesSize(8, getUrlBytes());
       }
       if (((bitField0_ & 0x00000100) == 0x00000100)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(9, address_);
+          .computeBytesSize(9, getImageBytes());
       }
       if (((bitField0_ & 0x00000200) == 0x00000200)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(10, lastModified_);
+          .computeDoubleSize(10, lat_);
       }
       if (((bitField0_ & 0x00000400) == 0x00000400)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(11, stars_);
+          .computeDoubleSize(11, lon_);
       }
       if (((bitField0_ & 0x00000800) == 0x00000800)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(12, getPhoneBytes());
+          .computeMessageSize(12, address_);
       }
       if (((bitField0_ & 0x00001000) == 0x00001000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(13, getPhone2Bytes());
+          .computeInt64Size(13, lastModified_);
       }
       if (((bitField0_ & 0x00002000) == 0x00002000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(14, getFaxBytes());
+          .computeInt32Size(14, stars_);
       }
       if (((bitField0_ & 0x00004000) == 0x00004000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(15, getEmailBytes());
+          .computeBytesSize(15, getPhoneBytes());
       }
       if (((bitField0_ & 0x00008000) == 0x00008000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(16, getObjectIdBytes());
+          .computeBytesSize(16, getPhone2Bytes());
+      }
+      if (((bitField0_ & 0x00010000) == 0x00010000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(17, getFaxBytes());
+      }
+      if (((bitField0_ & 0x00020000) == 0x00020000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(18, getEmailBytes());
+      }
+      if (((bitField0_ & 0x00040000) == 0x00040000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(19, getObjectIdBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -6729,7 +6807,10 @@ public final class Opendata {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getTitleFieldBuilder();
+          getShortTitleFieldBuilder();
           getSubtitleFieldBuilder();
+          getInfoFieldBuilder();
+          getDescriptionFieldBuilder();
           getClassificationFieldBuilder();
           getAddressFieldBuilder();
         }
@@ -6748,46 +6829,64 @@ public final class Opendata {
           titleBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000002);
+        if (shortTitleBuilder_ == null) {
+          shortTitle_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
+        } else {
+          shortTitleBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000004);
         if (subtitleBuilder_ == null) {
           subtitle_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
         } else {
           subtitleBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000008);
+        if (infoBuilder_ == null) {
+          info_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
+        } else {
+          infoBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000010);
+        if (descriptionBuilder_ == null) {
+          description_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
+        } else {
+          descriptionBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000020);
         if (classificationBuilder_ == null) {
           classification_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
         } else {
           classificationBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000008);
-        url_ = "";
-        bitField0_ = (bitField0_ & ~0x00000010);
-        image_ = "";
-        bitField0_ = (bitField0_ & ~0x00000020);
-        lat_ = 0D;
         bitField0_ = (bitField0_ & ~0x00000040);
-        lon_ = 0D;
+        url_ = "";
         bitField0_ = (bitField0_ & ~0x00000080);
+        image_ = "";
+        bitField0_ = (bitField0_ & ~0x00000100);
+        lat_ = 0D;
+        bitField0_ = (bitField0_ & ~0x00000200);
+        lon_ = 0D;
+        bitField0_ = (bitField0_ & ~0x00000400);
         if (addressBuilder_ == null) {
           address_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
         } else {
           addressBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000100);
-        lastModified_ = 0L;
-        bitField0_ = (bitField0_ & ~0x00000200);
-        stars_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000400);
-        phone_ = "";
         bitField0_ = (bitField0_ & ~0x00000800);
-        phone2_ = "";
+        lastModified_ = 0L;
         bitField0_ = (bitField0_ & ~0x00001000);
-        fax_ = "";
+        stars_ = 0;
         bitField0_ = (bitField0_ & ~0x00002000);
-        email_ = "";
+        phone_ = "";
         bitField0_ = (bitField0_ & ~0x00004000);
-        objectId_ = "";
+        phone2_ = "";
         bitField0_ = (bitField0_ & ~0x00008000);
+        fax_ = "";
+        bitField0_ = (bitField0_ & ~0x00010000);
+        email_ = "";
+        bitField0_ = (bitField0_ & ~0x00020000);
+        objectId_ = "";
+        bitField0_ = (bitField0_ & ~0x00040000);
         return this;
       }
       
@@ -6841,69 +6940,93 @@ public final class Opendata {
         if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
+        if (shortTitleBuilder_ == null) {
+          result.shortTitle_ = shortTitle_;
+        } else {
+          result.shortTitle_ = shortTitleBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
         if (subtitleBuilder_ == null) {
           result.subtitle_ = subtitle_;
         } else {
           result.subtitle_ = subtitleBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
-          to_bitField0_ |= 0x00000008;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        if (infoBuilder_ == null) {
+          result.info_ = info_;
+        } else {
+          result.info_ = infoBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+          to_bitField0_ |= 0x00000020;
+        }
+        if (descriptionBuilder_ == null) {
+          result.description_ = description_;
+        } else {
+          result.description_ = descriptionBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
+          to_bitField0_ |= 0x00000040;
         }
         if (classificationBuilder_ == null) {
           result.classification_ = classification_;
         } else {
           result.classification_ = classificationBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
-          to_bitField0_ |= 0x00000010;
-        }
-        result.url_ = url_;
-        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
-          to_bitField0_ |= 0x00000020;
-        }
-        result.image_ = image_;
-        if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
-          to_bitField0_ |= 0x00000040;
-        }
-        result.lat_ = lat_;
         if (((from_bitField0_ & 0x00000080) == 0x00000080)) {
           to_bitField0_ |= 0x00000080;
         }
-        result.lon_ = lon_;
+        result.url_ = url_;
         if (((from_bitField0_ & 0x00000100) == 0x00000100)) {
           to_bitField0_ |= 0x00000100;
+        }
+        result.image_ = image_;
+        if (((from_bitField0_ & 0x00000200) == 0x00000200)) {
+          to_bitField0_ |= 0x00000200;
+        }
+        result.lat_ = lat_;
+        if (((from_bitField0_ & 0x00000400) == 0x00000400)) {
+          to_bitField0_ |= 0x00000400;
+        }
+        result.lon_ = lon_;
+        if (((from_bitField0_ & 0x00000800) == 0x00000800)) {
+          to_bitField0_ |= 0x00000800;
         }
         if (addressBuilder_ == null) {
           result.address_ = address_;
         } else {
           result.address_ = addressBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00000200) == 0x00000200)) {
-          to_bitField0_ |= 0x00000200;
-        }
-        result.lastModified_ = lastModified_;
-        if (((from_bitField0_ & 0x00000400) == 0x00000400)) {
-          to_bitField0_ |= 0x00000400;
-        }
-        result.stars_ = stars_;
-        if (((from_bitField0_ & 0x00000800) == 0x00000800)) {
-          to_bitField0_ |= 0x00000800;
-        }
-        result.phone_ = phone_;
         if (((from_bitField0_ & 0x00001000) == 0x00001000)) {
           to_bitField0_ |= 0x00001000;
         }
-        result.phone2_ = phone2_;
+        result.lastModified_ = lastModified_;
         if (((from_bitField0_ & 0x00002000) == 0x00002000)) {
           to_bitField0_ |= 0x00002000;
         }
-        result.fax_ = fax_;
+        result.stars_ = stars_;
         if (((from_bitField0_ & 0x00004000) == 0x00004000)) {
           to_bitField0_ |= 0x00004000;
         }
-        result.email_ = email_;
+        result.phone_ = phone_;
         if (((from_bitField0_ & 0x00008000) == 0x00008000)) {
           to_bitField0_ |= 0x00008000;
+        }
+        result.phone2_ = phone2_;
+        if (((from_bitField0_ & 0x00010000) == 0x00010000)) {
+          to_bitField0_ |= 0x00010000;
+        }
+        result.fax_ = fax_;
+        if (((from_bitField0_ & 0x00020000) == 0x00020000)) {
+          to_bitField0_ |= 0x00020000;
+        }
+        result.email_ = email_;
+        if (((from_bitField0_ & 0x00040000) == 0x00040000)) {
+          to_bitField0_ |= 0x00040000;
         }
         result.objectId_ = objectId_;
         result.bitField0_ = to_bitField0_;
@@ -6928,8 +7051,17 @@ public final class Opendata {
         if (other.hasTitle()) {
           mergeTitle(other.getTitle());
         }
+        if (other.hasShortTitle()) {
+          mergeShortTitle(other.getShortTitle());
+        }
         if (other.hasSubtitle()) {
           mergeSubtitle(other.getSubtitle());
+        }
+        if (other.hasInfo()) {
+          mergeInfo(other.getInfo());
+        }
+        if (other.hasDescription()) {
+          mergeDescription(other.getDescription());
         }
         if (other.hasClassification()) {
           mergeClassification(other.getClassification());
@@ -7029,6 +7161,15 @@ public final class Opendata {
             }
             case 26: {
               eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder subBuilder = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.newBuilder();
+              if (hasShortTitle()) {
+                subBuilder.mergeFrom(getShortTitle());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setShortTitle(subBuilder.buildPartial());
+              break;
+            }
+            case 34: {
+              eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder subBuilder = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.newBuilder();
               if (hasSubtitle()) {
                 subBuilder.mergeFrom(getSubtitle());
               }
@@ -7036,7 +7177,25 @@ public final class Opendata {
               setSubtitle(subBuilder.buildPartial());
               break;
             }
-            case 34: {
+            case 42: {
+              eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder subBuilder = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.newBuilder();
+              if (hasInfo()) {
+                subBuilder.mergeFrom(getInfo());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setInfo(subBuilder.buildPartial());
+              break;
+            }
+            case 50: {
+              eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder subBuilder = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.newBuilder();
+              if (hasDescription()) {
+                subBuilder.mergeFrom(getDescription());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setDescription(subBuilder.buildPartial());
+              break;
+            }
+            case 58: {
               eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder subBuilder = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.newBuilder();
               if (hasClassification()) {
                 subBuilder.mergeFrom(getClassification());
@@ -7045,27 +7204,27 @@ public final class Opendata {
               setClassification(subBuilder.buildPartial());
               break;
             }
-            case 42: {
-              bitField0_ |= 0x00000010;
+            case 66: {
+              bitField0_ |= 0x00000080;
               url_ = input.readBytes();
               break;
             }
-            case 50: {
-              bitField0_ |= 0x00000020;
+            case 74: {
+              bitField0_ |= 0x00000100;
               image_ = input.readBytes();
               break;
             }
-            case 57: {
-              bitField0_ |= 0x00000040;
+            case 81: {
+              bitField0_ |= 0x00000200;
               lat_ = input.readDouble();
               break;
             }
-            case 65: {
-              bitField0_ |= 0x00000080;
+            case 89: {
+              bitField0_ |= 0x00000400;
               lon_ = input.readDouble();
               break;
             }
-            case 74: {
+            case 98: {
               eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder subBuilder = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.newBuilder();
               if (hasAddress()) {
                 subBuilder.mergeFrom(getAddress());
@@ -7074,38 +7233,38 @@ public final class Opendata {
               setAddress(subBuilder.buildPartial());
               break;
             }
-            case 80: {
-              bitField0_ |= 0x00000200;
+            case 104: {
+              bitField0_ |= 0x00001000;
               lastModified_ = input.readInt64();
               break;
             }
-            case 88: {
-              bitField0_ |= 0x00000400;
-              stars_ = input.readInt32();
-              break;
-            }
-            case 98: {
-              bitField0_ |= 0x00000800;
-              phone_ = input.readBytes();
-              break;
-            }
-            case 106: {
-              bitField0_ |= 0x00001000;
-              phone2_ = input.readBytes();
-              break;
-            }
-            case 114: {
+            case 112: {
               bitField0_ |= 0x00002000;
-              fax_ = input.readBytes();
+              stars_ = input.readInt32();
               break;
             }
             case 122: {
               bitField0_ |= 0x00004000;
-              email_ = input.readBytes();
+              phone_ = input.readBytes();
               break;
             }
             case 130: {
               bitField0_ |= 0x00008000;
+              phone2_ = input.readBytes();
+              break;
+            }
+            case 138: {
+              bitField0_ |= 0x00010000;
+              fax_ = input.readBytes();
+              break;
+            }
+            case 146: {
+              bitField0_ |= 0x00020000;
+              email_ = input.readBytes();
+              break;
+            }
+            case 154: {
+              bitField0_ |= 0x00040000;
               objectId_ = input.readBytes();
               break;
             }
@@ -7241,12 +7400,102 @@ public final class Opendata {
         return titleBuilder_;
       }
       
-      // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString subtitle = 3;
+      // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString shortTitle = 3;
+      private eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString shortTitle_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder> shortTitleBuilder_;
+      public boolean hasShortTitle() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getShortTitle() {
+        if (shortTitleBuilder_ == null) {
+          return shortTitle_;
+        } else {
+          return shortTitleBuilder_.getMessage();
+        }
+      }
+      public Builder setShortTitle(eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString value) {
+        if (shortTitleBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          shortTitle_ = value;
+          onChanged();
+        } else {
+          shortTitleBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000004;
+        return this;
+      }
+      public Builder setShortTitle(
+          eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder builderForValue) {
+        if (shortTitleBuilder_ == null) {
+          shortTitle_ = builderForValue.build();
+          onChanged();
+        } else {
+          shortTitleBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000004;
+        return this;
+      }
+      public Builder mergeShortTitle(eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString value) {
+        if (shortTitleBuilder_ == null) {
+          if (((bitField0_ & 0x00000004) == 0x00000004) &&
+              shortTitle_ != eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance()) {
+            shortTitle_ =
+              eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.newBuilder(shortTitle_).mergeFrom(value).buildPartial();
+          } else {
+            shortTitle_ = value;
+          }
+          onChanged();
+        } else {
+          shortTitleBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000004;
+        return this;
+      }
+      public Builder clearShortTitle() {
+        if (shortTitleBuilder_ == null) {
+          shortTitle_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
+          onChanged();
+        } else {
+          shortTitleBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000004);
+        return this;
+      }
+      public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder getShortTitleBuilder() {
+        bitField0_ |= 0x00000004;
+        onChanged();
+        return getShortTitleFieldBuilder().getBuilder();
+      }
+      public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder getShortTitleOrBuilder() {
+        if (shortTitleBuilder_ != null) {
+          return shortTitleBuilder_.getMessageOrBuilder();
+        } else {
+          return shortTitle_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder> 
+          getShortTitleFieldBuilder() {
+        if (shortTitleBuilder_ == null) {
+          shortTitleBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder>(
+                  shortTitle_,
+                  getParentForChildren(),
+                  isClean());
+          shortTitle_ = null;
+        }
+        return shortTitleBuilder_;
+      }
+      
+      // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString subtitle = 4;
       private eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString subtitle_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder> subtitleBuilder_;
       public boolean hasSubtitle() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getSubtitle() {
         if (subtitleBuilder_ == null) {
@@ -7265,7 +7514,7 @@ public final class Opendata {
         } else {
           subtitleBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         return this;
       }
       public Builder setSubtitle(
@@ -7276,12 +7525,12 @@ public final class Opendata {
         } else {
           subtitleBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         return this;
       }
       public Builder mergeSubtitle(eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString value) {
         if (subtitleBuilder_ == null) {
-          if (((bitField0_ & 0x00000004) == 0x00000004) &&
+          if (((bitField0_ & 0x00000008) == 0x00000008) &&
               subtitle_ != eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance()) {
             subtitle_ =
               eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.newBuilder(subtitle_).mergeFrom(value).buildPartial();
@@ -7292,7 +7541,7 @@ public final class Opendata {
         } else {
           subtitleBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         return this;
       }
       public Builder clearSubtitle() {
@@ -7302,11 +7551,11 @@ public final class Opendata {
         } else {
           subtitleBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
       public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder getSubtitleBuilder() {
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         onChanged();
         return getSubtitleFieldBuilder().getBuilder();
       }
@@ -7331,12 +7580,192 @@ public final class Opendata {
         return subtitleBuilder_;
       }
       
-      // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString classification = 4;
+      // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString info = 5;
+      private eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString info_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder> infoBuilder_;
+      public boolean hasInfo() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
+      }
+      public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getInfo() {
+        if (infoBuilder_ == null) {
+          return info_;
+        } else {
+          return infoBuilder_.getMessage();
+        }
+      }
+      public Builder setInfo(eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString value) {
+        if (infoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          info_ = value;
+          onChanged();
+        } else {
+          infoBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000010;
+        return this;
+      }
+      public Builder setInfo(
+          eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder builderForValue) {
+        if (infoBuilder_ == null) {
+          info_ = builderForValue.build();
+          onChanged();
+        } else {
+          infoBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000010;
+        return this;
+      }
+      public Builder mergeInfo(eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString value) {
+        if (infoBuilder_ == null) {
+          if (((bitField0_ & 0x00000010) == 0x00000010) &&
+              info_ != eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance()) {
+            info_ =
+              eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.newBuilder(info_).mergeFrom(value).buildPartial();
+          } else {
+            info_ = value;
+          }
+          onChanged();
+        } else {
+          infoBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000010;
+        return this;
+      }
+      public Builder clearInfo() {
+        if (infoBuilder_ == null) {
+          info_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
+          onChanged();
+        } else {
+          infoBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000010);
+        return this;
+      }
+      public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder getInfoBuilder() {
+        bitField0_ |= 0x00000010;
+        onChanged();
+        return getInfoFieldBuilder().getBuilder();
+      }
+      public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder getInfoOrBuilder() {
+        if (infoBuilder_ != null) {
+          return infoBuilder_.getMessageOrBuilder();
+        } else {
+          return info_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder> 
+          getInfoFieldBuilder() {
+        if (infoBuilder_ == null) {
+          infoBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder>(
+                  info_,
+                  getParentForChildren(),
+                  isClean());
+          info_ = null;
+        }
+        return infoBuilder_;
+      }
+      
+      // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString description = 6;
+      private eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString description_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder> descriptionBuilder_;
+      public boolean hasDescription() {
+        return ((bitField0_ & 0x00000020) == 0x00000020);
+      }
+      public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getDescription() {
+        if (descriptionBuilder_ == null) {
+          return description_;
+        } else {
+          return descriptionBuilder_.getMessage();
+        }
+      }
+      public Builder setDescription(eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString value) {
+        if (descriptionBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          description_ = value;
+          onChanged();
+        } else {
+          descriptionBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000020;
+        return this;
+      }
+      public Builder setDescription(
+          eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder builderForValue) {
+        if (descriptionBuilder_ == null) {
+          description_ = builderForValue.build();
+          onChanged();
+        } else {
+          descriptionBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000020;
+        return this;
+      }
+      public Builder mergeDescription(eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString value) {
+        if (descriptionBuilder_ == null) {
+          if (((bitField0_ & 0x00000020) == 0x00000020) &&
+              description_ != eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance()) {
+            description_ =
+              eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.newBuilder(description_).mergeFrom(value).buildPartial();
+          } else {
+            description_ = value;
+          }
+          onChanged();
+        } else {
+          descriptionBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000020;
+        return this;
+      }
+      public Builder clearDescription() {
+        if (descriptionBuilder_ == null) {
+          description_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
+          onChanged();
+        } else {
+          descriptionBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000020);
+        return this;
+      }
+      public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder getDescriptionBuilder() {
+        bitField0_ |= 0x00000020;
+        onChanged();
+        return getDescriptionFieldBuilder().getBuilder();
+      }
+      public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder getDescriptionOrBuilder() {
+        if (descriptionBuilder_ != null) {
+          return descriptionBuilder_.getMessageOrBuilder();
+        } else {
+          return description_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder> 
+          getDescriptionFieldBuilder() {
+        if (descriptionBuilder_ == null) {
+          descriptionBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder>(
+                  description_,
+                  getParentForChildren(),
+                  isClean());
+          description_ = null;
+        }
+        return descriptionBuilder_;
+      }
+      
+      // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString classification = 7;
       private eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString classification_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder> classificationBuilder_;
       public boolean hasClassification() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
+        return ((bitField0_ & 0x00000040) == 0x00000040);
       }
       public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getClassification() {
         if (classificationBuilder_ == null) {
@@ -7355,7 +7784,7 @@ public final class Opendata {
         } else {
           classificationBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000040;
         return this;
       }
       public Builder setClassification(
@@ -7366,12 +7795,12 @@ public final class Opendata {
         } else {
           classificationBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000040;
         return this;
       }
       public Builder mergeClassification(eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString value) {
         if (classificationBuilder_ == null) {
-          if (((bitField0_ & 0x00000008) == 0x00000008) &&
+          if (((bitField0_ & 0x00000040) == 0x00000040) &&
               classification_ != eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance()) {
             classification_ =
               eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.newBuilder(classification_).mergeFrom(value).buildPartial();
@@ -7382,7 +7811,7 @@ public final class Opendata {
         } else {
           classificationBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000040;
         return this;
       }
       public Builder clearClassification() {
@@ -7392,11 +7821,11 @@ public final class Opendata {
         } else {
           classificationBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000040);
         return this;
       }
       public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder getClassificationBuilder() {
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000040;
         onChanged();
         return getClassificationFieldBuilder().getBuilder();
       }
@@ -7421,10 +7850,10 @@ public final class Opendata {
         return classificationBuilder_;
       }
       
-      // optional string url = 5;
+      // optional string url = 8;
       private java.lang.Object url_ = "";
       public boolean hasUrl() {
-        return ((bitField0_ & 0x00000010) == 0x00000010);
+        return ((bitField0_ & 0x00000080) == 0x00000080);
       }
       public String getUrl() {
         java.lang.Object ref = url_;
@@ -7440,27 +7869,27 @@ public final class Opendata {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000010;
+  bitField0_ |= 0x00000080;
         url_ = value;
         onChanged();
         return this;
       }
       public Builder clearUrl() {
-        bitField0_ = (bitField0_ & ~0x00000010);
+        bitField0_ = (bitField0_ & ~0x00000080);
         url_ = getDefaultInstance().getUrl();
         onChanged();
         return this;
       }
       void setUrl(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000010;
+        bitField0_ |= 0x00000080;
         url_ = value;
         onChanged();
       }
       
-      // optional string image = 6;
+      // optional string image = 9;
       private java.lang.Object image_ = "";
       public boolean hasImage() {
-        return ((bitField0_ & 0x00000020) == 0x00000020);
+        return ((bitField0_ & 0x00000100) == 0x00000100);
       }
       public String getImage() {
         java.lang.Object ref = image_;
@@ -7476,71 +7905,71 @@ public final class Opendata {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000020;
+  bitField0_ |= 0x00000100;
         image_ = value;
         onChanged();
         return this;
       }
       public Builder clearImage() {
-        bitField0_ = (bitField0_ & ~0x00000020);
+        bitField0_ = (bitField0_ & ~0x00000100);
         image_ = getDefaultInstance().getImage();
         onChanged();
         return this;
       }
       void setImage(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000020;
+        bitField0_ |= 0x00000100;
         image_ = value;
         onChanged();
       }
       
-      // optional double lat = 7;
+      // optional double lat = 10;
       private double lat_ ;
       public boolean hasLat() {
-        return ((bitField0_ & 0x00000040) == 0x00000040);
+        return ((bitField0_ & 0x00000200) == 0x00000200);
       }
       public double getLat() {
         return lat_;
       }
       public Builder setLat(double value) {
-        bitField0_ |= 0x00000040;
+        bitField0_ |= 0x00000200;
         lat_ = value;
         onChanged();
         return this;
       }
       public Builder clearLat() {
-        bitField0_ = (bitField0_ & ~0x00000040);
+        bitField0_ = (bitField0_ & ~0x00000200);
         lat_ = 0D;
         onChanged();
         return this;
       }
       
-      // optional double lon = 8;
+      // optional double lon = 11;
       private double lon_ ;
       public boolean hasLon() {
-        return ((bitField0_ & 0x00000080) == 0x00000080);
+        return ((bitField0_ & 0x00000400) == 0x00000400);
       }
       public double getLon() {
         return lon_;
       }
       public Builder setLon(double value) {
-        bitField0_ |= 0x00000080;
+        bitField0_ |= 0x00000400;
         lon_ = value;
         onChanged();
         return this;
       }
       public Builder clearLon() {
-        bitField0_ = (bitField0_ & ~0x00000080);
+        bitField0_ = (bitField0_ & ~0x00000400);
         lon_ = 0D;
         onChanged();
         return this;
       }
       
-      // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString address = 9;
+      // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString address = 12;
       private eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString address_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder> addressBuilder_;
       public boolean hasAddress() {
-        return ((bitField0_ & 0x00000100) == 0x00000100);
+        return ((bitField0_ & 0x00000800) == 0x00000800);
       }
       public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getAddress() {
         if (addressBuilder_ == null) {
@@ -7559,7 +7988,7 @@ public final class Opendata {
         } else {
           addressBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000100;
+        bitField0_ |= 0x00000800;
         return this;
       }
       public Builder setAddress(
@@ -7570,12 +7999,12 @@ public final class Opendata {
         } else {
           addressBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000100;
+        bitField0_ |= 0x00000800;
         return this;
       }
       public Builder mergeAddress(eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString value) {
         if (addressBuilder_ == null) {
-          if (((bitField0_ & 0x00000100) == 0x00000100) &&
+          if (((bitField0_ & 0x00000800) == 0x00000800) &&
               address_ != eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance()) {
             address_ =
               eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.newBuilder(address_).mergeFrom(value).buildPartial();
@@ -7586,7 +8015,7 @@ public final class Opendata {
         } else {
           addressBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000100;
+        bitField0_ |= 0x00000800;
         return this;
       }
       public Builder clearAddress() {
@@ -7596,11 +8025,11 @@ public final class Opendata {
         } else {
           addressBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000100);
+        bitField0_ = (bitField0_ & ~0x00000800);
         return this;
       }
       public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder getAddressBuilder() {
-        bitField0_ |= 0x00000100;
+        bitField0_ |= 0x00000800;
         onChanged();
         return getAddressFieldBuilder().getBuilder();
       }
@@ -7625,52 +8054,52 @@ public final class Opendata {
         return addressBuilder_;
       }
       
-      // optional int64 lastModified = 10;
+      // optional int64 lastModified = 13;
       private long lastModified_ ;
       public boolean hasLastModified() {
-        return ((bitField0_ & 0x00000200) == 0x00000200);
+        return ((bitField0_ & 0x00001000) == 0x00001000);
       }
       public long getLastModified() {
         return lastModified_;
       }
       public Builder setLastModified(long value) {
-        bitField0_ |= 0x00000200;
+        bitField0_ |= 0x00001000;
         lastModified_ = value;
         onChanged();
         return this;
       }
       public Builder clearLastModified() {
-        bitField0_ = (bitField0_ & ~0x00000200);
+        bitField0_ = (bitField0_ & ~0x00001000);
         lastModified_ = 0L;
         onChanged();
         return this;
       }
       
-      // optional int32 stars = 11;
+      // optional int32 stars = 14;
       private int stars_ ;
       public boolean hasStars() {
-        return ((bitField0_ & 0x00000400) == 0x00000400);
+        return ((bitField0_ & 0x00002000) == 0x00002000);
       }
       public int getStars() {
         return stars_;
       }
       public Builder setStars(int value) {
-        bitField0_ |= 0x00000400;
+        bitField0_ |= 0x00002000;
         stars_ = value;
         onChanged();
         return this;
       }
       public Builder clearStars() {
-        bitField0_ = (bitField0_ & ~0x00000400);
+        bitField0_ = (bitField0_ & ~0x00002000);
         stars_ = 0;
         onChanged();
         return this;
       }
       
-      // optional string phone = 12;
+      // optional string phone = 15;
       private java.lang.Object phone_ = "";
       public boolean hasPhone() {
-        return ((bitField0_ & 0x00000800) == 0x00000800);
+        return ((bitField0_ & 0x00004000) == 0x00004000);
       }
       public String getPhone() {
         java.lang.Object ref = phone_;
@@ -7686,27 +8115,27 @@ public final class Opendata {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000800;
+  bitField0_ |= 0x00004000;
         phone_ = value;
         onChanged();
         return this;
       }
       public Builder clearPhone() {
-        bitField0_ = (bitField0_ & ~0x00000800);
+        bitField0_ = (bitField0_ & ~0x00004000);
         phone_ = getDefaultInstance().getPhone();
         onChanged();
         return this;
       }
       void setPhone(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000800;
+        bitField0_ |= 0x00004000;
         phone_ = value;
         onChanged();
       }
       
-      // optional string phone2 = 13;
+      // optional string phone2 = 16;
       private java.lang.Object phone2_ = "";
       public boolean hasPhone2() {
-        return ((bitField0_ & 0x00001000) == 0x00001000);
+        return ((bitField0_ & 0x00008000) == 0x00008000);
       }
       public String getPhone2() {
         java.lang.Object ref = phone2_;
@@ -7722,27 +8151,27 @@ public final class Opendata {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00001000;
+  bitField0_ |= 0x00008000;
         phone2_ = value;
         onChanged();
         return this;
       }
       public Builder clearPhone2() {
-        bitField0_ = (bitField0_ & ~0x00001000);
+        bitField0_ = (bitField0_ & ~0x00008000);
         phone2_ = getDefaultInstance().getPhone2();
         onChanged();
         return this;
       }
       void setPhone2(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00001000;
+        bitField0_ |= 0x00008000;
         phone2_ = value;
         onChanged();
       }
       
-      // optional string fax = 14;
+      // optional string fax = 17;
       private java.lang.Object fax_ = "";
       public boolean hasFax() {
-        return ((bitField0_ & 0x00002000) == 0x00002000);
+        return ((bitField0_ & 0x00010000) == 0x00010000);
       }
       public String getFax() {
         java.lang.Object ref = fax_;
@@ -7758,27 +8187,27 @@ public final class Opendata {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00002000;
+  bitField0_ |= 0x00010000;
         fax_ = value;
         onChanged();
         return this;
       }
       public Builder clearFax() {
-        bitField0_ = (bitField0_ & ~0x00002000);
+        bitField0_ = (bitField0_ & ~0x00010000);
         fax_ = getDefaultInstance().getFax();
         onChanged();
         return this;
       }
       void setFax(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00002000;
+        bitField0_ |= 0x00010000;
         fax_ = value;
         onChanged();
       }
       
-      // optional string email = 15;
+      // optional string email = 18;
       private java.lang.Object email_ = "";
       public boolean hasEmail() {
-        return ((bitField0_ & 0x00004000) == 0x00004000);
+        return ((bitField0_ & 0x00020000) == 0x00020000);
       }
       public String getEmail() {
         java.lang.Object ref = email_;
@@ -7794,27 +8223,27 @@ public final class Opendata {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00004000;
+  bitField0_ |= 0x00020000;
         email_ = value;
         onChanged();
         return this;
       }
       public Builder clearEmail() {
-        bitField0_ = (bitField0_ & ~0x00004000);
+        bitField0_ = (bitField0_ & ~0x00020000);
         email_ = getDefaultInstance().getEmail();
         onChanged();
         return this;
       }
       void setEmail(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00004000;
+        bitField0_ |= 0x00020000;
         email_ = value;
         onChanged();
       }
       
-      // required string objectId = 16;
+      // required string objectId = 19;
       private java.lang.Object objectId_ = "";
       public boolean hasObjectId() {
-        return ((bitField0_ & 0x00008000) == 0x00008000);
+        return ((bitField0_ & 0x00040000) == 0x00040000);
       }
       public String getObjectId() {
         java.lang.Object ref = objectId_;
@@ -7830,19 +8259,19 @@ public final class Opendata {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00008000;
+  bitField0_ |= 0x00040000;
         objectId_ = value;
         onChanged();
         return this;
       }
       public Builder clearObjectId() {
-        bitField0_ = (bitField0_ & ~0x00008000);
+        bitField0_ = (bitField0_ & ~0x00040000);
         objectId_ = getDefaultInstance().getObjectId();
         onChanged();
         return this;
       }
       void setObjectId(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00008000;
+        bitField0_ |= 0x00040000;
         objectId_ = value;
         onChanged();
       }
@@ -9926,6 +10355,11 @@ public final class Opendata {
     // required string objectId = 17;
     boolean hasObjectId();
     String getObjectId();
+    
+    // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString info = 18;
+    boolean hasInfo();
+    eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getInfo();
+    eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder getInfoOrBuilder();
   }
   public static final class I18nMainEvent extends
       com.google.protobuf.GeneratedMessage
@@ -10276,6 +10710,19 @@ public final class Opendata {
       }
     }
     
+    // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString info = 18;
+    public static final int INFO_FIELD_NUMBER = 18;
+    private eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString info_;
+    public boolean hasInfo() {
+      return ((bitField0_ & 0x00020000) == 0x00020000);
+    }
+    public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getInfo() {
+      return info_;
+    }
+    public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder getInfoOrBuilder() {
+      return info_;
+    }
+    
     private void initFields() {
       id_ = "";
       title_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
@@ -10294,6 +10741,7 @@ public final class Opendata {
       toDate_ = 0L;
       dateDescription_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
       objectId_ = "";
+      info_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -10369,6 +10817,9 @@ public final class Opendata {
       }
       if (((bitField0_ & 0x00010000) == 0x00010000)) {
         output.writeBytes(17, getObjectIdBytes());
+      }
+      if (((bitField0_ & 0x00020000) == 0x00020000)) {
+        output.writeMessage(18, info_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -10446,6 +10897,10 @@ public final class Opendata {
       if (((bitField0_ & 0x00010000) == 0x00010000)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(17, getObjectIdBytes());
+      }
+      if (((bitField0_ & 0x00020000) == 0x00020000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(18, info_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -10569,6 +11024,7 @@ public final class Opendata {
           getClassificationFieldBuilder();
           getAddressFieldBuilder();
           getDateDescriptionFieldBuilder();
+          getInfoFieldBuilder();
         }
       }
       private static Builder create() {
@@ -10635,6 +11091,12 @@ public final class Opendata {
         bitField0_ = (bitField0_ & ~0x00008000);
         objectId_ = "";
         bitField0_ = (bitField0_ & ~0x00010000);
+        if (infoBuilder_ == null) {
+          info_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
+        } else {
+          infoBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00020000);
         return this;
       }
       
@@ -10765,6 +11227,14 @@ public final class Opendata {
           to_bitField0_ |= 0x00010000;
         }
         result.objectId_ = objectId_;
+        if (((from_bitField0_ & 0x00020000) == 0x00020000)) {
+          to_bitField0_ |= 0x00020000;
+        }
+        if (infoBuilder_ == null) {
+          result.info_ = info_;
+        } else {
+          result.info_ = infoBuilder_.build();
+        }
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -10831,6 +11301,9 @@ public final class Opendata {
         }
         if (other.hasObjectId()) {
           setObjectId(other.getObjectId());
+        }
+        if (other.hasInfo()) {
+          mergeInfo(other.getInfo());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -10982,6 +11455,15 @@ public final class Opendata {
             case 138: {
               bitField0_ |= 0x00010000;
               objectId_ = input.readBytes();
+              break;
+            }
+            case 146: {
+              eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder subBuilder = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.newBuilder();
+              if (hasInfo()) {
+                subBuilder.mergeFrom(getInfo());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setInfo(subBuilder.buildPartial());
               break;
             }
           }
@@ -11849,6 +12331,96 @@ public final class Opendata {
         bitField0_ |= 0x00010000;
         objectId_ = value;
         onChanged();
+      }
+      
+      // optional .eu.trentorise.smartcampus.service.opendata.data.message.I18nString info = 18;
+      private eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString info_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder> infoBuilder_;
+      public boolean hasInfo() {
+        return ((bitField0_ & 0x00020000) == 0x00020000);
+      }
+      public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString getInfo() {
+        if (infoBuilder_ == null) {
+          return info_;
+        } else {
+          return infoBuilder_.getMessage();
+        }
+      }
+      public Builder setInfo(eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString value) {
+        if (infoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          info_ = value;
+          onChanged();
+        } else {
+          infoBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00020000;
+        return this;
+      }
+      public Builder setInfo(
+          eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder builderForValue) {
+        if (infoBuilder_ == null) {
+          info_ = builderForValue.build();
+          onChanged();
+        } else {
+          infoBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00020000;
+        return this;
+      }
+      public Builder mergeInfo(eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString value) {
+        if (infoBuilder_ == null) {
+          if (((bitField0_ & 0x00020000) == 0x00020000) &&
+              info_ != eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance()) {
+            info_ =
+              eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.newBuilder(info_).mergeFrom(value).buildPartial();
+          } else {
+            info_ = value;
+          }
+          onChanged();
+        } else {
+          infoBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00020000;
+        return this;
+      }
+      public Builder clearInfo() {
+        if (infoBuilder_ == null) {
+          info_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
+          onChanged();
+        } else {
+          infoBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00020000);
+        return this;
+      }
+      public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder getInfoBuilder() {
+        bitField0_ |= 0x00020000;
+        onChanged();
+        return getInfoFieldBuilder().getBuilder();
+      }
+      public eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder getInfoOrBuilder() {
+        if (infoBuilder_ != null) {
+          return infoBuilder_.getMessageOrBuilder();
+        } else {
+          return info_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder> 
+          getInfoFieldBuilder() {
+        if (infoBuilder_ == null) {
+          infoBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.Builder, eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStringOrBuilder>(
+                  info_,
+                  getParentForChildren(),
+                  isClean());
+          info_ = null;
+        }
+        return infoBuilder_;
       }
       
       // @@protoc_insertion_point(builder_scope:eu.trentorise.smartcampus.service.opendata.data.message.I18nMainEvent)
@@ -17964,43 +18536,32 @@ public final class Opendata {
       "\021 \001(\0132C.eu.trentorise.smartcampus.servic" +
       "e.opendata.data.message.I18nString\022\r\n\005ph" +
       "one\030\022 \001(\t\022\013\n\003fax\030\023 \001(\t\022\r\n\005email\030\024 \001(\t\022\020\n" +
-      "\010objectId\030\025 \002(\t\"\235\004\n\tI18nHotel\022\n\n\002id\030\001 \002(" +
+      "\010objectId\030\025 \002(\t\"\243\006\n\tI18nHotel\022\n\n\002id\030\001 \002(" +
       "\t\022R\n\005title\030\002 \002(\0132C.eu.trentorise.smartca" +
       "mpus.service.opendata.data.message.I18nS" +
-      "tring\022U\n\010subtitle\030\003 \001(\0132C.eu.trentorise." +
-      "smartcampus.service.opendata.data.messag" +
-      "e.I18nString\022[\n\016classification\030\004 \001(\0132C.e",
-      "u.trentorise.smartcampus.service.opendat" +
-      "a.data.message.I18nString\022\013\n\003url\030\005 \001(\t\022\r" +
-      "\n\005image\030\006 \001(\t\022\013\n\003lat\030\007 \001(\001\022\013\n\003lon\030\010 \001(\001\022" +
-      "T\n\007address\030\t \001(\0132C.eu.trentorise.smartca" +
-      "mpus.service.opendata.data.message.I18nS" +
-      "tring\022\024\n\014lastModified\030\n \001(\003\022\r\n\005stars\030\013 \001" +
-      "(\005\022\r\n\005phone\030\014 \001(\t\022\016\n\006phone2\030\r \001(\t\022\013\n\003fax" +
-      "\030\016 \001(\t\022\r\n\005email\030\017 \001(\t\022\020\n\010objectId\030\020 \002(\t\"" +
-      "\271\005\n\013I18nCultura\022\n\n\002id\030\001 \002(\t\022R\n\005title\030\002 \002" +
-      "(\0132C.eu.trentorise.smartcampus.service.o",
-      "pendata.data.message.I18nString\022U\n\010subti" +
-      "tle\030\003 \001(\0132C.eu.trentorise.smartcampus.se" +
-      "rvice.opendata.data.message.I18nString\022X" +
-      "\n\013description\030\004 \001(\0132C.eu.trentorise.smar" +
-      "tcampus.service.opendata.data.message.I1" +
-      "8nString\022[\n\016classification\030\005 \001(\0132C.eu.tr" +
+      "tring\022W\n\nshortTitle\030\003 \001(\0132C.eu.trentoris" +
+      "e.smartcampus.service.opendata.data.mess" +
+      "age.I18nString\022U\n\010subtitle\030\004 \001(\0132C.eu.tr",
       "entorise.smartcampus.service.opendata.da" +
-      "ta.message.I18nString\022\013\n\003url\030\006 \001(\t\022\r\n\005im" +
-      "age\030\007 \001(\t\022\013\n\003lat\030\010 \001(\001\022\013\n\003lon\030\t \001(\001\022T\n\007a" +
-      "ddress\030\n \001(\0132C.eu.trentorise.smartcampus",
-      ".service.opendata.data.message.I18nStrin" +
-      "g\022\024\n\014lastModified\030\013 \001(\003\022\r\n\005phone\030\014 \001(\t\022\r" +
-      "\n\005email\030\r \001(\t\022\027\n\017contactFullName\030\016 \001(\t\022Q" +
-      "\n\004info\030\017 \001(\0132C.eu.trentorise.smartcampus" +
-      ".service.opendata.data.message.I18nStrin" +
-      "g\022\020\n\010objectId\030\020 \002(\t\"\317\005\n\rI18nMainEvent\022\n\n" +
+      "ta.message.I18nString\022Q\n\004info\030\005 \001(\0132C.eu" +
+      ".trentorise.smartcampus.service.opendata" +
+      ".data.message.I18nString\022X\n\013description\030" +
+      "\006 \001(\0132C.eu.trentorise.smartcampus.servic" +
+      "e.opendata.data.message.I18nString\022[\n\016cl" +
+      "assification\030\007 \001(\0132C.eu.trentorise.smart" +
+      "campus.service.opendata.data.message.I18" +
+      "nString\022\013\n\003url\030\010 \001(\t\022\r\n\005image\030\t \001(\t\022\013\n\003l" +
+      "at\030\n \001(\001\022\013\n\003lon\030\013 \001(\001\022T\n\007address\030\014 \001(\0132C",
+      ".eu.trentorise.smartcampus.service.opend" +
+      "ata.data.message.I18nString\022\024\n\014lastModif" +
+      "ied\030\r \001(\003\022\r\n\005stars\030\016 \001(\005\022\r\n\005phone\030\017 \001(\t\022" +
+      "\016\n\006phone2\030\020 \001(\t\022\013\n\003fax\030\021 \001(\t\022\r\n\005email\030\022 " +
+      "\001(\t\022\020\n\010objectId\030\023 \002(\t\"\271\005\n\013I18nCultura\022\n\n" +
       "\002id\030\001 \002(\t\022R\n\005title\030\002 \002(\0132C.eu.trentorise" +
       ".smartcampus.service.opendata.data.messa" +
       "ge.I18nString\022U\n\010subtitle\030\003 \001(\0132C.eu.tre" +
-      "ntorise.smartcampus.service.opendata.dat",
-      "a.message.I18nString\022X\n\013description\030\004 \001(" +
+      "ntorise.smartcampus.service.opendata.dat" +
+      "a.message.I18nString\022X\n\013description\030\004 \001(",
       "\0132C.eu.trentorise.smartcampus.service.op" +
       "endata.data.message.I18nString\022[\n\016classi" +
       "fication\030\005 \001(\0132C.eu.trentorise.smartcamp" +
@@ -18009,50 +18570,70 @@ public final class Opendata {
       " \001(\001\022\013\n\003lon\030\t \001(\001\022T\n\007address\030\n \001(\0132C.eu." +
       "trentorise.smartcampus.service.opendata." +
       "data.message.I18nString\022\024\n\014lastModified\030" +
-      "\013 \001(\003\022\r\n\005phone\030\014 \001(\t\022\r\n\005email\030\r \001(\t\022\020\n\010f",
-      "romDate\030\016 \001(\003\022\016\n\006toDate\030\017 \001(\003\022\\\n\017dateDes" +
-      "cription\030\020 \001(\0132C.eu.trentorise.smartcamp" +
-      "us.service.opendata.data.message.I18nStr" +
-      "ing\022\020\n\010objectId\030\021 \002(\t\"\346\004\n\tI18nTesto\022\n\n\002i" +
-      "d\030\001 \002(\t\022R\n\005title\030\002 \002(\0132C.eu.trentorise.s" +
-      "martcampus.service.opendata.data.message" +
-      ".I18nString\022U\n\010subtitle\030\003 \001(\0132C.eu.trent" +
-      "orise.smartcampus.service.opendata.data." +
-      "message.I18nString\022X\n\013description\030\004 \001(\0132" +
-      "C.eu.trentorise.smartcampus.service.open",
-      "data.data.message.I18nString\022[\n\016classifi" +
-      "cation\030\005 \001(\0132C.eu.trentorise.smartcampus" +
-      ".service.opendata.data.message.I18nStrin" +
-      "g\022T\n\007address\030\006 \001(\0132C.eu.trentorise.smart" +
-      "campus.service.opendata.data.message.I18" +
-      "nString\022\013\n\003url\030\007 \001(\t\022\r\n\005image\030\010 \001(\t\022\024\n\014l" +
-      "astModified\030\t \001(\003\022Q\n\004info\030\n \001(\0132C.eu.tre" +
-      "ntorise.smartcampus.service.opendata.dat" +
-      "a.message.I18nString\022\020\n\010objectId\030\013 \002(\t\"\237" +
-      "\005\n\016I18nItinerario\022\n\n\002id\030\001 \002(\t\022R\n\005title\030\002",
-      " \002(\0132C.eu.trentorise.smartcampus.service" +
-      ".opendata.data.message.I18nString\022U\n\010sub" +
-      "title\030\003 \001(\0132C.eu.trentorise.smartcampus." +
-      "service.opendata.data.message.I18nString" +
-      "\022X\n\013description\030\004 \001(\0132C.eu.trentorise.sm" +
-      "artcampus.service.opendata.data.message." +
-      "I18nString\022[\n\016classification\030\005 \001(\0132C.eu." +
+      "\013 \001(\003\022\r\n\005phone\030\014 \001(\t\022\r\n\005email\030\r \001(\t\022\027\n\017c" +
+      "ontactFullName\030\016 \001(\t\022Q\n\004info\030\017 \001(\0132C.eu.",
       "trentorise.smartcampus.service.opendata." +
-      "data.message.I18nString\022\013\n\003url\030\006 \001(\t\022\r\n\005" +
-      "image\030\007 \001(\t\022\024\n\014lastModified\030\010 \001(\003\022\r\n\005ste",
-      "ps\030\t \003(\t\022\016\n\006length\030\n \001(\005\022\020\n\010duration\030\013 \001" +
-      "(\005\022W\n\ndifficulty\030\014 \001(\0132C.eu.trentorise.s" +
-      "martcampus.service.opendata.data.message" +
-      ".I18nString\022Q\n\004info\030\r \001(\0132C.eu.trentoris" +
-      "e.smartcampus.service.opendata.data.mess" +
-      "age.I18nString\022\020\n\010objectId\030\016 \002(\t\"=\n\nConf" +
-      "igLink\022\014\n\004name\030\001 \002(\t\022\013\n\003uri\030\002 \002(\t\022\024\n\014dat" +
-      "eModified\030\003 \002(\003\">\n\nConfigData\022\014\n\004name\030\001 " +
-      "\002(\t\022\014\n\004data\030\002 \002(\t\022\024\n\014dateModified\030\003 \002(\003\"" +
-      "0\n\nI18nString\022\n\n\002it\030\001 \001(\t\022\n\n\002en\030\002 \001(\t\022\n\n",
-      "\002de\030\003 \001(\t\".\n\010I18nLong\022\n\n\002it\030\001 \001(\003\022\n\n\002en\030" +
-      "\002 \001(\003\022\n\n\002de\030\003 \001(\003\"0\n\nI18nDouble\022\n\n\002it\030\001 " +
-      "\001(\001\022\n\n\002en\030\002 \001(\001\022\n\n\002de\030\003 \001(\001"
+      "data.message.I18nString\022\020\n\010objectId\030\020 \002(" +
+      "\t\"\242\006\n\rI18nMainEvent\022\n\n\002id\030\001 \002(\t\022R\n\005title" +
+      "\030\002 \002(\0132C.eu.trentorise.smartcampus.servi" +
+      "ce.opendata.data.message.I18nString\022U\n\010s" +
+      "ubtitle\030\003 \001(\0132C.eu.trentorise.smartcampu" +
+      "s.service.opendata.data.message.I18nStri" +
+      "ng\022X\n\013description\030\004 \001(\0132C.eu.trentorise." +
+      "smartcampus.service.opendata.data.messag" +
+      "e.I18nString\022[\n\016classification\030\005 \001(\0132C.e",
+      "u.trentorise.smartcampus.service.opendat" +
+      "a.data.message.I18nString\022\013\n\003url\030\006 \001(\t\022\r" +
+      "\n\005image\030\007 \001(\t\022\013\n\003lat\030\010 \001(\001\022\013\n\003lon\030\t \001(\001\022" +
+      "T\n\007address\030\n \001(\0132C.eu.trentorise.smartca" +
+      "mpus.service.opendata.data.message.I18nS" +
+      "tring\022\024\n\014lastModified\030\013 \001(\003\022\r\n\005phone\030\014 \001" +
+      "(\t\022\r\n\005email\030\r \001(\t\022\020\n\010fromDate\030\016 \001(\003\022\016\n\006t" +
+      "oDate\030\017 \001(\003\022\\\n\017dateDescription\030\020 \001(\0132C.e" +
+      "u.trentorise.smartcampus.service.opendat" +
+      "a.data.message.I18nString\022\020\n\010objectId\030\021 ",
+      "\002(\t\022Q\n\004info\030\022 \001(\0132C.eu.trentorise.smartc" +
+      "ampus.service.opendata.data.message.I18n" +
+      "String\"\346\004\n\tI18nTesto\022\n\n\002id\030\001 \002(\t\022R\n\005titl" +
+      "e\030\002 \002(\0132C.eu.trentorise.smartcampus.serv" +
+      "ice.opendata.data.message.I18nString\022U\n\010" +
+      "subtitle\030\003 \001(\0132C.eu.trentorise.smartcamp" +
+      "us.service.opendata.data.message.I18nStr" +
+      "ing\022X\n\013description\030\004 \001(\0132C.eu.trentorise" +
+      ".smartcampus.service.opendata.data.messa" +
+      "ge.I18nString\022[\n\016classification\030\005 \001(\0132C.",
+      "eu.trentorise.smartcampus.service.openda" +
+      "ta.data.message.I18nString\022T\n\007address\030\006 " +
+      "\001(\0132C.eu.trentorise.smartcampus.service." +
+      "opendata.data.message.I18nString\022\013\n\003url\030" +
+      "\007 \001(\t\022\r\n\005image\030\010 \001(\t\022\024\n\014lastModified\030\t \001" +
+      "(\003\022Q\n\004info\030\n \001(\0132C.eu.trentorise.smartca" +
+      "mpus.service.opendata.data.message.I18nS" +
+      "tring\022\020\n\010objectId\030\013 \002(\t\"\237\005\n\016I18nItinerar" +
+      "io\022\n\n\002id\030\001 \002(\t\022R\n\005title\030\002 \002(\0132C.eu.trent" +
+      "orise.smartcampus.service.opendata.data.",
+      "message.I18nString\022U\n\010subtitle\030\003 \001(\0132C.e" +
+      "u.trentorise.smartcampus.service.opendat" +
+      "a.data.message.I18nString\022X\n\013description" +
+      "\030\004 \001(\0132C.eu.trentorise.smartcampus.servi" +
+      "ce.opendata.data.message.I18nString\022[\n\016c" +
+      "lassification\030\005 \001(\0132C.eu.trentorise.smar" +
+      "tcampus.service.opendata.data.message.I1" +
+      "8nString\022\013\n\003url\030\006 \001(\t\022\r\n\005image\030\007 \001(\t\022\024\n\014" +
+      "lastModified\030\010 \001(\003\022\r\n\005steps\030\t \003(\t\022\016\n\006len" +
+      "gth\030\n \001(\005\022\020\n\010duration\030\013 \001(\005\022W\n\ndifficult",
+      "y\030\014 \001(\0132C.eu.trentorise.smartcampus.serv" +
+      "ice.opendata.data.message.I18nString\022Q\n\004" +
+      "info\030\r \001(\0132C.eu.trentorise.smartcampus.s" +
+      "ervice.opendata.data.message.I18nString\022" +
+      "\020\n\010objectId\030\016 \002(\t\"=\n\nConfigLink\022\014\n\004name\030" +
+      "\001 \002(\t\022\013\n\003uri\030\002 \002(\t\022\024\n\014dateModified\030\003 \002(\003" +
+      "\">\n\nConfigData\022\014\n\004name\030\001 \002(\t\022\014\n\004data\030\002 \002" +
+      "(\t\022\024\n\014dateModified\030\003 \002(\003\"0\n\nI18nString\022\n" +
+      "\n\002it\030\001 \001(\t\022\n\n\002en\030\002 \001(\t\022\n\n\002de\030\003 \001(\t\".\n\010I1" +
+      "8nLong\022\n\n\002it\030\001 \001(\003\022\n\n\002en\030\002 \001(\003\022\n\n\002de\030\003 \001",
+      "(\003\"0\n\nI18nDouble\022\n\n\002it\030\001 \001(\001\022\n\n\002en\030\002 \001(\001" +
+      "\022\n\n\002de\030\003 \001(\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -18088,7 +18669,7 @@ public final class Opendata {
           internal_static_eu_trentorise_smartcampus_service_opendata_data_message_I18nHotel_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_eu_trentorise_smartcampus_service_opendata_data_message_I18nHotel_descriptor,
-              new java.lang.String[] { "Id", "Title", "Subtitle", "Classification", "Url", "Image", "Lat", "Lon", "Address", "LastModified", "Stars", "Phone", "Phone2", "Fax", "Email", "ObjectId", },
+              new java.lang.String[] { "Id", "Title", "ShortTitle", "Subtitle", "Info", "Description", "Classification", "Url", "Image", "Lat", "Lon", "Address", "LastModified", "Stars", "Phone", "Phone2", "Fax", "Email", "ObjectId", },
               eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nHotel.class,
               eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nHotel.Builder.class);
           internal_static_eu_trentorise_smartcampus_service_opendata_data_message_I18nCultura_descriptor =
@@ -18104,7 +18685,7 @@ public final class Opendata {
           internal_static_eu_trentorise_smartcampus_service_opendata_data_message_I18nMainEvent_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_eu_trentorise_smartcampus_service_opendata_data_message_I18nMainEvent_descriptor,
-              new java.lang.String[] { "Id", "Title", "Subtitle", "Description", "Classification", "Url", "Image", "Lat", "Lon", "Address", "LastModified", "Phone", "Email", "FromDate", "ToDate", "DateDescription", "ObjectId", },
+              new java.lang.String[] { "Id", "Title", "Subtitle", "Description", "Classification", "Url", "Image", "Lat", "Lon", "Address", "LastModified", "Phone", "Email", "FromDate", "ToDate", "DateDescription", "ObjectId", "Info", },
               eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nMainEvent.class,
               eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nMainEvent.Builder.class);
           internal_static_eu_trentorise_smartcampus_service_opendata_data_message_I18nTesto_descriptor =

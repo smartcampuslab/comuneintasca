@@ -191,7 +191,9 @@ public class DataExtractor {
 				no.setLocation(new double[] { bt.getLat(), bt.getLon() });
 			}
 			no.setStars(bt.getStars());
-			no.setDescription(toMap(bt.getSubtitle()));
+			no.setDescription(toMap(bt.getDescription()));
+			no.setSubtitle(toMap(bt.getSubtitle()));
+			no.setInfo(toMap(bt.getInfo()));
 			no.setTitle(toMap(bt.getTitle()));
 			no.setUpdateTime(System.currentTimeMillis());
 			no.setUrl(bt.getUrl());
@@ -289,6 +291,7 @@ public class DataExtractor {
 			no.setTitle(toMap(bt.getTitle()));
 			no.setUpdateTime(System.currentTimeMillis());
 			no.setUrl(bt.getUrl());
+			no.setInfo(toMap(bt.getInfo()));
 
 			no.setFromDate(bt.getFromDate());
 			no.setToDate(bt.getToDate());

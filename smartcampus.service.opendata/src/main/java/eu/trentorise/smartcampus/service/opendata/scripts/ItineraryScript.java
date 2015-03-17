@@ -41,9 +41,9 @@ public class ItineraryScript extends OpenContentScript {
 		
 		builder.setTitle(getI18NStringValue(i18n, FIELDS, "titolo", VALUE));
 		
-		builder.setSubtitle(getI18NStringValue(i18n, FIELDS, "sottotitolo", VALUE));
+		builder.setSubtitle(getI18NStringValue(i18n, FIELDS, "abstract", VALUE));
 		if (!builder.getSubtitle().hasIt()) {
-			builder.setSubtitle(getI18NStringValue(i18n, FIELDS, "abstract", VALUE));
+			builder.setSubtitle(getI18NStringValue(i18n, FIELDS, "sottotitolo", VALUE));
 		}		
 		builder.setDescription(getI18NStringValue(i18n, FIELDS, "descrizione", VALUE));
 		if (!builder.getDescription().hasIt()) {

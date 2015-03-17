@@ -104,8 +104,9 @@ angular.module('ilcomuneintasca.services.db', [])
       //NO-OP
 
     } else if (dbtype == 'mainevent') {
-      var maineventDate=new Date(item.fromDate);
-      item['date']=maineventDate.getMonth()*100 + maineventDate.getDate();
+        item['date']=item.fromDate;
+//      var maineventDate=new Date(item.fromDate);
+//      item['date']=maineventDate.getMonth()*100 + maineventDate.getDate();
     }
     Profiling._do('dbparse','type');
 

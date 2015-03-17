@@ -5,8 +5,9 @@
     <div class="padding">
       <h2>{{itinerario.title | translate}}</h2>
       <h4 ng-if="itinerario.subtitle.it" >{{itinerario.subtitle | translate}}</h4>
+      <div class="comuni-html-description subtitle" compile="itinerario.subtitle | translate"></div>
       <div class="comuni-html-description" compile="itinerario.description|translate"></div>
-      <h3>{{'itinerari_title_accessibilita' | translate}}</h3>
+      <h3>{{'itinerari_title_info' | translate}}</h3>
       <div class="comuni-html-info" compile="itinerario.info|translate"></div>
     </div>
   </ion-content>

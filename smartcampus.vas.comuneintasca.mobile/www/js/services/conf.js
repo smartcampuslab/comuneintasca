@@ -159,6 +159,11 @@ angular.module('ilcomuneintasca.services.conf', [])
       en: 'Accessibility',
       de: 'Zugänglichkeit'
     },
+    'itinerari_title_info': {
+      it: 'Informazioni',
+      en: 'Information',
+      de: 'Informationen'
+    },
     'entry_km': {
       it: 'Km',
       en: 'Km',

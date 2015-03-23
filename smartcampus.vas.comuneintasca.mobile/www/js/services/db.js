@@ -476,7 +476,7 @@ angular.module('ilcomuneintasca.services.db', [])
                       classified.resolve([classification,classification2,classification3]);
 
                       objsReady.push(classified.promise.then(function(clfs){
-                        values = [item.id, item.objectId, parentid, item.version, contentTypeClassName, item.category, clfs[0], clfs[1], clfs[2], JSON.stringify(item), ((item.location && item.location.length == 2) ? item.location[0] : -1), ((item.location && item.location.length == 2) ? item.location[1] : -1), fromTime, toTime];
+                        values = [item.id, item.objectId, parentid, item.version, contentTypeClassName, item.category, clfs[0] ? clfs[0].toLowerCase() : clfs[0], clfs[1] ? clfs[1].toLowerCase() : clfs[1], clfs[2] ? clfs[2].toLowerCase() : clfs[2], JSON.stringify(item), ((item.location && item.location.length == 2) ? item.location[0] : -1), ((item.location && item.location.length == 2) ? item.location[1] : -1), fromTime, toTime];
                         itemsToInsert.push(values)
                       }));
 
@@ -616,7 +616,7 @@ angular.module('ilcomuneintasca.services.db', [])
               parentIdCond = 'c.parentid=?';
             } else {
               for (i in parentIds) parentIds[i] = '?';
-              parentIdCond = 'c.parentid IN (' + itemsIds.join() + ')';
+              parentIdCond = 'c.parentid IN (' + parentIds.join() + ')';
             }
           }
           //console.log('parentIdCond: '+parentIdCond);
@@ -729,9 +729,10 @@ angular.module('ilcomuneintasca.services.db', [])
             for (i in parentIds) params.push(parentIds[i]);
           }
           if (cateId) {
-            params.push(cateId);
-            params.push(cateId);
-            params.push(cateId);
+            var lower = cateId.toLowerCase();
+            params.push(lower);
+            params.push(lower);
+            params.push(lower);
           }
 
           //console.log('[DB.cate()] sql: '+sql);
@@ -829,9 +830,10 @@ angular.module('ilcomuneintasca.services.db', [])
             for (i in parentIds) params.push(parentIds[i]);
           }
           if (cateId) {
-            params.push(cateId);
-            params.push(cateId);
-            params.push(cateId);
+            var lower = cateId.toLowerCase();
+            params.push(lower);
+            params.push(lower);
+            params.push(lower);
           }
 
           //console.log('[DB.byTimeInterval()] sql: '+sql);

@@ -473,7 +473,10 @@ angular.module('ilcomuneintasca.controllers.common', [])
             //console.log('tboptions doFilter!');
             this.doFilter(this.defaultFilter);
           } else {
-            if (sg.query.classification) {
+            if (sg.query.itemIds) {
+              //console.log('tboptions cate...');
+              $scope.gotdbdata =  DatiDB.get(sg_query_type, sg.query.itemIds.join(',')); 
+            } else if (sg.query.classification) {
               //console.log('tboptions cate...');
               $scope.gotdbdata = DatiDB.cate(sg_query_type, sg.query.classification, sg.query.parent);
             } else {
@@ -719,7 +722,11 @@ angular.module('ilcomuneintasca.controllers.common', [])
                 sg_query_type =  data.dbType;
                 data = [data];
               }
-              $scope.template = 'templates/page/' + sg_query_type + '.html';
+              if (sq_query_type == 'content' || data.length <= 1){
+                $scope.template = 'templates/page/' + sg_query_type + '.html';
+              } else {
+                $scope.template = 'templates/page/' + sg_query_type + '_list.html';
+              }
 
               if (data.length==1) {
                 gotItemData(data[0]);
@@ -742,31 +749,33 @@ angular.module('ilcomuneintasca.controllers.common', [])
       }
 
       $scope.title = sg.name;
-      if (sg.query) {
-        if ($stateParams.itemId != '') {
-          //console.log('$stateParams.itemId: '+$stateParams.itemId);
-          Profiling._do('page', 'item');
+      
+      if ($stateParams.itemId != '') {
+        //console.log('$stateParams.itemId: '+$stateParams.itemId);
+        Profiling._do('page', 'item');
 
-          if ($state.current.data && $state.current.data.sons) {
-            console.log('sons sublist...');
-            //DatiDB.getByParent(null, $stateParams.itemId).then(function (data) {
-            //  doListPage({query:{data:data,parent:$stateParams.itemId}});
-            //});
-            doListPage({query:{data:null,type:'event',parent:$stateParams.itemId, sonscount: $stateParams.sonscount}});
-          } else {
-            var sg_query_type=sg.query.type || 'content';
-
-            $scope.gotdata = DatiDB.get(sg_query_type, $stateParams.itemId).then(gotItemData);
-            $scope.template = 'templates/page/' + (sg.view || sg_query_type) + '.html';
-            //console.log('$scope.template: '+$scope.template);
-          };
-
-          Profiling._do('page', 'item.done');
+        if ($state.current.data && $state.current.data.sons) {
+          console.log('sons sublist...');
+          //DatiDB.getByParent(null, $stateParams.itemId).then(function (data) {
+          //  doListPage({query:{data:data,parent:$stateParams.itemId}});
+          //});
+          doListPage({query:{data:null,type:'event',parent:$stateParams.itemId, sonscount: $stateParams.sonscount}});
         } else {
-          Profiling._do('page', 'list');
-          doListPage(sg);
-          Profiling._do('page', 'list.done');
-        }
+          var sg_query_type= (sg.query ? sg.query.type : null) || sg.type || (sg._parent ? sg._parent.type : null) || 'content';
+//          var sg_query_type=sg.query.type || 'content';
+
+          $scope.gotdata = DatiDB.get(sg_query_type, $stateParams.itemId).then(gotItemData);
+          $scope.template = 'templates/page/' + (sg.view || sg_query_type) + '.html';
+          //console.log('$scope.template: '+$scope.template);
+        };
+
+        Profiling._do('page', 'item.done');
+      }
+      
+      else if (sg.query) {
+        Profiling._do('page', 'list');
+        doListPage(sg);
+        Profiling._do('page', 'list.done');
       } else if (sg.objectIds) {
         console.log('objectIds: '+sg.objectIds.join(','));
         //console.log('$scope.template: '+$scope.template);
@@ -781,20 +790,14 @@ angular.module('ilcomuneintasca.controllers.common', [])
           var sg_type=sg.type || sg._parent.type || 'content';
           if (sg_type=='text') sg_type='content';
 
-          $scope.gotdata = DatiDB.get(sg_type, sg.objectIds.join(',')).then(gotItemData);
-          $scope.template = 'templates/page/' + (sg.view || sg_type || sg._parent.view || 'content') + '.html';
-         //console.log('$scope.template: '+$scope.template);
-        }
-        /*
-        $scope.gotdata = DatiDB.get(sg_type, sg.objectIds.join(',')).then(function (data) {
-          //console.log('objectIds gotdata!');
-          if (!data.hasOwnProperty('length')) {
-            $scope.obj = data;
-            data = [data];
+          var templateName = (sg.view || sg_type || sg._parent.view || 'content');
+          if (templateName != 'content' && sg.objectIds.length > 1) {
+            doListPage({query:{data:null,type:sg_type,itemIds:sg.objectIds, sonscount: $stateParams.sonscount}});
+          } else {
+            $scope.template = 'templates/page/' + templateName + '.html';
+            $scope.gotdata = DatiDB.get(sg_type, sg.objectIds.join(',')).then(gotItemData);
           }
-          $scope.results = data;
-        });
-        */
+        }
       } else {
         console.log('unkown menu object type!');
       }

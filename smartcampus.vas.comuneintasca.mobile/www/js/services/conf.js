@@ -1,7 +1,7 @@
 angular.module('ilcomuneintasca.services.conf', [])
 
 .factory('Config', function ($q, $http, $window, $filter, $rootScope) {
-  var DEVELOPMENT=false;
+  var DEVELOPMENT=true;
 
   // when the following is TRUE, we show special buttons 
   // (actually just the db RESET button in settings)
@@ -158,6 +158,11 @@ angular.module('ilcomuneintasca.services.conf', [])
       it: 'Accessibilità',
       en: 'Accessibility',
       de: 'Zugänglichkeit'
+    },
+    'itinerari_title_info': {
+      it: 'Informazioni',
+      en: 'Information',
+      de: 'Informationen'
     },
     'entry_km': {
       it: 'Km',

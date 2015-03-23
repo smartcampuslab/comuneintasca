@@ -17,6 +17,8 @@
       <div ng-if="!! obj.prices[lang]" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-pricetag-outline"></i>&euro; {{obj.prices | translate}}</div>
       <div ng-if="!! obj.equipment[lang]" class="item item-text-wrap item-icon-left"><i class="icon ion-ios7-checkmark-outline"></i>{{obj.equipment | translate}}</div>
     </div>
+    <div class="comuni-html-description subtitle" compile="obj.subtitle | translate"></div>
+    <div class="comuni-html-description" compile="obj.description | translate"></div>
   </div>
 </ion-content>
 <ion-footer-bar>

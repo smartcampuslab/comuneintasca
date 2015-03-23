@@ -9,6 +9,10 @@
   </author>
   <content src="index.html" />
   <access origin="*" />
+  <access origin="sms:*" launch-external="yes" />
+  <access origin="tel:*" launch-external="yes" />
+  <access origin="mailto:*" launch-external="yes" />
+  <access origin="geo:*" launch-external="yes" />
   <preference name="fullscreen" value="false" />
   <preference name="webviewbounce" value="false" />
   <preference name="UIWebViewBounce" value="false" />
@@ -32,6 +36,6 @@
   </feature>
   <preference name="exit-on-suspend" value="false" />
   <preference name="detect-data-types" value="false" />
-  <preference name="KeepRunning" value="false"/>
+  <preference name="KeepRunning" value="true"/>
   <!-- preference name="Orientation" value="portrait" / -->
 </widget>

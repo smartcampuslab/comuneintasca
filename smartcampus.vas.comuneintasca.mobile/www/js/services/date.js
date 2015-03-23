@@ -33,6 +33,15 @@ angular.module('ilcomuneintasca.services.date', [])
       }
       return dateString;
     },
+    filterInterval: function(resultsAll, f, t) {
+        var filtered = [];
+        for (var i = 0; i < resultsAll.length; i++) {
+          var ef = resultsAll[i].fromTime;
+          var et = resultsAll[i].toTime ? resultsAll[i].toTime : ef;
+          if (et >= f && ef <= t) filtered.push(resultsAll[i]);
+        }
+        return filtered;
+    },
     flatgroup: function (scope) {
         var ordered = $filter('extOrderBy')(scope.resultsAll,scope.ordering);
         groups=[
@@ -61,7 +70,9 @@ angular.module('ilcomuneintasca.services.date', [])
         groups=[];
         var map = {};
         for (i=0; i<days; i++) {
-          var d = new Date(from.getFullYear(), from.getMonth(), from.getDate() + i);
+          var d = new Date(from);
+          d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + i);
+          //var d = new Date(from.getFullYear(), from.getMonth(), from.getDate() + i);
           var t = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1);
           var group={ labelHidden:scope.getLocaleDateString(d), results:[] };
           map[scope.getLocaleDateString(d)] = group;

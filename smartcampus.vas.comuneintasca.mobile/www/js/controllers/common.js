@@ -590,24 +590,28 @@ angular.module('ilcomuneintasca.controllers.common', [])
           //console.log('do filter gotdata!');
           if (data) {
             //$scope.results = $filter('extOrderBy')(data,$scope.ordering);
-            $scope.resultsAll = data;
             //$scope.results = data;
             if (sg_query_type=='event') {
               // group by date 
-              if (t == 0 && !!$scope.resultsAll) {
-                for (var i = 0; i < $scope.resultsAll.length; i++) {
-                  var elem = $scope.resultsAll[i];
+              if (t == 0 && !!data) {
+                for (var i = 0; i < data.length; i++) {
+                  var elem = data[i];
                   if (t < elem.toTime) t = elem.toTime;
                   if (t < elem.fromTime) t = elem.fromTime;
                 }
+                var lastDate = new Date(t);
+                lastDate = new Date(lastDate.getFullYear(),lastDate.getMonth(),lastDate.getDate()+1);
+                t = lastDate.getTime() - 1;
               }
-              var groups = DateUtility.regroup($scope,sg_query_type,d,t,sg.query.classification);
+              $scope.resultsAll = DateUtility.filterInterval(data, f+1,t);
+              var groups = DateUtility.regroup($scope,sg_query_type,f+1,t,sg.query.classification);
               // ungroup if there are less than 3 events per day
               if (sg.query.parent && groups.length > 1 && $scope.resultsAll.length / groups.length <= 1) {
                 groups = DateUtility.flatgroup($scope);
               }
               $scope.resultsGroups = groups;
             } else {
+              $scope.resultsAll = data;
               dosort(data);
             }
           } else {

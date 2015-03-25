@@ -100,7 +100,7 @@ apps:
           autoPublish: true
           
         - type: it.smartcommunitylab.comuneintasca.core.model.ContentObject
-          url: http://ricadi.opencontent.it/api/opendata/v1/content/class/folder/offset/0/limit/1000
+          url: http://ricadi.opencontent.it/api/opendata/v1/content/class/pagina_sito/offset/0/limit/1000
           serviceId: smartcampus.service.opendata
           methodName: GetTesti
           imagePath: http://ricadi.opencontent.it/

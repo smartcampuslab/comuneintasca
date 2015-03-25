@@ -722,7 +722,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
                 sg_query_type =  data.dbType;
                 data = [data];
               }
-              if (sq_query_type == 'content' || data.length <= 1){
+              if (sg_query_type == 'content' || data.length <= 1){
                 $scope.template = 'templates/page/' + sg_query_type + '.html';
               } else {
                 $scope.template = 'templates/page/' + sg_query_type + '_list.html';

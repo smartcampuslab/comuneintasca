@@ -1,6 +1,8 @@
 angular.module('ilcomuneintasca.controllers.home', [])
 
 .controller('HomeCtrl', function ($scope, $rootScope, $ionicSlideBoxDelegate, $q, $location, $filter, $ionicPopup, Config, DatiDB, Files) {
+  $scope.topBoxStyle = {};
+
   $rootScope.inHome = true;
   $scope.openApp = function (appname,appdata) {
     if (ionic.Platform.isWebView() && device.platform == 'Android' && appdata.android) {
@@ -160,6 +162,7 @@ angular.module('ilcomuneintasca.controllers.home', [])
           rows[row].push(items[ii]);
         }
         $scope.buttonsRows=rows;
+		$scope.topBoxStyle = {bottom: (rows.length*60)+'px'};
       }
     },function(menu) {
       $scope.buttonRows=null;

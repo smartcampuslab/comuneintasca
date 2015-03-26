@@ -28,7 +28,8 @@ angular.module('ilcomuneintasca.services.conf', [])
     'ee123e0729fc6394020850129e3e22e0':'conoscere', 
     '936d735838e60e33ae940de691580991':'visitare',
     'cd3b58dfb21537fa0b720d89bf6af0a0':'mangiare_e_dormire',
-    '5f9cba3a3562635835dae003b95e30fd':'info_utili'
+    '5f9cba3a3562635835dae003b95e30fd':'info_utili',
+    'ad94673caa967e022fd137627094d238':'visitare',
   };
 //  // TRENTO
 //  var APP_VERSION='3.1.0';

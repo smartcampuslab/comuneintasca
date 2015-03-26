@@ -1,10 +1,10 @@
 {
   "id": null,
-  "updateTime": 1426601880289,
-  "version": 6330,
+  "updateTime": 1427297042660,
+  "version": 13527,
   "user": null,
   "appId": "RicadiInTasca",
-  "lastModified": 1425378164000,
+  "lastModified": 1427295571000,
   "localId": null,
   "highlights": [
     {
@@ -22,7 +22,7 @@
       "items": null,
       "query": null,
       "ref": null,
-      "type": null,
+      "type": "content",
       "app": null
     },
     {
@@ -40,7 +40,7 @@
       "items": null,
       "query": null,
       "ref": null,
-      "type": null,
+      "type": "content",
       "app": null
     },
     {
@@ -58,7 +58,7 @@
       "items": null,
       "query": null,
       "ref": null,
-      "type": null,
+      "type": "content",
       "app": null
     }
   ],
@@ -132,20 +132,6 @@
       "ref": "ad94673caa967e022fd137627094d238",
       "type": null,
       "app": null
-    },
-    {
-      "id": "66c5c1638a069d4bff58b6331f725b6c",
-      "name": {
-        "it": "Preferiti"
-      },
-      "description": null,
-      "image": null,
-      "objectIds": null,
-      "items": null,
-      "query": null,
-      "ref": "66c5c1638a069d4bff58b6331f725b6c",
-      "type": null,
-      "app": null
     }
   ],
   "menu": [
@@ -173,7 +159,7 @@
           "items": null,
           "query": null,
           "ref": null,
-          "type": null,
+          "type": "content",
           "app": null
         },
         {
@@ -196,7 +182,7 @@
           "items": null,
           "query": null,
           "ref": null,
-          "type": null,
+          "type": "content",
           "app": null
         },
         {
@@ -212,7 +198,7 @@
           "items": null,
           "query": null,
           "ref": null,
-          "type": null,
+          "type": "content",
           "app": null
         }
       ],
@@ -490,7 +476,7 @@
           "query": {
             "type": "servizio_sul_territorio",
             "classifications": null,
-            "classification": "ospedale"
+            "classification": "Ospedale"
           },
           "ref": null,
           "type": null,
@@ -526,7 +512,7 @@
           "query": {
             "type": "servizio_sul_territorio",
             "classifications": null,
-            "classification": "Ufficio_postale"
+            "classification": "Ufficio postale"
           },
           "ref": null,
           "type": null,
@@ -544,7 +530,7 @@
           "query": {
             "type": "servizio_sul_territorio",
             "classifications": null,
-            "classification": "Stazione_dei_treni"
+            "classification": "Stazione dei treni"
           },
           "ref": null,
           "type": null,
@@ -666,41 +652,6 @@
             "classifications": null,
             "classification": "spiaggia"
           },
-          "ref": null,
-          "type": null,
-          "app": null
-        }
-      ],
-      "query": {
-        "type": "poi",
-        "classifications": null,
-        "classification": "Spiaggia"
-      },
-      "ref": null,
-      "type": null,
-      "app": null
-    },
-    {
-      "id": "66c5c1638a069d4bff58b6331f725b6c",
-      "name": {
-        "it": "Preferiti"
-      },
-      "description": null,
-      "image": null,
-      "objectIds": null,
-      "items": [
-        {
-          "id": "66c5c1638a069d4bff58b6331f725b6c_sub",
-          "name": {
-            "it": "Preferiti"
-          },
-          "description": null,
-          "image": null,
-          "objectIds": [
-            "66c5c1638a069d4bff58b6331f725b6c"
-          ],
-          "items": null,
-          "query": null,
           "ref": null,
           "type": null,
           "app": null

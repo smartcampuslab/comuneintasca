@@ -6,7 +6,13 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
 //  });
   if ($rootScope.itineraryGroup) {
     $scope.title = $rootScope.itineraryGroup.name;
-  }  
+  } else {
+    Config.menuGroup(Config.itineraryMenuGroupID()).then(function(g){
+      if (g) {
+        $scope.title = g.name;
+      }
+    });
+  }
 
   var dosort = function() {
     $scope.itinerari = $filter('extOrderBy')($scope.itinerari,$scope.ordering);

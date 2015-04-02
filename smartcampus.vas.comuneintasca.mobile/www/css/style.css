@@ -201,7 +201,9 @@ ion-side-menu .list .item { background-color: transparent;color:#fff;border-colo
 .comuni-item-bottom2 { position:absolute;bottom:0;}
 */
 .comuni-item-bottom2.row { padding:0;height:38px;font-size:14px; }
-.comuni-item-bottom2.col { padding:0;white-space:normal;line-height:1.2em;max-height:2.4em;overflow:hidden;text-overflow:ellipsis; }
+.comuni-item-bottom2.col { padding:0;white-space:normal;line-height:1.2em;max-height:2.4em;overflow:hidden;text-overflow:ellipsis;  color: rgb(41, 117, 167); }
+.comuni-item-bottom2.col  > p{ color: rgb(41, 117, 167); }
+
 
 .item-thumbnail-left.itinerari h2 { line-height:1.2em;max-height:2.4em;height:2.4em;white-space:normal; }
 

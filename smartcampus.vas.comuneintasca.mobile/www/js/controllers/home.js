@@ -30,7 +30,7 @@ angular.module('ilcomuneintasca.controllers.home', [])
     if (btn.app) {
       $scope.openApp(btn.name,btn.app);
     } else if (btn.ref) {
-      if (btn.ref == 'profile_cit_csvimport_Percorsi_item_comuneintasca') {
+      if (btn.ref == Config.itineraryMenuGroupID()) {
         $rootScope.goto('itineraries');
       }
       else if (btn.ref=='itineraries' || btn.ref=='favorites') {      

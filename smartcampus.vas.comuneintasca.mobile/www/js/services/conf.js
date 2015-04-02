@@ -10,7 +10,7 @@ angular.module('ilcomuneintasca.services.conf', [])
   // $rootScope.DEV=true;
 
   var SYNC_WEBAPP='comuneintasca-multi';
-  var SCHEMA_VERSION=111;
+  var SCHEMA_VERSION=112;
   var HOME_HIGHLIGHTS_MAX=6;
   var SYNC_HOST="tn";
   if (DEVELOPMENT) SYNC_HOST="dev";
@@ -47,6 +47,7 @@ angular.module('ilcomuneintasca.services.conf', [])
     'profile_cit_2cc4db1674d9e8994658eac954355d31':'conoscere',
     'profile_cit_csvimport_Percorsi_item_comuneintasca':'percorsi'  
   };
+  var ITINERARY_CONTAINER_MENU = "profile_cit_csvimport_Percorsi_item_comuneintasca";
   
   function parseConfig(config) {
     if (config) {
@@ -730,6 +731,9 @@ angular.module('ilcomuneintasca.services.conf', [])
       return this.getProfile().then(function(data) {
         return data.menu;
       });
+    },
+    itineraryMenuGroupID : function() {
+      return ITINERARY_CONTAINER_MENU;
     },
     menuGroup: function (label) {
       return this.menu().then(function(menu) {

@@ -10,7 +10,7 @@ angular.module('ilcomuneintasca.services.conf', [])
   // $rootScope.DEV=true;
 
   var SYNC_WEBAPP='comuneintasca-multi';
-  var SCHEMA_VERSION=111;
+  var SCHEMA_VERSION=112;
   var HOME_HIGHLIGHTS_MAX=6;
   var SYNC_HOST="tn";
   if (DEVELOPMENT) SYNC_HOST="dev";
@@ -18,7 +18,7 @@ angular.module('ilcomuneintasca.services.conf', [])
   
   // customization parameters
   // RICADI
-  var APP_VERSION='0.1.0';
+  var APP_VERSION='1.0.0';
   var APP_BUILD='';
   var WEBAPP_MULTI="RicadiInTasca";
   var cityName = { 'it':'Ricadi', 'en':'Ricadi', 'de':'Ricadi' };
@@ -31,6 +31,7 @@ angular.module('ilcomuneintasca.services.conf', [])
     '5f9cba3a3562635835dae003b95e30fd':'info_utili',
     'ad94673caa967e022fd137627094d238':'visitare',
   };
+  var ITINERARY_CONTAINER_MENU = "profile_cit_csvimport_Percorsi_item_comuneintasca";
 //  // TRENTO
 //  var APP_VERSION='3.1.0';
 //  var APP_BUILD='';
@@ -731,6 +732,9 @@ angular.module('ilcomuneintasca.services.conf', [])
         return data.menu;
       });
     },
+    itineraryMenuGroupID : function() {
+      return ITINERARY_CONTAINER_MENU;
+    },
     menuGroup: function (label) {
       return this.menu().then(function(menu) {
         for (gi=0; gi<menu.length; gi++) {
@@ -773,7 +777,7 @@ angular.module('ilcomuneintasca.services.conf', [])
           if (group.items) {
             for (sgi=0; sgi<group.items.length; sgi++) {
               var sg=group.items[sgi];
-              if ( sg.query && sg.query.type==type && ( (!classification && !sg.query.classification) || (classification&&classification==sg.query.classification) ) ) {
+              if ( sg.query && sg.query.type==type && ( (!classification && !sg.query.classification) || (classification&&classification==sg.query.classification.toLowerCase()) ) ) {
                 sg._parent=cloneParentGroup(group);
                 return sg;
               } else if (sg.type && sg.type==type && classification==null) {

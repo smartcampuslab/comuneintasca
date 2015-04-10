@@ -497,7 +497,7 @@ angular.module('ilcomuneintasca.controllers.common', [])
         }
       },
       getData: function (data) {
-        return $scope.resultsAll||data;
+        return $scope.resultsAll || data || $scope.results;
       },
       getTitle: function () {
         return $scope.title;

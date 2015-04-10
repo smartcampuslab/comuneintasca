@@ -12,7 +12,7 @@
           <div class="comuni-item-bottom2">{{itinerario.subtitle | translate}}</div>
         </div></div -->
         <div ng-if="itinerario.subtitle.it" class="comuni-item-bottom2 row row-bottom">
-          <div class="comuni-item-bottom2 col">{{itinerario.subtitle | translate}}</div>
+          <div class="comuni-item-bottom2 col" compile="itinerario.subtitle | translate"></div>
         </div>
       </ion-item>
     </ion-list>

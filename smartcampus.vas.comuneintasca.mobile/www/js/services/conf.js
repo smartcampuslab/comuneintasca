@@ -114,9 +114,9 @@ angular.module('ilcomuneintasca.services.conf', [])
   
   var keys = {
     'settings_done': {
-      it: 'operazione completata',
-      en: 'operation completed',
-      de: 'operation beendet'
+      it: 'Operazione completata.',
+      en: 'Operation completed.',
+      de: 'Operation beendet.'
     },
     'settings_data_clean': {
       it: 'Elimina file temporanei',
@@ -182,18 +182,18 @@ angular.module('ilcomuneintasca.services.conf', [])
       de: 'Suche'
     },
     'list_results_none': {
-      it: 'nessun risultato',
-      en: 'no results',
+      it: 'Nessun risultato',
+      en: 'No results',
       de: 'Keine Ergebnisse'
     },
     'list_results_single': {
-      it: 'un solo risultato',
-      en: 'one result only',
+      it: 'Un solo risultato',
+      en: 'One result only',
       de: 'Ein Ergebnis'
     },
     'list_results_plural': {
-      it: 'risultati',
-      en: 'results',
+      it: 'Risultati',
+      en: 'Results',
       de: 'Ergebnisse'
     },
     'restaurant_opening': {
@@ -227,29 +227,29 @@ angular.module('ilcomuneintasca.services.conf', [])
       de: 'Gastronomie'
     },
     'complex_events_none': {
-      it: 'no eventi',
-      en: 'no events',
-      de: 'kein veranstaltung'
+      it: 'Nessun evento',
+      en: 'No events',
+      de: 'Kein Veranstaltung'
     },
     'complex_events_single': {
-      it: 'un evento',
-      en: 'one event',
-      de: 'ein veranstaltung'
+      it: 'Un evento',
+      en: 'One event',
+      de: 'Ein Veranstaltung'
     },
     'complex_events_plural': {
-      it: 'eventi',
-      en: 'events',
-      de: 'veranstaltungen'
+      it: 'Eventi',
+      en: 'Events',
+      de: 'Veranstaltungen'
     },
     'complex_events_found_single': {
-      it: 'un evento collegato',
-      en: 'one related event',
-      de: 'ein veranstaltung'
+      it: 'Un evento collegato',
+      en: 'One related event',
+      de: 'Ein Veranstaltung'
     },
     'complex_events_found_plural': {
-      it: 'eventi collegati',
-      en: 'related events',
-      de: 'veranstaltungen'
+      it: 'Eventi collegati',
+      en: 'Related events',
+      de: 'Veranstaltungen'
     },
     'leaf_Itinerario': {
       it: 'Itinerario',
@@ -322,23 +322,23 @@ angular.module('ilcomuneintasca.services.conf', [])
       de: 'Schließen'
     },
     'loading': {
-      it: 'caricamento in corso...',
-      en: 'loading...',
-      de: 'loading...'
+      it: 'Caricamento in corso...',
+      en: 'Loading...',
+      de: 'Loading...'
     },
     'loading_short': {
-      it: 'carico...',
-      en: 'loading...',
-      de: 'loading...'
+      it: 'Carico...',
+      en: 'Loading...',
+      de: 'Loading...'
     },
     'syncing': {
-      it: 'aggiornamento in corso...',
-      en: 'syncing...',
+      it: 'Aggiornamento in corso...',
+      en: 'Syncing...',
       de: 'Laufende Aktualisierung...'
     },
     'cleaning': {
-      it: 'pulizia in corso...',
-      en: 'cleaning...',
+      it: 'Pulizia in corso...',
+      en: 'Cleaning...',
       de: 'Reinigung im Laufe...'
     },
     'coming_soon': {

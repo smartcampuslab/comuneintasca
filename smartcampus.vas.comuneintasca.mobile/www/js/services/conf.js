@@ -3,7 +3,7 @@ angular.module('ilcomuneintasca.services.conf', [])
 .factory('Config', function ($q, $http, $window, $filter, $rootScope) {
   var DEVELOPMENT=true;
 
-  // when the following is TRUE, we show special buttons 
+  // when the following is TRUE, we show special buttons
   // (actually just the db RESET button in settings)
   // even if not in development mode
   $rootScope.DEV=DEVELOPMENT;
@@ -15,7 +15,7 @@ angular.module('ilcomuneintasca.services.conf', [])
   var SYNC_HOST="tn";
   if (DEVELOPMENT) SYNC_HOST="dev";
   var LOCAL_PROFILE="opencontent";
-  
+
   // customization parameters
 //  // RICADI
 //  var APP_VERSION='0.1.0';
@@ -25,7 +25,7 @@ angular.module('ilcomuneintasca.services.conf', [])
 //  var imagePath = 'http://www.comune.trento.it/var/comunetn';
 //  var dbName = 'ricadi';
 //  var nvItemMap = {
-//    'ee123e0729fc6394020850129e3e22e0':'conoscere', 
+//    'ee123e0729fc6394020850129e3e22e0':'conoscere',
 //    '936d735838e60e33ae940de691580991':'visitare',
 //    'cd3b58dfb21537fa0b720d89bf6af0a0':'mangiare_e_dormire',
 //    '5f9cba3a3562635835dae003b95e30fd':'info_utili',
@@ -39,16 +39,16 @@ angular.module('ilcomuneintasca.services.conf', [])
   var imagePath = 'http://www.comune.trento.it/var/comunetn';
   var dbName = 'Trento';
   var nvItemMap = {
-    'profile_cit_csvimport_Viaggia_Trento_item_comuneintasca':'viaggia_trento', 
+    'profile_cit_csvimport_Viaggia_Trento_item_comuneintasca':'viaggia_trento',
     'profile_cit_csvimport_Visitare_item_comuneintasca':'visitare',
     'profile_cit_csvimport_Mangiare_e_dormire_item_comuneintasca':'mangiare_e_dormire',
     'profile_cit_csvimport_Info_utili_item_comuneintasca':'info_utili',
     'profile_cit_csvimport_Eventi_item_comuneintasca':'eventi',
     'profile_cit_2cc4db1674d9e8994658eac954355d31':'conoscere',
-    'profile_cit_csvimport_Percorsi_item_comuneintasca':'percorsi'  
+    'profile_cit_csvimport_Percorsi_item_comuneintasca':'percorsi'
   };
   var ITINERARY_CONTAINER_MENU = "profile_cit_csvimport_Percorsi_item_comuneintasca";
-  
+
   function parseConfig(config) {
     if (config) {
       if (config.menu) {
@@ -111,12 +111,12 @@ angular.module('ilcomuneintasca.services.conf', [])
     }
     return config;
   }
-  
+
   var keys = {
     'settings_done': {
-      it: 'operazione completata',
-      en: 'operation completed',
-      de: 'operation beendet'
+      it: 'Operazione completata.',
+      en: 'Operation completed.',
+      de: 'Operation beendet.'
     },
     'settings_data_clean': {
       it: 'Elimina file temporanei',
@@ -182,18 +182,18 @@ angular.module('ilcomuneintasca.services.conf', [])
       de: 'Suche'
     },
     'list_results_none': {
-      it: 'nessun risultato',
-      en: 'no results',
+      it: 'Nessun risultato',
+      en: 'No results',
       de: 'Keine Ergebnisse'
     },
     'list_results_single': {
-      it: 'un solo risultato',
-      en: 'one result only',
+      it: 'Un solo risultato',
+      en: 'One result only',
       de: 'Ein Ergebnis'
     },
     'list_results_plural': {
-      it: 'risultati',
-      en: 'results',
+      it: 'Risultati',
+      en: 'Results',
       de: 'Ergebnisse'
     },
     'restaurant_opening': {
@@ -227,29 +227,29 @@ angular.module('ilcomuneintasca.services.conf', [])
       de: 'Gastronomie'
     },
     'complex_events_none': {
-      it: 'no eventi',
-      en: 'no events',
-      de: 'kein veranstaltung'
+      it: 'Nessun evento',
+      en: 'No events',
+      de: 'Kein Veranstaltung'
     },
     'complex_events_single': {
-      it: 'un evento',
-      en: 'one event',
-      de: 'ein veranstaltung'
+      it: 'Un evento',
+      en: 'One event',
+      de: 'Ein Veranstaltung'
     },
     'complex_events_plural': {
-      it: 'eventi',
-      en: 'events',
-      de: 'veranstaltungen'
+      it: 'Eventi',
+      en: 'Events',
+      de: 'Veranstaltungen'
     },
     'complex_events_found_single': {
-      it: 'un evento collegato',
-      en: 'one related event',
-      de: 'ein veranstaltung'
+      it: 'Un evento collegato',
+      en: 'One related event',
+      de: 'Ein Veranstaltung'
     },
     'complex_events_found_plural': {
-      it: 'eventi collegati',
-      en: 'related events',
-      de: 'veranstaltungen'
+      it: 'Eventi collegati',
+      en: 'Related events',
+      de: 'Veranstaltungen'
     },
     'leaf_Itinerario': {
       it: 'Itinerario',
@@ -322,23 +322,23 @@ angular.module('ilcomuneintasca.services.conf', [])
       de: 'Schließen'
     },
     'loading': {
-      it: 'caricamento in corso...',
-      en: 'loading...',
-      de: 'loading...'
+      it: 'Caricamento in corso...',
+      en: 'Loading...',
+      de: 'Loading...'
     },
     'loading_short': {
-      it: 'carico...',
-      en: 'loading...',
-      de: 'loading...'
+      it: 'Carico...',
+      en: 'Loading...',
+      de: 'Loading...'
     },
     'syncing': {
-      it: 'aggiornamento in corso...',
-      en: 'syncing...',
+      it: 'Aggiornamento in corso...',
+      en: 'Syncing...',
       de: 'Laufende Aktualisierung...'
     },
     'cleaning': {
-      it: 'pulizia in corso...',
-      en: 'cleaning...',
+      it: 'Pulizia in corso...',
+      en: 'Cleaning...',
       de: 'Reinigung im Laufe...'
     },
     'coming_soon': {
@@ -595,9 +595,9 @@ angular.module('ilcomuneintasca.services.conf', [])
 
   function cloneParentGroup(group) {
     /*
-    var r=_.map(group,function(value,key,list){ 
+    var r=_.map(group,function(value,key,list){
       if (key=='items') {
-        return false; 
+        return false;
       } else {
         //console.log('key: '+key);
         return _.clone(value);
@@ -609,7 +609,7 @@ angular.module('ilcomuneintasca.services.conf', [])
     if (group.id) r['id']=group.id;
     return r;
   }
-  
+
   return {
     getVersion: function () {
       return 'v '+APP_VERSION+(APP_BUILD&&APP_BUILD!=''?'<br/>('+APP_BUILD+')':'');
@@ -660,7 +660,7 @@ angular.module('ilcomuneintasca.services.conf', [])
         },
         "event":{
           "sort":{ "options":["A-Z", "Z-A", "DateFrom", "DateTo"], "default":"DateTo" },
-          "filter":{ 
+          "filter":{
             "options": {
               "today": {
                 "it": "Oggi",
@@ -677,8 +677,8 @@ angular.module('ilcomuneintasca.services.conf', [])
                 "en": "Next 30 days",
                 "de": "Nächsten 30 Tage"
               }
-            }, 
-            "default":"week" 
+            },
+            "default":"week"
           },
           //overrides for specific query classifications
           "classifications":{
@@ -696,12 +696,12 @@ angular.module('ilcomuneintasca.services.conf', [])
           "map":true
         },
         "hotel":{
-          "sort":{ "options":["A-Z", "Z-A", "Distance", "Stars"], "default":"Distance" }, 
-          "filter":true, 
+          "sort":{ "options":["A-Z", "Z-A", "Distance", "Stars"], "default":"Distance" },
+          "filter":true,
           "map":true
         },
         "restaurant":{
-          "sort":{ "options":["A-Z", "Z-A", "Distance"], "default":"Distance" }, 
+          "sort":{ "options":["A-Z", "Z-A", "Distance"], "default":"Distance" },
           "filter":true,
           "map":true
         }
@@ -912,7 +912,7 @@ angular.module('ilcomuneintasca.services.conf', [])
         en: 'UNKNOWN'
       };
     },
- 
+
     cityName: function() {
       return cityName;
     },

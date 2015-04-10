@@ -187,13 +187,13 @@ angular.module('ilcomuneintasca.services.conf', [])
       de: 'Keine Ergebnisse'
     },
     'list_results_single': {
-      it: 'Un solo risultato',
-      en: 'One result only',
-      de: 'Ein Ergebnis'
+      it: '1 risultato',
+      en: '1 result ',
+      de: '1 Ergebnis'
     },
     'list_results_plural': {
-      it: 'Risultati',
-      en: 'Results',
+      it: 'risultati',
+      en: 'results',
       de: 'Ergebnisse'
     },
     'restaurant_opening': {
@@ -232,23 +232,23 @@ angular.module('ilcomuneintasca.services.conf', [])
       de: 'Kein Veranstaltung'
     },
     'complex_events_single': {
-      it: 'Un evento',
-      en: 'One event',
-      de: 'Ein Veranstaltung'
+      it: '1 evento',
+      en: '1 event',
+      de: '1 Veranstaltung'
     },
     'complex_events_plural': {
-      it: 'Eventi',
-      en: 'Events',
+      it: 'eventi',
+      en: 'events',
       de: 'Veranstaltungen'
     },
     'complex_events_found_single': {
-      it: 'Un evento collegato',
-      en: 'One related event',
-      de: 'Ein Veranstaltung'
+      it: '1 evento collegato',
+      en: '1 related event',
+      de: '1 Veranstaltung'
     },
     'complex_events_found_plural': {
-      it: 'Eventi collegati',
-      en: 'Related events',
+      it: 'eventi collegati',
+      en: 'related events',
       de: 'Veranstaltungen'
     },
     'leaf_Itinerario': {

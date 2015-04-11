@@ -375,7 +375,7 @@ public class ConfigProcessor {
 					if (StringUtils.isEmpty(item.getQuery().getClassification())) {
 						filters.all = true;
 					} else {
-						filters.classifications.addAll(Arrays.asList(item.getQuery().getClassification().split(";")));
+						filters.classifications.addAll(Arrays.asList(item.getQuery().getClassification().toLowerCase().split(";")));
 					}
 				}
 			}
@@ -398,19 +398,19 @@ public class ConfigProcessor {
 				if (classifications.contains(o.getCategory())) return true;
 			}
 			if (o instanceof POIObject) {
-				if (classifications.contains(((POIObject)o).getClassification().get("it"))) return true;
+				if (classifications.contains(((POIObject)o).getClassification().get("it").toLowerCase())) return true;
 			}
 			if (o instanceof ContentObject) {
-				if (classifications.contains(((ContentObject)o).getClassification().get("it"))) return true;
+				if (classifications.contains(((ContentObject)o).getClassification().get("it").toLowerCase())) return true;
 			}
 			if (o instanceof MainEventObject) {
-				if (classifications.contains(((MainEventObject)o).getClassification().get("it"))) return true;
+				if (classifications.contains(((MainEventObject)o).getClassification().get("it").toLowerCase())) return true;
 			}
 			if (o instanceof RestaurantObject) {
-				if (classifications.contains(((RestaurantObject)o).getClassification().get("it"))) return true;
+				if (classifications.contains(((RestaurantObject)o).getClassification().get("it").toLowerCase())) return true;
 			}
 			if (o instanceof HotelObject) {
-				if (classifications.contains(((HotelObject)o).getClassification().get("it"))) return true;
+				if (classifications.contains(((HotelObject)o).getClassification().get("it").toLowerCase())) return true;
 			}
 
 			return false;

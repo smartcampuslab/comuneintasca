@@ -398,6 +398,7 @@ public class ConfigProcessor {
 				if (classifications.contains(o.getCategory())) return true;
 			}
 			if (o instanceof POIObject) {
+				System.err.println(classifications +" vs "+((POIObject)o).getClassification().get("it").toLowerCase());
 				if (classifications.contains(((POIObject)o).getClassification().get("it").toLowerCase())) return true;
 			}
 			if (o instanceof ContentObject) {

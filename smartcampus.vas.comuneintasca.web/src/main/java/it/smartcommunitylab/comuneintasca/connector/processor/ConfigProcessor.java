@@ -398,20 +398,24 @@ public class ConfigProcessor {
 				if (classifications.contains(o.getCategory())) return true;
 			}
 			if (o instanceof POIObject) {
-				System.err.println(classifications +" vs "+((POIObject)o).getClassification().get("it").toLowerCase());
-				if (classifications.contains(((POIObject)o).getClassification().get("it").toLowerCase())) return true;
+				String string = ((POIObject)o).getClassification().get("it");
+				if (string !=null && classifications.contains(string.toLowerCase())) return true;
 			}
 			if (o instanceof ContentObject) {
-				if (classifications.contains(((ContentObject)o).getClassification().get("it").toLowerCase())) return true;
+				String string = ((ContentObject)o).getClassification().get("it");
+				if (string != null && classifications.contains(string.toLowerCase())) return true;
 			}
 			if (o instanceof MainEventObject) {
-				if (classifications.contains(((MainEventObject)o).getClassification().get("it").toLowerCase())) return true;
+				String string = ((MainEventObject)o).getClassification().get("it");
+				if (string != null && classifications.contains(string.toLowerCase())) return true;
 			}
 			if (o instanceof RestaurantObject) {
-				if (classifications.contains(((RestaurantObject)o).getClassification().get("it").toLowerCase())) return true;
+				String string = ((RestaurantObject)o).getClassification().get("it");
+				if (string != null && classifications.contains(string.toLowerCase())) return true;
 			}
 			if (o instanceof HotelObject) {
-				if (classifications.contains(((HotelObject)o).getClassification().get("it").toLowerCase())) return true;
+				String string = ((HotelObject)o).getClassification().get("it");
+				if (string != null && classifications.contains(string.toLowerCase())) return true;
 			}
 
 			return false;

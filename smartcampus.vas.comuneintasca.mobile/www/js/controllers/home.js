@@ -145,7 +145,8 @@ angular.module('ilcomuneintasca.controllers.home', [])
             "query": null,
             "ref": "favorites",
             "type": null,
-            "app": null
+            "app": null,
+            "colorIndex":"favorites"
           });
         }
         var rows=[], row=-1, pos=0;

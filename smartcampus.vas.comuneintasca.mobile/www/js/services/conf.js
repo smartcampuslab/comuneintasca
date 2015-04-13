@@ -51,6 +51,7 @@ angular.module('ilcomuneintasca.services.conf', [])
 
   function parseConfig(config) {
     if (config) {
+      var colorMap = {};
       if (config.menu) {
         for (mgi=0; mgi<config.menu.length; mgi++) {
           var group=config.menu[mgi];
@@ -70,6 +71,8 @@ angular.module('ilcomuneintasca.services.conf', [])
           } else {
             console.log('CONFIG.group["'+(group.id||group)+'"] has no items!');
           }
+          group.colorIndex = mgi;
+          colorMap[group.id] = mgi;
         }
       } else {
         console.log('CONFIG.menu is NULL!');
@@ -88,8 +91,14 @@ angular.module('ilcomuneintasca.services.conf', [])
          }
          return txt;
        };
+       var extraColors = 100;
        for (ngi=0; ngi<config.navigationItems.length; ngi++) {
           var item=config.navigationItems[ngi];
+          if (item.ref in colorMap) {
+            item.colorIndex = colorMap[item.ref];
+          } else {
+            item.colorIndex = extraColors++;
+          }
           if (item.name) {
             angular.forEach(item.name, function (txt, loc) {
               if (item.name[loc]) item.name[loc]=prepareNavItemName(txt);//txt.replace(/\s+/g,"<br/>");

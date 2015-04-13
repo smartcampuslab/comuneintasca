@@ -1,8 +1,9 @@
 #home-buttons button.button-comuni-pos0, ion-side-menu .list .comunimenu-pos0 .item { color:#6ab8ea; } /* conoscere */
 #home-buttons button.button-comuni-pos1, ion-side-menu .list .comunimenu-pos1 .item { color:#d77f2a; } /* visitare */
 #home-buttons button.button-comuni-pos2, ion-side-menu .list .comunimenu-pos2 .item { color:#74a5b1; } /* mangiare e dormire */
-#home-buttons button.button-comuni-pos3 { color:#ccb471; } /* viaggia trento */
-#home-buttons button.button-comuni-pos4, ion-side-menu .list .comunimenu-pos3 .item { color:#b35596; } /* eventi */
-#home-buttons button.button-comuni-pos5, ion-side-menu .list .comunimenu-pos4 .item { color:#b7cb3a; } /* percorsi */
-#home-buttons button.button-comuni-pos6, ion-side-menu .list .comunimenu-pos5 .item { color:#f2cb30; } /* info utili */
-#home-buttons button.button-comuni-pos7, ion-side-menu .list .comunimenu-favorites .item { color:#c4c6c6; }
+#home-buttons button.button-comuni-pos3, ion-side-menu .list .comunimenu-pos3 .item { color:#b35596; } /* eventi */
+#home-buttons button.button-comuni-pos4, ion-side-menu .list .comunimenu-pos4 .item { color:#b7cb3a; } /* percorsi */
+#home-buttons button.button-comuni-pos5, ion-side-menu .list .comunimenu-pos5 .item { color:#f2cb30; } /* info utili */
+#home-buttons button.button-comuni-posfavorites, ion-side-menu .list .comunimenu-posfavorites .item { color:#c4c6c6; }
+
+#home-buttons button.button-comuni-pos100 { color:#ccb471; } /* viaggia trento */

@@ -28,7 +28,7 @@
           <span class="comunimenu-home"><em>¡test!</em></span>
         </ion-item-->
 
-        <div ng-if="menu" ng-repeat="(groupIndex, menuGroup) in menu" class="comunimenu-pos{{groupIndex}}">
+        <div ng-if="menu" ng-repeat="(groupIndex, menuGroup) in menu" class="comunimenu-pos{{menuGroup.colorIndex}}">
           <ion-item class="item-header item-icon-right" ng-click="showGroup(groupIndex)">
             <b ng-bind="menuGroup.name | translate"></b>
             <i class="icon comunimenu-{{menuGroup.id}}" ng-class="{'ion-chevron-down': !isGroupShown(groupIndex), 'ion-chevron-up': isGroupShown(groupIndex)}"></i>
@@ -40,7 +40,7 @@
           </div>
         </div>
 
-        <div class="comunimenu-favorites">
+        <div class="comunimenu-posfavorites">
           <ion-item menu-close class="item-accordion" ng-click="goto('favorites')">
             <b ng-bind="'sidemenu_Favourites' | translate"></b>
           </ion-item>

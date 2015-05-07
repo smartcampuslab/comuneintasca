@@ -64,17 +64,29 @@ angular.module('ilcomuneintasca.controllers.common', [])
   };
   $scope.dbReset = function () {
     console.log('reset!');
-    DatiDB.reset().then(function () {
-      console.log('db reset completed!');
-      $ionicPopup.alert({
-        title: $filter('translate')('settings_data_sync'),
-        template: $filter('translate')('settings_done')
-      }).then(function(res) {
-        console.log('db reset acknowledged!');
-        $scope.settings.hide();
-        $window.location.reload();
+    DatiDB.reset().then(
+      function () {
+          console.log('db reset completed!');
+          $ionicPopup.alert({
+            title: $filter('translate')('settings_data_sync'),
+            template: $filter('translate')('settings_done')
+          }).then(function(res) {
+            console.log('db reset acknowledged!');
+            $scope.settings.hide();
+            $window.location.reload();
+          });
+        },
+      function(){
+          console.log('db reset failed!');
+          $ionicPopup.alert({
+            title: $filter('translate')('settings_data_sync'),
+            template: $filter('translate')('settings_failed')
+          }).then(function(res) {
+            console.log('db reset acknowledged!');
+            $scope.settings.hide();
+            $window.location.reload();
+          });
       });
-    });
   };
   $scope.dbFullReset = function () {
     console.log('reset!');

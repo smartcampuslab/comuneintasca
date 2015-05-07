@@ -127,6 +127,11 @@ angular.module('ilcomuneintasca.services.conf', [])
       en: 'Operation completed.',
       de: 'Operation beendet.'
     },
+    'settings_failed': {
+      it: 'Aggiornamento non riuscito.',
+      en: 'Operation failed.',
+      de: 'Operation ist fehlgeschlagen.'
+    },
     'settings_data_clean': {
       it: 'Elimina file temporanei',
       en: 'Delete temporary files',

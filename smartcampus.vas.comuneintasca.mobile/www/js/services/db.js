@@ -368,7 +368,8 @@ angular.module('ilcomuneintasca.services.db', [])
                   $rootScope.$emit('profileUpdated');
                 }
 
-                angular.forEach(types, function (contentTypeClassName, contentTypeKey) {
+                try {
+                  angular.forEach(types, function (contentTypeClassName, contentTypeKey) {
                   //console.log('INSERTS[' + contentTypeKey + ']: ' + contentTypeClassName);
 
                   if (!angular.isUndefined(data.updated[contentTypeClassName])) {
@@ -487,6 +488,12 @@ angular.module('ilcomuneintasca.services.db', [])
                   }
 
                 });
+                } catch (err) {
+                    $ionicLoading.hide();
+                    Profiling._do('dbsync');
+                    syncinprogress=null;
+                    syncronization.resolve(currentDbVersion);
+                }
 
                 var insertsPromise = $q.defer();
                 var deletionsPromise = $q.defer();

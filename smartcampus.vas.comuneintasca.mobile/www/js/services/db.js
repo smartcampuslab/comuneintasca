@@ -271,17 +271,17 @@ angular.module('ilcomuneintasca.services.db', [])
 
   return {
 		reset: function () { 
-      if (!ionic.Platform.isWebView() || navigator.connection.type != Connection.NONE) {
-        //localStorage.cachedProfile=null;
-        localStorage.lastSynced=lastSynced=-1;
-      } else {
-        console.log('cannot reset db: offline!');
-      }
-      return this.sync().then(function(){
-        console.log('DB reset completed.');
-      },function(){
-        console.log('DB not resetted.');
-      });
+          if (!ionic.Platform.isWebView() || navigator.connection.type != Connection.NONE) {
+            //localStorage.cachedProfile=null;
+            localStorage.lastSynced=lastSynced=-1;
+          } else {
+            console.log('cannot reset db: offline!');
+          }
+          return this.sync();//.then(function(){
+    //        console.log('DB reset completed.');
+    //      },function(){
+    //        console.log('DB not resetted.');
+    //      });
 		},
 		fullreset: function (cb) { 
 			localStorage.currentDbVersion=currentDbVersion=0;
@@ -492,7 +492,8 @@ angular.module('ilcomuneintasca.services.db', [])
                     $ionicLoading.hide();
                     Profiling._do('dbsync');
                     syncinprogress=null;
-                    syncronization.resolve(currentDbVersion);
+                    syncronization.reject(currentDbVersion);
+                    return;
                 }
 
                 var insertsPromise = $q.defer();

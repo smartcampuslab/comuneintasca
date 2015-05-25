@@ -12486,6 +12486,26 @@ public final class Opendata {
     // required string objectId = 11;
     boolean hasObjectId();
     String getObjectId();
+    
+    // optional string phone = 12;
+    boolean hasPhone();
+    String getPhone();
+    
+    // optional string email = 13;
+    boolean hasEmail();
+    String getEmail();
+    
+    // optional double lat = 14;
+    boolean hasLat();
+    double getLat();
+    
+    // optional double lon = 15;
+    boolean hasLon();
+    double getLon();
+    
+    // optional string fax = 16;
+    boolean hasFax();
+    String getFax();
   }
   public static final class I18nTesto extends
       com.google.protobuf.GeneratedMessage
@@ -12732,6 +12752,122 @@ public final class Opendata {
       }
     }
     
+    // optional string phone = 12;
+    public static final int PHONE_FIELD_NUMBER = 12;
+    private java.lang.Object phone_;
+    public boolean hasPhone() {
+      return ((bitField0_ & 0x00000800) == 0x00000800);
+    }
+    public String getPhone() {
+      java.lang.Object ref = phone_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          phone_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getPhoneBytes() {
+      java.lang.Object ref = phone_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        phone_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    
+    // optional string email = 13;
+    public static final int EMAIL_FIELD_NUMBER = 13;
+    private java.lang.Object email_;
+    public boolean hasEmail() {
+      return ((bitField0_ & 0x00001000) == 0x00001000);
+    }
+    public String getEmail() {
+      java.lang.Object ref = email_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          email_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getEmailBytes() {
+      java.lang.Object ref = email_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        email_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    
+    // optional double lat = 14;
+    public static final int LAT_FIELD_NUMBER = 14;
+    private double lat_;
+    public boolean hasLat() {
+      return ((bitField0_ & 0x00002000) == 0x00002000);
+    }
+    public double getLat() {
+      return lat_;
+    }
+    
+    // optional double lon = 15;
+    public static final int LON_FIELD_NUMBER = 15;
+    private double lon_;
+    public boolean hasLon() {
+      return ((bitField0_ & 0x00004000) == 0x00004000);
+    }
+    public double getLon() {
+      return lon_;
+    }
+    
+    // optional string fax = 16;
+    public static final int FAX_FIELD_NUMBER = 16;
+    private java.lang.Object fax_;
+    public boolean hasFax() {
+      return ((bitField0_ & 0x00008000) == 0x00008000);
+    }
+    public String getFax() {
+      java.lang.Object ref = fax_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          fax_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getFaxBytes() {
+      java.lang.Object ref = fax_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        fax_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    
     private void initFields() {
       id_ = "";
       title_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
@@ -12744,6 +12880,11 @@ public final class Opendata {
       lastModified_ = 0L;
       info_ = eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nString.getDefaultInstance();
       objectId_ = "";
+      phone_ = "";
+      email_ = "";
+      lat_ = 0D;
+      lon_ = 0D;
+      fax_ = "";
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -12802,6 +12943,21 @@ public final class Opendata {
       if (((bitField0_ & 0x00000400) == 0x00000400)) {
         output.writeBytes(11, getObjectIdBytes());
       }
+      if (((bitField0_ & 0x00000800) == 0x00000800)) {
+        output.writeBytes(12, getPhoneBytes());
+      }
+      if (((bitField0_ & 0x00001000) == 0x00001000)) {
+        output.writeBytes(13, getEmailBytes());
+      }
+      if (((bitField0_ & 0x00002000) == 0x00002000)) {
+        output.writeDouble(14, lat_);
+      }
+      if (((bitField0_ & 0x00004000) == 0x00004000)) {
+        output.writeDouble(15, lon_);
+      }
+      if (((bitField0_ & 0x00008000) == 0x00008000)) {
+        output.writeBytes(16, getFaxBytes());
+      }
       getUnknownFields().writeTo(output);
     }
     
@@ -12854,6 +13010,26 @@ public final class Opendata {
       if (((bitField0_ & 0x00000400) == 0x00000400)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(11, getObjectIdBytes());
+      }
+      if (((bitField0_ & 0x00000800) == 0x00000800)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(12, getPhoneBytes());
+      }
+      if (((bitField0_ & 0x00001000) == 0x00001000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(13, getEmailBytes());
+      }
+      if (((bitField0_ & 0x00002000) == 0x00002000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeDoubleSize(14, lat_);
+      }
+      if (((bitField0_ & 0x00004000) == 0x00004000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeDoubleSize(15, lon_);
+      }
+      if (((bitField0_ & 0x00008000) == 0x00008000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(16, getFaxBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -13031,6 +13207,16 @@ public final class Opendata {
         bitField0_ = (bitField0_ & ~0x00000200);
         objectId_ = "";
         bitField0_ = (bitField0_ & ~0x00000400);
+        phone_ = "";
+        bitField0_ = (bitField0_ & ~0x00000800);
+        email_ = "";
+        bitField0_ = (bitField0_ & ~0x00001000);
+        lat_ = 0D;
+        bitField0_ = (bitField0_ & ~0x00002000);
+        lon_ = 0D;
+        bitField0_ = (bitField0_ & ~0x00004000);
+        fax_ = "";
+        bitField0_ = (bitField0_ & ~0x00008000);
         return this;
       }
       
@@ -13137,6 +13323,26 @@ public final class Opendata {
           to_bitField0_ |= 0x00000400;
         }
         result.objectId_ = objectId_;
+        if (((from_bitField0_ & 0x00000800) == 0x00000800)) {
+          to_bitField0_ |= 0x00000800;
+        }
+        result.phone_ = phone_;
+        if (((from_bitField0_ & 0x00001000) == 0x00001000)) {
+          to_bitField0_ |= 0x00001000;
+        }
+        result.email_ = email_;
+        if (((from_bitField0_ & 0x00002000) == 0x00002000)) {
+          to_bitField0_ |= 0x00002000;
+        }
+        result.lat_ = lat_;
+        if (((from_bitField0_ & 0x00004000) == 0x00004000)) {
+          to_bitField0_ |= 0x00004000;
+        }
+        result.lon_ = lon_;
+        if (((from_bitField0_ & 0x00008000) == 0x00008000)) {
+          to_bitField0_ |= 0x00008000;
+        }
+        result.fax_ = fax_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -13185,6 +13391,21 @@ public final class Opendata {
         }
         if (other.hasObjectId()) {
           setObjectId(other.getObjectId());
+        }
+        if (other.hasPhone()) {
+          setPhone(other.getPhone());
+        }
+        if (other.hasEmail()) {
+          setEmail(other.getEmail());
+        }
+        if (other.hasLat()) {
+          setLat(other.getLat());
+        }
+        if (other.hasLon()) {
+          setLon(other.getLon());
+        }
+        if (other.hasFax()) {
+          setFax(other.getFax());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -13306,6 +13527,31 @@ public final class Opendata {
             case 90: {
               bitField0_ |= 0x00000400;
               objectId_ = input.readBytes();
+              break;
+            }
+            case 98: {
+              bitField0_ |= 0x00000800;
+              phone_ = input.readBytes();
+              break;
+            }
+            case 106: {
+              bitField0_ |= 0x00001000;
+              email_ = input.readBytes();
+              break;
+            }
+            case 113: {
+              bitField0_ |= 0x00002000;
+              lat_ = input.readDouble();
+              break;
+            }
+            case 121: {
+              bitField0_ |= 0x00004000;
+              lon_ = input.readDouble();
+              break;
+            }
+            case 130: {
+              bitField0_ |= 0x00008000;
+              fax_ = input.readBytes();
               break;
             }
           }
@@ -14016,6 +14262,156 @@ public final class Opendata {
       void setObjectId(com.google.protobuf.ByteString value) {
         bitField0_ |= 0x00000400;
         objectId_ = value;
+        onChanged();
+      }
+      
+      // optional string phone = 12;
+      private java.lang.Object phone_ = "";
+      public boolean hasPhone() {
+        return ((bitField0_ & 0x00000800) == 0x00000800);
+      }
+      public String getPhone() {
+        java.lang.Object ref = phone_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          phone_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      public Builder setPhone(String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000800;
+        phone_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearPhone() {
+        bitField0_ = (bitField0_ & ~0x00000800);
+        phone_ = getDefaultInstance().getPhone();
+        onChanged();
+        return this;
+      }
+      void setPhone(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000800;
+        phone_ = value;
+        onChanged();
+      }
+      
+      // optional string email = 13;
+      private java.lang.Object email_ = "";
+      public boolean hasEmail() {
+        return ((bitField0_ & 0x00001000) == 0x00001000);
+      }
+      public String getEmail() {
+        java.lang.Object ref = email_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          email_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      public Builder setEmail(String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00001000;
+        email_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearEmail() {
+        bitField0_ = (bitField0_ & ~0x00001000);
+        email_ = getDefaultInstance().getEmail();
+        onChanged();
+        return this;
+      }
+      void setEmail(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00001000;
+        email_ = value;
+        onChanged();
+      }
+      
+      // optional double lat = 14;
+      private double lat_ ;
+      public boolean hasLat() {
+        return ((bitField0_ & 0x00002000) == 0x00002000);
+      }
+      public double getLat() {
+        return lat_;
+      }
+      public Builder setLat(double value) {
+        bitField0_ |= 0x00002000;
+        lat_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearLat() {
+        bitField0_ = (bitField0_ & ~0x00002000);
+        lat_ = 0D;
+        onChanged();
+        return this;
+      }
+      
+      // optional double lon = 15;
+      private double lon_ ;
+      public boolean hasLon() {
+        return ((bitField0_ & 0x00004000) == 0x00004000);
+      }
+      public double getLon() {
+        return lon_;
+      }
+      public Builder setLon(double value) {
+        bitField0_ |= 0x00004000;
+        lon_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearLon() {
+        bitField0_ = (bitField0_ & ~0x00004000);
+        lon_ = 0D;
+        onChanged();
+        return this;
+      }
+      
+      // optional string fax = 16;
+      private java.lang.Object fax_ = "";
+      public boolean hasFax() {
+        return ((bitField0_ & 0x00008000) == 0x00008000);
+      }
+      public String getFax() {
+        java.lang.Object ref = fax_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          fax_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      public Builder setFax(String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00008000;
+        fax_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearFax() {
+        bitField0_ = (bitField0_ & ~0x00008000);
+        fax_ = getDefaultInstance().getFax();
+        onChanged();
+        return this;
+      }
+      void setFax(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00008000;
+        fax_ = value;
         onChanged();
       }
       
@@ -18594,7 +18990,7 @@ public final class Opendata {
       "a.data.message.I18nString\022\020\n\010objectId\030\021 ",
       "\002(\t\022Q\n\004info\030\022 \001(\0132C.eu.trentorise.smartc" +
       "ampus.service.opendata.data.message.I18n" +
-      "String\"\346\004\n\tI18nTesto\022\n\n\002id\030\001 \002(\t\022R\n\005titl" +
+      "String\"\253\005\n\tI18nTesto\022\n\n\002id\030\001 \002(\t\022R\n\005titl" +
       "e\030\002 \002(\0132C.eu.trentorise.smartcampus.serv" +
       "ice.opendata.data.message.I18nString\022U\n\010" +
       "subtitle\030\003 \001(\0132C.eu.trentorise.smartcamp" +
@@ -18609,31 +19005,33 @@ public final class Opendata {
       "\007 \001(\t\022\r\n\005image\030\010 \001(\t\022\024\n\014lastModified\030\t \001" +
       "(\003\022Q\n\004info\030\n \001(\0132C.eu.trentorise.smartca" +
       "mpus.service.opendata.data.message.I18nS" +
-      "tring\022\020\n\010objectId\030\013 \002(\t\"\237\005\n\016I18nItinerar" +
-      "io\022\n\n\002id\030\001 \002(\t\022R\n\005title\030\002 \002(\0132C.eu.trent" +
-      "orise.smartcampus.service.opendata.data.",
-      "message.I18nString\022U\n\010subtitle\030\003 \001(\0132C.e" +
+      "tring\022\020\n\010objectId\030\013 \002(\t\022\r\n\005phone\030\014 \001(\t\022\r" +
+      "\n\005email\030\r \001(\t\022\013\n\003lat\030\016 \001(\001\022\013\n\003lon\030\017 \001(\001\022" +
+      "\013\n\003fax\030\020 \001(\t\"\237\005\n\016I18nItinerario\022\n\n\002id\030\001 ",
+      "\002(\t\022R\n\005title\030\002 \002(\0132C.eu.trentorise.smart" +
+      "campus.service.opendata.data.message.I18" +
+      "nString\022U\n\010subtitle\030\003 \001(\0132C.eu.trentoris" +
+      "e.smartcampus.service.opendata.data.mess" +
+      "age.I18nString\022X\n\013description\030\004 \001(\0132C.eu" +
+      ".trentorise.smartcampus.service.opendata" +
+      ".data.message.I18nString\022[\n\016classificati" +
+      "on\030\005 \001(\0132C.eu.trentorise.smartcampus.ser" +
+      "vice.opendata.data.message.I18nString\022\013\n" +
+      "\003url\030\006 \001(\t\022\r\n\005image\030\007 \001(\t\022\024\n\014lastModifie",
+      "d\030\010 \001(\003\022\r\n\005steps\030\t \003(\t\022\016\n\006length\030\n \001(\005\022\020" +
+      "\n\010duration\030\013 \001(\005\022W\n\ndifficulty\030\014 \001(\0132C.e" +
       "u.trentorise.smartcampus.service.opendat" +
-      "a.data.message.I18nString\022X\n\013description" +
-      "\030\004 \001(\0132C.eu.trentorise.smartcampus.servi" +
-      "ce.opendata.data.message.I18nString\022[\n\016c" +
-      "lassification\030\005 \001(\0132C.eu.trentorise.smar" +
-      "tcampus.service.opendata.data.message.I1" +
-      "8nString\022\013\n\003url\030\006 \001(\t\022\r\n\005image\030\007 \001(\t\022\024\n\014" +
-      "lastModified\030\010 \001(\003\022\r\n\005steps\030\t \003(\t\022\016\n\006len" +
-      "gth\030\n \001(\005\022\020\n\010duration\030\013 \001(\005\022W\n\ndifficult",
-      "y\030\014 \001(\0132C.eu.trentorise.smartcampus.serv" +
-      "ice.opendata.data.message.I18nString\022Q\n\004" +
-      "info\030\r \001(\0132C.eu.trentorise.smartcampus.s" +
-      "ervice.opendata.data.message.I18nString\022" +
-      "\020\n\010objectId\030\016 \002(\t\"=\n\nConfigLink\022\014\n\004name\030" +
-      "\001 \002(\t\022\013\n\003uri\030\002 \002(\t\022\024\n\014dateModified\030\003 \002(\003" +
-      "\">\n\nConfigData\022\014\n\004name\030\001 \002(\t\022\014\n\004data\030\002 \002" +
-      "(\t\022\024\n\014dateModified\030\003 \002(\003\"0\n\nI18nString\022\n" +
-      "\n\002it\030\001 \001(\t\022\n\n\002en\030\002 \001(\t\022\n\n\002de\030\003 \001(\t\".\n\010I1" +
-      "8nLong\022\n\n\002it\030\001 \001(\003\022\n\n\002en\030\002 \001(\003\022\n\n\002de\030\003 \001",
-      "(\003\"0\n\nI18nDouble\022\n\n\002it\030\001 \001(\001\022\n\n\002en\030\002 \001(\001" +
-      "\022\n\n\002de\030\003 \001(\001"
+      "a.data.message.I18nString\022Q\n\004info\030\r \001(\0132" +
+      "C.eu.trentorise.smartcampus.service.open" +
+      "data.data.message.I18nString\022\020\n\010objectId" +
+      "\030\016 \002(\t\"=\n\nConfigLink\022\014\n\004name\030\001 \002(\t\022\013\n\003ur" +
+      "i\030\002 \002(\t\022\024\n\014dateModified\030\003 \002(\003\">\n\nConfigD" +
+      "ata\022\014\n\004name\030\001 \002(\t\022\014\n\004data\030\002 \002(\t\022\024\n\014dateM" +
+      "odified\030\003 \002(\003\"0\n\nI18nString\022\n\n\002it\030\001 \001(\t\022",
+      "\n\n\002en\030\002 \001(\t\022\n\n\002de\030\003 \001(\t\".\n\010I18nLong\022\n\n\002i" +
+      "t\030\001 \001(\003\022\n\n\002en\030\002 \001(\003\022\n\n\002de\030\003 \001(\003\"0\n\nI18nD" +
+      "ouble\022\n\n\002it\030\001 \001(\001\022\n\n\002en\030\002 \001(\001\022\n\n\002de\030\003 \001(" +
+      "\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -18693,7 +19091,7 @@ public final class Opendata {
           internal_static_eu_trentorise_smartcampus_service_opendata_data_message_I18nTesto_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_eu_trentorise_smartcampus_service_opendata_data_message_I18nTesto_descriptor,
-              new java.lang.String[] { "Id", "Title", "Subtitle", "Description", "Classification", "Address", "Url", "Image", "LastModified", "Info", "ObjectId", },
+              new java.lang.String[] { "Id", "Title", "Subtitle", "Description", "Classification", "Address", "Url", "Image", "LastModified", "Info", "ObjectId", "Phone", "Email", "Lat", "Lon", "Fax", },
               eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nTesto.class,
               eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nTesto.Builder.class);
           internal_static_eu_trentorise_smartcampus_service_opendata_data_message_I18nItinerario_descriptor =

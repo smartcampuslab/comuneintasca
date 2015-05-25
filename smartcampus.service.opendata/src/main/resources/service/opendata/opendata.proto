@@ -132,6 +132,11 @@ message I18nTesto {
  optional int64 lastModified = 9;
  optional I18nString info = 10;   
  required string objectId = 11;
+ optional string phone = 12;
+ optional string email = 13;  
+ optional double lat = 14;
+ optional double lon = 15;
+ optional string fax = 16;
 }
 
 message I18nItinerario {

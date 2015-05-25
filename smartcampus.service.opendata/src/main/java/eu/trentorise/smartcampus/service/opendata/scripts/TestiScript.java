@@ -62,6 +62,28 @@ public class TestiScript extends OpenContentScript {
 			builder.setInfo(info);
 		}			
 
+		Object gps = getRecValue(getMap(i18n,DEFAULT_LANGUAGE), FIELDS, "gps", STRING_VALUE);
+		if (gps != null && gps instanceof String) {
+			Double latlon[] = extractGPS((String)gps);
+			if (latlon != null) {
+				builder.setLat(latlon[0]);
+				builder.setLon(latlon[1]);
+			}
+		}
+		
+		Object phone1 = getRecValue(getMap(i18n,DEFAULT_LANGUAGE), FIELDS, "telefono", STRING_VALUE);
+		if (phone1 != null && phone1 instanceof String) {
+			builder.setPhone((String)phone1);
+		}
+		Object fax = getRecValue(getMap(i18n,DEFAULT_LANGUAGE), FIELDS, "fax", STRING_VALUE);
+		if (fax != null && fax instanceof String) {
+			builder.setFax((String)fax);
+		}		
+		Object email = getRecValue(getMap(i18n,DEFAULT_LANGUAGE), FIELDS, "email", STRING_VALUE);
+		if (email != null && email instanceof String) {
+			builder.setEmail((String)email);
+		}		
+
 		return builder.build();
 	}
 	

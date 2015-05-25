@@ -368,6 +368,12 @@ public class DataExtractor {
 			no.setImage(getImageURL(bt.getImage(), entry));
 			no.setLastModified(bt.getLastModified());
 
+			Map<String, String> contacts = new HashMap<String, String>();
+			contacts.put("email", bt.getEmail());
+			contacts.put("phone", bt.getPhone());
+			contacts.put("fax", bt.getFax());
+			no.setContacts(contacts);
+
 			no.setSubtitle(toMap(bt.getSubtitle()));
 			no.setTitle(toMap(bt.getTitle()));
 			no.setInfo(toMap(bt.getInfo()));

@@ -479,7 +479,8 @@ angular.module('ilcomuneintasca.controllers.common', [])
       load: function (cache) {
         if (cache) {
           //console.log('tboptions cache!');
-          $scope.results = cache;
+          $scope.resultsAll = cache;
+          $scope.results = angular.copy(cache);
         } else {
           if (typeof this.doFilter == 'function') {
             //console.log('tboptions doFilter!');

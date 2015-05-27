@@ -157,6 +157,7 @@ angular.module('ilcomuneintasca.services.list', [])
         if (typeof conf.filterOptions.then=='function') {
           conf.filterOptions.then(function(options){
             $scope.filterOptions = conf.filterOptions = options;
+            $scope.filterDef = $scope.filter ? $scope.filterOptions[$scope.filter] : null;
             //console.log('conf.filterOptions: '+JSON.stringify(conf.filterOptions));
           });
         } else {

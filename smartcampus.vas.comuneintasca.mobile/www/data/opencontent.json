@@ -1,71 +1,27 @@
 {
   "id": null,
-  "updateTime": 1417726326182,
-  "version": 8040,
+  "updateTime": 1432635135464,
+  "version": 81030,
   "user": null,
   "appId": "TrentoInTasca",
-  "lastModified": 1417445390000,
+  "lastModified": 0,
   "localId": null,
   "highlights": [
     {
-      "id": "profile_cit_75aceda860befbcb1fe8bd1a0f8be85c",
+      "id": "f1b1d0f9485fcdda1b6622d1b1ae1a9c",
       "name": {
-        "it": "Natale a Trento",
-        "en": "Christmas in Trento",
-        "de": "Weihnachtsstadt in Trient"
+        "it": "Festival dell'Economia 2015",
+        "en": "Economics Festival 2015",
+        "de": "Wirtschaftsfestival 2015"
       },
       "description": null,
       "image": {
-        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/natale-a-trento/8554658-8-ita-IT/Natale-a-Trento.jpg",
-        "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/natale-a-trento/8554663-9-eng-GB/Christmas-in-Trento.jpg",
-        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/natale-a-trento/8554668-10-ger-DE/Weihnachtsstadt-in-Trient.jpg"
+        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/festival-dell-economia-2015/8714288-14-ita-IT/Festival-dell-Economia-2015.jpg",
+        "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/festival-dell-economia-2015/8726356-16-eng-GB/Economics-Festival-2015.jpg",
+        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/festival-dell-economia-2015/8727077-17-ger-DE/Wirtschaftsfestival-2015.jpg"
       },
       "objectIds": [
-        "event.major.11"
-      ],
-      "items": null,
-      "query": null,
-      "ref": null,
-      "type": "mainevent",
-      "app": null
-    },
-    {
-      "id": "profile_cit_405be9ac05df567b4c87b4d31119e52e",
-      "name": {
-        "it": "Muse",
-        "en": "Muse",
-        "de": "Muse"
-      },
-      "description": null,
-      "image": {
-        "it": "http://www.comune.trento.it/var/comunetn/storage/images-versioned/8554673/1-ita-IT/Muse1.jpg",
-        "en": "http://www.comune.trento.it/var/comunetn/storage/images-versioned/8554678/1-eng-GB/Muse1.jpg",
-        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/muse/8554683-2-ger-DE/Muse.jpg"
-      },
-      "objectIds": [
-        "cultura.72"
-      ],
-      "items": null,
-      "query": null,
-      "ref": null,
-      "type": "poi",
-      "app": null
-    },
-    {
-      "id": "d347c18f3a931ae6a512b7d80591afd8",
-      "name": {
-        "it": "Natale e sport sul Monte Bondone",
-        "en": "Christmas and sports in Monte Bondone",
-        "de": "Monte Bondone für Weihnachten und Sport"
-      },
-      "description": null,
-      "image": {
-        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/natale-e-sport-sul-monte-bondone/8622728-12-ita-IT/Natale-e-sport-sul-Monte-Bondone.jpg",
-        "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/natale-e-sport-sul-monte-bondone/8622733-10-eng-GB/Christmas-and-sports-in-Monte-Bondone.jpg",
-        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/natale-e-sport-sul-monte-bondone/8622738-11-ger-DE/Monte-Bondone-fuer-Weihnachten-und-Sport.jpg"
-      },
-      "objectIds": [
-        "64e6e0f73d67f3629c4468c3eb52c1f6"
+        "event.major.3"
       ],
       "items": null,
       "query": null,
@@ -96,25 +52,69 @@
       "app": null
     },
     {
-      "id": "f1b1d0f9485fcdda1b6622d1b1ae1a9c",
+      "id": "d347c18f3a931ae6a512b7d80591afd8",
       "name": {
-        "it": "Condividete le vostre Foto del Natale",
-        "en": "Share your pictures about Christmas",
-        "de": "Teilen Sie Ihre Fotos von Weihnachten"
+        "it": "Come arrivare a Trento",
+        "en": "How to arrive to Trento",
+        "de": "Nach Trient kommen"
       },
       "description": null,
       "image": {
-        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/condividete-le-vostre-foto-del-natale/8714288-1-ita-IT/Condividete-le-vostre-Foto-del-Natale.jpg",
-        "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/condividete-le-vostre-foto-del-natale/8726356-3-eng-GB/Share-your-pictures-about-Christmas.jpg",
-        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/condividete-le-vostre-foto-del-natale/8727077-4-ger-DE/Teilen-Sie-Ihre-Fotos-von-Weihnachten.jpg"
+        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/come-arrivare-a-trento/8622728-33-ita-IT/Come-arrivare-a-Trento.jpg",
+        "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/come-arrivare-a-trento/8622733-34-eng-GB/How-to-arrive-to-Trento.jpg",
+        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/come-arrivare-a-trento/8622738-35-ger-DE/Nach-Trient-kommen.jpg"
       },
       "objectIds": [
-        "ced5c1a5366707f28cfe7468f18ae96b"
+        "4b8834e1c27b237c07faebc96d8dab37"
       ],
       "items": null,
       "query": null,
       "ref": null,
-      "type": "mainevent",
+      "type": "content",
+      "app": null
+    },
+    {
+      "id": "profile_cit_405be9ac05df567b4c87b4d31119e52e",
+      "name": {
+        "it": "Muse",
+        "en": "Muse",
+        "de": "Muse"
+      },
+      "description": null,
+      "image": {
+        "it": "http://www.comune.trento.it/var/comunetn/storage/images-versioned/8554673/1-ita-IT/Muse1.jpg",
+        "en": "http://www.comune.trento.it/var/comunetn/storage/images-versioned/8554678/1-eng-GB/Muse1.jpg",
+        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/muse/8554683-2-ger-DE/Muse.jpg"
+      },
+      "objectIds": [
+        "cultura.72"
+      ],
+      "items": null,
+      "query": null,
+      "ref": null,
+      "type": "poi",
+      "app": null
+    },
+    {
+      "id": "profile_cit_75aceda860befbcb1fe8bd1a0f8be85c",
+      "name": {
+        "it": "Castello del Buonconsiglio",
+        "en": "Buonconsiglio Castle",
+        "de": "Buonconsiglio Schloss"
+      },
+      "description": null,
+      "image": {
+        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/castello-del-buonconsiglio/8554658-26-ita-IT/Castello-del-Buonconsiglio.jpg",
+        "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/castello-del-buonconsiglio/8554663-27-eng-GB/Buonconsiglio-Castle.jpg",
+        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/castello-del-buonconsiglio/8554668-28-ger-DE/Buonconsiglio-Schloss.jpg"
+      },
+      "objectIds": [
+        "cultura.27"
+      ],
+      "items": null,
+      "query": null,
+      "ref": null,
+      "type": "poi",
       "app": null
     }
   ],
@@ -140,7 +140,7 @@
       "name": {
         "it": "VISITARE",
         "en": "HIGHLIGHTS",
-        "de": "WAS SU  BESICHTIGEN"
+        "de": "WAS ZU  BESICHTIGEN"
       },
       "description": null,
       "image": null,
@@ -221,7 +221,7 @@
       "id": "profile_cit_csvimport_Info_utili_item_comuneintasca",
       "name": {
         "it": "INFO UTILI",
-        "en": "USEFUL  INFORMATIONS",
+        "en": "USEFUL  INFORMATION",
         "de": "WEITERE INFORMATIONEN"
       },
       "description": null,
@@ -368,7 +368,7 @@
       "name": {
         "it": "VISITARE",
         "en": "HIGHLIGHTS",
-        "de": "WAS SU  BESICHTIGEN"
+        "de": "WAS ZU  BESICHTIGEN"
       },
       "description": null,
       "image": null,
@@ -443,7 +443,7 @@
           "name": {
             "it": "Aree archeologiche",
             "en": "Archaeological Areas",
-            "de": "Archäologische Areas"
+            "de": "Archäologische Stätten"
           },
           "description": null,
           "image": null,
@@ -593,28 +593,6 @@
           "app": null
         },
         {
-          "id": "profile_cit_csvimport_Mostre_item_comuneintasca",
-          "name": {
-            "it": "NATALE A TRENTO",
-            "en": "CHRISTMAS IN TRENTO",
-            "de": "WEIHNACHTSSTADT IN TRIENT"
-          },
-          "description": null,
-          "image": {
-            "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/menu-laterale/eventi/natale-a-trento/8555006-3-ita-IT/NATALE-A-TRENTO.jpg",
-            "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/menu-laterale/eventi/natale-a-trento/8555011-4-eng-GB/CHRISTMAS-IN-TRENTO.jpg",
-            "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/menu-laterale/eventi/natale-a-trento/8555016-5-ger-DE/WEIHNACHTSSTADT-IN-TRIENT.jpg"
-          },
-          "objectIds": [
-            "event.major.11"
-          ],
-          "items": null,
-          "query": null,
-          "ref": null,
-          "type": "mainevent",
-          "app": null
-        },
-        {
           "id": "profile_cit_csvimport_Iniziative_varie_item_comuneintasca",
           "name": {
             "it": "Mostre",
@@ -715,26 +693,6 @@
           "app": null
         },
         {
-          "id": "profile_cit_csvimport_Corsi_e_laboratori_item_comuneintasca",
-          "name": {
-            "it": "Corsi e laboratori",
-            "en": "Courses and workshops",
-            "de": "Kurse und Workshops"
-          },
-          "description": null,
-          "image": null,
-          "objectIds": null,
-          "items": null,
-          "query": {
-            "type": "event",
-            "classifications": null,
-            "classification": "Corsi e laboratori"
-          },
-          "ref": null,
-          "type": null,
-          "app": null
-        },
-        {
           "id": "24edf0c174b14eb2e4cc51b7223bed6e",
           "name": {
             "it": "Manifestazioni",
@@ -821,7 +779,7 @@
       "id": "profile_cit_csvimport_Info_utili_item_comuneintasca",
       "name": {
         "it": "INFO UTILI",
-        "en": "USEFUL  INFORMATIONS",
+        "en": "USEFUL  INFORMATION",
         "de": "WEITERE INFORMATIONEN"
       },
       "description": null,
@@ -853,7 +811,7 @@
           "name": {
             "it": "Contatti",
             "en": "Contacts",
-            "de": "Kontakten"
+            "de": "Kontakte"
           },
           "description": null,
           "image": null,
@@ -904,6 +862,26 @@
           "query": null,
           "ref": null,
           "type": "content",
+          "app": null
+        },
+        {
+          "id": "805c1f12f90bf1607f20b7f8981f31b3",
+          "name": {
+            "it": "Parcheggi",
+            "en": "Parking",
+            "de": "Parkplatz"
+          },
+          "description": null,
+          "image": null,
+          "objectIds": null,
+          "items": null,
+          "query": {
+            "type": "poi",
+            "classifications": null,
+            "classification": "Parcheggio"
+          },
+          "ref": null,
+          "type": null,
           "app": null
         }
       ],

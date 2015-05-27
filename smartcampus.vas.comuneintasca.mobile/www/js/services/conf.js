@@ -1,7 +1,7 @@
 angular.module('ilcomuneintasca.services.conf', [])
 
 .factory('Config', function ($q, $http, $window, $filter, $rootScope) {
-  var DEVELOPMENT=true;
+  var DEVELOPMENT=false;
 
   // when the following is TRUE, we show special buttons
   // (actually just the db RESET button in settings)
@@ -10,7 +10,7 @@ angular.module('ilcomuneintasca.services.conf', [])
   // $rootScope.DEV=true;
 
   var SYNC_WEBAPP='comuneintasca-multi';
-  var SCHEMA_VERSION=112;
+  var SCHEMA_VERSION=113;
   var HOME_HIGHLIGHTS_MAX=6;
   var SYNC_HOST="tn";
   if (DEVELOPMENT) SYNC_HOST="dev";
@@ -32,7 +32,7 @@ angular.module('ilcomuneintasca.services.conf', [])
 //    'ad94673caa967e022fd137627094d238':'visitare'
 //  };
   // TRENTO
-  var APP_VERSION='3.1.1RC1';
+  var APP_VERSION='3.1.1';
   var APP_BUILD='';
   var WEBAPP_MULTI="TrentoInTasca";
   var cityName = { 'it':'Trento', 'en':'Trento', 'de':'Trento' };

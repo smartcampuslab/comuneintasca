@@ -8,5 +8,25 @@
     "gulp-concat": "^2.2.0",
     "gulp-minify-css": "^0.3.0",
     "gulp-rename": "^1.2.0"
-  }
+  },
+  "cordovaPlugins": [
+    "org.apache.cordova.statusbar",
+    "org.apache.cordova.network-information",
+    "org.apache.cordova.device",
+    "org.apache.cordova.geolocation",
+    "org.apache.cordova.console",
+    "org.apache.cordova.splashscreen",
+    "org.apache.cordova.file-transfer",
+    "org.apache.cordova.inappbrowser",
+    "org.apache.cordova.file",
+    "https://github.com/enricomarchesin/cordova-startapp.git",
+    "https://github.com/smartcampuslab/cordova-file-metadata.git",
+    "https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git",
+    "https://github.com/driftyco/ionic-plugins-keyboard.git",
+    "https://github.com/brodysoft/Cordova-SQLitePlugin.git",
+    "de.appplant.cordova.plugin.email-composer"
+  ],
+  "cordovaPlatforms": [
+    "android"
+  ]
 }

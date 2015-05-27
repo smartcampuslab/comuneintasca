@@ -4,7 +4,7 @@ DATA_WEBAPP_MULTI="TrentoInTasca"
 
 grep "var DEVELOPMENT=true;" ../js/services/conf.js &>/dev/null
 if [ $? == 0 ]; then
-  DATA_HOST_NAME="vas-dev"
+  DATA_HOST_NAME="dev"
 else
   DATA_HOST_NAME="tn"
 fi

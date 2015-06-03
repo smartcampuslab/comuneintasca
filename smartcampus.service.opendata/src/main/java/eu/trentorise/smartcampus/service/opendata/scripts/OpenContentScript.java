@@ -15,6 +15,7 @@
  ******************************************************************************/
 package eu.trentorise.smartcampus.service.opendata.scripts;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -35,6 +36,7 @@ import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nStri
 
 public class OpenContentScript {
 
+	protected static final String METADATA = "metadata";
 	protected static final String OBJECT_NAME = "objectName";
 	protected static final String VALUE = "value";
 	protected static final String STRING_VALUE = "string_value";
@@ -196,10 +198,15 @@ public class OpenContentScript {
 			} else if (m.get(keys[i]) instanceof List) {
 				List l = (List) m.get(keys[i]);
 				List<Object> res2 = new ArrayList<Object>();
+				Map<String, String> conv = getReferencedObject(l);
 				for (Object o : l) {
 					Object o2 = ((Map) o).get(keys[keys.length - 1]);
 					if (o2 != null) {
-						res2.add(o2);
+						if (conv.containsKey(o2)) {
+							res2.add(conv.get(o2));
+						} else {
+							res2.add(o2);
+						}
 					}
 				}
 				if (!res2.isEmpty()) {
@@ -213,6 +220,21 @@ public class OpenContentScript {
 			}
 		}
 		return res;
+	}
+	
+	protected Map<String, String> getReferencedObject(List l) {
+		Map<String, String> res = new TreeMap<String, String>();
+		try {
+		for (Object o: l) {
+			String objName = (String)((Map)o).get(OBJECT_NAME);
+			String link = (String)((Map)o).get("link");
+			Map<String, Object> map = mapper.readValue(new URL(link), Map.class);
+			String name = (String)getRecValue(map, METADATA, OBJECT_NAME);
+			res.put(objName, name);
+		}
+		} catch (Exception e) {
+		}
+		return res;		
 	}
 
 	protected Double[] extractGPS(String gps) {

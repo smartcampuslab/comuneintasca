@@ -213,9 +213,14 @@ public class OpenContentScript {
 					res = res2;
 				}
 			} else if (res == null) {
-				res = m.get(keys[i]);
-				if (res instanceof Boolean) {
-					res = null;
+				String r = getReferencedObject(m);
+				if (r != null) {
+					res = r;
+				} else {
+					res = m.get(keys[i]);
+					if (res instanceof Boolean) {
+						res = null;
+					}					
 				}
 			}
 		}
@@ -237,6 +242,17 @@ public class OpenContentScript {
 		return res;		
 	}
 
+	protected String getReferencedObject(Map m) {
+		String name = null;
+		try {
+		String link = (String)((Map)m).get("link");
+		Map<String, Object> map = mapper.readValue(new URL(link), Map.class);
+		name = (String)getRecValue(map, METADATA, OBJECT_NAME);
+		} catch (Exception e) {
+		}
+		return name;
+	}
+	
 	protected Double[] extractGPS(String gps) {
 		Double latlon[] = new Double[2];
 		String coords[] = gps.replace("#", "").split("\\|");

@@ -15,6 +15,7 @@
  ******************************************************************************/
 package it.smartcommunitylab.comuneintasca.core.model;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +28,7 @@ public class MenuItem {
 	private static final ObjectMapper canonicalObjectMapper = new ObjectMapper();
 	static {
 		canonicalObjectMapper.disable(SerializationConfig.Feature.FAIL_ON_EMPTY_BEANS);
-		canonicalObjectMapper.disable(SerializationConfig.Feature.WRITE_EMPTY_JSON_ARRAYS);
+		canonicalObjectMapper.enable(SerializationConfig.Feature.WRITE_EMPTY_JSON_ARRAYS);
 		canonicalObjectMapper.disable(SerializationConfig.Feature.WRITE_NULL_PROPERTIES);
 		canonicalObjectMapper.disable(SerializationConfig.Feature.WRITE_NULL_MAP_VALUES);
 	}
@@ -68,6 +69,7 @@ public class MenuItem {
 		this.image = image;
 	}
 	public List<String> getObjectIds() {
+		if (objectIds == null) objectIds = Collections.emptyList();
 		return objectIds;
 	}
 	public void setObjectIds(List<String> objectIds) {

@@ -166,7 +166,9 @@ angular.module('ilcomuneintasca', [
     } else {
       win_target = '_blank';
     }
-    window.open(url, win_target);
+    // window.open(url, win_target);
+    cordova.InAppBrowser.open (url, win_target,'location=yes');
+    
   }
   $rootScope.email = function (toAddr) {
 // need to update social sharing plugin to use this syntax
@@ -190,11 +192,11 @@ angular.module('ilcomuneintasca', [
     var emailPlugin=null;
     if (ionic.Platform.isWebView()) {
       //console.log('using native email plugin... ('+toAddr+')');
-      if (window.plugin.email) emailPlugin=window.plugin.email;
+      if (cordova.plugins.email) emailPlugin=cordova.plugins.email;
       else if (cordova.plugins.email) emailPlugin=cordova.plugins.email;
     }
     if (emailPlugin) {
-      window.plugin.email.open({
+      cordova.plugins.email.open({
         'to': [toAddr]
       } 
 /* VALID ONLY FOR DEV VERSION
@@ -212,7 +214,9 @@ angular.module('ilcomuneintasca', [
   $rootScope.bringmethere = function (loc) {
     if (device.platform == "Android") {
       setTimeout(function(){
-        window.open("http://maps.google.com/maps?daddr=" + loc[0] + "," + loc[1], "_system");
+        // window.open("http://maps.google.com/maps?daddr=" + loc[0] + "," + loc[1], "_system");
+        cordova.InAppBrowser.open("http://maps.google.com/maps?daddr=" + loc[0] + "," + loc[1], "_system",'location=yes');
+        
       },10);
     } else if (device.platform == "iOS") {
       var url = "maps:daddr=" + loc[0] + "," + loc[1];

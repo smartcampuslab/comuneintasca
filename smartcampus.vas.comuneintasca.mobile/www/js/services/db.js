@@ -170,7 +170,8 @@ angular.module('ilcomuneintasca.services.db', [])
       dbObj = window.sqlitePlugin.openDatabase({
         name: dbName,
         bgType: 1,
-        skipBackup: true
+        skipBackup: true,
+        location: 'default'
       });
       dbopenDeferred.resolve(dbObj);
     }, false);

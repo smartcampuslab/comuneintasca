@@ -1,5 +1,22 @@
 package it.smartcommunitylab.comuneintasca.connector.processor;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+
+import eu.trentorise.smartcampus.presentation.common.exception.DataException;
 import it.smartcommunitylab.comuneintasca.connector.App;
 import it.smartcommunitylab.comuneintasca.connector.ConnectorStorage;
 import it.smartcommunitylab.comuneintasca.core.model.AppObject;
@@ -16,24 +33,6 @@ import it.smartcommunitylab.comuneintasca.core.model.POIObject;
 import it.smartcommunitylab.comuneintasca.core.model.RestaurantObject;
 import it.smartcommunitylab.comuneintasca.core.model.TerritoryServiceObject;
 import it.smartcommunitylab.comuneintasca.core.model.TypeConstants;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import eu.trentorise.smartcampus.presentation.common.exception.DataException;
 
 /**
  * Process and extract data from the configuration object

@@ -1,13 +1,10 @@
 package it.smartcommunitylab.comuneintasca.core.controller;
 
-import it.smartcommunitylab.comuneintasca.core.model.AppObject;
-import it.smartcommunitylab.comuneintasca.core.model.TypeConstants;
-import it.smartcommunitylab.comuneintasca.core.service.DataService;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -18,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import eu.trentorise.smartcampus.network.JsonUtils;
 import eu.trentorise.smartcampus.presentation.common.exception.DataException;
+import it.smartcommunitylab.comuneintasca.core.model.AppObject;
+import it.smartcommunitylab.comuneintasca.core.model.TypeConstants;
+import it.smartcommunitylab.comuneintasca.core.service.DataService;
 
 @Controller
 @RequestMapping("/dataapi")
@@ -28,6 +27,8 @@ public class DataController {
 
 	@Autowired
 	private DataService dataService;
+	
+	private ObjectMapper mapper = new ObjectMapper();
 	
 	@RequestMapping(value="/{app}/ping",method=RequestMethod.GET)
 	public @ResponseBody String ping(@PathVariable String app) {
@@ -80,7 +81,7 @@ public class DataController {
 	}
 
 	private <T extends AppObject> T convertObject(Map<String, Object> data, Class<T> cls) {
-		return JsonUtils.convert(data, cls);
+		return mapper.convertValue(data, cls);
 	}
 
 	@SuppressWarnings("unchecked")

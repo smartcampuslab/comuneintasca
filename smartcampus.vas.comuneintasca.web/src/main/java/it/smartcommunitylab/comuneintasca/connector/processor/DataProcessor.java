@@ -1,27 +1,5 @@
 package it.smartcommunitylab.comuneintasca.connector.processor;
 
-import it.sayservice.platform.client.ServiceBusListener;
-import it.smartcommunitylab.comuneintasca.connector.App;
-import it.smartcommunitylab.comuneintasca.connector.AppManager;
-import it.smartcommunitylab.comuneintasca.connector.ConnectorStorage;
-import it.smartcommunitylab.comuneintasca.connector.SourceEntry;
-import it.smartcommunitylab.comuneintasca.connector.Subscriber;
-import it.smartcommunitylab.comuneintasca.connector.processor.ConfigProcessor.ObjectFilters;
-import it.smartcommunitylab.comuneintasca.connector.processor.DataExtractor.Extractor;
-import it.smartcommunitylab.comuneintasca.core.model.AppObject;
-import it.smartcommunitylab.comuneintasca.core.model.BaseCITObject;
-import it.smartcommunitylab.comuneintasca.core.model.ContentObject;
-import it.smartcommunitylab.comuneintasca.core.model.DynamicConfigObject;
-import it.smartcommunitylab.comuneintasca.core.model.EventObject;
-import it.smartcommunitylab.comuneintasca.core.model.HotelObject;
-import it.smartcommunitylab.comuneintasca.core.model.ItineraryObject;
-import it.smartcommunitylab.comuneintasca.core.model.MainEventObject;
-import it.smartcommunitylab.comuneintasca.core.model.POIObject;
-import it.smartcommunitylab.comuneintasca.core.model.RestaurantObject;
-import it.smartcommunitylab.comuneintasca.core.model.TerritoryServiceObject;
-import it.smartcommunitylab.comuneintasca.core.model.TypeConstants;
-import it.smartcommunitylab.comuneintasca.core.service.DataService;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -39,6 +17,33 @@ import com.google.protobuf.ByteString;
 
 import eu.trentorise.smartcampus.presentation.common.exception.DataException;
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.ConfigData;
+import it.smartcommunitylab.comuneintasca.connector.App;
+import it.smartcommunitylab.comuneintasca.connector.AppManager;
+import it.smartcommunitylab.comuneintasca.connector.ConnectorStorage;
+import it.smartcommunitylab.comuneintasca.connector.SourceEntry;
+import it.smartcommunitylab.comuneintasca.connector.flows.ConfigFlow;
+import it.smartcommunitylab.comuneintasca.connector.flows.CulturaFlow;
+import it.smartcommunitylab.comuneintasca.connector.flows.EventsFlow;
+import it.smartcommunitylab.comuneintasca.connector.flows.HotelsFlow;
+import it.smartcommunitylab.comuneintasca.connector.flows.MainEventsFlow;
+import it.smartcommunitylab.comuneintasca.connector.flows.RestaurantsFlow;
+import it.smartcommunitylab.comuneintasca.connector.flows.TextsFlow;
+import it.smartcommunitylab.comuneintasca.connector.processor.ConfigProcessor.ObjectFilters;
+import it.smartcommunitylab.comuneintasca.connector.processor.DataExtractor.Extractor;
+import it.smartcommunitylab.comuneintasca.connector.scripts.ItineraryScript;
+import it.smartcommunitylab.comuneintasca.core.model.AppObject;
+import it.smartcommunitylab.comuneintasca.core.model.BaseCITObject;
+import it.smartcommunitylab.comuneintasca.core.model.ContentObject;
+import it.smartcommunitylab.comuneintasca.core.model.DynamicConfigObject;
+import it.smartcommunitylab.comuneintasca.core.model.EventObject;
+import it.smartcommunitylab.comuneintasca.core.model.HotelObject;
+import it.smartcommunitylab.comuneintasca.core.model.ItineraryObject;
+import it.smartcommunitylab.comuneintasca.core.model.MainEventObject;
+import it.smartcommunitylab.comuneintasca.core.model.POIObject;
+import it.smartcommunitylab.comuneintasca.core.model.RestaurantObject;
+import it.smartcommunitylab.comuneintasca.core.model.TerritoryServiceObject;
+import it.smartcommunitylab.comuneintasca.core.model.TypeConstants;
+import it.smartcommunitylab.comuneintasca.core.service.DataService;
 
 /**
  * Process data updates
@@ -46,7 +51,7 @@ import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.ConfigDa
  *
  */
 @Component("dataProcessor")
-public class DataProcessor implements ServiceBusListener {
+public class DataProcessor  {
 
 	@Autowired
 	private AppManager appManager;
@@ -64,47 +69,43 @@ public class DataProcessor implements ServiceBusListener {
 	
 	private static Logger logger = LoggerFactory.getLogger(DataProcessor.class);
 
-	@Override
-	public void onServiceEvents(String serviceId, String methodName, String subscriptionId, List<ByteString> data) {
-		logger.debug("Processing update for {}/{} with subscriptionId {}",serviceId, methodName, subscriptionId);
-		App app = appManager.getApp(serviceId, methodName, subscriptionId);
+	public void onServiceEvents(String appId, String serviceId, String className, List<ByteString> data) {
+		logger.debug("Processing update for {}/{}",serviceId, className);
+		App app = appManager.getApp(appId, serviceId, className);
 		if (app == null) return;
 		logger.debug("-- found app {}",app.getId());
-		SourceEntry entry = app.findEntry(serviceId, methodName, subscriptionId);
+		SourceEntry entry = app.findEntry(serviceId, className);
 		logger.debug("-- found source {}", entry);
 		try {
-			if (Subscriber.SERVICE_OD.equals(serviceId)) {
-				if (Subscriber.METHOD_CONFIG.equals(methodName)) {
+				if (ConfigFlow.class.getName().equals(className)) {
 					updateConfig(data, app, entry);
 				}
-				if (Subscriber.METHOD_EVENTS.equals(methodName)) {
+				if (EventsFlow.class.getName().equals(className)) {
 					updateEvents(data, app, entry);
 				}
-				if (Subscriber.METHOD_RESTAURANTS.equals(methodName)) {
+				if (RestaurantsFlow.class.getName().equals(className)) {
 					updateRestaurants(data, app, entry);
 				}
-				if (Subscriber.METHOD_HOTELS.equals(methodName)) {
+				if (HotelsFlow.class.getName().equals(className)) {
 					updateHotels(data, app, entry);
 				}
-				if (Subscriber.METHOD_CULTURA.equals(methodName)) {
+				if (CulturaFlow.class.getName().equals(className)) {
 					updateCultura(data, app, entry);
 				}
-				if (Subscriber.METHOD_TERRITORY_SERVICE.equals(methodName)) {
-					updateTerritoryServices(data, app, entry);
-				}
-				if (Subscriber.METHOD_MAINEVENTS.equals(methodName)) {
+//				if (Subscriber.METHOD_TERRITORY_SERVICE.equals(className)) {
+//					updateTerritoryServices(data, app, entry);
+//				}
+				if (MainEventsFlow.class.getName().equals(className)) {
 					updateMainEvents(data, app, entry);
 				}
-				if (Subscriber.METHOD_TESTI.equals(methodName)) {
+				if (TextsFlow.class.getName().equals(className)) {
 					updateTesti(data, app, entry);
 				}
-				if (Subscriber.METHOD_ITINERARI.equals(methodName)) {
+				if (ItineraryScript.class.getName().equals(className)) {
 					updateItinerari(data, app, entry);
 				}
-
-			}
 		} catch (Exception e) {
-			logger.error("Error updating " + methodName);
+			logger.error("Error updating " + className);
 			e.printStackTrace();
 		}
 	}
@@ -181,7 +182,7 @@ public class DataProcessor implements ServiceBusListener {
 					dataService.unpublishObject(draftObject, app.getId());
 				} else if (applies) {
 					dataService.upsertObject(o, app.getId());
-					SourceEntry entry = app.findEntry(o.getClass().getName(), ((BaseCITObject) o).getClassifier());
+					SourceEntry entry = app.findEntryByType(o.getClass().getName(), ((BaseCITObject) o).getClassifier());
 					if (entry.isAutoPublish()) {
 						dataService.publishObject(o, app.getId()); 
 					}

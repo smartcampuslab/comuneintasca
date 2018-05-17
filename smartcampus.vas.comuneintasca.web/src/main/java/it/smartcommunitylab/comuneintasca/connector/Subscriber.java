@@ -18,8 +18,6 @@ package it.smartcommunitylab.comuneintasca.connector;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -36,7 +34,6 @@ public class Subscriber {
 	private App app;
 	private DataProcessor processor;
 	
-	@PostConstruct
 	public void subscribe(App app, DataProcessor processor) {
 		logger.info("SUBSCRIBING app "+app.getId());
 		this.app = app;

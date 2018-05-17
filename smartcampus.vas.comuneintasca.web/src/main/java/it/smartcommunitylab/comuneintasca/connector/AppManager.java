@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
@@ -21,6 +22,7 @@ public class AppManager {
 	private DataProcessor processor;
 	
 	private Map<String, App> appMap = new HashMap<String, App>();
+	private Map<String, Subscriber> subscriberMap = new HashMap<String, Subscriber>();
 	
 	public void initialize(InputStream appSource) throws IOException {
 		Yaml yaml = new Yaml(new Constructor(AppSetup.class));
@@ -33,6 +35,7 @@ public class AppManager {
 			subscriber.subscribe(app, processor);
 			appRepository.save(app);
 			appMap.put(app.getId(), app);
+			subscriberMap.put(app.getId(), subscriber);
 		}
 	}
 
@@ -60,5 +63,11 @@ public class AppManager {
 			}
 		}
 		return null;
+	}
+	@Scheduled(fixedDelay=1000*60*60*4)
+	public void schedule() {
+		for (Subscriber s: subscriberMap.values()) {
+			s.process();
+		}
 	}
 }

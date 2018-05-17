@@ -27,6 +27,7 @@ import it.smartcommunitylab.comuneintasca.connector.flows.EventsFlow;
 import it.smartcommunitylab.comuneintasca.connector.flows.HotelsFlow;
 import it.smartcommunitylab.comuneintasca.connector.flows.MainEventsFlow;
 import it.smartcommunitylab.comuneintasca.connector.flows.RestaurantsFlow;
+import it.smartcommunitylab.comuneintasca.connector.flows.TerritoryServicesFlow;
 import it.smartcommunitylab.comuneintasca.connector.flows.TextsFlow;
 import it.smartcommunitylab.comuneintasca.connector.processor.ConfigProcessor.ObjectFilters;
 import it.smartcommunitylab.comuneintasca.connector.processor.DataExtractor.Extractor;
@@ -92,9 +93,9 @@ public class DataProcessor  {
 				if (CulturaFlow.class.getName().equals(className)) {
 					updateCultura(data, app, entry);
 				}
-//				if (Subscriber.METHOD_TERRITORY_SERVICE.equals(className)) {
-//					updateTerritoryServices(data, app, entry);
-//				}
+				if (TerritoryServicesFlow.class.getName().equals(className)) {
+					updateTerritoryServices(data, app, entry);
+				}
 				if (MainEventsFlow.class.getName().equals(className)) {
 					updateMainEvents(data, app, entry);
 				}

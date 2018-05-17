@@ -61,62 +61,62 @@ apps:
         - type: it.smartcommunitylab.comuneintasca.core.model.EventObject
           url: http://ricadi.opencontent.it/api/opendata/v1/content/class/event/offset/0/limit/1000
           serviceId: smartcampus.service.opendata
-          methodName: GetEventiParam
+          methodName: it.smartcommunitylab.comuneintasca.connector.flows.EventsFlow
           imagePath: http://ricadi.opencontent.it/
           autoPublish: true
           
         - type: it.smartcommunitylab.comuneintasca.core.model.DynamicConfigObject
           url: http://ricadi.opencontent.it/comuneintasca/data
           serviceId: smartcampus.service.opendata
-          methodName: GetConfig
+          methodName: it.smartcommunitylab.comuneintasca.connector.flows.ConfigFlow
           imagePath: http://ricadi.opencontent.it/
           
         - type: it.smartcommunitylab.comuneintasca.core.model.RestaurantObject
           url: http://ricadi.opencontent.it/api/opendata/v1/content/class/ristorante/offset/0/limit/1000
           serviceId: smartcampus.service.opendata
-          methodName: GetRestaurants
+          methodName: it.smartcommunitylab.comuneintasca.connector.flows.RestaurantsFlow
           imagePath: http://ricadi.opencontent.it/
           autoPublish: true
           
         - type: it.smartcommunitylab.comuneintasca.core.model.HotelObject
           url: http://ricadi.opencontent.it/api/opendata/v1/content/class/accomodation/offset/0/limit/1000
           serviceId: smartcampus.service.opendata
-          methodName: GetHotels
+          methodName: it.smartcommunitylab.comuneintasca.connector.flows.HotelsFlow
           imagePath: http://ricadi.opencontent.it/
           autoPublish: true
           
         - type: it.smartcommunitylab.comuneintasca.core.model.MainEventObject
           url: http://ricadi.opencontent.it/api/opendata/v1/content/class/iniziativa/offset/0/limit/1000
           serviceId: smartcampus.service.opendata
-          methodName: GetMainEvents
+          methodName: it.smartcommunitylab.comuneintasca.connector.flows.MainEventsFlow
           imagePath: http://ricadi.opencontent.it/
           autoPublish: true
           
         - type: it.smartcommunitylab.comuneintasca.core.model.POIObject
           url: http://ricadi.opencontent.it/api/opendata/v1/content/class/luogo/offset/0/limit/1000
           serviceId: smartcampus.service.opendata
-          methodName: GetCultura
+          methodName: it.smartcommunitylab.comuneintasca.connector.flows.CulturaFlow
           imagePath: http://ricadi.opencontent.it/
           autoPublish: true
           
         - type: it.smartcommunitylab.comuneintasca.core.model.ContentObject
           url: http://ricadi.opencontent.it/api/opendata/v1/content/class/pagina_sito/offset/0/limit/1000
           serviceId: smartcampus.service.opendata
-          methodName: GetTesti
+          methodName: it.smartcommunitylab.comuneintasca.connector.flows.TextsFlow
           imagePath: http://ricadi.opencontent.it/
           autoPublish: true
           
         - type: it.smartcommunitylab.comuneintasca.core.model.ItineraryObject
           url: http://ricadi.opencontent.it/api/opendata/v1/content/class/itinerario/offset/0/limit/1000
           serviceId: smartcampus.service.opendata
-          methodName: GetItinerari
+          methodName: it.smartcommunitylab.comuneintasca.connector.flows.ItinerariesFlow
           imagePath: http://ricadi.opencontent.it/
           autoPublish: true
 
         - type: it.smartcommunitylab.comuneintasca.core.model.TerritoryServiceObject
           url: http://ricadi.opencontent.it/api/opendata/v1/content/class/servizio_sul_territorio/offset/0/limit/1000
           serviceId: smartcampus.service.opendata
-          methodName: GetTerritoryServices
+          methodName: it.smartcommunitylab.comuneintasca.connector.flows.TerritoryServicesFlow
           imagePath: http://ricadi.opencontent.it/
           autoPublish: true
           

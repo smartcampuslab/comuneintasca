@@ -1,5 +1,11 @@
 <div class="event_container" ng-hide="sonsVisible">
   <ion-content class="has-header">
+      <ion-nav-buttons side="right">
+          <a class="tab-item" ng-click="toggleFavorite(obj)">
+            <i ng-if="isObjFavorite" class="icon ion-ios7-star"></i>
+            <i ng-if="!isObjFavorite" class="icon ion-ios7-star-outline"></i>
+          </a>
+        </ion-nav-buttons>
     <!-- comuni-img ng-if="obj.image" class="content-image-main" gotdata="gotdata" detail="true"></comuni-img -->
     <div ng-if="!emptyParsedImageURL(obj)" class="content-image-main comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj)}})"></div>
 

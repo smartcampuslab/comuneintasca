@@ -4,5 +4,5 @@
 		<a ng-if="obj.contacts.phone" class="tab-item" href="tel:{{obj.contacts.phone}}"><i class="icon ion-ios7-telephone-outline "></i></a>
 		<a ng-if="hasNav(obj.location)" class="tab-item" ng-click="bringmethere(obj.location)" data-off-ng-href="geo:obj.location[0],obj.location[1]"><i class="icon ion-ios7-navigate-outline "></i></a>
 		<a class="tab-item" ng-click="share(obj.title,obj.url,obj.image)"><i class="icon ion-ios7-redo-outline" ></i></a>
-		<a class="tab-item" ng-click="toggleFavorite(obj)"><i ng-if="isObjFavorite" class="icon ion-ios7-star"></i><i ng-if="!isObjFavorite" class="icon ion-ios7-star-outline"></i></a>
+		<!-- <a class="tab-item" ng-click="toggleFavorite(obj)"><i ng-if="isObjFavorite" class="icon ion-ios7-star"></i><i ng-if="!isObjFavorite" class="icon ion-ios7-star-outline"></i></a> -->
 </div>

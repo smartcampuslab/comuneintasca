@@ -1,6 +1,12 @@
 <ion-nav-buttons side="left" ng-if="explicitBack()">
   <button class="button button-clear" ng-click="bk()"><i class="icon ion-ios7-arrow-back"></i></button>
 </ion-nav-buttons>
+<ion-nav-buttons side="right">
+    <a class="tab-item" ng-click="toggleFavorite(obj)">
+      <i ng-if="isObjFavorite" class="icon ion-ios7-star"></i>
+      <i ng-if="!isObjFavorite" class="icon ion-ios7-star-outline"></i>
+    </a>
+  </ion-nav-buttons>
 <div ng-include="'templates/page/poi_content.html'"></div>
 <ion-footer-bar>
 <div ng-include="'templates/toolbox.html'"></div>

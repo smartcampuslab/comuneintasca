@@ -4,7 +4,8 @@
 </ion-header-bar>
 <ion-content class="has-header" delegate-handle="listScroll">
   <ion-list>
-    <ion-item ng-repeat="obj in scrolldata track by $index"
+    <div ng-repeat="obj in scrolldata track by $index">
+    <ion-item 
               
               ng-click="gotoSubpath(obj.id)" class="item-thumbnail-left coll-item">
       <!-- comuni-img class="item-image comuni-item-image" gotdata="gotdata" dida="{{obj.distance | number:1}} {{'entry_km' | translate}}"></comuni-img -->
@@ -19,6 +20,8 @@
         </div>
       </div>
     </ion-item>
+    <div class="h-line"></div>
+  </div>
   </ion-list>
   <ion-infinite-scroll on-infinite="loadMore()" distance="10%" ng-if="hasMoreDataToLoad()"></ion-infinite-scroll>
 </ion-content>

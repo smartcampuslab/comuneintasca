@@ -40,7 +40,7 @@ ion-footer-bar.bar {
 
 /*
 azzurrino: #b7d6e8;
-blu: #2975a7;
+blu: #03526e;
 blu scuro: #1b4d6e;
 */
 
@@ -59,7 +59,7 @@ h1,h2, h3, h4, h5, h6,
 
 .comuni-html-description a,
 .comuni-html-info a {
-  color: #2975a7;
+  color: #03526e;
   font-weight: bold;
 }
 .comuni-html-description,
@@ -76,9 +76,9 @@ h1,h2, h3, h4, h5, h6,
 }
 .bar.bar-comuni {
   border-color: #1b4d6e;
-  background-color: #2975a7;
+  background-color: #03526e;
   color: #fff;
-  /*background-image: linear-gradient(0deg, #2975a7, #2975a7 50%, transparent 50%);*/
+  /*background-image: linear-gradient(0deg, #03526e, #03526e 50%, transparent 50%);*/
 }
 .bar.bar-comuni h1,
 .bar.bar-comuni .button {
@@ -87,15 +87,15 @@ h1,h2, h3, h4, h5, h6,
 
 
 ion-tabs, .tabs {
-  border-color: #2975a7;
+  border-color: #03526e;
   background-color: #CCC !important;
-  color: #2975a7;
+  color: #03526e;
 }
 .tabs .tab-item {
   /*  opacity: 1;*/
 }
 .tabs .tab-item.activated, .tabs .tab-item.active, .tabs .tab-item.tab-item-active { 
-  color:#2975a7 !important;font-weight:bold !important;border-bottom:5px solid #2975a7 !important; border-top-width: 0 !important; margin-top:0 !important; 
+  color:#03526e !important;font-weight:bold !important;border-bottom:5px solid #03526e !important; border-top-width: 0 !important; margin-top:0 !important; 
 }
 
 
@@ -117,7 +117,7 @@ ion-tabs, .tabs {
 }
 .bar.bar-dark-comuni {
   border-color: #111;
-  background-color: #2975a7;
+  background-color: #03526e;
   background-image: linear-gradient(0deg, #111, #111 50%, transparent 50%);
   color: #fff;
 }
@@ -127,7 +127,7 @@ ion-tabs, .tabs {
 
 
 ion-side-menu .item-divider {
-  background-color: #2975a7;
+  background-color: #03526e;
   color: #fff;
   opacity: .5;
 }
@@ -149,7 +149,7 @@ ion-side-menu .list .item { background-color: transparent;color:#fff;border-colo
   background-repeat: no-repeat;
   font-size: .8em;
   color: #fff;
-  background-color: #2975a7;
+  background-color: #03526e;
 }
 .comuni-item-image {
   border: 4px solid #b7d6e8;
@@ -229,7 +229,7 @@ ion-side-menu .list .item { background-color: transparent;color:#fff;border-colo
   content: '!';
 }
 #content-home {
-  background-color: #2975a7;
+  background-color: #03526e;
   color: #fff;
 }
 #slide-box-home {
@@ -287,7 +287,7 @@ ion-side-menu .list .item { background-color: transparent;color:#fff;border-colo
   font-size: 32px !important;
 }
 .comuni-button {
-  color: #2975a7;
+  color: #03526e;
   background-color: #b7d6e8;
   margin: 0;
   padding: 0;
@@ -323,11 +323,11 @@ ion-side-menu .list .item { background-color: transparent;color:#fff;border-colo
 }
 
 .list .item {
-	color: #2975a7;
+	color: #03526e;
 }
 .list .item.item-header, .list .item.item-utility {
 /*
-	background-color: #2975a7;
+	background-color: #03526e;
   color: #ffffff;
   opacity: 0.5;
 */
@@ -423,22 +423,22 @@ ion-side-menu .list .item { background-color: transparent;color:#fff;border-colo
 }
 .button.button-positive {
   border-color: #1b4d6e;
-  background-color: #2975a7;
+  background-color: #03526e;
   color: #fff;
 }
 .ion-ios7-circle-outline,
 .ion-ios7-checkmark {
-  color: #2975a7;
+  color: #03526e;
 }
 .h2.h2-credits {
-  color: #2975a7;
+  color: #03526e;
   font-family: 'HelveticaNeue-CondensedBold';
 }
 .h4.h4-credits {
   font-family: 'HelveticaNeue-CondensedBold';
 }
 .h4.credits-title {
-  color: #2975a7;
+  color: #03526e;
 }
 
 p.phone-button {
@@ -447,15 +447,27 @@ p.phone-button {
 
 
 comuni-img, .comuni-item-image { position: relative; }
-.comuni-item-image { border: 5px solid #2975a7; }
+.comuni-item-image { border: 5px solid #03526e; }
 
 .dida {
-	color:#fff; background-color: #2975a7;
+	color:#fff; background-color: #03526e;
 	line-height:17px; position: absolute; bottom:0;right:0;padding:0 .4em 0 .5em;
 }
 .dida span { margin-right:.5em; }
 .dida i { font-size:1.4em;position:absolute;right:0;bottom:-1px; }
-
+.no-border-item {
+  border-style: none;
+}
+.list ion-item {
+    border-style: none;
+}
+.h-line {
+  width: 80%;
+  height: 3px;
+  background-color: gray;
+  color: gray;
+  margin: auto;
+}
 /* stretched img css trick
 .comuni-img img {
   zoom: 2;  //increase if you have very small images
@@ -474,7 +486,7 @@ comuni-img, .comuni-item-image { position: relative; }
 .card.sinottico, .card.sinottico .item { border-color: #666 !important; color:#666 !important; }
 .card.sinottico .item { font-size:.9em !important;line-height:1.1em !important; }
 .card.sinottico .icon { font-size:2.3em !important; }
-.card.sinottico .sinottico-button { background-color:#ccc; color:#2975a7 !important; font-weight:bold; }
+.card.sinottico .sinottico-button { background-color:#ccc; color:#03526e !important; font-weight:bold; }
 .list:last-child.card.sinottico { margin-bottom:0; }
 
 .bar-subheader { height:32px; }
@@ -494,10 +506,10 @@ comuni-img, .comuni-item-image { position: relative; }
 
 
 ion-list > .list { padding-top:1;padding-bottom:1; }
-.sticky-label { margin-top:1px;width:100%;z-index:1;position:absolute;top:74px; color: #2975a7; }
+.sticky-label { margin-top:1px;width:100%;z-index:1;position:absolute;top:74px; color: #03526e; }
 
 .popup .appicon { position:absolute;top:8px;left:8px; width:32px;margin-bottom }
-.popup-head { background-color:#2975a7; }
+.popup-head { background-color:#03526e; }
 .popup-title, .popup-sub-title { color:#fff; }
 
 .popup-title.exit h3 { padding-left:28px; }

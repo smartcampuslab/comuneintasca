@@ -1,7 +1,8 @@
 <ion-content class="has-header">
   <ion-list>
     <div class="item item-divider" align="center">{{itinerario.title | translate}}</div>
-    <ion-item ng-repeat="obj in tappe track by $index" 
+    <div ng-repeat="obj in tappe track by $index" >
+    <ion-item 
               href="#/app/itinstep/{{itinerario.id}}/step/{{obj.id}}" 
               class="item-thumbnail-left itinerari"> 
       <!-- comuni-img class="item-image comuni-item-image" gotdata="gotdata"></comuni-img -->
@@ -11,5 +12,7 @@
         <div class="comuni-item-bottom2 col">{{obj.address | translate | addrclean}}</div>
       </div>
     </ion-item>
+    <div class="h-line"></div>
+  </div>
   </ion-list>
 </ion-content>

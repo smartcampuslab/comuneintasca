@@ -1,5 +1,5 @@
 <ion-content class="has-header">
-  <ion-nav-buttons side="right" >
+  <ion-nav-buttons side="right">
     <a class="tab-item" ng-show="obj" ng-click="toggleFavorite(obj)">
       <i ng-if="isObjFavorite" class="icon ion-ios7-star"></i>
       <i ng-if="!isObjFavorite" class="icon ion-ios7-star-outline"></i>
@@ -66,6 +66,9 @@
     </div>
   </div>
 </ion-content>
-<ion-footer-bar ng-show="obj">
+<div ng-if="obj">
+  <div ng-include="'templates/toolbox-material.html'"></div>
+</div>
+<!-- <ion-footer-bar ng-show="obj">
   <div ng-include="'templates/toolbox.html'"></div>
-</ion-footer-bar>
+</ion-footer-bar> -->

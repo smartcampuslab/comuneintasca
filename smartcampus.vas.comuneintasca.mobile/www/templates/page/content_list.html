@@ -1,7 +1,9 @@
 <ion-content class="has-header" delegate-handle="listScroll">
   <ion-list>
-    <ion-item ng-repeat="obj in results" ng-click="gotoSubpath(obj.id)">
-      {{obj.title|translate}}
-    </ion-item>
+    <div class="card" ng-repeat="obj in results" ng-click="gotoSubpath(obj.id)">
+      <ion-item>
+        {{obj.title|translate}}
+      </ion-item>
+    </div>
   </ion-list>
 </ion-content>

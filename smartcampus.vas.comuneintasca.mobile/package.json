@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "An Ionic project",
   "dependencies": {
+    "call-number": "^1.0.1",
     "com.phonegap.plugins.startapp": "git+https://github.com/enricomarchesin/cordova-startapp.git",
     "cordova-android": "^6.3.0",
+    "cordova-plugin-call-number": "^1.0.1",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-email": "^1.2.7",
     "cordova-plugin-file": "^6.0.1",
@@ -49,7 +51,9 @@
     "cordova-plugin-file-transfer",
     "cordova-plugin-device",
     "cordova-plugin-splashscreen",
-    "cordova-plugin-inappbrowser"
+    "cordova-plugin-inappbrowser",
+    "call-number",
+    "cordova-plugin-call-number"
   ],
   "cordovaPlatforms": [
     "android"
@@ -67,7 +71,8 @@
       "cordova-plugin-file-transfer": {},
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
-      "cordova-plugin-inappbrowser": {}
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-call-number": {}
     },
     "platforms": [
       "android"

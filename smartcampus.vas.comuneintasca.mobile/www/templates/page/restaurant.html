@@ -1,3 +1,4 @@
+
 <ion-content class="has-header">
     <ion-nav-buttons side="right">
         <a class="tab-item" ng-click="toggleFavorite(obj)">
@@ -27,6 +28,11 @@
     <div class="comuni-html-description" compile="obj.description | translate"></div>
   </div>
 </ion-content>
-<ion-footer-bar>
-  <div ng-include="'templates/toolbox.html'"></div>
-</ion-footer-bar>
+
+
+<div ng-if="obj">
+    <div ng-include="'templates/toolbox-material.html'"></div>
+  </div>
+  <!-- <ion-footer-bar ng-show="obj">
+    <div ng-include="'templates/toolbox.html'"></div>
+  </ion-footer-bar> -->

@@ -1,9 +1,12 @@
 <ion-view title="{{group.name | translate}}">
   <ion-content class="has-header">
     <ion-list>
-      <ion-item ng-repeat="item in group.items" ng-click="goto(item.path)">
-        {{item.name | translate}}
-      </ion-item>
+      <div ng-repeat="item in group.items">
+        <ion-item ng-click="goto(item.path)">
+          {{item.name | translate}}
+        </ion-item>
+        <div class="h-line"></div>
+      </div>
     </ion-list>
   </ion-content>
 </ion-view>

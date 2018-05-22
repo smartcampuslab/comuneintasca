@@ -16,6 +16,7 @@ angular.module('ilcomuneintasca', [
   'ilcomuneintasca.filters',
   'ilcomuneintasca.directives',
   'ngQueue',
+  'ion-floating-menu',
   'google-maps'.ns()
 ])
 
@@ -170,6 +171,11 @@ angular.module('ilcomuneintasca', [
       cordova.InAppBrowser.open(url, win_target, 'location=yes');
 
     }
+    $rootScope.call = function (number) {
+      document.location.href = 'tel:'+number;
+
+    };
+
     $rootScope.email = function (toAddr) {
       // need to update social sharing plugin to use this syntax
       /*
@@ -358,7 +364,8 @@ angular.module('ilcomuneintasca', [
   })
 
 
-  .config(function ($stateProvider, $urlRouterProvider) {
+  .config(function ($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
+    // $ionicConfigProvider.tabs.position('top');
     $stateProvider
       .state('app', {
         url: "/app",

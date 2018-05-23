@@ -7,8 +7,10 @@
       <i ng-if="!isObjFavorite" class="icon ion-ios7-star-outline"></i>
     </a>
   </ion-nav-buttons>
+  <ion-floating-button button-color="#e14248"  icon-color="#ffffff" icon="icon ion-ios7-redo" ng-click="share(obj.title,obj.url,obj.image)"></ion-floating-button>
+ 
 <div ng-include="'templates/page/poi_content.html'"></div>
-<div ng-include="'templates/toolbox-material.html'"></div>
+<!-- <div ng-include="'templates/toolbox-material.html'"></div> -->
 <!-- <ion-footer-bar >
   <div ng-include="'templates/toolbox.html'"></div>
 </ion-footer-bar> -->

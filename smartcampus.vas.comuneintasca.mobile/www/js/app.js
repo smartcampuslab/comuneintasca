@@ -172,7 +172,7 @@ angular.module('ilcomuneintasca', [
 
     }
     $rootScope.call = function (number) {
-      document.location.href = 'tel:'+number;
+      document.location.href = 'tel:' + number;
 
     };
 
@@ -218,20 +218,22 @@ angular.module('ilcomuneintasca', [
       return loc != null;
     }
     $rootScope.bringmethere = function (loc) {
-      if (device.platform == "Android") {
-        setTimeout(function () {
-          // window.open("http://maps.google.com/maps?daddr=" + loc[0] + "," + loc[1], "_system");
-          cordova.InAppBrowser.open("http://maps.google.com/maps?daddr=" + loc[0] + "," + loc[1], "_system", 'location=yes');
+      if (loc) {
+        if (device.platform == "Android") {
+          setTimeout(function () {
+            // window.open("http://maps.google.com/maps?daddr=" + loc[0] + "," + loc[1], "_system");
+            cordova.InAppBrowser.open("http://maps.google.com/maps?daddr=" + loc[0] + "," + loc[1], "_system", 'location=yes');
 
-        }, 10);
-      } else if (device.platform == "iOS") {
-        var url = "maps:daddr=" + loc[0] + "," + loc[1];
-        //successFn();
-        setTimeout(function () {
-          window.location = url;
-        }, 10);
-      } else {
-        console.error("Unknown platform");
+          }, 10);
+        } else if (device.platform == "iOS") {
+          var url = "maps:daddr=" + loc[0] + "," + loc[1];
+          //successFn();
+          setTimeout(function () {
+            window.location = url;
+          }, 10);
+        } else {
+          console.error("Unknown platform");
+        }
       }
       return false;
     }
@@ -364,7 +366,7 @@ angular.module('ilcomuneintasca', [
   })
 
 
-  .config(function ($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
     // $ionicConfigProvider.tabs.position('top');
     $stateProvider
       .state('app', {

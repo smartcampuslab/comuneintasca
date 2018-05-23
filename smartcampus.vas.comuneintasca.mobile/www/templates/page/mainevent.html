@@ -1,4 +1,6 @@
 <div class="event_container" ng-hide="sonsVisible">
+    <ion-floating-button button-color="#e14248"  icon-color="#ffffff" icon="icon ion-ios7-redo" ng-click="share(obj.title,obj.url,obj.image)"></ion-floating-button>
+    
   <ion-content class="has-header">
       <ion-nav-buttons side="right">
           <a class="tab-item" ng-click="toggleFavorite(obj)">
@@ -12,7 +14,7 @@
     <div class="padding nobottom">
       <h1>{{obj.title | translate}}</h1>
       <h4>{{obj.eventDateDescription | translate}}</h4>
-      <div class="comuni-html-description" ng-if="obj.contacts.phone"><b>Tel:</b> <a href="tel:{{obj.contacts.phone}}">{{obj.contacts.phone}}</a></div>
+      <div class="comuni-html-description" ng-if="obj.contacts.phone" ><b>Tel:</b> <a ng-click="call(obj.contacts.phone)" >{{obj.contacts.phone}}</a></div>
       <div class="comuni-html-description" ng-if="obj.contacts.email"><b>E-mail:</b> <a ng-click="email(obj.contacts.email)">{{obj.contacts.email}}</a></div>
       <div class="comuni-html-description" ng-if="obj.url"><b>Web:</b> <a ng-click="extLink(obj.url)">{{obj.url}}</a></div>
     </div>
@@ -46,7 +48,7 @@
     </ion-list>
   </ion-content>
 </div>
-<div ng-include="'templates/toolbox-material.html'"></div>
+<!-- <div ng-include="'templates/toolbox-material.html'"></div> -->
 <!-- <ion-footer-bar >
   <div ng-include="'templates/toolbox.html'"></div>
 </ion-footer-bar> -->

@@ -19,9 +19,21 @@
         <div id="home-buttons" class="lang_{{lang}}">
           <div class="row" ng-if="buttonsRows" ng-repeat="buttonsRow in buttonsRows">
             <div class="col" ng-repeat="button in buttonsRow">
-              <button class="button button-full button-comuni button-comuni-pos{{button.colorIndex}} icon-left comuneicon comuneicon-{{button.id|cleanMenuID}} {{button.css}}"
+              <div class="button-home" ng-click="gotoButton(button)">
+                <div class="row">
+                  <div class="col text-center">
+                    <i class="icon comuneicon comuneicon-{{button.id|cleanMenuID}} "></i>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col text-center">
+                    <b ng-bind-html="button.name|translate|uppercase" ></b>
+                  </div>
+                </div>
+              </div>
+              <!-- <button class="button button-full button-comuni button-comuni-pos0 icon-left comuneicon comuneicon-{{button.id|cleanMenuID}} {{button.css}}"
                 ng-click="gotoButton(button)">
-                <b ng-bind-html="button.name|translate|uppercase"></b>
+                <b ng-bind-html="button.name|translate|uppercase"></b> -->
               </button>
             </div>
           </div>

@@ -227,7 +227,7 @@ ion-side-menu .list .item { background-color: transparent;color:#e14248;border-c
   content: '!';
 }
 #content-home {
-  background-color: #03526e;
+  /* background-color: #03526e; */
   color: #fff;
 }
 #slide-box-home {
@@ -506,6 +506,14 @@ ion-tabs .pane ion-content {
 }
 .action-link {
   color: #3c7391;
+}
+
+.button-home{
+  color: #e14248;
+  border-width: 5px;
+  height: 124px;
+  width: 124px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
 }
 /* stretched img css trick
 .comuni-img img {

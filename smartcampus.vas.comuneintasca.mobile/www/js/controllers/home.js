@@ -131,23 +131,23 @@ angular.module('ilcomuneintasca.controllers.home', [])
       if (items) {
         if (items[items.length-1] && items[items.length-1].id != 'preferiti'){
           // hardcoded favourites
-          items.push({
-            "id": "preferiti",
-            "name": {
-              "it": "PREFERITI",
-              "en": "FAVORITES",
-              "de": "LIEBLINGSSEITEN"
-            },
-            "description": null,
-            "image": null,
-            "objectIds": null,
-            "items": null,
-            "query": null,
-            "ref": "favorites",
-            "type": null,
-            "app": null,
-            "colorIndex":"favorites"
-          });
+          // items.push({
+          //   "id": "preferiti",
+          //   "name": {
+          //     "it": "PREFERITI",
+          //     "en": "FAVORITES",
+          //     "de": "LIEBLINGSSEITEN"
+          //   },
+          //   "description": null,
+          //   "image": null,
+          //   "objectIds": null,
+          //   "items": null,
+          //   "query": null,
+          //   "ref": "favorites",
+          //   "type": null,
+          //   "app": null,
+          //   "colorIndex":"favorites"
+          // });
         }
         var rows=[], row=-1, pos=0;
         for (ii=0; ii<items.length; ii++) {
@@ -156,14 +156,14 @@ angular.module('ilcomuneintasca.controllers.home', [])
             items[ii].id = Config.navItemMap()[items[ii].id];
           }
           pos++;
-          if ((ii%2)==0) {
+          if ((ii%3)==0) {
             row++;
             rows[row]=[];
           }
           rows[row].push(items[ii]);
         }
         $scope.buttonsRows=rows;
-		$scope.topBoxStyle = {bottom: (rows.length*60)+'px'};
+		$scope.topBoxStyle = {bottom: (rows.length*140)+'px'};
       }
     },function(menu) {
       $scope.buttonRows=null;

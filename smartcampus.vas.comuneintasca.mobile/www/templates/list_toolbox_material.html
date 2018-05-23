@@ -1,25 +1,7 @@
-<!-- <div class="tabs tabs-icon-only" ng-if="!searching">
-  <a ng-if="hasMap && mapsReady" class="tab-item" ng-click="showMap()"><i class="icon comuneicon comuneicon-map"></i></a>
-  <a ng-if="hasFilter" class="tab-item" ng-click="showFilterPopup()"><i class="icon comuneicon comuneicon-filter2"></i></a>
-  <a ng-if="hasSort" class="tab-item" ng-click="showSortPopup()"><i class="icon comuneicon comuneicon-ordina_per2"></i></a>
-  <a ng-if="hasSearch" class="tab-item" ng-click="showSearch($event)"><i class="icon ion-ios7-search"></i></a>
-</div>
-<div class="tabs tabs-icon-only" ng-if="searching">
-  <div class="bar bar-footer item-input-inset">
-    <label class="item-input-wrapper" ng-if="searching">
-      <i class="icon ion-ios7-search placeholder-icon"></i>
-      <input type="search" placeholder="{{'search'|translate}}" width="100%" ng-model="ordering.searchText">
-    </label>
-    <button class="button button-clear" ng-click="cancelSearch()">
-      {{'cancel' | translate}}
-    </button>
-  </div>
-</div> -->
-
 <ion-floating-menu menu-color="#e14248" menu-open-icon="ion-close" menu-open-color="#e14248" ng-if="!searching">
 		<ion-floating-item button-color="#ececec" ng-if="hasMap && mapsReady" ng-click="showMap()" icon="icon comuneicon comuneicon-map" ></ion-floating-item>
 		<ion-floating-item button-color="#ececec"  ng-if="hasFilter"  ng-click="showFilterPopup()" icon="icon comuneicon comuneicon-filter2" ></ion-floating-item>
-		<ion-floating-item button-color="#ececec"  ng-if="hasSort" ng-click="showSortPopup()"  icon="icon comuneicon comuneicon-ordina_per2" ></ion-floating-item>
+		<!-- <ion-floating-item button-color="#ececec"  ng-if="hasSort" ng-click="showSortPopup()"  icon="icon comuneicon comuneicon-ordina_per2" ></ion-floating-item> -->
 		<ion-floating-item button-color="#ececec"  ng-if="hasSearch" ng-click="showSearch($event)" icon="icon ion-ios7-search"  data-off-ng-href="geo:obj.location[0],obj.location[1]"></ion-floating-item>
 </ion-floating-menu>
 <div class="tabs tabs-icon-only" ng-if="searching">

@@ -1,3 +1,8 @@
+<ion-nav-buttons side="right">
+  <button class="button button-clear" ng-if="hasSort" ng-click="showSortPopup()">
+    <i class="icon comuneicon comuneicon-ordina_per2"></i>
+  </button>
+</ion-nav-buttons>
 <ion-header-bar class="bar-subheader item item-divider" align="center">
   <span ng-if="!scrolldata">{{'loading' | translate }}</span>
   <span ng-if="scrolldata">{{'list_results' | translate_plur:results.length}}</span>

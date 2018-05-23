@@ -1,3 +1,5 @@
+
+<ion-floating-button button-color="#e14248"  icon-color="#ffffff" ng-if="!obj.url && !obj.contacts.email && !obj.contacts.phone && !hasNav(obj.location)" icon="icon ion-ios7-redo" ng-click="share(obj.title,obj.url,obj.image)"></ion-floating-button>
 <ion-content class="has-header">
   <ion-nav-buttons side="right">
     <a class="tab-item" ng-show="obj" ng-click="toggleFavorite(obj)">

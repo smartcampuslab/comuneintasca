@@ -1,3 +1,6 @@
+<ion-nav-buttons side="left" id="navbar2">
+  <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+</ion-nav-buttons>
 <ion-view ng-attr-title="{{'app_title' | translate | nl2br}}">
   <ion-content class="has-header content-stable" scroll="false" id="content-home">
     <div class="home-container">
@@ -14,9 +17,14 @@
       </div>
       <div class="home-box-bottom">
         <div id="home-buttons" class="lang_{{lang}}">
-		  		<div class="row" ng-if="buttonsRows" ng-repeat="buttonsRow in buttonsRows">
-            <div class="col" ng-repeat="button in buttonsRow"><button class="button button-full button-comuni button-comuni-pos{{button.colorIndex}} icon-left comuneicon comuneicon-{{button.id|cleanMenuID}} {{button.css}}" ng-click="gotoButton(button)"><b ng-bind-html="button.name|translate|uppercase"></b></button></div>
-					</div>
+          <div class="row" ng-if="buttonsRows" ng-repeat="buttonsRow in buttonsRows">
+            <div class="col" ng-repeat="button in buttonsRow">
+              <button class="button button-full button-comuni button-comuni-pos{{button.colorIndex}} icon-left comuneicon comuneicon-{{button.id|cleanMenuID}} {{button.css}}"
+                ng-click="gotoButton(button)">
+                <b ng-bind-html="button.name|translate|uppercase"></b>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

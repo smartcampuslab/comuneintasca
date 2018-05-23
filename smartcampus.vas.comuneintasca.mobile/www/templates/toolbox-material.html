@@ -1,4 +1,4 @@
-<ion-floating-menu menu-color="#e14248" menu-open-icon="ion-close" menu-open-color="#e14248">
+<ion-floating-menu menu-color="#e14248" menu-open-icon="ion-close" menu-open-color="#e14248" ng-if="obj.url || obj.contacts.email || obj.contacts.phone|| hasNav(obj.location)" >
 		<ion-floating-item button-color="#ececec" ng-if="obj.url"  icon="icon ion-ios7-world-outline" ng-click="extLink(obj.url)"></ion-floating-item>
 		<ion-floating-item button-color="#ececec"  ng-if="obj.contacts.email"  icon="icon ion-ios7-email-outline" ng-click="email(obj.contacts.email)"></ion-floating-item>
 		<ion-floating-item button-color="#ececec"  ng-if="obj.contacts.phone"  icon="icon ion-ios7-telephone-outline" ng-click="call(obj.contacts.phone)"></ion-floating-item>

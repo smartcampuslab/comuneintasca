@@ -1,28 +1,35 @@
+<ion-nav-buttons side="right">
+  <button class="button button-clear" ng-if="hasSort" ng-click="showSortPopup()">
+    <i class="icon comuneicon comuneicon-ordina_per2"></i>
+  </button>
+</ion-nav-buttons>
 <ion-view title="{{title | translate}}">
   <ion-content class="has-header" delegate-handle="listScroll">
     <ion-list>
-      <div class="item item-divider" align="center"><span ng-if="!itinerari">{{'loading' | translate }}</span><span ng-if="itinerari">{{'list_results' | translate_plur:itinerari.length}}</span></div>
-      <div  ng-repeat="itinerario in itinerari" >
-      <ion-item
-              collection-item-width="'100%'" collection-item-height="'80px'"
-				      ng-href="#/app/itinerary/{{itinerario.id}}/info" class="item-thumbnail-left itinerari">
-        <!-- comuni-img class="item-image comuni-item-image" gotdata="gotdata"></comuni-img -->
-        <div class="item-image comuni-item-image comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(itinerario,'list')}})"></div>
-        <h2>{{itinerario.title | translate}}</h2>
-        <!-- div class="comuni-item-bottom2-out"><div class="comuni-item-bottom2-in">
+      <div class="item item-divider" align="center">
+        <span ng-if="!itinerari">{{'loading' | translate }}</span>
+        <span ng-if="itinerari">{{'list_results' | translate_plur:itinerari.length}}</span>
+      </div>
+      <div ng-repeat="itinerario in itinerari">
+        <ion-item collection-item-width="'100%'" collection-item-height="'80px'" ng-href="#/app/itinerary/{{itinerario.id}}/info"
+          class="item-thumbnail-left itinerari">
+          <!-- comuni-img class="item-image comuni-item-image" gotdata="gotdata"></comuni-img -->
+          <div class="item-image comuni-item-image comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(itinerario,'list')}})"></div>
+          <h2>{{itinerario.title | translate}}</h2>
+          <!-- div class="comuni-item-bottom2-out"><div class="comuni-item-bottom2-in">
           <div class="comuni-item-bottom2">{{itinerario.subtitle | translate}}</div>
         </div></div -->
-        <div ng-if="itinerario.subtitle.it" class="comuni-item-bottom2 row row-bottom">
-          <div class="comuni-item-bottom2 col" compile="itinerario.subtitle | translate"></div>
-        </div>
-      </ion-item>
-      <div class="h-line"></div>
-      
-    </div>
+          <div ng-if="itinerario.subtitle.it" class="comuni-item-bottom2 row row-bottom">
+            <div class="comuni-item-bottom2 col" compile="itinerario.subtitle | translate"></div>
+          </div>
+        </ion-item>
+        <div class="h-line"></div>
+
+      </div>
     </ion-list>
   </ion-content>
   <div ng-include="'templates/list_toolbox_material.html'"></div>
   <!-- <ion-footer-bar>
     <div ng-include="'templates/list_toolbox.html'"></div>
-  </ion-footer-bar> -->     
+  </ion-footer-bar> -->
 </ion-view>

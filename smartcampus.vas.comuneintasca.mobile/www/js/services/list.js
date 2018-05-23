@@ -130,6 +130,10 @@ angular.module('ilcomuneintasca.services.list', [])
         };
         //console.log('$scope.ordering: '+JSON.stringify($scope.ordering));
 
+        $scope.expandSort = function() {
+          $rootScope.expandedSort = !$rootScope.expandedSort;
+        }
+        $rootScope.expandedSort = false;
         $scope.showSortPopup = function () {
           var odef=($scope.ordering&&$scope.ordering.order?$scope.ordering.order:null);
           openSortPopup($scope, $scope.orderingTypes, odef, function (res) {

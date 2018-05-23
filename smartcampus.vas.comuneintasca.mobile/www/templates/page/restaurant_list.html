@@ -1,31 +1,39 @@
+<ion-nav-buttons side="right">
+  <button class="button button-clear" ng-if="hasSort" ng-click="showSortPopup()">
+    <i class="icon comuneicon comuneicon-ordina_per2"></i>
+  </button>
+</ion-nav-buttons>
 <ion-header-bar class="bar-subheader item item-divider" align="center">
-  <span ng-if="filterDef">{{filterDef | translate | ellipsis:20}}<span ng-if="filterDetail">{{filterDetail}}</span>: </span>
-  <span ng-if="!scrolldata">{{'loading' | translate }}</span><span ng-if="scrolldata">{{'list_results' | translate_plur:results.length}}</span>
+  <span ng-if="filterDef">{{filterDef | translate | ellipsis:20}}
+    <span ng-if="filterDetail">{{filterDetail}}</span>: </span>
+  <span ng-if="!scrolldata">{{'loading' | translate }}</span>
+  <span ng-if="scrolldata">{{'list_results' | translate_plur:results.length}}</span>
 </ion-header-bar>
 <ion-content class="has-header" delegate-handle="listScroll">
   <ion-list>
     <div ng-repeat="obj in scrolldata track by $index">
-    <ion-item 
-              
-              ng-click="gotoSubpath(obj.id)" class="item-thumbnail-left coll-item">
-      <!-- comuni-img class="item-image comuni-item-image" gotdata="gotdata" dida="{{obj.distance | number:1}} {{'entry_km' | translate}}"></comuni-img -->
-      <div class="item-image comuni-item-image comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj,'list')}})">
-        <div ng-if="obj.distance" class="dida">{{obj.distance | number:1}} {{'entry_km' | translate}}</div>
-      </div>
-      <h2>{{obj.title | translate}}</h2>
-      <p>{{obj.dbClassification | translate}}<span ng-if="obj.dbClassification2">, {{obj.dbClassification2 | translate}}</span><span ng-if="obj.dbClassification3">, {{obj.dbClassification3 | translate}}</span></p>
-      <div class="row comuni-item-bottom">
-        <div class="col comuni-item-bottom-text">
-          <span>{{obj.address | translate | addrclean}}</span>
+      <ion-item ng-click="gotoSubpath(obj.id)" class="item-thumbnail-left coll-item">
+        <!-- comuni-img class="item-image comuni-item-image" gotdata="gotdata" dida="{{obj.distance | number:1}} {{'entry_km' | translate}}"></comuni-img -->
+        <div class="item-image comuni-item-image comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj,'list')}})">
+          <div ng-if="obj.distance" class="dida">{{obj.distance | number:1}} {{'entry_km' | translate}}</div>
         </div>
-      </div>
-    </ion-item>
-    <div class="h-line"></div>
-  </div>
+        <h2>{{obj.title | translate}}</h2>
+        <p>{{obj.dbClassification | translate}}
+          <span ng-if="obj.dbClassification2">, {{obj.dbClassification2 | translate}}</span>
+          <span ng-if="obj.dbClassification3">, {{obj.dbClassification3 | translate}}</span>
+        </p>
+        <div class="row comuni-item-bottom">
+          <div class="col comuni-item-bottom-text">
+            <span>{{obj.address | translate | addrclean}}</span>
+          </div>
+        </div>
+      </ion-item>
+      <div class="h-line"></div>
+    </div>
   </ion-list>
   <ion-infinite-scroll on-infinite="loadMore()" distance="10%" ng-if="hasMoreDataToLoad()"></ion-infinite-scroll>
 </ion-content>
 <div ng-include="'templates/list_toolbox_material.html'"></div>
 <!-- <ion-footer-bar>
   <div ng-include="'templates/list_toolbox.html'"></div>
-</ion-footer-bar> --> 
+</ion-footer-bar> -->

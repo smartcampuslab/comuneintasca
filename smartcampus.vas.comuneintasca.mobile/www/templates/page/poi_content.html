@@ -7,15 +7,15 @@
 
     <div class="list sinottico">
       <div ng-if="!!(obj.address | translate)" ng-click="bringmethere(obj.location)" class="item no-border action-link item-text-wrap item-icon-left">
-        <i class="icon ion-android-location"></i>{{obj.address | translate}}</div>
-      <div ng-if="!!(obj.distance)" class="item no-border action-link item-text-wrap item-icon-left">
+        <i class="icon ic-new-navigate"></i>{{obj.address | translate}}</div>
+      <div ng-if="!!(obj.distance)" class="item no-border item-text-wrap item-icon-left">
         <i class="icon ion-arrow-resize"></i>{{obj.distance | number:1}} {{'entry_km' | translate}}</div>
       <div ng-if="!!(obj.contacts.phone)" ng-click="call(obj.contacts.phone)" class="item no-border action-link item-text-wrap item-icon-left">
         <i class="icon ion-ios7-telephone"></i>{{obj.contacts.phone}}</div>
       <div ng-if="!!(obj.contacts.email)" ng-click="email(obj.contacts.email)" class="item no-border action-link item-text-wrap item-icon-left">
         <i class="icon ion-android-mail"></i>{{obj.contacts.email}}</div>
       <div ng-if="!!(obj.url)" ng-click="extLink(obj.url)" class="item no-border action-link item-text-wrap item-icon-left">
-        <i class="icon ion-link"></i>{{obj.url}}</div>
+        <i class="icon ic-new-website"></i>{{obj.url}}</div>
     </div>
   </div>
   <div class="padding">

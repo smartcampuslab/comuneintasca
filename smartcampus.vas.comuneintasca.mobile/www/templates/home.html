@@ -9,7 +9,7 @@
         </div>
         <ion-slide-box auto-play="true" ng-if="highlights" does-continue="true" slide-interval="5000" id="slide-box-home">
           <ion-slide ng-repeat="obj in highlights">
-            <div class="hp-box" style="background-image: url({{getParsedImageURL(obj)}})" ng-click="goto(obj.abslink)">
+            <div class="hp-box" style="{{getBackground(obj);}}" ng-click="goto(obj.abslink)">
               <h3 class="title">{{obj.title|translate}}</h3>
             </div>
           </ion-slide>
@@ -20,9 +20,10 @@
           <div class="row" ng-if="buttonsRows" ng-repeat="buttonsRow in buttonsRows">
             <div class="col" ng-repeat="button in buttonsRow">
               <div class="button-home" ng-click="gotoButton(button)">
+                <div class="button-container">
                 <div class="row">
                   <div class="col text-center">
-                    <i class="icon comuneicon comuneicon-{{button.id|cleanMenuID}} "></i>
+                    <i class="icon icon-home ic-new-{{button.id|cleanMenuID}} "></i>
                   </div>
                 </div>
                 <div class="row">
@@ -30,6 +31,7 @@
                     <b ng-bind-html="button.name|translate|uppercase" ></b>
                   </div>
                 </div>
+              </div>
               </div>
               <!-- <button class="button button-full button-comuni button-comuni-pos0 icon-left comuneicon comuneicon-{{button.id|cleanMenuID}} {{button.css}}"
                 ng-click="gotoButton(button)">

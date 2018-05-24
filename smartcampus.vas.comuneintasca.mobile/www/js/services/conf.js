@@ -469,9 +469,9 @@ angular.module('ilcomuneintasca.services.conf', [])
         de: 'Home'
       },
       'sidemenu_Favourites': {
-        it: 'PREFERITI',
-        en: 'FAVORITES',
-        de: 'LIEBLINGSSEITEN'
+        it: 'Preferiti',
+        en: 'Favorites',
+        de: 'Lieblingsseiten'
       },
       'list_no-favorites': {
         it: 'Nessun preferito salvato',

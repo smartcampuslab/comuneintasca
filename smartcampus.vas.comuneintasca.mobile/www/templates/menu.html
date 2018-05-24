@@ -19,7 +19,7 @@
     <ion-content class="has-header content-calm">
       <ion-list>
         <ion-item nav-clear menu-close class="item-accordion" ng-click="goto('home')">
-          <span ng-bind="'sidemenu_Home' | translate" class="comunimenu-home"></span>
+          <b ng-bind="'sidemenu_Home' | translate" class="comunimenu-home"></b>
         </ion-item>
         <!--ion-item ng-if="DEV" nav-clear menu-close class="item-accordion" ng-click="goto('test')">
           <span class="comunimenu-home"><em>¡test!</em></span>
@@ -42,10 +42,10 @@
           </ion-item>
         </div>
         <ion-item menu-close class="item-accordion" ng-click="showSettings()">
-          <span ng-bind="'settings_title' | translate" class="comunimenu-settings"></span>
+          <b ng-bind="'settings_title' | translate" class="comunimenu-settings"></b>
         </ion-item>
         <ion-item menu-close class="item-accordion" ng-click="showCredits()">
-          <span ng-bind="'credits_title' | translate" class="comunimenu-credits"></span>
+          <b ng-bind="'credits_title' | translate" class="comunimenu-credits"></b>
         </ion-item>
       </ion-list>
     </ion-content>

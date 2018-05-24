@@ -167,24 +167,7 @@
       "type": null,
       "app": null
     },
-    {
-      "id": "profile_cit_csvimport_Viaggia_Trento_item_comuneintasca",
-      "name": {
-        "it": "VIAGGIA TRENTO",
-        "en": "VIAGGIA TRENTO",
-        "de": "VIAGGIA TRENTO"
-      },
-      "description": null,
-      "image": null,
-      "objectIds": null,
-      "items": null,
-      "query": null,
-      "ref": null,
-      "type": null,
-      "app": {
-        "android": "eu.trentorise.smartcampus.viaggiatrento"
-      }
-    },
+
     {
       "id": "profile_cit_csvimport_Eventi_item_comuneintasca",
       "name": {

@@ -116,13 +116,10 @@ ion-tabs, .tabs {
   background-size: auto 100%;
 }
 .bar.bar-dark-comuni {
-  border-color: #111;
-  background-color: #03526e;
-  background-image: linear-gradient(0deg, #111, #111 50%, transparent 50%);
-  color: #fff;
+  background-color: #ececec;
 }
 .bar.bar-dark-comuni .title {
-  color: #fff;
+  /* color: #fff; */
 }
 ion-side-menu .item-divider {
   background-color: #03526e;
@@ -343,7 +340,7 @@ ion-side-menu .list .item { background-color: transparent;color:#e14248;border-c
   padding-left: 1em;
 	font-size: 1.1em;
 	line-height: .9em;
-	border:none;border-bottom:1px solid rgba(41,117,167,.2);
+	/* border:none;border-bottom:1px solid rgba(41,117,167,.2); */
 }
 .list .item.item-accordion.ng-hide {
   line-height: 0px;

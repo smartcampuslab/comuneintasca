@@ -23,22 +23,22 @@ var filestocopy = [{
     "config/android/AndroidManifest.xml": 
     "platforms/android/AndroidManifest.xml"
 }, {
-    "config/android/res/drawable/icon.png": 
+    "resources/android/icon/drawable-hdpi-icon.png": 
     "platforms/android/res/drawable/icon.png"
 }, {
-    "config/android/res/drawable-hdpi/icon.png": 
+    "resources/android/icon/drawable-hdpi-icon.png": 
     "platforms/android/res/drawable-hdpi/icon.png"
 }, {
-    "config/android/res/drawable-ldpi/icon.png": 
+    "resources/android/icon/drawable-ldpi-icon.png": 
     "platforms/android/res/drawable-ldpi/icon.png"
 }, {
-    "config/android/res/drawable-mdpi/icon.png": 
+    "resources/android/icon/drawable-mdpi-icon.png": 
     "platforms/android/res/drawable-mdpi/icon.png"
 }, {
-    "config/android/res/drawable-xhdpi/icon.png": 
+    "resources/android/icon/drawable-xhdpi-icon.png": 
     "platforms/android/res/drawable-xhdpi/icon.png"
 }, {
-    "config/android/res/drawable-xxhdpi/icon.png": 
+    "resources/android/icon/drawable-xxhdpi-icon.png": 
     "platforms/android/res/drawable-xxhdpi/icon.png"
 }, {
     "config/android/res/drawable/splash.png": 

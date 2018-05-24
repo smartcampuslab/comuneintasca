@@ -1,7 +1,7 @@
 <ion-floating-menu menu-color="#e14248" menu-open-icon="ion-close" menu-open-color="#e14248" ng-if="obj.url || obj.contacts.email || obj.contacts.phone|| hasNav(obj.location)" >
-		<ion-floating-item button-color="#ececec" ng-if="obj.url"  icon="icon ion-ios7-world-outline" ng-click="extLink(obj.url)"></ion-floating-item>
-		<ion-floating-item button-color="#ececec"  ng-if="obj.contacts.email"  icon="icon ion-ios7-email-outline" ng-click="email(obj.contacts.email)"></ion-floating-item>
-		<ion-floating-item button-color="#ececec"  ng-if="obj.contacts.phone"  icon="icon ion-ios7-telephone-outline" ng-click="call(obj.contacts.phone)"></ion-floating-item>
+		<ion-floating-item button-color="#ececec" ng-if="obj.url"  icon="icon ion-link" ng-click="extLink(obj.url)"></ion-floating-item>
+		<ion-floating-item button-color="#ececec"  ng-if="obj.contacts.email"  icon="icon ion-android-mail" ng-click="email(obj.contacts.email)"></ion-floating-item>
+		<ion-floating-item button-color="#ececec"  ng-if="obj.contacts.phone"  icon="icon ion-ios7-telephone" ng-click="call(obj.contacts.phone)"></ion-floating-item>
 		<ion-floating-item button-color="#ececec"  ng-if="hasNav(obj.location)"  icon="icon ion-ios7-navigate-outline" ng-click="bringmethere(obj.location)" data-off-ng-href="geo:obj.location[0],obj.location[1]"></ion-floating-item>
 		<ion-floating-item button-color="#ececec"  icon="icon icon ion-ios7-redo-outline" ng-click="share(obj.title,obj.url,obj.image)"></ion-floating-item>
 </ion-floating-menu>

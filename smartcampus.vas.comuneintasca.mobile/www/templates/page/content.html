@@ -14,20 +14,20 @@
       <div class="padding">
         <h2>{{obj.title | translate}}</h2>
         <div class="list  sinottico" ng-if="!!(obj.address | translate) || !!obj.distance || !!obj.contacts.phone || !!obj.contacts.email || !!obj.url">
-          <div ng-if="!!(obj.address | translate)" class="item no-border item-text-wrap item-icon-left">
-            <i class="icon ion-ios7-location-outline"></i>{{obj.address | translate}}</div>
-          <div ng-if="!!(obj.distance)" class="item no-border item-text-wrap item-icon-left">
+          <div ng-if="!!(obj.address | translate)" class="item no-border action-link item-text-wrap item-icon-left">
+            <i class="icon ion-android-location"></i>{{obj.address | translate}}</div>
+          <div ng-if="!!(obj.distance)" class="item no-border action-link item-text-wrap item-icon-left">
             <i class="icon ion-arrow-resize"></i>{{obj.distance | number:1}} {{'entry_km' | translate}}</div>
-          <div ng-if="!!(obj.contacts.phone)" class="item no-border  item-text-wrap item-icon-left">
-            <i class="icon ion-ios7-telephone-outline"></i>
+          <div ng-if="!!(obj.contacts.phone)" class="item no-border action-link item-text-wrap item-icon-left">
+            <i class="icon ion-ios7-telephone"></i>
             <a href="tel:{{obj.contacts.phone}}">{{obj.contacts.phone}}</a>
           </div>
-          <div ng-if="!!(obj.contacts.email)" class="item no-border  item-text-wrap item-icon-left">
-            <i class="icon ion-ios7-email-outline"></i>
+          <div ng-if="!!(obj.contacts.email)" class="item no-border  action-link item-text-wrap item-icon-left">
+            <i class="icon ion-android-mail"></i>
             <a ng-click="email(obj.contacts.email)">{{obj.contacts.email}}</a>
           </div>
-          <div ng-if="!!(obj.url)" class="item no-border item-text-wrap item-icon-left">
-            <i class="icon ion-ios7-world-outline"></i>
+          <div ng-if="!!(obj.url)" class="item no-border action-link item-text-wrap item-icon-left">
+            <i class="icon ion-link"></i>
             <a ng-click="extLink(obj.url)">{{obj.url}}</a>
           </div>
         </div>
@@ -45,19 +45,19 @@
         <h2>{{obj.title | translate}}</h2>
         <div class="list  sinottico" ng-if="!!(obj.address | translate) || !!obj.distance || !!obj.contacts.phone || !!obj.contacts.email || !!obj.url">
           <div ng-if="!!(obj.address | translate)" ng-click="bringmethere(obj.location)" class="item no-border  item-text-wrap item-icon-left">
-            <i class="icon ion-ios7-location-outline"></i>{{obj.address | translate}}</div>
-          <div ng-if="!!(obj.distance)" class="item no-border  item-text-wrap item-icon-left">
+            <i class="icon ion-android-location"></i>{{obj.address | translate}}</div>
+          <div ng-if="!!(obj.distance)" class="item no-border action-link  item-text-wrap item-icon-left">
             <i class="icon ion-arrow-resize"></i>{{obj.distance | number:1}} {{'entry_km' | translate}}</div>
-          <div ng-if="!!(obj.contacts.phone)" ng-click="call(obj.contacts.phone)"  class="item no-border item-text-wrap item-icon-left">
-            <i class="icon ion-ios7-telephone-outline"></i>
+          <div ng-if="!!(obj.contacts.phone)" ng-click="call(obj.contacts.phone)"  class="item no-border action-link item-text-wrap item-icon-left">
+            <i class="icon ion-ios7-telephone"></i>
             {{obj.contacts.phone}}
           </div>
-          <div ng-if="!!(obj.contacts.email)" class="item no-border  item-text-wrap item-icon-left">
-            <i class="icon ion-ios7-email-outline"></i>
+          <div ng-if="!!(obj.contacts.email)" class="item no-border action-link item-text-wrap item-icon-left">
+            <i class="icon ion-android-mail"></i>
             <a ng-click="email(obj.contacts.email)">{{obj.contacts.email}}</a>
           </div>
-          <div ng-if="!!(obj.url)" class="item no-border item-text-wrap item-icon-left">
-            <i class="icon ion-ios7-world-outline"></i>
+          <div ng-if="!!(obj.url)" class="item no-border action-link item-text-wrap item-icon-left">
+            <i class="icon ion-link"></i>
             <a ng-click="extLink(obj.url)">{{obj.url}}</a>
           </div>
         </div>

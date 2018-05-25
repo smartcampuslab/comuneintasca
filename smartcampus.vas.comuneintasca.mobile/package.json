@@ -6,6 +6,7 @@
     "call-number": "^1.0.1",
     "com.phonegap.plugins.startapp": "git+https://github.com/enricomarchesin/cordova-startapp.git",
     "cordova-android": "^6.3.0",
+    "cordova-file-metadata-master": "file:///home/chin8/Documents/work/comuneintasca/comuneintasca/cordova-file-metadata-master",
     "cordova-plugin-call-number": "^1.0.1",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-email": "^1.2.7",
@@ -53,7 +54,8 @@
     "cordova-plugin-splashscreen",
     "cordova-plugin-inappbrowser",
     "call-number",
-    "cordova-plugin-call-number"
+    "cordova-plugin-call-number",
+    "../../comuneintasca/cordova-file-metadata-master/"
   ],
   "cordovaPlatforms": [
     "android"
@@ -72,7 +74,8 @@
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-inappbrowser": {},
-      "cordova-plugin-call-number": {}
+      "cordova-plugin-call-number": {},
+      "it.smartcampuslab.cordova.file-metadata": {}
     },
     "platforms": [
       "android"

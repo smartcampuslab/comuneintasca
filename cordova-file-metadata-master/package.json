@@ -1,0 +1,15 @@
+{
+  "cordova": {
+    "id": "cordova-file-metadata-master",
+    "platforms": [
+      "ios","android"
+    ]
+  },
+  "dependencies": {},
+  "description": "cordova plugin for download metadata",
+  "directories": {},
+  "license": "Apache-2.0",
+  "name": "cordova-file-metadata-master",
+  "optionalDependencies": {},
+  "version": "0.1.0"
+}

@@ -71,5 +71,6 @@
     <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
     <plugin name="org.apache.cordova.geolocation" spec="~0.3.6" />
     <plugin name="cordova-plugin-x-socialsharing" spec="https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git" />
+    <plugin name="it.smartcampuslab.cordova.file-metadata" spec="../../comuneintasca/cordova-file-metadata-master" />
     <engine name="android" spec="^6.3.0" />
 </widget>

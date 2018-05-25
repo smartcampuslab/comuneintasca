@@ -2,7 +2,7 @@
 <ion-floating-button button-color="#e14248"  icon-color="#ffffff" icon="icon ion-ios7-redo" ng-click="share(obj.title,obj.url,obj.image)"></ion-floating-button>
 <ion-content class="has-header">
     <ion-nav-buttons side="right">
-        <a class="tab-item" ng-click="toggleFavorite(obj)">
+        <a class="tab-item favorite" ng-click="toggleFavorite(obj)">
           <i ng-if="isObjFavorite" class="icon ic-new-star"></i>
           <i ng-if="!isObjFavorite" class="icon ic-new-star-outline"></i>
         </a>

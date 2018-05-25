@@ -94,19 +94,25 @@ ion-tabs, .tabs {
 .tabs .tab-item {
   /*  opacity: 1;*/
 }
+.favorite {
+  opacity: 1!important;
+}
 .tabs .tab-item.activated, .tabs .tab-item.active, .tabs .tab-item.tab-item-active { 
   color:#03526e !important;font-weight:bold !important;border-bottom:5px solid #03526e !important; border-top-width: 0 !important; margin-top:0 !important; 
 }
 
 
-.item-input-inset { background-color: #2f2d2d; }
+.item-input-inset { background-color: #1b4d6e; }
 .item-input-inset .item-input-wrapper { background-color: #c5c5c4; }
 .item-input-inset .item-input-wrapper .placeholder-icon,
 .item-input-inset .item-input-wrapper input {
   color: #000;
 }
 .item-input-inset .button.button-clear { color: #c5c5c4; }
-
+.bar-footer.item-input-inset {
+  top: 0;
+  height: 100%;
+}
 
 .bar.bar-comuni-home {
   border: none;
@@ -539,6 +545,8 @@ ion-tabs .pane ion-content {
 .icon-home {
   font-size: 26px;
 }
+
+
 /* stretched img css trick
 .comuni-img img {
   zoom: 2;  //increase if you have very small images

@@ -1,14 +1,6 @@
-<!--
-<ion-header-bar ng-if="obj.sonscount>0" class="button bar-subheader icon-right" ng-click="toggleSons()" ng-class="{'ion-chevron-down': !sonsVisible, 'ion-chevron-up': sonsVisible}">
-  {{ 'complex_events_found' | translate_plur:obj.sonscount }} "{{obj.title|translate}}"
-</ion-header-bar>
-<ion-header-bar ng-if="siblingscount>0" class="button bar-subheader icon-right" ng-click="toggleSiblings()" ng-class="{'ion-chevron-down': !sonsVisible, 'ion-chevron-up': sonsVisible}">
-  {{ 'complex_events_found' | translate_plur:siblingscount }} "{{obj.parent.title|translate}}"
-</ion-header-bar>
--->
 <div class="event_container" ng-hide="sonsVisible">
   <ion-nav-buttons side="right">
-    <a class="tab-item" ng-click="toggleFavorite(obj)">
+    <a class="tab-item favorite" ng-click="toggleFavorite(obj)">
       <i ng-if="isObjFavorite" class="icon ic-new-star"></i>
       <i ng-if="!isObjFavorite" class="icon ic-new-star-outline"></i>
     </a>
@@ -16,24 +8,21 @@
   <ion-floating-button button-color="#e14248"  icon-color="#ffffff" icon="icon ion-ios7-redo" ng-click="share(obj.title,obj.url,obj.image)"></ion-floating-button>
  
   <ion-content class="has-header">
-    <!-- comuni-img class="content-image-main" gotdata="gotdata" detail="true"></comuni-img -->
     <div ng-if="!emptyParsedImageURL(obj)" class="content-image-main comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj)}})"></div>
-
     <div class="padding nobottom">
       <h1>{{obj.title | translate}}</h1>
       <h4 ng-if="obj.menu">{{obj.menu.name | translate}}</h4>
-      <!-- <h5><i class="icon ion-ios7-calendar-outline"></i>{{obj.fromTime | date:'dd/MM/yyyy'}}<span ng-if="obj.fromTime !== obj.toTime"> - {{obj.toTime | date:'dd/MM/yyyy'}}</span></h5>-->
     </div>
     <div class="list sinottico">
       <div ng-click="bringmethere(obj.location)" ng-if="!!(obj.address | translate) && (obj.address | translate) != 'false'" class="item no-border action-link item-text-wrap item-icon-left">
         <i class="icon ic-new-navigate"></i>{{obj.address | translate}}</div>
-      <div ng-if="!!(obj.eventPeriod | translate) && (obj.eventPeriod | translate) != 'false'" class="item no-border action-link item-text-wrap item-icon-left">
+      <div ng-if="!!(obj.eventPeriod | translate) && (obj.eventPeriod | translate) != 'false'" class="item no-border item-text-wrap item-icon-left">
         <i class="icon ic-new-calendar "></i>{{obj.eventPeriod | translate}}</div>
-      <div ng-if="!!(obj.eventTiming | translate) && (obj.eventTiming | translate) != 'false'" class="item no-border action-link item-text-wrap item-icon-left">
+      <div ng-if="!!(obj.eventTiming | translate) && (obj.eventTiming | translate) != 'false'" class="item no-border item-text-wrap item-icon-left">
         <i class="icon ic-new-clock"></i>{{obj.eventTiming | translate}}</div>
-      <div ng-if="!!(obj.cost | translate) && (obj.cost | translate) != 'false'" class="item no-border action-link item-text-wrap item-icon-left">
+      <div ng-if="!!(obj.cost | translate) && (obj.cost | translate) != 'false'" class="item no-border item-text-wrap item-icon-left">
         <i class="icon ion-ios7-photos-outline"></i>{{obj.cost | translate}}</div>
-      <div ng-if="obj.topics.length > 0" class="item no-border action-link item-text-wrap item-icon-left">
+      <div ng-if="obj.topics.length > 0" class="item no-border item-text-wrap item-icon-left">
         <i class="icon ic-new-tag "></i>
         <span ng-repeat="topic in obj.topics" ng-if="!!topic">{{topic}}
           <span ng-if="!$last">, </span>
@@ -58,7 +47,6 @@
   <ion-content class="has-subheader">
     <ion-list ng-if="gotsonsdata">
       <ion-item ng-repeat="son in sons track by son.id" href="{{son.abslink}}" class="coll-item item-thumbnail-left">
-        <!-- comuni-img class="item-image comuni-item-image" gotdata="gotsonsdata"></comuni-img -->
         <div class="item-image comuni-item-image comuni-img" style="background-image:url({{getParsedImageURL(son)}})"></div>
         <h2>{{son.title | translate}}</h2>
         <p ng-if="son.fromTime">{{son.fromTime | date:'dd/MM/yyyy'}}

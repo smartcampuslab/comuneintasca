@@ -30,6 +30,7 @@ angular.module('ilcomuneintasca', [
 
   .run(function ($ionicPlatform, $rootScope, $state, $filter, $location, Config, DatiDB, Files, GeoLocate, $ionicPopup) {
     $rootScope.mapsReady = false;
+    $rootScope.expirationDate = "31-05-2018";
     $rootScope.reallyexitapp = function () {
       $ionicPopup.confirm({
         title: $filter('translate')('exitapp_title'),
@@ -62,6 +63,11 @@ angular.module('ilcomuneintasca', [
     }, false);
     $ionicPlatform.ready(function () {
       //console.log('IONIC READY!');
+      if (!$rootScope.isExpired()) {
+        $rootScope.showNotExpiredPopup($rootScope.expirationDate);
+      } else {
+        $rootScope.showExpiredPopup();
+      }
       $ionicPlatform.registerBackButtonAction(function (event) {
         if ($state.current.name == "app.home") {
           //console.log('going back in home...');
@@ -120,6 +126,48 @@ angular.module('ilcomuneintasca', [
         $rootScope.goto(link);
       });
     };
+
+    $rootScope.showExpiredPopup = function () {
+      var alertPopup = $ionicPopup.alert({
+        title: "Versione scaduta",
+        template: "Ci scusiamo ma non è più possibile utilizzare questa versione dell\'applicazione in quanto il periodo di prova è terminata",
+        buttons: [
+          {
+            text: "OK",
+            type: 'button-custom',
+            onTap: function (e) {
+              ionic.Platform.exitApp();
+            }
+          }
+        ]
+      });
+    }
+
+    $rootScope.showNotExpiredPopup = function (date) {
+      var alertPopup = $ionicPopup.alert({
+        title: "Versione di prova",
+        template: "Questa  è una versione di prova e terminerà il " + date,
+        buttons: [
+          {
+            text: "OK",
+            type: 'button-custom'
+          }
+        ]
+      });
+    }
+    $rootScope.isExpired = function () {
+      var expirationDateString = $rootScope.expirationDate;
+      var pattern = /(\d{2})-(\d{2})-(\d{4})/;
+      var expirationDate = new Date(expirationDateString.replace(pattern, '$3-$2-$1'));
+      expirationDate = expirationDate.getTime();
+      var today = new Date().getTime();
+      if (expirationDate < today) {
+        return true;
+      } else if (expirationDate > today) {
+        return false;
+      }
+
+    }
     $rootScope.goto = function (link) {
       if (link) {
         if (link.indexOf('#/app/') == 0) link = link.substring(1);

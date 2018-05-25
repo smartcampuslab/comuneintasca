@@ -7,6 +7,7 @@
   <span ng-if="!scrolldata">{{'loading' | translate }}</span>
   <span ng-if="scrolldata">{{'list_results' | translate_plur:results.length}}</span>
 </ion-header-bar>
+<ion-floating-button button-color="#e14248"  icon-color="#ffffff" ng-click="showSearch($event)" icon="icon ion-search"  ng-if="!searching && ((!hasMap || !mapsReady) && !hasFilter)"></ion-floating-button>
 <ion-content class="has-header" delegate-handle="listScroll">
   <ion-list>
     <div ng-repeat="obj in scrolldata track by $index">

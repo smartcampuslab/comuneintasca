@@ -88,8 +88,8 @@ h1,h2, h3, h4, h5, h6,
 
 ion-tabs, .tabs {
   border-color: #03526e;
-  background-color: #CCC !important;
-  color: #03526e;
+  background-color: #03526e !important;
+  color: white;
 }
 .tabs .tab-item {
   /*  opacity: 1;*/
@@ -98,7 +98,7 @@ ion-tabs, .tabs {
   opacity: 1!important;
 }
 .tabs .tab-item.activated, .tabs .tab-item.active, .tabs .tab-item.tab-item-active { 
-  color:#03526e !important;font-weight:bold !important;border-bottom:5px solid #03526e !important; border-top-width: 0 !important; margin-top:0 !important; 
+  color:white !important;font-weight:bold !important;border-bottom:5px solid white !important; border-top-width: 0 !important; margin-top:0 !important; 
 }
 
 

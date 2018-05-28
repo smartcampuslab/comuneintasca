@@ -18,8 +18,6 @@ package it.smartcommunitylab.comuneintasca.connector.flows;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.springframework.web.client.RestTemplate;
-
 import com.google.protobuf.Message;
 
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata;
@@ -34,19 +32,16 @@ import it.smartcommunitylab.comuneintasca.connector.scripts.OpenContentScript;
  */
 public class ConfigFlow implements Flow<ConfigData>{
 
-	private RestTemplate  rest = new RestTemplate();
-	
-	
 	@Override
 	public List<ConfigData> process(String url) throws Exception {
 		List<ConfigData> output = new LinkedList<Opendata.ConfigData>();
 		
-		String configStr = rest.getForObject(url, String.class);
+		String configStr = it.smartcommunitylab.comuneintasca.connector.ConnectionUtils.call(url, String.class);
 		OpenContentScript ocs = new OpenContentScript();
 		List<Message> links = ocs.extractUri(configStr);
 		for (Message link : links) {
 			ConfigLink cl = (ConfigLink) link;
-			String string = rest.getForObject(cl.getUri(), String.class);
+			String string = it.smartcommunitylab.comuneintasca.connector.ConnectionUtils.call(cl.getUri(), String.class);
 			ConfigScript cs = new ConfigScript();
 			Message data = cs.copyData(cl, string);
 			output.add((ConfigData)data);

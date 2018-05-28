@@ -18,14 +18,10 @@ package it.smartcommunitylab.comuneintasca.connector.flows;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.springframework.web.client.RestTemplate;
-
 import com.google.protobuf.Message;
 
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata;
-import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nCultura;
 import eu.trentorise.smartcampus.service.opendata.data.message.Opendata.I18nMainEvent;
-import it.smartcommunitylab.comuneintasca.connector.scripts.CulturaScript;
 import it.smartcommunitylab.comuneintasca.connector.scripts.MainEventsScript;
 import it.smartcommunitylab.comuneintasca.connector.scripts.OpenContentScript;
 
@@ -34,20 +30,18 @@ import it.smartcommunitylab.comuneintasca.connector.scripts.OpenContentScript;
  *
  */
 public class MainEventsFlow implements Flow<I18nMainEvent> {
-	private RestTemplate  rest = new RestTemplate();
-	
 	
 	@Override
 	public List<I18nMainEvent> process(String url) throws Exception {
 		List<I18nMainEvent> output = new LinkedList<Opendata.I18nMainEvent>();
 		
-		String mainStr = rest.getForObject(url, String.class);
+		String mainStr = it.smartcommunitylab.comuneintasca.connector.ConnectionUtils.call(url, String.class);
 		OpenContentScript ocs = new OpenContentScript();
 		List<String> links = ocs.extractLinks(mainStr);
 		for (String link : links) {
-			String string = rest.getForObject(link, String.class);
-			String stringen = rest.getForObject(link + "?Translation=eng-GB", String.class);
-			String stringde = rest.getForObject(link + "?Translation=ger-DE", String.class);
+			String string = it.smartcommunitylab.comuneintasca.connector.ConnectionUtils.call(link, String.class);
+			String stringen = it.smartcommunitylab.comuneintasca.connector.ConnectionUtils.call(link + "?Translation=eng-GB", String.class);
+			String stringde = it.smartcommunitylab.comuneintasca.connector.ConnectionUtils.call(link + "?Translation=ger-DE", String.class);
 			MainEventsScript cs = new MainEventsScript();
 			Message data = cs.extractData(string, stringen, stringde);
 			output.add((I18nMainEvent)data);

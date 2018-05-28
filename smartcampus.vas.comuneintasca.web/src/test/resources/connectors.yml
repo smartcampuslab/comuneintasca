@@ -10,6 +10,7 @@ apps:
 
         - type: it.smartcommunitylab.comuneintasca.core.model.DynamicConfigObject
           url: http://www.comune.trento.it/comuneintasca/data
+          #url: file:///Users/raman/workspace/cit/comuneintasca/smartcampus.vas.comuneintasca.web/src/test/resources/config.json
           serviceId: smartcampus.service.opendata
           methodName: it.smartcommunitylab.comuneintasca.connector.flows.ConfigFlow
           imagePath: http://url.it

@@ -1,9 +1,5 @@
 package it.smartcommunitylab.comuneintasca.connector;
 
-import it.smartcommunitylab.comuneintasca.core.data.AppSyncSubStorage;
-import it.smartcommunitylab.comuneintasca.core.data.AppSyncSubStorageImpl;
-import it.smartcommunitylab.comuneintasca.core.model.AppObject;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -12,6 +8,9 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
 import eu.trentorise.smartcampus.presentation.common.exception.DataException;
+import it.smartcommunitylab.comuneintasca.core.data.AppSyncSubStorage;
+import it.smartcommunitylab.comuneintasca.core.data.AppSyncSubStorageImpl;
+import it.smartcommunitylab.comuneintasca.core.model.AppObject;
 
 @Component
 public class ConnectorStorage {

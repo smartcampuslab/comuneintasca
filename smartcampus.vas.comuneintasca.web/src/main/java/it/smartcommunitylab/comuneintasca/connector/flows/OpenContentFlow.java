@@ -18,8 +18,6 @@ package it.smartcommunitylab.comuneintasca.connector.flows;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.springframework.web.client.RestTemplate;
-
 import com.google.protobuf.Message;
 
 import it.smartcommunitylab.comuneintasca.connector.scripts.OpenContentScript;
@@ -31,17 +29,15 @@ import it.smartcommunitylab.comuneintasca.connector.scripts.OpenDataScript;
  */
 public class OpenContentFlow<T> implements Flow<T>{
 
-	private RestTemplate  rest = new RestTemplate();
-
 	@Override
 	public List<T> process(String url) throws Exception {
 		List<T> output = new LinkedList<T>();
 		
-		String mainStr = rest.getForObject(url, String.class);
+		String mainStr = it.smartcommunitylab.comuneintasca.connector.ConnectionUtils.call(url, String.class);
 		OpenContentScript ocs = new OpenContentScript();
 		List<String> links = ocs.extractLinks(mainStr);
 		for (String link : links) {
-			String string = rest.getForObject(link, String.class);
+			String string = it.smartcommunitylab.comuneintasca.connector.ConnectionUtils.call(link, String.class);
 			OpenDataScript cs = new OpenDataScript();
 			Message data = cs.extractData(string);
 			output.add((T)data);

@@ -1,8 +1,9 @@
 <ion-floating-menu menu-color="#e14248" menu-open-icon="ion-close" menu-open-color="#e14248" ng-if="!searching && (hasMap && mapsReady || hasFilter)">
 		<ion-floating-item button-color="#ececec" ng-if="hasMap && mapsReady" ng-click="showMap()" icon="icon ic-new-map" ></ion-floating-item>
-		<ion-floating-item button-color="#ececec"  ng-if="hasFilter"  ng-click="showFilterPopup()"  icon="icon ic-new-filter" ></ion-floating-item>
+		<ion-floating-item button-color="#ececec"  ng-if="hasFilter"  ng-click="showFilterPopup()"  icon="icon ion-funnel" ></ion-floating-item>
+		<ion-floating-item button-color="#ececec"  ng-if="hasSort" ng-click="showSortPopup()" icon="icon ic-new-filter" ></ion-floating-item>
 		<ion-floating-item button-color="#ececec"  ng-if="hasSearch" ng-click="showSearch($event)" icon="icon ion-search"  data-off-ng-href="geo:obj.location[0],obj.location[1]"></ion-floating-item>
-</ion-floating-menu>
+  </ion-floating-menu>
 <div class="tabs tabs-icon-only" ng-if="searching">
     <div class="bar bar-footer item-input-inset">
       <label class="item-input-wrapper" ng-if="searching">

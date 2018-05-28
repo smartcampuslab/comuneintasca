@@ -528,6 +528,11 @@ angular.module('ilcomuneintasca.services.conf', [])
         en: 'OK',
         de: 'OK'
       },
+      'credits_licenses_button': {
+        it: 'VEDI LICENZE',
+        en: 'READ LICENSES',
+        de: 'LIZENZEN LESEN'
+      },
       'exitapp_title': {
         it: null,
         en: null,

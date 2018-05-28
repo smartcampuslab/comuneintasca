@@ -546,6 +546,11 @@ ion-tabs .pane ion-content {
   font-size: 26px;
 }
 
+.button-credits {
+  width: 90%;
+  background-color: #03526e;
+  color: white;
+}
 
 /* stretched img css trick
 .comuni-img img {

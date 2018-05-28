@@ -1,0 +1,9 @@
+{
+  "config_ios" : {
+    "CFBundleDisplayName": "Trento - Die Stadt in der Tasche",
+    "CFBundleName": "Trento - Die Stadt in der Tasche"
+  },
+  "config_android" : {
+    "app_name": "Trento - Die Stadt in der Tasche"
+  }
+}

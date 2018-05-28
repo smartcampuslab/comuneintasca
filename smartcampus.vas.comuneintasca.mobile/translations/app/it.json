@@ -1,0 +1,9 @@
+{
+  "config_ios" : {
+    "CFBundleDisplayName": "Trento - Il Comune in Tasca",
+    "CFBundleName": "Trento - Il Comune in Tasca"
+  },
+  "config_android" : {
+    "app_name": "Trento - Il Comune in Tasca"
+  }
+}

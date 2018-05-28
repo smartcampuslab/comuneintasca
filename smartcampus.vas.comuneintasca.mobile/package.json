@@ -18,15 +18,20 @@
     "cordova-plugin-x-socialsharing": "git+https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git",
     "cordova-sqlite-storage": "^2.3.1",
     "es6-promise-plugin": "^4.2.2",
+    "fs-extra": "^6.0.1",
     "gulp": "^3.9.1",
     "gulp-clean-css": "^3.9.4",
     "gulp-concat": "^2.6.1",
     "gulp-minify-css": "^1.2.4",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^4.0.1",
+    "iconv-lite": "^0.4.23",
     "ionic-plugin-keyboard": "git+https://github.com/driftyco/ionic-plugins-keyboard.git",
+    "lodash": "^4.17.10",
     "node-sass": "^4.9.0",
-    "org.apache.cordova.geolocation": "~0.3.6"
+    "org.apache.cordova.geolocation": "~0.3.6",
+    "xcode": "^1.0.0",
+    "xml2js": "^0.4.19"
   },
   "cordovaPlugins": [
     "org.apache.cordova.statusbar",

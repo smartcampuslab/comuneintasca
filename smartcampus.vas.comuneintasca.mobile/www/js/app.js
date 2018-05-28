@@ -63,11 +63,11 @@ angular.module('ilcomuneintasca', [
     }, false);
     $ionicPlatform.ready(function () {
       //console.log('IONIC READY!');
-      if (!$rootScope.isExpired()) {
-        $rootScope.showNotExpiredPopup($rootScope.expirationDate);
-      } else {
-        $rootScope.showExpiredPopup();
-      }
+      // if (!$rootScope.isExpired()) {
+      //   $rootScope.showNotExpiredPopup($rootScope.expirationDate);
+      // } else {
+      //   $rootScope.showExpiredPopup();
+      // }
       $ionicPlatform.registerBackButtonAction(function (event) {
         if ($state.current.name == "app.home") {
           //console.log('going back in home...');

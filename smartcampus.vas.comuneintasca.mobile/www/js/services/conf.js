@@ -32,7 +32,7 @@ angular.module('ilcomuneintasca.services.conf', [])
     //    'ad94673caa967e022fd137627094d238':'visitare'
     //  };
     // TRENTO
-    var APP_VERSION = '3.1.1';
+    var APP_VERSION = '1.0.0';
     var APP_BUILD = '';
     var WEBAPP_MULTI = "TrentoInTasca";
     var cityName = { 'it': 'Trento', 'en': 'Trento', 'de': 'Trento' };
@@ -494,16 +494,26 @@ angular.module('ilcomuneintasca.services.conf', [])
         de: 'App der Gemeinden im Trentino'
       },
       'credits_project': {
-        it: 'Un progetto di:',
-        en: 'A project by:',
-        de: 'Ein projekt:'
+        it: 'Realizzata da:',
+        en: 'Developed by:',
+        de: 'Entwickelt von:'
       },
       'credits_sponsored': {
         it: 'Con la collaborazione di:',
         en: 'In collaboration with:',
         de: 'In Zusammenarbeit mit der:'
       },
+      'credits_sponsored_2': {
+        it: 'Ufficio "Cultura e turismo" del Comune di Trento',
+        en: 'Culture and Tourism Bureau of the Municipality of Trento',
+        de: 'Kultur und Tourismus Bureau der Gemeinde Trento'
+      },
       'credits_info': {
+        it: 'Per problemi tecnici:',
+        en: 'For technical issues:',
+        de: 'Für technische probleme:'
+      },
+      'credits_info_more': {
         it: 'Per informazioni:',
         en: 'Further information:',
         de: 'Informationen:'

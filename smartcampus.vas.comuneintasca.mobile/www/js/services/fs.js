@@ -355,12 +355,12 @@ angular.module('ilcomuneintasca.services.fs', [])
                       //console.log('File: ' + fileURI);
                       allTotalSizesDeferreds[fileURI]=$q.defer();
                       allTotalSizesPromises[fileURI]=allTotalSizesDeferreds[fileURI].promise;
-                      window.FileMetadata.getMetadataForFileURI(fileURI, function(metadata) {
-                        //console.log('file uri size: ' + metadata.size);
-                        if (metadata.size>0) totalSize+=metadata.size;
-                        allTotalSizesDeferreds[metadata.uri].resolve();
-                        allFilesMetadata.push(metadata);
-                      });
+                      // window.FileMetadata.getMetadataForFileURI(fileURI, function(metadata) {
+                      //   //console.log('file uri size: ' + metadata.size);
+                      //   if (metadata.size>0) totalSize+=metadata.size;
+                      //   allTotalSizesDeferreds[metadata.uri].resolve();
+                      //   allFilesMetadata.push(metadata);
+                      // });
                     }
                   }
                   readAllEntries();

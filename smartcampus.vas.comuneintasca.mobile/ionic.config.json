@@ -2,5 +2,15 @@
   "name": "trento",
   "email": "",
   "app_id": "",
-  "package_name": ""
+  "package_name": "",
+  "type": "ionic1",
+  "integrations": {
+    "cordova": {}
+  },
+  "watchPatterns": [
+    "scss/**/*",
+    "www/**/*",
+    "!www/lib/**/*",
+    "!www/**/*.map"
+  ]
 }

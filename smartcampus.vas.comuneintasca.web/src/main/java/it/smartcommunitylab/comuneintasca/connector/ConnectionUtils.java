@@ -18,6 +18,7 @@ package it.smartcommunitylab.comuneintasca.connector;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -38,7 +39,7 @@ public class ConnectionUtils {
 	public static <T> T call(String url, Class<T> cls) throws IOException {
 		URL urlObj = new URL(url);
 		if ("file".equalsIgnoreCase(urlObj.getProtocol())) {
-			List<String> list = Files.readAllLines(Paths.get(URI.create(url)));
+			List<String> list = Files.readAllLines(Paths.get(URI.create(url)), Charset.forName("utf-8"));
 			return mapper.convertValue(StringUtils.collectionToDelimitedString(list, "\n"), cls);
 		} else {
 			return restTemplate.getForObject(url, cls);

@@ -20,9 +20,10 @@ import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.stream.Collectors;
+import java.util.List;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -37,8 +38,8 @@ public class ConnectionUtils {
 	public static <T> T call(String url, Class<T> cls) throws IOException {
 		URL urlObj = new URL(url);
 		if ("file".equalsIgnoreCase(urlObj.getProtocol())) {
-			String string = Files.readAllLines(Paths.get(URI.create(url))).stream().collect(Collectors.joining("\n"));
-			return mapper.convertValue(string, cls);
+			List<String> list = Files.readAllLines(Paths.get(URI.create(url)));
+			return mapper.convertValue(StringUtils.collectionToDelimitedString(list, "\n"), cls);
 		} else {
 			return restTemplate.getForObject(url, cls);
 		}

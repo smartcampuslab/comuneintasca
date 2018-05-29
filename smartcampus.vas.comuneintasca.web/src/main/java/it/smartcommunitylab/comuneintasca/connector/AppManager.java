@@ -64,7 +64,7 @@ public class AppManager {
 		}
 		return null;
 	}
-	@Scheduled(initialDelay=10000, fixedDelay=1000*60*60*2)
+	@Scheduled(initialDelay=5000, fixedDelay=1000*60*60*2)
 	public void schedule() {
 		for (Subscriber s: subscriberMap.values()) {
 			s.process();

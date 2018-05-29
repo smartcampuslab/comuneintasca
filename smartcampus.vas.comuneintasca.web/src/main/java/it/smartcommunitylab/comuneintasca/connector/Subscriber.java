@@ -55,6 +55,7 @@ public class Subscriber {
 				}
 				processor.onServiceEvents(app.getId(), serviceId, clazz.getName(), bsList);
 			} catch (Exception e) {
+				logger.error(e.getMessage(), e);
 				logger.error("No class found: "+ methodName);
 			}
 		}	

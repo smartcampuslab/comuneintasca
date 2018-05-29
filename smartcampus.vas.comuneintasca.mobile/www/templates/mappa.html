@@ -1,8 +1,15 @@
 <ion-view title="{{title | translate}}">
+  <ion-nav-buttons side="left">
+    <button class="button back-button buttons button-clear header-item" ng-click="goBack()">
+      <i class="icon ion-arrow-left-c"></i>
+    </button>
+  </ion-nav-buttons>
   <ion-content class="has-header" scroll="false" id="map1-container">
     <div id="map1">
-      <ui-gmap-google-map data-tap-disabled="true" center="map.center" zoom="map.zoom" pan="map.pan" options="map.options" draggable="map.draggable" refresh="map.refresh">
-        <ui-gmap-markers models="markers.models" coords="markers.coords" fit="markers.fit" icon="markers.icon" doCluster="markers.doCluster" click="openMarkerPopup"></ui-gmap-markers>
+      <ui-gmap-google-map data-tap-disabled="true" center="map.center" zoom="map.zoom" pan="map.pan" options="map.options" draggable="map.draggable"
+        refresh="map.refresh">
+        <ui-gmap-markers models="markers.models" coords="markers.coords" fit="markers.fit" icon="markers.icon" doCluster="markers.doCluster"
+          click="openMarkerPopup"></ui-gmap-markers>
       </ui-gmap-google-map>
     </div>
   </ion-content>

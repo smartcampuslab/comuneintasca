@@ -119,15 +119,18 @@ public class DataProcessor  {
 
 		DynamicConfigObject config = mapper.readValue(d, DynamicConfigObject.class);
 
+		logger.info("Updating config");
 		try {
 			configProcessor.buildConfig(config, app);
 		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 			return;
 		}
 
 		List<DynamicConfigObject> oldList = dataService.getDraftObjects(DynamicConfigObject.class, app.getId());
 		DynamicConfigObject old = null;
 		if (oldList != null && !oldList.isEmpty()) {
+			logger.info("Updating existing config");
 			old = oldList.get(0);
 			if (old.getLastModified() < cd.getDateModified() || !old.dataEquals(config)) {
 				config.setId(old.getId());
@@ -145,6 +148,7 @@ public class DataProcessor  {
 				updateAll(config, app);
 			}
 		} else {
+			logger.info("New config");
 			config.setAppId(app.getId());
 			config.setLastModified(cd.getDateModified());
 			connectorStorage.storeObject(config, app.getId());

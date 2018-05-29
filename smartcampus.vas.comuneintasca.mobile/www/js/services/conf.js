@@ -84,7 +84,7 @@ angular.module('ilcomuneintasca.services.conf', [])
       {
         "id": "profile_cit_csvimport_Mangiare_e_dormire_item_comuneintasca",
         "name": {
-          "it": "MANGIARE E DORMIRE",
+          "it": "MANGIARE <br> E <br> DORMIRE",
           "en": "RESTAURANTS & HOTELS",
           "de": "GASTRONOMIE UND ÜBERNACHTUNG"
         },

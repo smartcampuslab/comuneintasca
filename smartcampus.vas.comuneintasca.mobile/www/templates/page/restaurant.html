@@ -1,29 +1,52 @@
-
-<ion-floating-button button-color="#e14248"  icon-color="#ffffff" icon="icon ion-ios7-redo" ng-click="share(obj.title,obj.url,obj.image)"></ion-floating-button>
+<ion-floating-button button-color="#e14248" icon-color="#ffffff" icon="icon ion-ios7-redo" ng-click="share(obj.title,obj.url,obj.image)">
+</ion-floating-button>
 <ion-content class="has-header">
-    <ion-nav-buttons side="right">
-        <a class="tab-item favorite" ng-click="toggleFavorite(obj)">
-          <i ng-if="isObjFavorite" class="icon ic-new-star"></i>
-          <i ng-if="!isObjFavorite" class="icon ic-new-star-outline"></i>
-        </a>
-      </ion-nav-buttons>
+  <ion-nav-buttons side="left">
+    <button class="button back-button buttons button-clear header-item" ng-click="goBack()">
+      <i class="icon ion-arrow-left-c"></i>
+    </button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <a class="tab-item favorite" ng-click="toggleFavorite(obj)">
+      <i ng-if="isObjFavorite" class="icon ic-new-star"></i>
+      <i ng-if="!isObjFavorite" class="icon ic-new-star-outline"></i>
+    </a>
+  </ion-nav-buttons>
   <!-- comuni-img ng-if="obj.image" class="content-image-main" gotdata="gotdata" detail="true"></comuni-img -->
   <div ng-if="!emptyParsedImageURL(obj)" class="content-image-main comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj)}})"></div>
   <div class="padding">
     <h1>{{obj.title | translate}}</h1>
-    <h4>{{obj.dbClassification | translate}}<span ng-if="obj.dbClassification2">, {{obj.dbClassification2 | translate}}</span><span ng-if="obj.dbClassification3">, {{obj.dbClassification3 | translate}}</span></h4>
+    <h4>{{obj.dbClassification | translate}}
+      <span ng-if="obj.dbClassification2">, {{obj.dbClassification2 | translate}}</span>
+      <span ng-if="obj.dbClassification3">, {{obj.dbClassification3 | translate}}</span>
+    </h4>
     <div class="comuni-html-description">
-      <div ng-if="!! obj.timetable[lang]"><strong>{{'restaurant_opening' | translate}}: </strong> {{obj.timetable | translate}}</div>
-      <div ng-if="!! obj.closing[lang]"><strong>{{'restaurant_closing' | translate}}: </strong> {{obj.closing | translate}}</div>
+      <div ng-if="!! obj.timetable[lang]">
+        <strong>{{'restaurant_opening' | translate}}: </strong> {{obj.timetable | translate}}</div>
+      <div ng-if="!! obj.closing[lang]">
+        <strong>{{'restaurant_closing' | translate}}: </strong> {{obj.closing | translate}}</div>
     </div>
     <div class="list  sinottico">
-      <div ng-if="!!(obj.address | translate)" ng-click="bringmethere(obj.location)" class="item no-border action-link item-text-wrap item-icon-left"><i class="icon ic-new-navigate"></i>{{obj.address | translate}}</div>
-      <div ng-if="!!(obj.distance)" class="item no-border item-text-wrap item-icon-left"><i class="icon ion-arrow-resize"></i>{{obj.distance | number:1}} {{'entry_km' | translate}}</div>
-      <div ng-if="!!(obj.contacts.phone)" class="item no-border action-link item-text-wrap item-icon-left"><i class="icon ion-ios7-telephone"></i><a ng-click="call(obj.contacts.phone)" >{{obj.contacts.phone}}</a></div>
-      <div ng-if="!!(obj.contacts.email)" class="item no-border action-link item-text-wrap item-icon-left"><i class="icon ion-android-mail"></i><a ng-click="email(obj.contacts.email)">{{obj.contacts.email}}</a></div>
-      <div ng-if="!!(obj.url)" class="item no-border action-link item-text-wrap item-icon-left"><i class="icon ic-new-website"></i><a ng-click="extLink(obj.url)">{{obj.url}}</a></div>
-      <div ng-if="!! obj.prices[lang]" class="item no-border action-link item-text-wrap item-icon-left"><i class="icon ion-ios7-pricetag-outline"></i>&euro; {{obj.prices | translate}}</div>
-      <div ng-if="!! obj.equipment[lang]" class="item no-border action-link item-text-wrap item-icon-left"><i class="icon ion-ios7-checkmark-outline"></i>{{obj.equipment | translate}}</div>
+      <div ng-if="!!(obj.address | translate)" ng-click="bringmethere(obj.location)" class="item no-border action-link item-text-wrap item-icon-left">
+        <i class="icon ic-new-navigate"></i>{{obj.address | translate}}</div>
+      <div ng-if="!!(obj.distance)" class="item no-border item-text-wrap item-icon-left">
+        <i class="icon ion-arrow-resize"></i>{{obj.distance | number:1}} {{'entry_km' | translate}}</div>
+      <div ng-if="!!(obj.contacts.phone)" class="item no-border action-link item-text-wrap item-icon-left">
+        <i class="icon ion-ios7-telephone"></i>
+        <a ng-click="call(obj.contacts.phone)">{{obj.contacts.phone}}</a>
+      </div>
+      <div ng-if="!!(obj.contacts.email)" class="item no-border action-link item-text-wrap item-icon-left">
+        <i class="icon ion-android-mail"></i>
+        <a ng-click="email(obj.contacts.email)">{{obj.contacts.email}}</a>
+      </div>
+      <div ng-if="!!(obj.url)" class="item no-border action-link item-text-wrap item-icon-left">
+        <i class="icon ic-new-website"></i>
+        <a ng-click="extLink(obj.url)">{{obj.url}}</a>
+      </div>
+      <div ng-if="!! obj.prices[lang]" class="item no-border action-link item-text-wrap item-icon-left">
+        <i class="icon ion-ios7-pricetag-outline"></i>&euro; {{obj.prices | translate}}</div>
+      <div ng-if="!! obj.equipment[lang]" class="item no-border action-link item-text-wrap item-icon-left">
+        <i class="icon ion-ios7-checkmark-outline"></i>{{obj.equipment | translate}}</div>
     </div>
     <div class="comuni-html-description subtitle" compile="obj.subtitle | translate"></div>
     <div class="comuni-html-description" compile="obj.description | translate"></div>
@@ -34,6 +57,6 @@
 <!-- <div ng-if="obj">
     <div ng-include="'templates/toolbox-material.html'"></div>
   </div> -->
-  <!-- <ion-footer-bar ng-show="obj">
+<!-- <ion-footer-bar ng-show="obj">
     <div ng-include="'templates/toolbox.html'"></div>
   </ion-footer-bar> -->

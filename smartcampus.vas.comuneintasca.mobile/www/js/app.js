@@ -28,7 +28,7 @@ angular.module('ilcomuneintasca', [
     });
   }])
 
-  .run(function ($ionicPlatform, $rootScope, $state, $filter, $location, Config, DatiDB, Files, GeoLocate, $ionicPopup) {
+  .run(function ($ionicPlatform, $rootScope, $ionicNavBarDelegate, $state, $filter, $location, Config, DatiDB, Files, GeoLocate, $ionicPopup) {
     $rootScope.mapsReady = false;
     $rootScope.expirationDate = "31-05-2018";
     $rootScope.reallyexitapp = function () {
@@ -168,10 +168,14 @@ angular.module('ilcomuneintasca', [
       }
 
     }
+    $rootScope.goBack = function(){
+      window.history.back();
+    }
     $rootScope.goto = function (link) {
       if (link) {
         if (link.indexOf('#/app/') == 0) link = link.substring(1);
         if (link.indexOf('/app/') != 0) link = '/app/' + link;
+        $ionicNavBarDelegate.showBackButton(false);
         $location.path(link);
       } else {
         console.log('goto() link is null!');

@@ -1,8 +1,6 @@
-<!-- <ion-nav-buttons side="right">
-  <button class="button button-clear" ng-if="hasSort" ng-click="showSortPopup()">
-    <i class="icon ic-new-reorder"></i>
-  </button>
-</ion-nav-buttons> -->
+<ion-nav-buttons side="left" id="navbar2">
+  <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+</ion-nav-buttons>
 <ion-floating-button button-color="#e14248"  icon-color="#ffffff"  icon="icon ic-new-filter" ng-click="showSortPopup()"></ion-floating-button>
 
 <ion-view title="{{title | translate}}">
@@ -31,7 +29,4 @@
     </ion-list>
   </ion-content>
   <div ng-include="'templates/list_toolbox_material.html'"></div>
-  <!-- <ion-footer-bar>
-    <div ng-include="'templates/list_toolbox.html'"></div>
-  </ion-footer-bar> -->
 </ion-view>

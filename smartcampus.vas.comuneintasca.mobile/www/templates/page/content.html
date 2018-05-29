@@ -1,6 +1,11 @@
-
-<ion-floating-button button-color="#e14248"  icon-color="#ffffff"  icon="icon ion-ios7-redo" ng-click="share(obj.title,obj.url,obj.image)"></ion-floating-button>
+<ion-floating-button button-color="#e14248" icon-color="#ffffff" icon="icon ion-ios7-redo" ng-click="share(obj.title,obj.url,obj.image)">
+</ion-floating-button>
 <ion-content class="has-header">
+  <ion-nav-buttons side="left">
+    <button class="button back-button buttons button-clear header-item" ng-click="goBack()">
+      <i class="icon ion-arrow-left-c"></i>
+    </button>
+  </ion-nav-buttons>
   <ion-nav-buttons side="right">
     <a class="tab-item favorite" ng-show="obj" ng-click="toggleFavorite(obj)">
       <i ng-if="isObjFavorite" class="icon ic-new-star"></i>
@@ -48,7 +53,7 @@
             <i class="icon ic-new-navigate"></i>{{obj.address | translate}}</div>
           <div ng-if="!!(obj.distance)" class="item no-border  item-text-wrap item-icon-left">
             <i class="icon ion-arrow-resize"></i>{{obj.distance | number:1}} {{'entry_km' | translate}}</div>
-          <div ng-if="!!(obj.contacts.phone)" ng-click="call(obj.contacts.phone)"  class="item no-border action-link item-text-wrap item-icon-left">
+          <div ng-if="!!(obj.contacts.phone)" ng-click="call(obj.contacts.phone)" class="item no-border action-link item-text-wrap item-icon-left">
             <i class="icon ion-ios7-telephone"></i>
             {{obj.contacts.phone}}
           </div>

@@ -1,12 +1,17 @@
 <div class="event_container" ng-hide="sonsVisible">
+  <ion-nav-buttons side="left">
+      <button class="button back-button buttons button-clear header-item" ng-click="goBack()">
+          <i class="icon ion-arrow-left-c"></i> 
+      </button>
+  </ion-nav-buttons>
   <ion-nav-buttons side="right">
     <a class="tab-item favorite" ng-click="toggleFavorite(obj)">
       <i ng-if="isObjFavorite" class="icon ic-new-star"></i>
       <i ng-if="!isObjFavorite" class="icon ic-new-star-outline"></i>
     </a>
   </ion-nav-buttons>
-  <ion-floating-button button-color="#e14248"  icon-color="#ffffff" icon="icon ion-ios7-redo" ng-click="share(obj.title,obj.url,obj.image)"></ion-floating-button>
- 
+  <ion-floating-button button-color="#e14248" icon-color="#ffffff" icon="icon ion-ios7-redo" ng-click="share(obj.title,obj.url,obj.image)"></ion-floating-button>
+
   <ion-content class="has-header">
     <div ng-if="!emptyParsedImageURL(obj)" class="content-image-main comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj)}})"></div>
     <div class="padding nobottom">

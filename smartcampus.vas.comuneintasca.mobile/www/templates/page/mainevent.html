@@ -1,24 +1,39 @@
 <div class="event_container" ng-hide="sonsVisible">
-    <ion-floating-button button-color="#e14248"  icon-color="#ffffff" icon="icon ion-ios7-redo" ng-click="share(obj.title,obj.url,obj.image)"></ion-floating-button>
-    
+  <ion-floating-button button-color="#e14248" icon-color="#ffffff" icon="icon ion-ios7-redo" ng-click="share(obj.title,obj.url,obj.image)"></ion-floating-button>
+
   <ion-content class="has-header">
-      <ion-nav-buttons side="right">
-          <a class="tab-item favorite" ng-click="toggleFavorite(obj)">
-            <i ng-if="isObjFavorite" class="icon ic-new-star"></i>
-            <i ng-if="!isObjFavorite" class="icon ic-new-star-outline"></i>
-          </a>
-        </ion-nav-buttons>
+    <ion-nav-buttons side="left">
+      <button class="button back-button buttons button-clear header-item" ng-click="goBack()">
+        <i class="icon ion-arrow-left-c"></i>
+      </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+      <a class="tab-item favorite" ng-click="toggleFavorite(obj)">
+        <i ng-if="isObjFavorite" class="icon ic-new-star"></i>
+        <i ng-if="!isObjFavorite" class="icon ic-new-star-outline"></i>
+      </a>
+    </ion-nav-buttons>
     <!-- comuni-img ng-if="obj.image" class="content-image-main" gotdata="gotdata" detail="true"></comuni-img -->
     <div ng-if="!emptyParsedImageURL(obj)" class="content-image-main comuni-img" ng-attr-style="background-image:url({{getParsedImageURL(obj)}})"></div>
 
     <div class="padding nobottom">
       <h1>{{obj.title | translate}}</h1>
       <h4>{{obj.eventDateDescription | translate}}</h4>
-      <div class="comuni-html-description" ng-if="obj.contacts.phone" ><b>Tel:</b> <a ng-click="call(obj.contacts.phone)" >{{obj.contacts.phone}}</a></div>
-      <div class="comuni-html-description" ng-if="obj.contacts.email"><b>E-mail:</b> <a ng-click="email(obj.contacts.email)">{{obj.contacts.email}}</a></div>
-      <div class="comuni-html-description" ng-if="obj.url"><b>Web:</b> <a ng-click="extLink(obj.url)">{{obj.url}}</a></div>
+      <div class="comuni-html-description" ng-if="obj.contacts.phone">
+        <b>Tel:</b>
+        <a ng-click="call(obj.contacts.phone)">{{obj.contacts.phone}}</a>
+      </div>
+      <div class="comuni-html-description" ng-if="obj.contacts.email">
+        <b>E-mail:</b>
+        <a ng-click="email(obj.contacts.email)">{{obj.contacts.email}}</a>
+      </div>
+      <div class="comuni-html-description" ng-if="obj.url">
+        <b>Web:</b>
+        <a ng-click="extLink(obj.url)">{{obj.url}}</a>
+      </div>
     </div>
-    <button ng-if="obj.sonscount>0" class="button button-full eventscount icon-right ion-chevron-right" data-off-ng-click="toggleSons()" ng-click="gotoSubpath('/sons/'+obj.sonscount)">{{ 'complex_events_found' | translate_plur:obj.sonscount }}</button>
+    <button ng-if="obj.sonscount>0" class="button button-full eventscount icon-right ion-chevron-right" data-off-ng-click="toggleSons()"
+      ng-click="gotoSubpath('/sons/'+obj.sonscount)">{{ 'complex_events_found' | translate_plur:obj.sonscount }}</button>
     <div class="padding notop">
       <div class="comuni-html-description subtitle" compile="obj.subtitle | translate"></div>
       <div class="comuni-html-description" compile="obj.description | translate"></div>
@@ -32,13 +47,13 @@
   </div>
   <ion-content class="has-subheader">
     <ion-list ng-if="gotsonsdata">
-      <ion-item ng-repeat="son in sons track by son.id" 
-                
-                href="{{son.abslink}}" class="coll-item item-thumbnail-left">
+      <ion-item ng-repeat="son in sons track by son.id" href="{{son.abslink}}" class="coll-item item-thumbnail-left">
         <!-- comuni-img class="item-image comuni-item-image" gotdata="gotsonsdata"></comuni-img -->
         <div class="item-image comuni-item-image comuni-img" style="background-image:url({{getParsedImageURL(son)}})"></div>
         <h2>{{son.title | translate}}</h2>
-        <p ng-if="son.fromTime">{{son.fromTime | date:'dd/MM/yyyy'}}<span ng-if="son.fromTime !== son.toTime"> - {{son.toTime | date:'dd/MM/yyyy'}}</span></p>
+        <p ng-if="son.fromTime">{{son.fromTime | date:'dd/MM/yyyy'}}
+          <span ng-if="son.fromTime !== son.toTime"> - {{son.toTime | date:'dd/MM/yyyy'}}</span>
+        </p>
         <div class="row comuni-item-bottom">
           <div class="col comuni-item-bottom-text">
             <span>{{son.address | translate}}</span>

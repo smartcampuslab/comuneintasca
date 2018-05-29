@@ -13,7 +13,10 @@
   bottom: 70px;
 }
 */
+.bar-footer.has-tabs, .has-tabs{
 
+bottom:0px !important; 
+}
 ion-footer-bar.bar {
   padding: 0;
 }

@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -26,6 +27,7 @@ import it.smartcommunitylab.comuneintasca.connector.AppManager;
 
 @Configuration
 @EnableWebMvc
+@EnableScheduling
 @ComponentScan("it.smartcommunitylab.comuneintasca")
 public class BaseConfig extends WebMvcConfigurerAdapter {
 

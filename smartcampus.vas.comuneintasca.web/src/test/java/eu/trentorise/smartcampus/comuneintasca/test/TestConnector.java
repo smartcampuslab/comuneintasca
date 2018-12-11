@@ -2,13 +2,7 @@ package eu.trentorise.smartcampus.comuneintasca.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import it.smartcommunitylab.comuneintasca.connector.AppManager;
-import it.smartcommunitylab.comuneintasca.connector.ConnectorStorage;
-import it.smartcommunitylab.comuneintasca.core.data.AppSyncStorageImpl;
-import it.smartcommunitylab.comuneintasca.core.model.EventObject;
-import it.smartcommunitylab.comuneintasca.core.service.DataService;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.Before;
@@ -19,12 +13,24 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.google.protobuf.ByteString;
-
 import eu.trentorise.smartcampus.comuneintasca.test.config.TestConfig;
-import eu.trentorise.smartcampus.comuneintasca.test.config.TestServiceBusClient;
 import eu.trentorise.smartcampus.comuneintasca.test.util.ObjectCreator;
 import eu.trentorise.smartcampus.presentation.common.exception.DataException;
+import it.smartcommunitylab.comuneintasca.connector.AppManager;
+import it.smartcommunitylab.comuneintasca.connector.ConnectorStorage;
+import it.smartcommunitylab.comuneintasca.connector.Subscriber;
+import it.smartcommunitylab.comuneintasca.connector.processor.DataProcessor;
+import it.smartcommunitylab.comuneintasca.core.data.AppSyncStorageImpl;
+import it.smartcommunitylab.comuneintasca.core.model.AppObject;
+import it.smartcommunitylab.comuneintasca.core.model.ContentObject;
+import it.smartcommunitylab.comuneintasca.core.model.DynamicConfigObject;
+import it.smartcommunitylab.comuneintasca.core.model.EventObject;
+import it.smartcommunitylab.comuneintasca.core.model.HotelObject;
+import it.smartcommunitylab.comuneintasca.core.model.ItineraryObject;
+import it.smartcommunitylab.comuneintasca.core.model.MainEventObject;
+import it.smartcommunitylab.comuneintasca.core.model.POIObject;
+import it.smartcommunitylab.comuneintasca.core.model.RestaurantObject;
+import it.smartcommunitylab.comuneintasca.core.service.DataService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestConfig.class})
@@ -39,61 +45,52 @@ public class TestConnector {
 	@Autowired
 	private DataService dataService;
 	@Autowired
-	private TestServiceBusClient serviceBusClient;
-	
+	private DataProcessor processor;
+
 	@Before
 	public void prepare() {
 		mongoTemplate.dropCollection(ConnectorStorage.COLLECTION);
 		mongoTemplate.dropCollection(AppSyncStorageImpl.DRAFT_COLLECTION);
 		mongoTemplate.dropCollection(AppSyncStorageImpl.PUBLISH_COLLECTION);
 	}
-	
-	@Test
-	public void eventsNoConfig() throws DataException {
-		List<ByteString> data = Collections.singletonList(ObjectCreator.createEventProto().toByteString());
-		serviceBusClient.notifyData(data, "smartcampus.service.opendata", "GetEventiParam", "1");
-		List<EventObject> events = connectorStorage.getObjectsByType(EventObject.class, ObjectCreator.TEST_APP);
-		assertNotNull(events);
-		assertEquals(1, events.size());
-		
-		List<EventObject> draftObjects = dataService.getDraftObjects(EventObject.class, ObjectCreator.TEST_APP);
-		assertNotNull(draftObjects);
-		assertEquals(0, draftObjects.size());
 
-		List<EventObject> publishObjects = dataService.getDraftObjects(EventObject.class, ObjectCreator.TEST_APP);
+	@Test
+	public void testConfig() throws DataException {
+		Subscriber s = new Subscriber();
+		s.subscribe(appManager.getApp("test", "smartcampus.service.opendata", "it.smartcommunitylab.comuneintasca.connector.flows.ConfigFlow"), processor);
+		s.process();
+		
+		List<DynamicConfigObject> draftObjects = dataService.getDraftObjects(DynamicConfigObject.class, ObjectCreator.TEST_APP);
+		assertNotNull(draftObjects);
+		assertEquals(1, draftObjects.size());
+
+		List<DynamicConfigObject> publishObjects = dataService.getPublishedObjects(DynamicConfigObject.class, ObjectCreator.TEST_APP);
 		assertNotNull(publishObjects);
 		assertEquals(0, publishObjects.size());
 	}
 
 	@Test
-	public void eventsConfig() throws DataException {
+	public void testLists() throws DataException {
+//		testLists("test", "smartcampus.service.opendata", "it.smartcommunitylab.comuneintasca.connector.flows.EventsFlow", EventObject.class);
+//		testLists("test", "smartcampus.service.opendata", "it.smartcommunitylab.comuneintasca.connector.flows.RestaurantsFlow", RestaurantObject.class);
+//		testLists("test", "smartcampus.service.opendata", "it.smartcommunitylab.comuneintasca.connector.flows.HotelsFlow", HotelObject.class);
+//		testLists("test", "smartcampus.service.opendata", "it.smartcommunitylab.comuneintasca.connector.flows.CulturaFlow", POIObject.class);
+//		testLists("test", "smartcampus.service.opendata", "it.smartcommunitylab.comuneintasca.connector.flows.ItinerariesFlow", ItineraryObject.class);
+		testLists("test", "smartcampus.service.opendata", "it.smartcommunitylab.comuneintasca.connector.flows.TextsFlow", ContentObject.class);
+	}
+
+	public void testLists(String app, String serviceId, String clsName, Class<? extends AppObject> cls) throws DataException {
+		Subscriber s = new Subscriber();
+		s.subscribe(appManager.getApp(app, serviceId, clsName), processor);
+		s.process();
 		
-		eventsNoConfig();
-		List<ByteString> data = Collections.singletonList(ObjectCreator.createConfigProtoWithObjectId().toByteString());
-		serviceBusClient.notifyData(data, "smartcampus.service.opendata", "GetConfig", "1");
-		
-		List<EventObject> draftObjects = dataService.getDraftObjects(EventObject.class, ObjectCreator.TEST_APP);
+		List<?> draftObjects = dataService.getDraftObjects(cls, ObjectCreator.TEST_APP);
 		assertNotNull(draftObjects);
 		assertEquals(1, draftObjects.size());
 
-		List<EventObject> publishObjects = dataService.getPublishedObjects(EventObject.class, ObjectCreator.TEST_APP);
+		List<?> publishObjects = dataService.getPublishedObjects(cls, ObjectCreator.TEST_APP);
 		assertNotNull(publishObjects);
 		assertEquals(1, publishObjects.size());
 	}
 
-	@Test
-	public void eventsConfigWithQuery() throws DataException {
-		
-		eventsNoConfig();
-		List<ByteString> data = Collections.singletonList(ObjectCreator.createConfigProtoWithQuery().toByteString());
-		serviceBusClient.notifyData(data, "smartcampus.service.opendata", "GetConfig", "1");
-		
-		List<EventObject> draftObjects = dataService.getDraftObjects(EventObject.class, ObjectCreator.TEST_APP);
-		assertNotNull(draftObjects);
-		assertEquals(1, draftObjects.size());
-
-		List<EventObject> publishObjects = dataService.getPublishedObjects(EventObject.class, ObjectCreator.TEST_APP);
-		assertNotNull(publishObjects);
-		assertEquals(1, publishObjects.size());
-	}
 }

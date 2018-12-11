@@ -19,16 +19,15 @@ public class App {
 		this.id = id;
 	}
 
-	public SourceEntry findEntry(String serviceId, String methodName, String subscriptionId) {
+	public SourceEntry findEntry(String serviceId, String methodName) {
 		for (SourceEntry entry : sources) {
-			if (entry.getSubscriptionId().equals(subscriptionId) &&
-				entry.getServiceId().equals(serviceId)			 &&
+			if (entry.getServiceId().equals(serviceId)			 &&
 				entry.getMethodName().equals(methodName)) return entry;
 		}
 		return null;
 	}
 
-	public SourceEntry findEntry(String type, String classifier) {
+	public SourceEntry findEntryByType(String type, String classifier) {
 		if (entryMap == null) {
 			entryMap = new HashMap<TypeClassifier, SourceEntry>(); 
 			for (SourceEntry s : sources) {

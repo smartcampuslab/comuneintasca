@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
+import org.springframework.util.StringUtils;
 
 public class EventMappingDescriptor extends MappingDescriptor {
 
@@ -35,7 +35,7 @@ public class EventMappingDescriptor extends MappingDescriptor {
 			}
 		}
 		if (list.isEmpty()) return "";
-		return StringUtils.join(list, ';');
+		return StringUtils.collectionToDelimitedString(list, ";");
 	}
 
 	

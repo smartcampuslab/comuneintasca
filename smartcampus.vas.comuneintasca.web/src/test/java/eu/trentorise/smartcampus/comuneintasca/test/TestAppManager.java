@@ -27,10 +27,10 @@ public class TestAppManager {
 	
 	@Test
 	public void getAppData() throws DataException {
-		App app = manager.getApp("smartcampus.service.opendata", "GetEventiParam", "1");
+		App app = manager.getApp("test", "smartcampus.service.opendata", "it.smartcommunitylab.comuneintasca.connector.flows.ConfigFlow");
 		assertNotNull(app);
 
-		app = manager.getApp("smartcampus.service.opendata", "Test3", "1");
+		app = manager.getApp("test", "smartcampus.service.opendata", "Test3");
 		assertNull(app);
 	}
 	

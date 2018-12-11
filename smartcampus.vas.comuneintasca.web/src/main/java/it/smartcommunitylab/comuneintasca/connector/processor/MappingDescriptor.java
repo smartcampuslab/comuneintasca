@@ -1,7 +1,5 @@
 package it.smartcommunitylab.comuneintasca.connector.processor;
 
-import it.smartcommunitylab.comuneintasca.core.model.BaseCITObject;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -9,7 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
+import org.springframework.util.StringUtils;
+
+import it.smartcommunitylab.comuneintasca.core.model.BaseCITObject;
 
 public class MappingDescriptor {
 	private String remoteType;
@@ -66,6 +66,6 @@ public class MappingDescriptor {
 			}
 		}
 		if (list.isEmpty()) return "";
-		return StringUtils.join(list, ';');
+		return StringUtils.collectionToDelimitedString(list, ";");
 	}
 }

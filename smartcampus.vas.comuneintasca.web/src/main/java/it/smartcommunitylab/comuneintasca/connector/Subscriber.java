@@ -15,72 +15,49 @@
  ******************************************************************************/
 package it.smartcommunitylab.comuneintasca.connector;
 
-import it.sayservice.platform.client.InvocationException;
-import it.sayservice.platform.client.ServiceBusClient;
-
-import java.util.Map;
-import java.util.TreeMap;
-
-import javax.annotation.PostConstruct;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.google.protobuf.ByteString;
+import com.google.protobuf.Message;
+
+import it.smartcommunitylab.comuneintasca.connector.flows.Flow;
+import it.smartcommunitylab.comuneintasca.connector.processor.DataProcessor;
+
+
 public class Subscriber {
 
-	public static final String SERVICE_OD = "smartcampus.service.opendata";
-	public static final String METHOD_EVENTS = "GetEventiParam";
-	public static final String METHOD_CONFIG = "GetConfig";
-	public static final String METHOD_RESTAURANTS = "GetRestaurants";
-	public static final String METHOD_HOTELS = "GetHotels";
-	public static final String METHOD_CULTURA = "GetCultura";
-	public static final String METHOD_MAINEVENTS = "GetMainEvents";
-	public static final String METHOD_TESTI = "GetTesti";
-	public static final String METHOD_ITINERARI = "GetItinerari";
-	public static final String METHOD_TERRITORY_SERVICE = "GetTerritoryServices";
-
-	private ServiceBusClient client;
-	
 	private Log logger = LogFactory.getLog(getClass());
-
-	public Subscriber(ServiceBusClient client) {
-		this.client = client;
-	}	
+	private App app;
+	private DataProcessor processor;
 	
-	@PostConstruct
-	public void subscribe(App app) {
-		try {
-			logger.info("SUBSCRIBING app "+app.getId());
-			for (SourceEntry source : app.getSources()) {
-				String serviceId = source.getServiceId();
-				String methodName = source.getMethodName();
-//				if (source.getSubscriptionId() != null) {
-//					logger.info("UNSUBSCRIBING source "+source.getMethodName()+": "+source.getSubscriptionId());
-//					client.unsubscribeService(serviceId, methodName, source.getSubscriptionId());
-//				}
-				Map<String, Object> params = new TreeMap<String, Object>();
-				params.put("url", source.getUrl());
-				String newSubscriptionId =  client.subscribeService(serviceId, methodName, params);
-				source.setSubscriptionId(newSubscriptionId);
-				logger.info("SUBSCRIBED source "+source.getMethodName()+": "+source.getSubscriptionId());
-			}
-			logger.info("DONE SUBSCRIBING app "+app.getId());
-		} catch (InvocationException e) {
-			logger.error("Failed to subscribe for the app: " + e.getMessage());
-		}
+	public void subscribe(App app, DataProcessor processor) {
+		logger.info("SUBSCRIBING app "+app.getId());
+		this.app = app;
+		this.processor = processor;
 	}
-
-	public void unsubscribe(App a) {
-		try {
-			for (SourceEntry source : a.getSources()) {
-				String serviceId = source.getServiceId();
-				String methodName = source.getMethodName();
-				if (source.getSubscriptionId() != null) {
-					client.unsubscribeService(serviceId, methodName, source.getSubscriptionId());
+	
+	public void process() {
+		for (SourceEntry source : app.getSources()) {
+			String serviceId = source.getServiceId();
+			String methodName = source.getMethodName();
+			try {
+				Class<?> clazz = Class.forName(methodName);
+				@SuppressWarnings("unchecked")
+				Flow<Message> newInstance = (Flow<Message>) clazz.newInstance();
+				List<Message> list = newInstance.process(source.getUrl());
+				List<ByteString> bsList = new LinkedList<ByteString>();
+				for (Message msg : list) {
+					bsList.add(msg.toByteString());
 				}
+				processor.onServiceEvents(app.getId(), serviceId, clazz.getName(), bsList);
+			} catch (Exception e) {
+				logger.error(e.getMessage(), e);
+				logger.error("No class found: "+ methodName);
 			}
-		} catch (InvocationException e) {
-			logger.error("Failed to unsubscribe for the app: " + e.getMessage());
 		}	
 	}
 	

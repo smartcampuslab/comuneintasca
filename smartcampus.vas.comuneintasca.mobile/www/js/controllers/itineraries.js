@@ -185,8 +185,8 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
   $scope.$on('$viewContentLoaded', function () {
     var mapHeight = 600; // or any other calculated value
     mapHeight = angular.element(document.querySelector('#map2-container'))[0].offsetHeight;
-    //console.log('mapheight: '+mapHeight);
-    gotheight.resolve(mapHeight + 40);
+    console.log('mapheight: '+mapHeight);
+    gotheight.resolve(mapHeight);
   });
 
   $scope.map = {
@@ -201,6 +201,9 @@ angular.module('ilcomuneintasca.controllers.itineraries', [])
     options: {
       streetViewControl: false,
       zoomControl: true,
+      zoomControlOptions: {
+        position: 6 //=RIGHT_TOP
+      },
       styles:[{
         featureType:"poi",
         elementType:"labels",

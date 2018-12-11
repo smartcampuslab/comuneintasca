@@ -1,27 +1,49 @@
 {
   "id": null,
-  "updateTime": 1432635135464,
-  "version": 81030,
+  "updateTime": 1544543069725,
+  "version": 244253,
   "user": null,
   "appId": "TrentoInTasca",
-  "lastModified": 0,
+  "lastModified": 1515244064000,
   "localId": null,
   "highlights": [
     {
-      "id": "f1b1d0f9485fcdda1b6622d1b1ae1a9c",
+      "id": "cittadelnatale",
       "name": {
-        "it": "Festival dell'Economia 2015",
-        "en": "Economics Festival 2015",
-        "de": "Wirtschaftsfestival 2015"
+        "it": "Trento, città del Natale e il Mercatino di Natale",
+        "en": "Trento, città del Natale e il Mercatino di Natale (Trento Christmas city and the Christmas market)",
+        "de": "Trento, città del Natale e il Mercatino di Natale (Die Weihnachtsstadt Trient und der Weihnachtsmarkt)"
       },
       "description": null,
       "image": {
-        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/festival-dell-economia-2015/8714288-14-ita-IT/Festival-dell-Economia-2015.jpg",
-        "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/festival-dell-economia-2015/8726356-16-eng-GB/Economics-Festival-2015.jpg",
-        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/festival-dell-economia-2015/8727077-17-ger-DE/Wirtschaftsfestival-2015.jpg"
+        "it": "http://www.comune.trento.it/var/comunetn/storage/images/aree-tematiche/turismo/eventi/eventi-principali/trento-citta-del-natale-e-il-mercatino-di-natale/8532983-37-ita-IT/Trento-citta-del-Natale-e-il-Mercatino-di-Natale_imagefull.png",
+        "en": "http://www.comune.trento.it/var/comunetn/storage/images/aree-tematiche/turismo/eventi/eventi-principali/trento-citta-del-natale-e-il-mercatino-di-natale/8532983-37-ita-IT/Trento-citta-del-Natale-e-il-Mercatino-di-Natale_imagefull.png",
+        "de": "http://www.comune.trento.it/var/comunetn/storage/images/aree-tematiche/turismo/eventi/eventi-principali/trento-citta-del-natale-e-il-mercatino-di-natale/8532983-37-ita-IT/Trento-citta-del-Natale-e-il-Mercatino-di-Natale_imagefull.png"
       },
       "objectIds": [
-        "event.major.3"
+        "event.major.11"
+      ],
+      "items": null,
+      "query": null,
+      "ref": null,
+      "type": "mainevent",
+      "app": null
+    },
+    {
+      "id": "d757ee0813bdcc5b6f74044e004226dc",
+      "name": {
+        "it": "Livetrento",
+        "en": "Livetrento",
+        "de": "Livetrento"
+      },
+      "description": null,
+      "image": {
+        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/livetrento/9867529-1-ita-IT/Livetrento.jpg",
+        "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/livetrento/9867534-2-eng-GB/Livetrento.jpg",
+        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/livetrento/9867539-3-ger-DE/Livetrento.jpg"
+      },
+      "objectIds": [
+        "48b624c0fc02e87c43728ca839ae50f5"
       ],
       "items": null,
       "query": null,
@@ -32,40 +54,18 @@
     {
       "id": "8cc43799380fcd360be1219b9fa6b152",
       "name": {
-        "it": "La Card 'TrentoRovereto città di culture'",
-        "en": "The 'TrentoRovereto Città di culture' card",
-        "de": "Die 'TrentoRovereto Città di culture'-Karte"
+        "it": "Museum Pass",
+        "en": "Museum Pass",
+        "de": "Museum Pass"
       },
       "description": null,
       "image": {
-        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/la-card-trentorovereto-citta-di-culture/8622743-1-ita-IT/La-Card-TrentoRovereto-citta-di-culture.jpg",
-        "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/la-card-trentorovereto-citta-di-culture/8622743-1-ita-IT/La-Card-TrentoRovereto-citta-di-culture.jpg",
-        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/in-evidenza/la-card-trentorovereto-citta-di-culture/8622743-1-ita-IT/La-Card-TrentoRovereto-citta-di-culture.jpg"
+        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/museum-pass/8622743-10-ita-IT/Museum-Pass.jpg",
+        "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/museum-pass/8622748-11-eng-GB/Museum-Pass.jpg",
+        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/museum-pass/8622753-12-ger-DE/Museum-Pass.jpg"
       },
       "objectIds": [
         "text.3005"
-      ],
-      "items": null,
-      "query": null,
-      "ref": null,
-      "type": "content",
-      "app": null
-    },
-    {
-      "id": "d347c18f3a931ae6a512b7d80591afd8",
-      "name": {
-        "it": "Come arrivare a Trento",
-        "en": "How to arrive to Trento",
-        "de": "Nach Trient kommen"
-      },
-      "description": null,
-      "image": {
-        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/come-arrivare-a-trento/8622728-33-ita-IT/Come-arrivare-a-Trento.jpg",
-        "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/come-arrivare-a-trento/8622733-34-eng-GB/How-to-arrive-to-Trento.jpg",
-        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/come-arrivare-a-trento/8622738-35-ger-DE/Nach-Trient-kommen.jpg"
-      },
-      "objectIds": [
-        "4b8834e1c27b237c07faebc96d8dab37"
       ],
       "items": null,
       "query": null,
@@ -96,25 +96,25 @@
       "app": null
     },
     {
-      "id": "profile_cit_75aceda860befbcb1fe8bd1a0f8be85c",
+      "id": "d347c18f3a931ae6a512b7d80591afd8",
       "name": {
-        "it": "Castello del Buonconsiglio",
-        "en": "Buonconsiglio Castle",
-        "de": "Buonconsiglio Schloss"
+        "it": "Come arrivare a Trento",
+        "en": "How to arrive to Trento",
+        "de": "Nach Trient kommen"
       },
       "description": null,
       "image": {
-        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/castello-del-buonconsiglio/8554658-26-ita-IT/Castello-del-Buonconsiglio.jpg",
-        "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/castello-del-buonconsiglio/8554663-27-eng-GB/Buonconsiglio-Castle.jpg",
-        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/castello-del-buonconsiglio/8554668-28-ger-DE/Buonconsiglio-Schloss.jpg"
+        "it": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/come-arrivare-a-trento/8622728-36-ita-IT/Come-arrivare-a-Trento.jpg",
+        "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/come-arrivare-a-trento/8622733-37-eng-GB/How-to-arrive-to-Trento.jpg",
+        "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni/comune-in-tasca/turista/in-evidenza/come-arrivare-a-trento/8622738-38-ger-DE/Nach-Trient-kommen.jpg"
       },
       "objectIds": [
-        "cultura.27"
+        "4b8834e1c27b237c07faebc96d8dab37"
       ],
       "items": null,
       "query": null,
       "ref": null,
-      "type": "poi",
+      "type": "content",
       "app": null
     }
   ],
@@ -128,7 +128,7 @@
       },
       "description": null,
       "image": null,
-      "objectIds": null,
+      "objectIds": [],
       "items": null,
       "query": null,
       "ref": "profile_cit_2cc4db1674d9e8994658eac954355d31",
@@ -144,7 +144,7 @@
       },
       "description": null,
       "image": null,
-      "objectIds": null,
+      "objectIds": [],
       "items": null,
       "query": null,
       "ref": "profile_cit_csvimport_Visitare_item_comuneintasca",
@@ -160,14 +160,31 @@
       },
       "description": null,
       "image": null,
-      "objectIds": null,
+      "objectIds": [],
       "items": null,
       "query": null,
       "ref": "profile_cit_csvimport_Mangiare_e_dormire_item_comuneintasca",
       "type": null,
       "app": null
     },
-
+    {
+      "id": "profile_cit_csvimport_Viaggia_Trento_item_comuneintasca",
+      "name": {
+        "it": "VIAGGIA TRENTO",
+        "en": "VIAGGIA TRENTO",
+        "de": "VIAGGIA TRENTO"
+      },
+      "description": null,
+      "image": null,
+      "objectIds": [],
+      "items": null,
+      "query": null,
+      "ref": null,
+      "type": null,
+      "app": {
+        "android": "eu.trentorise.smartcampus.viaggiatrento"
+      }
+    },
     {
       "id": "profile_cit_csvimport_Eventi_item_comuneintasca",
       "name": {
@@ -177,7 +194,7 @@
       },
       "description": null,
       "image": null,
-      "objectIds": null,
+      "objectIds": [],
       "items": null,
       "query": null,
       "ref": "profile_cit_csvimport_Eventi_item_comuneintasca",
@@ -193,7 +210,7 @@
       },
       "description": null,
       "image": null,
-      "objectIds": null,
+      "objectIds": [],
       "items": null,
       "query": null,
       "ref": "profile_cit_csvimport_Percorsi_item_comuneintasca",
@@ -209,7 +226,7 @@
       },
       "description": null,
       "image": null,
-      "objectIds": null,
+      "objectIds": [],
       "items": null,
       "query": null,
       "ref": "profile_cit_csvimport_Info_utili_item_comuneintasca",
@@ -227,7 +244,7 @@
       },
       "description": null,
       "image": null,
-      "objectIds": null,
+      "objectIds": [],
       "items": [
         {
           "id": "profile_cit_8ea91c65223746d1c1ef32b06459e6ce",
@@ -305,7 +322,7 @@
           },
           "description": null,
           "image": null,
-          "objectIds": null,
+          "objectIds": [],
           "items": null,
           "query": {
             "type": "mainevent",
@@ -329,15 +346,16 @@
             "en": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/conoscere/il-monte-bondone/8554861-2-eng-GB/Il-Monte-Bondone.jpg",
             "de": "http://www.comune.trento.it/var/comunetn/storage/images/applicazioni-mobile/comune-in-tasca/turista/menu-laterale/conoscere/il-monte-bondone/8554866-2-ger-DE/Il-Monte-Bondone.jpg"
           },
-          "objectIds": null,
+          "objectIds": [
+            "text.3018",
+            "text.3020",
+            "text.3019",
+            "text.3021"
+          ],
           "items": null,
-          "query": {
-            "type": "content",
-            "classifications": null,
-            "classification": "bondone"
-          },
+          "query": null,
           "ref": null,
-          "type": null,
+          "type": "content",
           "app": null
         }
       ],
@@ -355,7 +373,7 @@
       },
       "description": null,
       "image": null,
-      "objectIds": null,
+      "objectIds": [],
       "items": [
         {
           "id": "profile_cit_csvimport_Musei_item_comuneintasca",
@@ -366,7 +384,7 @@
           },
           "description": null,
           "image": null,
-          "objectIds": null,
+          "objectIds": [],
           "items": null,
           "query": {
             "type": "poi",
@@ -386,7 +404,7 @@
           },
           "description": null,
           "image": null,
-          "objectIds": null,
+          "objectIds": [],
           "items": null,
           "query": {
             "type": "poi",
@@ -410,7 +428,7 @@
             "en": "http://www.comune.trento.it/var/comunetn/storage/images-versioned/8554906/2-eng-GB/Churches1.jpg",
             "de": "http://www.comune.trento.it/var/comunetn/storage/images-versioned/8554911/2-ger-DE/Kirchen1.jpg"
           },
-          "objectIds": null,
+          "objectIds": [],
           "items": null,
           "query": {
             "type": "poi",
@@ -430,7 +448,7 @@
           },
           "description": null,
           "image": null,
-          "objectIds": null,
+          "objectIds": [],
           "items": null,
           "query": {
             "type": "poi",
@@ -450,7 +468,7 @@
           },
           "description": null,
           "image": null,
-          "objectIds": null,
+          "objectIds": [],
           "items": null,
           "query": {
             "type": "poi",
@@ -470,7 +488,7 @@
           },
           "description": null,
           "image": null,
-          "objectIds": null,
+          "objectIds": [],
           "items": null,
           "query": {
             "type": "poi",
@@ -496,7 +514,7 @@
       },
       "description": null,
       "image": null,
-      "objectIds": null,
+      "objectIds": [],
       "items": [
         {
           "id": "profile_cit_csvimport_Mangiare_item_comuneintasca",
@@ -507,7 +525,7 @@
           },
           "description": null,
           "image": null,
-          "objectIds": null,
+          "objectIds": [],
           "items": null,
           "query": {
             "type": "restaurant",
@@ -527,7 +545,7 @@
           },
           "description": null,
           "image": null,
-          "objectIds": null,
+          "objectIds": [],
           "items": null,
           "query": {
             "type": "hotel",
@@ -553,7 +571,7 @@
       },
       "description": null,
       "image": null,
-      "objectIds": null,
+      "objectIds": [],
       "items": [
         {
           "id": "profile_cit_csvimport_Tutti_gli_eventi_item_comuneintasca",
@@ -564,7 +582,7 @@
           },
           "description": null,
           "image": null,
-          "objectIds": null,
+          "objectIds": [],
           "items": null,
           "query": {
             "type": "event",
@@ -584,7 +602,7 @@
           },
           "description": null,
           "image": null,
-          "objectIds": null,
+          "objectIds": [],
           "items": null,
           "query": {
             "type": "event",
@@ -604,7 +622,7 @@
           },
           "description": null,
           "image": null,
-          "objectIds": null,
+          "objectIds": [],
           "items": null,
           "query": {
             "type": "event",
@@ -624,7 +642,7 @@
           },
           "description": null,
           "image": null,
-          "objectIds": null,
+          "objectIds": [],
           "items": null,
           "query": {
             "type": "event",
@@ -644,7 +662,7 @@
           },
           "description": null,
           "image": null,
-          "objectIds": null,
+          "objectIds": [],
           "items": null,
           "query": {
             "type": "event",
@@ -664,7 +682,7 @@
           },
           "description": null,
           "image": null,
-          "objectIds": null,
+          "objectIds": [],
           "items": null,
           "query": {
             "type": "event",
@@ -684,7 +702,7 @@
           },
           "description": null,
           "image": null,
-          "objectIds": null,
+          "objectIds": [],
           "items": null,
           "query": {
             "type": "mainevent",
@@ -704,7 +722,7 @@
           },
           "description": null,
           "image": null,
-          "objectIds": null,
+          "objectIds": [],
           "items": null,
           "query": {
             "type": "event",
@@ -730,7 +748,7 @@
       },
       "description": null,
       "image": null,
-      "objectIds": null,
+      "objectIds": [],
       "items": [
         {
           "id": "profile_cit_992a7ca32e9a335c575a46b6988c46a8",
@@ -741,7 +759,7 @@
           },
           "description": null,
           "image": null,
-          "objectIds": null,
+          "objectIds": [],
           "items": null,
           "query": {
             "type": "itineraries",
@@ -767,7 +785,7 @@
       },
       "description": null,
       "image": null,
-      "objectIds": null,
+      "objectIds": [],
       "items": [
         {
           "id": "profile_cit_csvimport_Servizi_item_comuneintasca",
@@ -778,7 +796,7 @@
           },
           "description": null,
           "image": null,
-          "objectIds": null,
+          "objectIds": [],
           "items": null,
           "query": {
             "type": "content",
@@ -798,7 +816,7 @@
           },
           "description": null,
           "image": null,
-          "objectIds": null,
+          "objectIds": [],
           "items": null,
           "query": {
             "type": "content",
@@ -818,7 +836,7 @@
           },
           "description": null,
           "image": null,
-          "objectIds": null,
+          "objectIds": [],
           "items": null,
           "query": {
             "type": "poi",
@@ -856,7 +874,7 @@
           },
           "description": null,
           "image": null,
-          "objectIds": null,
+          "objectIds": [],
           "items": null,
           "query": {
             "type": "poi",

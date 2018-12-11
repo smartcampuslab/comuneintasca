@@ -1,19 +1,19 @@
 {
   "highlights": [
     {
-      "id": "profile_cit_fe1",
+      "id": "cittadelnatale",
       "name": {
-        "it": "Festival dell'Economia 2018: Lavoro e tecnologia",
-        "en": "Festival dell'Economia 2018: Lavoro e tecnologia",
-        "de": "Festival dell'Economia 2018: Lavoro e tecnologia"
+        "it": "\"Trento, città del Natale\" e il Mercatino di Natale",
+        "en": "\"Trento, città del Natale\" e il Mercatino di Natale (\"Trento Christmas city\" and the Christmas market)",
+        "de": "\"Trento, città del Natale\" e il Mercatino di Natale (Die \"Weihnachtsstadt Trient\" und der Weihnachtsmarkt)"
       },
       "image": {
-        "it": "http:\/\/www.comune.trento.it\/var\/comunetn\/storage\/images\/aree-tematiche\/turismo\/eventi\/tutti-gli-eventi\/festival-dell-economia-2018-lavoro-e-tecnologia\/11107625-2-ita-IT\/Festival-dell-Economia-2018-Lavoro-e-tecnologia.jpg",
-        "en": "http:\/\/www.comune.trento.it\/var\/comunetn\/storage\/images\/aree-tematiche\/turismo\/eventi\/tutti-gli-eventi\/festival-dell-economia-2018-lavoro-e-tecnologia\/11107625-2-ita-IT\/Festival-dell-Economia-2018-Lavoro-e-tecnologia.jpg",
-        "de": "http:\/\/www.comune.trento.it\/var\/comunetn\/storage\/images\/aree-tematiche\/turismo\/eventi\/tutti-gli-eventi\/festival-dell-economia-2018-lavoro-e-tecnologia\/11107625-2-ita-IT\/Festival-dell-Economia-2018-Lavoro-e-tecnologia.jpg"
+        "it": "http://www.comune.trento.it/var/comunetn/storage/images/aree-tematiche/turismo/eventi/eventi-principali/trento-citta-del-natale-e-il-mercatino-di-natale/8532983-37-ita-IT/Trento-citta-del-Natale-e-il-Mercatino-di-Natale_imagefull.png",
+        "en": "http://www.comune.trento.it/var/comunetn/storage/images/aree-tematiche/turismo/eventi/eventi-principali/trento-citta-del-natale-e-il-mercatino-di-natale/8532983-37-ita-IT/Trento-citta-del-Natale-e-il-Mercatino-di-Natale_imagefull.png",
+        "de": "http://www.comune.trento.it/var/comunetn/storage/images/aree-tematiche/turismo/eventi/eventi-principali/trento-citta-del-natale-e-il-mercatino-di-natale/8532983-37-ita-IT/Trento-citta-del-Natale-e-il-Mercatino-di-Natale_imagefull.png"
       },
       "objectIds": [
-        "5e9cbb1a9e52b8a93bc2cbca1d063d22"
+        "event.major.11"
       ]
     },
     {

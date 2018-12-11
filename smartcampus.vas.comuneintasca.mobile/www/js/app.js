@@ -22,7 +22,7 @@ angular.module('ilcomuneintasca', [
 
   .config(['GoogleMapApiProvider'.ns(), function (GoogleMapApi) {
     GoogleMapApi.configure({
-      //    key: 'your api key',
+      key: 'AIzaSyCBRryqKlbKrG3mnYeKI3MKiQCC8rUOHJU',
       v: '3.17',
       libraries: 'geometry'
     });

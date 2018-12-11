@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "An Ionic project",
   "dependencies": {
+    "JSONPath": "^0.11.2",
     "call-number": "^1.0.1",
     "com.phonegap.plugins.startapp": "git+https://github.com/enricomarchesin/cordova-startapp.git",
     "cordova-android": "^6.3.0",
@@ -25,7 +26,7 @@
     "gulp-minify-css": "^1.2.4",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^4.0.1",
-    "iconv-lite": "^0.4.23",
+    "iconv-lite": "^0.4.24",
     "ionic-plugin-keyboard": "git+https://github.com/driftyco/ionic-plugins-keyboard.git",
     "lodash": "^4.17.10",
     "node-sass": "^4.9.0",
@@ -84,5 +85,8 @@
     "platforms": [
       "android"
     ]
+  },
+  "devDependencies": {
+    "@ionic/v1-toolkit": "1.0.14"
   }
 }

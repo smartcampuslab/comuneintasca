@@ -1,12 +1,11 @@
 {
   "name": "trento",
-  "email": "",
-  "app_id": "",
-  "package_name": "",
-  "type": "ionic1",
   "integrations": {
     "cordova": {}
   },
+  "type": "ionic1",
+  "email": "",
+  "package_name": "",
   "watchPatterns": [
     "scss/**/*",
     "www/**/*",

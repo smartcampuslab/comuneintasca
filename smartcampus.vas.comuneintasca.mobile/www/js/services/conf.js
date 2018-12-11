@@ -32,7 +32,7 @@ angular.module('ilcomuneintasca.services.conf', [])
     //    'ad94673caa967e022fd137627094d238':'visitare'
     //  };
     // TRENTO
-    var APP_VERSION = '1.0.0';
+    var APP_VERSION = '1.0.1';
     var APP_BUILD = '';
     var WEBAPP_MULTI = "TrentoInTasca";
     var cityName = { 'it': 'Trento', 'en': 'Trento', 'de': 'Trento' };
@@ -905,7 +905,7 @@ angular.module('ilcomuneintasca.services.conf', [])
               for (sgi = 0; sgi < group.items.length; sgi++) {
                 var sg = group.items[sgi];
                 if (sg.query && sg.query.type == type && ((!classification && !sg.query.classification) ||
-                  (classification && sg.query.classification && classification == sg.query.classification.toLowerCase()))) {
+                  (classification && sg.query.classification && (classification == sg.query.classification.toLowerCase() || classification == sg.query.classification)))) {
                   sg._parent = cloneParentGroup(group);
                   return sg;
                 } else if (sg.type && sg.type == type && classification == null) {

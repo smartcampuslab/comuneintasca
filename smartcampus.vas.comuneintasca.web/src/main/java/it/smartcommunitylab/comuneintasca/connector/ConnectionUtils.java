@@ -42,6 +42,9 @@ public class ConnectionUtils {
 			List<String> list = Files.readAllLines(Paths.get(URI.create(url)), Charset.forName("utf-8"));
 			return mapper.convertValue(StringUtils.collectionToDelimitedString(list, "\n"), cls);
 		} else {
+			if ("http".equals(urlObj.getProtocol())) {
+				return restTemplate.getForObject(url.replaceFirst("http", "https"), cls);
+			}
 			return restTemplate.getForObject(url, cls);
 		}
 	} 

@@ -33,9 +33,9 @@ import org.springframework.web.client.RestTemplate;
  */
 public class ConnectionUtils {
 
-	static {
-		System.setProperty("https.protocols", "TLSv1.1");
-	}
+//	static {
+//		System.setProperty("https.protocols", "TLSv1.1");
+//	}
 	private static ObjectMapper mapper = new ObjectMapper();
 	
 	public static <T> T call(String url, Class<T> cls) throws IOException {

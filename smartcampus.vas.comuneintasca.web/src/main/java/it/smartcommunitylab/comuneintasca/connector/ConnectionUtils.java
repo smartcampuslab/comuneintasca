@@ -44,6 +44,11 @@ public class ConnectionUtils {
 			List<String> list = Files.readAllLines(Paths.get(URI.create(url)), Charset.forName("utf-8"));
 			return mapper.convertValue(StringUtils.collectionToDelimitedString(list, "\n"), cls);
 		} else {
+			try {
+				SSLUtil.turnOffSslChecking();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			RestTemplate restTemplate = new RestTemplate();
 			if ("http".equals(urlObj.getProtocol())) {
 				return restTemplate.getForObject(url.replaceFirst("http", "https"), cls);

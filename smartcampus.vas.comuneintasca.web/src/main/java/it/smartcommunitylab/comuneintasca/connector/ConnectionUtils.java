@@ -33,7 +33,9 @@ import org.springframework.web.client.RestTemplate;
  */
 public class ConnectionUtils {
 
-	private static RestTemplate restTemplate = new RestTemplate();
+	static {
+		System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
+	}
 	private static ObjectMapper mapper = new ObjectMapper();
 	
 	public static <T> T call(String url, Class<T> cls) throws IOException {
@@ -42,6 +44,7 @@ public class ConnectionUtils {
 			List<String> list = Files.readAllLines(Paths.get(URI.create(url)), Charset.forName("utf-8"));
 			return mapper.convertValue(StringUtils.collectionToDelimitedString(list, "\n"), cls);
 		} else {
+			RestTemplate restTemplate = new RestTemplate();
 			if ("http".equals(urlObj.getProtocol())) {
 				return restTemplate.getForObject(url.replaceFirst("http", "https"), cls);
 			}

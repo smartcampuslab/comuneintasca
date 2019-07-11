@@ -34,7 +34,7 @@ import org.springframework.web.client.RestTemplate;
 public class ConnectionUtils {
 
 	static {
-		System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
+		System.setProperty("https.protocols", "TLSv1.1");
 	}
 	private static ObjectMapper mapper = new ObjectMapper();
 	

@@ -454,6 +454,9 @@ public class DataExtractor {
 		if (!img.startsWith("http")) {
 			return (entry.getImagePath() == null ? "" : entry.getImagePath()) + img;
 		}
+		if (img.startsWith("http:")) {
+			img.replace("http:", "https:");
+		}
 		return img;
 	}
 

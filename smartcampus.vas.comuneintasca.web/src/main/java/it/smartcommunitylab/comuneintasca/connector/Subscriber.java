@@ -48,7 +48,9 @@ public class Subscriber {
 				Class<?> clazz = Class.forName(methodName);
 				@SuppressWarnings("unchecked")
 				Flow<Message> newInstance = (Flow<Message>) clazz.newInstance();
+				logger.info("processing " + methodName);
 				List<Message> list = newInstance.process(source.getUrl());
+				logger.info("processing done: " + list.size());
 				List<ByteString> bsList = new LinkedList<ByteString>();
 				for (Message msg : list) {
 					bsList.add(msg.toByteString());

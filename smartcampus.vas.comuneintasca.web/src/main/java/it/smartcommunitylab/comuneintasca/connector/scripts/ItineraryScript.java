@@ -67,7 +67,10 @@ public class ItineraryScript extends OpenContentScript {
 		
 		Object duration = getRecValue(getMap(i18n,DEFAULT_LANGUAGE), FIELDS, "durata", VALUE);
 		if (duration != null && duration instanceof String) {
-			builder.setDuration(Integer.parseInt((String)duration));
+			try {
+				builder.setDuration(Integer.parseInt((String)duration));
+			} catch (Exception e) {
+			}
 		}		
 		
 		builder.setDifficulty(getI18NStringValue(i18n, FIELDS, "difficolta", STRING_VALUE));

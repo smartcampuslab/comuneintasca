@@ -8,7 +8,7 @@
 	<name>Comune in Tasca webapp</name>
 
 	<properties>
-		<spring.version>4.0.6.RELEASE</spring.version>
+		<spring.version>5.3.19</spring.version>
 		<servicebus-core>1.3</servicebus-core>
 		<service-engine-client>1.4</service-engine-client>
 		<spring-security-version>3.2.4.RELEASE</spring-security-version>
